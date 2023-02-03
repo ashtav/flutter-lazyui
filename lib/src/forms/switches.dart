@@ -1,0 +1,58 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:mixins/mixins.dart';
+
+import '../widgets/widgets.dart';
+
+/* --------------------------------------------------------------------------
+| Switches
+| -------------------------------------------------------- */
+
+class Switches extends StatefulWidget {
+  final String label;
+  final bool initValue;
+  final Function(bool)? onChanged;
+  const Switches({super.key, required this.label, this.initValue = false, this.onChanged});
+
+  @override
+  State<Switches> createState() => _SwitchesState();
+}
+
+class _SwitchesState extends State<Switches> {
+  bool switched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    switched = widget.initValue;
+  }
+
+  void onSwitch(bool value) {
+    setState(() {
+      switched = value;
+    });
+
+    widget.onChanged?.call(value);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Color primaryColor = MixinConfig.getConfig.primaryColor;
+    List<String> labels = widget.label.split('|');
+    String label = labels[0], secondLabel = labels.length > 1 ? labels[1] : label;
+
+    return Touch(
+      onTap: () => onSwitch(!switched),
+      child: Row(
+        children: [
+          Transform.scale(
+            scale: 0.7,
+            alignment: Alignment.centerLeft,
+            child: CupertinoSwitch(value: switched, activeColor: primaryColor, onChanged: onSwitch),
+          ),
+          Textr(switched ? label : secondLabel, style: Theme.of(context).textTheme.bodyText2, padding: Ei.sym(v: 5))
+        ],
+      ),
+    );
+  }
+}
