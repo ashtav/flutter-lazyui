@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
+import 'package:lazyui/src/config.dart';
 import 'package:mixins/mixins.dart';
 
 import '../widgets/widgets.dart';
@@ -185,6 +186,7 @@ class Forms {
           void Function(String)? onSubmit,
           void Function(String)? onChanged,
           void Function(bool)? onFocus,
+          void Function(TextEditingController?)? onTap,
           TextEditingController? controller,
           TextStyle? textStyle,
           List<TextInputFormatter> formatters = const []}) =>
@@ -212,6 +214,7 @@ class Forms {
         textStyle: textStyle,
         formatters: formatters,
         obsecureToggle: obsecureToggle,
+        onTap: onTap,
       );
 
   /* ------------------------------------------------------------------------------------------
@@ -320,6 +323,8 @@ class FormsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double configRadius = LazyConfig.getConfig.radius;
+
     return Container(
       margin: Ei.only(b: 20),
       child: Col(
@@ -331,14 +336,14 @@ class FormsGroup extends StatelessWidget {
                   child: Textr(label!),
                 ),
           Container(
-            decoration: BoxDecoration(border: Br.all(Colors.black12), borderRadius: Br.radius(2)),
+            decoration: BoxDecoration(border: Br.all(), borderRadius: Br.radius(configRadius)),
             child: ClipRRect(
-              borderRadius: Br.radius(2),
+              borderRadius: Br.radius(configRadius),
               child: Column(
                 children: List.generate(children.length, (i) {
                   dynamic child = children[i];
 
-                  BoxBorder border = Br.all(Colors.transparent);
+                  BoxBorder border = Br.all(color: Colors.transparent);
                   BorderRadius? zero = BorderRadius.zero;
 
                   if (child is Input) {

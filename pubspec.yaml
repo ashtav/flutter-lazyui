@@ -11,13 +11,20 @@ environment:
 dependencies:
   animator: ^3.2.0
   cached_network_image: ^3.2.3
+  camera: ^0.10.3
   custom_refresh_indicator: ^2.0.1
   flutter:
     sdk: flutter
+  gallery_saver: ^2.3.2
   intl: ^0.17.0
   line_awesome_flutter: ^2.0.0
+  media_gallery:
+    git:
+      url: https://github.com/ashtav/media_gallery.git
   mixins:
     path: ../mixins
+  permission_handler: ^10.2.0
+  transparent_image: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

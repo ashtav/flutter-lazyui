@@ -8,7 +8,7 @@ import 'theme/theme.dart';
 void main() {
   Mixins.setSystemUI(navBarColor: Colors.white);
 
-  LazyConfig.setConfig(LazyConfig(radius: 2.0, primaryColor: Mixins.hex('#212121'), widgets: {
+  LazyConfig.setConfig(LazyConfig(radius: 5.0, primaryColor: Mixins.hex('#212121'), widgets: {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
     'no_data': {'title': 'No Data', 'on_tap_message': 'Tap to refresh'},
   }));
@@ -71,10 +71,31 @@ class HomePage extends StatelessWidget {
               }
             },
             // onTapDown: (details) => logg(details),
-            color: Colors.white, border: Br.all(Colors.black12),
+            color: Colors.white, border: Br.all(),
             padding: Ei.sym(v: 15, h: 25),
             child: const Text('Forms View'),
           ),
+          ...List.generate(
+              3,
+              (i) => InkW(
+                    onTap: () async {
+                      if (i == 0) {
+                        DateTime? date = await Pickers.datePicker(context);
+                        logg(date);
+                      } else if (i == 1) {
+                        DateTime? time = await Pickers.timePicker(context);
+                        logg(time);
+                      } else {
+                        List<Media>? images = await Pickers.imagePicker(context, maxImages: 5);
+                        logg(images);
+                      }
+                    },
+                    color: Colors.white,
+                    border: Br.all(),
+                    margin: Ei.only(t: 5),
+                    padding: Ei.sym(v: 15, h: 25),
+                    child: Text(['Select Date', 'Select Time', 'Select Image'][i]),
+                  )),
         ],
       )),
     );

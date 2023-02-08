@@ -9,6 +9,7 @@ class FormView extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController name = TextEditingController(),
         phone = TextEditingController(),
+        birthday = TextEditingController(),
         gender = TextEditingController(),
         city = TextEditingController(),
         hobby = TextEditingController(text: 'Hot, Salty');
@@ -40,12 +41,22 @@ class FormView extends StatelessWidget {
             Forms.radio(label: 'Gender', options: const ['Male', 'Female'], controller: gender),
             Forms.checkbox(label: 'Hobby', options: hobbies, controller: hobby, disabled: const [1, 3]),
           ]),
-          Forms.select(
-            label: 'City',
-            hint: 'Select your city',
-            controller: city,
-            options: List.generate(cities.length, (i) => Option(option: cities[i])),
-          ),
+          FormsGroup(children: [
+            Forms.select(
+              label: 'City',
+              hint: 'Select your city',
+              controller: city,
+              options: List.generate(cities.length, (i) => Option(option: cities[i])),
+            ),
+            Forms.input(
+                label: 'Date of Birth',
+                hint: 'Input birthday',
+                controller: birthday,
+                onTap: (c) async {
+                  DateTime? date = await Pickers.datePicker(context);
+                  if (date != null) c?.text = date.format();
+                }),
+          ]),
           Forms.switches(
             label: 'Available|Not Available',
             onChanged: (value) {},

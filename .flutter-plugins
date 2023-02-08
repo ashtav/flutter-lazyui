@@ -1,7 +1,18 @@
 # This is a generated file; do not edit or check into version control.
+camera=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\camera-0.10.3\\
+camera_android=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\camera_android-0.10.4\\
+camera_avfoundation=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\camera_avfoundation-0.9.11\\
+camera_web=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\camera_web-0.3.1+1\\
+flutter_plugin_android_lifecycle=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\flutter_plugin_android_lifecycle-2.0.7\\
+gallery_saver=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\gallery_saver-2.3.2\\
+media_gallery=C:\\flutter\\.pub-cache\\git\\media_gallery-fa79ba479b4254b62f5cad98cf77e12fd2b41bc8\\
 path_provider=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider-2.0.12\\
 path_provider_android=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_android-2.0.22\\
 path_provider_foundation=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_foundation-2.1.1\\
 path_provider_linux=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_linux-2.1.7\\
 path_provider_windows=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\path_provider_windows-2.1.3\\
+permission_handler=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler-10.2.0\\
+permission_handler_android=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler_android-10.2.0\\
+permission_handler_apple=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler_apple-9.0.7\\
+permission_handler_windows=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\permission_handler_windows-0.1.2\\
 sqflite=C:\\flutter\\.pub-cache\\hosted\\pub.dartlang.org\\sqflite-2.2.4+1\\

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart' hide Checkbox;
+import 'package:lazyui/lazyui.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mixins/mixins.dart';
-
-import '../widgets/widgets.dart';
 
 /* --------------------------------------------------------------------------
 | CheckboxList
@@ -93,7 +92,7 @@ class _CheckboxListState extends State<CheckboxList> {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = MixinConfig.getConfig.primaryColor;
+    Color primaryColor = LazyConfig.getConfig.primaryColor;
 
     String label = widget.label;
     List<String> options = widget.options;
@@ -113,13 +112,15 @@ class _CheckboxListState extends State<CheckboxList> {
       setState(() {});
     }
 
+    double configRadius = LazyConfig.getConfig.radius;
+
     return Container(
       padding: Ei.only(l: 15, r: 15, t: 15, b: 10),
       margin: widget.margin ?? Ei.only(b: 15),
       decoration: BoxDecoration(
           color: Colors.white,
           border: widget.border ?? Border.all(color: Colors.black12, width: .7),
-          borderRadius: widget.borderRadius ?? Br.radius(2)),
+          borderRadius: widget.borderRadius ?? Br.radius(configRadius)),
       child: Col(
         children: [
           Container(
@@ -140,7 +141,7 @@ class _CheckboxListState extends State<CheckboxList> {
                 onTap: isDisabled ? null : () => onChanged(value, i),
                 margin: Ei.only(r: 10, t: 7, b: 5),
                 padding: Ei.only(r: 10),
-                borderRadius: Br.radius(15),
+                radius: Br.radius(15),
                 child: Opacity(
                   opacity: isDisabled ? .5 : 1,
                   child: IgnorePointer(
@@ -156,7 +157,7 @@ class _CheckboxListState extends State<CheckboxList> {
                           decoration: BoxDecoration(
                               color: value ? primaryColor : Colors.white,
                               borderRadius: Br.radius(2),
-                              border: Br.all(value ? Colors.transparent : Colors.black12)),
+                              border: Br.all(color: value ? Colors.transparent : Colors.black12)),
                           child: value
                               ? Icon(
                                   La.check,

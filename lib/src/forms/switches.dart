@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 import 'package:mixins/mixins.dart';
-
-import '../widgets/widgets.dart';
 
 /* --------------------------------------------------------------------------
 | Switches
@@ -37,7 +36,7 @@ class _SwitchesState extends State<Switches> {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = MixinConfig.getConfig.primaryColor;
+    Color primaryColor = LazyConfig.getConfig.primaryColor;
     List<String> labels = widget.label.split('|');
     String label = labels[0], secondLabel = labels.length > 1 ? labels[1] : label;
 

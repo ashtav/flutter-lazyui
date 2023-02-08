@@ -1,9 +1,9 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 import 'package:mixins/mixins.dart';
 
 import 'transition.dart';
-import 'widgets.dart';
 
 class Refreshtor extends StatelessWidget {
   final Future<void> Function() onRefresh;
@@ -26,7 +26,7 @@ class Refreshtor extends StatelessWidget {
             AnimatedBuilder(
               animation: controller,
               builder: (BuildContext context, Widget? _) {
-                Color primaryColor = MixinConfig.getConfig.primaryColor;
+                Color primaryColor = LazyConfig.getConfig.primaryColor;
 
                 return controller.isLoading || controller.value <= 0.1
                     ? const None()

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 import 'package:mixins/mixins.dart';
 
 /// combination betweeen Icon and Container
@@ -163,7 +164,7 @@ class InkW extends StatelessWidget {
   final Function()? onTap, onLongPress, onDoubleTap;
   final EdgeInsetsGeometry? padding, margin;
   final Color? color, splash, highlightColor;
-  final BorderRadius? borderRadius;
+  final BorderRadius? radius;
   final BoxBorder? border;
   final double elevation;
   final ShapeBorder? shape;
@@ -183,7 +184,7 @@ class InkW extends StatelessWidget {
       this.color,
       this.splash,
       this.highlightColor,
-      this.borderRadius,
+      this.radius,
       this.margin,
       this.shape,
       this.enableSplash = true,
@@ -200,7 +201,7 @@ class InkW extends StatelessWidget {
         key: key,
         elevation: elevation,
         color: color ?? Colors.transparent,
-        borderRadius: borderRadius,
+        borderRadius: radius,
         shape: shape,
         child: Opacity(
           opacity: opacity,
@@ -216,10 +217,10 @@ class InkW extends StatelessWidget {
                   ? Colors.transparent
                   : highlightColor ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.1)),
               onTap: onTap,
-              borderRadius: borderRadius,
+              borderRadius: radius,
               child: Container(
                   decoration: BoxDecoration(
-                    borderRadius: borderRadius,
+                    borderRadius: radius,
                     border: border,
                   ),
                   padding: padding ?? Ei.all(0),
@@ -282,9 +283,9 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = MixinConfig.getConfig.primaryColor;
-    String title = this.title ?? MixinConfig.getConfig.widgets['no_data']?['title'] ?? 'No Data';
-    String onTapMessage = this.onTapMessage ?? MixinConfig.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
+    Color primaryColor = LazyConfig.getConfig.primaryColor;
+    String title = this.title ?? LazyConfig.getConfig.widgets['no_data']?['title'] ?? 'No Data';
+    String onTapMessage = this.onTapMessage ?? LazyConfig.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
 
     return Container(
       padding: Ei.all(20),
@@ -317,5 +318,28 @@ class NoData extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Poslign extends StatelessWidget {
+  final AlignmentGeometry alignment;
+  final Widget? child;
+  final EdgeInsetsGeometry? margin;
+  final bool ignoring;
+  const Poslign({super.key, required this.alignment, this.child, this.ignoring = false, this.margin});
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+        child: IgnorePointer(
+      ignoring: ignoring,
+      child: Align(
+        alignment: alignment,
+        child: Container(
+          margin: margin,
+          child: child,
+        ),
+      ),
+    ));
   }
 }

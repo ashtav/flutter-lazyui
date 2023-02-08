@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 import 'package:mixins/mixins.dart';
-
-import 'widgets.dart';
 
 ///```dart
 /// Confirm(
@@ -33,9 +32,9 @@ class Confirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = MixinConfig.getConfig.radius;
-    String cancelText = this.cancelText ?? MixinConfig.getConfig.widgets['confirm']?['cancel'] ?? 'Cancel';
-    String confirmText = this.confirmText ?? MixinConfig.getConfig.widgets['confirm']?['confirm'] ?? 'Confirm';
+    double radius = LazyConfig.getConfig.radius;
+    String cancelText = this.cancelText ?? LazyConfig.getConfig.widgets['confirm']?['cancel'] ?? 'Cancel';
+    String confirmText = this.confirmText ?? LazyConfig.getConfig.widgets['confirm']?['confirm'] ?? 'Confirm';
 
     return CenterDialog(
       borderRadius: borderRadius ?? Br.radius(radius),

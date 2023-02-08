@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mixins/mixins.dart';
-
-import '../widgets/text_input.dart';
-import '../widgets/widgets.dart';
 
 /* --------------------------------------------------------------------------
 | Select
@@ -64,6 +62,7 @@ class Select extends StatelessWidget {
         controller: controller,
         textStyle: textStyle,
         options: options,
+        margin: margin,
         onTap: (Option? option, Function(Option) action) {
           open(context, option, onSelect: (o) => action(o));
         });
@@ -121,8 +120,8 @@ class SelectPicker extends StatelessWidget {
         ? {'option': options.isEmpty ? null : options[i]}
         : {'option': options.isEmpty ? null : options[i], 'value': values.isEmpty ? null : values[i]};
 
-    Color primaryColor = MixinConfig.getConfig.primaryColor;
-    double radius = MixinConfig.getConfig.radius;
+    Color primaryColor = LazyConfig.getConfig.primaryColor;
+    double radius = LazyConfig.getConfig.radius;
     BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
     return ClipRRect(
@@ -197,7 +196,7 @@ class SelectPicker extends StatelessWidget {
                     }
                   },
                   margin: Ei.only(b: 20),
-                  borderRadius: Br.radius(50),
+                  radius: Br.radius(50),
                   padding: Ei.sym(v: 10, h: 45),
                   color: Mixins.hex('f1f5f9'),
                   child: Text('Select',
@@ -267,10 +266,12 @@ class _SelectWidgetState extends State<SelectWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double configRadius = LazyConfig.getConfig.radius;
+
     return Container(
         margin: widget.margin ?? Ei.only(b: 15),
         child: ClipRRect(
-          borderRadius: widget.borderRadius ?? Br.radius(2),
+          borderRadius: widget.borderRadius ?? Br.radius(configRadius),
           child: InkW(
             onTap: () {
               widget.onTap?.call(option, setValue);
@@ -279,7 +280,8 @@ class _SelectWidgetState extends State<SelectWidget> {
             child: Container(
               padding: Ei.only(l: 15, r: 15, t: 15, b: 10),
               decoration: BoxDecoration(
-                  border: widget.border ?? Border.all(color: Colors.black12, width: .7), borderRadius: widget.borderRadius ?? Br.radius(2)),
+                  border: widget.border ?? Border.all(color: Colors.black12, width: .7),
+                  borderRadius: widget.borderRadius ?? Br.radius(configRadius)),
               child: Col(children: [
                 Container(
                   margin: Ei.only(b: 2, l: 0),

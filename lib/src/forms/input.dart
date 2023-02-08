@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lazyui/src/config.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mixins/mixins.dart';
 
@@ -29,6 +30,7 @@ class Input extends StatelessWidget {
   final List<TextInputFormatter> formatters;
   final Color? backgroundColor;
   final TextStyle? textStyle;
+  final Function(TextEditingController?)? onTap;
 
   const Input(
       {Key? key,
@@ -54,7 +56,8 @@ class Input extends StatelessWidget {
       this.controller,
       this.backgroundColor,
       this.textStyle,
-      this.formatters = const []})
+      this.formatters = const [],
+      this.onTap})
       : super(key: key);
 
   @override
@@ -69,26 +72,30 @@ class Input extends StatelessWidget {
       formatters.add(InputFormat.numeric);
     }
 
+    double configRadius = LazyConfig.getConfig.radius;
+
     return Container(
         margin: margin ?? Ei.only(b: 15),
         child: ClipRRect(
-          borderRadius: borderRadius ?? Br.radius(2),
+          borderRadius: borderRadius ?? Br.radius(configRadius),
           child: Container(
-            padding: Ei.only(l: 15, r: obsecureToggle ? 0 : 15, t: 15, b: 10),
-            decoration: BoxDecoration(
-                border: border ?? Border.all(color: Colors.black12, width: .7), color: Colors.white, borderRadius: borderRadius ?? Br.radius(2)),
-            child: Col(children: [
-              Container(
-                margin: Ei.only(b: 2, l: 0),
-                child: Row(
-                  mainAxisAlignment: Maa.spaceBetween,
-                  children: [
-                    Text(label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
-                    indicator ? TextInputBadgeLabel(controller: controller, maxLength: maxLength) : const None(),
-                  ],
+            decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius ?? Br.radius(configRadius)),
+            child: InkW(
+              onTap: onTap == null ? null : () => onTap?.call(controller),
+              padding: Ei.only(l: 15, r: obsecureToggle ? 0 : 15, t: 15, b: 10),
+              border: border ?? Border.all(color: Colors.black12, width: .7),
+              child: Col(children: [
+                Container(
+                  margin: Ei.only(b: 2, l: 0),
+                  child: Row(
+                    mainAxisAlignment: Maa.spaceBetween,
+                    children: [
+                      Text(label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
+                      indicator ? TextInputBadgeLabel(controller: controller, maxLength: maxLength) : const None(),
+                    ],
+                  ),
                 ),
-              ),
-              InputField(
+                InputField(
                   label: label,
                   icon: icon,
                   hint: hint,
@@ -100,7 +107,7 @@ class Input extends StatelessWidget {
                   maxLength: maxLength,
                   maxLines: maxLines,
                   node: node,
-                  enabled: enabled,
+                  enabled: onTap == null ? enabled : false,
                   indicator: indicator,
                   borderRadius: borderRadius,
                   border: border,
@@ -111,8 +118,11 @@ class Input extends StatelessWidget {
                   controller: controller,
                   backgroundColor: backgroundColor,
                   textStyle: textStyle,
-                  formatters: formatters)
-            ]),
+                  formatters: formatters,
+                  onTap: onTap,
+                )
+              ]),
+            ),
           ),
         ));
   }
@@ -141,7 +151,8 @@ class Input extends StatelessWidget {
         controller: controller,
         backgroundColor: backgroundColor,
         textStyle: textStyle,
-        formatters: formatters);
+        formatters: formatters,
+        onTap: onTap);
   }
 }
 
@@ -195,6 +206,7 @@ class InputField extends StatefulWidget {
   final List<TextInputFormatter> formatters;
   final Color? backgroundColor;
   final TextStyle? textStyle;
+  final Function(TextEditingController?)? onTap;
 
   const InputField(
       {Key? key,
@@ -220,7 +232,8 @@ class InputField extends StatefulWidget {
       this.controller,
       this.backgroundColor,
       this.textStyle,
-      this.formatters = const []})
+      this.formatters = const [],
+      this.onTap})
       : super(key: key);
 
   @override
@@ -275,11 +288,13 @@ class _InputFieldState extends State<InputField> {
                   });
                 },
                 child: Iconr(
-                  obsecure ? La.eye_slash : La.eye,
+                  obsecure ? La.eye : La.eye_slash,
                   padding: Ei.sym(v: 5, h: 15),
                 ),
               )
-            : widget.suffixIcon ?? const None(),
+            : widget.onTap == null
+                ? widget.suffixIcon ?? const None()
+                : widget.suffixIcon ?? const Icon(La.angle_down),
       ],
     ));
   }
