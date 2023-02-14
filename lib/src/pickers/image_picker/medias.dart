@@ -6,6 +6,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:media_gallery/media_gallery.dart';
 import 'package:mixins/mixins.dart';
 
+import '../../shortcut.dart';
 import '../../widgets/widgets.dart';
 import 'selectable.dart';
 import 'selection.dart';

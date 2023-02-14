@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mixins/mixins.dart';
+
+import '../shortcut.dart';
 
 class TextInputTransparent extends StatelessWidget {
   final String? hint;
@@ -56,20 +57,13 @@ class TextInputTransparent extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       minLines: 1,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(maxLength),
-        ...formatters
-      ],
+      inputFormatters: [LengthLimitingTextInputFormatter(maxLength), ...formatters],
       selectionControls: selectionControls,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: contentPadding ?? Ei.sym(v: 13.5),
         hintText: hint,
-        hintStyle: hintStyle ??
-            Theme.of(context)
-                .textTheme
-                .bodyText2
-                ?.copyWith(color: Colors.black38),
+        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.black38),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,

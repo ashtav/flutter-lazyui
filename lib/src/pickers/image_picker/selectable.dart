@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/mixins.dart';
 
+import '../../shortcut.dart';
 import '../../widgets/widgets.dart';
 
 class Selectable extends StatelessWidget {

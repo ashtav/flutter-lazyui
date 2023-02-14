@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:mixins/mixins.dart';
 
+import '../shortcut.dart';
 import 'skeleton.dart';
 
 class GetImage extends StatelessWidget {

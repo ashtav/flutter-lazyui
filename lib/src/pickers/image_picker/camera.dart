@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:lazyui/src/widgets/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:mixins/mixins.dart';
+
+import '../../shortcut.dart';
 
 class CameraScreen extends StatefulWidget {
   const CameraScreen({super.key});

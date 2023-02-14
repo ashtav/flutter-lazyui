@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide Checkbox;
 import 'package:lazyui/lazyui.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:mixins/mixins.dart';
 
 /* --------------------------------------------------------------------------
 | CheckboxList

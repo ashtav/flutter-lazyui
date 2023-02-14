@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Radio;
 import 'package:lazyui/lazyui.dart';
-import 'package:mixins/mixins.dart';
 
 /* --------------------------------------------------------------------------
 | Radio

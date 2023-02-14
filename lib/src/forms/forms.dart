@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:lazyui/src/config.dart';
 import 'package:mixins/mixins.dart';
 
+import '../shortcut.dart';
 import '../widgets/widgets.dart';
 import 'checkbox.dart';
 import 'input.dart';
@@ -113,7 +114,7 @@ class Forms {
       // index 0 and 1 will always be there, if index 1 is not a number, it will be 0
       List splitter(String str) {
         List<String> split = str.split(':');
-        return [split[0], split.length < 2 ? 0 : split[1].getNumberOnly];
+        return [split[0], split.length < 2 ? 0 : split[1].getNumeric];
       }
 
       for (var e in min) {

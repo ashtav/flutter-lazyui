@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mixins/mixins.dart';
 
+import '../../shortcut.dart';
 import '../../widgets/widgets.dart';
 import 'labels.dart';
 import 'selection.dart';

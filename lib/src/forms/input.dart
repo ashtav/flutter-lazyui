@@ -4,6 +4,7 @@ import 'package:lazyui/src/config.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mixins/mixins.dart';
 
+import '../shortcut.dart';
 import '../widgets/text_input.dart';
 import '../widgets/widgets.dart';
 

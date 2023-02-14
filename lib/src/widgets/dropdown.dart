@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mixins/mixins.dart';
 
+import '../shortcut.dart';
 import 'transition.dart';
 import 'widgets.dart';
 

@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/src/widgets/widgets.dart';
 import 'package:media_gallery/media_gallery.dart';
-import 'package:mixins/mixins.dart';
 
+import '../../shortcut.dart';
 import 'labels.dart';
 import 'medias.dart';
 import 'selection.dart';

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/src/config.dart';
 import 'package:mixins/mixins.dart';
 
+import '../shortcut.dart';
 import '../widgets/transition.dart';
 import '../widgets/widgets.dart';
 import 'constant.dart';
