@@ -55,48 +55,50 @@ class HomePage extends StatelessWidget {
               ))
         ],
       ),
-      body: Center(
-          child: Column(
-        mainAxisAlignment: Maa.center,
-        children: [
-          InkW(
-            onTap: () async {
-              try {
-                Navigator.of(context).push(MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const FormView(),
-                ));
-              } catch (e, s) {
-                Utils.errorCatcher(e, s);
-              }
-            },
-            // onTapDown: (details) => logg(details),
-            color: Colors.white, border: Br.all(),
-            padding: Ei.sym(v: 15, h: 25),
-            child: const Text('Forms View'),
-          ),
-          ...List.generate(
-              3,
-              (i) => InkW(
-                    onTap: () async {
-                      if (i == 0) {
-                        DateTime? date = await Pickers.datePicker(context);
-                        logg(date);
-                      } else if (i == 1) {
-                        DateTime? time = await Pickers.timePicker(context);
-                        logg(time);
-                      } else {
-                        List<Media>? images = await Pickers.imagePicker(context, maxImages: 5);
-                        logg(images);
-                      }
-                    },
-                    color: Colors.white,
-                    border: Br.all(),
-                    margin: Ei.only(t: 5),
-                    padding: Ei.sym(v: 15, h: 25),
-                    child: Text(['Select Date', 'Select Time', 'Select Image'][i]),
-                  )),
-        ],
-      )),
+      body: ZoomIn(
+        child: Center(
+            child: Column(
+          mainAxisAlignment: Maa.center,
+          children: [
+            InkW(
+              onTap: () async {
+                try {
+                  Navigator.of(context).push(MaterialPageRoute<void>(
+                    builder: (BuildContext context) => const FormView(),
+                  ));
+                } catch (e, s) {
+                  Utils.errorCatcher(e, s);
+                }
+              },
+              // onTapDown: (details) => logg(details),
+              color: Colors.white, border: Br.all(),
+              padding: Ei.sym(v: 15, h: 25),
+              child: const Text('Forms View'),
+            ),
+            ...List.generate(
+                3,
+                (i) => InkW(
+                      onTap: () async {
+                        if (i == 0) {
+                          DateTime? date = await Pickers.datePicker(context);
+                          logg(date);
+                        } else if (i == 1) {
+                          DateTime? time = await Pickers.timePicker(context);
+                          logg(time);
+                        } else {
+                          List<Media>? images = await Pickers.imagePicker(context, maxImages: 5);
+                          logg(images);
+                        }
+                      },
+                      color: Colors.white,
+                      border: Br.all(),
+                      margin: Ei.only(t: 5),
+                      padding: Ei.sym(v: 15, h: 25),
+                      child: Text(['Select Date', 'Select Time', 'Select Image'][i]),
+                    )),
+          ],
+        )),
+      ),
     );
   }
 }

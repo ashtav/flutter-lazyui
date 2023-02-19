@@ -71,18 +71,6 @@ extension StringExtension on String {
   }
 
   /// ``` dart
-  /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
-  /// ```
-  DateTime toDate() {
-    try {
-      return DateTime.parse(trim());
-    } catch (e) {
-      logg(e.toString(), name: 'StringExtension');
-      return DateTime.now();
-    }
-  }
-
-  /// ``` dart
   /// 'lorem ipsum dolor'.removeStringBefore('ipsum'); // ipsum dolor
   /// ```
   String removeStringBefore(String pattern, {bool includePattern = false}) {
@@ -220,4 +208,18 @@ extension StringExtension on String {
       .hasMatch(this);
 
   bool get isUrl => RegExp(r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$').hasMatch(this);
+}
+
+extension NullableStringExtension on String? {
+  /// ``` dart
+  /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
+  /// ```
+  DateTime toDate() {
+    try {
+      return this == null ? DateTime.now() : DateTime.parse(this!.trim());
+    } catch (e) {
+      logg(e.toString(), name: 'StringExtension');
+      return DateTime.now();
+    }
+  }
 }
