@@ -4,8 +4,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:media_gallery/media_gallery.dart';
-import 'package:mixins/mixins.dart';
 
+import '../../extensions/context_extension.dart';
 import '../../shortcut.dart';
 import '../../widgets/widgets.dart';
 import 'selectable.dart';
@@ -43,7 +43,7 @@ class _MediaImagesPageState extends State<MediasPage> {
 
           title: Text(
             widget.collection.name,
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 20, color: Colors.black54),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 20, color: Colors.black54),
           ),
 
           // actions: <Widget>[

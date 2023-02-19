@@ -219,7 +219,7 @@ class CameraCapturePreview extends StatelessWidget {
                                   ),
                                   child: Text(
                                     'Use Photo',
-                                    style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white),
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white),
                                   ),
                                 ),
                               ),

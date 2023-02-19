@@ -103,7 +103,7 @@ class _MediaCollectionsPageState extends State<MediaCollectionsPage> with Ticker
           elevation: .5,
           title: Text(
             widget.title ?? 'Select Image',
-            style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 20, color: Colors.black54),
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 20, color: Colors.black54),
           ),
           actions: [IconButton(onPressed: () => openCamera(), icon: const Icon(La.camera, color: Colors.black54))],
         ),

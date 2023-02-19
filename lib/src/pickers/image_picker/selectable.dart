@@ -55,7 +55,7 @@ class Selectable extends StatelessWidget {
                           margin: Ei.only(l: 4, t: number > 9 ? 4 : 0),
                           decoration: BoxDecoration(color: theme.colorScheme.secondary, shape: BoxShape.circle, border: Br.all(color: Colors.white)),
                           padding: Ei.all(number > 9 ? 3.0 : 7.0),
-                          child: Text('$number', style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.white, fontSize: 14)),
+                          child: Text('$number', style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white, fontSize: 14)),
                         ),
                 ),
               ))

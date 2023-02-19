@@ -48,7 +48,7 @@ class _SwitchesState extends State<Switches> {
             alignment: Alignment.centerLeft,
             child: CupertinoSwitch(value: switched, activeColor: primaryColor, onChanged: onSwitch),
           ),
-          Textr(switched ? label : secondLabel, style: Theme.of(context).textTheme.bodyText2, padding: Ei.sym(v: 5))
+          Textr(switched ? label : secondLabel, style: Theme.of(context).textTheme.bodyMedium, padding: Ei.sym(v: 5))
         ],
       ),
     );

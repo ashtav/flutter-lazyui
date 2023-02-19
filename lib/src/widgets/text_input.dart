@@ -44,7 +44,7 @@ class TextInputTransparent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget textField = TextField(
-      style: textStyle ?? Theme.of(context).textTheme.bodyText2,
+      style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
       keyboardType: keyboard,
       textInputAction: inputAction,
       onSubmitted: onSubmit,
@@ -63,7 +63,7 @@ class TextInputTransparent extends StatelessWidget {
         isDense: true,
         contentPadding: contentPadding ?? Ei.sym(v: 13.5),
         hintText: hint,
-        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.black38),
+        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black38),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,

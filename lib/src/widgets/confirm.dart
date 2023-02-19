@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:mixins/mixins.dart';
 
 ///```dart
 /// Confirm(
@@ -57,7 +56,7 @@ class Confirm extends StatelessWidget {
                       : const None(),
                   Text(
                     title,
-                    style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: Fw.bold),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold),
                     textAlign: Ta.center,
                   ),
                   Textr(
@@ -76,7 +75,7 @@ class Confirm extends StatelessWidget {
                     Navigator.pop(context);
                     onConfirm?.call(i == 1);
                   },
-                  color: Mixins.hex(i == 0 ? 'f3f3f3' : 'fff'),
+                  color: Utils.hex(i == 0 ? 'f3f3f3' : 'fff'),
                   padding: Ei.all(20),
                   child: Text(
                     [cancelText, confirmText][i],

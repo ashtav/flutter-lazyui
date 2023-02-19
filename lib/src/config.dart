@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/mixins.dart';
+import 'utils/utils.dart';
 
 Map _____config = {
   'radius': 2.0,
@@ -24,7 +24,7 @@ class LazyConfig {
     Map config = _____config;
 
     double radius = config['radius'] is double ? config['radius'] : double.parse(config['radius'].toString());
-    Color primaryColor = config['primary_color'] is String ? Mixins.hex(config['primary_color']) : config['primary_color'];
+    Color primaryColor = config['primary_color'] is String ? Utils.hex(config['primary_color']) : config['primary_color'];
     Map widgets = config['widgets'] is Map ? config['widgets'] : {};
 
     return LazyConfig(radius: radius, primaryColor: primaryColor, widgets: widgets);

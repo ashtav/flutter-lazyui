@@ -54,7 +54,7 @@ class Refreshtor extends StatelessWidget {
                                   Textr(controller.isArmed ? 'Release to refresh' : 'Pull down to refresh',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText2
+                                          .bodyMedium
                                           ?.copyWith(fontSize: 13, color: controller.isArmed ? (releaseTextColor ?? primaryColor) : Colors.black38),
                                       margin: Ei.only(t: 20))
                                 ],

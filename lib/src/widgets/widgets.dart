@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:mixins/mixins.dart';
 
 /// combination betweeen Icon and Container
 class Iconr extends StatelessWidget {
@@ -301,19 +300,18 @@ class NoData extends StatelessWidget {
             ),
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyText2?.copyWith(color: Colors.black54),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
               textAlign: Ta.center,
             ),
-            onTap.isNull
-                ? const None()
-                : Touch(
-                    onTap: onTap,
-                    child: Textr(
-                      onTapMessage,
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(color: primaryColor, fontWeight: Fw.bold),
-                      padding: Ei.sym(v: 7, h: 20),
-                    ),
-                  ),
+            if (onTap != null)
+              Touch(
+                onTap: onTap,
+                child: Textr(
+                  onTapMessage,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: primaryColor, fontWeight: Fw.bold),
+                  padding: Ei.sym(v: 7, h: 20),
+                ),
+              ),
           ],
         ),
       ),

@@ -32,9 +32,9 @@ ThemeData appTheme = ThemeData(
   ),
   iconTheme: const IconThemeData(color: Colors.black87, size: 20),
   textTheme: TextTheme(
-    bodyText1: gfont,
-    bodyText2: gfont,
-    subtitle1: gfont,
-    subtitle2: gfont,
+    bodyLarge: gfont,
+    bodyMedium: gfont,
+    titleMedium: gfont,
+    titleSmall: gfont,
   ),
 );

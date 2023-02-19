@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:mixins/mixins.dart';
 
 class ItemView extends StatelessWidget {
   const ItemView({super.key});

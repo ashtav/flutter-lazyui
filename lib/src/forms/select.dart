@@ -2,11 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:mixins/mixins.dart';
-
-/* --------------------------------------------------------------------------
-| Select
-| -------------------------------------------------------- */
 
 class Option {
   final String? option;
@@ -164,7 +159,7 @@ class SelectPicker extends StatelessWidget {
                             return Center(
                               child: Text(
                                 options[index],
-                                style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 16),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
                               ),
                             );
                           })),
@@ -198,10 +193,10 @@ class SelectPicker extends StatelessWidget {
                   margin: Ei.only(b: 20),
                   radius: Br.radius(50),
                   padding: Ei.sym(v: 10, h: 45),
-                  color: Mixins.hex('f1f5f9'),
+                  color: Utils.hex('f1f5f9'),
                   child: Text('Select',
                       textAlign: Ta.center,
-                      style: Theme.of(context).textTheme.bodyText2?.copyWith(color: primaryColor, fontWeight: Fw.bold, letterSpacing: 1))),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: primaryColor, fontWeight: Fw.bold, letterSpacing: 1))),
             ),
           )),
           Positioned.fill(
@@ -288,7 +283,7 @@ class _SelectWidgetState extends State<SelectWidget> {
                   child: Row(
                     mainAxisAlignment: Maa.spaceBetween,
                     children: [
-                      Text(widget.label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
+                      Text(widget.label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14)),
                     ],
                   ),
                 ),

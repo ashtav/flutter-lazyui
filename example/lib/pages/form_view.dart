@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:mixins/mixins.dart';
 
 class FormView extends StatelessWidget {
   const FormView({super.key});

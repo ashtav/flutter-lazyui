@@ -1,19 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lazyui/src/config.dart';
-import 'package:lazyui/src/pickers/constant.dart';
-import 'package:lazyui/src/widgets/transition.dart';
-import 'package:mixins/mixins.dart';
 
+import '../config.dart';
+import '../extensions/context_extension.dart';
+import '../pickers/constant.dart';
+import '../utils/utils.dart';
+import '../widgets/transition.dart';
 import '../shortcut.dart';
+import '../utils/constant.dart';
 import '../widgets/widgets.dart';
+
+enum DatePickerType { all, monthYear, year }
 
 class CupertinoDatePickerWidget extends StatelessWidget {
   final DateTime? initialDate;
   final DateTime? firstDate;
   final DateTime? lastDate;
   final String? confirmLabel;
-  final bool useShortMonths, monthYearOnly;
+  final bool useShortMonths;
+  final DatePickerType? type;
   final AlignmentGeometry? alignment;
   const CupertinoDatePickerWidget(
       {super.key,
@@ -22,7 +27,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
       this.lastDate,
       this.confirmLabel,
       this.useShortMonths = false,
-      this.monthYearOnly = false,
+      this.type = DatePickerType.all,
       this.alignment});
 
   @override
@@ -199,7 +204,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
     return ScrollConfiguration(
       behavior: NoScrollGlow(),
       child: Container(
-        decoration: BoxDecoration(color: Mixins.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
+        decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
         height: context.height * 0.4,
         child: Stack(
           children: [
@@ -207,13 +212,18 @@ class CupertinoDatePickerWidget extends StatelessWidget {
               future: Future.delayed(const Duration(milliseconds: 0)),
               builder: (context, snapshot) {
                 List<String> types = ['date', 'month', 'year'];
-                if (monthYearOnly) types = ['month', 'year'];
+
+                if (type == DatePickerType.monthYear) {
+                  types = ['month', 'year'];
+                } else if (type == DatePickerType.year) {
+                  types = ['year'];
+                }
 
                 return Center(
                   child: SizedBox(
                     height: context.height * 0.4,
                     child: Intrinsic(
-                      children: List.generate(3, (t) {
+                      children: List.generate(types.length, (t) {
                         String value = types[t];
 
                         return Expanded(
@@ -227,7 +237,8 @@ class CupertinoDatePickerWidget extends StatelessWidget {
 
             /* ------------------------------------------------------------
             | Confirm Button
-            ------------------------------------ */
+            | */
+
             Positioned.fill(
                 child: Align(
               alignment: Alignment.bottomCenter,
@@ -237,7 +248,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                   decoration: BoxDecoration(
                     boxShadow: [
                       BoxShadow(
-                        color: Mixins.hex('f1f1f1'),
+                        color: Utils.hex('f1f1f1'),
                         spreadRadius: 15,
                         blurRadius: 25,
                         offset: const Offset(0, -5),
@@ -252,12 +263,12 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                       padding: Ei.sym(v: 10, h: 45),
                       margin: Ei.only(b: 20),
                       radius: Br.radius(25),
-                      color: Mixins.hex('fff'),
+                      color: Utils.hex('fff'),
                       child: Text(
                         confirmLabel ?? 'Confirm',
                         textAlign: Ta.center,
                         maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(fontWeight: Fw.bold),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold),
                       )),
                 ),
               ),
@@ -311,7 +322,7 @@ class CupertinioPickerWidget extends StatelessWidget {
                     child: ZoomIn(
                       child: Text(
                         items[index],
-                        style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             color: styles[type] == null
                                 ? Colors.black87
                                 : index >= styles[type][0] && index <= styles[type][1]

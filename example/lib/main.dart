@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:mixins/mixins.dart';
 
 import 'pages/form_view.dart';
 import 'theme/theme.dart';
 
 void main() {
-  Mixins.setSystemUI(navBarColor: Colors.white);
+  Utils.setSystemUI(navBarColor: Colors.white);
 
-  LazyConfig.setConfig(LazyConfig(radius: 5.0, primaryColor: Mixins.hex('#212121'), widgets: {
+  LazyConfig.setConfig(LazyConfig(radius: 5.0, primaryColor: Utils.hex('#212121'), widgets: {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
     'no_data': {'title': 'No Data', 'on_tap_message': 'Tap to refresh'},
   }));
@@ -67,7 +66,7 @@ class HomePage extends StatelessWidget {
                   builder: (BuildContext context) => const FormView(),
                 ));
               } catch (e, s) {
-                Mixins.errorCatcher(e, s);
+                Utils.errorCatcher(e, s);
               }
             },
             // onTapDown: (details) => logg(details),

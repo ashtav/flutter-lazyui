@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/mixins.dart';
+import 'package:lazyui/src/extensions/list_extension.dart';
+
+import '../../ext/shimmer.dart';
 
 /// ``` dart
 /// Skeleton(size: 15); // width and height is 15
@@ -70,8 +72,8 @@ class Skeleton extends StatelessWidget {
         baseColor: baseColor,
         highlightColor: darkMode ? Colors.white.withOpacity(.5) : highlightColor,
         child: Container(
-          width: [minW, maxW].numInRange() as double,
-          height: [minH, maxH].numInRange() as double,
+          width: [minW, maxW].numInRange(),
+          height: [minH, maxH].numInRange(),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius)),
         ),

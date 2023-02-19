@@ -1,22 +1,5 @@
 import 'package:flutter/material.dart';
 
-class Const {
-  static List<String> months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December'
-  ];
-}
-
 class PickerNotifier extends ValueNotifier {
   PickerNotifier(super.value);
 
@@ -40,9 +23,4 @@ class PickerNotifier extends ValueNotifier {
   }
 
   List dateRanges = [0, 30], monthRanges = [0, 11], hourRanges = [0, 23], minuteRanges = [0, 59];
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 }

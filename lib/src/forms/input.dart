@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/src/config.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:mixins/mixins.dart';
 
 import '../shortcut.dart';
+import '../utils/formatter.dart';
 import '../widgets/text_input.dart';
 import '../widgets/widgets.dart';
 
@@ -91,7 +91,7 @@ class Input extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: Maa.spaceBetween,
                     children: [
-                      Text(label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
+                      Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14)),
                       indicator ? TextInputBadgeLabel(controller: controller, maxLength: maxLength) : const None(),
                     ],
                   ),
@@ -184,7 +184,7 @@ class _TextInputBadgeLabelState extends State<TextInputBadgeLabel> {
   Widget build(BuildContext context) {
     int maxLength = widget.maxLength;
     int text = (widget.controller?.text ?? '').length;
-    return Text('$text/$maxLength', style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14));
+    return Text('$text/$maxLength', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14));
   }
 }
 
@@ -257,7 +257,7 @@ class _InputFieldState extends State<InputField> {
       children: [
         Expanded(
           child: Row(children: [
-            widget.icon.isNull ? const None() : Iconr(widget.icon!, color: Colors.white38, margin: Ei.only(r: 15, b: 15)),
+            if (widget.icon != null) Iconr(widget.icon!, color: Colors.white38, margin: Ei.only(r: 15, b: 15)),
             Expanded(
                 child: Focus(
               onFocusChange: widget.onFocus,

@@ -57,7 +57,7 @@ class MediaAlbums extends StatelessWidget {
       separatorBuilder: (context, i) => Container(
         // margin: Ei.sym(h: 10),
         height: .7,
-        color: theme.textTheme.bodyText2?.color?.withOpacity(0.12),
+        color: theme.textTheme.bodyMedium?.color?.withOpacity(0.12),
       ),
       itemBuilder: (context, i) => children[i],
       itemCount: children.length,
@@ -96,7 +96,7 @@ class AlbumTile extends StatelessWidget {
                   child: Container(
                     width: 64,
                     height: 64,
-                    color: theme.textTheme.subtitle1?.color?.withOpacity(0.1),
+                    color: theme.textTheme.titleMedium?.color?.withOpacity(0.1),
                     child: MediaCollectionThumbnailImage(collection: collection),
                   ),
                 ),
@@ -110,11 +110,11 @@ class AlbumTile extends StatelessWidget {
                     children: [
                       Text(
                         collection.name,
-                        style: theme.textTheme.subtitle1,
+                        style: theme.textTheme.titleMedium,
                       ),
                       Text(
                         '${collection.count} ${labels.items}',
-                        style: theme.textTheme.caption,
+                        style: theme.textTheme.bodySmall,
                       ),
                     ],
                   ),

@@ -120,7 +120,7 @@ class _RadioListState extends State<RadioList> {
             child: Row(
               mainAxisAlignment: Maa.spaceBetween,
               children: [
-                Text(label, style: Theme.of(context).textTheme.bodyText2?.copyWith(fontSize: 14)),
+                Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14)),
               ],
             ),
           ),

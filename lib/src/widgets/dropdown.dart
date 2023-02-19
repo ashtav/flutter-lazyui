@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mixins/mixins.dart';
+import 'package:lazyui/src/extensions/context_extension.dart';
 
 import '../shortcut.dart';
 import 'transition.dart';
@@ -160,7 +160,7 @@ class DropdownPositioned extends StatelessWidget {
                                           Flexible(
                                             child: Textr(
                                               options[i],
-                                              style: Theme.of(context).textTheme.bodyText2?.copyWith(
+                                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                                     color: dangers.contains(i) ? Colors.redAccent : Colors.black54,
                                                   ),
                                               padding: Ei.only(r: 10),

@@ -4,9 +4,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:media_gallery/media_gallery.dart';
-import 'package:mixins/mixins.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../utils/log.dart';
 import 'cupertino_date_picker.dart';
 import 'cupertino_time_picker.dart';
 import 'image_picker/labels.dart';
@@ -24,7 +24,7 @@ class Pickers {
       DateTime? lastDate,
       String confirmLabel = 'Confirm',
       bool useShortMonths = false,
-      bool monthYearOnly = false,
+      DatePickerType type = DatePickerType.all,
       AlignmentGeometry? alignment}) async {
     if (firstDate != null && lastDate != null && firstDate.isAfter(lastDate)) {
       logg('First date must be smaller than last date', name: 'Pickers');
@@ -39,7 +39,7 @@ class Pickers {
             firstDate: firstDate,
             lastDate: lastDate,
             useShortMonths: useShortMonths,
-            monthYearOnly: monthYearOnly,
+            type: type,
             alignment: alignment,
             confirmLabel: confirmLabel));
 

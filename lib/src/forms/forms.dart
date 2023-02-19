@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
 import 'package:lazyui/src/config.dart';
-import 'package:mixins/mixins.dart';
 
+import '../extensions/string_extension.dart';
 import '../shortcut.dart';
+import '../utils/utils.dart';
 import '../widgets/widgets.dart';
 import 'checkbox.dart';
 import 'input.dart';
@@ -156,7 +157,7 @@ class Forms {
         form = Forms(ok: false, errors: keys.isEmpty ? {} : keys.first);
       }
     } catch (e, s) {
-      Mixins.errorCatcher(e, s);
+      Utils.errorCatcher(e, s);
     }
 
     return form;
