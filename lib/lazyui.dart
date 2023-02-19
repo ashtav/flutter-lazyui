@@ -2,7 +2,12 @@ library mixins;
 
 export 'package:lazyui/src/pickers/image_picker/selection.dart';
 export 'package:media_gallery/media_gallery.dart';
+export 'package:cached_network_image/cached_network_image.dart';
 export 'package:permission_handler/permission_handler.dart';
+export 'package:intl/intl.dart';
+export 'package:path_provider/path_provider.dart';
+export 'package:stack_trace/stack_trace.dart';
+export 'package:flutter_svg/flutter_svg.dart';
 
 export 'src/config.dart';
 export 'src/forms/forms.dart';
