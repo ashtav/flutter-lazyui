@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
-import 'package:lazyui/src/config.dart';
+import 'package:lazyui/lazyui.dart';
 
-import '../extensions/string_extension.dart';
-import '../shortcut.dart';
-import '../utils/utils.dart';
-import '../widgets/widgets.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
 
+class FormsError {
+  final String? key;
+  final String? message;
+  final String? type;
+
+  FormsError({this.key, this.message, this.type});
+}
+
 class Forms {
   final bool ok;
-  final Map<String, dynamic> errors;
-  Forms({this.ok = false, this.errors = const {}});
+  final FormsError? errors;
+  final Map<String, dynamic>? value;
+  Forms({this.ok = false, this.errors, this.value});
 
   /// ```dart
   /// Map<String, TextEditingController> forms = Forms.create(['name', {'qty': 1}]) // Only String and Map are allowed
@@ -83,7 +88,7 @@ class Forms {
 
   static Forms validate(Map<String, TextEditingController> forms,
       {List<String> required = const [], List<String> min = const [], List<String> max = const [], List<String> email = const []}) {
-    Forms form = Forms(ok: true, errors: {});
+    Forms form = Forms(ok: true, errors: FormsError());
 
     try {
       List<Map<String, dynamic>> keys = []; // problematic keys, stored here
@@ -154,7 +159,10 @@ class Forms {
 
       // if problematic keys is not empty, then return error
       if (keys.isNotEmpty) {
-        form = Forms(ok: false, errors: keys.isEmpty ? {} : keys.first);
+        form = Forms(
+            ok: false,
+            value: forms.toMap(),
+            errors: keys.isEmpty ? FormsError() : FormsError(key: keys.first['key'], type: keys.first['type'], message: keys.first['message']));
       }
     } catch (e, s) {
       Utils.errorCatcher(e, s);
