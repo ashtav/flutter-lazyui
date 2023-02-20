@@ -64,7 +64,7 @@ class Forms {
   /// ```dart
   /// Forms.fill(forms, data, except: [])
   /// ```
-  static void fill(Map<String, TextEditingController> forms, Map<String, String?> data, {List<String> except = const []}) {
+  static void fill(Map<String, TextEditingController> forms, Map<String, dynamic> data, {List<String> except = const []}) {
     forms.forEach((key, value) {
       if (!except.contains(key)) {
         value.text = (data[key] ?? '').toString();
