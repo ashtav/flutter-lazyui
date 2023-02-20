@@ -67,7 +67,7 @@ class Forms {
   static void fill(Map<String, TextEditingController> forms, Map<String, String?> data, {List<String> except = const []}) {
     forms.forEach((key, value) {
       if (!except.contains(key)) {
-        value.text = data[key] ?? '';
+        value.text = (data[key] ?? '').toString();
       }
     });
   }

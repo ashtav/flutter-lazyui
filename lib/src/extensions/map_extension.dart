@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './string_extension.dart';
+
 import './dynamic_extension.dart';
+import './string_extension.dart';
 
 extension MapTECExtension on Map<String, TextEditingController> {
   /// ``` dart
@@ -16,6 +17,13 @@ extension MapTECExtension on Map<String, TextEditingController> {
 }
 
 extension MapExtension on Map<String, dynamic> {
+  /// ``` dart
+  /// Map<String, dynamic> data = {'name': 'John'}.add({'id': 1}); // {'name': 'John', 'id': 1}
+  /// ```
+  Map<String, dynamic> add(Map<String, dynamic> map) {
+    return {...this, ...map};
+  }
+
   /// ``` dart
   /// Map<String, dynamic> data = {'price': 'IDR 250'}.numeric(['price']); // {'price': 250}
   /// ```
