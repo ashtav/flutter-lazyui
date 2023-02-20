@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+
 import '../utils/log.dart';
 
 extension StringExtension on String {
@@ -214,9 +215,13 @@ extension NullableStringExtension on String? {
   /// ``` dart
   /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
   /// ```
-  DateTime toDate() {
+  DateTime toDate({bool toLocal = false}) {
     try {
-      return this == null ? DateTime.now() : DateTime.parse(this!.trim());
+      return this == null
+          ? DateTime.now()
+          : toLocal
+              ? DateTime.parse(this!.trim()).toLocal()
+              : DateTime.parse(this!.trim());
     } catch (e) {
       logg(e.toString(), name: 'StringExtension');
       return DateTime.now();

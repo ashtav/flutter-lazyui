@@ -99,7 +99,7 @@ class DropdownPositioned extends StatelessWidget {
     );
 
     double dy = offset.dy;
-    double itemPosition = !isOutOfScreen ? dy - 10 : dy - (isMaxHeight ? (maxHeight + itemHeight) : optionHeight + 13);
+    double itemPosition = !isOutOfScreen ? dy - 35 : dy - (isMaxHeight ? (maxHeight + itemHeight) : optionHeight + 70);
 
     return Stack(
       children: [
@@ -207,6 +207,9 @@ class DropdownDialog extends StatelessWidget {
     return Container();
   }
 
+  /// use `offset` to adjust position of dropdown
+  ///
+  /// set `contextLess` = `true` to show dropdown based on offset only
   static void open(BuildContext context,
       {List<String> options = const [],
       List<IconData> icons = const [],
@@ -214,6 +217,7 @@ class DropdownDialog extends StatelessWidget {
       List<int> disableds = const [],
       List<int> sparators = const [],
       Offset? offset,
+      bool contextLess = false,
       BorderRadiusGeometry? borderRadius,
       DropdownCaret? caret,
       void Function(String value, int index)? onSelect}) {
@@ -224,22 +228,18 @@ class DropdownDialog extends StatelessWidget {
     double dy = o?.dy ?? 0;
     double dx = o?.dx ?? 0;
     double itemHeight = box?.size.height ?? 0;
-    // dy += itemHeight;
-
     double x = context.width - dx - (box?.size.width ?? 0.0);
     double y = dy + (box?.size.height ?? 0);
 
     if (offset != null) {
-      // dy += offset.dy;
-      // dx += offset.dx;
-    } else {
-      // dx += 20;
+      y += offset.dy;
+      x += offset.dx;
     }
 
     showDialog(
         context: context,
         builder: (_) => DropdownPositioned(
-            offset: offset ?? Offset(x, y),
+            offset: contextLess && offset != null ? offset : Offset(x, y),
             options: options,
             dangers: dangers,
             sparators: sparators,

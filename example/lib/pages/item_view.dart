@@ -28,9 +28,13 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey key = GlobalKey();
+
     return InkW(
+      key: key,
       onTap: () {
-        DropdownDialog.open(context, options: List.generate(4, (index) => 'Option $index'), disableds: [2], dangers: [1], onSelect: (o, i) {
+        DropdownDialog.open(key.currentContext!,
+            offset: const Offset(20, 0), options: List.generate(4, (index) => 'Option $index'), disableds: [2], dangers: [1], onSelect: (o, i) {
           logg(o);
         });
       },

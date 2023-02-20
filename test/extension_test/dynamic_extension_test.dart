@@ -13,4 +13,8 @@ void main() {
     expect(b.orIf(), 1);
     expect(c.orIf(), 2);
   });
+
+  test('idr', () {
+    expect(1000000.idr(), 'Rp1.000.000');
+  });
 }

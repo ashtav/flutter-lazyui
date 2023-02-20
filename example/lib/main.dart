@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'pages/form_view.dart';
+import 'pages/item_view.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -29,6 +30,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey key = GlobalKey();
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -43,16 +46,18 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 DropdownDialog.open(context,
                     options: List.generate(4, (index) => 'Option $index'),
-                    offset: const Offset(16, 57),
+                    offset: const Offset(16, 90),
+                    contextLess: true,
                     disableds: [2],
                     dangers: [1], onSelect: (o, i) {
                   logg(o);
+
+                  context.push(const ItemView()).then((value) {
+                    logg(value);
+                  });
                 });
               },
-              icon: const Icon(
-                Icons.menu,
-                color: Colors.black87,
-              ))
+              icon: const Icon(Icons.menu, color: Colors.black87))
         ],
       ),
       body: ZoomIn(
@@ -60,6 +65,17 @@ class HomePage extends StatelessWidget {
             child: Column(
           mainAxisAlignment: Maa.center,
           children: [
+            InkW(
+              key: key,
+              onTap: () {
+                DropdownDialog.open(key.currentContext!, options: ['Option A', 'Option B', 'Option C']);
+              },
+              padding: Ei.sym(v: 15, h: 20),
+              border: Br.all(),
+              color: Colors.white,
+              margin: Ei.only(b: 10),
+              child: const Text('Dropdown Dialog'),
+            ),
             InkW(
               onTap: () async {
                 try {

@@ -197,7 +197,6 @@ class InkW extends StatelessWidget {
     return Container(
       margin: margin ?? Ei.all(0),
       child: Material(
-        key: key,
         elevation: elevation,
         color: color ?? Colors.transparent,
         borderRadius: radius,
@@ -247,7 +246,7 @@ class Touch extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        key: key, onTap: onTap, onDoubleTap: onDoubleTap, behavior: HitTestBehavior.translucent, child: Container(margin: margin, child: child));
+        onTap: onTap, onDoubleTap: onDoubleTap, behavior: HitTestBehavior.translucent, child: Container(margin: margin, child: child));
   }
 }
 
