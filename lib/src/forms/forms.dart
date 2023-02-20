@@ -88,7 +88,7 @@ class Forms {
 
   static Forms validate(Map<String, TextEditingController> forms,
       {List<String> required = const [], List<String> min = const [], List<String> max = const [], List<String> email = const []}) {
-    Forms form = Forms(ok: true, errors: FormsError());
+    Forms form = Forms(ok: true, value: forms.toMap(), errors: FormsError());
 
     try {
       List<Map<String, dynamic>> keys = []; // problematic keys, stored here
