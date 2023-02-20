@@ -44,6 +44,7 @@ class FormView extends StatelessWidget {
             Forms.select(
               label: 'City',
               hint: 'Select your city',
+              enabled: false,
               controller: city,
               options: List.generate(cities.length, (i) => Option(option: cities[i])),
             ),
@@ -56,6 +57,7 @@ class FormView extends StatelessWidget {
                   if (date != null) c?.text = date.format();
                 }),
           ]),
+          Forms.input(label: 'Date of Birth', hint: 'Input birthday', enabled: false),
           Forms.switches(
             label: 'Available|Not Available',
             onChanged: (value) {},

@@ -267,9 +267,11 @@ class _SelectWidgetState extends State<SelectWidget> {
         child: ClipRRect(
           borderRadius: widget.borderRadius ?? Br.radius(configRadius),
           child: InkW(
-            onTap: () {
-              widget.onTap?.call(option, setValue);
-            },
+            onTap: !widget.enabled
+                ? null
+                : () {
+                    widget.onTap?.call(option, setValue);
+                  },
             color: Colors.white,
             child: Container(
               padding: Ei.only(l: 15, r: 15, t: 15, b: 10),

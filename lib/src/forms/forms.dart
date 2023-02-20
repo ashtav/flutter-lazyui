@@ -328,7 +328,7 @@ class Forms {
 
 class FormsGroup extends StatelessWidget {
   final String? label;
-  final List children;
+  final List<Widget> children;
   const FormsGroup({super.key, this.label, this.children = const []});
 
   @override
@@ -351,7 +351,7 @@ class FormsGroup extends StatelessWidget {
               borderRadius: Br.radius(configRadius),
               child: Column(
                 children: List.generate(children.length, (i) {
-                  dynamic child = children[i];
+                  Widget child = children[i];
 
                   BoxBorder border = Br.all(color: Colors.transparent);
                   BorderRadius? zero = BorderRadius.zero;

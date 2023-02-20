@@ -79,51 +79,50 @@ class Input extends StatelessWidget {
         margin: margin ?? Ei.only(b: 15),
         child: ClipRRect(
           borderRadius: borderRadius ?? Br.radius(configRadius),
-          child: Container(
-            decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius ?? Br.radius(configRadius)),
-            child: InkW(
-              onTap: onTap == null ? null : () => onTap?.call(controller),
-              padding: Ei.only(l: 15, r: obsecureToggle ? 0 : 15, t: 15, b: 10),
-              border: border ?? Border.all(color: Colors.black12, width: .7),
-              child: Col(children: [
-                Container(
-                  margin: Ei.only(b: 2, l: 0),
-                  child: Row(
-                    mainAxisAlignment: Maa.spaceBetween,
-                    children: [
-                      Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14)),
-                      indicator ? TextInputBadgeLabel(controller: controller, maxLength: maxLength) : const None(),
-                    ],
-                  ),
+          child: InkW(
+            onTap: onTap == null ? null : () => onTap?.call(controller),
+            padding: Ei.only(l: 15, r: obsecureToggle ? 0 : 15, t: 15, b: 10),
+            border: border ?? Border.all(color: Colors.black12, width: .7),
+            color: Colors.white,
+            radius: borderRadius ?? Br.radius(configRadius),
+            child: Col(children: [
+              Container(
+                margin: Ei.only(b: 2, l: 0),
+                child: Row(
+                  mainAxisAlignment: Maa.spaceBetween,
+                  children: [
+                    Text(label, style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14)),
+                    indicator ? TextInputBadgeLabel(controller: controller, maxLength: maxLength) : const None(),
+                  ],
                 ),
-                InputField(
-                  label: label,
-                  icon: icon,
-                  hint: hint,
-                  obsecure: obsecure,
-                  obsecureToggle: obsecureToggle,
-                  autofocus: autofocus,
-                  suffixIcon: suffixIcon,
-                  keyboard: keyboard,
-                  maxLength: maxLength,
-                  maxLines: maxLines,
-                  node: node,
-                  enabled: onTap == null ? enabled : false,
-                  indicator: indicator,
-                  borderRadius: borderRadius,
-                  border: border,
-                  margin: margin,
-                  onSubmit: onSubmit,
-                  onChanged: onChanged,
-                  onFocus: onFocus,
-                  controller: controller,
-                  backgroundColor: backgroundColor,
-                  textStyle: textStyle,
-                  formatters: formatters,
-                  onTap: onTap,
-                )
-              ]),
-            ),
+              ),
+              InputField(
+                label: label,
+                icon: icon,
+                hint: hint,
+                obsecure: obsecure,
+                obsecureToggle: obsecureToggle,
+                autofocus: autofocus,
+                suffixIcon: suffixIcon,
+                keyboard: keyboard,
+                maxLength: maxLength,
+                maxLines: maxLines,
+                node: node,
+                enabled: onTap == null ? enabled : false,
+                indicator: indicator,
+                borderRadius: borderRadius,
+                border: border,
+                margin: margin,
+                onSubmit: onSubmit,
+                onChanged: onChanged,
+                onFocus: onFocus,
+                controller: controller,
+                backgroundColor: backgroundColor,
+                textStyle: textStyle,
+                formatters: formatters,
+                onTap: onTap,
+              )
+            ]),
           ),
         ));
   }
