@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 class Option {
   final String? option;
