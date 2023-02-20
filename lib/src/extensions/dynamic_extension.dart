@@ -71,14 +71,20 @@ extension DynamicExtension on dynamic {
   ///
   dynamic orIf([dynamic value, List conditions = const [null, '']]) {
     Type type = runtimeType;
-    dynamic returnValue = value ?? type == int
-        ? 0
-        : type == double
-            ? 0.0
-            : type == bool
-                ? false
-                : '-';
+    dynamic result = '-';
 
-    return conditions.contains(this) ? returnValue : this;
+    if (value == null) {
+      if (type is int) {
+        result = 0;
+      } else if (type is double) {
+        result = 0.0;
+      } else if (type is bool) {
+        result = false;
+      }
+    } else {
+      result = value;
+    }
+
+    return conditions.contains(this) ? result : this;
   }
 }
