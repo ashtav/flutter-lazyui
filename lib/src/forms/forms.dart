@@ -19,8 +19,8 @@ class FormsError {
 class Forms {
   final bool ok;
   final FormsError? errors;
-  final Map<String, dynamic>? value;
-  Forms({this.ok = false, this.errors, this.value});
+  final Map<String, dynamic> value;
+  Forms({this.ok = false, this.errors, this.value = const {}});
 
   /// ```dart
   /// Map<String, TextEditingController> forms = Forms.create(['name', {'qty': 1}]) // Only String and Map are allowed
