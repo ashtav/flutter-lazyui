@@ -30,6 +30,7 @@ export 'src/utils/formatter.dart' show InputFormat;
 export 'src/utils/lipsum.dart';
 export 'src/utils/log.dart';
 export 'src/utils/utils.dart';
+export 'src/widgets/button.dart';
 export 'src/widgets/confirm.dart';
 export 'src/widgets/dropdown.dart';
 export 'src/widgets/get_image.dart';

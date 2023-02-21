@@ -180,11 +180,11 @@ class InkW extends StatelessWidget {
       this.onLongPress,
       this.onDoubleTap,
       this.padding,
+      this.margin,
       this.color,
       this.splash,
       this.highlightColor,
       this.radius,
-      this.margin,
       this.shape,
       this.enableSplash = true,
       this.splashByBaseColor = false,
@@ -338,5 +338,17 @@ class Poslign extends StatelessWidget {
         ),
       ),
     ));
+  }
+}
+
+class Loader extends StatelessWidget {
+  final double size, stroke;
+  final EdgeInsetsGeometry? margin;
+  final Color? color;
+  const Loader({Key? key, this.size = 18, this.stroke = 2, this.margin, this.color}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(margin: margin, child: SizedBox(width: size, height: size, child: CircularProgressIndicator(color: color, strokeWidth: stroke)));
   }
 }

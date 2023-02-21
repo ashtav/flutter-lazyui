@@ -61,13 +61,13 @@ class FormView extends StatelessWidget {
           Forms.switches(
             label: 'Available|Not Available',
             onChanged: (value) {},
-          )
+          ),
         ],
       ),
-      bottomNavigationBar: InkW(
+      bottomNavigationBar: Forms.button(
+        text: 'Submit',
+        icon: La.check,
         onTap: () {},
-        padding: Ei.all(20),
-        child: const Text('Submit'),
       ),
     );
   }

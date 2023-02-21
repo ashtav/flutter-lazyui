@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
-import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/extensions/map_extension.dart';
+import 'package:lazyui/src/extensions/string_extension.dart';
 
+import '../config.dart';
+import '../shortcut.dart';
+import '../utils/utils.dart';
+import '../widgets/widgets.dart';
+import 'button.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'radio.dart';
@@ -319,6 +325,28 @@ class Forms {
         label: label,
         initValue: initValue,
         onChanged: onChanged,
+      );
+
+  /* ------------------------------------------------------------------------------------------
+  | Button
+  |------------------------------------------------------------*/
+
+  static Button button(
+          {IconData? icon,
+          String? text,
+          dynamic Function()? onTap,
+          ButtonType type = ButtonType.primary,
+          bool withShadow = true,
+          bool submit = false,
+          double space = 20}) =>
+      Button(
+        icon: icon,
+        text: text,
+        onTap: onTap,
+        type: type,
+        withShadow: withShadow,
+        submit: submit,
+        space: space,
       );
 }
 
