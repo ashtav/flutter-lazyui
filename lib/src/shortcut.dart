@@ -53,10 +53,10 @@ class Br {
   /// borderRadius: Br.radiusOnly()
   /// ```
   static BorderRadiusGeometry radiusOnly({double? tl, double? tr, double? bl, double? br}) => BorderRadius.only(
-      topLeft: Radius.circular(tl ?? 2),
-      topRight: Radius.circular(tr ?? 2),
-      bottomLeft: Radius.circular(bl ?? 2),
-      bottomRight: Radius.circular(br ?? 2));
+      topLeft: Radius.circular(tl ?? 0),
+      topRight: Radius.circular(tr ?? 0),
+      bottomLeft: Radius.circular(bl ?? 0),
+      bottomRight: Radius.circular(br ?? 0));
 
   /// ``` dart
   /// borderRadius: Br.circle
