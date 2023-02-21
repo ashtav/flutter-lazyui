@@ -11,5 +11,4 @@ if "%input%" == "%input%" goto Commit
     if "%input%" == "" ( git commit -m "Bug fixes" ) else ( git commit -m "%input%" )
     git push -f origin master
 
-pause
 exit
