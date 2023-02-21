@@ -102,7 +102,7 @@ class Col extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
 
-  const Col({Key? key, required this.children, this.mainAxisAlignment = Maa.start, this.mainAxisSize = Mas.min}) : super(key: key);
+  const Col({Key? key, this.children = const <Widget>[], this.mainAxisAlignment = Maa.start, this.mainAxisSize = Mas.min}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -238,10 +238,10 @@ class InkW extends StatelessWidget {
 /// ```
 class Touch extends StatelessWidget {
   final void Function()? onTap, onDoubleTap;
-  final Widget child;
+  final Widget? child;
   final EdgeInsetsGeometry? margin;
 
-  const Touch({Key? key, required this.child, this.onTap, this.onDoubleTap, this.margin}) : super(key: key);
+  const Touch({Key? key, this.child, this.onTap, this.onDoubleTap, this.margin}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -275,14 +275,14 @@ class NoScrollGlow extends ScrollBehavior {
 
 class NoData extends StatelessWidget {
   final IconData? icon;
-  final String? title, onTapMessage;
+  final String? message, onTapMessage;
   final Function()? onTap;
-  const NoData({super.key, this.icon, this.title, this.onTapMessage, this.onTap});
+  const NoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap});
 
   @override
   Widget build(BuildContext context) {
     Color primaryColor = LazyConfig.getConfig.primaryColor;
-    String title = this.title ?? LazyConfig.getConfig.widgets['no_data']?['title'] ?? 'No Data';
+    String message = this.message ?? LazyConfig.getConfig.widgets['no_data']?['message'] ?? 'No Data';
     String onTapMessage = this.onTapMessage ?? LazyConfig.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
 
     return Container(
@@ -298,7 +298,7 @@ class NoData extends StatelessWidget {
               margin: Ei.only(b: 25),
             ),
             Text(
-              title,
+              message,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
               textAlign: Ta.center,
             ),

@@ -38,6 +38,19 @@ extension MapExtension on Map<String, dynamic> {
   }
 
   /// ``` dart
+  /// Map<String, dynamic> data = {'name': 'john doe'}.ucfirst(['name']); // {'name': 'John doe'}
+  /// ```
+  Map<String, dynamic> ucfirst([List<String> keys = const []]) {
+    return map((key, value) {
+      if (keys.contains(key)) {
+        return MapEntry(key, value.toString().ucfirst);
+      } else {
+        return MapEntry(key, value);
+      }
+    });
+  }
+
+  /// ``` dart
   /// Map<String, dynamic> data = {'name': 'john doe'}.ucwords(['name']); // {'name': 'John Doe'}
   /// ```
   Map<String, dynamic> ucwords([List<String> keys = const []]) {

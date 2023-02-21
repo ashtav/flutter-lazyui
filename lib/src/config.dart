@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'utils/utils.dart';
 
 Map _____config = {
@@ -6,7 +7,7 @@ Map _____config = {
   'primary_color': '#212121',
   'widgets': {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
-    'no_data': {'title': 'No Data', 'on_tap_message': 'Tap to refresh'},
+    'no_data': {'message': 'No Data', 'on_tap_message': 'Tap to refresh'},
   },
 };
 
