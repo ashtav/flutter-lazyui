@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'checkbox.dart';

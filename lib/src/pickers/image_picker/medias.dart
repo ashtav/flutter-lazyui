@@ -2,9 +2,9 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:media_gallery/media_gallery.dart';
 
+import '../../../ext/line_awesome.dart';
 import '../../extensions/context_extension.dart';
 import '../../shortcut.dart';
 import '../../widgets/widgets.dart';

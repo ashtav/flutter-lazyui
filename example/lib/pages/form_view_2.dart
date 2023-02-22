@@ -67,6 +67,6 @@ class _CustomListViewState extends State<CustomListView> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(physics: BounceScroll(), padding: Ei.all(20), controller: controller, children: []);
+    return ListView(physics: BounceScroll(), padding: Ei.all(20), controller: controller, children: const []);
   }
 }

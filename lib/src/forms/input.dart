@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/src/config.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../../ext/line_awesome.dart';
 import '../shortcut.dart';
 import '../utils/formatter.dart';
 import '../widgets/text_input.dart';

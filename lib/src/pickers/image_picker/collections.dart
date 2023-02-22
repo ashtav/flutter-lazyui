@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:media_gallery/media_gallery.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../ext/line_awesome.dart';
 import '../../shortcut.dart';
 import '../../widgets/widgets.dart';
 import 'albums.dart';

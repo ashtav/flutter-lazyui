@@ -5,8 +5,8 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:gallery_saver/gallery_saver.dart';
 import 'package:lazyui/src/widgets/widgets.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../../../ext/line_awesome.dart';
 import '../../shortcut.dart';
 
 class CameraScreen extends StatefulWidget {

@@ -5,12 +5,12 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:fluttertoast/fluttertoast.dart';
 export 'package:intl/intl.dart';
 export 'package:lazyui/src/pickers/image_picker/selection.dart';
-export 'package:line_awesome_flutter/line_awesome_flutter.dart';
 export 'package:media_gallery/media_gallery.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'package:stack_trace/stack_trace.dart';
 
+export 'ext/line_awesome.dart';
 export 'ext/shimmer.dart';
 export 'src/config.dart';
 export 'src/extensions/context_extension.dart';
