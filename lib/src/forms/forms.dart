@@ -1,30 +1,46 @@
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
-import 'package:lazyui/src/extensions/map_extension.dart';
-import 'package:lazyui/src/extensions/string_extension.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lazyui/lazyui.dart';
 
-import '../config.dart';
-import '../shortcut.dart';
-import '../utils/utils.dart';
-import '../widgets/widgets.dart';
-import 'button.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
 
-class FormsError {
+class FormErrors {
   final String? key;
   final String? message;
   final String? type;
 
-  FormsError({this.key, this.message, this.type});
+  FormErrors({this.key, this.message, this.type});
+}
+
+class FormMessages {
+  final Map<String, dynamic>? required, min, max, email;
+
+  FormMessages({this.required, this.min, this.max, this.email});
+
+  String? get(String type, String key) {
+    switch (type) {
+      case 'required':
+        return required?[key];
+      case 'min':
+        return min?[key];
+      case 'max':
+        return max?[key];
+      case 'email':
+        return email?[key];
+      default:
+        return null;
+    }
+  }
 }
 
 class Forms {
   final bool ok;
-  final FormsError? errors;
+  final FormErrors? errors;
   final Map<String, dynamic> value;
   Forms({this.ok = false, this.errors, this.value = const {}});
 
@@ -93,8 +109,13 @@ class Forms {
   /// ```
 
   static Forms validate(Map<String, TextEditingController> forms,
-      {List<String> required = const [], List<String> min = const [], List<String> max = const [], List<String> email = const []}) {
-    Forms form = Forms(ok: true, value: forms.toMap(), errors: FormsError());
+      {List<String> required = const [],
+      List<String> min = const [],
+      List<String> max = const [],
+      List<String> email = const [],
+      FormMessages? formMessages,
+      bool useToast = true}) {
+    Forms form = Forms(ok: true, value: forms.toMap(), errors: FormErrors());
 
     try {
       List<Map<String, dynamic>> keys = []; // problematic keys, stored here
@@ -165,10 +186,19 @@ class Forms {
 
       // if problematic keys is not empty, then return error
       if (keys.isNotEmpty) {
-        form = Forms(
-            ok: false,
-            value: forms.toMap(),
-            errors: keys.isEmpty ? FormsError() : FormsError(key: keys.first['key'], type: keys.first['type'], message: keys.first['message']));
+        String key = keys.first['key'];
+        String type = keys.first['type'];
+        String message = keys.first['message'];
+
+        if (formMessages != null) {
+          message = formMessages.get(type, key) ?? message;
+        }
+
+        if (useToast) {
+          Fluttertoast.showToast(msg: message, gravity: ToastGravity.CENTER);
+        }
+
+        form = Forms(ok: false, value: forms.toMap(), errors: FormErrors(key: key, type: type, message: message));
       }
     } catch (e, s) {
       Utils.errorCatcher(e, s);

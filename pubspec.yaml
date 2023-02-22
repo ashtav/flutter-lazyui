@@ -16,6 +16,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_svg: ^2.0.1
+  fluttertoast: ^8.2.1
   gallery_saver: ^2.3.2
   http: ^0.13.5
   intl: ^0.17.0
