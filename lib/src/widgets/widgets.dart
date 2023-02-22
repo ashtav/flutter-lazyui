@@ -351,4 +351,15 @@ class Loader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(margin: margin, child: SizedBox(width: size, height: size, child: CircularProgressIndicator(color: color, strokeWidth: stroke)));
   }
+
+  static Widget bar({String? message, bool center = true}) {
+    TextStyle? textStyle = LazyConfig.getConfig.textStyle;
+
+    Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
+      const GetImage('loading-bar.gif', size: 90, fit: BoxFit.contain),
+      message == null ? const None() : Text(message, style: textStyle?.copyWith(color: Colors.black54))
+    ]);
+
+    return center ? Center(child: child) : child;
+  }
 }
