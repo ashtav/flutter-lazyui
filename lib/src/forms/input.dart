@@ -288,13 +288,13 @@ class _InputFieldState extends State<InputField> {
                   });
                 },
                 child: Iconr(
-                  obsecure ? La.eye : La.eye_slash,
+                  obsecure ? La.eye : La.eyeSlash,
                   padding: Ei.sym(v: 5, h: 15),
                 ),
               )
             : widget.onTap == null
                 ? widget.suffixIcon ?? const None()
-                : widget.suffixIcon ?? const Icon(La.angle_down),
+                : widget.suffixIcon ?? const Icon(La.angleDown),
       ],
     ));
   }

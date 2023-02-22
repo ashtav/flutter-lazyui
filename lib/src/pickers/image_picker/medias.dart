@@ -36,7 +36,7 @@ class _MediaImagesPageState extends State<MediasPage> {
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: const Icon(La.angle_left, color: Colors.black54),
+            icon: const Icon(La.angleLeft, color: Colors.black54),
             onPressed: () => Navigator.pop(context),
           ),
           elevation: .5,

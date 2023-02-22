@@ -307,7 +307,7 @@ class _SelectWidgetState extends State<SelectWidget> {
                       ]),
                     ),
                     const Icon(
-                      La.angle_down,
+                      La.angleDown,
                     )
                   ],
                 ))

@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
                   }
                 });
               },
-              icon: const Icon(Icons.menu, color: Colors.black87))
+              icon: const Icon(La.bars, color: Colors.black87))
         ],
       ),
       body: ZoomIn(

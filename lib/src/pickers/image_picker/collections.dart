@@ -97,7 +97,7 @@ class _MediaCollectionsPageState extends State<MediaCollectionsPage> with Ticker
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
-            icon: const Icon(La.arrow_left, color: Colors.black54),
+            icon: const Icon(La.arrowLeft, color: Colors.black54),
             onPressed: () => Navigator.pop(context),
           ),
           elevation: .5,

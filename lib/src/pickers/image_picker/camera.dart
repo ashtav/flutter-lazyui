@@ -129,7 +129,7 @@ class _CameraScreenState extends State<CameraScreen> {
                           InkW(
                             onTap: () => Navigator.pop(context),
                             child: Iconr(
-                              La.angle_left,
+                              La.angleLeft,
                               color: Colors.white,
                               padding: Ei.all(15),
                             ),

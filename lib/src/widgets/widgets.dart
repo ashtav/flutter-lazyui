@@ -356,7 +356,12 @@ class Loader extends StatelessWidget {
     TextStyle? textStyle = LazyConfig.getConfig.textStyle;
 
     Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
-      const GetImage('loading-bar.gif', size: 90, fit: BoxFit.contain),
+      Image.asset(
+        'packages/lazyui/assets/images/loading-bar.gif',
+        width: 90,
+        height: 90,
+        fit: BoxFit.contain,
+      ),
       message == null ? const None() : Text(message, style: textStyle?.copyWith(color: Colors.black54))
     ]);
 
