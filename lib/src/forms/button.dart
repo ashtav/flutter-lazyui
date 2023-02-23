@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../lazyui.dart';
 
-enum ButtonType { primary, secondary, danger, success, warning }
-
 class Button extends StatelessWidget {
   final String? text;
   final IconData? icon;

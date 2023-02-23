@@ -17,12 +17,8 @@ dependencies:
     sdk: flutter
   flutter_svg: ^2.0.1
   fluttertoast: ^8.2.1
-  gallery_saver: ^2.3.2
   http: ^0.13.5
   intl: ^0.17.0
-  media_gallery:
-    git:
-      url: https://github.com/ashtav/media_gallery.git
   path_provider: ^2.0.12
   permission_handler: ^10.2.0
   stack_trace: ^1.11.0

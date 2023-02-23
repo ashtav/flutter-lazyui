@@ -45,3 +45,8 @@ class LazyConfig {
   // setters
   static void setConfig(LazyConfig config) => {_____config = config.toMap()};
 }
+
+class Lazy {
+  static String assets(String value) => 'packages/lazyui/assets/images/$value';
+  static TextStyle? textStyle(BuildContext context) => Theme.of(context).textTheme.bodyMedium;
+}

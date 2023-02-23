@@ -22,6 +22,17 @@ class Gfont {
   static TextStyle normal = gfont.copyWith(fontWeight: FontWeight.normal, color: Colors.black87);
 }
 
+extension GfontExt on TextStyle {
+  TextStyle get bold => copyWith(fontWeight: FontWeight.bold);
+  TextStyle get normal => copyWith(fontWeight: FontWeight.normal);
+  TextStyle get muted => copyWith(fontWeight: FontWeight.normal, color: Colors.black54);
+  TextStyle get white => copyWith(color: Colors.white);
+
+  TextStyle fsize(double size) => copyWith(fontSize: size);
+  TextStyle fcolor(Color color) => copyWith(color: color);
+  TextStyle fopacity(double opacity) => copyWith(color: color?.withOpacity(opacity));
+}
+
 ThemeData appTheme = ThemeData(
   appBarTheme: AppBarTheme(
     centerTitle: false,

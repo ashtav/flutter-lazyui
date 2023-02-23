@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import '../config.dart';
+
 /// combination betweeen Icon and Container
 class Iconr extends StatelessWidget {
   final IconData icon;
@@ -124,18 +126,26 @@ class CenterDialog extends StatelessWidget {
   final Widget child;
   final double margin;
   final BorderRadius? borderRadius;
+  final String? closeMessage;
+  final bool tapClose;
 
-  const CenterDialog({Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero}) : super(key: key);
+  const CenterDialog(
+      {Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero, this.closeMessage, this.tapClose = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: Ei.only(b: MediaQuery.of(context).viewInsets.bottom),
-      child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        Material(
-            color: Colors.transparent, child: Container(margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child)))
-      ])),
+    return Column(
+      mainAxisAlignment: Maa.center,
+      children: [
+        Container(
+          padding: Ei.only(b: context.viewInsets.bottom),
+          child: Material(
+              color: Colors.transparent,
+              child: Container(margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child))),
+        ),
+        if (tapClose) IgnorePointer(child: Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
+      ],
     );
   }
 }
@@ -357,7 +367,7 @@ class Loader extends StatelessWidget {
 
     Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(
-        'packages/lazyui/assets/images/loading-bar.gif',
+        Lazy.assets('loading-bar.gif'),
         width: 90,
         height: 90,
         fit: BoxFit.contain,

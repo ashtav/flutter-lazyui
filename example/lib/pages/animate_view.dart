@@ -8,6 +8,8 @@ class AnimateView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Animate.restartOnHotReload = true;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Animation'),
@@ -17,27 +19,39 @@ class AnimateView extends StatelessWidget {
         physics: BounceScroll(),
         padding: Ei.all(20),
         children: [
-          Animate(
-            effects: const [FadeEffect(), ScaleEffect()],
-            child: const Text("Hello World!"),
+          // Blink
+          const Text("Blink Text")
+              .animate(
+                onPlay: (controller) => controller.repeat(), // loop
+              )
+              .fade(delay: 500.ms),
+
+          Container(
+            margin: Ei.sym(v: 20),
+            decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.white, border: Br.all()),
+            child: Col(
+              children: List.generate(3, (i) {
+                return Textr(
+                  Lipsum.createWord(5).ucwords,
+                  border: Br.only(['t'], except: i == 0),
+                  padding: Ei.sym(v: 20, h: 20),
+                  width: context.width,
+                ).animate(delay: ((i + 1) * 100).ms).slideY(duration: 400.ms);
+              }),
+            ),
           ),
-          const Text("Hello World!").animate().fade().scale(),
 
-          const Text("Hello").animate().fade(duration: 500.ms).scale(delay: 500.ms), // runs after fade.
-
-          const Text("Hello World!")
-              .animate()
+          Text(
+            "Hello World!",
+            style: Gfont.fs20.bold,
+          )
+              .animate(
+                onPlay: (controller) => controller.repeat(),
+              )
               .fadeIn() // uses `Animate.defaultDuration`
               .scale() // inherits duration from fadeIn
               .move(delay: 300.ms, duration: 600.ms) // runs after the above w/new duration
               .blurXY(), // inherits the delay & duration from move
-
-          const Text("Hello")
-              .animate(
-                delay: 1000.ms, // this delay only happens once at the very start
-                onPlay: (controller) => controller.repeat(), // loop
-              )
-              .fadeIn(delay: 500.ms),
 
           // an opacity of 1 is "neutral"
           const Text("Hello").animate().fade(), // begin=0, end=1

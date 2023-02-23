@@ -9,9 +9,9 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:stack_trace/stack_trace.dart';
 
-import 'log.dart';
 import '../extensions/datetime_extension.dart';
 import '../extensions/string_extension.dart';
+import 'log.dart';
 
 class Utils {
   /// ``` dart
@@ -380,7 +380,7 @@ class Utils {
   /// ```dart
   /// String text = await Utils.htmlToText('<p>HTML</p>');
   /// ```
-  static htmlToText(String html) {
+  static String htmlToText(String html) {
     // replace <br /> = \n
     // &ldquo;, &rdquo; = "
     // &lsquo;, &rsquo; = '

@@ -1,3 +1,4 @@
+import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -11,62 +12,53 @@ class FormView2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScrollController controller = ScrollController();
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Form View'),
       ),
-      body: ListView(
-        physics: BounceScroll(),
-        padding: Ei.all(20),
-        controller: controller,
-        children: [
-          FormsGroup(children: [
-            Forms.input(label: 'Email', hint: 'Input your email', controller: forms['email']),
-            Forms.input(label: 'Password', hint: 'Input your password', obsecureToggle: true, controller: forms['password']),
-          ]),
-          Forms.switches(
-            label: 'Available|Not Available',
-            onChanged: (value) {},
-          ),
-          Button(
+      body: StackedListView(
+          stacked: Button(
             onTap: () {
-              // double space = context.height - controller.position.maxScrollExtent;
-              // logg(context.height);
-              // logg(controller.position.maxScrollExtent);
-              // logg(space);
-
-              Forms form = Forms.validate(forms,
-                  required: ['email'],
-                  email: ['email'],
-                  formMessages: FormMessages(email: {'email': 'Email tidak valid'}, required: {'email': 'Email tidak boleh kosong'}));
-
-              if (!form.ok) {
-                logg(form.errors?.message);
-              }
+              context.dialog(CustomDialog(
+                tapClose: true,
+                alignment: Caa.start,
+                children: [
+                  Text('Dialog Title', style: Gfont.fs20.bold),
+                  Textr(
+                    Lipsum.createWord(15),
+                    margin: Ei.only(t: 10, b: 15),
+                  ),
+                  Col(
+                    children: List.generate(5, (i) {
+                      return Container(
+                        padding: Ei.sym(v: 20),
+                        decoration: BoxDecoration(border: Br.only(['t'])),
+                        child: Row(
+                          children: [
+                            Text(Lipsum.createWord(3)),
+                          ],
+                        ),
+                      );
+                    }),
+                  ),
+                  const TextInputTransparent(
+                    hint: 'Type something...',
+                  ),
+                ],
+              ));
             },
             text: 'Submit',
-            margin: Ei.only(t: 424.73636363636365),
-          )
-        ],
-      ),
+          ),
+          children: [
+            FormsGroup(children: [
+              Forms.input(label: 'Email', hint: 'Input your email', controller: forms['email']),
+              Forms.input(label: 'Password', hint: 'Input your password', obsecureToggle: true, controller: forms['password']),
+            ]),
+            Forms.switches(
+              label: 'Available|Not Available',
+              onChanged: (value) {},
+            ),
+          ]),
     );
-  }
-}
-
-class CustomListView extends StatefulWidget {
-  const CustomListView({super.key});
-
-  @override
-  State<CustomListView> createState() => _CustomListViewState();
-}
-
-class _CustomListViewState extends State<CustomListView> {
-  ScrollController controller = ScrollController();
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(physics: BounceScroll(), padding: Ei.all(20), controller: controller, children: const []);
   }
 }

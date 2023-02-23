@@ -1,4 +1,4 @@
-import 'package:intl/intl.dart';
+import 'package:lazyui/lazyui.dart' as lz;
 
 extension DynamicExtension on dynamic {
   /// ```dart
@@ -38,7 +38,8 @@ extension DynamicExtension on dynamic {
 
       bool allowDecimal = runtimeType == int || runtimeType == String && !contains('.');
 
-      String result = NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
+      String result =
+          lz.NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
 
       return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
@@ -87,4 +88,12 @@ extension DynamicExtension on dynamic {
 
     return conditions.contains(this) ? result : this;
   }
+
+  /// ``` dart
+  /// 'Hello World'.logg; // Print string in debug console
+  /// ```
+  ///
+  // void get logg {
+  //   lz.logg(this);
+  // }
 }

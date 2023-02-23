@@ -9,8 +9,8 @@ class Button extends StatelessWidget {
   final IconData? icon;
   final Function()? onTap;
   final ButtonType type;
-  final bool withShadow, submit;
-  final double space;
+  final bool gradient, submit;
+  final double? space, radius;
   final EdgeInsetsGeometry? margin;
 
   const Button(
@@ -19,9 +19,10 @@ class Button extends StatelessWidget {
       this.text,
       this.onTap,
       this.type = ButtonType.primary,
-      this.withShadow = true,
+      this.gradient = false,
       this.submit = false,
-      this.space = 20,
+      this.space,
+      this.radius,
       this.margin});
 
   @override
@@ -44,32 +45,42 @@ class Button extends StatelessWidget {
       ButtonType.warning: Colors.white,
     };
 
-    return Opacity(
-      opacity: submit ? 0.5 : 1,
-      child: InkW(
-        onTap: submit ? null : () => onTap?.call(),
-        padding: Ei.sym(v: 16, h: space),
-        radius: Br.radius(radius),
-        color: bgColors[type],
-        margin: margin,
-        child: Row(
-          mainAxisAlignment: Maa.center,
-          mainAxisSize: Mas.min,
-          children: [
-            if (submit)
-              Loader(
-                color: textColors[type],
-                margin: Ei.only(r: 12),
-              )
-            else if (icon.isNotNull)
-              Iconr(icon!, margin: Ei.only(r: 10), color: textColors[type]),
-            Text(
-              text ?? '',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColors[type]),
-            ),
-          ],
-        ),
+    Widget button = InkW(
+      onTap: submit ? null : () => onTap?.call(),
+      padding: Ei.sym(v: 16, h: space ?? 20),
+      radius: Br.radius(this.radius ?? radius),
+      color: gradient ? null : bgColors[type],
+      child: Row(
+        mainAxisAlignment: Maa.center,
+        mainAxisSize: Mas.min,
+        children: [
+          if (submit)
+            Loader(
+              color: textColors[type],
+              margin: Ei.only(r: 12),
+            )
+          else if (icon.isNotNull)
+            Iconr(icon!, margin: Ei.only(r: 10), color: textColors[type]),
+          Text(
+            text ?? '',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColors[type]),
+          ),
+        ],
       ),
     );
+
+    Widget buttonGradient = Container(
+        decoration: BoxDecoration(
+          borderRadius: Br.radius(this.radius ?? radius),
+          gradient: LinearGradient(
+              colors: [bgColors[type]!, bgColors[type]!.withOpacity(0.5)],
+              begin: const FractionalOffset(0.0, 0.0),
+              end: const FractionalOffset(1.0, 0.5),
+              stops: const [0.0, 1.0],
+              tileMode: TileMode.clamp),
+        ),
+        child: ClipRRect(borderRadius: Br.radius(this.radius ?? radius), child: button));
+
+    return Container(margin: margin, child: Opacity(opacity: submit ? 0.5 : 1, child: gradient ? buttonGradient : button));
   }
 }

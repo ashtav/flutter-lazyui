@@ -217,7 +217,7 @@ class DropdownDialog extends StatelessWidget {
       List<int> disableds = const [],
       List<int> sparators = const [],
       Offset? offset,
-      bool contextLess = false,
+      bool top = false,
       BorderRadiusGeometry? borderRadius,
       DropdownCaret? caret,
       void Function(String value, int index)? onSelect}) {
@@ -231,6 +231,11 @@ class DropdownDialog extends StatelessWidget {
     double x = context.width - dx - (box?.size.width ?? 0.0);
     double y = dy + (box?.size.height ?? 0);
 
+    if (top) {
+      x = 16;
+      y = 90;
+    }
+
     if (offset != null) {
       y += offset.dy;
       x += offset.dx;
@@ -239,7 +244,7 @@ class DropdownDialog extends StatelessWidget {
     showDialog(
         context: context,
         builder: (_) => DropdownPositioned(
-            offset: contextLess && offset != null ? offset : Offset(x, y),
+            offset: top && offset != null ? offset : Offset(x, y),
             options: options,
             dangers: dangers,
             sparators: sparators,

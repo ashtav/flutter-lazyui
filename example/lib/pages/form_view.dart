@@ -44,7 +44,6 @@ class FormView extends StatelessWidget {
             Forms.select(
               label: 'City',
               hint: 'Select your city',
-              enabled: false,
               controller: city,
               options: List.generate(cities.length, (i) => Option(option: cities[i])),
             ),

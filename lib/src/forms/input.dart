@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:lazyui/src/config.dart';
-
-import '../../ext/line_awesome.dart';
-import '../shortcut.dart';
-import '../utils/formatter.dart';
-import '../widgets/text_input.dart';
-import '../widgets/widgets.dart';
+import 'package:lazyui/lazyui.dart';
 
 /* --------------------------------------------------------------------------
 | TextInput

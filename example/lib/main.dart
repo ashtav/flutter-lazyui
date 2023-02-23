@@ -1,10 +1,9 @@
-import 'package:example/pages/form_view_2.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'pages/animate_view.dart';
 import 'pages/form_view.dart';
-import 'pages/item_view.dart';
+import 'pages/form_view_2.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -34,11 +33,89 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey key = GlobalKey();
 
+    List<String> features = ['Select Date', 'Select Time', 'Dropdown Dialog', 'Custom Dialog', 'Forms', 'Stacked List', 'Select Option', 'Animation'];
+
+    void onFeatureTap(int index) async {
+      switch (index) {
+        case 0:
+          DateTime? date = await Pickers.datePicker(context);
+          logg(date);
+
+          break;
+
+        case 1:
+          DateTime? time = await Pickers.timePicker(context);
+          logg(time);
+
+          break;
+
+        case 2:
+          DropdownDialog.open(key.currentContext!, options: ['Option A', 'Option B', 'Option C'], onSelect: (o, i) {
+            logg(o);
+          });
+          break;
+
+        case 3:
+          context.dialog(CustomDialog(
+            tapClose: true,
+            alignment: Caa.start,
+            children: [
+              Text('Dialog Title', style: Gfont.fs20.bold),
+              Textr(
+                Lipsum.createWord(15),
+                margin: Ei.only(t: 10, b: 15),
+              ),
+              Col(
+                children: List.generate(5, (i) {
+                  return Container(
+                    padding: Ei.sym(v: 20),
+                    decoration: BoxDecoration(border: Br.only(['t'])),
+                    child: Row(
+                      children: [
+                        Text(Lipsum.createWord(3)),
+                      ],
+                    ),
+                  );
+                }),
+              ),
+              const TextInputTransparent(
+                hint: 'Type something...',
+              ),
+            ],
+          ));
+          break;
+
+        case 4:
+          context.push(const FormView());
+          break;
+
+        case 5:
+          context.push(const FormView2());
+          break;
+
+        case 6:
+          List<Option> options = List.generate(5, (i) => Option(option: Lipsum.createWord(3), value: i));
+          context.bottomSheet(SelectPicker(
+              options: options,
+              onSelect: (option) {
+                logg(option.option);
+              }));
+
+          break;
+
+        case 7:
+          context.push(const AnimateView());
+          break;
+
+        default:
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: const Text(
-          'Welcome to LazyUi',
+          'LazyUi',
           style: TextStyle(color: Colors.black54),
         ),
         elevation: .5,
@@ -46,73 +123,44 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                List<String> options = ['Option A', 'Option B', 'Option C', 'List Item', 'Animation'];
-                DropdownDialog.open(context, options: options, offset: const Offset(16, 90), contextLess: true, disableds: [2], dangers: [1],
-                    onSelect: (o, i) {
-                  switch (o) {
-                    case 'List Item':
-                      context.push(const ItemView()).then((value) {
-                        logg(value);
-                      });
-                      break;
-                    case 'Animation':
-                      context.push(const AnimateView());
-                      break;
-
-                    default:
-                  }
-                });
+                List<String> options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'];
+                DropdownDialog.open(context, options: options, top: true, disableds: [2], dangers: [1], sparators: [3]);
               },
               icon: const Icon(La.bars, color: Colors.black87))
         ],
       ),
-      body: ZoomIn(
-        child: Center(
-            child: Column(
-          mainAxisAlignment: Maa.center,
-          children: [
-            InkW(
-              key: key,
-              onTap: () {
-                DropdownDialog.open(key.currentContext!, options: ['Option A', 'Option B', 'Option C']);
-              },
-              padding: Ei.sym(v: 15, h: 20),
-              border: Br.all(),
-              color: Colors.white,
-              margin: Ei.only(b: 10),
-              child: const Text('Dropdown Dialog'),
-            ),
-            Button(
-              text: 'Form View 1',
-              onTap: () => context.push(const FormView()),
-              margin: Ei.sym(v: 5),
-            ),
-            Button(
-              text: 'Form View 2',
-              onTap: () => context.push(const FormView2()),
-              margin: Ei.sym(v: 5),
-            ),
-            ...List.generate(
-              3,
-              (i) => Button(
-                text: ['Select Date', 'Select Time', 'Select Image'][i],
-                onTap: () async {
-                  if (i == 0) {
-                    DateTime? date = await Pickers.datePicker(context);
-                    logg(date);
-                  } else if (i == 1) {
-                    DateTime? time = await Pickers.timePicker(context);
-                    logg(time);
-                  } else {
-                    List<Media>? images = await Pickers.imagePicker(context, maxImages: 5);
-                    logg(images);
-                  }
-                },
-                margin: Ei.sym(v: 5),
-              ),
-            ),
-          ],
-        )),
+      body: ListView(
+        physics: BounceScroll(),
+        padding: Ei.all(20),
+        children: [
+          Wrap(
+              children: List.generate(
+                  features.length,
+                  (i) => Button(
+                        key: i == 2 ? key : null,
+                        onTap: () {
+                          onFeatureTap(i);
+                        },
+                        text: features[i],
+                        gradient: true,
+                        margin: Ei.all(2),
+                      ))),
+          const SizedBox(height: 20),
+          ExpandableList(
+              children: List.generate(
+                  5,
+                  (i) => ExpandableContent(
+                        title: Lipsum.createWord(5).ucwords,
+                        child: Text(Lipsum.createWord(50)),
+                      ))),
+          const SizedBox(height: 20),
+          Button(
+            text: 'Gradient Button',
+            gradient: true,
+            type: ButtonType.warning,
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }

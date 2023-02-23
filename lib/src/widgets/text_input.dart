@@ -43,7 +43,7 @@ class TextInputTransparent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget textField = TextField(
+    TextField textField = TextField(
       style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
       keyboardType: keyboard,
       textInputAction: inputAction,
