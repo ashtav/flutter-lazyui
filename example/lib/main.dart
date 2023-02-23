@@ -1,9 +1,11 @@
+import 'package:example/pages/nodata_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'pages/animate_view.dart';
 import 'pages/form_view.dart';
 import 'pages/form_view_2.dart';
+import 'pages/lazicon_view.dart';
 import 'theme/theme.dart';
 
 void main() {
@@ -33,7 +35,18 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     GlobalKey key = GlobalKey();
 
-    List<String> features = ['Select Date', 'Select Time', 'Dropdown Dialog', 'Custom Dialog', 'Forms', 'Stacked List', 'Select Option', 'Animation'];
+    List<String> features = [
+      'Select Date',
+      'Select Time',
+      'Dropdown Dialog',
+      'Custom Dialog',
+      'Forms',
+      'Stacked List',
+      'Select Option',
+      'Animation',
+      'Lazicon',
+      'No Data'
+    ];
 
     void onFeatureTap(int index) async {
       switch (index) {
@@ -105,6 +118,14 @@ class HomePage extends StatelessWidget {
 
         case 7:
           context.push(const AnimateView());
+          break;
+
+        case 8:
+          context.push(const LaziconView());
+          break;
+
+        case 9:
+          context.push(const NoDataView());
           break;
 
         default:

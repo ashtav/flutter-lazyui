@@ -283,11 +283,14 @@ class NoScrollGlow extends ScrollBehavior {
   }
 }
 
+enum NoDataType { type1, type2 }
+
 class NoData extends StatelessWidget {
   final IconData? icon;
   final String? message, onTapMessage;
   final Function()? onTap;
-  const NoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap});
+  final NoDataType type;
+  const NoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap, this.type = NoDataType.type1});
 
   @override
   Widget build(BuildContext context) {
@@ -301,16 +304,25 @@ class NoData extends StatelessWidget {
         child: Column(
           mainAxisAlignment: Maa.center,
           children: [
-            Iconr(
-              icon ?? Icons.info_outline,
-              color: Colors.black38,
-              size: 50,
-              margin: Ei.only(b: 25),
-            ),
-            Text(
+            // Iconr(
+            //   icon ?? Icons.info_outline,
+            //   color: Colors.black38,
+            //   size: 50,
+            //   margin: Ei.only(b: 25),
+            // ),
+
+            Container(
+                width: 100,
+                height: 100,
+                padding: Ei.all(20),
+                decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                child: Lazicon.get(LaziconType.nodata, colorFilter: Colors.white)),
+
+            Textr(
               message,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
               textAlign: Ta.center,
+              margin: Ei.only(t: 15),
             ),
             if (onTap != null)
               Touch(
@@ -376,5 +388,22 @@ class Loader extends StatelessWidget {
     ]);
 
     return center ? Center(child: child) : child;
+  }
+}
+
+enum LaziconType { nodata }
+
+class Lazicon {
+  static get(LaziconType type, {double size = 70, Color? colorFilter}) {
+    Map<LaziconType, String> icons = {
+      LaziconType.nodata: 'no-data.svg',
+    };
+
+    return SvgPicture.asset(
+      Lazy.assets(icons[type]!),
+      width: size,
+      height: size,
+      colorFilter: colorFilter.isNull ? null : ColorFilter.mode(colorFilter!, BlendMode.saturation),
+    );
   }
 }
