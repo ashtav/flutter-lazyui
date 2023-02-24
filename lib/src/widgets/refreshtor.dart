@@ -23,7 +23,7 @@ class Refreshtor extends StatelessWidget {
             AnimatedBuilder(
               animation: controller,
               builder: (BuildContext context, Widget? _) {
-                Color primaryColor = LazyConfig.getConfig.primaryColor;
+                Color primaryColor = LazyUi.getConfig.primaryColor;
 
                 return controller.isLoading || controller.value <= 0.1
                     ? const None()

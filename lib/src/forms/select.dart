@@ -128,7 +128,7 @@ class _SelectWidgetState extends State<SelectWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double configRadius = LazyConfig.getConfig.radius;
+    double configRadius = LazyUi.getConfig.radius;
 
     return Container(
         margin: widget.margin ?? Ei.only(b: 15),

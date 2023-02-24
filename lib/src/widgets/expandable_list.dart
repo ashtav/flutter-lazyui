@@ -111,7 +111,7 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyConfig.getConfig.radius;
+    double radius = LazyUi.getConfig.radius;
 
     return Container(
       decoration: BoxDecoration(border: widget.border ? Br.all() : null, borderRadius: Br.radius(widget.radius ?? radius)),

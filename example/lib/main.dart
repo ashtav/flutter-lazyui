@@ -12,12 +12,20 @@ import 'theme/theme.dart';
 void main() {
   Utils.setSystemUI(navBarColor: Colors.white);
 
-  LazyConfig.setConfig(LazyConfig(radius: 5.0, primaryColor: Utils.hex('#212121'), widgets: {
+  LazyUi.setConfig(LazyUiOptions(radius: 5.0, primaryColor: Utils.hex('#212121'), widgets: {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
     'no_data': {'title': 'No Data', 'on_tap_message': 'Tap to refresh'},
   }));
 
-  Errors.config(botToken: '1650513497:AAG5-o3fW_Fe45xOJfNMAxDxRDrLXPubdHM', chatId: '1099040541', useBot: true);
+  Errors.config(
+      botToken: '1650513497:AAG5-o3fW_Fe45xOJfNMAxDxRDrLXPubdHM',
+      chatId: '1099040541',
+      useBot: true,
+      errorBuilder: (ErrorInfo info) {
+        String message = 'Hmm, something went wrong, please try again later. ${info.error}, ${info.device}';
+        Bot.sendMessage(message, info.botToken!, info.chatId!);
+      });
+
   runApp(const MyApp());
 }
 

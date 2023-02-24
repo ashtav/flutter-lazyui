@@ -27,7 +27,7 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyConfig.getConfig.radius;
+    double radius = LazyUi.getConfig.radius;
 
     Map<ButtonType, Color> bgColors = {
       ButtonType.primary: Colors.blueAccent,

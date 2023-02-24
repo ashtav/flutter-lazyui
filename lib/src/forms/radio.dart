@@ -90,7 +90,7 @@ class _RadioListState extends State<RadioList> {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = LazyConfig.getConfig.primaryColor;
+    Color primaryColor = LazyUi.getConfig.primaryColor;
 
     String label = widget.label;
     List<String> options = widget.options;
@@ -104,7 +104,7 @@ class _RadioListState extends State<RadioList> {
       widget.onChanged?.call(value);
     }
 
-    double configRadius = LazyConfig.getConfig.radius;
+    double configRadius = LazyUi.getConfig.radius;
 
     return Container(
       padding: Ei.only(l: 15, r: 15, t: 15, b: 10),

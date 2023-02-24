@@ -391,7 +391,7 @@ class FormsGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double configRadius = LazyConfig.getConfig.radius;
+    double configRadius = LazyUi.getConfig.radius;
 
     return Container(
       margin: Ei.only(b: 20),

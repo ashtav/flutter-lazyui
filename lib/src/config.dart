@@ -12,18 +12,27 @@ Map _____config = {
   },
 };
 
-class LazyConfig {
+class LazyUiOptions {
   final double radius;
   final Color primaryColor;
   final Map widgets;
   final TextStyle? textStyle;
-  LazyConfig({this.radius = 2, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
 
-  // to map
+  LazyUiOptions({this.radius = 2, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
+
   Map toMap() => {'radius': radius, 'primary_color': primaryColor, 'widgets': widgets};
+}
+
+class LazyUi {
+  final double radius;
+  final Color primaryColor;
+  final Map widgets;
+  final TextStyle? textStyle;
+
+  LazyUi({this.radius = 2, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
 
   // getters
-  static LazyConfig get getConfig {
+  static LazyUiOptions get getConfig {
     Map config = _____config;
 
     // Get radius
@@ -39,11 +48,11 @@ class LazyConfig {
     TextStyle textStyle = config['text_style'] is TextStyle ? config['text_style'] : const TextStyle(color: Colors.black87, fontSize: 16);
 
     // Return config
-    return LazyConfig(radius: radius, primaryColor: primaryColor, widgets: widgets, textStyle: textStyle);
+    return LazyUiOptions(radius: radius, primaryColor: primaryColor, widgets: widgets, textStyle: textStyle);
   }
 
   // setters
-  static void setConfig(LazyConfig config) => {_____config = config.toMap()};
+  static void setConfig(LazyUiOptions config) => {_____config = config.toMap()};
 }
 
 class Lazy {

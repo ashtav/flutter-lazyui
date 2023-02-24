@@ -35,7 +35,7 @@ class _SwitchesState extends State<Switches> {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = LazyConfig.getConfig.primaryColor;
+    Color primaryColor = LazyUi.getConfig.primaryColor;
     List<String> labels = widget.label.split('|');
     String label = labels[0], secondLabel = labels.length > 1 ? labels[1] : label;
 

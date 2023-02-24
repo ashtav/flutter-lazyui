@@ -5,29 +5,43 @@ import 'package:lazyui/lazyui.dart';
 
 Map<String, dynamic> _errorConfig = {
   'bot': {'token': '', 'chat_id': '', 'active': true},
-  'track_device': true,
+  'use_list': false,
+  'error_info': null
 };
 
+class ErrorInfo {
+  final String? device, botToken, chatId;
+  final String error;
+
+  ErrorInfo({this.device, this.botToken, this.chatId, required this.error});
+}
+
 class Errors {
-  static void config({String? botToken, String? chatId, bool useBot = true, bool trackDevice = true}) {
+  static void config({String? botToken, String? chatId, bool useBot = true, bool useList = false, Function(ErrorInfo info)? errorBuilder}) {
     try {
       _errorConfig['bot']['token'] = botToken;
       _errorConfig['bot']['chat_id'] = chatId;
       _errorConfig['bot']['active'] = useBot;
 
-      _errorConfig['track_device'] = trackDevice;
+      _errorConfig['use_list'] = useList;
+      _errorConfig['error_info'] = errorBuilder;
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }
   }
 
-  static check(e, StackTrace s, {bool track = false, bool disabledBot = false}) async {
+  /// ```dart
+  /// Errors.check(e, s, useList: true);
+  /// ```
+  /// `useList` = `true`, will show the list of function that related to the error
+
+  static check(e, StackTrace s, {bool? useList, bool disabledBot = false}) async {
     try {
       // ---------------------------------------------------------------------
       // Check Errors Caused by Internet Connection
 
       List<String> failsNetwork = ['SocketException', 'Failed host lookup', 'NetworkException'];
-      String? errorMessage;
+      String errorMessage = '-';
 
       if (failsNetwork.any((n) => e.toString().contains(n))) {
         logg('Network error, $e', name: 'ERROR');
@@ -37,7 +51,7 @@ class Errors {
 
         final frames = Trace.from(s).terse.frames;
 
-        if (track) {
+        if (useList ?? _errorConfig['use_list']) {
           List<String> members = frames.take(4).map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})').toList();
           String member = members.join(', ');
 
@@ -93,7 +107,14 @@ Try to check [$member]''';
 <b>Details</b>
 $device''';
 
-          await Telebot.sendMessage(message, botToken, chatId);
+          if (_errorConfig['error_info'] != null) {
+            void Function(ErrorInfo info) errorBuilder = _errorConfig['error_info'];
+            ErrorInfo info = ErrorInfo(device: device, error: errorMessage.toString(), botToken: botToken, chatId: chatId);
+
+            errorBuilder(info);
+          } else {
+            await Bot.sendMessage(message, botToken, chatId);
+          }
         }
       }
     } catch (e, s) {

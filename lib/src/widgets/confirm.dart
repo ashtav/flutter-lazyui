@@ -31,9 +31,9 @@ class Confirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyConfig.getConfig.radius;
-    String cancelText = this.cancelText ?? LazyConfig.getConfig.widgets['confirm']?['cancel'] ?? 'Cancel';
-    String confirmText = this.confirmText ?? LazyConfig.getConfig.widgets['confirm']?['confirm'] ?? 'Confirm';
+    double radius = LazyUi.getConfig.radius;
+    String cancelText = this.cancelText ?? LazyUi.getConfig.widgets['confirm']?['cancel'] ?? 'Cancel';
+    String confirmText = this.confirmText ?? LazyUi.getConfig.widgets['confirm']?['confirm'] ?? 'Confirm';
 
     return CenterDialog(
       borderRadius: borderRadius ?? Br.radius(radius),

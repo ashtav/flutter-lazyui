@@ -67,7 +67,7 @@ class Input extends StatelessWidget {
       formatters.add(InputFormat.numeric);
     }
 
-    double configRadius = LazyConfig.getConfig.radius;
+    double configRadius = LazyUi.getConfig.radius;
 
     return Container(
         margin: margin ?? Ei.only(b: 15),

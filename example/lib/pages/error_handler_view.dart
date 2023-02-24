@@ -21,12 +21,10 @@ class ActionController {
   dynamic a = '';
 
   void test() async {
-    Map<String, dynamic> res = {'id': 1, 'name': 'John Doe', 'active': false, 'weight': 1.5};
-
     try {
-      Utils.checkModel('user.json', res);
+      a++;
     } catch (e, s) {
-      Errors.check(e, s, track: true);
+      Errors.check(e, s, useList: true);
     }
   }
 }

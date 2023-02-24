@@ -294,9 +294,9 @@ class NoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = LazyConfig.getConfig.primaryColor;
-    String message = this.message ?? LazyConfig.getConfig.widgets['no_data']?['message'] ?? 'No Data';
-    String onTapMessage = this.onTapMessage ?? LazyConfig.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
+    Color primaryColor = LazyUi.getConfig.primaryColor;
+    String message = this.message ?? LazyUi.getConfig.widgets['no_data']?['message'] ?? 'No Data';
+    String onTapMessage = this.onTapMessage ?? LazyUi.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
 
     return Container(
       padding: Ei.all(20),
@@ -375,7 +375,7 @@ class Loader extends StatelessWidget {
   }
 
   static Widget bar({String? message, bool center = true}) {
-    TextStyle? textStyle = LazyConfig.getConfig.textStyle;
+    TextStyle? textStyle = LazyUi.getConfig.textStyle;
 
     Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(

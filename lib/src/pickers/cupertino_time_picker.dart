@@ -161,7 +161,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
               ));
     }
 
-    double radius = LazyConfig.getConfig.radius;
+    double radius = LazyUi.getConfig.radius;
 
     return ScrollConfiguration(
       behavior: NoScrollGlow(),
