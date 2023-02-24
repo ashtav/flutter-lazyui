@@ -1,0 +1,10 @@
+{
+    "id": 1,
+    "name": "John Doe",
+    "active": true,
+    "weight": 80.5,
+    "hobbies": [
+        "swimming",
+        "reading"
+    ]
+}

@@ -449,4 +449,60 @@ class Utils {
         .replaceAll('&bull;', '•')
         .removeHtmlTag;
   }
+
+  /// ```dart
+  /// Utils.checkModel(String jsonPath, {})
+  /// // jsonPath must be = 'filename.json', put in assets/models
+  /// ```
+  static checkModel(String path, Map<String, dynamic> jsonData) {
+    try {
+      rootBundle.loadString('assets/models/$path').then((jsonStr) {
+        Map<String, dynamic> model = jsonDecode(jsonStr);
+        logg(jsonData);
+        logg(model);
+
+        List<Map<String, Type>> missingKeys = [];
+        List<Map<String, Type>> wrongType = [];
+
+        // check each type of data
+        jsonData.forEach((key, value) {
+          if (model.containsKey(key)) {
+            if (model[key].runtimeType != value.runtimeType) {
+              wrongType.add({key: value.runtimeType});
+            }
+          } else {
+            missingKeys.add({key: value.runtimeType});
+          }
+        });
+
+        String missing = missingKeys.map((e) {
+          String modelType = colorize(model[e.keys.first].runtimeType.toString(), LogColor.yellow);
+          String resType = colorize(e.values.first.toString(), LogColor.yellow);
+
+          return '${colorize(e.keys.first, LogColor.yellow)} ($resType) is missing from your model';
+        }).join(', ');
+
+        String wrong = wrongType.map((e) {
+          String modelType = colorize(model[e.keys.first].runtimeType.toString(), LogColor.yellow);
+          String resType = colorize(e.values.first.toString(), LogColor.yellow);
+
+          return '${colorize(e.keys.first, LogColor.yellow)} of your data must be $modelType not $resType';
+        }).join(', ');
+
+        String message = '''
+You have ${missingKeys.length} missing keys :
+$missing
+
+You have ${wrongType.length} wrong type of data :
+$wrong
+''';
+
+        logg(message, color: LogColor.normal);
+      }).catchError((err) {
+        logg(err);
+      });
+    } catch (e, s) {
+      Utils.errorCatcher(e, s);
+    }
+  }
 }

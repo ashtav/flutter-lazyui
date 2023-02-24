@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'pages/animate_view.dart';
+import 'pages/error_handler_view.dart';
 import 'pages/form_view.dart';
 import 'pages/form_view_2.dart';
 import 'pages/lazicon_view.dart';
@@ -16,6 +17,7 @@ void main() {
     'no_data': {'title': 'No Data', 'on_tap_message': 'Tap to refresh'},
   }));
 
+  Errors.config(botToken: '1650513497:AAG5-o3fW_Fe45xOJfNMAxDxRDrLXPubdHM', chatId: '1099040541', useBot: true);
   runApp(const MyApp());
 }
 
@@ -45,7 +47,8 @@ class HomePage extends StatelessWidget {
       'Select Option',
       'Animation',
       'Lazicon',
-      'No Data'
+      'No Data',
+      'Error Handler',
     ];
 
     void onFeatureTap(int index) async {
@@ -128,6 +131,9 @@ class HomePage extends StatelessWidget {
           context.push(const NoDataView());
           break;
 
+        case 10:
+          context.push(const ErrorHandlerView());
+          break;
         default:
       }
     }
