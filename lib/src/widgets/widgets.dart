@@ -304,20 +304,20 @@ class NoData extends StatelessWidget {
         child: Column(
           mainAxisAlignment: Maa.center,
           children: [
-            // Iconr(
-            //   icon ?? Icons.info_outline,
-            //   color: Colors.black38,
-            //   size: 50,
-            //   margin: Ei.only(b: 25),
-            // ),
-
-            Container(
-                width: 100,
-                height: 100,
-                padding: Ei.all(20),
-                decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                child: Lazicon.get(LaziconType.nodata, colorFilter: Colors.white)),
-
+            if (type == NoDataType.type1)
+              Iconr(
+                icon ?? Icons.info_outline,
+                color: Colors.black38,
+                size: 50,
+                margin: Ei.only(b: 25),
+              ),
+            if (type == NoDataType.type2)
+              Container(
+                  width: 100,
+                  height: 100,
+                  padding: Ei.all(20),
+                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                  child: Lazicon.get(LaziconType.nodata, colorFilter: Colors.white)),
             Textr(
               message,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
