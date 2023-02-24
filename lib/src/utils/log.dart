@@ -1,10 +1,5 @@
 import 'dart:developer';
 
-/// ```dart
-/// logg('lorem ipsum', color: 'r');
-/// // available colors: yellow (y), blue (b), green (g), red (r), purple (p), cyan (c) and bright blue (bb)
-/// ```
-
 enum LogColor { normal, yellow, blue, green, red, purple, cyan, brightBlue }
 
 Map<LogColor, dynamic> colors = {
@@ -20,12 +15,16 @@ Map<LogColor, dynamic> colors = {
 
 String colorize(String value, LogColor color) => '\x1B[${colors[color]}$value\x1B[0m';
 
-void logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
+/// ```dart
+/// // show on debug console with custom color and limit
+/// logg('lorem ipsum', color: LogColor.red, limit: 3000);
+/// ```
+logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
   // max length
   String valueString = '$value';
   String subStr = '$value'.substring(0, valueString.length > limit ? limit : valueString.length);
 
   // print on debug console
-  String message = colorize(subStr, colors[color]);
+  String message = colorize(subStr, color);
   log(subStr.length < valueString.length ? '$message.....' : message, name: name ?? 'LOG');
 }

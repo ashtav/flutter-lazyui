@@ -21,7 +21,7 @@ class ActionController {
   dynamic a = '';
 
   void test() async {
-    Map<String, dynamic> res = {'id': '1', 'name': 'John Doe', 'active': false, 'weight': 1, 'age': 44};
+    Map<String, dynamic> res = {'id': 1, 'name': 'John Doe', 'active': false, 'weight': 1.5};
 
     try {
       Utils.checkModel('user.json', res);

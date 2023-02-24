@@ -451,15 +451,15 @@ class Utils {
   }
 
   /// ```dart
-  /// Utils.checkModel(String jsonPath, {})
+  /// Utils.checkModel('users.json', {'id': 1, 'name': 'John Doe'})
   /// // jsonPath must be = 'filename.json', put in assets/models
   /// ```
-  static checkModel(String path, Map<String, dynamic> jsonData) {
+  static Future<bool> checkModel(String path, Map<String, dynamic> jsonData, {bool ignoreNull = false}) async {
+    bool isOk = true;
+
     try {
       rootBundle.loadString('assets/models/$path').then((jsonStr) {
         Map<String, dynamic> model = jsonDecode(jsonStr);
-        logg(jsonData);
-        logg(model);
 
         List<Map<String, Type>> missingKeys = [];
         List<Map<String, Type>> wrongType = [];
@@ -468,6 +468,11 @@ class Utils {
         jsonData.forEach((key, value) {
           if (model.containsKey(key)) {
             if (model[key].runtimeType != value.runtimeType) {
+              // if ignoreNull is true, then ignore null value
+              if (ignoreNull && value == null) {
+                return;
+              }
+
               wrongType.add({key: value.runtimeType});
             }
           } else {
@@ -476,33 +481,40 @@ class Utils {
         });
 
         String missing = missingKeys.map((e) {
-          String modelType = colorize(model[e.keys.first].runtimeType.toString(), LogColor.yellow);
           String resType = colorize(e.values.first.toString(), LogColor.yellow);
-
           return '${colorize(e.keys.first, LogColor.yellow)} ($resType) is missing from your model';
         }).join(', ');
 
         String wrong = wrongType.map((e) {
           String modelType = colorize(model[e.keys.first].runtimeType.toString(), LogColor.yellow);
           String resType = colorize(e.values.first.toString(), LogColor.yellow);
-
-          return '${colorize(e.keys.first, LogColor.yellow)} of your data must be $modelType not $resType';
+          return '${colorize(e.keys.first, LogColor.yellow)} property of your model must be $resType not $modelType';
         }).join(', ');
 
-        String message = '''
-You have ${missingKeys.length} missing keys :
-$missing
+        String message = '';
 
-You have ${wrongType.length} wrong type of data :
-$wrong
-''';
+        if (missingKeys.isNotEmpty) {
+          isOk = false;
+          message += 'You have ${missingKeys.length} missing keys :\n$missing';
+        }
 
-        logg(message, color: LogColor.normal);
-      }).catchError((err) {
-        logg(err);
-      });
+        if (wrongType.isNotEmpty) {
+          isOk = false;
+
+          if (message.isNotEmpty) message += '\n\n';
+          message += 'You have ${wrongType.length} wrong type of data :\n$wrong';
+        }
+
+        if (message.isNotEmpty) {
+          logg(message, color: LogColor.normal);
+        } else {
+          logg('Your model ($path) is valid. ✓', color: LogColor.green);
+        }
+      }).catchError((err) => logg(err));
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }
+
+    return isOk;
   }
 }
