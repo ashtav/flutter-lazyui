@@ -13,13 +13,13 @@ extension ContextExtension on BuildContext {
   Future<T?> push<T extends Object?>(Widget page) => Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
 
   // show dialog
-  void dialog(Widget widget, {bool dismiss = true}) {
-    showDialog(context: this, barrierDismissible: dismiss, builder: (_) => widget);
+  Future<T?> dialog<T extends Object?>(Widget widget, {bool dismiss = true}) {
+    return showDialog<T>(context: this, barrierDismissible: dismiss, builder: (_) => widget);
   }
 
   // show bottom sheet
-  void bottomSheet(Widget widget, {bool dismiss = true, Color? backgroundColor, bool isScrollControlled = false}) {
-    showModalBottomSheet(
+  Future<T?> bottomSheet<T extends Object?>(Widget widget, {bool dismiss = true, Color? backgroundColor, bool isScrollControlled = false}) {
+    return showModalBottomSheet<T>(
         context: this,
         backgroundColor: backgroundColor ?? Colors.transparent,
         isDismissible: dismiss,
