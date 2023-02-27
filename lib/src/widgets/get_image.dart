@@ -35,16 +35,13 @@ class GetImage extends StatelessWidget {
         ),
       );
     } else if (image is String && image.contains('http')) {
-      widget = ClipRRect(
-        borderRadius: Br.radius(radius ?? 0),
-        child: CachedNetworkImage(
-          fit: fit,
-          imageUrl: image,
-          progressIndicatorBuilder: (context, url, downloadProgress) {
-            return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
-          },
-          errorWidget: (context, url, error) => const Center(),
-        ),
+      widget = CachedNetworkImage(
+        fit: fit,
+        imageUrl: image,
+        progressIndicatorBuilder: (context, url, downloadProgress) {
+          return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
+        },
+        errorWidget: (context, url, error) => const Center(),
       );
     } else if (image is String && isSvg) {
       widget = SvgPicture.asset('assets/images/$image',
@@ -53,15 +50,9 @@ class GetImage extends StatelessWidget {
 
     // if path
     else if (image is String && image.split('/').length > 2) {
-      widget = ClipRRect(
-        borderRadius: Br.radius(radius ?? 0),
-        child: Image.file(File(image), fit: fit),
-      );
+      widget = Image.file(File(image), fit: fit);
     } else if (image is Uint8List) {
-      widget = ClipRRect(
-        borderRadius: Br.radius(radius ?? 0),
-        child: Image.memory(image, fit: fit),
-      );
+      widget = Image.memory(image, fit: fit);
     } else if (image is File) {
       widget = ClipRRect(
         borderRadius: Br.radius(radius ?? 0),
@@ -69,12 +60,9 @@ class GetImage extends StatelessWidget {
       );
     } else {
       String path = 'assets/images/$image';
-      widget = ClipRRect(
-        borderRadius: Br.radius(radius ?? 0),
-        child: Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(image: AssetImage(path), fit: fit),
-          ),
+      widget = Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path), fit: fit),
         ),
       );
     }
@@ -90,7 +78,7 @@ class GetImage extends StatelessWidget {
               minHeight: maxSize is List ? maxSize[1]?.toDouble() : maxSize?.toDouble(),
             ),
       margin: margin,
-      child: widget,
+      child: ClipRRect(borderRadius: Br.radius(radius ?? 0), child: widget),
     );
   }
 }
