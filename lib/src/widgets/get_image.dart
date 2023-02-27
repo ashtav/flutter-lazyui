@@ -54,10 +54,7 @@ class GetImage extends StatelessWidget {
     } else if (image is Uint8List) {
       widget = Image.memory(image, fit: fit);
     } else if (image is File) {
-      widget = ClipRRect(
-        borderRadius: Br.radius(radius ?? 0),
-        child: Image.file(image, fit: fit),
-      );
+      widget = Image.file(image, fit: fit);
     } else {
       String path = 'assets/images/$image';
       widget = Container(
@@ -67,18 +64,23 @@ class GetImage extends StatelessWidget {
       );
     }
 
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 200),
-      width: size is List<num> ? size[0]?.toDouble() : size?.toDouble(),
-      height: size is List<num> ? size[1]?.toDouble() : size?.toDouble(),
-      constraints: maxSize == null
-          ? null
-          : BoxConstraints(
-              minWidth: maxSize is List ? maxSize[0]?.toDouble() : maxSize?.toDouble(),
-              minHeight: maxSize is List ? maxSize[1]?.toDouble() : maxSize?.toDouble(),
-            ),
-      margin: margin,
-      child: ClipRRect(borderRadius: Br.radius(radius ?? 0), child: widget),
+    return Column(
+      mainAxisSize: Mas.min,
+      children: [
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          width: size is List<num> ? size[0]?.toDouble() : size?.toDouble(),
+          height: size is List<num> ? size[1]?.toDouble() : size?.toDouble(),
+          constraints: maxSize == null
+              ? null
+              : BoxConstraints(
+                  minWidth: maxSize is List ? maxSize[0]?.toDouble() : maxSize?.toDouble(),
+                  minHeight: maxSize is List ? maxSize[1]?.toDouble() : maxSize?.toDouble(),
+                ),
+          margin: margin,
+          child: ClipRRect(borderRadius: Br.radius(radius ?? 0), child: widget),
+        ),
+      ],
     );
   }
 }
