@@ -10,10 +10,7 @@ environment:
 
 dependencies:
   animator: ^3.2.0
-  build_runner: ^2.3.3
-  built_value_generator: ^8.4.3
   cached_network_image: ^3.2.3
-  camera: ^0.10.3
   custom_refresh_indicator: ^2.0.1
   device_info_plus: ^8.1.0
   flutter:
@@ -24,10 +21,8 @@ dependencies:
   intl: ^0.17.0
   path_provider: ^2.0.12
   permission_handler: ^10.2.0
-  reflectable: ^4.0.5
   stack_trace: ^1.11.0
   teledart: ^0.5.4
-  transparent_image: ^2.0.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0
