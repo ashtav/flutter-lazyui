@@ -13,11 +13,10 @@ class GetImage extends StatelessWidget {
   final dynamic image;
   final dynamic size, maxSize;
   final BoxFit fit;
-  final double? borderRadius, skeletonRadius;
+  final double? radius;
   final Color? skeletonColor;
   final EdgeInsetsGeometry? margin;
-  const GetImage(this.image,
-      {Key? key, this.size = 100, this.maxSize, this.fit = BoxFit.contain, this.borderRadius, this.skeletonRadius, this.skeletonColor, this.margin})
+  const GetImage(this.image, {Key? key, this.size = 100, this.maxSize, this.fit = BoxFit.contain, this.radius, this.skeletonColor, this.margin})
       : super(key: key);
 
   @override
@@ -32,17 +31,17 @@ class GetImage extends StatelessWidget {
       widget = Container(
         decoration: BoxDecoration(
           color: Utils.hex('f5f5f5'),
-          borderRadius: BorderRadius.circular(borderRadius ?? 0),
+          borderRadius: BorderRadius.circular(radius ?? 0),
         ),
       );
     } else if (image is String && image.contains('http')) {
       widget = ClipRRect(
-        borderRadius: Br.radius(borderRadius ?? 0),
+        borderRadius: Br.radius(radius ?? 0),
         child: CachedNetworkImage(
           fit: fit,
           imageUrl: image,
           progressIndicatorBuilder: (context, url, downloadProgress) {
-            return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: skeletonRadius ?? 10);
+            return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
           },
           errorWidget: (context, url, error) => const Center(),
         ),
@@ -55,23 +54,23 @@ class GetImage extends StatelessWidget {
     // if path
     else if (image is String && image.split('/').length > 2) {
       widget = ClipRRect(
-        borderRadius: Br.radius(borderRadius ?? 0),
+        borderRadius: Br.radius(radius ?? 0),
         child: Image.file(File(image), fit: fit),
       );
     } else if (image is Uint8List) {
       widget = ClipRRect(
-        borderRadius: Br.radius(borderRadius ?? 0),
+        borderRadius: Br.radius(radius ?? 0),
         child: Image.memory(image, fit: fit),
       );
     } else if (image is File) {
       widget = ClipRRect(
-        borderRadius: Br.radius(borderRadius ?? 0),
+        borderRadius: Br.radius(radius ?? 0),
         child: Image.file(image, fit: fit),
       );
     } else {
       String path = 'assets/images/$image';
       widget = ClipRRect(
-        borderRadius: Br.radius(borderRadius ?? 0),
+        borderRadius: Br.radius(radius ?? 0),
         child: Container(
           decoration: BoxDecoration(
             image: DecorationImage(image: AssetImage(path), fit: fit),
