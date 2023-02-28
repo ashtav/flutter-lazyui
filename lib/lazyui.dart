@@ -15,6 +15,7 @@ export 'src/extensions/context_extension.dart';
 export 'src/extensions/datetime_extension.dart';
 export 'src/extensions/dynamic_extension.dart';
 export 'src/extensions/file_extension.dart';
+export 'src/extensions/widget_extension.dart';
 export 'src/extensions/int_extension.dart';
 export 'src/extensions/list_extension.dart';
 export 'src/extensions/map_extension.dart';
