@@ -66,6 +66,7 @@ class FormView extends StatelessWidget {
       bottomNavigationBar: Forms.button(
         text: 'Submit',
         icon: La.check,
+        type: ButtonType.dark,
         onTap: () {},
       ),
     );

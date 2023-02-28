@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../lazyui.dart';
 
-enum ButtonType { primary, secondary, danger, success, warning }
+enum ButtonType { primary, secondary, danger, success, warning, dark }
 
 class Button extends StatelessWidget {
   final String? text;

@@ -11,6 +11,7 @@ class Select extends StatelessWidget {
   final BorderRadius? borderRadius;
   final BoxBorder? border;
   final Function(TextEditingController? form, Option? option)? onSelect;
+  final Function()? onTap;
   final TextEditingController? controller;
   final TextStyle? textStyle;
   final List<Option> options;
@@ -26,6 +27,7 @@ class Select extends StatelessWidget {
     this.border,
     this.margin,
     this.onSelect,
+    this.onTap,
     this.controller,
     this.textStyle,
     this.options = const [],
@@ -46,7 +48,11 @@ class Select extends StatelessWidget {
         options: options,
         margin: margin,
         onTap: (Option? option, Function(Option) action) {
-          open(context, option, onSelect: (o) => action(o));
+          bool ok = onTap?.call() ?? true;
+
+          if (ok) {
+            open(context, option, onSelect: (o) => action(o));
+          }
         });
   }
 
@@ -68,18 +74,20 @@ class Select extends StatelessWidget {
 
   Select copyWith({EdgeInsetsGeometry? margin, BoxBorder? border, BorderRadius? borderRadius, String? hint, TextEditingController? controller}) {
     return Select(
-        label: label,
-        icon: icon,
-        hint: hint,
-        maxLines: maxLines,
-        enabled: enabled,
-        borderRadius: borderRadius,
-        border: border,
-        margin: margin,
-        controller: controller,
-        textStyle: textStyle,
-        options: options,
-        onSelect: onSelect);
+      label: label,
+      icon: icon,
+      hint: hint,
+      maxLines: maxLines,
+      enabled: enabled,
+      borderRadius: borderRadius,
+      border: border,
+      margin: margin,
+      controller: controller,
+      textStyle: textStyle,
+      options: options,
+      onSelect: onSelect,
+      onTap: onTap,
+    );
   }
 }
 
@@ -176,6 +184,7 @@ class _SelectWidgetState extends State<SelectWidget> {
                     ),
                     const Icon(
                       La.angleDown,
+                      size: 17,
                     )
                   ],
                 ))

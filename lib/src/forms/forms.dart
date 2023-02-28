@@ -274,10 +274,11 @@ class Forms {
     String? hint,
     int? maxLines,
     bool enabled = true,
-    BorderRadius? borderRadius,
+    BorderRadius? radius,
     BoxBorder? border,
     EdgeInsetsGeometry? margin,
     dynamic Function(TextEditingController?, Option?)? onSelect,
+    bool Function()? onTap,
     TextEditingController? controller,
     TextStyle? textStyle,
     List<Option> options = const [],
@@ -289,10 +290,11 @@ class Forms {
           hint: hint,
           maxLines: maxLines,
           enabled: enabled,
-          borderRadius: borderRadius,
+          borderRadius: radius,
           border: border,
           margin: margin,
           onSelect: onSelect,
+          onTap: onTap,
           controller: controller,
           textStyle: textStyle,
           options: options);
@@ -345,6 +347,12 @@ class Forms {
   | Switches
   |------------------------------------------------------------*/
 
+  /// ```dart
+  /// Forms.switches(
+  ///   label: 'Available|Not Available',
+  ///   onChanged: (value) {},
+  /// )
+  /// ```
   static Switches switches({
     Key? key,
     required String label,

@@ -288,7 +288,11 @@ class _InputFieldState extends State<InputField> {
               )
             : widget.onTap == null
                 ? widget.suffixIcon ?? const None()
-                : widget.suffixIcon ?? const Icon(La.angleDown),
+                : widget.suffixIcon ??
+                    const Icon(
+                      La.angleDown,
+                      size: 17,
+                    ),
       ],
     ));
   }
