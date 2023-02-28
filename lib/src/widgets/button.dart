@@ -10,7 +10,7 @@ class Button extends StatelessWidget {
   final Function()? onTap;
   final ButtonType type;
   final bool gradient, submit;
-  final double? space, radius;
+  final double? spacing, radius, width;
   final EdgeInsetsGeometry? margin;
 
   const Button(
@@ -21,8 +21,9 @@ class Button extends StatelessWidget {
       this.type = ButtonType.primary,
       this.gradient = false,
       this.submit = false,
-      this.space,
+      this.spacing,
       this.radius,
+      this.width,
       this.margin});
 
   @override
@@ -47,7 +48,7 @@ class Button extends StatelessWidget {
 
     Widget button = InkW(
       onTap: submit ? null : () => onTap?.call(),
-      padding: Ei.sym(v: 16, h: space ?? 20),
+      padding: Ei.sym(v: 16, h: spacing ?? 20),
       radius: Br.radius(this.radius ?? radius),
       color: gradient ? null : bgColors[type],
       child: Row(
@@ -81,6 +82,8 @@ class Button extends StatelessWidget {
         ),
         child: ClipRRect(borderRadius: Br.radius(this.radius ?? radius), child: button));
 
-    return Container(margin: margin, child: Opacity(opacity: submit ? 0.5 : 1, child: gradient ? buttonGradient : button));
+    Widget finalWidget = Container(margin: margin, child: Opacity(opacity: submit ? 0.5 : 1, child: gradient ? buttonGradient : button));
+
+    return width != null ? SizedBox(width: width, child: finalWidget) : finalWidget;
   }
 }
