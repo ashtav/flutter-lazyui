@@ -219,6 +219,7 @@ class DropdownDialog extends StatelessWidget {
       Offset? offset,
       bool top = false,
       BorderRadiusGeometry? borderRadius,
+      Color? barrierColor,
       DropdownCaret? caret,
       void Function(String value, int index)? onSelect}) {
     if (options.isEmpty) return;
@@ -243,6 +244,7 @@ class DropdownDialog extends StatelessWidget {
 
     showDialog(
         context: context,
+        barrierColor: barrierColor,
         builder: (_) => DropdownPositioned(
             offset: top && offset != null ? offset : Offset(x, y),
             options: options,
