@@ -244,7 +244,7 @@ class DropdownDialog extends StatelessWidget {
 
     showDialog(
         context: context,
-        barrierColor: barrierColor,
+        barrierColor: barrierColor ?? Colors.black54,
         builder: (_) => DropdownPositioned(
             offset: top && offset != null ? offset : Offset(x, y),
             options: options,

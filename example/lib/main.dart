@@ -119,11 +119,14 @@ class HomePage extends StatelessWidget {
 
         case 6:
           List<Option> options = List.generate(5, (i) => Option(option: Lipsum.createWord(3), value: i));
-          context.bottomSheet(SelectPicker(
-              options: options,
-              onSelect: (option) {
-                logg(option.option);
-              }));
+          context.bottomSheet(
+              SelectPicker(
+                  options: options,
+                  onSelect: (option) {
+                    logg(option.option);
+                  }),
+              useSafeArea: false,
+              enableDrag: true);
 
           break;
 

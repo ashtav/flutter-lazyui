@@ -37,7 +37,7 @@ extension ContextExtension on BuildContext {
       {bool dismiss = true, bool useSafeArea = true, bool enableDrag = false, Color? backgroundColor, bool isScrollControlled = true}) {
     Widget wrapper(Widget child) => Container(
         padding: Ei.only(t: useSafeArea ? MediaQueryData.fromWindow(window).padding.top : 0),
-        decoration: BoxDecoration(color: backgroundColor ?? Colors.white),
+        decoration: BoxDecoration(color: backgroundColor ?? (useSafeArea ? Colors.white : Colors.transparent)),
         child: child);
 
     return showModalBottomSheet<T>(
