@@ -366,17 +366,21 @@ class Forms {
           String? text,
           dynamic Function()? onTap,
           ButtonType type = ButtonType.primary,
-          bool withShadow = true,
+          bool shadow = true,
+          bool gradient = false,
           bool submit = false,
-          double space = 20}) =>
+          double space = 20,
+          double? radius}) =>
       Button(
         icon: icon,
         text: text,
         onTap: onTap,
         type: type,
-        withShadow: withShadow,
+        shadow: shadow,
+        gradient: gradient,
         submit: submit,
-        space: space,
+        spacing: space,
+        radius: radius,
       );
 }
 

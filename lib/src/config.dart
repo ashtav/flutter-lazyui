@@ -4,6 +4,7 @@ import 'utils/utils.dart';
 
 Map _____config = {
   'radius': 2.0,
+  'spacing': 20.0,
   'primary_color': '#212121',
   'text_style': const TextStyle(color: Colors.black87, fontSize: 16),
   'widgets': {
@@ -13,23 +14,23 @@ Map _____config = {
 };
 
 class LazyUiOptions {
-  final double radius;
+  final double radius, spacing;
   final Color primaryColor;
   final Map widgets;
   final TextStyle? textStyle;
 
-  LazyUiOptions({this.radius = 2, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
+  LazyUiOptions({this.radius = 2, this.spacing = 20.0, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
 
-  Map toMap() => {'radius': radius, 'primary_color': primaryColor, 'widgets': widgets};
+  Map toMap() => {'radius': radius, 'spacing': spacing, 'primary_color': primaryColor, 'widgets': widgets};
 }
 
 class LazyUi {
-  final double radius;
+  final double radius, spacing;
   final Color primaryColor;
   final Map widgets;
   final TextStyle? textStyle;
 
-  LazyUi({this.radius = 2, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
+  LazyUi({this.radius = 2, this.spacing = 20.0, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
 
   // getters
   static LazyUiOptions get getConfig {
@@ -37,6 +38,9 @@ class LazyUi {
 
     // Get radius
     double radius = config['radius'] is double ? config['radius'] : double.parse(config['radius'].toString());
+
+    // Get spacing
+    double spacing = config['spacing'] is double ? config['spacing'] : double.parse(config['spacing'].toString());
 
     // Get primary color
     Color primaryColor = config['primary_color'] is String ? Utils.hex(config['primary_color']) : config['primary_color'];
@@ -48,7 +52,7 @@ class LazyUi {
     TextStyle textStyle = config['text_style'] is TextStyle ? config['text_style'] : const TextStyle(color: Colors.black87, fontSize: 16);
 
     // Return config
-    return LazyUiOptions(radius: radius, primaryColor: primaryColor, widgets: widgets, textStyle: textStyle);
+    return LazyUiOptions(radius: radius, spacing: spacing, primaryColor: primaryColor, widgets: widgets, textStyle: textStyle);
   }
 
   // setters

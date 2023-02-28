@@ -363,6 +363,47 @@ class Poslign extends StatelessWidget {
   }
 }
 
+class Box extends StatelessWidget {
+  final Widget? child;
+  final EdgeInsetsGeometry? padding, margin;
+  final BoxBorder? border;
+  final Color? color;
+  final BorderRadiusGeometry? radius;
+  final List<BoxShadow>? boxShadow;
+  final Gradient? gradient;
+  final BoxShape shape;
+  const Box(
+      {super.key,
+      this.child,
+      this.padding,
+      this.margin,
+      this.border,
+      this.color,
+      this.radius,
+      this.boxShadow,
+      this.gradient,
+      this.shape = BoxShape.rectangle});
+
+  @override
+  Widget build(BuildContext context) {
+    double spacing = LazyUi.getConfig.spacing;
+    double radius = LazyUi.getConfig.radius;
+
+    return Container(
+      padding: padding ?? Ei.all(spacing),
+      margin: margin,
+      decoration: BoxDecoration(
+          border: border ?? Br.all(),
+          color: color ?? Colors.white,
+          borderRadius: this.radius ?? Br.radius(radius),
+          boxShadow: boxShadow,
+          gradient: gradient,
+          shape: shape),
+      child: child,
+    );
+  }
+}
+
 class Loader extends StatelessWidget {
   final double size, stroke;
   final EdgeInsetsGeometry? margin;
