@@ -46,7 +46,6 @@ class FormView extends StatelessWidget {
               controller: city,
               onTap: (control) async {
                 control.options = List.generate(cities.length, (i) => Option(option: cities[i]));
-                return true;
               }),
           FormsGroup(children: [
             Forms.select(

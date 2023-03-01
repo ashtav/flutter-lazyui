@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -16,7 +18,7 @@ class Select extends StatelessWidget {
   final BorderRadius? borderRadius;
   final BoxBorder? border;
   final Function(TextEditingController? form, Option? option)? onSelect;
-  final Future<bool> Function(SelectController selectController)? onTap;
+  final Future? Function(SelectController selectController)? onTap;
   final TextEditingController? controller;
   final TextStyle? textStyle;
   final List<Option> options;
@@ -55,7 +57,11 @@ class Select extends StatelessWidget {
         options: options,
         margin: margin,
         onTap: (Option? option, Function(Option) action) async {
-          bool ok = await onTap?.call(selectController) ?? true;
+          dynamic ok = await onTap?.call(selectController) ?? true;
+
+          if ((ok! is bool)) {
+            ok = true;
+          }
 
           if (ok && context.mounted) {
             open(context, option, onSelect: (o) => action(o), localOptions: selectController.options);
