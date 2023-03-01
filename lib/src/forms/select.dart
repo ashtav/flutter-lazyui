@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class SelectController {
+  String? label;
   List<Option>? options;
-  SelectController({this.options});
+  SelectController({this.label, this.options});
 }
 
 class Select extends StatelessWidget {
@@ -42,7 +43,7 @@ class Select extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SelectController selectController = SelectController();
+    SelectController selectController = SelectController(label: label.replaceAll('*', '').trim());
 
     return SelectWidget(
         label: label,
