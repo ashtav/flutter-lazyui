@@ -279,7 +279,7 @@ class Forms {
     BorderRadius? radius,
     BoxBorder? border,
     EdgeInsetsGeometry? margin,
-    dynamic Function(TextEditingController?, Option?)? onSelect,
+    dynamic Function(SelectController selectController, Option?)? onSelect,
     Future? Function(SelectController selectController)? onTap,
     TextEditingController? controller,
     TextStyle? textStyle,

@@ -6,7 +6,9 @@ import 'package:lazyui/lazyui.dart';
 class SelectController {
   String? label;
   List<Option>? options;
-  SelectController({this.label, this.options});
+  TextEditingController? controller;
+
+  SelectController({this.label, this.options, this.controller});
 }
 
 class Select extends StatelessWidget {
@@ -18,7 +20,7 @@ class Select extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final BorderRadius? borderRadius;
   final BoxBorder? border;
-  final Function(TextEditingController? form, Option? option)? onSelect;
+  final Function(SelectController selectController, Option? option)? onSelect;
   final Future? Function(SelectController selectController)? onTap;
   final TextEditingController? controller;
   final TextStyle? textStyle;
@@ -43,7 +45,7 @@ class Select extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SelectController selectController = SelectController(label: label.replaceAll('*', '').trim());
+    SelectController selectController = SelectController(label: label.replaceAll('*', '').trim(), controller: controller);
 
     return SelectWidget(
         label: label,
@@ -65,12 +67,13 @@ class Select extends StatelessWidget {
           }
 
           if (ok && context.mounted) {
-            open(context, option, onSelect: (o) => action(o), localOptions: selectController.options);
+            open(context, selectController, option, onSelect: (o) => action(o), localOptions: selectController.options);
           }
         });
   }
 
-  Future open(BuildContext context, Option? option, {required Function(Option) onSelect, List<Option>? localOptions}) async {
+  Future open(BuildContext context, SelectController selectController, Option? option,
+      {required Function(Option) onSelect, List<Option>? localOptions}) async {
     if (options.isEmpty && (localOptions == null || localOptions.isEmpty)) return;
 
     FocusScope.of(context).unfocus();
@@ -81,7 +84,7 @@ class Select extends StatelessWidget {
             initialValue: option,
             options: localOptions ?? options,
             onSelect: (option) {
-              this.onSelect?.call(controller, option);
+              this.onSelect?.call(selectController, option);
               controller?.text = option.option ?? '';
               onSelect.call(option);
             })));
@@ -115,7 +118,7 @@ class SelectWidget extends StatefulWidget {
   final EdgeInsetsGeometry? margin;
   final BorderRadius? borderRadius;
   final BoxBorder? border;
-  final Function(TextEditingController? form, Option? option)? onSelect;
+  final Function(SelectController selectController, Option? option)? onSelect;
   final TextEditingController? controller;
   final TextStyle? textStyle;
   final List<Option> options;
