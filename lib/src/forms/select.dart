@@ -11,7 +11,7 @@ class Select extends StatelessWidget {
   final BorderRadius? borderRadius;
   final BoxBorder? border;
   final Function(TextEditingController? form, Option? option)? onSelect;
-  final Function()? onTap;
+  final Future<bool> Function()? onTap;
   final TextEditingController? controller;
   final TextStyle? textStyle;
   final List<Option> options;
@@ -47,10 +47,10 @@ class Select extends StatelessWidget {
         textStyle: textStyle,
         options: options,
         margin: margin,
-        onTap: (Option? option, Function(Option) action) {
-          bool ok = onTap?.call() ?? true;
+        onTap: (Option? option, Function(Option) action) async {
+          bool ok = await onTap?.call() ?? true;
 
-          if (ok) {
+          if (ok && context.mounted) {
             open(context, option, onSelect: (o) => action(o));
           }
         });
