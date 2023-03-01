@@ -79,8 +79,11 @@ class Forms {
   /// ```dart
   /// Forms.reset(forms)
   /// ```
-  static void reset(Map<String, TextEditingController> forms) {
+  static void reset(Map<String, TextEditingController> forms, {List<String> only = const [], List<String> except = const []}) {
     forms.forEach((key, value) {
+      if (only.isNotEmpty && !only.contains(key)) return;
+      if (except.isNotEmpty && except.contains(key)) return;
+
       value.clear();
     });
   }

@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:lazyui/src/utils/log.dart';
+
 extension ListExtension on List {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
@@ -11,6 +13,8 @@ extension ListExtension on List {
     }
     return result;
   }
+
+  void logs() => forEach((e) => logg(e));
 }
 
 extension ListNumExtension on List<num> {

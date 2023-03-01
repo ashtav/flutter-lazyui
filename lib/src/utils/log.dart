@@ -28,3 +28,9 @@ logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? 
   String message = colorize(subStr, color);
   log(subStr.length < valueString.length ? '$message.....' : message, name: name ?? 'LOG');
 }
+
+logs(List values, {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
+  for (var value in values) {
+    logg(value, color: color, limit: limit, name: name);
+  }
+}
