@@ -40,6 +40,14 @@ class FormView extends StatelessWidget {
             Forms.radio(label: 'Gender', options: const ['Male', 'Female'], controller: gender),
             Forms.checkbox(label: 'Hobby', options: hobbies, controller: hobby, disabled: const [1, 3]),
           ]),
+          Forms.select(
+              label: 'Control Your Options',
+              hint: 'Select your city',
+              controller: city,
+              onTap: (control) async {
+                control.options = List.generate(cities.length, (i) => Option(option: cities[i]));
+                return true;
+              }),
           FormsGroup(children: [
             Forms.select(
               label: 'City',

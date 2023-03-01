@@ -64,7 +64,8 @@ class Select extends StatelessWidget {
   }
 
   Future open(BuildContext context, Option? option, {required Function(Option) onSelect, List<Option>? localOptions}) async {
-    if (options.isEmpty) return;
+    if (options.isEmpty && (localOptions == null || localOptions.isEmpty)) return;
+
     FocusScope.of(context).unfocus();
     showModalBottomSheet(
         context: context,
