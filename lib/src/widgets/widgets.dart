@@ -87,7 +87,7 @@ class Textr extends StatelessWidget {
             size: (style?.fontSize ?? 15) + 5,
             margin: Ei.only(r: iconSpace),
           ),
-          textWidget,
+          Flexible(child: textWidget),
         ],
       );
 
@@ -445,7 +445,7 @@ class Padder extends StatelessWidget {
       {super.key,
       this.children = const [],
       this.padding,
-      this.crossAxisAlignment = Caa.center,
+      this.crossAxisAlignment = Caa.start,
       this.mainAxisAlignment = Maa.start,
       this.mainAxisSize = Mas.max});
 
