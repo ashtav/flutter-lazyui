@@ -46,6 +46,7 @@ class Textr extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final IconData? icon;
   final double iconSpace;
+  final CrossAxisAlignment iconPosition;
 
   const Textr(this.text,
       {Key? key,
@@ -62,7 +63,8 @@ class Textr extends StatelessWidget {
       this.alignment,
       this.border,
       this.icon,
-      this.iconSpace = 12})
+      this.iconSpace = 12,
+      this.iconPosition = Caa.start})
       : super(key: key);
 
   @override
@@ -80,11 +82,12 @@ class Textr extends StatelessWidget {
     if (icon != null) {
       Widget textIconWidget = Row(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: iconPosition,
         children: [
           Iconr(
             icon!,
             color: style?.color,
-            size: (style?.fontSize ?? 15) + 5,
+            size: (style?.fontSize ?? 15) + 4,
             margin: Ei.only(r: iconSpace),
           ),
           Flexible(child: textWidget),
