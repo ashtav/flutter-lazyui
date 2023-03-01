@@ -278,7 +278,7 @@ class Forms {
     BoxBorder? border,
     EdgeInsetsGeometry? margin,
     dynamic Function(TextEditingController?, Option?)? onSelect,
-    Future<bool> Function()? onTap,
+    Future<bool> Function(SelectController selectController)? onTap,
     TextEditingController? controller,
     TextStyle? textStyle,
     List<Option> options = const [],

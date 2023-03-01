@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+class SelectController {
+  List<Option>? options;
+  SelectController({this.options});
+}
+
 class Select extends StatelessWidget {
   final String label;
   final IconData? icon;
@@ -11,7 +16,7 @@ class Select extends StatelessWidget {
   final BorderRadius? borderRadius;
   final BoxBorder? border;
   final Function(TextEditingController? form, Option? option)? onSelect;
-  final Future<bool> Function()? onTap;
+  final Future<bool> Function(SelectController selectController)? onTap;
   final TextEditingController? controller;
   final TextStyle? textStyle;
   final List<Option> options;
@@ -35,6 +40,8 @@ class Select extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SelectController selectController = SelectController();
+
     return SelectWidget(
         label: label,
         hint: hint,
@@ -48,15 +55,15 @@ class Select extends StatelessWidget {
         options: options,
         margin: margin,
         onTap: (Option? option, Function(Option) action) async {
-          bool ok = await onTap?.call() ?? true;
+          bool ok = await onTap?.call(selectController) ?? true;
 
           if (ok && context.mounted) {
-            open(context, option, onSelect: (o) => action(o));
+            open(context, option, onSelect: (o) => action(o), localOptions: selectController.options);
           }
         });
   }
 
-  Future open(BuildContext context, Option? option, {required Function(Option) onSelect}) async {
+  Future open(BuildContext context, Option? option, {required Function(Option) onSelect, List<Option>? localOptions}) async {
     if (options.isEmpty) return;
     FocusScope.of(context).unfocus();
     showModalBottomSheet(
@@ -64,7 +71,7 @@ class Select extends StatelessWidget {
         backgroundColor: Colors.transparent,
         builder: ((context) => SelectPicker(
             initialValue: option,
-            options: options,
+            options: localOptions ?? options,
             onSelect: (option) {
               this.onSelect?.call(controller, option);
               controller?.text = option.option ?? '';
