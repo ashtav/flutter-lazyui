@@ -44,6 +44,8 @@ class Textr extends StatelessWidget {
   final BoxBorder? border;
   final double? width;
   final AlignmentGeometry? alignment;
+  final IconData? icon;
+  final double iconSpace;
 
   const Textr(this.text,
       {Key? key,
@@ -58,18 +60,42 @@ class Textr extends StatelessWidget {
       this.softwrap,
       this.maxLines,
       this.alignment,
-      this.border})
+      this.border,
+      this.icon,
+      this.iconSpace = 12})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: alignment,
-      padding: padding,
-      margin: margin,
-      width: width,
-      decoration: BoxDecoration(border: border, borderRadius: radius),
-      child: Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines),
+    Widget wrapper(Widget child) => Container(
+        alignment: alignment,
+        padding: padding,
+        margin: margin,
+        width: width,
+        decoration: BoxDecoration(border: border, borderRadius: radius),
+        child: child);
+
+    Widget textWidget = Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines);
+
+    if (icon != null) {
+      Widget textIconWidget = Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Iconr(
+            icon!,
+            color: style?.color,
+            size: (style?.fontSize ?? 15) + 5,
+            margin: Ei.only(r: iconSpace),
+          ),
+          textWidget,
+        ],
+      );
+
+      return wrapper(textIconWidget);
+    }
+
+    return wrapper(
+      Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines),
     );
   }
 }
@@ -372,6 +398,8 @@ class Box extends StatelessWidget {
   final List<BoxShadow>? boxShadow;
   final Gradient? gradient;
   final BoxShape shape;
+  final BoxConstraints? constraints;
+
   const Box(
       {super.key,
       this.child,
@@ -382,7 +410,8 @@ class Box extends StatelessWidget {
       this.radius,
       this.boxShadow,
       this.gradient,
-      this.shape = BoxShape.rectangle});
+      this.shape = BoxShape.rectangle,
+      this.constraints});
 
   @override
   Widget build(BuildContext context) {
@@ -392,6 +421,7 @@ class Box extends StatelessWidget {
     return Container(
       padding: padding ?? Ei.all(spacing),
       margin: margin,
+      constraints: constraints,
       decoration: BoxDecoration(
           border: border ?? Br.all(),
           color: color ?? Colors.white,
@@ -400,6 +430,35 @@ class Box extends StatelessWidget {
           gradient: gradient,
           shape: shape),
       child: child,
+    );
+  }
+}
+
+class Padder extends StatelessWidget {
+  final List<Widget> children;
+  final EdgeInsetsGeometry? padding;
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
+  final MainAxisSize mainAxisSize;
+
+  const Padder(
+      {super.key,
+      this.children = const [],
+      this.padding,
+      this.crossAxisAlignment = Caa.center,
+      this.mainAxisAlignment = Maa.start,
+      this.mainAxisSize = Mas.max});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: padding ?? Ei.all(20),
+      child: Column(
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisAlignment: mainAxisAlignment,
+        mainAxisSize: mainAxisSize,
+        children: children,
+      ),
     );
   }
 }
