@@ -12,8 +12,14 @@ Map<String, dynamic> _errorConfig = {
 class ErrorInfo {
   final String? device, botToken, chatId;
   final String error;
+  final NetworkError? networkError;
 
-  ErrorInfo({this.device, this.botToken, this.chatId, required this.error});
+  ErrorInfo({this.device, this.botToken, this.chatId, required this.error, this.networkError});
+}
+
+class NetworkError {
+  final String? baseUrl, path;
+  NetworkError({this.baseUrl, this.path});
 }
 
 class Errors {
@@ -35,7 +41,7 @@ class Errors {
   /// ```
   /// `useList` = `true`, will show the list of function that related to the error
 
-  static check(e, StackTrace s, {bool? useList, bool disabledBot = false}) async {
+  static check(e, StackTrace s, {bool? useList, bool disabledBot = false, NetworkError? networkError}) async {
     try {
       // ---------------------------------------------------------------------
       // Check Errors Caused by Internet Connection
@@ -74,6 +80,21 @@ Try to check [$member]''';
         }
 
         // ---------------------------------------------------------------------
+        // Check Connection Timeout
+        bool isTimeOut = errorMessage.contains('connectTimeout');
+
+        if (isTimeOut) {
+          if (networkError != null) {
+            String baseUrl = networkError.baseUrl ?? '';
+            String path = networkError.path ?? '';
+
+            return logg('Connection timeout, $baseUrl/$path', name: 'ERROR');
+          }
+
+          return logg('Connection timeout', name: 'ERROR');
+        }
+
+        // ---------------------------------------------------------------------
         // Bot Usage
 
         String botToken = _errorConfig['bot']['token'] ?? '';
@@ -101,15 +122,22 @@ Try to check [$member]''';
           }
 
           String device = '$brand $model ($system $sdk)';
+          List<String> messages = [errorMessage, '<b>Details</b>', device];
 
-          String message = '''$errorMessage
+          if (networkError != null) {
+            String baseUrl = networkError.baseUrl ?? '';
+            String path = networkError.path ?? '';
 
-<b>Details</b>
-$device''';
+            messages.insert(2, '$baseUrl/$path');
+          }
+
+          // join messages
+          String message = messages.join('\n');
 
           if (_errorConfig['error_info'] != null) {
             void Function(ErrorInfo info) errorBuilder = _errorConfig['error_info'];
-            ErrorInfo info = ErrorInfo(device: device, error: errorMessage.toString(), botToken: botToken, chatId: chatId);
+            ErrorInfo info =
+                ErrorInfo(device: device, error: errorMessage.toString(), botToken: botToken, chatId: chatId, networkError: networkError);
 
             errorBuilder(info);
           } else {
