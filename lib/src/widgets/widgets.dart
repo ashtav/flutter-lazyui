@@ -432,7 +432,7 @@ class Box extends StatelessWidget {
           boxShadow: boxShadow,
           gradient: gradient,
           shape: shape),
-      child: child,
+      child: ClipRRect(borderRadius: this.radius ?? Br.radius(radius), child: child),
     );
   }
 }

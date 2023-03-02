@@ -74,7 +74,7 @@ class Br {
 | */
 
 class Ei {
-  static const EdgeInsets none = EdgeInsets.zero;
+  static const EdgeInsets zero = EdgeInsets.zero;
 
   static EdgeInsets only({double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) =>
       EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others);

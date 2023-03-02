@@ -432,13 +432,13 @@ class FormsGroup extends StatelessWidget {
                   BorderRadius? zero = BorderRadius.zero;
 
                   if (child is Input) {
-                    child = child.copyWith(margin: Ei.none, controller: child.controller, border: border, borderRadius: zero);
+                    child = child.copyWith(margin: Ei.zero, controller: child.controller, border: border, borderRadius: zero);
                   } else if (child is Select) {
-                    child = child.copyWith(margin: Ei.none, border: border, borderRadius: zero, controller: child.controller, hint: child.hint);
+                    child = child.copyWith(margin: Ei.zero, border: border, borderRadius: zero, controller: child.controller, hint: child.hint);
                   } else if (child is Radio) {
-                    child = child.copyWith(margin: Ei.none, border: border, borderRadius: zero);
+                    child = child.copyWith(margin: Ei.zero, border: border, borderRadius: zero);
                   } else if (child is Checkbox) {
-                    child = child.copyWith(margin: Ei.none, border: border, borderRadius: zero);
+                    child = child.copyWith(margin: Ei.zero, border: border, borderRadius: zero);
                   }
 
                   return Container(
