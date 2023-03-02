@@ -60,14 +60,12 @@ class Select extends StatelessWidget {
         options: options,
         margin: margin,
         onTap: (Option? option, Function(Option) action) async {
-          dynamic ok = await onTap?.call(selectController) ?? true;
+          dynamic res = await onTap?.call(selectController);
+          bool ok = true;
 
-          if ((ok! is bool)) {
-            ok = true;
+          if (res is bool) {
+            ok = res;
           }
-
-          logg(ok, name: 'lazyui');
-          logg(ok.runtimeType, name: 'lazyui');
 
           if (ok && context.mounted) {
             open(context, selectController, option, onSelect: (o) => action(o), localOptions: selectController.options);
