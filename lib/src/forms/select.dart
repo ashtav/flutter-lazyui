@@ -66,6 +66,9 @@ class Select extends StatelessWidget {
             ok = true;
           }
 
+          logg(ok, name: 'lazyui');
+          logg(ok.runtimeType, name: 'lazyui');
+
           if (ok && context.mounted) {
             open(context, selectController, option, onSelect: (o) => action(o), localOptions: selectController.options);
           }
