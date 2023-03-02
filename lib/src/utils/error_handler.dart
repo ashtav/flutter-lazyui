@@ -18,8 +18,8 @@ class ErrorInfo {
 }
 
 class NetworkError {
-  final String? baseUrl, path;
-  NetworkError({this.baseUrl, this.path});
+  final String? baseUrl, path, error;
+  NetworkError({this.baseUrl, this.path, this.error});
 }
 
 class Errors {
@@ -125,13 +125,15 @@ Try to check [$member]''';
           errorMessage = errorMessage.replaceAll('\n', ' ').trim();
 
           String device = '$brand $model ($system $sdk)';
-          List<String> messages = [errorMessage, '<b>Details</b>', device];
+          List<String> messages = [errorMessage, '\n<b>Details</b>', device];
 
           if (networkError != null) {
             String baseUrl = networkError.baseUrl ?? '';
             String path = networkError.path ?? '';
+            String error = networkError.error ?? '';
 
-            messages.insert(2, '$baseUrl/$path');
+            messages[0] = error;
+            messages.insert(2, '$baseUrl\n$path');
           }
 
           // join messages
