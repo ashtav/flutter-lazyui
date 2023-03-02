@@ -32,10 +32,16 @@ class ActionController {
 
   void test() async {
     try {
-      Forms.fill(forms, {'x': '1', 'y': '2'});
-      Forms.reset(forms, only: ['y', 'x'], except: ['x']);
+      String text = "<b>bold</b> <test>hello</test> <i>italic</i>";
+      List<String> allowed = ["b", "i", '/b', '/i'];
 
-      logg(forms.toMap());
+      // Generate a regular expression pattern to match all HTML tags except the allowed ones
+      String pattern = "(</?(?!(${allowed.join('|')})\\b)[^>]+>)";
+
+      // Replace all non-allowed HTML tags with an empty string
+      String filteredText = text.replaceAllMapped(RegExp(pattern), (match) => '');
+
+      logg(filteredText); // "<b>bold</b> hello <i>italic</i>"
     } catch (e, s) {
       Errors.check(e, s, useList: true);
     }

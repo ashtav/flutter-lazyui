@@ -121,6 +121,9 @@ Try to check [$member]''';
             sdk = iosInfo.systemVersion;
           }
 
+          // clear message from space, \n
+          errorMessage = errorMessage.replaceAll('\n', ' ').trim();
+
           String device = '$brand $model ($system $sdk)';
           List<String> messages = [errorMessage, '<b>Details</b>', device];
 
