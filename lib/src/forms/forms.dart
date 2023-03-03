@@ -411,7 +411,7 @@ class FormsGroup extends StatelessWidget {
     double configRadius = LazyUi.getConfig.radius;
 
     return Container(
-      margin: Ei.only(b: 20),
+      margin: Ei.only(b: 15),
       child: Col(
         children: [
           label == null

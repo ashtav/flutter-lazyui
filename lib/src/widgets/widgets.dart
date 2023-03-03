@@ -46,6 +46,7 @@ class Textr extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final IconData? icon;
   final double iconSpace;
+  final Color? iconColor;
   final CrossAxisAlignment iconPosition;
 
   const Textr(this.text,
@@ -64,6 +65,7 @@ class Textr extends StatelessWidget {
       this.border,
       this.icon,
       this.iconSpace = 12,
+      this.iconColor,
       this.iconPosition = Caa.start})
       : super(key: key);
 
@@ -86,7 +88,7 @@ class Textr extends StatelessWidget {
         children: [
           Iconr(
             icon!,
-            color: style?.color,
+            color: iconColor ?? style?.color,
             size: (style?.fontSize ?? 15) + 4,
             margin: Ei.only(r: iconSpace),
           ),
@@ -462,6 +464,25 @@ class Padder extends StatelessWidget {
         mainAxisSize: mainAxisSize,
         children: children,
       ),
+    );
+  }
+}
+
+class Badge extends StatelessWidget {
+  final String text;
+  final Color? color, textColor;
+  final BorderRadiusGeometry? radius;
+  final EdgeInsetsGeometry? padding;
+  const Badge({super.key, required this.text, this.color, this.textColor, this.radius, this.padding});
+
+  @override
+  Widget build(BuildContext context) {
+    Color color = this.color ?? Colors.white;
+
+    return Container(
+      decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: radius ?? Br.radius(3)),
+      padding: padding ?? Ei.sym(v: 3, h: 10),
+      child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor ?? color)),
     );
   }
 }

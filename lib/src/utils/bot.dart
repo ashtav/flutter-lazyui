@@ -11,7 +11,7 @@ class Bot {
 
       // message = message.replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 
-      List<String> allowed = ["b", "i", '/b', '/i'];
+      List<String> allowed = ['b', 'i', '/b', '/i'];
 
       // Generate a regular expression pattern to match all HTML tags except the allowed ones
       String pattern = "(</?(?!(${allowed.join('|')})\\b)[^>]+>)";

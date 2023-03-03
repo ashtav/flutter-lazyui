@@ -5,7 +5,6 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:fluttertoast/fluttertoast.dart';
 export 'package:intl/intl.dart';
 export 'package:path_provider/path_provider.dart';
-export 'package:permission_handler/permission_handler.dart';
 export 'package:stack_trace/stack_trace.dart';
 
 export 'ext/line_awesome.dart';
