@@ -30,7 +30,17 @@ class Iconr extends StatelessWidget {
   }
 }
 
-/// combination betweeen Text and Container
+/// combination betweeen Text, Icon and Container
+
+class IconStyle {
+  final double? size, space;
+  final Color? color;
+  final CrossAxisAlignment position;
+  final bool asSuffix;
+
+  const IconStyle({this.size, this.space, this.color, this.position = Caa.start, this.asSuffix = false});
+}
+
 class Textr extends StatelessWidget {
   final String text;
   final TextStyle? style;
@@ -45,9 +55,7 @@ class Textr extends StatelessWidget {
   final double? width;
   final AlignmentGeometry? alignment;
   final IconData? icon;
-  final double iconSpace;
-  final Color? iconColor;
-  final CrossAxisAlignment iconPosition;
+  final IconStyle? iconStyle;
 
   const Textr(this.text,
       {Key? key,
@@ -64,9 +72,7 @@ class Textr extends StatelessWidget {
       this.alignment,
       this.border,
       this.icon,
-      this.iconSpace = 12,
-      this.iconColor,
-      this.iconPosition = Caa.start})
+      this.iconStyle})
       : super(key: key);
 
   @override
@@ -82,18 +88,23 @@ class Textr extends StatelessWidget {
     Widget textWidget = Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines);
 
     if (icon != null) {
+      double iconSize = iconStyle?.size ?? style?.fontSize ?? 15;
+      bool asSuffix = iconStyle?.asSuffix ?? false;
+
+      List<Widget> children = [
+        Iconr(
+          icon!,
+          color: iconStyle?.color ?? style?.color,
+          size: iconSize + 4,
+          margin: asSuffix ? Ei.only(l: iconStyle?.space ?? 12) : Ei.only(r: iconStyle?.space ?? 12),
+        ),
+        Flexible(child: textWidget),
+      ];
+
       Widget textIconWidget = Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: iconPosition,
-        children: [
-          Iconr(
-            icon!,
-            color: iconColor ?? style?.color,
-            size: (style?.fontSize ?? 15) + 4,
-            margin: Ei.only(r: iconSpace),
-          ),
-          Flexible(child: textWidget),
-        ],
+        crossAxisAlignment: iconStyle?.position ?? Caa.start,
+        children: asSuffix ? children.reversed.toList() : children,
       );
 
       return wrapper(textIconWidget);
@@ -468,21 +479,90 @@ class Padder extends StatelessWidget {
   }
 }
 
-class Badge extends StatelessWidget {
+class Badgee extends StatelessWidget {
   final String text;
   final Color? color, textColor;
   final BorderRadiusGeometry? radius;
   final EdgeInsetsGeometry? padding;
-  const Badge({super.key, required this.text, this.color, this.textColor, this.radius, this.padding});
+  const Badgee({super.key, required this.text, this.color, this.textColor, this.radius, this.padding});
 
   @override
   Widget build(BuildContext context) {
-    Color color = this.color ?? Colors.white;
+    Color color = this.color ?? Colors.orange;
 
     return Container(
       decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: radius ?? Br.radius(3)),
       padding: padding ?? Ei.sym(v: 3, h: 10),
       child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor ?? color)),
+    );
+  }
+}
+
+class Slidebar extends StatelessWidget {
+  final int length;
+
+  /// size = [width, height]
+  final List<double> Function(int index)? size;
+  final int active;
+  final Color? activeColor, color;
+  final double radius;
+  final CrossAxisAlignment position;
+  const Slidebar(
+      {super.key, this.length = 3, this.size, this.active = 0, this.color, this.activeColor, this.radius = 5.0, this.position = Caa.center});
+
+  @override
+  Widget build(BuildContext context) {
+    double width = 10;
+    double height = 10;
+
+    return Row(
+      crossAxisAlignment: position,
+      children: List.generate(length, (i) {
+        if (size != null) {
+          List<double> size = this.size!(i);
+          width = size.isNotEmpty ? size[0] : 10;
+          height = size.length > 1 ? size[1] : 10;
+        }
+
+        return AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          margin: Ei.only(r: 5),
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            color: active == i ? (activeColor ?? Theme.of(context).primaryColor) : (color ?? Colors.grey),
+            borderRadius: BorderRadius.circular(radius),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class TextDivider extends StatelessWidget {
+  final Widget text;
+  final double spacing, lineHeight;
+  final Color? backgroundColor, lineColor;
+  const TextDivider(this.text, {super.key, this.spacing = 15, this.lineHeight = 1, this.backgroundColor, this.lineColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        const SizedBox(
+          height: 30,
+        ),
+        Poslign(
+          alignment: Alignment.center,
+          child: Container(
+            height: lineHeight >= 15 ? 15 : lineHeight,
+            color: lineColor ?? Colors.grey,
+            width: context.width,
+          ),
+        ),
+        Poslign(
+            alignment: Alignment.center, child: Container(padding: Ei.sym(h: spacing), color: backgroundColor ?? Utils.hex('fafafa'), child: text))
+      ],
     );
   }
 }

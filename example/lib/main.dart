@@ -1,3 +1,4 @@
+import 'package:example/pages/another_widget_view.dart';
 import 'package:example/pages/nodata_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -57,6 +58,7 @@ class HomePage extends StatelessWidget {
       'Lazicon',
       'No Data',
       'Error Handler',
+      'Another Widgets'
     ];
 
     void onFeatureTap(int index) async {
@@ -144,6 +146,10 @@ class HomePage extends StatelessWidget {
 
         case 10:
           context.push(const ErrorHandlerView());
+          break;
+
+        case 11:
+          context.push(const AnotherWidgetView());
           break;
         default:
       }

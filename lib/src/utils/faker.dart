@@ -1,9 +1,14 @@
 import 'dart:math';
 
-import '../extensions/dynamic_extension.dart';
+import 'package:lazyui/lazyui.dart';
 import './constant.dart';
 
 class Faker {
+  // generate random words based on length
+  static String random([int length = 3]) {
+    return Lipsum.createWord(length);
+  }
+
   // generate random number based on length
   static String number([int length = 5]) {
     int randomInt = Random().nextInt(pow(10, length) as int);
