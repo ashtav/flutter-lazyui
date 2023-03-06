@@ -64,7 +64,7 @@ extension DynamicExtension on dynamic {
   /// name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
   /// ```
   ///
-  dynamic orIf([dynamic value, List conditions = const [null, '']]) {
+  T orIf<T>([dynamic value, List conditions = const [null, '']]) {
     Type type = runtimeType;
     dynamic result = '-';
 
