@@ -67,6 +67,11 @@ class Br {
   /// borderRadius: Br.zero
   /// ```
   static const BorderRadius zero = BorderRadius.zero;
+
+  /// ``` dart
+  /// border: Br.none
+  /// ```
+  static const BoxBorder none = Border.fromBorderSide(BorderSide.none);
 }
 
 /* --------------------------------------------------------------------------------
