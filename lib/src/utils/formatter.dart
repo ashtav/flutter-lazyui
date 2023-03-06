@@ -1,9 +1,11 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import '../extensions/string_extension.dart';
+import 'log.dart';
 
 class InputFormat {
-  static TextInputFormatter get numeric => FilteringTextInputFormatter.allow(RegExp("[0-9]"));
+  static TextInputFormatter get strictNumeric => FilteringTextInputFormatter.allow(RegExp("[0-9]"));
+  static TextInputFormatter get numeric => FilteringTextInputFormatter.allow(RegExp("[0-9,.]"));
   static TextInputFormatter get alpha => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"));
   static TextInputFormatter get alphanumeric => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]"));
 
@@ -77,8 +79,12 @@ class ThousandFormatter extends TextInputFormatter {
 
       int selectionIndexFromTheRight = newValue.text.length - newValue.selection.extentOffset;
 
-      String convert(String value) => NumberFormat.currency(locale: 'id_ID', decimalDigits: 0, symbol: '').format(int.parse(value));
+      String convert(String value) {
+        return NumberFormat.currency(locale: 'id_ID', decimalDigits: 0, symbol: '').format(value.getNumeric);
+      }
+
       String newString = convert(isMax ? newValue.text.substring(0, max) : newValue.text);
+      logg(newString);
 
       return TextEditingValue(
         text: newString.replaceAll('.', sparator.isEmpty ? ',' : sparator),
