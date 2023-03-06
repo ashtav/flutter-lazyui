@@ -407,6 +407,7 @@ class Poslign extends StatelessWidget {
 
 class Box extends StatelessWidget {
   final Widget? child;
+  final List<Widget> children;
   final EdgeInsetsGeometry? padding, margin;
   final BoxBorder? border;
   final Color? color;
@@ -415,10 +416,12 @@ class Box extends StatelessWidget {
   final Gradient? gradient;
   final BoxShape shape;
   final BoxConstraints? constraints;
+  final CrossAxisAlignment crossAxisAlignment;
 
   const Box(
       {super.key,
       this.child,
+      this.children = const [],
       this.padding,
       this.margin,
       this.border,
@@ -427,7 +430,8 @@ class Box extends StatelessWidget {
       this.boxShadow,
       this.gradient,
       this.shape = BoxShape.rectangle,
-      this.constraints});
+      this.constraints,
+      this.crossAxisAlignment = Caa.start});
 
   @override
   Widget build(BuildContext context) {
@@ -445,7 +449,8 @@ class Box extends StatelessWidget {
           boxShadow: boxShadow,
           gradient: gradient,
           shape: shape),
-      child: ClipRRect(borderRadius: this.radius ?? Br.radius(radius), child: child),
+      child: ClipRRect(
+          borderRadius: this.radius ?? Br.radius(radius), child: child ?? Column(crossAxisAlignment: crossAxisAlignment, children: children)),
     );
   }
 }

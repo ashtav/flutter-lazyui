@@ -16,4 +16,16 @@ extension WidgetExtension on Widget {
         padding: EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others),
         child: this,
       );
+
+  /// ``` dart
+  /// YourWidget().clip() // Only works on widget with no clip property
+  /// ```
+  Widget clip({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr}) => ClipRRect(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(tl ?? tlr ?? 0),
+            topRight: Radius.circular(tr ?? tlr ?? 0),
+            bottomLeft: Radius.circular(bl ?? blr ?? 0),
+            bottomRight: Radius.circular(br ?? blr ?? 0)),
+        child: this,
+      );
 }
