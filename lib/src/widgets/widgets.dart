@@ -405,6 +405,8 @@ class Poslign extends StatelessWidget {
   }
 }
 
+enum BoxType { customize, clean }
+
 class Box extends StatelessWidget {
   final Widget? child;
   final List<Widget> children;
@@ -417,6 +419,9 @@ class Box extends StatelessWidget {
   final BoxShape shape;
   final BoxConstraints? constraints;
   final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisSize mainAxisSize;
+  final MainAxisAlignment mainAxisAlignment;
+  final BoxType type;
 
   const Box(
       {super.key,
@@ -431,26 +436,37 @@ class Box extends StatelessWidget {
       this.gradient,
       this.shape = BoxShape.rectangle,
       this.constraints,
-      this.crossAxisAlignment = Caa.start});
+      this.crossAxisAlignment = Caa.start,
+      this.mainAxisSize = Mas.min,
+      this.mainAxisAlignment = Maa.start,
+      this.type = BoxType.customize});
 
   @override
   Widget build(BuildContext context) {
-    double spacing = LazyUi.getConfig.spacing;
-    double radius = LazyUi.getConfig.radius;
+    bool isCleanType = type == BoxType.clean;
+
+    double spacing = isCleanType ? 0 : LazyUi.getConfig.spacing;
+    double radius = isCleanType ? 0 : LazyUi.getConfig.radius;
 
     return Container(
       padding: padding ?? Ei.all(spacing),
       margin: margin,
       constraints: constraints,
       decoration: BoxDecoration(
-          border: border ?? Br.all(),
+          border: border ?? (isCleanType ? Br.none : Br.all()),
           color: color ?? Colors.white,
           borderRadius: this.radius ?? Br.radius(radius),
           boxShadow: boxShadow,
           gradient: gradient,
           shape: shape),
       child: ClipRRect(
-          borderRadius: this.radius ?? Br.radius(radius), child: child ?? Column(crossAxisAlignment: crossAxisAlignment, children: children)),
+          borderRadius: this.radius ?? Br.radius(radius),
+          child: child ??
+              Column(
+                  mainAxisSize: mainAxisSize,
+                  mainAxisAlignment: mainAxisAlignment,
+                  crossAxisAlignment: isCleanType ? Caa.center : crossAxisAlignment,
+                  children: children)),
     );
   }
 }
