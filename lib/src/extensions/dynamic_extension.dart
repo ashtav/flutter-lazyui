@@ -34,6 +34,7 @@ extension DynamicExtension on dynamic {
       String result =
           lz.NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
 
+      result = result.replaceAll('.', separator);
       return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';

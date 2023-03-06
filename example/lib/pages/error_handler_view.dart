@@ -69,7 +69,8 @@ class ErrorHandlerView extends StatelessWidget {
                   ActionController().test();
                 },
                 text: 'Test Error',
-              )
+              ),
+              Text(355003.idr(separator: ','))
             ],
           ),
         ));
