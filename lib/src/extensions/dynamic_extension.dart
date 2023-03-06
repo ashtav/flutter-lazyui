@@ -6,7 +6,7 @@ extension DynamicExtension on dynamic {
   /// 2500.7.idr() // Rp2.500,7
   /// '3500.4'.idr() // Rp3.500,4
   /// ```
-  String idr({String symbol = 'Rp', int decimalDigits = 0}) {
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
     try {
       String num = '0', digits = '';
 
@@ -16,22 +16,15 @@ extension DynamicExtension on dynamic {
           break;
 
         case double:
-          if (toString().contains('.')) {
-            num = toString().split('.')[0];
-            digits = toString().split('.')[1];
+        case String:
+          if (toString().contains(separator)) {
+            num = toString().split(separator)[0];
+            digits = toString().split(separator)[1];
           } else {
             num = toString();
           }
           break;
 
-        case String:
-          if (contains('.')) {
-            num = split('.')[0];
-            digits = split('.')[1];
-          } else {
-            num = toString();
-          }
-          break;
         default:
           return 'Rp?';
       }
@@ -70,7 +63,7 @@ extension DynamicExtension on dynamic {
   /// name.orIf('-', [null, '']) // it's mean if name is null or empty, then return '-'
   /// ```
   ///
-  dynamic orIf([dynamic value, List conditions = const [null, '']]) {
+  T orIf<T>([dynamic value, List conditions = const [null, '']]) {
     Type type = runtimeType;
     dynamic result = '-';
 

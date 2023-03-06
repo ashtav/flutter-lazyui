@@ -17,6 +17,8 @@ class UserModel {
   Map<String, dynamic> toJson() => {'id': id, 'name': name};
 }
 
+int? x;
+
 void testx(List v, dynamic value) {
   for (var i = 0; i < v.length; i++) {
     v[i] = value;
