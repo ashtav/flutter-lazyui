@@ -14,8 +14,9 @@ class FormView extends StatelessWidget {
         hobby = TextEditingController(text: 'Hot, Salty');
 
     List<String> cities = ['Denpasar', 'Badung', 'Tabanan', 'Singaraja', "Negare", 'Jembrana'];
-
     List<String> hobbies = ['Footbal', 'Killing', 'Drawing', 'Reading', 'Music', 'Writing'];
+
+    final forms = Forms.create(['email', 'password']);
 
     return Scaffold(
       appBar: AppBar(
@@ -26,8 +27,8 @@ class FormView extends StatelessWidget {
         padding: Ei.all(20),
         children: [
           FormsGroup(children: [
-            Forms.input(label: 'Email', hint: 'Input your email'),
-            Forms.input(label: 'Password', hint: 'Input your password', obsecureToggle: true),
+            Forms.input(label: 'Email', hint: 'Input your email', controller: forms['email']),
+            Forms.input(label: 'Password', hint: 'Input your password', obsecureToggle: true, controller: forms['password']),
           ]),
           FormsGroup(children: [
             Forms.input(
@@ -76,7 +77,10 @@ class FormView extends StatelessWidget {
         text: 'Submit',
         icon: La.check,
         type: ButtonType.dark,
-        onTap: () {},
+        onTap: () {
+          // validate
+          Forms form = Forms.validate(forms, required: ['*']);
+        },
       ),
     );
   }

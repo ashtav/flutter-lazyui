@@ -11,6 +11,8 @@ import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
 
+enum FormsVlalidateNotifier { none, toast, text }
+
 class FormErrors {
   final String? key;
   final String? message;
