@@ -11,7 +11,11 @@ import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
 
-enum FormsVlalidateNotifier { none, toast, text }
+enum FormValidateNotifier { none, toast, text }
+
+/* --------------------------------------------------------------------------
+| Form Errors
+| */
 
 class FormErrors {
   final String? key;
@@ -20,6 +24,10 @@ class FormErrors {
 
   FormErrors({this.key, this.message, this.type});
 }
+
+/* --------------------------------------------------------------------------
+| Form Messages
+| */
 
 class FormMessages {
   final Map<String, dynamic>? required, min, max, email;
@@ -41,6 +49,10 @@ class FormMessages {
     }
   }
 }
+
+/* --------------------------------------------------------------------------
+| Forms
+| */
 
 class Forms {
   final bool ok;
@@ -115,17 +127,19 @@ class Forms {
   ///
   /// ```
 
-  static Forms validate(Map<String, TextEditingController> forms,
-      {List<String> required = const [],
-      List<String> min = const [],
-      List<String> max = const [],
-      List<String> email = const [],
-      FormMessages? formMessages,
-      bool useToast = true}) {
+  static Forms validate(
+    Map<String, TextEditingController> forms, {
+    List<String> required = const [],
+    List<String> min = const [],
+    List<String> max = const [],
+    List<String> email = const [],
+    FormMessages? formMessages,
+    FormValidateNotifier notifier = FormValidateNotifier.toast,
+  }) {
     Forms form = Forms(ok: true, value: forms.toMap(), errors: FormErrors());
 
     try {
-      List<Map<String, dynamic>> keys = []; // problematic keys, stored here
+      List<Map<String, dynamic>> errorFields = [];
 
       bool isRequiredAll = required.length == 1 && required.contains('*');
       bool isRequiredAllExcept = required.length > 1 && required.contains('*');
@@ -143,7 +157,7 @@ class Forms {
 
       for (var e in required) {
         if (forms[e] != null && forms[e]!.text.trim().isEmpty) {
-          keys.add({'key': e, 'type': 'required', 'message': '$e is required'});
+          errorFields.add({'key': e, 'type': 'required', 'message': '$e is required'});
         }
       }
 
@@ -163,7 +177,7 @@ class Forms {
         int length = split[1];
 
         if (forms[key] != null && forms[key]!.text.trim().length < length) {
-          keys.add({'key': key, 'type': 'min', 'message': '$key must be at least $length characters'});
+          errorFields.add({'key': key, 'type': 'min', 'message': '$key must be at least $length characters'});
         }
       }
 
@@ -177,7 +191,7 @@ class Forms {
         int length = split[1];
 
         if (forms[key] != null && forms[key]!.text.trim().length > length) {
-          keys.add({'key': key, 'type': 'max', 'message': '$key must be at most $length characters'});
+          errorFields.add({'key': key, 'type': 'max', 'message': '$key must be at most $length characters'});
         }
       }
 
@@ -187,25 +201,26 @@ class Forms {
 
       for (var e in email) {
         if (forms[e] != null && !forms[e]!.text.trim().toString().isEmail) {
-          keys.add({'key': e, 'type': 'email', 'message': '$e is not a valid email'});
+          errorFields.add({'key': e, 'type': 'email', 'message': '$e is not a valid email'});
         }
       }
 
-      // if problematic keys is not empty, then return error
-      if (keys.isNotEmpty) {
-        String key = keys.first['key'];
-        String type = keys.first['type'];
-        String message = keys.first['message'];
+      if (errorFields.isNotEmpty) {
+        String errorKey = errorFields.first['key'];
+        String errorType = errorFields.first['type'];
+        String errorMessage = errorFields.first['message'];
 
         if (formMessages != null) {
-          message = formMessages.get(type, key) ?? message;
+          errorMessage = formMessages.get(errorType, errorKey) ?? errorMessage;
         }
 
-        if (useToast) {
-          Fluttertoast.showToast(msg: message, gravity: ToastGravity.CENTER);
+        // show error message
+
+        if (notifier == FormValidateNotifier.toast) {
+          Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.CENTER);
         }
 
-        form = Forms(ok: false, value: forms.toMap(), errors: FormErrors(key: key, type: type, message: message));
+        form = Forms(ok: false, value: forms.toMap(), errors: FormErrors(key: errorKey, type: errorType, message: errorMessage));
       }
     } catch (e, s) {
       Utils.errorCatcher(e, s);

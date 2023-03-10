@@ -79,7 +79,7 @@ class FormView extends StatelessWidget {
         type: ButtonType.dark,
         onTap: () {
           // validate
-          Forms form = Forms.validate(forms, required: ['*']);
+          Forms form = Forms.validate(forms, required: ['*'], notifier: FormValidateNotifier.text);
         },
       ),
     );

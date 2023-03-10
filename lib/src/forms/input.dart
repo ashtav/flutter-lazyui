@@ -115,7 +115,8 @@ class Input extends StatelessWidget {
                 textStyle: textStyle,
                 formatters: formatters,
                 onTap: onTap,
-              )
+              ),
+              // Text('Please input your email address', style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 14, color: Colors.redAccent))
             ]),
           ),
         ));
