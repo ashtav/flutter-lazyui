@@ -108,7 +108,7 @@ Try to check [$member]''';
           if (Platform.isAndroid) {
             AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
 
-            brand = androidInfo.brand;
+            brand = androidInfo.brand.ucwords;
             model = androidInfo.model;
             system = androidInfo.version.release;
             sdk = androidInfo.version.sdkInt.toString();
@@ -124,7 +124,7 @@ Try to check [$member]''';
           // clear message from space, \n
           errorMessage = errorMessage.replaceAll('\n', ' ').trim();
 
-          String device = '$brand $model ($system $sdk)';
+          String device = '$brand $model ($system, $sdk)';
           List<String> messages = [errorMessage, '\n<b>Details</b>', device];
 
           if (networkError != null) {

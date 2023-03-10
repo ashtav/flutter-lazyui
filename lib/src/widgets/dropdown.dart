@@ -41,6 +41,7 @@ class CaretPainter extends CustomPainter {
 
 class DropdownPositioned extends StatelessWidget {
   final Offset offset;
+  final Offset Function(bool isOutOfScreen)? offsetBuilder;
   final List<String> options;
   final List<IconData?> icons;
   final List<int> dangers, disabled, sparators;
@@ -51,6 +52,7 @@ class DropdownPositioned extends StatelessWidget {
   const DropdownPositioned(
       {super.key,
       required this.offset,
+      this.offsetBuilder,
       this.options = const [],
       this.icons = const [],
       this.sparators = const [],
@@ -100,6 +102,11 @@ class DropdownPositioned extends StatelessWidget {
 
     double dy = offset.dy;
     double itemPosition = !isOutOfScreen ? dy - 35 : dy - (isMaxHeight ? (maxHeight + itemHeight) : optionHeight + 70);
+
+    if (offsetBuilder != null) {
+      Offset newOffset = offsetBuilder?.call(isOutOfScreen) ?? Offset.zero;
+      itemPosition += newOffset.dy;
+    }
 
     return Stack(
       children: [
@@ -217,6 +224,7 @@ class DropdownDialog extends StatelessWidget {
       List<int> disableds = const [],
       List<int> sparators = const [],
       Offset? offset,
+      Offset Function(bool isOutOfScreen)? offsetBuilder,
       bool top = false,
       BorderRadiusGeometry? borderRadius,
       Color? barrierColor,
@@ -247,6 +255,7 @@ class DropdownDialog extends StatelessWidget {
         barrierColor: barrierColor ?? Colors.black54,
         builder: (_) => DropdownPositioned(
             offset: top && offset != null ? offset : Offset(x, y),
+            offsetBuilder: offsetBuilder,
             options: options,
             dangers: dangers,
             sparators: sparators,

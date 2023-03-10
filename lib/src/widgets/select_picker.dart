@@ -37,98 +37,104 @@ class SelectPicker extends StatelessWidget {
     double radius = LazyUi.getConfig.radius;
     BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
-    return ClipRRect(
-      borderRadius: borderRadius,
-      child: Stack(
-        children: [
-          ScrollConfiguration(
-            behavior: NoScrollGlow(),
-            child: Container(
-              height: 300,
-              color: Colors.white,
-              child: SafeArea(
-                top: false,
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: CupertinoPicker(
-                          magnification: 1,
-                          useMagnifier: false,
-                          itemExtent: 40,
-                          offAxisFraction: 0,
-                          diameterRatio: 1,
-                          scrollController: FixedExtentScrollController(initialItem: i),
-                          selectionOverlay: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(border: Br.only(['b'])),
-                          ),
+    bool isMobile = context.width < 600;
 
-                          // This is called when selected item is changed.
-                          onSelectedItemChanged: (int selectedItem) {
-                            if (onSelect != null) {
-                              if (values.isNotEmpty) {
-                                result = {'option': options[selectedItem], 'value': values.length < selectedItem ? null : values[selectedItem]};
-                              } else {
-                                result = {'option': options[selectedItem]};
+    return FractionallySizedBox(
+      widthFactor: isMobile ? 1 : .4,
+      child: ClipRRect(
+        borderRadius: borderRadius,
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
+          children: [
+            ScrollConfiguration(
+              behavior: NoScrollGlow(),
+              child: Container(
+                height: isMobile ? 300 : 400,
+                decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
+                child: SafeArea(
+                  top: false,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: CupertinoPicker(
+                            magnification: 1,
+                            useMagnifier: false,
+                            itemExtent: 40,
+                            offAxisFraction: 0,
+                            diameterRatio: 1,
+                            scrollController: FixedExtentScrollController(initialItem: i),
+                            selectionOverlay: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(border: Br.only(['b'])),
+                            ),
+
+                            // This is called when selected item is changed.
+                            onSelectedItemChanged: (int selectedItem) {
+                              if (onSelect != null) {
+                                if (values.isNotEmpty) {
+                                  result = {'option': options[selectedItem], 'value': values.length < selectedItem ? null : values[selectedItem]};
+                                } else {
+                                  result = {'option': options[selectedItem]};
+                                }
                               }
-                            }
-                          },
-                          children: List<Widget>.generate(options.length, (int index) {
-                            return Center(
-                              child: Text(
-                                options[index],
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
-                              ),
-                            );
-                          })),
-                    ),
-                  ],
+                            },
+                            children: List<Widget>.generate(options.length, (int index) {
+                              return Center(
+                                child: Text(
+                                  options[index],
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                ),
+                              );
+                            })),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned.fill(
-              child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.white,
-                    spreadRadius: 25,
-                    blurRadius: 20,
-                    offset: Offset(0, -4), // changes position of shadow
-                  ),
-                ],
-              ),
-              child: InkW(
-                  onTap: () {
-                    if (onSelect != null) {
-                      onSelect?.call(Option.fromMap(result));
-                      Navigator.pop(context);
-                    }
-                  },
-                  margin: Ei.only(b: 20),
-                  radius: Br.radius(50),
-                  padding: Ei.sym(v: 10, h: 45),
-                  color: Utils.hex('f1f5f9'),
-                  child: Text(textConfirm ?? 'Select',
-                      textAlign: Ta.center,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: primaryColor, fontWeight: Fw.bold, letterSpacing: 1))),
-            ),
-          )),
-          Positioned.fill(
-              child: Align(
-                  alignment: Alignment.topLeft,
-                  child: Touch(
-                    onTap: () => Navigator.pop(context),
-                    child: Iconr(
-                      La.bars,
-                      color: Colors.black54,
-                      padding: Ei.all(20),
+            Positioned.fill(
+                child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                decoration: const BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.white,
+                      spreadRadius: 25,
+                      blurRadius: 20,
+                      offset: Offset(0, -4), // changes position of shadow
                     ),
-                  )))
-        ],
+                  ],
+                ),
+                child: InkW(
+                    onTap: () {
+                      if (onSelect != null) {
+                        onSelect?.call(Option.fromMap(result));
+                        Navigator.pop(context);
+                      }
+                    },
+                    margin: Ei.only(b: 20),
+                    radius: Br.radius(50),
+                    padding: Ei.sym(v: 10, h: 45),
+                    color: Utils.hex('f1f5f9'),
+                    child: Text(textConfirm ?? 'Select',
+                        textAlign: Ta.center,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: primaryColor, fontWeight: Fw.bold, letterSpacing: 1))),
+              ),
+            )),
+            Positioned.fill(
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Touch(
+                      onTap: () => Navigator.pop(context),
+                      child: Iconr(
+                        La.angleDown,
+                        color: Colors.black54,
+                        padding: Ei.all(20),
+                      ),
+                    )))
+          ],
+        ),
       ),
     );
   }
