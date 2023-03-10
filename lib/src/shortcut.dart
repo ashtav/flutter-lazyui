@@ -8,8 +8,8 @@ class Br {
   /// ``` dart
   /// border: Br.all(color: Colors.black12)
   /// ```
-  static BoxBorder all({Color? color, double width = .7, BorderStyle style = BorderStyle.solid}) =>
-      Border.all(color: color ?? Colors.black12, width: width, style: style);
+  static BoxBorder all({Color? color, double width = .7, BorderStyle style = BorderStyle.solid, double strokeAlign = BorderSide.strokeAlignInside}) =>
+      Border.all(color: color ?? Colors.black12, width: width, style: style, strokeAlign: strokeAlign);
 
   /// ``` dart
   /// border: Br.only(['t'])

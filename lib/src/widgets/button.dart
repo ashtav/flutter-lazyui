@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../lazyui.dart';
 
-enum ButtonType { primary, secondary, danger, success, warning, dark }
+enum ButtonType { primary, secondary, danger, success, warning, dark, white }
 
 class Button extends StatelessWidget {
   final String? text;
@@ -36,6 +36,8 @@ class Button extends StatelessWidget {
       ButtonType.danger: Colors.red,
       ButtonType.success: Colors.green,
       ButtonType.warning: Colors.orange,
+      ButtonType.dark: Utils.hex('212121'),
+      ButtonType.white: Colors.white,
     };
 
     Map<ButtonType, Color> textColors = {
@@ -44,6 +46,8 @@ class Button extends StatelessWidget {
       ButtonType.danger: Colors.white,
       ButtonType.success: Colors.white,
       ButtonType.warning: Colors.white,
+      ButtonType.dark: Colors.white,
+      ButtonType.white: Colors.black,
     };
 
     Widget button = InkW(
@@ -51,6 +55,7 @@ class Button extends StatelessWidget {
       padding: Ei.sym(v: 16, h: spacing ?? 20),
       radius: Br.radius(this.radius ?? radius),
       color: gradient ? null : bgColors[type],
+      border: ButtonType.white == type ? Br.all() : null,
       child: Row(
         mainAxisAlignment: Maa.center,
         mainAxisSize: Mas.min,

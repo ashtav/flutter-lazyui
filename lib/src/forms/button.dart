@@ -27,21 +27,23 @@ class Button extends StatelessWidget {
     double radius = LazyUi.getConfig.radius;
 
     Map<ButtonType, Color> bgColors = {
-      ButtonType.dark: Utils.hex('212121'),
       ButtonType.primary: Colors.blueAccent,
       ButtonType.secondary: Colors.grey,
       ButtonType.danger: Colors.red,
       ButtonType.success: Colors.green,
       ButtonType.warning: Colors.orange,
+      ButtonType.dark: Utils.hex('212121'),
+      ButtonType.white: Colors.white,
     };
 
     Map<ButtonType, Color> textColors = {
-      ButtonType.dark: Colors.white,
       ButtonType.primary: Colors.white,
       ButtonType.secondary: Colors.white,
       ButtonType.danger: Colors.white,
       ButtonType.success: Colors.white,
       ButtonType.warning: Colors.white,
+      ButtonType.dark: Colors.white,
+      ButtonType.white: Colors.black,
     };
 
     Widget button = InkW(
@@ -49,6 +51,7 @@ class Button extends StatelessWidget {
       padding: Ei.sym(v: 16, h: 20),
       radius: Br.radius(radius),
       color: gradient ? null : bgColors[type],
+      border: ButtonType.white == type ? Br.all() : null,
       child: Row(
         mainAxisAlignment: Maa.center,
         children: [
