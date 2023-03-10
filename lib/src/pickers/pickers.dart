@@ -27,6 +27,7 @@ class Pickers {
     DateTime? result = await showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
+        isScrollControlled: true,
         builder: (c) => CupertinoDatePickerWidget(
             initialDate: initialDate,
             firstDate: firstDate,
@@ -58,6 +59,7 @@ class Pickers {
     DateTime? result = await showModalBottomSheet(
         context: context,
         backgroundColor: Colors.transparent,
+        isScrollControlled: true,
         builder: (c) => CupertinoTimePickerWidget(initialDate: initialDate, firstDate: firstDate, lastDate: lastDate, confirmLabel: confirmLabel));
 
     return result;

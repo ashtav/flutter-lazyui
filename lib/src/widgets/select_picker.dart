@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -39,8 +41,12 @@ class SelectPicker extends StatelessWidget {
 
     bool isMobile = context.width < 600;
 
+    double toDecimal(double value) {
+      return value >= 1000 ? .4 : value / pow(10, value.ceil().toString().length);
+    }
+
     return FractionallySizedBox(
-      widthFactor: isMobile ? 1 : .4,
+      widthFactor: isMobile ? 1 : toDecimal(context.width),
       child: ClipRRect(
         borderRadius: borderRadius,
         child: Stack(
@@ -49,7 +55,7 @@ class SelectPicker extends StatelessWidget {
             ScrollConfiguration(
               behavior: NoScrollGlow(),
               child: Container(
-                height: isMobile ? 300 : 400,
+                height: isMobile ? 300 : context.height * .5,
                 decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
                 child: SafeArea(
                   top: false,

@@ -1,14 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
-import '../config.dart';
-import '../extensions/context_extension.dart';
 import '../pickers/constant.dart';
-import '../utils/utils.dart';
-import '../widgets/transition.dart';
-import '../shortcut.dart';
 import '../utils/constant.dart';
-import '../widgets/widgets.dart';
 
 enum DatePickerType { all, monthYear, year }
 
@@ -205,7 +200,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
       behavior: NoScrollGlow(),
       child: Container(
         decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
-        height: context.height * 0.4,
+        height: context.height * (context.width > 395 ? .6 : .4),
         child: Stack(
           children: [
             FutureBuilder(

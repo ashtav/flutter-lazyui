@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../config.dart';
 import '../extensions/context_extension.dart';
-import '../utils/utils.dart';
 import '../shortcut.dart';
+import '../utils/utils.dart';
 import '../widgets/transition.dart';
 import '../widgets/widgets.dart';
 import 'constant.dart';
@@ -167,7 +167,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
       behavior: NoScrollGlow(),
       child: Container(
         decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
-        height: context.height * 0.4,
+        height: context.height * (context.width > 395 ? .6 : .4),
         child: Stack(
           children: [
             FutureBuilder(
