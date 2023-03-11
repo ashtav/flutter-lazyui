@@ -1,3 +1,5 @@
+import 'package:example/codelabs/lazyform/constant.dart';
+import 'package:example/codelabs/lazyform/group.dart';
 import 'package:example/codelabs/lazyform/lazyform.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart' hide FormMessages;
@@ -7,7 +9,7 @@ class FormView3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['email', 'password']);
+    final forms = LzForm.make(['email', 'password']).fill({'email': 'ashtaaav@gmail.com'});
 
     return Wrapper(
         child: Scaffold(
@@ -16,8 +18,13 @@ class FormView3 extends StatelessWidget {
       ),
       body: BounceListView(
         children: [
-          LzForm.input(label: 'Email *', hint: 'Input your email address', model: forms['email']),
-          LzForm.input(label: 'Password *', hint: 'Input your password', model: forms['password']),
+          LzFormGroup(
+            children: [
+              LzForm.input(label: 'Email *', hint: 'Input your email address', model: forms['email'], indicator: true),
+              LzForm.input(label: 'Password *', hint: 'Input your password', model: forms['password'], obsecureToggle: true),
+            ],
+          ),
+          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number),
         ],
       ),
       bottomNavigationBar: Forms.button(
@@ -28,7 +35,8 @@ class FormView3 extends StatelessWidget {
                 messages: FormMessages(required: {
                   'email': 'Please input your email address',
                   'password': 'Please input your password',
-                }));
+                }),
+                notifierType: FormValidateNotifier.text);
 
             logg(form.ok);
           }),

@@ -11,8 +11,6 @@ import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
 
-enum FormValidateNotifier { none, toast, text }
-
 /* --------------------------------------------------------------------------
 | Form Errors
 | */
@@ -134,7 +132,6 @@ class Forms {
     List<String> max = const [],
     List<String> email = const [],
     FormMessages? formMessages,
-    FormValidateNotifier notifier = FormValidateNotifier.toast,
   }) {
     Forms form = Forms(ok: true, value: forms.toMap(), errors: FormErrors());
 
@@ -215,10 +212,7 @@ class Forms {
         }
 
         // show error message
-
-        if (notifier == FormValidateNotifier.toast) {
-          Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.CENTER);
-        }
+        Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.CENTER);
 
         form = Forms(ok: false, value: forms.toMap(), errors: FormErrors(key: errorKey, type: errorType, message: errorMessage));
       }
