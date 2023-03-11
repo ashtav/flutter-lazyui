@@ -77,10 +77,7 @@ class FormView extends StatelessWidget {
         text: 'Submit',
         icon: La.check,
         type: ButtonType.dark,
-        onTap: () {
-          // validate
-          Forms form = Forms.validate(forms, required: ['*']);
-        },
+        onTap: () {},
       ),
     );
   }

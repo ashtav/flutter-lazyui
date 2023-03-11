@@ -7,7 +7,7 @@ class TextInputTransparent extends StatelessWidget {
   final String? hint;
   final TextInputType? keyboard;
   final TextInputAction? inputAction;
-  final Function(String)? onSubmit, onChanged;
+  final Function(String)? onSubmit, onChange;
   final bool autofocus, enabled, obsecure, showMaxLength;
   final FocusNode? node;
   final TextEditingController? controller;
@@ -25,7 +25,7 @@ class TextInputTransparent extends StatelessWidget {
       this.inputAction,
       this.onSubmit,
       this.obsecure = false,
-      this.onChanged,
+      this.onChange,
       this.autofocus = false,
       this.showMaxLength = false,
       this.node,
@@ -48,7 +48,7 @@ class TextInputTransparent extends StatelessWidget {
       keyboardType: keyboard,
       textInputAction: inputAction,
       onSubmitted: onSubmit,
-      onChanged: onChanged,
+      onChanged: onChange,
       autofocus: autofocus,
       focusNode: node,
       obscureText: obsecure,

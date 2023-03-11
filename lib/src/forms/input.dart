@@ -264,7 +264,7 @@ class _InputFieldState extends State<InputField> {
                 obsecure: obsecure,
                 autofocus: widget.autofocus,
                 onSubmit: widget.onSubmit,
-                onChanged: widget.onChanged,
+                onChange: widget.onChanged,
                 controller: widget.controller,
                 formatters: widget.formatters,
                 maxLines: widget.maxLines,

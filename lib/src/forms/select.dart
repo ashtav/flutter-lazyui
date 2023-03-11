@@ -6,9 +6,10 @@ import 'package:lazyui/lazyui.dart';
 class SelectController {
   String? label;
   List<Option>? options;
+  Option? option;
   TextEditingController? controller;
 
-  SelectController({this.label, this.options, this.controller});
+  SelectController({this.label, this.options, this.controller, this.option});
 }
 
 class Select extends StatelessWidget {
@@ -86,7 +87,7 @@ class Select extends StatelessWidget {
             options: localOptions ?? options,
             onSelect: (option) {
               this.onSelect?.call(selectController, option);
-              controller?.text = option.option ?? '';
+              controller?.text = option.option;
               onSelect.call(option);
             })));
   }

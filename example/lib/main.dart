@@ -36,7 +36,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(title: 'Welcome to LazyUi', theme: appTheme, home: const HomePage());
+    return MaterialApp(
+      title: "Welcome to LazyUi",
+      theme: appTheme,
+      home: const HomePage(),
+      builder: (BuildContext context, Widget? widget) {
+        double fontDeviceSize = MediaQuery.of(context).textScaleFactor;
+
+        // prevent user from scaling font size
+        return MediaQuery(
+            data: MediaQuery.of(context).copyWith(
+              textScaleFactor: fontDeviceSize > 1.1 ? 1.1 : 1.0,
+            ),
+            child: FlutterEasyLoading(child: widget ?? Container()));
+      },
+    );
   }
 }
 

@@ -1,41 +1,58 @@
 import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'constant.dart';
 import 'group.dart';
 
-class Input extends StatelessWidget {
-  final String? label, hint;
-  final FormModel? model;
-  final int maxLength;
-  final int? maxLines;
-  final FocusNode? node;
-  final bool enabled, autofocus, obsecure, obsecureToggle, indicator;
-  final TextInputType? keyboard;
-  final List<TextInputFormatter> formatters;
-  final Function(String)? onChange, onSubmit;
-  final Function(TextEditingController)? onTap;
+/* ----------------------------------------------------
+| Select Option
+| */
 
-  const Input(
+// class Option {
+//   final String option;
+//   final dynamic value;
+
+//   Option(this.option, this.value);
+// }
+
+/* ----------------------------------------------------
+| Select Controller
+| */
+
+// class SelectController {
+//   String? label;
+//   List<Option>? options;
+//   TextEditingController? controller;
+
+//   SelectController({this.label, this.options, this.controller});
+// }
+
+/* ----------------------------------------------------
+| Select Widget
+| */
+
+class Select extends StatelessWidget {
+  final String? label, hint;
+  final List<Option> options;
+  final Option? initValue;
+  final FormModel? model;
+  final bool enabled;
+  final Function(String)? onChange;
+  final Future? Function(SelectController controller)? onTap;
+  final Function(SelectController controller)? onSelect;
+
+  const Select(
       {super.key,
       this.label,
       this.hint,
+      this.options = const [],
+      this.initValue,
       this.model,
-      this.maxLength = 50,
-      this.maxLines,
-      this.node,
       this.enabled = true,
-      this.autofocus = false,
-      this.obsecure = false,
-      this.keyboard,
-      this.formatters = const [],
-      this.obsecureToggle = false,
-      this.indicator = false,
       this.onChange,
-      this.onSubmit,
-      this.onTap});
+      this.onTap,
+      this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +65,13 @@ class Input extends StatelessWidget {
 
     // get first children of parent
     if (isGrouping && (parent?.children ?? []).isNotEmpty) {
-      if (parent!.children[0] is Input) {
-        Input firstChild = parent.children[0] as Input;
+      if (parent!.children[0] is Select) {
+        Select firstChild = parent.children[0] as Select;
         isFirst = firstChild.label == label;
       }
     }
 
     final notifier = model?.notifier ?? FormNotifier();
-    final formatters = [LengthLimitingTextInputFormatter(maxLength), ...this.formatters];
-
-    // setting input formatter
-    if (keyboard == Tit.number) {
-      formatters.add(InputFormat.numeric);
-    }
 
     // listen to controller
     if (model?.controller != null) {
@@ -77,7 +88,6 @@ class Input extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isSuffix = obsecureToggle || onTap != null;
 
     /* ----------------------------------------------------
     | Label Widget
@@ -97,45 +107,23 @@ class Input extends StatelessWidget {
                 overflow: Tof.ellipsis,
               ),
             ),
-
-            // Text Length
-            indicator
-                ? notifier.watch(() => Textr(
-                      '${notifier.textLength}/$maxLength',
-                      style: Gfont.fs14.muted,
-                      margin: Ei.only(r: isSuffix ? 50 : 0, l: 15),
-                    ))
-                : const None().margin(r: 50),
           ],
         ),
       ),
     );
 
     /* ----------------------------------------------------
-    | Obsecure Toggle Widget
-    | */
-
-    Widget obsecureToggleWidget(bool obsecure) => Touch(
-          onTap: () => notifier.setObsecure(!obsecure),
-          child: Iconr(
-            obsecure ? La.lock : La.unlock,
-            padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l']),
-          ),
-        );
-
-    /* ----------------------------------------------------
     | Suffix Widget
     | */
 
-    Widget suffixWidget = isSuffix
-        ? Iconr(
-            La.angleDown,
-            color: Colors.black45,
-            padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l']),
-          )
-        : const None();
+    Widget suffixWidget = Iconr(
+      La.angleDown,
+      color: Colors.black45,
+      padding: Ei.only(h: 15, v: 15),
+      border: Br.only(['l']),
+    );
+
+    SelectController selectController = SelectController(label: label?.replaceAll('*', '').trim(), controller: model?.controller);
 
     return ClipRRect(
       key: model?.key,
@@ -149,7 +137,34 @@ class Input extends StatelessWidget {
           String errorMessage = notifier.errorMessage;
 
           return InkW(
-              onTap: onTap.isNotNull ? () => onTap!(notifier.controller) : null,
+              onTap: () async {
+                // execute onTap callback
+                dynamic callback = await onTap?.call(selectController);
+
+                // as default, options can be shown except when the callback is false
+                bool ok = true;
+                if (callback is bool) ok = callback;
+
+                // get options
+                List<Option> options = selectController.options ?? this.options;
+
+                if (ok && options.isNotEmpty && context.mounted) {
+                  FocusScope.of(context).unfocus();
+
+                  // show options
+                  context.bottomSheet(
+                      SelectPicker(
+                          initialValue: initValue ?? notifier.option,
+                          options: options,
+                          onSelect: (option) {
+                            selectController.option = option;
+
+                            notifier.setOption(option);
+                            onSelect?.call(selectController);
+                          }),
+                      backgroundColor: Colors.transparent);
+                }
+              },
               color: Colors.white,
               border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(5),
@@ -160,17 +175,9 @@ class Input extends StatelessWidget {
                       TextInputTransparent(
                         hint: hint,
                         controller: model?.controller,
-                        maxLength: maxLength,
-                        maxLines: maxLines,
-                        node: node,
-                        enabled: enabled && onTap == null,
-                        autofocus: autofocus,
-                        obsecure: obsecureToggle ? notifier.obsecure : obsecure,
-                        keyboard: keyboard,
-                        formatters: formatters,
+                        enabled: false,
                         onChange: onChange,
-                        onSubmit: onSubmit,
-                        contentPadding: Ei.only(t: noLabel ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: isSuffix ? 65 : 15),
+                        contentPadding: Ei.only(t: noLabel ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 15),
                       ),
 
                       /* ----------------------------------------------------
@@ -195,7 +202,7 @@ class Input extends StatelessWidget {
                     ],
                   ),
                   labelWidget,
-                  Poslign(alignment: Alignment.centerRight, child: obsecureToggle ? obsecureToggleWidget(notifier.obsecure) : suffixWidget)
+                  Poslign(alignment: Alignment.centerRight, child: suffixWidget)
                 ],
               ));
         },

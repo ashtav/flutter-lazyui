@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
 extension ListenableExtension on Listenable {
   AnimatedBuilder watch(Widget Function() child) {
@@ -28,7 +29,8 @@ extension FormModelExtension on Map<String, FormModel> {
 class FormNotifier extends ChangeNotifier {
   TextEditingController controller = TextEditingController();
   Map<String, dynamic> data = {'error': '', 'valid': true, 'text_length': 0};
-  bool obsecure = false;
+  bool obsecure = true;
+  Option? option;
 
   String get errorMessage => data['error'];
   bool get isValid => data['valid'];
@@ -49,6 +51,30 @@ class FormNotifier extends ChangeNotifier {
     data['text_length'] = value;
     notifyListeners();
   }
+
+  void setOption(Option value) {
+    option = value;
+    controller.text = value.option.toString();
+    notifyListeners();
+  }
+
+  // checkbox
+  List<Option> checked = [];
+
+  void setChecked(Option value) {
+    if (checked.contains(value)) {
+      checked.remove(value);
+    } else {
+      checked.add(value);
+    }
+
+    notifyListeners();
+  }
+
+  void setCheckedAll(List<Option> value) {
+    checked = value;
+    notifyListeners();
+  }
 }
 
 /* ---------------------------------------------------------------
@@ -58,8 +84,9 @@ class FormNotifier extends ChangeNotifier {
 class FormModel {
   final TextEditingController controller;
   final FormNotifier notifier;
+  final GlobalKey key;
 
-  FormModel(this.controller, this.notifier);
+  FormModel(this.controller, this.notifier, this.key);
 }
 
 /* ---------------------------------------------------------------

@@ -5,13 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class Option {
-  final String? option;
+  final String option;
   final dynamic value;
+  final bool enabled;
 
-  const Option({this.option, this.value});
+  const Option({required this.option, this.value, this.enabled = true});
 
   factory Option.fromMap(Map<String, dynamic> map) {
-    return Option(option: map['option'], value: map['value']);
+    return Option(option: map['option'], value: map['value'], enabled: map['enabled'] ?? true);
+  }
+
+  Map<String, dynamic> toMap() {
+    return {'option': option, 'value': value, 'enabled': enabled};
   }
 }
 
@@ -28,7 +33,7 @@ class SelectPicker extends StatelessWidget {
     int i = this.options.indexWhere((e) => e.value == null ? e.option == initialValue?.option : e.value == initialValue?.value);
     i = i == -1 ? 0 : i;
 
-    List<String> options = this.options.map((e) => e.option ?? '').toList();
+    List<String> options = this.options.map((e) => e.option).toList();
     List values = this.options.map((e) => e.value).toList();
 
     Map<String, dynamic> result = values.isEmpty

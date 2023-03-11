@@ -20,6 +20,7 @@ export 'src/extensions/map_extension.dart';
 export 'src/extensions/string_extension.dart';
 export 'src/extensions/widget_extension.dart';
 export 'src/forms/forms.dart';
+export 'src/lazyloading/flutter_easyloading.dart';
 export 'src/forms/select.dart' show SelectController;
 export 'src/pickers/cupertino_date_picker.dart' show DatePickerType;
 export 'src/pickers/pickers.dart';
