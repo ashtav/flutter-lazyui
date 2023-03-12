@@ -6,26 +6,26 @@ class Toasts {
     return this;
   }
 
-  Toasts info(dynamic message, {bool ok = true, int duration = 2}) {
-    ok
-        ? EasyLoading.showInfo(message.toString(), dismissOnTap: true, duration: Duration(seconds: duration))
-        : EasyLoading.showError(message.toString(), dismissOnTap: true, duration: Duration(seconds: duration));
+  // Toasts info(dynamic message, {bool ok = true, int duration = 2}) {
+  //   ok
+  //       ? LazyLoading.showInfo(message.toString(), dismissOnTap: true, duration: Duration(seconds: duration))
+  //       : LazyLoading.showError(message.toString(), dismissOnTap: true, duration: Duration(seconds: duration));
 
-    return this;
-  }
+  //   return this;
+  // }
 
-  Toasts error(dynamic message, [int duration = 2]) {
-    EasyLoading.showError(message.toString(), dismissOnTap: true, duration: Duration(seconds: duration));
-    return this;
-  }
+  // Toasts error(dynamic message, [int duration = 2]) {
+  //   LazyLoading.showError(message.toString(), dismissOnTap: true, duration: Duration(seconds: duration));
+  //   return this;
+  // }
 
   Toasts overlay([String message = 'Loading...']) {
-    EasyLoading.show(maskType: EasyLoadingMaskType.black, status: message);
+    // LazyLoading.show(maskType: LazyLoadingMaskType.black, status: message);
     return this;
   }
 
   Toasts dismiss() {
-    EasyLoading.dismiss();
+    LazyLoading.dismiss();
     return this;
   }
 }

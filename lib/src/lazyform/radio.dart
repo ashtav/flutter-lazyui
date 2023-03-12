@@ -1,9 +1,5 @@
-import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart' hide Radio;
 import 'package:lazyui/lazyui.dart';
-
-import 'constant.dart';
-import 'group.dart';
 
 /* ----------------------------------------------------
 | Radio Widget
@@ -52,6 +48,9 @@ class Radio extends StatelessWidget {
       notifier.setOption(initValue!);
     }
 
+    // get text style
+    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+
     /* ----------------------------------------------------
     | Label Widget
     | */
@@ -66,7 +65,7 @@ class Radio extends StatelessWidget {
             Flexible(
               child: Textr(
                 label ?? '',
-                style: Gfont.fs14,
+                style: style?.copyWith(fontSize: 14),
                 overflow: Tof.ellipsis,
               ),
             ),
@@ -151,7 +150,7 @@ class Radio extends StatelessWidget {
                               : Textr(
                                   errorMessage,
                                   key: ValueKey(errorMessage),
-                                  style: Gfont.fs14.fcolor(Colors.redAccent),
+                                  style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
                                   margin: Ei.only(b: 13),
                                 ),
                         ),

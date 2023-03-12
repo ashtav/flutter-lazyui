@@ -56,7 +56,7 @@ class LazyUi {
   }
 
   // setters
-  static void setConfig(LazyUiOptions config) => {_____config = config.toMap()};
+  static void config(LazyUiOptions config) => {_____config = config.toMap()};
 }
 
 class Lazy {

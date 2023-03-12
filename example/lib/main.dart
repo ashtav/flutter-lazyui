@@ -14,7 +14,7 @@ import 'theme/theme.dart';
 void main() {
   Utils.setSystemUI(navBarColor: Colors.white);
 
-  LazyUi.setConfig(LazyUiOptions(radius: 5.0, primaryColor: Utils.hex('#212121'), widgets: {
+  LazyUi.config(LazyUiOptions(radius: 5.0, primaryColor: Utils.hex('#212121'), widgets: {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
     'no_data': {'title': 'No Data', 'on_tap_message': 'Tap to refresh'},
   }));
@@ -24,7 +24,7 @@ void main() {
       chatId: '1099040541',
       useBot: true,
       errorBuilder: (ErrorInfo info) {
-        String message = 'Hmm, something went wrong, please try again later. ${info.error}, ${info.device}';
+        String message = 'This is custom error message: ${info.error}, ${info.device}';
         Bot.sendMessage(message, info.botToken!, info.chatId!);
       });
 
@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
             data: MediaQuery.of(context).copyWith(
               textScaleFactor: fontDeviceSize > 1.1 ? 1.1 : 1.0,
             ),
-            child: FlutterEasyLoading(child: widget ?? Container()));
+            child: LzLoadingOverlay(child: widget ?? Container()));
       },
     );
   }

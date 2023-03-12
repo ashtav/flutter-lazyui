@@ -2,10 +2,9 @@
 
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
-import 'package:lazyui/lazyui.dart' hide FormMessages;
+import 'package:lazyui/lazyui.dart';
 
 import 'checkbox.dart';
-import 'constant.dart';
 import 'input.dart';
 import 'radio.dart';
 import 'select.dart';
@@ -33,8 +32,10 @@ import 'switches.dart';
 
 class LzForm {
   final bool ok;
+  final FormErrorInfo? error;
+  final Map<String, dynamic> value;
 
-  LzForm({this.ok = false});
+  LzForm({this.ok = false, this.error, this.value = const {}});
 
   /* ---------------------------------------------------------------
   | LzForm Make Model
@@ -269,7 +270,6 @@ class LzForm {
       /* ------------------------------------------------------------------------
       | Conclusion
       | */
-      logg(errorFields);
 
       // Get keys that are not contained in the errorFields
       List<String> keys = controllers.keys.toList()..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
@@ -299,12 +299,12 @@ class LzForm {
           Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
         }
 
-        return LzForm(ok: false);
+        return LzForm(ok: false, error: FormErrorInfo(key: errorKey, type: errorType, message: errorMessage), value: controllers.toMap());
       }
     } catch (e, s) {
       Errors.check(e, s, disabledBot: true);
     }
 
-    return LzForm(ok: true);
+    return LzForm(ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.controller)).toMap());
   }
 }

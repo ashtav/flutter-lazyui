@@ -1,27 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-extension ListenableExtension on Listenable {
-  AnimatedBuilder watch(Widget Function() child) {
-    return AnimatedBuilder(
-      animation: this,
-      builder: (context, _) => child(),
-    );
-  }
-}
-
-extension FormModelExtension on Map<String, FormModel> {
-  Map<String, FormModel> fill(Map<String, dynamic> data) {
-    for (var e in data.keys) {
-      if (containsKey(e)) {
-        this[e]!.controller.text = data[e].toString();
-      }
-    }
-
-    return this;
-  }
-}
-
 /* ---------------------------------------------------------------
 | Form Notifier
 | */
@@ -118,3 +97,12 @@ class FormMessages {
 | */
 
 enum FormValidateNotifier { none, toast, text }
+
+/* ---------------------------------------------------------------
+| Form Error Info
+| */
+
+class FormErrorInfo {
+  final String? key, message, type;
+  FormErrorInfo({this.key, this.message, this.type});
+}

@@ -34,16 +34,11 @@ class ActionController {
 
   void test() async {
     try {
-      String text = "<b>bold</b> <test>hello</test> <i>italic</i>";
-      List<String> allowed = ["b", "i", '/b', '/i'];
+      LazyLoading.overlay(message: 'Please wait for a moment, we are processing your request...');
 
-      // Generate a regular expression pattern to match all HTML tags except the allowed ones
-      String pattern = "(</?(?!(${allowed.join('|')})\\b)[^>]+>)";
-
-      // Replace all non-allowed HTML tags with an empty string
-      String filteredText = text.replaceAllMapped(RegExp(pattern), (match) => '');
-
-      logg(filteredText); // "<b>bold</b> hello <i>italic</i>"
+      Utils.timer(() {
+        LazyLoading.dismiss();
+      }, 5000);
     } catch (e, s) {
       Errors.check(e, s, useList: true);
     }
@@ -55,24 +50,38 @@ class ErrorHandlerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: const Text('Error Handler'),
-          centerTitle: true,
-        ),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: Maa.center,
-            children: [
-              Button(
-                onTap: () {
-                  ActionController().test();
-                },
-                text: 'Test Error',
-              ),
-              Text(355003.idr(separator: ','))
-            ],
+    return Wrapper(
+      child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Error Handler'),
+            centerTitle: true,
           ),
-        ));
+          body: Center(
+            child: Column(
+              mainAxisAlignment: Maa.center,
+              children: [
+                Button(
+                  onTap: () {
+                    LazyLoading.overlay(message: 'Please wait for a moment, we are processing your request...');
+
+                    Utils.timer(() {
+                      LazyLoading.dismiss();
+                    }, 5000);
+                  },
+                  text: 'Overlay',
+                  margin: Ei.only(b: 15),
+                ),
+                Button(
+                  onTap: () {
+                    LazyLoading.show(message: 'Failed to request');
+                  },
+                  text: 'Toast Show',
+                  margin: Ei.only(b: 15),
+                ),
+                LzForm.input(hint: 'Put your name here').margin(t: 25)
+              ],
+            ),
+          )),
+    );
   }
 }

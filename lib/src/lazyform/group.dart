@@ -1,4 +1,3 @@
-import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:lazyui/lazyui.dart';
 
@@ -30,12 +29,15 @@ class LzFormGroup extends StatelessWidget {
     // count not allowed widget
     int count = this.children.where((e) => !allowed.contains(e.runtimeType)).length;
 
+    // get text style
+    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+
     return Col(
       children: [
         if (label.isNotNull)
           Textr(
             label!,
-            style: Gfont.bold,
+            style: style?.copyWith(fontWeight: Fw.bold),
             icon: prefixIcon,
             margin: Ei.only(b: 8),
           ),
@@ -54,7 +56,7 @@ class LzFormGroup extends StatelessWidget {
 
                 return Textr(
                   'Found $count not allowed widget(s)',
-                  style: Gfont.fs14.fcolor(Colors.redAccent),
+                  style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
                   border: Br.all(color: Colors.redAccent),
                   padding: Ei.sym(v: 10, h: 15),
                   margin: Ei.sym(h: 15, v: 15),
