@@ -8,10 +8,10 @@ import 'select.dart';
 import 'switches.dart';
 
 class LzFormGroup extends StatelessWidget {
-  final String? label;
+  final String? label, sublabel;
   final IconData? prefixIcon;
   final List<Widget> children;
-  const LzFormGroup({super.key, this.label, this.prefixIcon, this.children = const []});
+  const LzFormGroup({super.key, this.label, this.sublabel, this.prefixIcon, this.children = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +34,7 @@ class LzFormGroup extends StatelessWidget {
 
     return Col(
       children: [
+        // Label
         if (label.isNotNull)
           Textr(
             label!,
@@ -41,6 +42,17 @@ class LzFormGroup extends StatelessWidget {
             icon: prefixIcon,
             margin: Ei.only(b: 8),
           ),
+
+        // Sublabel
+
+        if (sublabel.isNotNull)
+          Textr(
+            sublabel!,
+            style: style?.copyWith(fontSize: 14),
+            margin: Ei.only(b: 15),
+          ),
+
+        // Fields
         Container(
           margin: Ei.only(b: 20),
           decoration: BoxDecoration(border: Br.all(), color: Colors.white, borderRadius: Br.radius(5)),

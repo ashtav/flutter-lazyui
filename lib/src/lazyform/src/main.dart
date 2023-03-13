@@ -329,11 +329,15 @@ class LzForm {
 | based on the height of the form fields
 | */
 
+enum FormType { topAligned, grouped }
+
 class LzFormList extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
-  const LzFormList({super.key, this.children = const [], this.padding, this.physics});
+  final FormType type;
+
+  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.type = FormType.grouped});
 
   @override
   Widget build(BuildContext context) {

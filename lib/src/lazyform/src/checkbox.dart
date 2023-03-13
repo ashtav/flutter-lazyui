@@ -20,10 +20,12 @@ class Checkbox extends StatelessWidget {
   Widget build(BuildContext context) {
     // get parent widget name
     final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
+    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
 
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
     bool isFirst = false;
+    bool isTopAligned = false;
 
     // get first children of parent
     if (isGrouping && (parent?.children ?? []).isNotEmpty) {
@@ -31,6 +33,10 @@ class Checkbox extends StatelessWidget {
         Checkbox firstChild = parent.children[0] as Checkbox;
         isFirst = firstChild.label == label;
       }
+    }
+
+    if (formListAncestor != null && formListAncestor.type == FormType.topAligned) {
+      isTopAligned = true;
     }
 
     final notifier = model?.notifier ?? FormNotifier();

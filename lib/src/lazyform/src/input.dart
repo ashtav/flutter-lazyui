@@ -37,10 +37,12 @@ class Input extends StatelessWidget {
   Widget build(BuildContext context) {
     // get parent widget name
     final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
+    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
 
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
     bool isFirst = false;
+    bool isTopAligned = false;
 
     // get first children of parent
     if (isGrouping && (parent?.children ?? []).isNotEmpty) {
@@ -48,6 +50,10 @@ class Input extends StatelessWidget {
         Input firstChild = parent.children[0] as Input;
         isFirst = firstChild.label == label;
       }
+    }
+
+    if (formListAncestor != null && formListAncestor.type == FormType.topAligned) {
+      isTopAligned = true;
     }
 
     final notifier = model?.notifier ?? FormNotifier();
@@ -74,6 +80,7 @@ class Input extends StatelessWidget {
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
     bool isSuffix = obsecureToggle || onTap != null;
+    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -83,31 +90,27 @@ class Input extends StatelessWidget {
     | Label Widget
     | */
 
-    Widget labelWidget = Poslign(
-      alignment: Alignment.topLeft,
-      margin: Ei.only(h: 15, t: 13),
-      child: IgnorePointer(
-        child: Row(
-          mainAxisAlignment: Maa.spaceBetween,
-          children: [
-            Flexible(
-              child: Textr(
-                label ?? '',
-                style: style?.copyWith(fontSize: 14),
-                overflow: Tof.ellipsis,
-              ),
+    Widget labelWidget = IgnorePointer(
+      child: Row(
+        mainAxisAlignment: Maa.spaceBetween,
+        children: [
+          Flexible(
+            child: Textr(
+              label ?? '',
+              style: style?.copyWith(fontSize: 14),
+              overflow: Tof.ellipsis,
             ),
+          ),
 
-            // Text Length
-            indicator
-                ? notifier.watch(() => Textr(
-                      '${notifier.textLength}/$maxLength',
-                      style: style?.copyWith(fontSize: 14, color: Colors.black45),
-                      margin: Ei.only(r: isSuffix ? 50 : 0, l: 15),
-                    ))
-                : const None().margin(r: 50),
-          ],
-        ),
+          // Text Length
+          indicator
+              ? notifier.watch(() => Textr(
+                    '${notifier.textLength}/$maxLength',
+                    style: style?.copyWith(fontSize: 14, color: Colors.black45),
+                    margin: Ei.only(r: isSuffix ? 50 : 0, l: 15),
+                  ))
+              : const None().margin(r: 50),
+        ],
       ),
     );
 
@@ -137,7 +140,7 @@ class Input extends StatelessWidget {
           )
         : const None();
 
-    return ClipRRect(
+    Widget field = ClipRRect(
       key: model?.key,
       borderRadius: Br.radius(isGrouping ? 0 : configRadius),
       child: AnimatedBuilder(
@@ -170,7 +173,7 @@ class Input extends StatelessWidget {
                         formatters: formatters,
                         onChange: onChange,
                         onSubmit: onSubmit,
-                        contentPadding: Ei.only(t: noLabel ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: isSuffix ? 65 : 15),
+                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: isSuffix ? 65 : 15),
                       ),
 
                       /* ----------------------------------------------------
@@ -184,12 +187,19 @@ class Input extends StatelessWidget {
                       ),
                     ],
                   ),
-                  labelWidget,
+                  if (!isTopAligned) Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: 15, t: 13), child: labelWidget),
                   Poslign(alignment: Alignment.centerRight, child: obsecureToggle ? obsecureToggleWidget(notifier.obsecure) : suffixWidget)
                 ],
               ));
         },
       ),
-    ).margin(b: isGrouping ? 0 : 20);
+    );
+
+    return (isTopAligned
+            ? Col(
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
+              )
+            : field)
+        .margin(b: isGrouping ? 0 : 20);
   }
 }

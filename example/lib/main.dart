@@ -8,6 +8,7 @@ import 'pages/error_handler_view.dart';
 import 'pages/form_view.dart';
 import 'pages/form_view_2.dart';
 import 'pages/form_view_3.dart';
+import 'pages/form_view_4.dart';
 import 'pages/lazicon_view.dart';
 import 'theme/theme.dart';
 
@@ -75,6 +76,7 @@ class HomePage extends StatelessWidget {
       'Error Handler',
       'Another Widgets',
       'Forms 3',
+      'Forms 4',
     ];
 
     void onFeatureTap(int index) async {
@@ -170,6 +172,10 @@ class HomePage extends StatelessWidget {
 
         case 12:
           context.push(const FormView3());
+          break;
+
+        case 13:
+          context.push(const FormView4());
           break;
         default:
       }
