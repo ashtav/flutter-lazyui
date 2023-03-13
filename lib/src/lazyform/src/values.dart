@@ -47,6 +47,7 @@ class FormNotifier extends ChangeNotifier {
       checked.add(value);
     }
 
+    controller.text = checked.map((e) => e.option).join(', ').trim();
     notifyListeners();
   }
 
