@@ -64,6 +64,7 @@ class Select extends StatelessWidget {
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    double configRadius = LazyUi.getConfig.radius;
 
     /* ----------------------------------------------------
     | Label Widget
@@ -103,7 +104,7 @@ class Select extends StatelessWidget {
 
     return ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : 5),
+      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
@@ -143,7 +144,7 @@ class Select extends StatelessWidget {
               },
               color: Colors.white,
               border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
-              radius: isGrouping ? null : Br.radius(5),
+              radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
                   Col(

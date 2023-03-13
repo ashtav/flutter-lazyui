@@ -92,3 +92,213 @@ class Button extends StatelessWidget {
     return width != null ? SizedBox(width: width, child: finalWidget) : finalWidget;
   }
 }
+
+/* ------------------------------------------------------------
+| LzButton
+| */
+
+class LzButton extends StatelessWidget {
+  final String? text;
+  final IconData? icon;
+  final Function(LzButtonControl control)? onTap;
+  final double? spacing, radius;
+  final ButtonType type;
+  final Color? textColor;
+  const LzButton({super.key, this.text, this.icon, this.onTap, this.spacing, this.radius, this.type = ButtonType.white, this.textColor});
+
+  @override
+  Widget build(BuildContext context) {
+    final notifier = LzButtonControl();
+    notifier.setText(text ?? '');
+
+    double configRadius = LazyUi.getConfig.radius;
+
+    Duration duration = const Duration(milliseconds: 150);
+
+    Map<ButtonType, Color> buttonColors = {
+      ButtonType.primary: Utils.hex('#60a5fa'),
+      ButtonType.secondary: Utils.hex('#9ca3af'),
+      ButtonType.danger: Utils.hex('#f87171'),
+      ButtonType.success: Utils.hex('#4ade80'),
+      ButtonType.warning: Utils.hex('#fb923c'),
+      ButtonType.dark: Utils.hex('#0f172a'),
+      ButtonType.white: Colors.white,
+    };
+
+    Color buttonTextColor = textColor ?? (type == ButtonType.white ? Utils.hex('#1e293b') : Colors.white);
+
+    Widget buttonWidget = AnimatedBuilder(
+        animation: notifier,
+        builder: (context, _) {
+          bool isSubmit = notifier.isSubmit;
+
+          Widget switcher(Widget child) => AnimatedSwitcher(
+              duration: duration,
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return ScaleTransition(
+                  scale: animation,
+                  child: child,
+                );
+              },
+              child: child);
+
+          return AnimatedOpacity(
+            opacity: isSubmit || !notifier.enabled ? 0.7 : 1,
+            duration: duration,
+            child: InkW(
+              onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
+              padding: Ei.sym(v: 16, h: spacing ?? 20),
+              radius: Br.radius(radius ?? configRadius),
+              color: buttonColors[type],
+              border: Br.all(),
+              child: Row(
+                mainAxisAlignment: Maa.center,
+                mainAxisSize: Mas.min,
+                children: [
+                  icon == null
+                      ? switcher(isSubmit
+                          ? Loader(
+                              key: UniqueKey(),
+                              color: buttonTextColor,
+                            )
+                          : const None())
+                      : switcher(isSubmit
+                          ? Loader(
+                              key: UniqueKey(),
+                              color: buttonTextColor,
+                            )
+                          : Icon(
+                              icon!,
+                              key: UniqueKey(),
+                              color: buttonTextColor,
+                              size: 18,
+                            )),
+
+                  // Button Text
+                  AnimatedContainer(
+                    duration: duration,
+                    margin: Ei.only(
+                        l: isSubmit
+                            ? 15
+                            : icon.isNotNull
+                                ? 15
+                                : 0),
+                    child: Text(
+                      notifier.buttonText,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
+
+    return buttonWidget;
+  }
+}
+
+enum LzButtonStyle { none, shadow }
+
+class LzButtonControl extends ChangeNotifier {
+  String buttonText = '';
+  bool isSubmit = false, enabled = true;
+
+  void submit() {
+    isSubmit = true;
+    notifyListeners();
+  }
+
+  void abort() {
+    isSubmit = false;
+    notifyListeners();
+  }
+
+  void setText(String text) {
+    buttonText = text;
+    notifyListeners();
+  }
+
+  void setEnabled(bool value) {
+    enabled = value;
+    notifyListeners();
+  }
+}
+
+/* ------------------------------------------------------------
+| LzButton Extension
+| */
+
+extension LzButtonExtension on LzButton {
+  Widget theme(List<LzButtonStyle> styles, {Color? shadowColor, double spacing = 0}) {
+    return Container(
+        padding: Ei.all(spacing),
+        decoration: BoxDecoration(
+            boxShadow: styles.contains(LzButtonStyle.shadow)
+                ? [
+                    BoxShadow(color: shadowColor ?? Utils.hex('fafafa'), spreadRadius: 30, blurRadius: 25, offset: const Offset(0, 0)),
+                  ]
+                : []),
+        child: this);
+  }
+
+  LzButton primary([Color? textColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        spacing: spacing,
+        radius: radius,
+        type: ButtonType.primary,
+        textColor: textColor,
+      );
+
+  LzButton secondary([Color? textColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        spacing: spacing,
+        radius: radius,
+        type: ButtonType.secondary,
+        textColor: textColor,
+      );
+
+  LzButton danger([Color? textColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        spacing: spacing,
+        radius: radius,
+        type: ButtonType.danger,
+        textColor: textColor,
+      );
+
+  LzButton success([Color? textColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        spacing: spacing,
+        radius: radius,
+        type: ButtonType.success,
+        textColor: textColor,
+      );
+
+  LzButton warning([Color? textColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        spacing: spacing,
+        radius: radius,
+        type: ButtonType.warning,
+        textColor: textColor,
+      );
+
+  LzButton dark([Color? textColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        spacing: spacing,
+        radius: radius,
+        type: ButtonType.dark,
+        textColor: textColor,
+      );
+}

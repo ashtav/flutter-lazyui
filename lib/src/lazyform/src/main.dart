@@ -1,5 +1,7 @@
 // LzForm.input()
 
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide Radio, Checkbox;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -41,6 +43,9 @@ class LzForm {
   | LzForm Make Model
   | */
 
+  /// ``` dart
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  /// ```
   static Map<String, FormModel> make(List<String> keys) {
     Map<String, TextEditingController> forms = {};
     Map<String, FormNotifier> notifiers = {};
@@ -57,6 +62,9 @@ class LzForm {
   | LzForm Fill
   | */
 
+  /// ``` dart
+  /// LzForm.fill(forms, {'name': 'John Doe'});
+  /// ```
   static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data) {
     for (var e in data.keys) {
       if (forms.containsKey(e)) {
@@ -194,6 +202,10 @@ class LzForm {
   | LzForm Validation
   | */
 
+  /// ```dart
+  /// LzForm form = LzForm.validate(forms, required: ['*']);
+  /// if(form.ok) // do something...
+  /// ```
   static LzForm validate(Map<String, FormModel> forms,
       {List<String> required = const [],
       List<String> min = const [],
@@ -226,10 +238,10 @@ class LzForm {
         return [split[0], split.length < 2 ? 0 : split[1].getNumeric];
       }
 
-      // Check keys (required, min, max, email) if they are in the forms
+      // check keys (required, min, max, email) if they are in the forms
       for (String key in formKeys) {
         /* ------------------------------------------------------------------------
-        | Required Validation
+        | Required
         | */
 
         if (controllers[key] != null && controllers[key]!.text.trim().isEmpty && required.contains(key)) {
@@ -274,6 +286,7 @@ class LzForm {
       // Get keys that are not contained in the errorFields
       List<String> keys = controllers.keys.toList()..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
 
+      // Clear all notifiers
       for (String k in keys) {
         notifiers[k]?.setMessage('', true);
       }
@@ -295,7 +308,7 @@ class LzForm {
 
         // scroll to the error field
         GlobalKey? key = globalKeys[errorKey];
-        if (key != null) {
+        if (key != null && key.currentContext != null) {
           Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
         }
 
@@ -306,5 +319,41 @@ class LzForm {
     }
 
     return LzForm(ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.controller)).toMap());
+  }
+}
+
+/* ---------------------------------------------------------------
+| LzFormList
+| ----------------------------------------------------------------
+| Use LzFormList to wrap your form fields to make it scrollable
+| based on the height of the form fields
+| */
+
+class LzFormList extends StatelessWidget {
+  final List<Widget> children;
+  final EdgeInsetsGeometry? padding;
+  final ScrollPhysics? physics;
+  const LzFormList({super.key, this.children = const [], this.padding, this.physics});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = StreamController<double>();
+    double height = 0;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      RenderBox box = context.findRenderObject() as RenderBox;
+      height += box.size.height;
+
+      controller.sink.add(height);
+    });
+
+    return StreamBuilder<double>(
+        stream: controller.stream,
+        builder: (BuildContext context, _) => ListView(
+              physics: physics ?? BounceScroll(),
+              cacheExtent: height,
+              padding: padding ?? Ei.all(20),
+              children: children,
+            ));
   }
 }

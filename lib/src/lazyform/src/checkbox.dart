@@ -50,6 +50,7 @@ class Checkbox extends StatelessWidget {
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    double configRadius = LazyUi.getConfig.radius;
 
     /* ----------------------------------------------------
     | Label Widget
@@ -76,7 +77,7 @@ class Checkbox extends StatelessWidget {
 
     return ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : 5),
+      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
@@ -90,7 +91,7 @@ class Checkbox extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.white,
                 border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
-                borderRadius: isGrouping ? null : Br.radius(5),
+                borderRadius: isGrouping ? null : Br.radius(configRadius),
               ),
               child: Stack(
                 children: [

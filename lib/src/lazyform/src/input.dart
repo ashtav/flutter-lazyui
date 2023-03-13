@@ -77,6 +77,7 @@ class Input extends StatelessWidget {
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    double configRadius = LazyUi.getConfig.radius;
 
     /* ----------------------------------------------------
     | Label Widget
@@ -117,7 +118,7 @@ class Input extends StatelessWidget {
     Widget obsecureToggleWidget(bool obsecure) => Touch(
           onTap: () => notifier.setObsecure(!obsecure),
           child: Iconr(
-            obsecure ? La.lock : La.unlock,
+            obsecure ? La.eye : La.eyeSlash,
             padding: Ei.only(h: 15, v: 15),
             border: Br.only(['l']),
           ),
@@ -138,7 +139,7 @@ class Input extends StatelessWidget {
 
     return ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : 5),
+      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
@@ -151,7 +152,7 @@ class Input extends StatelessWidget {
               onTap: onTap.isNotNull ? () => onTap!(notifier.controller) : null,
               color: Colors.white,
               border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
-              radius: isGrouping ? null : Br.radius(5),
+              radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
                   Col(

@@ -1,4 +1,3 @@
-import 'package:example/app/core/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -14,7 +13,7 @@ class FormView3 extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Form View'),
       ),
-      body: BounceListView(
+      body: LzFormList(
         children: [
           LzFormGroup(
             label: 'Bio',
@@ -59,9 +58,10 @@ class FormView3 extends StatelessWidget {
                   model: forms['province'],
                   onTap: (selector) async {
                     // get data from server
-                    toast.overlay('Loading...');
+                    LazyLoading.overlay(message: 'Loading...');
+
                     final data = await MyController.getProvince();
-                    toast.dismiss();
+                    LazyLoading.dismiss();
 
                     // set options
                     selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
@@ -81,12 +81,35 @@ class FormView3 extends StatelessWidget {
           ),
           LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr]),
           LzForm.input(label: 'About You *', hint: 'Tell us about you'),
-          LzForm.switches(label: 'Active|Inactive', activeColor: Colors.blue)
+          LzForm.switches(label: 'Active|Inactive', activeColor: Colors.blue),
+          Col(
+            children: [
+              LzButton(
+                  text: 'Hello, I\'m Button',
+                  onTap: (control) {
+                    control.setText('Submit');
+                    control.submit();
+
+                    Utils.timer(() {
+                      control.abort();
+                      control.setText('Submitted!');
+                      control.setEnabled(false);
+                    }, 2000);
+
+                    Utils.timer(() {
+                      control.setEnabled(true);
+                    }, 3000);
+                  }).margin(t: 15),
+            ],
+          ),
+          const SizedBox(
+            height: 50,
+          )
         ],
       ),
-      bottomNavigationBar: Forms.button(
+      bottomNavigationBar: LzButton(
           text: 'Submit',
-          onTap: () {
+          onTap: (control) {
             LzForm form = LzForm.validate(forms,
                 required: ['*'],
                 email: ['email'],
@@ -104,24 +127,11 @@ class FormView3 extends StatelessWidget {
                 }),
                 notifierType: FormValidateNotifier.text);
 
-            logg(form.ok);
-          }),
+            if (form.ok) {
+              LazyLoading.show(message: 'Form is valid');
+            }
+          }).dark().theme([LzButtonStyle.shadow], spacing: 20),
     ));
-  }
-}
-
-class BounceListView extends StatelessWidget {
-  final EdgeInsetsGeometry? padding;
-  final List<Widget> children;
-  const BounceListView({super.key, this.padding, this.children = const []});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      physics: BounceScroll(),
-      padding: padding ?? Ei.all(20),
-      children: children,
-    );
   }
 }
 
