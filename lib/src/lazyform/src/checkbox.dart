@@ -153,20 +153,15 @@ class Checkbox extends StatelessWidget {
                             );
                           }),
                         ),
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 150),
-                          transitionBuilder: (Widget child, Animation<double> animation) {
-                            final tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
-                            return SlideTransition(position: tween.animate(animation), child: child);
-                          },
-                          child: isValid
-                              ? const None()
-                              : Textr(
-                                  errorMessage,
-                                  key: ValueKey(errorMessage),
-                                  style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
-                                  margin: Ei.only(b: 13),
-                                ),
+
+                        /* ----------------------------------------------------
+                        | Feedback Message
+                        | */
+
+                        FeedbackMessage(
+                          isValid: isValid,
+                          errorMessage: errorMessage,
+                          leftLess: true,
                         ),
                       ],
                     ),

@@ -161,20 +161,10 @@ class Select extends StatelessWidget {
                       | Feedback Message
                       | */
 
-                      AnimatedSwitcher(
-                        duration: const Duration(milliseconds: 150),
-                        transitionBuilder: (Widget child, Animation<double> animation) {
-                          final tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
-                          return SlideTransition(position: tween.animate(animation), child: child);
-                        },
-                        child: isValid
-                            ? const None()
-                            : Textr(
-                                errorMessage,
-                                key: ValueKey(errorMessage),
-                                style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
-                                margin: Ei.only(h: 15, b: 13),
-                              ),
+                      FeedbackMessage(
+                        isValid: isValid,
+                        errorMessage: errorMessage,
+                        isSuffix: true,
                       ),
                     ],
                   ),

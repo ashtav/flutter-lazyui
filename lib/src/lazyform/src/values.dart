@@ -107,3 +107,41 @@ class FormErrorInfo {
   final String? key, message, type;
   FormErrorInfo({this.key, this.message, this.type});
 }
+
+class FeedbackMessage extends StatelessWidget {
+  final bool isValid;
+  final String errorMessage;
+  final bool leftLess, isSuffix;
+  const FeedbackMessage({super.key, this.isValid = true, this.errorMessage = '', this.leftLess = false, this.isSuffix = false});
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 150),
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        final tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
+        return SlideTransition(position: tween.animate(animation), child: child);
+      },
+      child: isValid
+          ? const None()
+          : SizedBox(
+              key: ValueKey(errorMessage),
+              width: context.width,
+              child: Textr(
+                errorMessage,
+                style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
+                margin: Ei.only(
+                    l: leftLess ? 0 : 15,
+                    b: 13,
+                    r: leftLess
+                        ? 0
+                        : isSuffix
+                            ? 65
+                            : 15),
+              ),
+            ),
+    );
+  }
+}
