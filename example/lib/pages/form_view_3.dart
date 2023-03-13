@@ -130,7 +130,7 @@ class FormView3 extends StatelessWidget {
             if (form.ok) {
               LazyLoading.show(message: 'Form is valid');
             }
-          }).dark().theme([LzButtonStyle.shadow], spacing: 20),
+          }).theme([LzButtonStyle.shadow], spacing: 20),
     ));
   }
 }

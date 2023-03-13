@@ -103,8 +103,9 @@ class LzButton extends StatelessWidget {
   final Function(LzButtonControl control)? onTap;
   final double? spacing, radius;
   final ButtonType type;
+  final Color? color;
   final Color? textColor;
-  const LzButton({super.key, this.text, this.icon, this.onTap, this.spacing, this.radius, this.type = ButtonType.white, this.textColor});
+  const LzButton({super.key, this.text, this.icon, this.onTap, this.spacing, this.radius, this.type = ButtonType.white, this.color, this.textColor});
 
   @override
   Widget build(BuildContext context) {
@@ -149,8 +150,8 @@ class LzButton extends StatelessWidget {
               onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
               padding: Ei.sym(v: 16, h: spacing ?? 20),
               radius: Br.radius(radius ?? configRadius),
-              color: buttonColors[type],
-              border: Br.all(),
+              color: color ?? buttonColors[type],
+              border: Br.all(color: type == ButtonType.white ? null : color ?? buttonColors[type]),
               child: Row(
                 mainAxisAlignment: Maa.center,
                 mainAxisSize: Mas.min,
