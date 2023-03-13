@@ -28,7 +28,7 @@ class LazyLoading {
 
   LazyLoadingOverlayEntry? overlayEntry;
   GlobalKey<LazyLoadingContainerState>? _key;
-  Timer? _timer;
+  Timer? _timer, _timerShow;
 
   Widget? get w => _w;
   GlobalKey<LazyLoadingContainerState>? get key => _key;
@@ -76,15 +76,12 @@ class LazyLoading {
     bool? dismissOnTap,
     Duration? duration,
   }) {
-    _instance._timer?.cancel();
-    _instance._timer = Timer(duration ?? const Duration(seconds: 2), () {
+    _instance._timerShow?.cancel();
+    _instance._timerShow = Timer(duration ?? const Duration(seconds: 2), () {
       dismiss();
     });
 
-    return _instance._show(
-      message: message,
-      dismissOnTap: dismissOnTap,
-    );
+    return _instance._show(message: message, dismissOnTap: dismissOnTap, freeInteract: true);
   }
 
   /// dismiss loading
@@ -101,6 +98,7 @@ class LazyLoading {
     Widget? w,
     required String message,
     bool? dismissOnTap,
+    bool freeInteract = false,
   }) async {
     assert(
       overlayEntry != null,
@@ -118,6 +116,7 @@ class LazyLoading {
       indicator: w,
       animation: animation,
       dismissOnTap: dismissOnTap,
+      freeInteract: freeInteract,
     );
 
     _markNeedsBuild();

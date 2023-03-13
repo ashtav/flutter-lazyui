@@ -13,15 +13,11 @@ class LazyLoadingContainer extends StatefulWidget {
   final bool? dismissOnTap;
   final Completer<void>? completer;
   final bool animation;
+  final bool freeInteract;
 
-  const LazyLoadingContainer({
-    Key? key,
-    this.indicator,
-    required this.message,
-    this.dismissOnTap,
-    this.completer,
-    this.animation = true,
-  }) : super(key: key);
+  const LazyLoadingContainer(
+      {Key? key, this.indicator, required this.message, this.dismissOnTap, this.completer, this.animation = true, this.freeInteract = false})
+      : super(key: key);
 
   @override
   LazyLoadingContainerState createState() => LazyLoadingContainerState();

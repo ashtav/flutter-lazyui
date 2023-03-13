@@ -66,6 +66,7 @@ class ErrorHandlerView extends StatelessWidget {
 
                     Utils.timer(() {
                       LazyLoading.dismiss();
+                      LazyLoading.show(message: 'Failed to request');
                     }, 5000);
                   },
                   text: 'Overlay',
