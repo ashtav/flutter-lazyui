@@ -34,9 +34,7 @@ class LazyLoadingContainer extends StatefulWidget {
 
 class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleTickerProviderStateMixin {
   late String _message;
-  Color? _maskColor;
   late AnimationController animationController;
-  late bool _dismissOnTap, _ignoring;
 
   // https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
   bool get isPersistentCallbacks => _ambiguate(SchedulerBinding.instance)!.schedulerPhase == SchedulerPhase.persistentCallbacks;
@@ -55,9 +53,6 @@ class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleT
     if (!mounted) return;
 
     _message = widget.message;
-    _dismissOnTap = widget.dismissOnTap ?? false;
-    _ignoring = _dismissOnTap ? true : false;
-    _maskColor = Colors.black.withOpacity(0.5);
 
     animationController = AnimationController(
       vsync: this,
@@ -99,8 +94,6 @@ class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleT
       _message = status;
     });
   }
-
-  void _onTap() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -157,46 +150,6 @@ class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleT
         //   },
         // ),
       ],
-    );
-  }
-}
-
-class _Indicator extends StatelessWidget {
-  final Widget? indicator;
-  final String message;
-  final EdgeInsetsGeometry? padding;
-
-  const _Indicator({
-    required this.indicator,
-    required this.message,
-    required this.padding,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    // get text style
-    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
-
-    return Container(
-      margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.9),
-        borderRadius: Br.radius(5),
-      ),
-      padding: padding ?? Ei.all(20),
-      child: Column(
-        mainAxisAlignment: Maa.center,
-        crossAxisAlignment: Caa.center,
-        mainAxisSize: Mas.min,
-        children: [
-          indicator?.margin(b: 15) ?? const None(),
-          Text(
-            message,
-            style: style?.copyWith(color: Colors.white),
-            textAlign: Ta.center,
-          ),
-        ],
-      ),
     );
   }
 }

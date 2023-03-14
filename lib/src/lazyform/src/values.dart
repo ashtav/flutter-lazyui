@@ -6,14 +6,21 @@ import 'package:lazyui/lazyui.dart';
 | */
 
 class FormNotifier extends ChangeNotifier {
+  // text input controller
   TextEditingController controller = TextEditingController();
+
+  // text input focus
+  FocusNode node = FocusNode();
+
+  // text input data
   Map<String, dynamic> data = {'error': '', 'valid': true, 'text_length': 0};
-  bool obsecure = true;
-  Option? option;
 
   String get errorMessage => data['error'];
   bool get isValid => data['valid'];
   int get textLength => data['text_length'];
+
+  bool obsecure = true;
+  bool? disabled, readonly;
 
   void setMessage(String value, bool valid) {
     data['error'] = value;
@@ -30,6 +37,9 @@ class FormNotifier extends ChangeNotifier {
     data['text_length'] = value;
     notifyListeners();
   }
+
+  // radio
+  Option? option;
 
   void setOption(Option value) {
     option = value;
@@ -54,6 +64,29 @@ class FormNotifier extends ChangeNotifier {
   void setCheckedAll(List<Option> value) {
     checked = value;
     notifyListeners();
+  }
+
+  // readonly
+  FormNotifier setReadonly(bool value) {
+    readonly = !value;
+    notifyListeners();
+    return this;
+  }
+
+  // disabled
+  FormNotifier setDisabled(bool value) {
+    disabled = !value;
+    notifyListeners();
+    return this;
+  }
+
+  // focus
+  FormNotifier setFocus() {
+    Utils.timer(() {
+      node.requestFocus();
+    }, 100.ms);
+
+    return this;
   }
 }
 

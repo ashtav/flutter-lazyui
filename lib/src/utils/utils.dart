@@ -6,12 +6,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-import 'package:stack_trace/stack_trace.dart';
-
-import '../extensions/datetime_extension.dart';
-import '../extensions/string_extension.dart';
-import 'log.dart';
+import 'package:lazyui/lazyui.dart';
 
 class Utils {
   /// ``` dart
@@ -74,9 +69,9 @@ class Utils {
   /// ```dart
   /// Timer timer = Utils.timer((){
   ///   // do something...
-  /// }, 100);
+  /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
   /// ```
-  static Timer timer(void Function() then, [int ms = 50]) => Timer(Duration(milliseconds: ms), then);
+  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
 
   /// ``` dart
   /// Utils.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Sabtu, 20 Maret 2021

@@ -9,6 +9,7 @@ import 'pages/form_view.dart';
 import 'pages/form_view_2.dart';
 import 'pages/form_view_3.dart';
 import 'pages/form_view_4.dart';
+import 'pages/form_view_5.dart';
 import 'pages/lazicon_view.dart';
 import 'theme/theme.dart';
 
@@ -77,6 +78,7 @@ class HomePage extends StatelessWidget {
       'Another Widgets',
       'Forms 3',
       'Forms 4',
+      'Forms 5',
     ];
 
     void onFeatureTap(int index) async {
@@ -176,6 +178,10 @@ class HomePage extends StatelessWidget {
 
         case 13:
           context.push(const FormView4());
+          break;
+
+        case 14:
+          context.push(const FormView5());
           break;
         default:
       }

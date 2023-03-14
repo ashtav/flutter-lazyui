@@ -10,7 +10,7 @@ class Select extends StatelessWidget {
   final List<Option> options;
   final Option? initValue;
   final FormModel? model;
-  final bool enabled;
+  final bool disabled;
   final Function(String)? onChange;
   final Future? Function(SelectController controller)? onTap;
   final Function(SelectController controller)? onSelect;
@@ -22,7 +22,7 @@ class Select extends StatelessWidget {
       this.options = const [],
       this.initValue,
       this.model,
-      this.enabled = true,
+      this.disabled = false,
       this.onChange,
       this.onTap,
       this.onSelect});
@@ -112,37 +112,43 @@ class Select extends StatelessWidget {
           bool isValid = notifier.isValid;
           Color borderColor = isValid ? Colors.black12 : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
+          Color disabledColor = Utils.hex('#f3f4f6');
+
+          bool? isDisabled = notifier.disabled;
+          bool enabled = (isDisabled ?? !disabled);
 
           return InkW(
-              onTap: () async {
-                // execute onTap callback
-                dynamic callback = await onTap?.call(selectController);
+              onTap: !enabled
+                  ? null
+                  : () async {
+                      // execute onTap callback
+                      dynamic callback = await onTap?.call(selectController);
 
-                // as default, options can be shown except when the callback is false
-                bool ok = true;
-                if (callback is bool) ok = callback;
+                      // as default, options can be shown except when the callback is false
+                      bool ok = true;
+                      if (callback is bool) ok = callback;
 
-                // get options
-                List<Option> options = selectController.options ?? this.options;
+                      // get options
+                      List<Option> options = selectController.options ?? this.options;
 
-                if (ok && options.isNotEmpty && context.mounted) {
-                  FocusScope.of(context).unfocus();
+                      if (ok && options.isNotEmpty && context.mounted) {
+                        FocusScope.of(context).unfocus();
 
-                  // show options
-                  context.bottomSheet(
-                      SelectPicker(
-                          initialValue: initValue ?? notifier.option,
-                          options: options,
-                          onSelect: (option) {
-                            selectController.option = option;
+                        // show options
+                        context.bottomSheet(
+                            SelectPicker(
+                                initialValue: initValue ?? notifier.option,
+                                options: options,
+                                onSelect: (option) {
+                                  selectController.option = option;
 
-                            notifier.setOption(option);
-                            onSelect?.call(selectController);
-                          }),
-                      backgroundColor: Colors.transparent);
-                }
-              },
-              color: Colors.white,
+                                  notifier.setOption(option);
+                                  onSelect?.call(selectController);
+                                }),
+                            backgroundColor: Colors.transparent);
+                      }
+                    },
+              color: enabled ? Colors.white : disabledColor,
               border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(

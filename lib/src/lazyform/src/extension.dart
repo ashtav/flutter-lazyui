@@ -21,4 +21,20 @@ extension FormModelExtension on Map<String, FormModel> {
 
     return this;
   }
+
+  String get(String key) {
+    return this[key]!.controller.text;
+  }
+
+  Map<String, dynamic> toMap({List<String> except = const []}) {
+    final data = <String, dynamic>{};
+
+    for (var e in keys) {
+      if (!except.contains(e)) {
+        data[e] = this[e]!.controller.text;
+      }
+    }
+
+    return data;
+  }
 }

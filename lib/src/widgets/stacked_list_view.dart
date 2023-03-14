@@ -63,7 +63,7 @@ class StackedListView extends StatelessWidget {
         if (defaultHeight == -1) defaultHeight = height;
 
         opacityStreamController.add(isInit);
-      }, 250);
+      }, 250.ms);
     }
 
     initWidget();

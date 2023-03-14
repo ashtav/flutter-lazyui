@@ -8,7 +8,7 @@ class Input extends StatelessWidget {
   final int maxLength;
   final int? maxLines;
   final FocusNode? node;
-  final bool enabled, autofocus, obsecure, obsecureToggle, indicator;
+  final bool disabled, readonly, autofocus, obsecure, obsecureToggle, indicator;
   final TextInputType? keyboard;
   final List<TextInputFormatter> formatters;
   final Function(String)? onChange, onSubmit;
@@ -22,7 +22,8 @@ class Input extends StatelessWidget {
       this.maxLength = 50,
       this.maxLines,
       this.node,
-      this.enabled = true,
+      this.disabled = false,
+      this.readonly = false,
       this.autofocus = false,
       this.obsecure = false,
       this.keyboard,
@@ -149,11 +150,18 @@ class Input extends StatelessWidget {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid ? Colors.black12 : Colors.redAccent;
+          Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
+          FocusNode focusNode = node ?? notifier.node;
+
+          bool? isDisabled = notifier.disabled;
+          bool? isReadonly = notifier.readonly;
+
+          bool enabled = onTap == null && (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
 
           return InkW(
               onTap: onTap.isNotNull ? () => onTap!(notifier.controller) : null,
-              color: Colors.white,
+              color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
               border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
@@ -165,8 +173,8 @@ class Input extends StatelessWidget {
                         controller: model?.controller,
                         maxLength: maxLength,
                         maxLines: maxLines,
-                        node: node,
-                        enabled: enabled && onTap == null,
+                        node: focusNode,
+                        enabled: enabled,
                         autofocus: autofocus,
                         obsecure: obsecureToggle ? notifier.obsecure : obsecure,
                         keyboard: keyboard,

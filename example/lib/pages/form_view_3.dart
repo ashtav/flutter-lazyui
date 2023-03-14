@@ -94,11 +94,11 @@ class FormView3 extends StatelessWidget {
                       control.abort();
                       control.setText('Submitted!');
                       control.setEnabled(false);
-                    }, 2000);
+                    }, 2.s);
 
                     Utils.timer(() {
                       control.setEnabled(true);
-                    }, 3000);
+                    }, 3.s);
                   }).margin(t: 15),
             ],
           ),

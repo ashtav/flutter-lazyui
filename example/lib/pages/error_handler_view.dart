@@ -38,7 +38,7 @@ class ActionController {
 
       Utils.timer(() {
         LzToast.dismiss();
-      }, 5000);
+      }, 5.s);
     } catch (e, s) {
       Errors.check(e, s, useList: true);
     }
@@ -72,7 +72,7 @@ class ErrorHandlerView extends StatelessWidget {
                           Utils.timer(() {
                             LzToast.dismiss();
                             // LzToast.show('Failed to request');
-                          }, 5000);
+                          }, 5.s);
                         }).dark().margin(all: 5),
                     LzButton(text: 'Toast with Icon', onTap: (_) => LzToast.show('Toast message with an icon', icon: La.infoCircle)).margin(all: 5),
                     LzButton(text: 'Toast Top', onTap: (_) => LzToast.show('This message in top position', position: LzToastPosition.top))

@@ -75,4 +75,20 @@ extension MapExtension on Map<String, dynamic> {
       }
     });
   }
+
+  /// ``` dart
+  /// Map<String, dynamic> data = {'id': 1, 'name': 'Apple', 'price': 2500}.removes(['id','name']); // {'price': 2500}
+  /// ```
+
+  Map<String, dynamic> removes([List<String> keys = const []]) {
+    return this..removeWhere((key, value) => keys.contains(key));
+  }
+
+  /// ``` dart
+  /// Map<String, dynamic> data = {'id': 1, 'name': 'Apple', 'price': 2500}.get(['name']); // {'name': 'Apple'}
+  /// ```
+
+  Map<String, dynamic> get([List<String> keys = const []]) {
+    return this..removeWhere((key, value) => !keys.contains(key));
+  }
 }
