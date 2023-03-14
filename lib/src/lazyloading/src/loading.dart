@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'main.dart';
 import 'overlay_entry.dart';
 
+final notifier = LzToastNotifier();
+
 class LzLoadingOverlay extends StatefulWidget {
   final Widget? child;
 
@@ -23,9 +25,9 @@ class _LzLoadingOverlayState extends State<LzLoadingOverlay> {
   void initState() {
     super.initState();
     overlayEntry = LazyLoadingOverlayEntry(
-      overlayBuilder: (BuildContext context) => LazyLoading.instance.w ?? Container(),
+      overlayBuilder: (BuildContext context) => LzToastWidget(notifier: notifier),
     );
-    LazyLoading.instance.overlayEntry = overlayEntry;
+    LzToast.instance.overlayEntry = overlayEntry;
   }
 
   @override

@@ -4,8 +4,10 @@ extension WidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().margin() // Only works on widget with no margin property
   /// ```
-  Widget margin({double? t, double? b, double? l, double? r, double? v, double? h, double others = 0}) => Container(
-        margin: EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others),
+  Widget margin({double? t, double? b, double? l, double? r, double? v, double? h, double others = 0, double? all}) => Container(
+        margin: all != null
+            ? EdgeInsets.all(all)
+            : EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others),
         child: this,
       );
 

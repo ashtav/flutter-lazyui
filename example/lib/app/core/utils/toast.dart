@@ -25,7 +25,7 @@ class Toasts {
   }
 
   Toasts dismiss() {
-    LazyLoading.dismiss();
+    LzToast.dismiss();
     return this;
   }
 }

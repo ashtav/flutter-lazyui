@@ -34,10 +34,10 @@ class ActionController {
 
   void test() async {
     try {
-      LazyLoading.overlay(message: 'Please wait for a moment, we are processing your request...');
+      LzToast.overlay('Please wait for a moment, we are processing your request...');
 
       Utils.timer(() {
-        LazyLoading.dismiss();
+        LzToast.dismiss();
       }, 5000);
     } catch (e, s) {
       Errors.check(e, s, useList: true);
@@ -56,32 +56,37 @@ class ErrorHandlerView extends StatelessWidget {
             title: const Text('Error Handler'),
             centerTitle: true,
           ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: Maa.center,
-              children: [
-                Button(
-                  onTap: () {
-                    LazyLoading.overlay(message: 'Please wait for a moment, we are processing your request...');
+          body: ListView(
+            physics: BounceScroll(),
+            padding: Ei.all(20),
+            children: [
+              Center(
+                child: Column(
+                  mainAxisAlignment: Maa.center,
+                  children: [
+                    LzButton(
+                        text: 'Toast Overlay',
+                        onTap: (_) {
+                          LzToast.overlay('Please wait for a moment, we are processing your request...');
 
-                    Utils.timer(() {
-                      LazyLoading.dismiss();
-                      LazyLoading.show(message: 'Failed to request');
-                    }, 5000);
-                  },
-                  text: 'Overlay',
-                  margin: Ei.only(b: 15),
+                          Utils.timer(() {
+                            LzToast.dismiss();
+                            // LzToast.show('Failed to request');
+                          }, 5000);
+                        }).dark().margin(all: 5),
+                    LzButton(text: 'Toast with Icon', onTap: (_) => LzToast.show('Toast message with an icon', icon: La.infoCircle)).margin(all: 5),
+                    LzButton(text: 'Toast Top', onTap: (_) => LzToast.show('This message in top position', position: LzToastPosition.top))
+                        .margin(all: 5),
+                    LzButton(text: 'Toast Center', onTap: (_) => LzToast.show('This message in center position', position: LzToastPosition.center))
+                        .margin(all: 5),
+                    LzButton(text: 'Toast Bottom', onTap: (_) => LzToast.show('This message in bottom position')).margin(all: 5),
+                    LzButton(text: 'Long Toast Message', onTap: (_) => LzToast.show(Faker.random(15))).margin(all: 5),
+                    LzButton(text: '5 Seconds', onTap: (_) => LzToast.show('Hello this is 5 seconds', duration: 5.s)).margin(all: 5),
+                    LzForm.input(hint: 'Put your name here').margin(t: 25)
+                  ],
                 ),
-                Button(
-                  onTap: () {
-                    LazyLoading.show(message: 'Failed to request');
-                  },
-                  text: 'Toast Show',
-                  margin: Ei.only(b: 15),
-                ),
-                LzForm.input(hint: 'Put your name here').margin(t: 25)
-              ],
-            ),
+              ),
+            ],
           )),
     );
   }

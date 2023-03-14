@@ -54,10 +54,10 @@ class FormView4 extends StatelessWidget {
                   model: forms['province'],
                   onTap: (selector) async {
                     // get data from server
-                    LazyLoading.overlay(message: 'Loading...');
+                    LzToast.overlay('Loading...');
 
                     final data = await MyController.getProvince();
-                    LazyLoading.dismiss();
+                    LzToast.dismiss();
 
                     // set options
                     selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
@@ -124,7 +124,7 @@ class FormView4 extends StatelessWidget {
                 notifierType: FormValidateNotifier.text);
 
             if (form.ok) {
-              LazyLoading.show(message: 'Form is valid');
+              LzToast.show('Form is valid');
             }
           }).theme([LzButtonStyle.shadow], spacing: 20),
     ));
