@@ -512,4 +512,40 @@ class Utils {
 
     return isOk;
   }
+
+  /// ```dart
+  /// Utils.getDateStringFormat('2000-12-10'); // y-m-d
+  /// ```
+
+  static String? getDateStringFormat(String dateString) {
+    Map<String, RegExp> formatRegexMap = {
+      'y-m-d': RegExp(r'^\d{4}-\d{2}-\d{2}$'),
+      'd-m-y': RegExp(r'^\d{2}-\d{2}-\d{4}$'),
+      'y.m.d': RegExp(r'^\d{4}\.\d{2}\.\d{2}$'),
+      'y/m/d': RegExp(r'^\d{4}/\d{2}/\d{2}$'),
+      'd/m/y': RegExp(r'^\d{2}/\d{2}/\d{4}$'),
+      'd.m.y': RegExp(r'^\d{2}\.\d{2}\.\d{4}$'),
+      'ymd': RegExp(r'^\d{4}\d{2}\d{2}$'),
+      'dmy': RegExp(r'^\d{2}\d{2}\d{4}$'),
+    };
+
+    String? result;
+
+    for (String format in formatRegexMap.keys) {
+      RegExp? r = formatRegexMap[format];
+
+      if (dateString.contains(' ')) {
+        dateString = dateString.split(' ')[0]; // extract date portion of string
+      } else {
+        dateString = dateString;
+      }
+
+      if (r != null && r.hasMatch(dateString)) {
+        result = format;
+        break; // exit loop when match is found
+      }
+    }
+
+    return result;
+  }
 }

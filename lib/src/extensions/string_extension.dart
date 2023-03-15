@@ -4,9 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
-
-import '../utils/log.dart';
+import 'package:lazyui/lazyui.dart';
 
 extension StringExtension on String {
   /// ``` dart
@@ -214,16 +212,33 @@ extension StringExtension on String {
 extension NullableStringExtension on String? {
   /// ``` dart
   /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
+  /// "10-02-2023 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
+  /// // Support yyyy-MM-dd and dd-MM-yyyy format
   /// ```
   DateTime toDate({bool toLocal = false}) {
     try {
-      return this == null
-          ? DateTime.now()
-          : toLocal
-              ? DateTime.parse(this!.trim()).toLocal()
-              : DateTime.parse(this!.trim());
-    } catch (e) {
-      logg(e.toString(), name: 'StringExtension');
+      String? dateString = this;
+
+      if (dateString != null) {
+        String? format = Utils.getDateStringFormat(dateString);
+        DateTime result = DateTime.now();
+
+        if (format != null && format == 'd-m-y') {
+          RegExp regex = RegExp(r'^(\d{2})-(\d{2})-(\d{4})$');
+          List<String> dateParts = (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ?? []).cast();
+          String ymd = '${dateParts[0]}-${dateParts[1]}-${dateParts[2]}';
+
+          result = DateTime.parse(ymd);
+        } else {
+          result = DateTime.parse(dateString);
+        }
+
+        return toLocal ? result.toLocal() : result;
+      }
+
+      return DateTime.now();
+    } catch (e, s) {
+      Utils.errorCatcher(e, s);
       return DateTime.now();
     }
   }
