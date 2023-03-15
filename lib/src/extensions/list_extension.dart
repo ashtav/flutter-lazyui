@@ -14,7 +14,22 @@ extension ListExtension on List {
     return result;
   }
 
-  void logs() => forEach((e) => logg(e));
+  /// ``` dart
+  /// List<Option> options = ['A', 'B', 'C', 'D', 'E'].make((data, i) => Option(option: data[i]))
+  /// ```
+
+  List<T> make<T>(T Function(List data, int i) callback) {
+    List<T> list = [];
+    for (int i = 0; i < length; i++) {
+      list.add(callback(this, i));
+    }
+    return list;
+  }
+
+  /// ``` dart
+  /// ['A', 'B', 'C', 'D', 'E'].logs; // A, B, C, D, E
+  /// ```
+  void get logs => forEach((e) => logg(e));
 }
 
 extension ListNumExtension on List<num> {

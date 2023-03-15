@@ -347,20 +347,18 @@ class LzFormList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = StreamController<double>();
-    double height = 0;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       RenderBox box = context.findRenderObject() as RenderBox;
-      height += box.size.height;
-
+      double height = (box.size.height * 3);
       controller.sink.add(height);
     });
 
     return StreamBuilder<double>(
         stream: controller.stream,
-        builder: (BuildContext context, _) => ListView(
+        builder: (BuildContext context, snap) => ListView(
               physics: physics ?? BounceScroll(),
-              cacheExtent: height,
+              cacheExtent: snap.data,
               padding: padding ?? Ei.all(20),
               children: children,
             ));
