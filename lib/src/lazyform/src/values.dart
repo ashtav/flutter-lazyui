@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'switches.dart';
+
 /* ---------------------------------------------------------------
 | Form Notifier
 | */
@@ -15,6 +17,10 @@ class FormNotifier extends ChangeNotifier {
   // text input data
   Map<String, dynamic> data = {'error': '', 'valid': true, 'text_length': 0};
 
+  // max length text input
+  int maxLength = 0;
+
+  // get error message
   String get errorMessage => data['error'];
   bool get isValid => data['valid'];
   int get textLength => data['text_length'];
@@ -22,20 +28,37 @@ class FormNotifier extends ChangeNotifier {
   bool obsecure = true;
   bool? disabled, readonly;
 
-  void setMessage(String value, bool valid) {
+  FormNotifier setMessage(String value, bool valid) {
     data['error'] = value;
     data['valid'] = valid;
     notifyListeners();
+    return this;
   }
 
-  void setObsecure(bool value) {
+  FormNotifier setObsecure(bool value) {
     obsecure = value;
     notifyListeners();
+    return this;
   }
 
-  void setTextLength(int value) {
+  /// set text to text input (controller / model)
+  FormNotifier setText(String value) {
+    controller.text = value;
+    return this;
+  }
+
+  /// set text length (indicator)
+  FormNotifier setTextLength(int value) {
     data['text_length'] = value;
     notifyListeners();
+    return this;
+  }
+
+  /// set max length
+  FormNotifier setMaxLength(int value) {
+    maxLength = value;
+    notifyListeners();
+    return this;
   }
 
   // radio
@@ -187,5 +210,32 @@ class FeedbackMessage extends StatelessWidget {
               ),
             ),
     );
+  }
+}
+
+/* ---------------------------------------------------------------
+| Form Theme Color (Radio, Checkbox)
+| Set or get active color for radio and checkbox
+| */
+
+Color __formThemeColor = LzColor.blue;
+
+class LzFormTheme {
+  static Color get activeColor => __formThemeColor;
+  static void setActiveColor(Color color) => __formThemeColor = color;
+}
+
+/* --------------------------------------------------------------------------
+| LzFormControl Controller
+| */
+
+/// ``` dart
+/// LzForm.switches(id: 'myKey'); // put this in your widget
+/// LzFormControl.switches('myKey'); // to control your switches
+/// ```
+
+class LzFormControl {
+  static switches(String id) {
+    switchesNotifier[id]?.setSwitched();
   }
 }

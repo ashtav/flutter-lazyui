@@ -200,8 +200,8 @@ class LzForm {
   /// )
   /// ```
 
-  static Switches switches({Key? key, required String label, bool initValue = false, Function(bool)? onChange, Color? activeColor}) =>
-      Switches(label: label, initValue: initValue, onChange: onChange, activeColor: activeColor);
+  static Switches switches({Key? key, String? label, String? id, bool initValue = false, Function(bool)? onChange, Color? activeColor}) =>
+      Switches(label: label, id: id, initValue: initValue, onChange: onChange, activeColor: activeColor);
 
   /* ---------------------------------------------------------------
   | LzForm Validation
@@ -341,11 +341,18 @@ class LzFormList extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
   final FormType type;
+  final Color? activeColor;
 
-  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.type = FormType.grouped});
+  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.type = FormType.grouped, this.activeColor});
 
   @override
   Widget build(BuildContext context) {
+    LzFormTheme.setActiveColor(LzColor.blue);
+
+    if (activeColor != null) {
+      LzFormTheme.setActiveColor(activeColor!);
+    }
+
     final controller = StreamController<double>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {

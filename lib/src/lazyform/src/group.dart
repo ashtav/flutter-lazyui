@@ -7,11 +7,14 @@ import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
 
+enum SublabelStyle { text, card, cardWarning }
+
 class LzFormGroup extends StatelessWidget {
   final String? label, sublabel;
   final IconData? prefixIcon;
   final List<Widget> children;
-  const LzFormGroup({super.key, this.label, this.sublabel, this.prefixIcon, this.children = const []});
+  final SublabelStyle sublabelStyle;
+  const LzFormGroup({super.key, this.label, this.sublabel, this.prefixIcon, this.children = const [], this.sublabelStyle = SublabelStyle.text});
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +35,12 @@ class LzFormGroup extends StatelessWidget {
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
 
+    // sublabel style
+    bool isCardWarning = sublabelStyle == SublabelStyle.cardWarning;
+    Color sublabelBorderColor = isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
+    Color sublabelColor = isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
+    Color sublabelTextColor = isCardWarning ? Colors.orange : Colors.black;
+
     return Col(
       children: [
         // Label
@@ -45,12 +54,22 @@ class LzFormGroup extends StatelessWidget {
 
         // Sublabel
 
-        if (sublabel.isNotNull)
-          Textr(
-            sublabel!,
-            style: style?.copyWith(fontSize: 14),
-            margin: Ei.only(b: 15),
-          ),
+        if (sublabel != null)
+          sublabelStyle == SublabelStyle.text
+              ? Textr(
+                  sublabel!,
+                  style: style?.copyWith(fontSize: 14),
+                  margin: Ei.only(b: 15),
+                )
+              : Textr(
+                  sublabel!,
+                  style: style?.copyWith(fontSize: 14, color: sublabelTextColor),
+                  margin: Ei.only(b: 15),
+                  border: Br.all(color: sublabelBorderColor),
+                  padding: Ei.sym(v: 13, h: 15),
+                  radius: Br.radius(5),
+                  color: sublabelColor,
+                ),
 
         // Fields
         Container(

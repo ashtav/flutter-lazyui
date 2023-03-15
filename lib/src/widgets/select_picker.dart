@@ -30,7 +30,7 @@ class SelectPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int i = this.options.indexWhere((e) => e.value == null ? e.option == initialValue?.option : e.value == initialValue?.value);
+    int i = this.options.indexWhere((e) => e.toMap().toString() == initialValue?.toMap().toString());
     i = i == -1 ? 0 : i;
 
     List<String> options = this.options.map((e) => e.option).toList();

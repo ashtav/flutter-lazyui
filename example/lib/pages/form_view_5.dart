@@ -1,3 +1,4 @@
+import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -7,6 +8,7 @@ class FormView5 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = FormController();
+    final forms = controller.forms;
 
     return Wrapper(
         child: Scaffold(
@@ -24,17 +26,17 @@ class FormView5 extends StatelessWidget {
                   keyboard: Tit.number,
                   maxLength: 5,
                   onChange: (value) => controller.getUser(value)),
-              LzForm.input(hint: 'Your name here', model: controller.forms['name'], disabled: true),
+              LzForm.input(hint: 'Your name here', model: forms['name'], disabled: true),
             ],
           ),
-          LzForm.input(label: 'Your Answer *', hint: 'Input your answer', model: controller.forms['answer'], disabled: true),
+          LzForm.input(label: 'Your Answer *', hint: 'Input your answer', model: forms['answer'], disabled: true),
           LzFormGroup(
             children: [
               LzForm.select(
                   label: 'Select Province *',
                   hint: 'Please select your province',
                   options: controller.provinces,
-                  model: controller.forms['province'],
+                  model: forms['province'],
                   onSelect: (selector) {
                     controller.forms['city']?.notifier.setDisabled(false);
                   }),
@@ -42,7 +44,7 @@ class FormView5 extends StatelessWidget {
                   label: 'Select City *',
                   hint: 'Please select your city',
                   options: controller.cities,
-                  model: controller.forms['city'],
+                  model: forms['city'],
                   disabled: true,
                   onSelect: (selector) {
                     controller.forms['district']?.notifier.setDisabled(false);
@@ -51,13 +53,53 @@ class FormView5 extends StatelessWidget {
                   label: 'Select District *',
                   hint: 'Please select your district',
                   options: controller.districts,
-                  model: controller.forms['district'],
+                  model: forms['district'],
                   disabled: true,
                   onSelect: (selector) {
                     controller.forms['id']?.notifier.setFocus();
                   })
             ],
           ),
+          LzFormGroup(
+              label: 'Set Max Length',
+              sublabel: 'You can set max length for input field. This is useful for bank account number.',
+              sublabelStyle: SublabelStyle.cardWarning,
+              prefixIcon: La.idCard,
+              children: [
+                LzForm.select(
+                    label: 'Bank *',
+                    hint: 'Please select your bank',
+                    options: ['BCA', 'BNI', 'BRI', 'Mandiri'].make((data, i) => Option(option: data[i], value: [10, 10, 15, 13][i])),
+                    model: forms['bank'],
+                    onSelect: (selector) {
+                      int maxLength = selector.option?.value ?? 0;
+                      forms['account']?.notifier.setText('').setMaxLength(maxLength).setDisabled(false).setFocus();
+                    }),
+                LzForm.input(
+                    label: 'Your Answer *',
+                    hint: 'Input your answer',
+                    indicator: true,
+                    model: forms['account'],
+                    disabled: true,
+                    keyboard: Tit.number,
+                    maxLength: 0),
+              ]),
+          Box(
+            children: [
+              Row(
+                crossAxisAlignment: Caa.start,
+                children: [
+                  LzForm.switches(id: 'term', onChange: (value) => logg(value)),
+                  Text(
+                    'By register as a member, you agree to our Terms and Conditions and Privacy Policy.',
+                    style: Gfont.fs14,
+                  ).onTap(() {
+                    LzFormControl.switches('term');
+                  }).flexible()
+                ],
+              )
+            ],
+          )
         ],
       ),
       bottomNavigationBar: LzButton(
@@ -70,7 +112,7 @@ class FormView5 extends StatelessWidget {
 }
 
 class FormController {
-  final forms = LzForm.make(['id', 'name', 'answer', 'province', 'city', 'district']);
+  final forms = LzForm.make(['id', 'name', 'answer', 'province', 'city', 'district', 'bank', 'account']);
 
   List<Option> provinces = const [
     Option(option: 'Bali', value: 1),

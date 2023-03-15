@@ -6,52 +6,70 @@ import 'package:lazyui/lazyui.dart';
 | Switches
 | */
 
-class Switches extends StatefulWidget {
-  final String label;
+class Switches extends StatelessWidget {
+  final String? label, id;
   final bool initValue;
   final Function(bool)? onChange;
   final Color? activeColor;
-  const Switches({super.key, required this.label, this.initValue = false, this.onChange, this.activeColor});
-
-  @override
-  State<Switches> createState() => _SwitchesState();
-}
-
-class _SwitchesState extends State<Switches> {
-  bool switched = false;
-
-  @override
-  void initState() {
-    super.initState();
-    switched = widget.initValue;
-  }
-
-  void onSwitch(bool value) {
-    setState(() {
-      switched = value;
-    });
-
-    widget.onChange?.call(value);
-  }
+  const Switches({super.key, this.label, this.id, this.initValue = false, this.onChange, this.activeColor});
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = widget.activeColor ?? LazyUi.getConfig.primaryColor;
-    List<String> labels = widget.label.split('|');
-    String label = labels[0], secondLabel = labels.length > 1 ? labels[1] : label;
+    final notifier = SwitchesNotifier();
 
-    return Touch(
-      onTap: () => onSwitch(!switched),
-      child: Row(
-        children: [
-          Transform.scale(
-            scale: 0.7,
-            alignment: Alignment.centerLeft,
-            child: CupertinoSwitch(value: switched, activeColor: primaryColor, onChanged: onSwitch),
-          ),
-          Textr(switched ? label : secondLabel, style: Theme.of(context).textTheme.bodyMedium, padding: Ei.sym(v: 5))
-        ],
-      ),
+    if (id != null) switchesNotifier[id!] = notifier;
+
+    List<String> labels = (this.label ?? '').split('|');
+    String label = labels[0], secondLabel = labels.length > 1 ? labels[1] : label;
+    Color activeColor = this.activeColor ?? LzFormTheme.activeColor;
+
+    void onSwitch(bool value) {
+      notifier.setSwitched(value);
+      onChange?.call(value);
+    }
+
+    notifier.switched.addListener(() {
+      if (id != null) onChange?.call(notifier.switched.value);
+    });
+
+    return notifier.watch(
+      () {
+        bool switched = notifier.switched.value;
+
+        return Touch(
+            onTap: () => onSwitch(!switched),
+            child: Row(
+              children: [
+                Transform.scale(
+                  scale: 0.7,
+                  alignment: Alignment.centerLeft,
+                  child: CupertinoSwitch(value: switched, activeColor: activeColor, onChanged: onSwitch),
+                ),
+                Textr(switched ? label : secondLabel, style: Theme.of(context).textTheme.bodyMedium, padding: Ei.sym(v: 5))
+              ],
+            ));
+      },
     );
+  }
+}
+
+/* --------------------------------------------------------------------------
+| Switches Notifier
+| */
+
+Map<String, SwitchesNotifier> switchesNotifier = {};
+
+class SwitchesNotifier extends ChangeNotifier {
+  ValueNotifier<bool> switched = ValueNotifier<bool>(false);
+
+  void setSwitched([bool? value]) {
+    switched.value = value ?? !switched.value;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    switched.dispose();
+    super.dispose();
   }
 }

@@ -52,6 +52,7 @@ class Textr extends StatelessWidget {
   final EdgeInsetsGeometry? margin, padding;
   final BorderRadiusGeometry? radius;
   final BoxBorder? border;
+  final Color? color;
   final double? width;
   final AlignmentGeometry? alignment;
   final IconData? icon;
@@ -71,6 +72,7 @@ class Textr extends StatelessWidget {
       this.maxLines,
       this.alignment,
       this.border,
+      this.color,
       this.icon,
       this.iconStyle})
       : super(key: key);
@@ -82,7 +84,7 @@ class Textr extends StatelessWidget {
         padding: padding,
         margin: margin,
         width: width,
-        decoration: BoxDecoration(border: border, borderRadius: radius),
+        decoration: BoxDecoration(border: border, borderRadius: radius, color: color),
         child: child);
 
     Widget textWidget = Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines);

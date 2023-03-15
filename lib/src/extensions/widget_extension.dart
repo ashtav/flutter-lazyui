@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
 extension WidgetExtension on Widget {
   /// ``` dart
@@ -30,4 +31,14 @@ extension WidgetExtension on Widget {
             bottomRight: Radius.circular(br ?? blr ?? 0)),
         child: this,
       );
+
+  /// ``` dart
+  /// YourWidget().flexible()
+  /// ```
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: this);
+
+  /// ``` dart
+  /// YourWidget().onTap(() {})
+  /// ```
+  Touch onTap(Function() onTap) => Touch(onTap: onTap, child: this);
 }

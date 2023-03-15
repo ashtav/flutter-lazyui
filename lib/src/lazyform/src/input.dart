@@ -67,7 +67,8 @@ class Input extends StatelessWidget {
     }
 
     final notifier = model?.notifier ?? FormNotifier();
-    final formatters = [LengthLimitingTextInputFormatter(maxLength), ...this.formatters];
+    final formatters = [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...this.formatters];
+    notifier.setMaxLength(maxLength < 1 ? 1 : maxLength);
 
     // setting input formatter
     if (keyboard == Tit.number) {
@@ -115,7 +116,7 @@ class Input extends StatelessWidget {
           // Text Length
           indicator
               ? notifier.watch(() => Textr(
-                    '${notifier.textLength}/$maxLength',
+                    '${notifier.textLength}/${notifier.maxLength}',
                     style: style?.copyWith(fontSize: 14, color: Colors.black45),
                     margin: Ei.only(r: isSuffix ? 50 : 0, l: 15),
                   ))
@@ -165,11 +166,15 @@ class Input extends StatelessWidget {
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
           FocusNode focusNode = node ?? notifier.node;
+          int maxLength = notifier.maxLength;
 
           bool? isDisabled = notifier.disabled;
           bool? isReadonly = notifier.readonly;
 
           bool enabled = onTap == null && (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
+
+          // update formatters (length, on index 0)
+          formatters[0] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
 
           return InkW(
               onTap: onTap.isNotNull ? () => onTap!(notifier.controller) : null,

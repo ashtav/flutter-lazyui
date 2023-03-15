@@ -113,7 +113,7 @@ class Radio extends StatelessWidget {
                             bool enabled = this.enabled && option.enabled;
                             bool selected = notifier.option?.option == label;
 
-                            Color radioColor = selected ? (activeColor ?? Colors.blueAccent) : Colors.black38;
+                            Color radioColor = selected ? (activeColor ?? LzFormTheme.activeColor) : Colors.black38;
 
                             return Opacity(
                               opacity: enabled ? 1 : .4,
