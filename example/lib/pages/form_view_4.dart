@@ -126,7 +126,7 @@ class FormView4 extends StatelessWidget {
             if (form.ok) {
               LzToast.show('Form is valid');
             }
-          }).theme([LzButtonStyle.shadow], spacing: 20),
+          }).style(LzButtonStyle.shadow, spacing: 20),
     ));
   }
 }

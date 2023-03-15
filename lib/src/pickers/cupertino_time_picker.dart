@@ -1,20 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
-import '../config.dart';
-import '../extensions/context_extension.dart';
-import '../shortcut.dart';
-import '../utils/utils.dart';
-import '../widgets/transition.dart';
-import '../widgets/widgets.dart';
-import 'constant.dart';
+import 'notifier.dart';
 
 class CupertinoTimePickerWidget extends StatelessWidget {
   final DateTime? initialDate;
   final DateTime? firstDate;
   final DateTime? lastDate;
-  final String? confirmLabel;
-  const CupertinoTimePickerWidget({super.key, this.initialDate, this.firstDate, this.lastDate, this.confirmLabel});
+  final String? title, confirmLabel;
+  const CupertinoTimePickerWidget({super.key, this.initialDate, this.firstDate, this.lastDate, this.title, this.confirmLabel});
 
   @override
   Widget build(BuildContext context) {
@@ -165,67 +160,120 @@ class CupertinoTimePickerWidget extends StatelessWidget {
 
     return ScrollConfiguration(
       behavior: NoScrollGlow(),
-      child: Container(
-        decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
-        height: context.height * (context.width > 395 ? .6 : .4),
-        child: Stack(
-          children: [
-            FutureBuilder(
-              future: Future.delayed(const Duration(milliseconds: 0)),
-              builder: (context, snapshot) {
-                return Center(
-                  child: SizedBox(
-                    height: context.height * 0.4,
-                    child: Intrinsic(
-                      children: List.generate(2, (t) {
-                        String value = ['hour', 'minute'][t];
-                        return Expanded(
-                            child: Container(decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)), child: cupertinoPickerWidget(value)));
-                      }),
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            /* ------------------------------------------------------------
-            | Confirm Button
-            ------------------------------------ */
-            Positioned.fill(
-                child: Align(
-              alignment: Alignment.bottomCenter,
-              child: SlideUp(
-                delay: 300,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Utils.hex('f1f1f1'),
-                        spreadRadius: 15,
-                        blurRadius: 25,
-                        offset: const Offset(0, -5),
+      child: ClipRRect(
+        borderRadius: Br.radius(radius, except: ['bl', 'br']),
+        child: Container(
+          decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
+          height: context.height * (context.width > 395 ? .6 : .45),
+          child: Stack(
+            children: [
+              Builder(
+                builder: (context) {
+                  return SlideUp(
+                    delay: 400,
+                    child: Center(
+                      child: SizedBox(
+                        height: context.height * 0.4,
+                        child: Intrinsic(
+                          children: List.generate(2, (t) {
+                            String value = ['hour', 'minute'][t];
+                            return Expanded(
+                                child: Container(
+                                    decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)), child: cupertinoPickerWidget(value)));
+                          }),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: InkW(
-                      onTap: () {
-                        DateTime date = timeProperties()['selected'];
-                        Navigator.pop(context, date);
-                      },
-                      padding: Ei.sym(v: 10, h: 45),
-                      margin: Ei.only(b: 20),
-                      radius: Br.radius(25),
-                      color: Utils.hex('fff'),
-                      child: Text(
-                        confirmLabel ?? 'Confirm',
-                        textAlign: Ta.center,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold),
-                      )),
-                ),
+                    ),
+                  );
+                },
               ),
-            ))
-          ],
+
+              /* ------------------------------------------------------------
+              | Confirm Button
+              ------------------------------------ */
+              Positioned.fill(
+                  child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      SlideUp(
+                        delay: 300,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Utils.hex('f1f1f1'),
+                                spreadRadius: 15,
+                                blurRadius: 25,
+                                offset: const Offset(0, -5),
+                              ),
+                            ],
+                          ),
+                          child: Builder(builder: (context) {
+                            String confirm = confirmLabel ?? 'Confirm';
+
+                            return InkW(
+                                onTap: () {
+                                  DateTime date = timeProperties()['selected'];
+                                  Navigator.pop(context, date);
+                                },
+                                padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                                radius: Br.radius(25),
+                                color: Utils.hex('fff'),
+                                border: Br.all(),
+                                child: Container(
+                                  constraints: BoxConstraints(maxWidth: context.width * .4),
+                                  child: Text(
+                                    confirm,
+                                    textAlign: Ta.center,
+                                    maxLines: 1,
+                                    overflow: Tof.ellipsis,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black),
+                                  ),
+                                ));
+                          }),
+                        ),
+                      ),
+                      Touch(
+                        onTap: () => context.pop(),
+                        child: SlideUp(
+                          delay: 400,
+                          child: Iconr(
+                            La.times,
+                            padding: Ei.all(20),
+                          ),
+                        ),
+                      )
+                    ],
+                  ).margin(b: 15, l: 60),
+                ),
+              )),
+              if (title != null)
+                Poslign(
+                  alignment: Alignment.topLeft,
+                  margin: Ei.all(20),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Utils.hex('fafafa'),
+                            spreadRadius: 10,
+                            blurRadius: 25,
+                            offset: const Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: Textr(title ?? '',
+                          overflow: Tof.ellipsis,
+                          maxLines: 1,
+                          icon: La.clock,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black))),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -246,7 +294,7 @@ class CupertinioTimePickerWidget extends StatelessWidget {
     return CupertinoPicker(
         magnification: 1.5,
         useMagnifier: false,
-        itemExtent: 40,
+        itemExtent: 45,
         offAxisFraction: 0,
         diameterRatio: .5,
         squeeze: 0.5,

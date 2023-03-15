@@ -24,12 +24,25 @@ class FormView3 extends StatelessWidget {
                   label: 'Birthday *',
                   hint: 'Input your birthday',
                   model: forms['birthday'],
+                  suffixIcon: La.calendar,
                   onTap: (model) {
-                    // open date picker, then set value to the model
-                    model.text = '2021-01-01';
+                    DateTime now = DateTime.now(), max = DateTime(now.year - 18, now.month, now.day);
+                    DateTime dateTime = model.text.isEmpty ? max : model.text.toDate();
+
+                    Pickers.datePicker(context, type: DatePickerType.all, initialDate: dateTime, firstDate: DateTime(1960), lastDate: max)
+                        .then((value) {
+                      if (value != null) model.text = value.format('dd-MM-yyyy');
+                    });
                   }),
             ],
           ),
+          LzForm.input(
+              label: 'Time Picker *',
+              hint: 'Input your time',
+              suffixIcon: La.clock,
+              onTap: (model) {
+                Pickers.timePicker(context, title: 'Select Timer');
+              }),
           LzForm.radio(
               label: 'Favorite Fruit *',
               options: List.generate(
@@ -44,7 +57,12 @@ class FormView3 extends StatelessWidget {
             prefixIcon: La.lock,
             children: [
               LzForm.input(label: 'Email *', hint: 'Input your email address', model: forms['email']),
-              LzForm.input(label: 'Password *', hint: 'Input your password', model: forms['password'], obsecureToggle: true),
+              LzForm.input(
+                  label: 'Password *',
+                  hint: 'Input your password',
+                  model: forms['password'],
+                  obsecureToggle: true,
+                  obsecureIcons: [La.unlock, La.lock]),
             ],
           ),
           LzFormGroup(
@@ -108,29 +126,31 @@ class FormView3 extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: LzButton(
-          text: 'Submit',
-          onTap: (control) {
-            LzForm form = LzForm.validate(forms,
-                required: ['*'],
-                email: ['email'],
-                min: ['password:6', 'name:5'],
-                messages: FormMessages(required: {
-                  'name': 'Please input your name',
-                  'fruit': 'Please select one of your favorite fruit, thanks for read this long important message!',
-                  'email': 'Please input your email address',
-                  'password': 'Please input your password',
-                }, email: {
-                  'email': 'Please input valid email address',
-                }, min: {
-                  'name': 'Name must be at least 5 characters',
-                  'password': 'Password must be at least 6 characters'
-                }),
-                notifierType: FormValidateNotifier.text);
+        text: 'Submit',
+        onTap: (control) {
+          LzForm form = LzForm.validate(forms,
+              required: ['*'],
+              email: ['email'],
+              min: ['password:6', 'name:5'],
+              messages: FormMessages(required: {
+                'name': 'Please input your name',
+                'fruit': 'Please select one of your favorite fruit, thanks for read this long important message!',
+                'email': 'Please input your email address',
+                'password': 'Please input your password',
+              }, email: {
+                'email': 'Please input valid email address',
+              }, min: {
+                'name': 'Name must be at least 5 characters',
+                'password': 'Password must be at least 6 characters'
+              }),
+              notifierType: FormValidateNotifier.text);
 
-            if (form.ok) {
-              LzToast.show('Form is valid');
-            }
-          }).theme([LzButtonStyle.shadow], spacing: 20),
+          if (form.ok) {
+            LzToast.show('Form is valid');
+          }
+        },
+        gradient: true,
+      ).dark().style(LzButtonStyle.shadow, spacing: 20),
     ));
   }
 }

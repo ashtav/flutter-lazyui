@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../pickers/constant.dart';
 import '../utils/constant.dart';
+import 'notifier.dart';
 
 enum DatePickerType { all, monthYear, year }
 
@@ -11,15 +11,16 @@ class CupertinoDatePickerWidget extends StatelessWidget {
   final DateTime? initialDate;
   final DateTime? firstDate;
   final DateTime? lastDate;
-  final String? confirmLabel;
+  final String? title, confirmLabel;
   final bool useShortMonths;
-  final DatePickerType? type;
+  final DatePickerType type;
   final AlignmentGeometry? alignment;
   const CupertinoDatePickerWidget(
       {super.key,
       this.initialDate,
       this.firstDate,
       this.lastDate,
+      this.title,
       this.confirmLabel,
       this.useShortMonths = false,
       this.type = DatePickerType.all,
@@ -41,7 +42,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
     ------------------------------------ */
 
     // default date selected
-    PickerNotifier notifier = PickerNotifier({'month': months[init.month], 'year': init.year});
+    PickerNotifier notifier = PickerNotifier({'month': months[init.month - 1], 'year': init.year});
     Map<String, dynamic> selected = {'date': init.day, 'month': months[init.month - 1], 'year': init.year};
 
     int maxYear = last.year + 1;
@@ -176,7 +177,8 @@ class CupertinoDatePickerWidget extends StatelessWidget {
           builder: (context, _, __) => CupertinioPickerWidget(
                 controller: notifier.map[widgetType]!,
                 notifier: notifier,
-                type: widgetType,
+                widgetType: widgetType,
+                type: type,
                 alignment: alignment,
                 onChange: (int i) async {
                   if (!notifier.hasInit) return;
@@ -198,77 +200,130 @@ class CupertinoDatePickerWidget extends StatelessWidget {
 
     return ScrollConfiguration(
       behavior: NoScrollGlow(),
-      child: Container(
-        decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
-        height: context.height * (context.width > 395 ? .6 : .4),
-        child: Stack(
-          children: [
-            FutureBuilder(
-              future: Future.delayed(const Duration(milliseconds: 0)),
-              builder: (context, snapshot) {
-                List<String> types = ['date', 'month', 'year'];
+      child: ClipRRect(
+        borderRadius: Br.radius(radius, except: ['bl', 'br']),
+        child: Container(
+          decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
+          height: context.height * (context.width > 395 ? .6 : .45),
+          child: Stack(
+            children: [
+              Builder(
+                builder: (context) {
+                  List<String> types = ['date', 'month', 'year'];
 
-                if (type == DatePickerType.monthYear) {
-                  types = ['month', 'year'];
-                } else if (type == DatePickerType.year) {
-                  types = ['year'];
-                }
+                  if (type == DatePickerType.monthYear) {
+                    types = ['month', 'year'];
+                  } else if (type == DatePickerType.year) {
+                    types = ['year'];
+                  }
 
-                return Center(
-                  child: SizedBox(
-                    height: context.height * 0.4,
-                    child: Intrinsic(
-                      children: List.generate(types.length, (t) {
-                        String value = types[t];
+                  return SlideUp(
+                    delay: 400,
+                    child: Center(
+                      child: SizedBox(
+                        height: context.height * 0.4,
+                        child: Intrinsic(
+                          children: List.generate(types.length, (t) {
+                            String value = types[t];
 
-                        return Expanded(
-                            child: Container(decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)), child: cupertinoPickerWidget(value)));
-                      }),
-                    ),
-                  ),
-                );
-              },
-            ),
-
-            /* ------------------------------------------------------------
-            | Confirm Button
-            | */
-
-            Positioned.fill(
-                child: Align(
-              alignment: Alignment.bottomCenter,
-              child: SlideUp(
-                delay: 300,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Utils.hex('f1f1f1'),
-                        spreadRadius: 15,
-                        blurRadius: 25,
-                        offset: const Offset(0, -5),
+                            return Expanded(
+                                child: Container(
+                                    decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)), child: cupertinoPickerWidget(value)));
+                          }),
+                        ),
                       ),
-                    ],
-                  ),
-                  child: InkW(
-                      onTap: () {
-                        DateTime date = dateProperties()['selected'];
-                        Navigator.pop(context, date);
-                      },
-                      padding: Ei.sym(v: 10, h: 45),
-                      margin: Ei.only(b: 20),
-                      radius: Br.radius(25),
-                      color: Utils.hex('fff'),
-                      child: Text(
-                        confirmLabel ?? 'Confirm',
-                        textAlign: Ta.center,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold),
-                      )),
-                ),
+                    ),
+                  );
+                },
               ),
-            ))
-          ],
+
+              /* ------------------------------------------------------------
+              | Confirm Button
+              | */
+
+              Positioned.fill(
+                  child: Align(
+                alignment: Alignment.bottomCenter,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      SlideUp(
+                        delay: 300,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Utils.hex('f1f1f1'),
+                                spreadRadius: 15,
+                                blurRadius: 25,
+                                offset: const Offset(0, -5),
+                              ),
+                            ],
+                          ),
+                          child: Builder(builder: (context) {
+                            String confirm = confirmLabel ?? 'Confirm';
+
+                            return InkW(
+                                onTap: () {
+                                  DateTime date = dateProperties()['selected'];
+                                  Navigator.pop(context, date);
+                                },
+                                padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                                radius: Br.radius(25),
+                                color: Utils.hex('fff'),
+                                border: Br.all(),
+                                child: Container(
+                                  constraints: BoxConstraints(maxWidth: context.width * .4),
+                                  child: Text(
+                                    confirm,
+                                    textAlign: Ta.center,
+                                    maxLines: 1,
+                                    overflow: Tof.ellipsis,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black),
+                                  ),
+                                ));
+                          }),
+                        ),
+                      ),
+                      Touch(
+                        onTap: () => context.pop(),
+                        child: SlideUp(
+                          delay: 400,
+                          child: Iconr(
+                            La.times,
+                            padding: Ei.all(20),
+                          ),
+                        ),
+                      )
+                    ],
+                  ).margin(b: 15, l: 60),
+                ),
+              )),
+              if (title != null)
+                Poslign(
+                  alignment: Alignment.topLeft,
+                  margin: Ei.all(20),
+                  child: Container(
+                      decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                            color: Utils.hex('fafafa'),
+                            spreadRadius: 10,
+                            blurRadius: 25,
+                            offset: const Offset(0, 0),
+                          ),
+                        ],
+                      ),
+                      child: Textr(title ?? '',
+                          overflow: Tof.ellipsis,
+                          maxLines: 1,
+                          icon: La.calendar,
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black))),
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -280,19 +335,30 @@ class CupertinioPickerWidget extends StatelessWidget {
   final void Function(int)? onChange;
   final List<String> items;
   final PickerNotifier notifier;
-  final String type;
+  final String widgetType;
   final AlignmentGeometry? alignment;
+  final DatePickerType type;
+
   const CupertinioPickerWidget(
-      {super.key, required this.controller, this.onChange, this.items = const [], required this.notifier, this.type = 'date', this.alignment});
+      {super.key,
+      required this.controller,
+      this.onChange,
+      this.items = const [],
+      required this.notifier,
+      this.widgetType = 'date',
+      this.alignment,
+      this.type = DatePickerType.all});
 
   @override
   Widget build(BuildContext context) {
+    bool isYearOnly = type == DatePickerType.year;
+
     return CupertinoPicker(
-        magnification: 1,
+        magnification: isYearOnly ? 1.5 : 1,
         useMagnifier: true,
-        itemExtent: 40,
+        itemExtent: isYearOnly ? 45 : 40,
         diameterRatio: .5,
-        squeeze: 0.8,
+        squeeze: isYearOnly ? .5 : 0.8,
         scrollController: controller,
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
@@ -318,6 +384,7 @@ class CupertinioPickerWidget extends StatelessWidget {
                       child: Text(
                         items[index],
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: isYearOnly ? 35 : 16.5,
                             color: styles[type] == null
                                 ? Colors.black87
                                 : index >= styles[type][0] && index <= styles[type][1]

@@ -105,7 +105,18 @@ class LzButton extends StatelessWidget {
   final ButtonType type;
   final Color? color;
   final Color? textColor;
-  const LzButton({super.key, this.text, this.icon, this.onTap, this.spacing, this.radius, this.type = ButtonType.white, this.color, this.textColor});
+  final bool gradient;
+  const LzButton(
+      {super.key,
+      this.text,
+      this.icon,
+      this.onTap,
+      this.spacing,
+      this.radius,
+      this.type = ButtonType.white,
+      this.color,
+      this.textColor,
+      this.gradient = false});
 
   @override
   Widget build(BuildContext context) {
@@ -143,53 +154,67 @@ class LzButton extends StatelessWidget {
               },
               child: child);
 
+          Color buttonColor = color ?? (buttonColors[type] ?? Colors.white);
           return AnimatedOpacity(
             opacity: isSubmit || !notifier.enabled ? 0.7 : 1,
             duration: duration,
-            child: InkW(
-              onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
-              padding: Ei.sym(v: 16, h: spacing ?? 20),
-              radius: Br.radius(radius ?? configRadius),
-              color: color ?? buttonColors[type],
-              border: Br.all(color: type == ButtonType.white ? null : color ?? buttonColors[type]),
-              child: Row(
-                mainAxisAlignment: Maa.center,
-                mainAxisSize: Mas.min,
-                children: [
-                  icon == null
-                      ? switcher(isSubmit
-                          ? Loader(
-                              key: UniqueKey(),
-                              color: buttonTextColor,
-                            )
-                          : const None())
-                      : switcher(isSubmit
-                          ? Loader(
-                              key: UniqueKey(),
-                              color: buttonTextColor,
-                            )
-                          : Icon(
-                              icon!,
-                              key: UniqueKey(),
-                              color: buttonTextColor,
-                              size: 18,
-                            )),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: Br.radius(radius ?? configRadius),
+                gradient: gradient
+                    ? LinearGradient(
+                        colors: [buttonColor, buttonColor.withOpacity(0.6)],
+                        begin: const FractionalOffset(0.0, 0.0),
+                        end: const FractionalOffset(1.0, 0.5),
+                        stops: const [0.0, 1.0],
+                        tileMode: TileMode.clamp)
+                    : null,
+              ),
+              child: InkW(
+                onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
+                padding: Ei.sym(v: gradient ? 17 : 16, h: spacing ?? 20),
+                radius: Br.radius(radius ?? configRadius),
+                color: gradient ? null : buttonColor,
+                border: gradient ? null : Br.all(color: type == ButtonType.white ? null : color ?? buttonColors[type]),
+                child: Row(
+                  mainAxisAlignment: Maa.center,
+                  mainAxisSize: Mas.min,
+                  children: [
+                    icon == null
+                        ? switcher(isSubmit
+                            ? Loader(
+                                key: UniqueKey(),
+                                color: buttonTextColor,
+                              )
+                            : const None())
+                        : switcher(isSubmit
+                            ? Loader(
+                                key: UniqueKey(),
+                                color: buttonTextColor,
+                              )
+                            : Icon(
+                                icon!,
+                                key: UniqueKey(),
+                                color: buttonTextColor,
+                                size: 18,
+                              )),
 
-                  // Button Text
-                  AnimatedContainer(
-                    duration: duration,
-                    margin: Ei.only(
-                        l: isSubmit
-                            ? 15
-                            : icon.isNotNull
-                                ? 15
-                                : 0),
-                    child: Text(
-                      notifier.buttonText,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
+                    // Button Text
+                    AnimatedContainer(
+                      duration: duration,
+                      margin: Ei.only(
+                          l: isSubmit
+                              ? 15
+                              : icon.isNotNull
+                                  ? 15
+                                  : 0),
+                      child: Text(
+                        notifier.buttonText,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           );
@@ -199,7 +224,7 @@ class LzButton extends StatelessWidget {
   }
 }
 
-enum LzButtonStyle { none, shadow }
+enum LzButtonStyle { none, shadow, gradient }
 
 class LzButtonControl extends ChangeNotifier {
   String buttonText = '';
@@ -231,11 +256,11 @@ class LzButtonControl extends ChangeNotifier {
 | */
 
 extension LzButtonExtension on LzButton {
-  Widget theme(List<LzButtonStyle> styles, {Color? shadowColor, double spacing = 0}) {
+  Widget style(LzButtonStyle style, {Color? shadowColor, double spacing = 0}) {
     return Container(
         padding: Ei.all(spacing),
         decoration: BoxDecoration(
-            boxShadow: styles.contains(LzButtonStyle.shadow)
+            boxShadow: style == LzButtonStyle.shadow
                 ? [
                     BoxShadow(color: shadowColor ?? Utils.hex('fafafa'), spreadRadius: 30, blurRadius: 25, offset: const Offset(0, 0)),
                   ]
@@ -251,6 +276,7 @@ extension LzButtonExtension on LzButton {
         radius: radius,
         type: ButtonType.primary,
         textColor: textColor,
+        gradient: gradient,
       );
 
   LzButton secondary([Color? textColor]) => LzButton(
@@ -261,6 +287,7 @@ extension LzButtonExtension on LzButton {
         radius: radius,
         type: ButtonType.secondary,
         textColor: textColor,
+        gradient: gradient,
       );
 
   LzButton danger([Color? textColor]) => LzButton(
@@ -271,6 +298,7 @@ extension LzButtonExtension on LzButton {
         radius: radius,
         type: ButtonType.danger,
         textColor: textColor,
+        gradient: gradient,
       );
 
   LzButton success([Color? textColor]) => LzButton(
@@ -281,6 +309,7 @@ extension LzButtonExtension on LzButton {
         radius: radius,
         type: ButtonType.success,
         textColor: textColor,
+        gradient: gradient,
       );
 
   LzButton warning([Color? textColor]) => LzButton(
@@ -291,6 +320,7 @@ extension LzButtonExtension on LzButton {
         radius: radius,
         type: ButtonType.warning,
         textColor: textColor,
+        gradient: gradient,
       );
 
   LzButton dark([Color? textColor]) => LzButton(
@@ -301,5 +331,6 @@ extension LzButtonExtension on LzButton {
         radius: radius,
         type: ButtonType.dark,
         textColor: textColor,
+        gradient: gradient,
       );
 }

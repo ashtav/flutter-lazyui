@@ -15,6 +15,12 @@ class Input extends StatelessWidget {
   final Function(TextEditingController)? onTap;
   final IconData? suffixIcon;
 
+  /// The length of the list must be 2, the first is the visible icon, the second is the hidden icon
+  /// ``` dart
+  /// obsecureIcons: [La.lock, La.unlock]
+  /// ```
+  final List<IconData> obsecureIcons;
+
   const Input(
       {super.key,
       this.label,
@@ -34,7 +40,8 @@ class Input extends StatelessWidget {
       this.onChange,
       this.onSubmit,
       this.onTap,
-      this.suffixIcon});
+      this.suffixIcon,
+      this.obsecureIcons = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -121,10 +128,13 @@ class Input extends StatelessWidget {
     | Obsecure Toggle Widget
     | */
 
+    IconData obsShowIcon = obsecureIcons.isNotEmpty ? obsecureIcons[0] : La.eye;
+    IconData obsHideIcon = obsecureIcons.length > 1 ? obsecureIcons[1] : La.eyeSlash;
+
     Widget obsecureToggleWidget(bool obsecure) => Touch(
           onTap: () => notifier.setObsecure(!obsecure),
           child: Iconr(
-            obsecure ? La.eye : La.eyeSlash,
+            obsecure ? obsShowIcon : obsHideIcon,
             padding: Ei.only(h: 15, v: 15),
             border: Br.only(['l']),
           ),

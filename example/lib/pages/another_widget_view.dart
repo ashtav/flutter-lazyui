@@ -1,3 +1,4 @@
+import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -50,6 +51,15 @@ class AnotherWidgetView extends StatelessWidget {
             height: 33,
           ),
           Textml('Hello <b>World</b>, I am <b>Jhon</b>'),
+          Container(
+            decoration: BoxDecoration(border: Br.all()),
+            padding: Ei.all(20),
+            margin: Ei.only(t: 15),
+            child: Text(
+              'Hay',
+              style: Gfont.bold,
+            ),
+          ).getChild()
         ],
       ),
     );
@@ -94,5 +104,18 @@ class Textml extends StatelessWidget {
     }
 
     return textSpans;
+  }
+}
+
+extension WidgetExtension on Widget {
+  Widget getChild<T extends Widget>() {
+    // only widget that has child property
+    List<Widget> allowed = [Container()];
+
+    if (!allowed.contains(this)) {
+      return (this as Container).child ?? Container();
+    }
+
+    return Container();
   }
 }

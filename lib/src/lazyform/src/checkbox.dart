@@ -102,7 +102,7 @@ class Checkbox extends StatelessWidget {
               child: Stack(
                 children: [
                   Container(
-                    padding: Ei.only(t: noLabel ? 14 : 40, b: isValid ? 5 : 0, l: 15, r: 15),
+                    padding: Ei.only(t: noLabel ? 14 : 43, b: isValid ? 5 : 0, l: 15, r: 15),
                     child: Col(
                       children: [
                         Wrap(

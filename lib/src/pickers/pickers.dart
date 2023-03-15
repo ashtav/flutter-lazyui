@@ -15,6 +15,7 @@ class Pickers {
       {DateTime? initialDate,
       DateTime? firstDate,
       DateTime? lastDate,
+      String? title,
       String confirmLabel = 'Confirm',
       bool useShortMonths = false,
       DatePickerType type = DatePickerType.all,
@@ -35,6 +36,7 @@ class Pickers {
             useShortMonths: useShortMonths,
             type: type,
             alignment: alignment,
+            title: title,
             confirmLabel: confirmLabel));
 
     return result;
@@ -49,6 +51,7 @@ class Pickers {
     DateTime? initialDate,
     DateTime? firstDate,
     DateTime? lastDate,
+    String? title,
     String confirmLabel = 'Confirm',
   }) async {
     if (firstDate != null && lastDate != null && firstDate.isAfter(lastDate)) {
@@ -60,7 +63,8 @@ class Pickers {
         context: context,
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
-        builder: (c) => CupertinoTimePickerWidget(initialDate: initialDate, firstDate: firstDate, lastDate: lastDate, confirmLabel: confirmLabel));
+        builder: (c) =>
+            CupertinoTimePickerWidget(initialDate: initialDate, firstDate: firstDate, lastDate: lastDate, title: title, confirmLabel: confirmLabel));
 
     return result;
   }

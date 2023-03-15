@@ -97,7 +97,8 @@ class LzForm {
           Function(String value)? onChange,
           Function(String value)? onSubmit,
           Function(TextEditingController model)? onTap,
-          IconData? suffixIcon}) =>
+          IconData? suffixIcon,
+          List<IconData> obsecureIcons = const []}) =>
       Input(
           label: label,
           hint: hint,
@@ -116,7 +117,8 @@ class LzForm {
           onChange: onChange,
           onSubmit: onSubmit,
           onTap: onTap,
-          suffixIcon: suffixIcon);
+          suffixIcon: suffixIcon,
+          obsecureIcons: obsecureIcons);
 
   /* ---------------------------------------------------------------
   | LzForm Select

@@ -64,7 +64,7 @@ class FormView5 extends StatelessWidget {
           text: 'Submit',
           onTap: (control) {
             controller.onSubmit();
-          }).dark().theme([LzButtonStyle.shadow], spacing: 20),
+          }).dark().style(LzButtonStyle.shadow, spacing: 20),
     ));
   }
 }
