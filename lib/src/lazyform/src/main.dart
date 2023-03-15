@@ -79,25 +79,25 @@ class LzForm {
   | LzForm Input
   | */
 
-  static Input input({
-    String? label,
-    String? hint,
-    FormModel? model,
-    int maxLength = 50,
-    int? maxLines,
-    FocusNode? node,
-    bool disabled = false,
-    bool readonly = false,
-    bool autofocus = false,
-    bool obsecure = false,
-    TextInputType? keyboard,
-    List<TextInputFormatter> formatters = const [],
-    bool obsecureToggle = false,
-    bool indicator = false,
-    Function(String value)? onChange,
-    Function(String value)? onSubmit,
-    Function(TextEditingController model)? onTap,
-  }) =>
+  static Input input(
+          {String? label,
+          String? hint,
+          FormModel? model,
+          int maxLength = 50,
+          int? maxLines,
+          FocusNode? node,
+          bool disabled = false,
+          bool readonly = false,
+          bool autofocus = false,
+          bool obsecure = false,
+          TextInputType? keyboard,
+          List<TextInputFormatter> formatters = const [],
+          bool obsecureToggle = false,
+          bool indicator = false,
+          Function(String value)? onChange,
+          Function(String value)? onSubmit,
+          Function(TextEditingController model)? onTap,
+          IconData? suffixIcon}) =>
       Input(
           label: label,
           hint: hint,
@@ -115,7 +115,8 @@ class LzForm {
           indicator: indicator,
           onChange: onChange,
           onSubmit: onSubmit,
-          onTap: onTap);
+          onTap: onTap,
+          suffixIcon: suffixIcon);
 
   /* ---------------------------------------------------------------
   | LzForm Select

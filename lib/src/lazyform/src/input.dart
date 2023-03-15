@@ -13,6 +13,7 @@ class Input extends StatelessWidget {
   final List<TextInputFormatter> formatters;
   final Function(String)? onChange, onSubmit;
   final Function(TextEditingController)? onTap;
+  final IconData? suffixIcon;
 
   const Input(
       {super.key,
@@ -32,7 +33,8 @@ class Input extends StatelessWidget {
       this.indicator = false,
       this.onChange,
       this.onSubmit,
-      this.onTap});
+      this.onTap,
+      this.suffixIcon});
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,7 @@ class Input extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isSuffix = obsecureToggle || onTap != null;
+    bool isSuffix = obsecureToggle || onTap != null || suffixIcon != null;
     bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // get text style
@@ -134,7 +136,7 @@ class Input extends StatelessWidget {
 
     Widget suffixWidget = isSuffix
         ? Iconr(
-            La.angleDown,
+            suffixIcon ?? La.angleDown,
             color: Colors.black45,
             padding: Ei.only(h: 15, v: 15),
             border: Br.only(['l']),

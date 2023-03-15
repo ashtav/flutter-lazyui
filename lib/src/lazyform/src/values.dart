@@ -41,16 +41,17 @@ class FormNotifier extends ChangeNotifier {
   // radio
   Option? option;
 
-  void setOption(Option value) {
+  FormNotifier setOption(Option value) {
     option = value;
     controller.text = value.option.toString();
     notifyListeners();
+    return this;
   }
 
   // checkbox
   List<Option> checked = [];
 
-  void setChecked(Option value) {
+  FormNotifier setChecked(Option value) {
     if (checked.contains(value)) {
       checked.remove(value);
     } else {
@@ -59,11 +60,13 @@ class FormNotifier extends ChangeNotifier {
 
     controller.text = checked.map((e) => e.option).join(', ').trim();
     notifyListeners();
+    return this;
   }
 
-  void setCheckedAll(List<Option> value) {
+  FormNotifier setCheckedAll(List<Option> value) {
     checked = value;
     notifyListeners();
+    return this;
   }
 
   // readonly
@@ -86,6 +89,14 @@ class FormNotifier extends ChangeNotifier {
       node.requestFocus();
     }, 100.ms);
 
+    return this;
+  }
+
+  // clear (data)
+  FormNotifier clear() {
+    data['error'] = '';
+    data['valid'] = true;
+    notifyListeners();
     return this;
   }
 }
