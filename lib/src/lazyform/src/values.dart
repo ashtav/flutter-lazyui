@@ -125,6 +125,18 @@ class FormNotifier extends ChangeNotifier {
 }
 
 /* ---------------------------------------------------------------
+| Form Label Style
+| */
+
+class LzFormLabelStyle {
+  final double? fontSize, letterSpacing;
+  final FontWeight? fontWeight;
+  final Color? color;
+
+  const LzFormLabelStyle({this.fontSize, this.letterSpacing, this.fontWeight, this.color});
+}
+
+/* ---------------------------------------------------------------
 | Form Model
 | */
 

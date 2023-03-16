@@ -6,7 +6,7 @@ Map _____config = {
   'radius': 2.0,
   'spacing': 20.0,
   'primary_color': '#212121',
-  'text_style': GoogleFonts.nunitoSans(fontSize: 16.5, color: LzColor.black),
+  'text_style': GoogleFonts.nunitoSans(fontSize: 16, color: LzColor.black),
   'widgets': {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
     'no_data': {'message': 'No Data', 'on_tap_message': 'Tap to refresh'},

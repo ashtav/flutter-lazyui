@@ -7,16 +7,16 @@ import 'package:lazyui/lazyui.dart';
 class Option {
   final String option;
   final dynamic value;
-  final bool enabled;
+  final bool disabled;
 
-  const Option({required this.option, this.value, this.enabled = true});
+  const Option({required this.option, this.value, this.disabled = false});
 
   factory Option.fromMap(Map<String, dynamic> map) {
-    return Option(option: map['option'], value: map['value'], enabled: map['enabled'] ?? true);
+    return Option(option: map['option'], value: map['value'], disabled: map['disabled'] ?? false);
   }
 
   Map<String, dynamic> toMap() {
-    return {'option': option, 'value': value, 'enabled': enabled};
+    return {'option': option, 'value': value, 'disabled': disabled};
   }
 }
 

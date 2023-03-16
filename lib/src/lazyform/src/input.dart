@@ -14,6 +14,7 @@ class Input extends StatelessWidget {
   final Function(String)? onChange, onSubmit;
   final Function(TextEditingController)? onTap;
   final IconData? suffixIcon;
+  final LzFormLabelStyle? labelStyle;
 
   /// The length of the list must be 2, the first is the visible icon, the second is the hidden icon
   /// ``` dart
@@ -41,7 +42,8 @@ class Input extends StatelessWidget {
       this.onSubmit,
       this.onTap,
       this.suffixIcon,
-      this.obsecureIcons = const []});
+      this.obsecureIcons = const [],
+      this.labelStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -108,7 +110,11 @@ class Input extends StatelessWidget {
           Flexible(
             child: Textr(
               label ?? '',
-              style: style?.copyWith(fontSize: 14),
+              style: style?.copyWith(
+                  fontSize: labelStyle?.fontSize ?? 14,
+                  fontWeight: labelStyle?.fontWeight,
+                  color: labelStyle?.color,
+                  letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
             ),
           ),

@@ -11,7 +11,7 @@ class FormView3 extends StatelessWidget {
     return Wrapper(
         child: Scaffold(
       appBar: AppBar(
-        title: const Text('Form View'),
+        title: const Text('Form View 3'),
       ),
       body: LzFormList(
         activeColor: LzColor.dark,
@@ -47,7 +47,7 @@ class FormView3 extends StatelessWidget {
           LzForm.radio(
               label: 'Favorite Fruit *',
               options: List.generate(
-                  7, (i) => Option(option: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon'][i], enabled: i != 2)),
+                  7, (i) => Option(option: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon'][i], disabled: i != 2)),
               model: forms['fruit']),
           LzForm.checkbox(
               label: 'Hobbies *',

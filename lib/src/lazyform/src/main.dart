@@ -98,7 +98,8 @@ class LzForm {
           Function(String value)? onSubmit,
           Function(TextEditingController model)? onTap,
           IconData? suffixIcon,
-          List<IconData> obsecureIcons = const []}) =>
+          List<IconData> obsecureIcons = const [],
+          LzFormLabelStyle? labelStyle}) =>
       Input(
           label: label,
           hint: hint,
@@ -118,7 +119,8 @@ class LzForm {
           onSubmit: onSubmit,
           onTap: onTap,
           suffixIcon: suffixIcon,
-          obsecureIcons: obsecureIcons);
+          obsecureIcons: obsecureIcons,
+          labelStyle: labelStyle);
 
   /* ---------------------------------------------------------------
   | LzForm Select
@@ -133,7 +135,8 @@ class LzForm {
           bool disabled = false,
           Function(String value)? onChange,
           Future<dynamic>? Function(SelectController selector)? onTap,
-          dynamic Function(SelectController selector)? onSelect}) =>
+          dynamic Function(SelectController selector)? onSelect,
+          LzFormLabelStyle? labelStyle}) =>
       Select(
           label: label,
           hint: hint,
@@ -143,7 +146,8 @@ class LzForm {
           disabled: disabled,
           onChange: onChange,
           onTap: onTap,
-          onSelect: onSelect);
+          onSelect: onSelect,
+          labelStyle: labelStyle);
 
   /* ---------------------------------------------------------------
   | LzForm Radio
@@ -154,17 +158,19 @@ class LzForm {
           List<Option> options = const [],
           Option? initValue,
           FormModel? model,
-          bool enabled = true,
+          bool disabled = false,
           Color? activeColor,
-          Function(Option value)? onChange}) =>
+          Function(Option value)? onChange,
+          LzFormLabelStyle? labelStyle}) =>
       Radio(
         label: label,
         options: options,
         initValue: initValue,
         model: model,
-        enabled: enabled,
+        disabled: disabled,
         activeColor: activeColor,
         onChange: onChange,
+        labelStyle: labelStyle,
       );
 
   /* ---------------------------------------------------------------
@@ -176,18 +182,19 @@ class LzForm {
           List<Option> options = const [],
           List<Option> initValue = const [],
           FormModel? model,
-          bool enabled = true,
+          bool disabled = false,
           Color? activeColor,
-          Function(Option value)? onChange}) =>
+          Function(Option value)? onChange,
+          LzFormLabelStyle? labelStyle}) =>
       Checkbox(
-        label: label,
-        options: options,
-        initValue: initValue,
-        model: model,
-        enabled: enabled,
-        activeColor: activeColor,
-        onChange: onChange,
-      );
+          label: label,
+          options: options,
+          initValue: initValue,
+          model: model,
+          disabled: disabled,
+          activeColor: activeColor,
+          onChange: onChange,
+          labelStyle: labelStyle);
 
   /* ---------------------------------------------------------------
   | LzForm Switches

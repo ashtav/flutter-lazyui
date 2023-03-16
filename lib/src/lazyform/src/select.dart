@@ -14,6 +14,7 @@ class Select extends StatelessWidget {
   final Function(String)? onChange;
   final Future? Function(SelectController controller)? onTap;
   final Function(SelectController controller)? onSelect;
+  final LzFormLabelStyle? labelStyle;
 
   const Select(
       {super.key,
@@ -25,16 +26,19 @@ class Select extends StatelessWidget {
       this.disabled = false,
       this.onChange,
       this.onTap,
-      this.onSelect});
+      this.onSelect,
+      this.labelStyle});
 
   @override
   Widget build(BuildContext context) {
     // get parent widget name
     final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
+    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
 
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
     bool isFirst = false;
+    bool isTopAligned = false;
 
     // get first children of parent
     if (isGrouping && (parent?.children ?? []).isNotEmpty) {
@@ -42,6 +46,10 @@ class Select extends StatelessWidget {
         Select firstChild = parent.children[0] as Select;
         isFirst = firstChild.label == label;
       }
+    }
+
+    if (formListAncestor != null && formListAncestor.type == FormType.topAligned) {
+      isTopAligned = true;
     }
 
     final notifier = model?.notifier ?? FormNotifier();
@@ -61,6 +69,7 @@ class Select extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
+    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -70,22 +79,22 @@ class Select extends StatelessWidget {
     | Label Widget
     | */
 
-    Widget labelWidget = Poslign(
-      alignment: Alignment.topLeft,
-      margin: Ei.only(h: 15, t: 13),
-      child: IgnorePointer(
-        child: Row(
-          mainAxisAlignment: Maa.spaceBetween,
-          children: [
-            Flexible(
-              child: Textr(
-                label ?? '',
-                style: style?.copyWith(fontSize: 14),
-                overflow: Tof.ellipsis,
-              ),
+    Widget labelWidget = IgnorePointer(
+      child: Row(
+        mainAxisAlignment: Maa.spaceBetween,
+        children: [
+          Flexible(
+            child: Textr(
+              label ?? '',
+              style: style?.copyWith(
+                  fontSize: labelStyle?.fontSize ?? 14,
+                  fontWeight: labelStyle?.fontWeight,
+                  color: labelStyle?.color,
+                  letterSpacing: labelStyle?.letterSpacing),
+              overflow: Tof.ellipsis,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
 
@@ -102,7 +111,7 @@ class Select extends StatelessWidget {
 
     SelectController selectController = SelectController(label: label?.replaceAll('*', '').trim(), controller: model?.controller);
 
-    return ClipRRect(
+    Widget field = ClipRRect(
       key: model?.key,
       borderRadius: Br.radius(isGrouping ? 0 : configRadius),
       child: AnimatedBuilder(
@@ -160,7 +169,7 @@ class Select extends StatelessWidget {
                         controller: model?.controller,
                         enabled: false,
                         onChange: onChange,
-                        contentPadding: Ei.only(t: noLabel ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 15),
+                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 15),
                       ),
 
                       /* ----------------------------------------------------
@@ -174,12 +183,19 @@ class Select extends StatelessWidget {
                       ),
                     ],
                   ),
-                  labelWidget,
+                  if (!isTopAligned) Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: 15, t: 13), child: labelWidget),
                   Poslign(alignment: Alignment.centerRight, child: suffixWidget)
                 ],
               ));
         },
       ),
-    ).margin(b: isGrouping ? 0 : 20);
+    );
+
+    return (isTopAligned
+            ? Col(
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
+              )
+            : field)
+        .margin(b: isGrouping ? 0 : 20);
   }
 }

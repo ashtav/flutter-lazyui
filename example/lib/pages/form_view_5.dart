@@ -1,4 +1,3 @@
-import 'package:example/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -13,7 +12,7 @@ class FormView5 extends StatelessWidget {
     return Wrapper(
         child: Scaffold(
       appBar: AppBar(
-        title: const Text('Form View'),
+        title: const Text('Form View 5'),
       ),
       body: LzFormList(
         children: [
@@ -21,6 +20,7 @@ class FormView5 extends StatelessWidget {
             children: [
               LzForm.input(
                   label: 'Your ID *',
+                  labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
                   hint: 'Input your id',
                   model: controller.forms['id'],
                   keyboard: Tit.number,
@@ -29,11 +29,17 @@ class FormView5 extends StatelessWidget {
               LzForm.input(hint: 'Your name here', model: forms['name'], disabled: true),
             ],
           ),
-          LzForm.input(label: 'Your Answer *', hint: 'Input your answer', model: forms['answer'], disabled: true),
+          LzForm.input(
+              label: 'Your Answer *',
+              labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
+              hint: 'Input your answer',
+              model: forms['answer'],
+              disabled: true),
           LzFormGroup(
             children: [
               LzForm.select(
                   label: 'Select Province *',
+                  labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
                   hint: 'Please select your province',
                   options: controller.provinces,
                   model: forms['province'],

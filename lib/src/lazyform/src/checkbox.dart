@@ -9,12 +9,21 @@ class Checkbox extends StatelessWidget {
   final String? label;
   final List<Option> options, initValue;
   final FormModel? model;
-  final bool enabled;
+  final bool disabled;
   final Color? activeColor;
   final Function(Option)? onChange;
+  final LzFormLabelStyle? labelStyle;
 
   const Checkbox(
-      {super.key, this.label, this.options = const [], this.initValue = const [], this.model, this.enabled = true, this.activeColor, this.onChange});
+      {super.key,
+      this.label,
+      this.options = const [],
+      this.initValue = const [],
+      this.model,
+      this.disabled = false,
+      this.activeColor,
+      this.onChange,
+      this.labelStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +52,7 @@ class Checkbox extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
+    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // set controller
     if (model?.controller != null) {
@@ -62,26 +72,26 @@ class Checkbox extends StatelessWidget {
     | Label Widget
     | */
 
-    Widget labelWidget = Poslign(
-      alignment: Alignment.topLeft,
-      margin: Ei.only(h: 15, t: 13),
-      child: IgnorePointer(
-        child: Row(
-          mainAxisAlignment: Maa.spaceBetween,
-          children: [
-            Flexible(
-              child: Textr(
-                label ?? '',
-                style: style?.copyWith(fontSize: 14),
-                overflow: Tof.ellipsis,
-              ),
+    Widget labelWidget = IgnorePointer(
+      child: Row(
+        mainAxisAlignment: Maa.spaceBetween,
+        children: [
+          Flexible(
+            child: Textr(
+              label ?? '',
+              style: style?.copyWith(
+                  fontSize: labelStyle?.fontSize ?? 14,
+                  fontWeight: labelStyle?.fontWeight,
+                  color: labelStyle?.color,
+                  letterSpacing: labelStyle?.letterSpacing),
+              overflow: Tof.ellipsis,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
 
-    return ClipRRect(
+    Widget field = ClipRRect(
       key: model?.key,
       borderRadius: Br.radius(isGrouping ? 0 : configRadius),
       child: AnimatedBuilder(
@@ -102,7 +112,7 @@ class Checkbox extends StatelessWidget {
               child: Stack(
                 children: [
                   Container(
-                    padding: Ei.only(t: noLabel ? 14 : 43, b: isValid ? 5 : 0, l: 15, r: 15),
+                    padding: Ei.only(t: noLabel || isTopAligned ? 14 : 43, b: isValid ? 5 : 0, l: 15, r: 15),
                     child: Col(
                       children: [
                         Wrap(
@@ -110,15 +120,15 @@ class Checkbox extends StatelessWidget {
                             Option option = options[i];
 
                             String label = option.option;
-                            bool enabled = this.enabled && option.enabled;
+                            bool disabled = this.disabled || option.disabled;
                             bool selected = notifier.checked.any((e) => e.option == label);
 
                             Color radioColor = selected ? (activeColor ?? LzFormTheme.activeColor) : Colors.black38;
 
                             return Opacity(
-                              opacity: enabled ? 1 : .4,
+                              opacity: !disabled ? 1 : .4,
                               child: Touch(
-                                onTap: !enabled
+                                onTap: disabled
                                     ? null
                                     : () {
                                         notifier.setChecked(options[i]);
@@ -172,11 +182,18 @@ class Checkbox extends StatelessWidget {
                       ],
                     ),
                   ),
-                  labelWidget
+                  if (!isTopAligned) Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: 15, t: 13), child: labelWidget),
                 ],
               ));
         },
       ),
-    ).margin(b: isGrouping ? 0 : 20);
+    );
+
+    return (isTopAligned
+            ? Col(
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
+              )
+            : field)
+        .margin(b: isGrouping ? 0 : 20);
   }
 }

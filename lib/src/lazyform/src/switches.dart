@@ -11,7 +11,9 @@ class Switches extends StatelessWidget {
   final bool initValue;
   final Function(bool)? onChange;
   final Color? activeColor;
-  const Switches({super.key, this.label, this.id, this.initValue = false, this.onChange, this.activeColor});
+  final LzFormLabelStyle? labelStyle;
+
+  const Switches({super.key, this.label, this.id, this.initValue = false, this.onChange, this.activeColor, this.labelStyle});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +47,13 @@ class Switches extends StatelessWidget {
                   alignment: Alignment.centerLeft,
                   child: CupertinoSwitch(value: switched, activeColor: activeColor, onChanged: onSwitch),
                 ),
-                Textr(switched ? label : secondLabel, style: Theme.of(context).textTheme.bodyMedium, padding: Ei.sym(v: 5))
+                Textr(switched ? label : secondLabel,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        fontSize: labelStyle?.fontSize,
+                        fontWeight: labelStyle?.fontWeight,
+                        color: labelStyle?.color,
+                        letterSpacing: labelStyle?.letterSpacing),
+                    padding: Ei.sym(v: 5))
               ],
             ));
       },

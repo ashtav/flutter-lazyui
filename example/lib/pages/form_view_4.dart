@@ -11,7 +11,7 @@ class FormView4 extends StatelessWidget {
     return Wrapper(
         child: Scaffold(
       appBar: AppBar(
-        title: const Text('Form View'),
+        title: const Text('Form View 4'),
       ),
       body: LzFormList(
         type: FormType.topAligned,
@@ -27,12 +27,12 @@ class FormView4 extends StatelessWidget {
               }),
           LzForm.radio(
               label: 'Favorite Fruit *',
-              options: List.generate(
-                  7, (i) => Option(option: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon'][i], enabled: i != 2)),
+              options: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon']
+                  .make((data, i) => Option(option: data[i], disabled: [0, 1, 3].contains(i))),
               model: forms['fruit']),
           LzForm.checkbox(
               label: 'Hobbies *',
-              options: List.generate(5, (i) => Option(option: ['Swimming', 'Reading', 'Coding', 'Cooking', 'Playing Music'][i])),
+              options: List.generate(5, (i) => Option(option: ['Swimming', 'Reading', 'Coding', 'Cooking', 'Playing Music'][i], disabled: i == 1)),
               model: forms['hobby']),
           LzFormGroup(
             label: 'Account',
@@ -75,6 +75,11 @@ class FormView4 extends StatelessWidget {
               LzForm.select(label: 'District *', hint: 'Please select district'),
             ],
           ),
+          LzForm.select(
+              label: 'Bank Account *',
+              labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
+              options: ['BCA', 'BNI', 'BRI', 'Mandiri'].make((data, i) => Option(option: data[i], value: [10, 10, 15, 13][i])),
+              hint: 'Please select your bank account'),
           LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr]),
           LzForm.input(label: 'About You *', hint: 'Tell us about you'),
           LzForm.switches(label: 'Active|Inactive', activeColor: Colors.blue),
