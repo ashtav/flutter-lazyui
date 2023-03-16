@@ -35,6 +35,7 @@ export 'src/utils/lipsum.dart';
 export 'src/utils/log.dart' hide colors;
 export 'src/utils/utils.dart';
 export 'src/values/constant.dart';
+export 'src/values/font.dart';
 export 'src/widgets/button.dart';
 export 'src/widgets/confirm.dart';
 export 'src/widgets/custom_dialog.dart';
