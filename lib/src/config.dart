@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lazyui/lazyui.dart';
 
 Map _____config = {
   'radius': 2.0,
   'spacing': 20.0,
   'primary_color': '#212121',
-  'text_style': GoogleFonts.nunitoSans(fontSize: 16, color: LzColor.black),
+  'text_style': GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColor.black),
   'widgets': {
     'confirm': {'cancel': 'Cancel', 'confirm': 'Yes'},
     'no_data': {'message': 'No Data', 'on_tap_message': 'Tap to refresh'},
@@ -21,7 +20,7 @@ class LazyUiOptions {
 
   LazyUiOptions({this.radius = 2, this.spacing = 20.0, this.primaryColor = Colors.black87, this.widgets = const {}, this.textStyle});
 
-  Map toMap() => {'radius': radius, 'spacing': spacing, 'primary_color': primaryColor, 'widgets': widgets};
+  Map toMap() => {'radius': radius, 'spacing': spacing, 'primary_color': primaryColor, 'widgets': widgets, 'text_style': textStyle};
 }
 
 class LazyUi {
