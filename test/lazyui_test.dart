@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lazyui/lazyui.dart';
 
 void main() {
   test('adds one to input values', () {
@@ -7,7 +6,5 @@ void main() {
     // expect(calculator.addOne(2), 3);
     // expect(calculator.addOne(-7), -6);
     // expect(calculator.addOne(0), 1);
-
-    print('10-12-1994 50:02:22'.toDate());
   });
 }
