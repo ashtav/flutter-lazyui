@@ -230,24 +230,28 @@ class LzButtonControl extends ChangeNotifier {
   String buttonText = '';
   bool isSubmit = false, enabled = true;
 
-  void submit() {
+  LzButtonControl submit() {
     isSubmit = true;
     notifyListeners();
+    return this;
   }
 
-  void abort() {
+  LzButtonControl abort() {
     isSubmit = false;
     notifyListeners();
+    return this;
   }
 
-  void setText(String text) {
+  LzButtonControl setText(String text) {
     buttonText = text;
     notifyListeners();
+    return this;
   }
 
-  void setEnabled(bool value) {
+  LzButtonControl setEnabled(bool value) {
     enabled = value;
     notifyListeners();
+    return this;
   }
 }
 
