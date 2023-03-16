@@ -15,7 +15,7 @@ extension FormModelExtension on Map<String, FormModel> {
   Map<String, FormModel> fill(Map<String, dynamic> data) {
     for (var e in data.keys) {
       if (containsKey(e)) {
-        this[e]!.controller.text = data[e].toString();
+        this[e]!.controller.text = data[e] == null ? '' : data[e].toString();
       }
     }
 

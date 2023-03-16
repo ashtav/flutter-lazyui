@@ -68,7 +68,7 @@ class LzForm {
   static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data) {
     for (var e in data.keys) {
       if (forms.containsKey(e)) {
-        forms[e]!.controller.text = data[e].toString();
+        forms[e]!.controller.text = data[e] == null ? '' : data['e'].toString();
       }
     }
 
