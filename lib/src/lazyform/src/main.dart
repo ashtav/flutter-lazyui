@@ -347,17 +347,16 @@ class LzFormList extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
-  final FormType type;
-  final Color? activeColor;
+  final LzFormStyle? style;
 
-  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.type = FormType.grouped, this.activeColor});
+  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.style});
 
   @override
   Widget build(BuildContext context) {
     LzFormTheme.setActiveColor(LzColor.blue);
 
-    if (activeColor != null) {
-      LzFormTheme.setActiveColor(activeColor!);
+    if (style?.activeColor != null) {
+      LzFormTheme.setActiveColor(style!.activeColor!);
     }
 
     final controller = StreamController<double>();
@@ -377,4 +376,11 @@ class LzFormList extends StatelessWidget {
               children: children,
             ));
   }
+}
+
+class LzFormStyle {
+  final FormType type;
+  final Color? activeColor, inputBorderColor;
+
+  const LzFormStyle({this.type = FormType.grouped, this.activeColor, this.inputBorderColor});
 }

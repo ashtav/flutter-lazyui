@@ -14,7 +14,7 @@ class FormView3 extends StatelessWidget {
         title: const Text('Form View 3'),
       ),
       body: LzFormList(
-        activeColor: LzColor.dark,
+        style: LzFormStyle(activeColor: LzColor.dark),
         children: [
           LzFormGroup(
             label: 'Bio',

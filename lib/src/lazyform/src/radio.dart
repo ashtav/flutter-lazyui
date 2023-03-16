@@ -45,7 +45,7 @@ class Radio extends StatelessWidget {
       }
     }
 
-    if (formListAncestor != null && formListAncestor.type == FormType.topAligned) {
+    if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
       isTopAligned = true;
     }
 
@@ -100,7 +100,7 @@ class Radio extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? Colors.black12 : Colors.redAccent;
+          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
 
           return Container(

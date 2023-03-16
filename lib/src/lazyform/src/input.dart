@@ -64,7 +64,7 @@ class Input extends StatelessWidget {
       }
     }
 
-    if (formListAncestor != null && formListAncestor.type == FormType.topAligned) {
+    if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
       isTopAligned = true;
     }
 
@@ -143,7 +143,7 @@ class Input extends StatelessWidget {
           child: Iconr(
             obsecure ? obsShowIcon : obsHideIcon,
             padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l']),
+            border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
           ),
         );
 
@@ -156,7 +156,7 @@ class Input extends StatelessWidget {
             suffixIcon ?? La.angleDown,
             color: Colors.black45,
             padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l']),
+            border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
           )
         : const None();
 
@@ -168,7 +168,7 @@ class Input extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? Colors.black12 : Colors.redAccent;
+          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
           FocusNode focusNode = node ?? notifier.node;
@@ -185,7 +185,7 @@ class Input extends StatelessWidget {
           return InkW(
               onTap: onTap.isNotNull ? () => onTap!(notifier.controller) : null,
               color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
-              border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
+              border: isGrouping ? Br.only(['t'], except: isFirst, color: borderColor) : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
                 children: [

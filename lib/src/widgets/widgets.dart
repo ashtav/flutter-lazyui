@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -632,5 +634,39 @@ class Lazicon {
       height: size,
       colorFilter: colorFilter.isNull ? null : ColorFilter.mode(colorFilter!, BlendMode.saturation),
     );
+  }
+}
+
+/* --------------------------------------------------------------------------
+| LzListView
+| */
+
+class LzListView extends StatelessWidget {
+  final List<Widget> children;
+  final EdgeInsetsGeometry? padding;
+  final ScrollPhysics? physics;
+
+  const LzListView({super.key, this.children = const [], this.padding, this.physics});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = StreamController<double>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      RenderBox box = context.findRenderObject() as RenderBox;
+      double height = (box.size.height * 3);
+      controller.sink.add(height);
+    });
+
+    double spacing = LazyUi.getConfig.spacing;
+
+    return StreamBuilder<double>(
+        stream: controller.stream,
+        builder: (BuildContext context, snap) => ListView(
+              physics: physics ?? BounceScroll(),
+              cacheExtent: snap.data,
+              padding: padding ?? Ei.all(spacing),
+              children: children,
+            ));
   }
 }

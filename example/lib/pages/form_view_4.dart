@@ -14,7 +14,7 @@ class FormView4 extends StatelessWidget {
         title: const Text('Form View 4'),
       ),
       body: LzFormList(
-        type: FormType.topAligned,
+        style: LzFormStyle(inputBorderColor: Colors.black26, type: FormType.topAligned),
         children: [
           LzForm.input(label: 'Your Name *', hint: 'Input your name', indicator: true, model: forms['name']),
           LzForm.input(

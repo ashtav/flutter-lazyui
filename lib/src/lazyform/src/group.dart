@@ -18,6 +18,9 @@ class LzFormGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
+    Color borderColor = (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
+
     List allowed = [Input, Select, Radio, Checkbox, Switches];
 
     // remove all children that not allowed
@@ -74,7 +77,7 @@ class LzFormGroup extends StatelessWidget {
         // Fields
         Container(
           margin: Ei.only(b: 20),
-          decoration: BoxDecoration(border: Br.all(), color: Colors.white, borderRadius: Br.radius(5)),
+          decoration: BoxDecoration(border: Br.all(color: borderColor), color: Colors.white, borderRadius: Br.radius(5)),
           child: ClipRRect(
             borderRadius: Br.radius(5),
             child: Col(

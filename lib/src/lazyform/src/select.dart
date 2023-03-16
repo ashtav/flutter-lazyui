@@ -48,7 +48,7 @@ class Select extends StatelessWidget {
       }
     }
 
-    if (formListAncestor != null && formListAncestor.type == FormType.topAligned) {
+    if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
       isTopAligned = true;
     }
 
@@ -106,7 +106,7 @@ class Select extends StatelessWidget {
       La.angleDown,
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
-      border: Br.only(['l']),
+      border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
     );
 
     SelectController selectController = SelectController(label: label?.replaceAll('*', '').trim(), controller: model?.controller);
@@ -119,7 +119,7 @@ class Select extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? Colors.black12 : Colors.redAccent;
+          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
           Color disabledColor = Utils.hex('#f3f4f6');
 
@@ -158,7 +158,7 @@ class Select extends StatelessWidget {
                       }
                     },
               color: enabled ? Colors.white : disabledColor,
-              border: isGrouping ? Br.only(['t'], except: isFirst) : Br.all(color: borderColor),
+              border: isGrouping ? Br.only(['t'], except: isFirst, color: borderColor) : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
