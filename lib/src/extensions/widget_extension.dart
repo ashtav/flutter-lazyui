@@ -43,4 +43,12 @@ extension WidgetExtension on Widget {
   /// YourWidget().onTap(() {})
   /// ```
   Touch onTap(Function() onTap) => Touch(onTap: onTap, child: this);
+
+  /// ``` dart
+  /// YourWidget().border(Br.all(), width: 1, color: Colors.black)
+  /// ```
+  Widget border(BoxBorder border, {BorderRadiusGeometry? radius, Color? color}) => Container(
+        decoration: BoxDecoration(borderRadius: radius, color: color, border: border),
+        child: this,
+      );
 }
