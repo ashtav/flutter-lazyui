@@ -51,4 +51,9 @@ extension WidgetExtension on Widget {
         decoration: BoxDecoration(borderRadius: radius, color: color, border: border),
         child: this,
       );
+
+  /// ``` dart
+  /// YourWidget().ignore()
+  /// ```
+  IgnorePointer ignore([bool ignoring = true]) => IgnorePointer(ignoring: ignoring, child: this);
 }
