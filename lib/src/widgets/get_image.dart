@@ -1,13 +1,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:lazyui/src/utils/utils.dart';
-
-import '../shortcut.dart';
-import 'skeleton.dart';
+import 'package:lazyui/lazyui.dart';
 
 class GetImage extends StatelessWidget {
   final dynamic image;
@@ -45,7 +40,7 @@ class GetImage extends StatelessWidget {
       return FutureBuilder(
           future: is404(),
           builder: (context, snap) => (snap.data ?? true)
-              ? const Center()
+              ? Container(width: 50, height: 50, color: Colors.black12, child: const Center(child: Text('404')))
               : CachedNetworkImage(
                   fit: fit,
                   imageUrl: image,
@@ -88,5 +83,148 @@ class GetImage extends StatelessWidget {
       margin: margin,
       child: ClipRRect(borderRadius: Br.radius(radius ?? 0), child: widget),
     );
+  }
+}
+
+class LzImage<T> extends StatelessWidget {
+  final T image;
+  final BoxFit fit;
+  final Color? color;
+  final double? width, height, size;
+  final double? radius;
+
+  const LzImage(this.image, {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius});
+
+  @override
+  Widget build(BuildContext context) {
+    // init size
+    double? width = this.width, height = this.height;
+
+    if (size != null) {
+      width = size;
+      height = size;
+    }
+
+    List availables = [String, File, Uint8List, Image];
+
+    // check available type
+    if (!availables.contains(image.runtimeType)) {
+      logg('Image type not available', name: 'LzImage');
+      return SizedBox(
+        width: width,
+        height: height,
+        child: const Center(
+            child: Icon(
+          La.exclamationCircle,
+        )),
+      );
+    }
+
+    late Widget result;
+
+    // init radius
+    double radius = this.radius ?? LazyUi.getConfig.radius;
+
+    // if string, check if it's a imageUrl, path, asset or svg
+    if (image is String) {
+      String path = image as String;
+
+      bool isSvg = path.split('.').last.toLowerCase() == 'svg';
+      bool isUrl = path.contains('http');
+      bool isPath = path.split('/').length > 2; // ex: /storage/emulated/0/Download/IMG_20210101_000000.jpg
+
+      /* --------------------------------------------------------------------------------------
+      | SVG
+      | */
+
+      if (isSvg) {
+        result = SvgPicture.asset('assets/images/$image', width: width, height: height);
+      }
+
+      /* --------------------------------------------------------------------------------------
+      | IMAGE URL
+      | */
+
+      else if (isUrl) {
+        Future<bool> is404() async {
+          var uri = Uri.parse(path);
+          var request = await HttpClient().getUrl(uri);
+          var response = await request.close();
+          return response.statusCode == HttpStatus.notFound;
+        }
+
+        Widget error = Center(
+            child: Text(
+          '404',
+          style: LazyUi.getConfig.textStyle?.copyWith(fontWeight: Fw.bold),
+        ));
+
+        Widget shimmer = Shimmer.fromColors(
+          baseColor: Colors.black26,
+          highlightColor: Colors.black54,
+          child: Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius)),
+          ),
+        );
+
+        result = FutureBuilder(
+            future: is404(),
+            builder: (context, snap) {
+              if (snap.connectionState == ConnectionState.waiting) {
+                return shimmer;
+              }
+
+              return (snap.data ?? true)
+                  ? error
+                  : CachedNetworkImage(
+                      fit: fit,
+                      imageUrl: path,
+                      width: width,
+                      height: height,
+                      progressIndicatorBuilder: (context, url, downloadProgress) => shimmer,
+                      errorWidget: (context, url, error) => const Center(child: Text('.')),
+                    );
+            });
+      }
+
+      /* --------------------------------------------------------------------------------------
+      | PATH
+      | */
+
+      else if (isPath) {
+        result = Image.file(File(path), fit: fit, width: width, height: height);
+      }
+    }
+
+    /* --------------------------------------------------------------------------------------
+    | Uint8List
+    | */
+
+    else if (image is Uint8List) {
+      result = Image.memory(image as Uint8List, fit: fit, width: width, height: height);
+    }
+
+    /* --------------------------------------------------------------------------------------
+    | File
+    | */
+
+    else if (image is File) {
+      result = Image.file(image as File, fit: fit, width: width, height: height);
+    } else {
+      String path = 'assets/images/$image';
+      result = Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(path), fit: fit),
+        ),
+      );
+    }
+
+    return SizedBox(
+      width: width,
+      height: height,
+      child: result,
+    ).clip(all: radius);
   }
 }

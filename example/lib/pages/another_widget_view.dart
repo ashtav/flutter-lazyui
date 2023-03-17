@@ -58,7 +58,7 @@ class AnotherWidgetView extends StatelessWidget {
               'Hay',
               style: Gfont.bold,
             ),
-          ).getChild()
+          ).getChild(),
         ],
       ),
     );
