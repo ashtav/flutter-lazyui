@@ -135,18 +135,18 @@ class LzImage<T> extends StatelessWidget {
       | */
 
       else if (isUrl) {
-        Future<bool> is404() async {
-          var uri = Uri.parse(path);
-          var request = await HttpClient().getUrl(uri);
-          var response = await request.close();
-          return response.statusCode == HttpStatus.notFound;
-        }
+        // Future<bool> is404() async {
+        //   var uri = Uri.parse(path);
+        //   var request = await HttpClient().getUrl(uri);
+        //   var response = await request.close();
+        //   return response.statusCode == HttpStatus.notFound;
+        // }
 
-        Widget error = Center(
-            child: Text(
-          '404',
-          style: LazyUi.getConfig.textStyle?.copyWith(fontWeight: Fw.bold),
-        ));
+        // Widget error = Center(
+        //     child: Text(
+        //   '404',
+        //   style: LazyUi.getConfig.textStyle?.copyWith(fontWeight: Fw.bold),
+        // ));
 
         Widget shimmer = Shimmer.fromColors(
           baseColor: Colors.black26,
@@ -154,28 +154,18 @@ class LzImage<T> extends StatelessWidget {
           child: Container(
             width: width,
             height: height,
-            decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius)),
+            decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(radius)),
           ),
         );
 
-        result = FutureBuilder(
-            future: is404(),
-            builder: (context, snap) {
-              if (snap.connectionState == ConnectionState.waiting) {
-                return shimmer;
-              }
-
-              return (snap.data ?? true)
-                  ? error
-                  : CachedNetworkImage(
-                      fit: fit,
-                      imageUrl: path,
-                      width: width,
-                      height: height,
-                      progressIndicatorBuilder: (context, url, downloadProgress) => shimmer,
-                      errorWidget: (context, url, error) => const Center(child: Text('.')),
-                    );
-            });
+        result = CachedNetworkImage(
+          fit: fit,
+          imageUrl: path,
+          width: width,
+          height: height,
+          progressIndicatorBuilder: (context, url, downloadProgress) => shimmer,
+          errorWidget: (context, url, error) => const Center(child: Icon(La.exclamationCircle)),
+        );
       }
 
       /* --------------------------------------------------------------------------------------

@@ -59,6 +59,11 @@ class AnotherWidgetView extends StatelessWidget {
               style: Gfont.bold,
             ),
           ).getChild(),
+          Col(
+            children: List.generate(1, (i) {
+              return LzImage('https://master.saddannusantara.com//storagethumbnails//mnYKQoxZYYWJpEkgoxWkYUl7oml634fTxjTZFo3a.png', size: 100);
+            }),
+          )
         ],
       ),
     );
