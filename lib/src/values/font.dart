@@ -7,6 +7,11 @@ class Gfont {
   // font color
   static final TextStyle black = gfont.copyWith(color: LzColor.black);
   static final TextStyle white = gfont.copyWith(color: Colors.white);
+  static final TextStyle red = gfont.copyWith(color: Colors.redAccent);
+  static final TextStyle orange = gfont.copyWith(color: LzColor.orange);
+  static final TextStyle blue = gfont.copyWith(color: LzColor.blue);
+  static final TextStyle green = gfont.copyWith(color: LzColor.green);
+  static final TextStyle grey = gfont.copyWith(color: LzColor.grey);
 
   // font size
   static final TextStyle fs10 = gfont.copyWith(fontSize: 10);
