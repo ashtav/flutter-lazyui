@@ -1,4 +1,5 @@
 import 'package:example/pages/another_widget_view.dart';
+import 'package:example/pages/item_view.dart';
 import 'package:example/pages/nodata_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -66,7 +67,8 @@ class HomePage extends StatelessWidget {
     List<String> features = [
       'Select Date',
       'Select Time',
-      'Dropdown Dialog',
+      'LzDropdown',
+      'LzDropdown In List',
       'Custom Dialog',
       'Forms',
       'Stacked List',
@@ -82,26 +84,34 @@ class HomePage extends StatelessWidget {
     ];
 
     void onFeatureTap(int index) async {
-      switch (index) {
-        case 0:
+      switch (features[index]) {
+        case 'Select Date':
           DateTime? date = await Pickers.datePicker(context);
           logg(date);
 
           break;
 
-        case 1:
+        case 'Select Time':
           DateTime? time = await Pickers.timePicker(context);
           logg(time);
 
           break;
 
-        case 2:
-          DropdownDialog.open(key.currentContext!, options: ['Option A', 'Option B', 'Option C'], onSelect: (o, i) {
-            logg(o);
-          });
+        case 'LzDropdown':
+          // DropdownDialog.open(key.currentContext!, options: ['Option A', 'Option B', 'Option C'], onSelect: (o, i) {
+          //   logg(o);
+          // });
+
+          final options = ['Setting Account', 'Change Password', 'Logout'].make((data, i) => Option(option: data[i]));
+
+          LzDropdown.show(key.currentContext!, options: options);
           break;
 
-        case 3:
+        case 'LzDropdown In List':
+          context.push(const ItemView());
+          break;
+
+        case 'Custom Dialog':
           context.dialog(CustomDialog(
             tapClose: true,
             alignment: Caa.start,
@@ -131,15 +141,15 @@ class HomePage extends StatelessWidget {
           ));
           break;
 
-        case 4:
+        case 'Forms':
           context.push(const FormView());
           break;
 
-        case 5:
+        case 'Stacked List':
           context.push(const FormView2());
           break;
 
-        case 6:
+        case 'Select Option':
           List<Option> options = List.generate(5, (i) => Option(option: Lipsum.createWord(3), value: i));
           context.bottomSheet(
               SelectPicker(
@@ -152,43 +162,46 @@ class HomePage extends StatelessWidget {
 
           break;
 
-        case 7:
+        case 'Animation':
           context.push(const AnimateView());
           break;
 
-        case 8:
+        case 'Lazicon':
           context.push(const LaziconView());
           break;
 
-        case 9:
+        case 'No Data':
           context.push(const NoDataView());
           break;
 
-        case 10:
+        case 'Error Handler':
           context.push(const ErrorHandlerView());
           break;
 
-        case 11:
+        case 'Another Widgets':
           context.push(const AnotherWidgetView());
           break;
 
-        case 12:
+        case 'Forms 3':
           context.push(const FormView3());
           break;
 
-        case 13:
+        case 'Forms 4':
           context.push(const FormView4());
           break;
 
-        case 14:
+        case 'Forms 5':
           context.push(const FormView5());
           break;
         default:
       }
     }
 
+    GlobalKey key2 = GlobalKey();
+
     return Scaffold(
       appBar: AppBar(
+        key: key2,
         centerTitle: true,
         title: const Text(
           'LazyUi',
@@ -199,10 +212,16 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
               onPressed: () {
-                List<String> options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'];
-                DropdownDialog.open(context, options: options, top: true, disableds: [2], dangers: [1], sparators: [3]);
+                // List<String> options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'];
+                // DropdownDialog.open(context, options: options, top: true, disableds: [2], dangers: [1], sparators: [3]);
+
+                final options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'].make((data, i) => Option(option: data[i]));
+                LzDropdown.show(key2.currentContext!, options: options);
               },
-              icon: const Icon(La.bars, color: Colors.black87))
+              icon: const Icon(
+                La.bars,
+                color: Colors.black87,
+              ))
         ],
       ),
       body: ListView(

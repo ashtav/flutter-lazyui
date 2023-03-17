@@ -8,15 +8,17 @@ class Option {
   final String option;
   final dynamic value;
   final bool disabled;
+  final int index;
+  final IconData? icon;
 
-  const Option({required this.option, this.value, this.disabled = false});
+  const Option({required this.option, this.value, this.disabled = false, this.index = 0, this.icon});
 
   factory Option.fromMap(Map<String, dynamic> map) {
-    return Option(option: map['option'], value: map['value'], disabled: map['disabled'] ?? false);
+    return Option(option: map['option'], value: map['value'], disabled: map['disabled'] ?? false, index: map['index'] ?? 0, icon: map['icon']);
   }
 
   Map<String, dynamic> toMap() {
-    return {'option': option, 'value': value, 'disabled': disabled};
+    return {'option': option, 'value': value, 'disabled': disabled, 'index': index, 'icon': icon};
   }
 }
 

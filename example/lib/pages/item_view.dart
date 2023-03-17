@@ -28,14 +28,21 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey key = GlobalKey();
-
     return InkW(
-      key: key,
       onTap: () {
-        DropdownDialog.open(key.currentContext!,
-            offset: const Offset(20, 0), options: List.generate(4, (index) => 'Option $index'), disableds: [2], dangers: [1], onSelect: (o, i) {
-          logg(o);
+        // make options
+        final icons = [La.infoCircle, La.archive, La.pen, La.trashAlt];
+        final options = ['Details', 'Archive', 'Edit', 'Delete'].make((data, i) => Option(option: data[i], icon: icons[i], disabled: i == 1));
+
+        // quick way to make options, icons and values
+        // final options = ['Details', 'Archive', 'Edit', 'Delete'].makeOptions(icons: icons);
+
+        // show dropdown
+        LzDropdown.show(context,
+            options: options,
+            offset: const Offset(20, 0),
+            style: LzDropdownStyle(useBorder: true, separators: [2], dangers: [3], separatorHeight: 5), onSelect: (option) {
+          logg(option.toMap());
         });
       },
       color: Colors.white,
@@ -43,7 +50,7 @@ class Item extends StatelessWidget {
       border: Br.only(['t'], except: index == 0),
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
-        children: [Textr('Item $index'), const Icon(Icons.more_vert)],
+        children: [Textr(Faker.random(3).ucwords), const Icon(La.ellipsisV)],
       ),
     );
   }
