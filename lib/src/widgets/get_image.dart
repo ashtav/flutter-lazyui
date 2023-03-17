@@ -30,25 +30,14 @@ class GetImage extends StatelessWidget {
         ),
       );
     } else if (image is String && image.contains('http')) {
-      Future<bool> is404() async {
-        var uri = Uri.parse(image);
-        var request = await HttpClient().getUrl(uri);
-        var response = await request.close();
-        return response.statusCode == HttpStatus.notFound;
-      }
-
-      return FutureBuilder(
-          future: is404(),
-          builder: (context, snap) => (snap.data ?? true)
-              ? Container(width: 50, height: 50, color: Colors.black12, child: const Center(child: Text('404')))
-              : CachedNetworkImage(
-                  fit: fit,
-                  imageUrl: image,
-                  progressIndicatorBuilder: (context, url, downloadProgress) {
-                    return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
-                  },
-                  errorWidget: (context, url, error) => const Center(),
-                ));
+      return CachedNetworkImage(
+        fit: fit,
+        imageUrl: image,
+        progressIndicatorBuilder: (context, url, downloadProgress) {
+          return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
+        },
+        errorWidget: (context, url, error) => const Center(),
+      );
     } else if (image is String && isSvg) {
       widget = SvgPicture.asset('assets/images/$image',
           width: size is List ? size[0].toDouble() : size.toDouble(), height: size is List ? size[1].toDouble() : size.toDouble());
