@@ -21,6 +21,7 @@ class LzFormGroup extends StatelessWidget {
     final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
     Color borderColor = (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
 
+    // allowed widget
     List allowed = [Input, Select, Radio, Checkbox, Switches];
 
     // remove all children that not allowed
@@ -56,7 +57,6 @@ class LzFormGroup extends StatelessWidget {
           ),
 
         // Sublabel
-
         if (sublabel != null)
           sublabelStyle == SublabelStyle.text
               ? Textr(

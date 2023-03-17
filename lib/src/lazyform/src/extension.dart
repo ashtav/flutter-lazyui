@@ -12,9 +12,13 @@ extension ListenableExtension on Listenable {
 }
 
 extension FormModelExtension on Map<String, FormModel> {
-  Map<String, FormModel> fill(Map<String, dynamic> data) {
+  /// ``` dart
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  /// forms.fill({'name': 'John Doe'});
+  /// ```
+  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const []}) {
     for (var e in data.keys) {
-      if (containsKey(e)) {
+      if (containsKey(e) && !except.contains(e)) {
         this[e]!.controller.text = data[e] == null ? '' : data[e].toString();
       }
     }
@@ -22,10 +26,18 @@ extension FormModelExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// ``` dart
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  /// forms.get('name');
+  /// ```
   String get(String key) {
     return this[key]!.controller.text;
   }
 
+  /// ``` dart
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  /// forms.toMap(except: ['password']); // {name: '', email: ''}
+  /// ```
   Map<String, dynamic> toMap({List<String> except = const []}) {
     final data = <String, dynamic>{};
 

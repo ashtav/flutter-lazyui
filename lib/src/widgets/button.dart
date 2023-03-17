@@ -224,7 +224,7 @@ class LzButton extends StatelessWidget {
   }
 }
 
-enum LzButtonStyle { none, shadow, gradient }
+enum LzButtonStyle { none, shadow }
 
 class LzButtonControl extends ChangeNotifier {
   String buttonText = '';
@@ -269,6 +269,15 @@ extension LzButtonExtension on LzButton {
                     BoxShadow(color: shadowColor ?? Utils.hex('fafafa'), spreadRadius: 30, blurRadius: 25, offset: const Offset(0, 0)),
                   ]
                 : []),
+        child: this);
+  }
+
+  Widget theme1({Color? shadowColor, double? spacing}) {
+    return Container(
+        padding: Ei.all(spacing ?? LazyUi.getConfig.spacing),
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(color: shadowColor ?? Utils.hex('fafafa'), spreadRadius: 30, blurRadius: 25, offset: const Offset(0, 0)),
+        ]),
         child: this);
   }
 

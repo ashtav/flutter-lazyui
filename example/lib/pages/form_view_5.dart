@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -115,7 +117,7 @@ class FormView5 extends StatelessWidget {
 
             final x = LazyUi.getConfig.toMap();
             logg(x);
-          }).dark().style(LzButtonStyle.shadow, spacing: 20),
+          }).dark().theme1(),
     ));
   }
 }

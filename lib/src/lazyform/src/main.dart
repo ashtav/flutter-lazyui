@@ -8,6 +8,7 @@ import 'package:lazyui/lazyui.dart';
 
 import 'checkbox.dart';
 import 'input.dart';
+import 'notifier.dart';
 import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
@@ -15,22 +16,6 @@ import 'switches.dart';
 /* ---------------------------------------------------------------
 | LzForm
 | */
-
-/// ```dart
-/// LzForm.input(label: 'Name', hint: 'Enter your name', model: model);
-///
-/// LzForm form = LzForm.validate(forms);
-///
-/// @params
-/// required: ['*'] // required all
-/// required: ['address', 'phone'] // required only address and phone
-/// required: ['*', 'address', 'phone'] // required all except address and phone
-///
-/// min: ['phone:10', 'address:5']
-/// max: ['phone:15', 'address:100']
-/// email: ['email']
-///
-/// ```
 
 class LzForm {
   final bool ok;
@@ -65,9 +50,9 @@ class LzForm {
   /// ``` dart
   /// LzForm.fill(forms, {'name': 'John Doe'});
   /// ```
-  static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data) {
+  static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data, {List<String> except = const []}) {
     for (var e in data.keys) {
-      if (forms.containsKey(e)) {
+      if (forms.containsKey(e) && !except.contains(e)) {
         forms[e]!.controller.text = data[e] == null ? '' : data['e'].toString();
       }
     }
@@ -215,8 +200,25 @@ class LzForm {
   | */
 
   /// ```dart
-  /// LzForm form = LzForm.validate(forms, required: ['*']);
+  /// // init models
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  ///
+  /// // use in widget
+  /// LzForm.input(label: 'Name', hint: 'Enter your name', model: forms['name']);
+  ///
+  /// // validate
+  /// final form = LzForm.validate(forms, required: ['*']);
   /// if(form.ok) // do something...
+  ///
+  /// // validate params
+  /// required: ['*'] // required all
+  /// required: ['address', 'phone'] // required only address and phone
+  /// required: ['*', 'address', 'phone'] // required all except address and phone
+  ///
+  /// min: ['phone:10', 'address:5']
+  /// max: ['phone:15', 'address:100']
+  /// email: ['email']
+  ///
   /// ```
   static LzForm validate(Map<String, FormModel> forms,
       {List<String> required = const [],
@@ -377,6 +379,13 @@ class LzFormList extends StatelessWidget {
             ));
   }
 }
+
+/* --------------------------------------------------------------------
+| LzFormStyle
+| ---------------------------------------------------------------------
+| Set the style of the form, such as active color for radio, switch,
+| checkbox and the border color of the input fields, etc.
+| */
 
 class LzFormStyle {
   final FormType type;

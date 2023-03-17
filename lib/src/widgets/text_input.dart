@@ -12,7 +12,8 @@ class TextInputTransparent extends StatelessWidget {
   final FocusNode? node;
   final TextEditingController? controller;
   final TextAlign? textAlign;
-  final int? maxLength, maxLines;
+  final int maxLength;
+  final int? maxLines;
   final List<TextInputFormatter> formatters;
   final EdgeInsetsGeometry? contentPadding;
   final TextStyle? textStyle, hintStyle;
@@ -57,7 +58,7 @@ class TextInputTransparent extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       minLines: 1,
-      inputFormatters: [LengthLimitingTextInputFormatter(maxLength), ...formatters],
+      inputFormatters: [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...formatters],
       selectionControls: selectionControls,
       decoration: InputDecoration(
         isDense: true,

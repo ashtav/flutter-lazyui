@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'notifier.dart';
+
 class Input extends StatelessWidget {
   final String? label, hint;
   final FormModel? model;
@@ -69,26 +71,30 @@ class Input extends StatelessWidget {
     }
 
     final notifier = model?.notifier ?? FormNotifier();
-    final formatters = [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...this.formatters];
-    notifier.setMaxLength(maxLength < 1 ? 1 : maxLength);
+    List<TextInputFormatter> formatters = [];
 
-    // setting input formatter
-    if (keyboard == Tit.number) {
-      formatters.add(InputFormat.numeric);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      formatters = [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...this.formatters];
+      notifier.setMaxLength(maxLength < 1 ? 1 : maxLength);
 
-    // listen to controller
-    if (model?.controller != null) {
-      notifier.controller = model!.controller;
-
-      if (notifier.controller.text.trim().isNotEmpty) {
-        notifier.setTextLength(notifier.controller.text.length);
+      // setting input formatter
+      if (keyboard == Tit.number) {
+        formatters.add(InputFormat.numeric);
       }
 
-      notifier.controller.addListener(() {
-        notifier.setTextLength(notifier.controller.text.length);
-      });
-    }
+      // listen to controller
+      if (model?.controller != null) {
+        notifier.controller = model!.controller;
+
+        if (notifier.controller.text.trim().isNotEmpty) {
+          notifier.setTextLength(notifier.controller.text.length);
+        }
+
+        notifier.controller.addListener(() {
+          notifier.setTextLength(notifier.controller.text.length);
+        });
+      }
+    });
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
@@ -180,7 +186,8 @@ class Input extends StatelessWidget {
           bool enabled = onTap == null && (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
 
           // update formatters (length, on index 0)
-          formatters[0] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
+          int ioLengthLimiting = formatters.indexWhere((e) => e is LengthLimitingTextInputFormatter);
+          if (ioLengthLimiting > -1) formatters[ioLengthLimiting] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
 
           return InkW(
               onTap: onTap.isNotNull ? () => onTap!(notifier.controller) : null,

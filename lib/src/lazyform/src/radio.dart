@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide Radio;
 import 'package:lazyui/lazyui.dart';
 
+import 'notifier.dart';
+
 /* ----------------------------------------------------
 | Radio Widget
 | */
@@ -60,10 +62,12 @@ class Radio extends StatelessWidget {
       notifier.controller = model!.controller;
     }
 
-    // init value
-    if (initValue != null) {
-      notifier.setOption(initValue!);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // init value
+      if (initValue != null) {
+        notifier.setOption(initValue!);
+      }
+    });
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;

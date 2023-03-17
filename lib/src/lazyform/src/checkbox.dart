@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart' hide Checkbox;
 import 'package:lazyui/lazyui.dart';
 
+import 'notifier.dart';
+
 /* ----------------------------------------------------
 | Checkbox Widget
 | */
@@ -59,10 +61,12 @@ class Checkbox extends StatelessWidget {
       notifier.controller = model!.controller;
     }
 
-    // init value
-    if (initValue.isNotEmpty) {
-      notifier.setCheckedAll(initValue);
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // init value
+      if (initValue.isNotEmpty) {
+        notifier.setCheckedAll(initValue);
+      }
+    });
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;

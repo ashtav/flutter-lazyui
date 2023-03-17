@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'notifier.dart';
+
 /* ----------------------------------------------------
 | Select Widget
 | */
@@ -54,18 +56,20 @@ class Select extends StatelessWidget {
 
     final notifier = model?.notifier ?? FormNotifier();
 
-    // listen to controller
-    if (model?.controller != null) {
-      notifier.controller = model!.controller;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // listen to controller
+      if (model?.controller != null) {
+        notifier.controller = model!.controller;
 
-      if (notifier.controller.text.trim().isNotEmpty) {
-        notifier.setTextLength(notifier.controller.text.length);
+        if (notifier.controller.text.trim().isNotEmpty) {
+          notifier.setTextLength(notifier.controller.text.length);
+        }
+
+        notifier.controller.addListener(() {
+          notifier.setTextLength(notifier.controller.text.length);
+        });
       }
-
-      notifier.controller.addListener(() {
-        notifier.setTextLength(notifier.controller.text.length);
-      });
-    }
+    });
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
