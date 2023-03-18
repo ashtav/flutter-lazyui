@@ -11,6 +11,8 @@ class FormView5 extends StatelessWidget {
     final controller = FormController();
     final forms = controller.forms;
 
+    LzForm.fill(controller.forms, {'id': 9});
+
     return Wrapper(
         child: Scaffold(
       appBar: AppBar(

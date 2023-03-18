@@ -53,7 +53,7 @@ class LzForm {
   static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data, {List<String> except = const []}) {
     for (var e in data.keys) {
       if (forms.containsKey(e) && !except.contains(e)) {
-        forms[e]!.controller.text = data[e] == null ? '' : data['e'].toString();
+        forms[e]!.controller.text = data[e] == null ? '' : data[e].toString();
       }
     }
 
