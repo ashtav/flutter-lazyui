@@ -63,6 +63,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     GlobalKey key = GlobalKey();
+    GlobalKey key3 = GlobalKey();
 
     List<String> features = [
       'Select Date',
@@ -103,12 +104,15 @@ class HomePage extends StatelessWidget {
           // });
 
           final options = ['Setting Account', 'Change Password', 'Logout'].make((data, i) => Option(option: data[i]));
-
           LzDropdown.show(key.currentContext!, options: options);
           break;
 
         case 'LzDropdown In List':
           context.push(const ItemView());
+
+          // final options = ['Setting Account', 'Change Password', 'Logout'].make((data, i) => Option(option: data[i]));
+          // LzDropdown.show(key3.currentContext!, options: options, offset: const Offset(20, 0));
+
           break;
 
         case 'Custom Dialog':
@@ -201,7 +205,6 @@ class HomePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        key: key2,
         centerTitle: true,
         title: const Text(
           'LazyUi',
@@ -211,12 +214,13 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white,
         actions: [
           IconButton(
+              key: key2,
               onPressed: () {
                 // List<String> options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'];
                 // DropdownDialog.open(context, options: options, top: true, disableds: [2], dangers: [1], sparators: [3]);
 
                 final options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'].make((data, i) => Option(option: data[i]));
-                LzDropdown.show(key2.currentContext!, options: options);
+                LzDropdown.show(key2.currentContext!, options: options, offset: Offset(20, 0));
               },
               icon: const Icon(
                 La.bars,
@@ -232,7 +236,7 @@ class HomePage extends StatelessWidget {
               children: List.generate(
                   features.length,
                   (i) => Button(
-                        key: i == 2 ? key : null,
+                        key: {2: key, 3: key3}[i],
                         onTap: () {
                           onFeatureTap(i);
                         },
