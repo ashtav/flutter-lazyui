@@ -27,7 +27,7 @@ class LzDropdownStyle {
   final double separatorHeight;
 
   const LzDropdownStyle({
-    this.useBorder = false,
+    this.useBorder = true,
     this.separators = const [],
     this.dangers = const [],
     this.separatorHeight = 1,
@@ -181,7 +181,7 @@ class _LzDropdownWidget extends StatelessWidget {
     | Content
     | */
 
-    bool useBorder = style?.useBorder ?? false;
+    bool useBorder = style?.useBorder ?? true;
     List<int> separators = style?.separators ?? [];
     List<int> dangers = style?.dangers ?? [];
     double separatorHeight = style?.separatorHeight ?? 1;

@@ -1,6 +1,9 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:lazyui/src/utils/log.dart';
+
+import '../widgets/select_picker.dart';
 
 extension ListExtension on List {
   /// ```dart
@@ -90,5 +93,22 @@ extension ListMapExtension on List<Map> {
     } catch (e) {
       throw Exception('$e');
     }
+  }
+}
+
+/* --------------------------------------------------------------------------
+| List<String> Extension
+| */
+
+extension ListStringExtension on List<String> {
+  List<Option> makeOptions({List values = const [], List<IconData> icons = const [], List<int> disableds = const []}) {
+    List<Option> options = [];
+    for (int i = 0; i < length; i++) {
+      bool disabled = disableds.contains(i);
+
+      options
+          .add(Option(option: this[i], value: values.length > i ? values[i] : this[i], icon: icons.length > i ? icons[i] : null, disabled: disabled));
+    }
+    return options;
   }
 }

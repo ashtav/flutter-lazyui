@@ -54,16 +54,16 @@ class Item extends StatelessWidget {
       onTap: () {
         // make options
         final icons = [La.infoCircle, La.archive, La.pen, La.trashAlt];
-        final options = ['Details', 'Archive', 'Edit', 'Delete'].make((data, i) => Option(option: data[i], icon: icons[i], disabled: i == 1));
+        // final options = ['Details', 'Archive', 'Edit', 'Delete'].make((data, i) => Option(option: data[i], icon: icons[i], disabled: i == 1));
 
         // quick way to make options, icons and values
-        // final options = ['Details', 'Archive', 'Edit', 'Delete'].makeOptions(icons: icons);
+        final options = ['Details', 'Archive', 'Edit', 'Delete'].makeOptions(icons: icons);
 
         // show dropdown
         LzDropdown.show(context,
             options: options,
             offset: const Offset(20, 0),
-            style: LzDropdownStyle(useBorder: true, separators: [2], dangers: [3], separatorHeight: 5), onSelect: (option) {
+            style: const LzDropdownStyle(useBorder: true, separators: [2], dangers: [3], separatorHeight: 5), onSelect: (option) {
           logg(option.toMap());
         });
       },
