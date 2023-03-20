@@ -58,9 +58,9 @@ class _LzDropdownWidget extends StatelessWidget {
     final caretController = StreamController<CaretValue>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!this.context.mounted) {
-        return;
-      }
+      // if (!this.context.mounted) {
+      //   return;
+      // }
 
       // content is out of screen
       bool isOut = false;
