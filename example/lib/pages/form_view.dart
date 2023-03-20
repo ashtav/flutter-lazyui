@@ -41,7 +41,7 @@ class FormView extends StatelessWidget {
             Forms.radio(label: 'Gender', options: const ['Male', 'Female'], controller: gender),
             Forms.checkbox(label: 'Hobby', options: hobbies, controller: hobby, disabled: const [1, 3]),
           ]),
-          Forms.input(label: 'Salary', hint: 'Input your salary', maxLength: 11, keyboard: Tit.number, formatters: [InputFormat.idr]),
+          Forms.input(label: 'Salary', hint: 'Input your salary', maxLength: 11, keyboard: Tit.number, formatters: [InputFormat.idr()]),
           Forms.select(
               label: 'Control Your Options',
               hint: 'Select your city',

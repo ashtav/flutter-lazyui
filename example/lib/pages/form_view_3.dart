@@ -98,7 +98,7 @@ class FormView3 extends StatelessWidget {
               LzForm.select(label: 'District *', hint: 'Please select district'),
             ],
           ),
-          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr]),
+          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
           LzForm.input(label: 'About You *', hint: 'Tell us about you'),
           LzForm.switches(label: 'Active|Inactive', activeColor: Colors.blue),
           Col(
