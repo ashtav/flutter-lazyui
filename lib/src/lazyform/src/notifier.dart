@@ -61,10 +61,17 @@ class FormNotifier extends ChangeNotifier {
 
   // radio
   Option? option;
+  List<Option> options = const [];
 
-  FormNotifier setOption(Option value) {
+  FormNotifier setOption([Option? value]) {
     option = value;
-    controller.text = value.option.toString();
+    controller.text = value?.option == null ? '' : (value?.option).toString();
+    notifyListeners();
+    return this;
+  }
+
+  FormNotifier setOptions(List<Option> value) {
+    options = value;
     notifyListeners();
     return this;
   }

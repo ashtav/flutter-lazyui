@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import './dynamic_extension.dart';
 import './string_extension.dart';
 
-extension MapTECExtension on Map<String, TextEditingController> {
+extension MapTextEditingControllerExtension on Map<String, TextEditingController> {
   /// ``` dart
   /// Map<String, dynamic> data = forms.toMap(manipulate: (map) {
   ///   return map.numberOnly(['price', 'stock']).ucwords(['name']);
@@ -66,10 +66,10 @@ extension MapExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'price': 2500}.currency(['price']); // {'price': '2.500'}
   /// ```
-  Map<String, dynamic> currency([List<String> keys = const [], String prefix = '']) {
+  Map<String, dynamic> currency([List<String> keys = const [], String prefix = '', String separator = '.']) {
     return map((key, value) {
       if (keys.contains(key)) {
-        return MapEntry(key, value.toString().idr(symbol: prefix));
+        return MapEntry(key, value.toString().idr(symbol: prefix, separator: separator));
       } else {
         return MapEntry(key, value);
       }

@@ -504,12 +504,13 @@ class Padder extends StatelessWidget {
   }
 }
 
-class Badgee extends StatelessWidget {
+class LzBadge extends StatelessWidget {
   final String text;
   final Color? color, textColor;
   final BorderRadiusGeometry? radius;
   final EdgeInsetsGeometry? padding;
-  const Badgee({super.key, required this.text, this.color, this.textColor, this.radius, this.padding});
+  final double? fontSize;
+  const LzBadge({super.key, required this.text, this.color, this.textColor, this.radius, this.padding, this.fontSize});
 
   @override
   Widget build(BuildContext context) {
@@ -518,7 +519,7 @@ class Badgee extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: radius ?? Br.radius(3)),
       padding: padding ?? Ei.sym(v: 3, h: 10),
-      child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor ?? color)),
+      child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor ?? color, fontSize: fontSize)),
     );
   }
 }

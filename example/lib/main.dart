@@ -1,4 +1,5 @@
 import 'package:example/pages/another_widget_view.dart';
+import 'package:example/pages/form_view_6.dart';
 import 'package:example/pages/item_view.dart';
 import 'package:example/pages/nodata_view.dart';
 import 'package:flutter/material.dart';
@@ -82,6 +83,7 @@ class HomePage extends StatelessWidget {
       'Forms 3',
       'Forms 4',
       'Forms 5',
+      'Forms 6',
     ];
 
     void onFeatureTap(int index) async {
@@ -196,6 +198,10 @@ class HomePage extends StatelessWidget {
 
         case 'Forms 5':
           context.push(const FormView5());
+          break;
+
+        case 'Forms 6':
+          context.push(const FormView6());
           break;
         default:
       }

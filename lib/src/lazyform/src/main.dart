@@ -390,6 +390,7 @@ class LzFormList extends StatelessWidget {
 class LzFormStyle {
   final FormType type;
   final Color? activeColor, inputBorderColor;
+  final FontWeight? inputLabelFontWeight;
 
-  const LzFormStyle({this.type = FormType.grouped, this.activeColor, this.inputBorderColor});
+  const LzFormStyle({this.type = FormType.grouped, this.activeColor, this.inputBorderColor, this.inputLabelFontWeight});
 }

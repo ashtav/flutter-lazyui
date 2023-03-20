@@ -29,7 +29,7 @@ class AnotherWidgetView extends StatelessWidget {
           ),
           const Col(
             children: [
-              Badgee(
+              LzBadge(
                 text: 'Welcome to LazyUi',
               ),
             ],

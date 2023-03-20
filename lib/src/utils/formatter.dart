@@ -1,7 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+
 import '../extensions/string_extension.dart';
-import 'log.dart';
 
 class InputFormat {
   static TextInputFormatter get strictNumeric => FilteringTextInputFormatter.allow(RegExp("[0-9]"));
@@ -9,10 +9,10 @@ class InputFormat {
   static TextInputFormatter get alpha => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"));
   static TextInputFormatter get alphanumeric => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]"));
 
-  static TextInputFormatter get lowercase => LowerCaseTextFormatter();
-  static TextInputFormatter get uppercase => UpperCaseTextFormatter();
-  static TextInputFormatter get ucwords => UcwordsFormatter();
-  static TextInputFormatter get idr => ThousandFormatter();
+  static TextInputFormatter get lowercase => _LowerCaseTextFormatter();
+  static TextInputFormatter get uppercase => _UpperCaseTextFormatter();
+  static TextInputFormatter get ucwords => _UcwordsFormatter();
+  static TextInputFormatter idr([String separator = '.']) => _ThousandFormatter(separator: separator);
 
   /// ```dart
   /// formatters: [
@@ -22,7 +22,7 @@ class InputFormat {
   static TextInputFormatter regExp(String pattern) => FilteringTextInputFormatter.allow(RegExp(pattern));
 }
 
-class LowerCaseTextFormatter extends TextInputFormatter {
+class _LowerCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
@@ -32,7 +32,7 @@ class LowerCaseTextFormatter extends TextInputFormatter {
   }
 }
 
-class UpperCaseTextFormatter extends TextInputFormatter {
+class _UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
@@ -43,7 +43,7 @@ class UpperCaseTextFormatter extends TextInputFormatter {
 }
 
 // UCWORDS FORMATTER
-class UcwordsFormatter extends TextInputFormatter {
+class _UcwordsFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.isEmpty) {
@@ -65,9 +65,9 @@ class UcwordsFormatter extends TextInputFormatter {
 }
 
 // THOUSAND FORMATTER
-class ThousandFormatter extends TextInputFormatter {
-  final String sparator;
-  ThousandFormatter({this.sparator = ','});
+class _ThousandFormatter extends TextInputFormatter {
+  final String separator;
+  _ThousandFormatter({this.separator = ','});
 
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -84,10 +84,9 @@ class ThousandFormatter extends TextInputFormatter {
       }
 
       String newString = convert(isMax ? newValue.text.substring(0, max) : newValue.text);
-      logg(newString);
 
       return TextEditingValue(
-        text: newString.replaceAll('.', sparator.isEmpty ? ',' : sparator),
+        text: newString.replaceAll('.', separator.isEmpty ? ',' : separator),
         selection: TextSelection.collapsed(
           offset: isMax ? newString.length : newString.length - selectionIndexFromTheRight,
         ),

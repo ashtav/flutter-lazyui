@@ -80,7 +80,7 @@ class FormView4 extends StatelessWidget {
               labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
               options: ['BCA', 'BNI', 'BRI', 'Mandiri'].make((data, i) => Option(option: data[i], value: [10, 10, 15, 13][i])),
               hint: 'Please select your bank account'),
-          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr]),
+          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
           LzForm.input(label: 'About You *', hint: 'Tell us about you'),
           LzForm.switches(label: 'Active|Inactive', activeColor: Colors.blue),
           Col(
