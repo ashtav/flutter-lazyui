@@ -69,6 +69,9 @@ class Select extends StatelessWidget {
           notifier.setTextLength(notifier.controller.text.length);
         });
       }
+
+      // set options
+      notifier.setOptions(options);
     });
 
     // constructor data
@@ -92,7 +95,7 @@ class Select extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight,
+                  fontWeight: labelStyle?.fontWeight ?? formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -142,7 +145,7 @@ class Select extends StatelessWidget {
                       if (callback is bool) ok = callback;
 
                       // get options
-                      List<Option> options = selectController.options ?? this.options;
+                      List<Option> options = selectController.options ?? notifier.options;
 
                       if (ok && options.isNotEmpty && context.mounted) {
                         FocusScope.of(context).unfocus();
