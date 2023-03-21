@@ -7,10 +7,27 @@ class ItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final keys = List.generate(3, (i) => GlobalKey());
+    final key = GlobalKey();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Item View'),
+        actions: [
+          IconButton(
+              key: key,
+              onPressed: () {
+                final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
+                LzDropdown.show(key.currentContext!,
+                    offset: const Offset(20, 0),
+                    options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].makeOptions(icons: icons),
+                    style: const LzDropdownStyle(separators: [1], separatorHeight: 3, dangers: [1]));
+
+                Utils.timer(() {
+                  context.focus();
+                });
+              },
+              icon: const Icon(La.bars))
+        ],
       ),
       body: ListView(
         physics: BounceScroll(),

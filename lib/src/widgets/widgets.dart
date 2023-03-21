@@ -216,7 +216,7 @@ class InkW extends StatelessWidget {
   final Widget? child;
   final Function(TapDownDetails? details)? onTapDown;
   final Function(TapUpDetails? details)? onTapUp;
-  final Function()? onTap, onLongPress, onDoubleTap;
+  final Function()? onTap, onLongPress, onDoubleTap, onTapCancel;
   final EdgeInsetsGeometry? padding, margin;
   final Color? color, splash, highlightColor;
   final BorderRadius? radius;
@@ -235,6 +235,7 @@ class InkW extends StatelessWidget {
       this.onTapUp,
       this.onLongPress,
       this.onDoubleTap,
+      this.onTapCancel,
       this.padding,
       this.margin,
       this.color,
@@ -262,6 +263,7 @@ class InkW extends StatelessWidget {
           child: InkWell(
               onTapDown: onTapDown,
               onTapUp: onTapUp,
+              onTapCancel: onTapCancel,
               onDoubleTap: onDoubleTap,
               onLongPress: onLongPress,
               splashColor: !enableSplash
