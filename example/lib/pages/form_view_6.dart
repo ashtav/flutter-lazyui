@@ -24,6 +24,8 @@ class FormView6 extends StatelessWidget {
             model: forms['name'],
           ),
           LzFormGroup(
+            label: 'Event Type & Category *',
+            labelSize: 14,
             children: [
               LzForm.select(
                   label: 'Event Type *',
@@ -51,6 +53,12 @@ class FormView6 extends StatelessWidget {
             ],
           ),
           LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty']),
+          LzForm.input(
+              label: 'Full Screen Select *',
+              hint: 'Select something here',
+              onTap: (model) {
+                SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].makeOptions());
+              }),
         ],
       ),
       bottomNavigationBar: LzButton(
