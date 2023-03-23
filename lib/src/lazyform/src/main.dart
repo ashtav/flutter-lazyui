@@ -9,6 +9,7 @@ import 'package:lazyui/lazyui.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'notifier.dart';
+import 'number.dart';
 import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
@@ -194,6 +195,39 @@ class LzForm {
 
   static Switches switches({Key? key, String? label, String? id, bool initValue = false, Function(bool)? onChange, Color? activeColor}) =>
       Switches(label: label, id: id, initValue: initValue, onChange: onChange, activeColor: activeColor);
+
+  /* ---------------------------------------------------------------
+  | LzForm Input
+  | */
+
+  static Number number(
+          {String? label,
+          String? hint,
+          FormModel? model,
+          FocusNode? node,
+          int initialValue = 0,
+          int min = 1,
+          int max = 100,
+          bool disabled = false,
+          bool readonly = true,
+          bool autofocus = false,
+          Function(String value)? onChange,
+          Function(String value)? onSubmit,
+          LzFormLabelStyle? labelStyle}) =>
+      Number(
+          label: label,
+          hint: hint,
+          model: model,
+          node: node,
+          initialValue: initialValue,
+          min: min,
+          max: max,
+          disabled: disabled,
+          readonly: readonly,
+          autofocus: autofocus,
+          onChange: onChange,
+          onSubmit: onSubmit,
+          labelStyle: labelStyle);
 
   /* ---------------------------------------------------------------
   | LzForm Validation

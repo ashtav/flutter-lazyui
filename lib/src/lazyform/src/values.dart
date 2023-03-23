@@ -75,7 +75,8 @@ class FeedbackMessage extends StatelessWidget {
   final bool isValid;
   final String errorMessage;
   final bool leftLess, isSuffix;
-  const FeedbackMessage({super.key, this.isValid = true, this.errorMessage = '', this.leftLess = false, this.isSuffix = false});
+  final double? padRight;
+  const FeedbackMessage({super.key, this.isValid = true, this.errorMessage = '', this.leftLess = false, this.isSuffix = false, this.padRight});
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +102,7 @@ class FeedbackMessage extends StatelessWidget {
                     r: leftLess
                         ? 0
                         : isSuffix
-                            ? 65
+                            ? (padRight ?? 65)
                             : 15),
               ),
             ),

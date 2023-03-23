@@ -63,8 +63,10 @@ extension StringExtension on String {
   int get getNumeric {
     try {
       if (trim().isEmpty) return 0;
-      return int.parse(replaceAll(RegExp(r'[^0-9-]'), ''));
+      String number = replaceAll(RegExp(r'-(?=\D|$)'), '');
+      return int.parse(number.replaceAll(RegExp(r'[^0-9-]'), ''));
     } catch (e) {
+      logg(e);
       return 0;
     }
   }

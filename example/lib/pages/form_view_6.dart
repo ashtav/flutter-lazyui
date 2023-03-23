@@ -8,7 +8,7 @@ class FormView6 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['name', 'type', 'category']);
+    final forms = LzForm.make(['name', 'type', 'category', 'qty']);
 
     return Wrapper(
         child: Scaffold(
@@ -16,7 +16,7 @@ class FormView6 extends StatelessWidget {
         title: const Text('Form View 6'),
       ),
       body: LzFormList(
-        style: LzFormStyle(inputBorderColor: LzColor.black, inputLabelFontWeight: Fw.bold),
+        style: const LzFormStyle(type: FormType.topAligned, inputLabelFontWeight: Fw.bold),
         children: [
           LzForm.input(
             label: 'Name *',
@@ -24,6 +24,8 @@ class FormView6 extends StatelessWidget {
             model: forms['name'],
           ),
           LzFormGroup(
+            label: 'Event Type & Category *',
+            labelSize: 14,
             children: [
               LzForm.select(
                   label: 'Event Type *',
@@ -50,9 +52,25 @@ class FormView6 extends StatelessWidget {
               ),
             ],
           ),
+          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty']),
+          LzForm.input(
+              label: 'Full Screen Select *',
+              hint: 'Select something here',
+              onTap: (model) {
+                SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].makeOptions());
+              }),
         ],
       ),
-      bottomNavigationBar: LzButton(text: 'Submit', onTap: (control) {}).dark().theme1(),
+      bottomNavigationBar: LzButton(
+          text: 'Submit',
+          onTap: (control) {
+            final form = LzForm.validate(forms,
+                min: ['qty:2'],
+                messages: FormMessages(min: {
+                  'qty': 'Qty must be greater than 2, current value is {value}',
+                }),
+                notifierType: FormValidateNotifier.text);
+          }).dark().theme1(),
     ));
   }
 }

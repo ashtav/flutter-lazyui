@@ -3,20 +3,17 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-enum AxisX { left, right }
-
 class LzDropdown {
   static void show(
     BuildContext context, {
     required List<Option> options,
     Function(Option)? onSelect,
-    final AxisX axis = AxisX.right,
     final Offset offset = Offset.zero,
     final LzDropdownStyle? style,
   }) {
     showDialog(
       context: context,
-      builder: (_) => _LzDropdownWidget(context: context, options: options, axis: axis, offset: offset, onSelect: onSelect, style: style),
+      builder: (_) => _LzDropdownWidget(context: context, options: options, offset: offset, onSelect: onSelect, style: style),
     );
   }
 }
@@ -37,7 +34,6 @@ class LzDropdownStyle {
 class _LzDropdownWidget extends StatelessWidget {
   final BuildContext context;
   final List<Option> options;
-  final AxisX axis;
   final Offset offset;
   final Function(Option)? onSelect;
   final LzDropdownStyle? style;
@@ -45,7 +41,6 @@ class _LzDropdownWidget extends StatelessWidget {
   const _LzDropdownWidget({
     required this.context,
     required this.options,
-    this.axis = AxisX.left,
     this.offset = Offset.zero,
     this.onSelect,
     this.style,
@@ -102,6 +97,10 @@ class _LzDropdownWidget extends StatelessWidget {
         isOut = true;
       }
 
+      if (dx <= 0) {
+        dx += offset.dx;
+      }
+
       dy += isOut ? (offset.dy + 7) : offset.dy - 17;
       controller.sink.add(Offset(dx, dy));
 
@@ -129,6 +128,8 @@ class _LzDropdownWidget extends StatelessWidget {
 
         if (cx > ddXRight) {
           cx = ddXRight - 15;
+        } else if (cx < ddXleft) {
+          cx = ddXleft + 15;
         }
 
         caretController.sink.add(CaretValue(flip: isOut, offset: Offset(cx, cy)));
@@ -204,7 +205,7 @@ class _LzDropdownWidget extends StatelessWidget {
 
             bool disabled = option.disabled;
 
-            return InkW(
+            Widget child = InkW(
               onTap: disabled
                   ? null
                   : () {
@@ -239,6 +240,8 @@ class _LzDropdownWidget extends StatelessWidget {
                 ),
               ),
             );
+
+            return SlideUp(delay: i * 100, child: child);
           }),
         ),
       ),
