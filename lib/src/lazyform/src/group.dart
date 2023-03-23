@@ -3,6 +3,7 @@ import 'package:lazyui/lazyui.dart';
 
 import 'checkbox.dart';
 import 'input.dart';
+import 'number.dart';
 import 'radio.dart';
 import 'select.dart';
 import 'switches.dart';
@@ -24,7 +25,7 @@ class LzFormGroup extends StatelessWidget {
     Color borderColor = (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
 
     // allowed widget
-    List allowed = [Input, Select, Radio, Checkbox, Switches];
+    List allowed = [Input, Select, Radio, Checkbox, Number, Switches];
 
     // remove all children that not allowed
     List<Widget> children = [...this.children];
