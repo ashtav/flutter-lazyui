@@ -260,7 +260,8 @@ class LzForm {
       List<String> max = const [],
       List<String> email = const [],
       FormMessages? messages,
-      FormValidateNotifier notifierType = FormValidateNotifier.toast}) {
+      FormValidateNotifier notifierType = FormValidateNotifier.toast,
+      bool singleNotifier = true}) {
     try {
       Map<String, TextEditingController> controllers = Map.fromIterables(forms.keys, forms.values.map((e) => e.controller));
       Map<String, FormNotifier> notifiers = Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
@@ -351,7 +352,26 @@ class LzForm {
         if (notifierType == FormValidateNotifier.toast) {
           Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.CENTER);
         } else if (notifierType == FormValidateNotifier.text) {
-          notifiers[errorKey]?.setMessage(errorMessage, false);
+          if (singleNotifier) {
+            notifiers[errorKey]?.setMessage(errorMessage, false);
+          } else {
+            final group = errorFields.groupBy('key', addKeys: ['key']);
+
+            for (Map e in group) {
+              String gKey = e['key'];
+              Map map = (e[gKey] as List).first;
+
+              String key = map['key'];
+              String type = map['type'];
+              String message = map['message'] ?? 'Unknown error';
+
+              if (messages != null) {
+                message = messages.get(type, key) ?? message;
+              }
+
+              notifiers[key]?.setMessage(message, false);
+            }
+          }
         }
 
         // scroll to the error field

@@ -126,7 +126,8 @@ class FormView4 extends StatelessWidget {
                   'name': 'Name must be at least 5 characters',
                   'password': 'Password must be at least 6 characters'
                 }),
-                notifierType: FormValidateNotifier.text);
+                notifierType: FormValidateNotifier.text,
+                singleNotifier: false);
 
             if (form.ok) {
               LzToast.show('Form is valid');
