@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -15,20 +16,38 @@ class Iconr extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final Color? color;
   final double? size;
+  final bool flipX, flipY, flipXY;
 
-  const Iconr(this.icon, {Key? key, this.margin, this.padding, this.width, this.radius, this.color, this.size, this.alignment, this.border})
+  const Iconr(this.icon,
+      {Key? key,
+      this.margin,
+      this.padding,
+      this.width,
+      this.radius,
+      this.color,
+      this.size,
+      this.alignment,
+      this.border,
+      this.flipX = false,
+      this.flipY = false,
+      this.flipXY = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget iconWidget = Icon(icon, color: color, size: size);
+
     return Container(
-      alignment: alignment,
-      padding: padding,
-      margin: margin,
-      width: width,
-      decoration: BoxDecoration(border: border, borderRadius: radius),
-      child: Icon(icon, color: color, size: size),
-    );
+        alignment: alignment,
+        padding: padding,
+        margin: margin,
+        width: width,
+        decoration: BoxDecoration(border: border, borderRadius: radius),
+        child: flipXY
+            ? Transform.rotate(angle: pi, child: iconWidget)
+            : flipX || flipY
+                ? Transform(alignment: Alignment.center, transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi), child: iconWidget)
+                : iconWidget);
   }
 }
 
@@ -526,6 +545,11 @@ class LzBadge extends StatelessWidget {
   }
 }
 
+/// ```dart
+/// int active = 1;
+/// Slidebar(active: active, spacing: 10, size: (int i) => [i == active ? 20 : 5, 5]),
+/// ```
+
 class Slidebar extends StatelessWidget {
   final int length;
 
@@ -533,10 +557,18 @@ class Slidebar extends StatelessWidget {
   final List<double> Function(int index)? size;
   final int active;
   final Color? activeColor, color;
-  final double radius;
+  final double radius, spacing;
   final CrossAxisAlignment position;
   const Slidebar(
-      {super.key, this.length = 3, this.size, this.active = 0, this.color, this.activeColor, this.radius = 5.0, this.position = Caa.center});
+      {super.key,
+      this.length = 3,
+      this.size,
+      this.active = 0,
+      this.color,
+      this.activeColor,
+      this.radius = 5.0,
+      this.spacing = 5,
+      this.position = Caa.center});
 
   @override
   Widget build(BuildContext context) {
@@ -554,7 +586,7 @@ class Slidebar extends StatelessWidget {
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          margin: Ei.only(r: 5),
+          margin: Ei.only(r: spacing),
           width: width,
           height: height,
           decoration: BoxDecoration(

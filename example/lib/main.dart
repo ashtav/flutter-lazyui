@@ -219,6 +219,7 @@ class HomePage extends StatelessWidget {
         elevation: .5,
         backgroundColor: Colors.white,
         actions: [
+          IconButton(onPressed: () {}, icon: const Iconr(La.search, flipX: true)),
           IconButton(
               key: key2,
               onPressed: () {
