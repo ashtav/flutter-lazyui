@@ -16,7 +16,7 @@ class Iconr extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final Color? color;
   final double? size;
-  final bool flipX, flipY, flipXY;
+  final bool flipX, flipY, flip;
 
   const Iconr(this.icon,
       {Key? key,
@@ -30,7 +30,7 @@ class Iconr extends StatelessWidget {
       this.border,
       this.flipX = false,
       this.flipY = false,
-      this.flipXY = false})
+      this.flip = false})
       : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class Iconr extends StatelessWidget {
         margin: margin,
         width: width,
         decoration: BoxDecoration(border: border, borderRadius: radius),
-        child: flipXY
+        child: flip
             ? Transform.rotate(angle: pi, child: iconWidget)
             : flipX || flipY
                 ? Transform(alignment: Alignment.center, transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi), child: iconWidget)
