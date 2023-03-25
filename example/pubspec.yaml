@@ -33,9 +33,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_animate: ^4.1.0
-  google_fonts: ^3.0.1
   lazyui:
     path: ../
+  tutorial_coach_mark:
+    git:
+      url: https://github.com/ashtav/TutorialCoachMark.git
+      ref: master
 
 dev_dependencies:
   flutter_lints: ^2.0.0

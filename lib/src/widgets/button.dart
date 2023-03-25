@@ -97,26 +97,31 @@ class Button extends StatelessWidget {
 | LzButton
 | */
 
+enum IconAlign { left, right }
+
 class LzButton extends StatelessWidget {
   final String? text;
   final IconData? icon;
+  final IconAlign iconAlign;
   final Function(LzButtonControl control)? onTap;
   final double? spacing, radius;
   final ButtonType type;
   final Color? color;
   final Color? textColor;
-  final bool gradient;
+  final bool gradient, outline;
   const LzButton(
       {super.key,
       this.text,
       this.icon,
+      this.iconAlign = IconAlign.left,
       this.onTap,
       this.spacing,
       this.radius,
       this.type = ButtonType.white,
       this.color,
       this.textColor,
-      this.gradient = false});
+      this.gradient = false,
+      this.outline = false});
 
   @override
   Widget build(BuildContext context) {
@@ -155,6 +160,44 @@ class LzButton extends StatelessWidget {
               child: child);
 
           Color buttonColor = color ?? (buttonColors[type] ?? Colors.white);
+
+          double iconTextSpace = isSubmit
+              ? 15
+              : icon.isNotNull
+                  ? 15
+                  : 0;
+
+          List<Widget> buttonContent = [
+            icon == null
+                ? switcher(isSubmit
+                    ? Loader(
+                        key: UniqueKey(),
+                        color: buttonTextColor,
+                      )
+                    : const None())
+                : switcher(isSubmit
+                    ? Loader(
+                        key: UniqueKey(),
+                        color: buttonTextColor,
+                      )
+                    : Icon(
+                        icon!,
+                        key: UniqueKey(),
+                        color: buttonTextColor,
+                        size: 18,
+                      )),
+
+            // Button Text
+            AnimatedContainer(
+              duration: duration,
+              margin: Ei.only(l: iconAlign == IconAlign.left ? iconTextSpace : 0, r: iconAlign == IconAlign.right ? iconTextSpace : 0),
+              child: Text(
+                notifier.buttonText,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
+              ),
+            ),
+          ];
+
           return AnimatedOpacity(
             opacity: isSubmit || !notifier.enabled ? 0.7 : 1,
             duration: duration,
@@ -174,46 +217,12 @@ class LzButton extends StatelessWidget {
                 onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
                 padding: Ei.sym(v: gradient ? 17 : 16, h: spacing ?? 20),
                 radius: Br.radius(radius ?? configRadius),
-                color: gradient ? null : buttonColor,
-                border: gradient ? null : Br.all(color: type == ButtonType.white ? null : color ?? buttonColors[type]),
+                color: gradient || outline ? null : buttonColor,
+                border: gradient ? null : Br.all(color: type == ButtonType.white && !outline ? null : color ?? buttonColors[type]),
                 child: Row(
                   mainAxisAlignment: Maa.center,
                   mainAxisSize: Mas.min,
-                  children: [
-                    icon == null
-                        ? switcher(isSubmit
-                            ? Loader(
-                                key: UniqueKey(),
-                                color: buttonTextColor,
-                              )
-                            : const None())
-                        : switcher(isSubmit
-                            ? Loader(
-                                key: UniqueKey(),
-                                color: buttonTextColor,
-                              )
-                            : Icon(
-                                icon!,
-                                key: UniqueKey(),
-                                color: buttonTextColor,
-                                size: 18,
-                              )),
-
-                    // Button Text
-                    AnimatedContainer(
-                      duration: duration,
-                      margin: Ei.only(
-                          l: isSubmit
-                              ? 15
-                              : icon.isNotNull
-                                  ? 15
-                                  : 0),
-                      child: Text(
-                        notifier.buttonText,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
-                      ),
-                    ),
-                  ],
+                  children: iconAlign == IconAlign.left ? buttonContent : buttonContent.reversed.toList(),
                 ),
               ),
             ),

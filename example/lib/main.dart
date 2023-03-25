@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'pages/animate_view.dart';
+import 'pages/coach_trainer.dart';
 import 'pages/error_handler_view.dart';
 import 'pages/form_view.dart';
 import 'pages/form_view_2.dart';
@@ -84,6 +85,7 @@ class HomePage extends StatelessWidget {
       'Forms 4',
       'Forms 5',
       'Forms 6',
+      'Coach Trainer'
     ];
 
     void onFeatureTap(int index) async {
@@ -202,6 +204,10 @@ class HomePage extends StatelessWidget {
 
         case 'Forms 6':
           context.push(const FormView6());
+          break;
+
+        case 'Coach Trainer':
+          context.push(const CoachTrainerView());
           break;
         default:
       }
