@@ -70,6 +70,8 @@ class FormView6 extends StatelessWidget {
                   'qty': 'Qty must be greater than 2, current value is {value}',
                 }),
                 notifierType: FormValidateNotifier.text);
+
+            logg(form.value);
           }).dark().theme1(),
     ));
   }

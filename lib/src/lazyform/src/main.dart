@@ -358,8 +358,7 @@ class LzForm {
             final group = errorFields.groupBy('key', addKeys: ['key']);
 
             for (Map e in group) {
-              String gKey = e['key'];
-              Map map = (e[gKey] as List).first;
+              Map map = (e[e['key']] as List).first;
 
               String key = map['key'];
               String type = map['type'];

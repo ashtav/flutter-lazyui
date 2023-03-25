@@ -44,7 +44,6 @@ class SelectPicker extends StatelessWidget {
         ? {'option': options.isEmpty ? null : options[i]}
         : {'option': options.isEmpty ? null : options[i], 'value': values.isEmpty ? null : values[i]};
 
-    Color primaryColor = LazyUi.getConfig.primaryColor;
     double radius = LazyUi.getConfig.radius;
     BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
