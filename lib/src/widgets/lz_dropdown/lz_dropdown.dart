@@ -3,30 +3,50 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+class LzDropdownController {
+  final Option option;
+  final void Function() back;
+
+  LzDropdownController({required this.option, required this.back});
+}
+
 class LzDropdown {
   static void show(
-    BuildContext context, {
+    BuildContext? context, {
     required List<Option> options,
-    Function(Option)? onSelect,
-    final Offset offset = Offset.zero,
+    final Map<int, List<Option>> subOptions = const {},
+    Function(LzDropdownController)? onSelect,
+    final Offset offset = const Offset(20, 0),
     final LzDropdownStyle? style,
+    final bool dismissOnSelect = true,
   }) {
+    if (context == null) {
+      logg('Context cannot be null');
+      return;
+    }
+
     showDialog(
       context: context,
-      builder: (_) => _LzDropdownWidget(context: context, options: options, offset: offset, onSelect: onSelect, style: style),
+      builder: (_) => _LzDropdownWidget(
+          context: context,
+          options: options,
+          subOptions: subOptions,
+          offset: offset,
+          onSelect: onSelect,
+          style: style,
+          dismissOnSelect: dismissOnSelect),
     );
   }
 }
 
 class LzDropdownStyle {
   final bool useBorder;
-  final List<int> separators, dangers;
+  final List<int> separators;
   final double separatorHeight;
 
   const LzDropdownStyle({
     this.useBorder = true,
     this.separators = const [],
-    this.dangers = const [],
     this.separatorHeight = 1,
   });
 }
@@ -34,23 +54,29 @@ class LzDropdownStyle {
 class _LzDropdownWidget extends StatelessWidget {
   final BuildContext context;
   final List<Option> options;
+  final Map<int, List<Option>> subOptions;
   final Offset offset;
-  final Function(Option)? onSelect;
+  final Function(LzDropdownController)? onSelect;
   final LzDropdownStyle? style;
+  final bool dismissOnSelect;
 
-  const _LzDropdownWidget({
-    required this.context,
-    required this.options,
-    this.offset = Offset.zero,
-    this.onSelect,
-    this.style,
-  });
+  const _LzDropdownWidget(
+      {required this.context,
+      required this.options,
+      this.subOptions = const {},
+      this.offset = Offset.zero,
+      this.onSelect,
+      this.style,
+      this.dismissOnSelect = true});
 
   @override
   Widget build(BuildContext context) {
     final dropdownKey = GlobalKey();
     final controller = StreamController<Offset>();
     final caretController = StreamController<CaretValue>();
+    final notifier = LzDropdownNotifier();
+
+    notifier.setOptions(options);
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!this.context.mounted) {
@@ -135,14 +161,9 @@ class _LzDropdownWidget extends StatelessWidget {
         caretController.sink.add(CaretValue(flip: isOut, offset: Offset(cx, cy)));
       });
 
-      // increase x and y based on offset
-      // dx += offset.dx;
-
       // note: 17 = (5 + content margin)
       // logg(
       //     'dx: $dx, dy: $dy, ddWidth: $ddWidth, ddHeight: $ddHeight, itemHeight: $itemHeight, itemWidth: $itemWidth, statusBarHeight: $statusBarHeight, screenWidth: ${context.width}, isOut: $isOut');
-
-      // sink
     });
 
     /* ---------------------------------------------------------------------------------
@@ -184,7 +205,6 @@ class _LzDropdownWidget extends StatelessWidget {
 
     bool useBorder = style?.useBorder ?? true;
     List<int> separators = style?.separators ?? [];
-    List<int> dangers = style?.dangers ?? [];
     double separatorHeight = style?.separatorHeight ?? 1;
 
     if (separatorHeight > 5) separatorHeight = 5;
@@ -195,56 +215,66 @@ class _LzDropdownWidget extends StatelessWidget {
       decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
       constraints: BoxConstraints(maxHeight: context.height * .6),
       child: SingleChildScrollView(
-        physics: BounceScroll(),
-        child: Col(
-          children: List.generate(options.length, (i) {
-            final option = options[i];
+          physics: BounceScroll(),
+          child: notifier.watch(
+            () {
+              final options = notifier.options;
 
-            String optionName = option.option;
-            IconData? icon = option.icon;
+              return Col(
+                children: List.generate(options.length, (i) {
+                  final option = options[i];
 
-            bool disabled = option.disabled;
+                  String optionName = option.option;
+                  IconData? icon = option.icon;
 
-            Widget child = InkW(
-              onTap: disabled
-                  ? null
-                  : () {
-                      context.pop();
+                  bool disabled = option.disabled;
 
-                      final selected = Option.fromMap({...option.toMap(), 'index': i});
-                      onSelect?.call(selected);
-                    },
-              padding: Ei.sym(v: 15, h: 20),
-              border:
-                  Br.only(['t'], except: useBorder ? i == 0 : !separators.contains(i - 1), width: separators.contains(i - 1) ? separatorHeight : 1),
-              child: Opacity(
-                opacity: disabled ? .4 : 1,
-                child: Container(
-                  constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
-                  child: Row(
-                    mainAxisSize: Mas.min,
-                    children: [
-                      if (icon != null)
-                        Iconr(
-                          icon,
-                          margin: Ei.only(r: 15),
-                          color: dangers.contains(i) ? LzColor.red : null,
+                  Widget child = InkW(
+                    onTap: disabled
+                        ? null
+                        : () {
+                            // check sub options
+                            if (subOptions[i] != null && notifier.level == 0) {
+                              notifier.setOptions(subOptions[i] ?? [], level: 1);
+                            } else {
+                              if (dismissOnSelect) context.pop();
+
+                              final selected = Option.fromMap({...option.toMap(), 'index': i});
+                              onSelect?.call(LzDropdownController(
+                                  option: selected,
+                                  back: () {
+                                    notifier.setOptions(this.options, level: 0);
+                                  }));
+                            }
+                          },
+                    padding: Ei.sym(v: 15, h: 20),
+                    border: Br.only(['t'],
+                        except: useBorder ? i == 0 : !separators.contains(i - 1), width: separators.contains(i - 1) ? separatorHeight : 1),
+                    child: Opacity(
+                      opacity: disabled ? .4 : 1,
+                      child: Container(
+                        constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
+                        child: Row(
+                          mainAxisSize: Mas.min,
+                          children: [
+                            if (icon != null) Iconr(icon, margin: Ei.only(r: 15), color: option.style?.color ?? LzColor.dark),
+                            Flexible(
+                                child: Text(
+                              optionName,
+                              style: LazyUi.getConfig.textStyle?.copyWith(
+                                  color: option.style?.color ?? LzColor.dark, fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
+                            )),
+                          ],
                         ),
-                      Flexible(
-                          child: Text(
-                        optionName,
-                        style: LazyUi.getConfig.textStyle?.copyWith(color: dangers.contains(i) ? LzColor.red : LzColor.dark),
-                      )),
-                    ],
-                  ),
-                ),
-              ),
-            );
+                      ),
+                    ),
+                  );
 
-            return SlideUp(delay: i * 100, child: child);
-          }),
-        ),
-      ),
+                  return SlideUp(key: UniqueKey(), delay: i * 100, child: child);
+                }),
+              );
+            },
+          )),
     );
 
     return Stack(
@@ -267,4 +297,18 @@ class CaretValue {
   final Offset offset;
 
   CaretValue({this.flip = false, this.offset = Offset.zero});
+}
+
+class LzDropdownNotifier extends ChangeNotifier {
+  List<Option> mainOptions = [];
+  List<Option> options = [];
+  int level = 0;
+
+  void setOptions(List<Option> options, {int level = 0}) {
+    if (level == 0) mainOptions = options;
+
+    this.options = options;
+    this.level = level;
+    notifyListeners();
+  }
 }

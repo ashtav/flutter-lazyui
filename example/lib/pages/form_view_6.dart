@@ -31,10 +31,10 @@ class FormView6 extends StatelessWidget {
                   label: 'Event Type *',
                   hint: 'Select event type',
                   model: forms['type'],
-                  options: ['Offline', 'Online'].makeOptions(values: [1, 2]),
+                  options: ['Offline', 'Online'].options(values: [1, 2]),
                   onSelect: (selector) {
-                    final offlines = ['Seminar', 'Workshop', 'Training'].makeOptions();
-                    final onlines = ['Webinar', 'Live Streaming', 'E-Learning'].makeOptions();
+                    final offlines = ['Seminar', 'Workshop', 'Training'].options();
+                    final onlines = ['Webinar', 'Live Streaming', 'E-Learning'].options();
 
                     final category = forms['category']?.notifier;
                     category?.setOption(null);
@@ -57,7 +57,7 @@ class FormView6 extends StatelessWidget {
               label: 'Full Screen Select *',
               hint: 'Select something here',
               onTap: (model) {
-                SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].makeOptions());
+                SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options());
               }),
         ],
       ),

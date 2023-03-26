@@ -101,13 +101,29 @@ extension ListMapExtension on List<Map> {
 | */
 
 extension ListStringExtension on List<String> {
-  List<Option> makeOptions({List values = const [], List<IconData> icons = const [], List<int> disableds = const []}) {
+  List<Option> options(
+      {List values = const [],
+      List<IconData> icons = const [],
+      List<int> disableds = const [],
+      List<int> dangers = const [],
+      Map<int, OptionStyle> Function(int index)? styles}) {
     List<Option> options = [];
     for (int i = 0; i < length; i++) {
       bool disabled = disableds.contains(i);
+      OptionStyle? style = styles?.call(i)[i];
 
-      options
-          .add(Option(option: this[i], value: values.length > i ? values[i] : this[i], icon: icons.length > i ? icons[i] : null, disabled: disabled));
+      if (dangers.contains(i)) {
+        style = const OptionStyle(
+          color: Colors.redAccent,
+        );
+      }
+
+      options.add(Option(
+          option: this[i],
+          value: values.length > i ? values[i] : this[i],
+          icon: icons.length > i ? icons[i] : null,
+          disabled: disabled,
+          style: style));
     }
     return options;
   }

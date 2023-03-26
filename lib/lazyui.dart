@@ -7,6 +7,7 @@ export 'package:google_fonts/google_fonts.dart';
 export 'package:intl/intl.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:stack_trace/stack_trace.dart';
+export 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 export 'ext/line_awesome.dart';
 export 'ext/shimmer.dart';
@@ -51,3 +52,4 @@ export 'src/widgets/text_input.dart';
 export 'src/widgets/transition.dart';
 export 'src/widgets/widgets.dart';
 export 'src/widgets/lz_dropdown/lz_dropdown.dart';
+export 'src/widgets/app_trainer/app_trainer.dart';

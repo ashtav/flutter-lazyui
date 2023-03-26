@@ -19,8 +19,8 @@ class ItemView extends StatelessWidget {
                 final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
                 LzDropdown.show(key.currentContext!,
                     offset: const Offset(20, 0),
-                    options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].makeOptions(icons: icons),
-                    style: const LzDropdownStyle(separators: [1], separatorHeight: 3, dangers: [1]));
+                    options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons),
+                    style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
 
                 Utils.timer(() {
                   context.focus();
@@ -43,9 +43,47 @@ class ItemView extends StatelessWidget {
                   return InkW(
                     key: key,
                     onTap: () {
-                      final options = ['Edit', 'Delete'].makeOptions(icons: [La.pen, La.trash]);
+                      final options = ['Edit', 'Delete'].options(icons: [La.pen, La.trash], dangers: [1]);
 
-                      LzDropdown.show(key.currentContext!, options: options, offset: const Offset(20, 0));
+                      final subOptions = {
+                        1: ['Cancel', 'Confirm'].options(
+                            icons: [La.times, La.checkCircle],
+                            styles: (i) {
+                              return {1: const OptionStyle(bold: true, color: Colors.redAccent)};
+                            }),
+                      };
+
+                      // final options = ['Edit', {'Delete': ['Cancel', 'Confirm']}].options2(icons: [La.pen, La.trash], subIcons: {1: [La.times, La.checkCircle]});
+
+                      LzDropdown.show(key.context, options: options, subOptions: subOptions, dismissOnSelect: false, onSelect: (control) {
+                        logg(control.option.toMap());
+
+                        switch (control.option.option) {
+                          case 'Cancel':
+                            control.back();
+
+                            break;
+
+                          case 'Confirm':
+                            logg('Deleted!');
+
+                            break;
+                          default:
+                            context.pop();
+                        }
+
+                        /* Or you can use this
+                        
+                        if (control.option.option == 'Cancel') {
+                          control.back();
+                        } else {
+                          context.pop();
+                        }
+
+                        Then use switch case for other options
+
+                        */
+                      });
                     },
                     padding: Ei.sym(v: 15, h: 20),
                     border: Br.only(['l'], except: i == 0),
@@ -72,9 +110,8 @@ class ItemView extends StatelessWidget {
                         LzDropdown.show(keys[i].currentContext!,
                             options: options,
                             offset: const Offset(20, 0),
-                            style: const LzDropdownStyle(useBorder: true, separators: [2], dangers: [3], separatorHeight: 5), onSelect: (option) {
-                          logg(option.toMap());
-                        });
+                            style: const LzDropdownStyle(useBorder: true, separators: [2], separatorHeight: 5),
+                            onSelect: (option) {});
                       },
                     ),
                   );
@@ -104,15 +141,14 @@ class Item extends StatelessWidget {
         // final options = ['Details', 'Archive', 'Edit', 'Delete'].make((data, i) => Option(option: data[i], icon: icons[i], disabled: i == 1));
 
         // quick way to make options, icons and values
-        final options = ['Details', 'Archive', 'Edit', 'Delete'].makeOptions(icons: icons);
+        final options = ['Details', 'Archive', 'Edit', 'Delete'].options(icons: icons);
 
         // show dropdown
         LzDropdown.show(context,
             options: options,
             offset: const Offset(20, 0),
-            style: const LzDropdownStyle(useBorder: true, separators: [2], dangers: [3], separatorHeight: 5), onSelect: (option) {
-          logg(option.toMap());
-        });
+            style: const LzDropdownStyle(useBorder: true, separators: [2], separatorHeight: 5),
+            onSelect: (option) {});
       },
       color: Colors.white,
       padding: Ei.all(20),
