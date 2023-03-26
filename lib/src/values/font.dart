@@ -39,6 +39,7 @@ extension TextStyleExtension on TextStyle {
   TextStyle get normal => copyWith(fontWeight: FontWeight.normal);
   TextStyle get muted => copyWith(fontWeight: FontWeight.normal, color: Colors.black54);
   TextStyle get white => copyWith(color: Colors.white);
+  TextStyle get black => copyWith(color: LzColor.black);
 
   TextStyle fsize(double size) => copyWith(fontSize: size);
   TextStyle fcolor(Color color) => copyWith(color: color);

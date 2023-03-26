@@ -16,7 +16,7 @@ class AnotherWidgetView extends StatelessWidget {
         physics: BounceScroll(),
         children: [
           Textr(
-            Faker.random(),
+            Faker.words(),
             icon: La.user,
           ),
           const Textr(

@@ -87,7 +87,7 @@ class ItemView extends StatelessWidget {
                     },
                     padding: Ei.sym(v: 15, h: 20),
                     border: Br.only(['l'], except: i == 0),
-                    child: Text(Faker.random(2).ucwords),
+                    child: Text(Faker.words(2).ucwords),
                   );
                 }),
               ),
@@ -155,7 +155,7 @@ class Item extends StatelessWidget {
       border: Br.only(['t'], except: index == 0),
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
-        children: [Textr(Faker.random(3).ucwords), const Icon(La.ellipsisV)],
+        children: [Textr(Faker.words(3).ucwords), const Icon(La.ellipsisV)],
       ),
     );
   }

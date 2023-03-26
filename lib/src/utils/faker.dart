@@ -5,7 +5,7 @@ import './constant.dart';
 
 class Faker {
   // generate random words based on length
-  static String random([int length = 3]) {
+  static String words([int length = 3]) {
     return Lipsum.createWord(length);
   }
 

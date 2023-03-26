@@ -80,7 +80,7 @@ class ErrorHandlerView extends StatelessWidget {
                     LzButton(text: 'Toast Center', onTap: (_) => LzToast.show('This message in center position', position: LzToastPosition.center))
                         .margin(all: 5),
                     LzButton(text: 'Toast Bottom', onTap: (_) => LzToast.show('This message in bottom position')).margin(all: 5),
-                    LzButton(text: 'Long Toast Message', onTap: (_) => LzToast.show(Faker.random(15))).margin(all: 5),
+                    LzButton(text: 'Long Toast Message', onTap: (_) => LzToast.show(Faker.words(15))).margin(all: 5),
                     LzButton(text: '5 Seconds', onTap: (_) => LzToast.show('Hello this is 5 seconds', duration: 5.s)).margin(all: 5),
                     LzForm.input(hint: 'Put your name here').margin(t: 25)
                   ],
