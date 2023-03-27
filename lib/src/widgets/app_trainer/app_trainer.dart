@@ -14,6 +14,8 @@ class AppTrainer extends StatefulWidget {
   final Function()? onFinish, onSkip;
   final String? nextLabel, finishLabel, skipLabel;
   final bool showSectionLabel;
+  final Color shadowColor;
+  final double shadowOpacity;
   const AppTrainer(
       {super.key,
       required this.child,
@@ -26,7 +28,9 @@ class AppTrainer extends StatefulWidget {
       this.nextLabel,
       this.finishLabel,
       this.skipLabel,
-      this.showSectionLabel = false});
+      this.showSectionLabel = false,
+      this.shadowColor = Colors.black,
+      this.shadowOpacity = .8});
 
   @override
   State<AppTrainer> createState() => _AppTrainerState();
@@ -138,6 +142,8 @@ class _AppTrainerState extends State<AppTrainer> {
     TutorialCoachMark(
       targets: targets,
       hideSkip: true,
+      colorShadow: widget.shadowColor,
+      opacityShadow: widget.shadowOpacity,
       onClickTarget: (target) {
         widget.onClickTarget?.call(target.identify);
       },
