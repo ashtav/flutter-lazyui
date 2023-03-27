@@ -117,9 +117,14 @@ class SelectPicker extends StatelessWidget {
                             },
                             children: List<Widget>.generate(options.length, (int index) {
                               return Center(
-                                child: Text(
-                                  options[index],
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                child: Container(
+                                  constraints: BoxConstraints(maxWidth: context.width * .75),
+                                  child: Text(
+                                    options[index],
+                                    overflow: Tof.ellipsis,
+                                    textAlign: Ta.center,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                  ),
                                 ),
                               );
                             })),
@@ -171,7 +176,10 @@ class SelectPicker extends StatelessWidget {
                                         textAlign: Ta.center,
                                         maxLines: 1,
                                         overflow: Tof.ellipsis,
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              fontWeight: Fw.bold,
+                                              color: LzColor.black,
+                                            ),
                                       ),
                                     ));
                               }),

@@ -12,7 +12,7 @@ class Select extends StatelessWidget {
   final List<Option> options;
   final Option? initValue;
   final FormModel? model;
-  final bool disabled;
+  final bool disabled, expandValue;
   final Function(String)? onChange;
   final Future? Function(SelectController controller)? onTap;
   final Function(SelectController controller)? onSelect;
@@ -26,6 +26,7 @@ class Select extends StatelessWidget {
       this.initValue,
       this.model,
       this.disabled = false,
+      this.expandValue = false,
       this.onChange,
       this.onTap,
       this.onSelect,
@@ -176,7 +177,8 @@ class Select extends StatelessWidget {
                         controller: model?.controller,
                         enabled: false,
                         onChange: onChange,
-                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 15),
+                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 65),
+                        maxLines: expandValue ? 50 : null,
                       ),
 
                       /* ----------------------------------------------------

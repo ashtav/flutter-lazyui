@@ -49,6 +49,7 @@ class FormView6 extends StatelessWidget {
                 label: 'Event Category *',
                 hint: 'Select event category',
                 model: forms['category'],
+                options: ['Lorem', 'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing'].options(),
               ),
             ],
           ),
