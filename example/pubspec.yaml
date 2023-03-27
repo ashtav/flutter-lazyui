@@ -35,10 +35,6 @@ dependencies:
   flutter_animate: ^4.1.0
   lazyui:
     path: ../
-  tutorial_coach_mark:
-    git:
-      url: https://github.com/ashtav/TutorialCoachMark.git
-      ref: master
 
 dev_dependencies:
   flutter_lints: ^2.0.0

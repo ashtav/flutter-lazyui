@@ -578,14 +578,13 @@ packages:
     source: hosted
     version: "0.4.16"
   tutorial_coach_mark:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      path: "."
-      ref: master
-      resolved-ref: "14c94d32b4fee38104fb7a2ad103144406c0f706"
-      url: "https://github.com/ashtav/TutorialCoachMark.git"
-    source: git
-    version: "1.2.4"
+      name: tutorial_coach_mark
+      sha256: "669d4bd517d22e14671f3ddee0e7442d976ab71f94bb6eec6ad057ca3944fd73"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.8"
   typed_data:
     dependency: transitive
     description:
@@ -659,5 +658,5 @@ packages:
     source: hosted
     version: "6.2.2"
 sdks:
-  dart: ">=2.19.0-0 <4.0.0"
+  dart: ">=2.19.0-0 <3.0.0"
   flutter: ">=3.7.0-0"
