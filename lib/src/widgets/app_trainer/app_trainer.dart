@@ -13,7 +13,7 @@ class AppTrainer extends StatefulWidget {
   final Function(dynamic target)? onClickTarget;
   final Function()? onFinish, onSkip, onFinishOrSkip;
   final String? nextLabel, finishLabel, skipLabel;
-  final bool showSectionLabel;
+  final bool showOnInit, showSectionLabel;
   final Color shadowColor;
   final double shadowOpacity;
   const AppTrainer(
@@ -29,6 +29,7 @@ class AppTrainer extends StatefulWidget {
       this.nextLabel,
       this.finishLabel,
       this.skipLabel,
+      this.showOnInit = true,
       this.showSectionLabel = false,
       this.shadowColor = Colors.black,
       this.shadowOpacity = .8});
@@ -78,12 +79,13 @@ class _AppTrainerState extends State<AppTrainer> {
                                     margin: Ei.only(b: 35),
                                     size: 30,
                                   ),
-                                  Textr(
-                                    e.title ?? "Titulo lorem ipsum",
-                                    style: Gfont.bold.white,
-                                    margin: Ei.only(b: 15),
-                                  ),
-                                  Text(e.description ?? 'Your description here', style: Gfont.white)
+                                  if (e.title != null)
+                                    Textr(
+                                      e.title ?? "Titulo lorem ipsum",
+                                      style: Gfont.bold.white,
+                                      margin: Ei.only(b: 15),
+                                    ),
+                                  Text(e.description ?? '', style: Gfont.white)
                                 ],
                               ),
                             ),
@@ -130,7 +132,7 @@ class _AppTrainerState extends State<AppTrainer> {
       );
     }
 
-    if (widget.onInit == null) {
+    if (widget.onInit == null && widget.showOnInit) {
       return showTutorial();
     }
 

@@ -104,7 +104,7 @@ class Radio extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
+          Color borderColor = isValid || isGrouping ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
 
           return Container(

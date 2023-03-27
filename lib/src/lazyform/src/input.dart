@@ -174,7 +174,7 @@ class Input extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
+          Color borderColor = isValid || isGrouping ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
           FocusNode focusNode = node ?? notifier.node;
