@@ -11,7 +11,7 @@ class AppTrainer extends StatefulWidget {
   final Function(AppTrainerController)? onInit;
   final AppTrainerController? controller;
   final Function(dynamic target)? onClickTarget;
-  final Function()? onFinish, onSkip;
+  final Function()? onFinish, onSkip, onFinishOrSkip;
   final String? nextLabel, finishLabel, skipLabel;
   final bool showSectionLabel;
   final Color shadowColor;
@@ -25,6 +25,7 @@ class AppTrainer extends StatefulWidget {
       this.onClickTarget,
       this.onFinish,
       this.onSkip,
+      this.onFinishOrSkip,
       this.nextLabel,
       this.finishLabel,
       this.skipLabel,
@@ -150,10 +151,12 @@ class _AppTrainerState extends State<AppTrainer> {
       onSkip: () {
         isActive = false;
         widget.onSkip?.call();
+        widget.onFinishOrSkip?.call();
       },
       onFinish: () {
         isActive = false;
         widget.onFinish?.call();
+        widget.onFinishOrSkip?.call();
       },
     ).show(context: context);
   }
