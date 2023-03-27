@@ -12,8 +12,21 @@ class AppTrainer extends StatefulWidget {
   final AppTrainerController? controller;
   final Function(dynamic target)? onClickTarget;
   final Function()? onFinish, onSkip;
+  final String? nextLabel, finishLabel, skipLabel;
+  final bool showSectionLabel;
   const AppTrainer(
-      {super.key, required this.child, this.targets = const [], this.onInit, this.controller, this.onClickTarget, this.onFinish, this.onSkip});
+      {super.key,
+      required this.child,
+      this.targets = const [],
+      this.onInit,
+      this.controller,
+      this.onClickTarget,
+      this.onFinish,
+      this.onSkip,
+      this.nextLabel,
+      this.finishLabel,
+      this.skipLabel,
+      this.showSectionLabel = false});
 
   @override
   State<AppTrainer> createState() => _AppTrainerState();
@@ -41,7 +54,7 @@ class _AppTrainerState extends State<AppTrainer> {
                   align: e.align,
                   builder: (context, controller) {
                     bool isLast = i >= length - 1;
-                    String text = isLast ? 'Finish' : 'Next';
+                    String text = isLast ? (widget.finishLabel ?? 'Finish') : (widget.nextLabel ?? 'Next');
 
                     return Column(
                       mainAxisSize: MainAxisSize.min,
@@ -69,41 +82,42 @@ class _AppTrainerState extends State<AppTrainer> {
                                 ],
                               ),
                             ),
-                            Row(
-                              children: List.generate(3, (j) {
-                                return j == 1
-                                    ? Container(
-                                        height: 20,
-                                        width: 1,
-                                        color: isLast ? Colors.transparent : Colors.white,
-                                      )
-                                    : InkW(
-                                        padding: Ei.sym(v: 15, h: 22),
-                                        onTap: isLast && j == 2
-                                            ? null
-                                            : () {
-                                                if (j == 2) {
-                                                  controller.skip();
-                                                  return;
-                                                }
+                            if (widget.showSectionLabel)
+                              Row(
+                                children: List.generate(3, (j) {
+                                  return j == 1
+                                      ? Container(
+                                          height: 20,
+                                          width: 1,
+                                          color: isLast ? Colors.transparent : Colors.white,
+                                        )
+                                      : InkW(
+                                          padding: Ei.sym(v: 15, h: 22),
+                                          onTap: isLast && j == 2
+                                              ? null
+                                              : () {
+                                                  if (j == 2) {
+                                                    controller.skip();
+                                                    return;
+                                                  }
 
-                                                if (e.onNext == null) {
-                                                  controller.next();
-                                                } else {
-                                                  e.onNext?.call(controller);
-                                                }
-                                              },
-                                        child: Text(
-                                          j == 0
-                                              ? text
-                                              : isLast && j == 2
-                                                  ? ''
-                                                  : 'Skip',
-                                          style: Gfont.white,
-                                        ),
-                                      );
-                              }),
-                            ).margin(t: 15),
+                                                  if (e.onNext == null) {
+                                                    controller.next();
+                                                  } else {
+                                                    e.onNext?.call(controller);
+                                                  }
+                                                },
+                                          child: Text(
+                                            j == 0
+                                                ? text
+                                                : isLast && j == 2
+                                                    ? ''
+                                                    : (widget.skipLabel ?? 'Skip'),
+                                            style: Gfont.white,
+                                          ),
+                                        );
+                                }),
+                              ).margin(t: 15),
                           ],
                     );
                   })
