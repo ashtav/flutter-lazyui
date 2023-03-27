@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+@Deprecated('Use LzImage widget instead')
 class GetImage extends StatelessWidget {
   final dynamic image;
   final dynamic size, maxSize;
