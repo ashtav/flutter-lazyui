@@ -10,17 +10,26 @@ class Faker {
   }
 
   // generate random number based on length
-  static String number([int length = 5]) {
-    int randomInt = Random().nextInt(pow(10, length) as int);
-    return randomInt.toString();
+  static String number(int length, {int? startWith}) {
+    try {
+      String result = '';
+      for (int i = 0; i < (length - 1); i++) {
+        int randomNumber = Random().nextInt(10);
+        result += randomNumber.toString();
+      }
+      return (startWith ?? Random().nextInt(10)).toString() + result;
+    } catch (e) {
+      logg(e);
+      return '0';
+    }
   }
 
   // generate random price based on length
-  static String price([int length = 5]) {
+  static String price([int length = 5, String separator = '.']) {
     int randomInt = Random().nextInt(pow(10, length) as int);
     String price = randomInt.toString();
 
-    return (price.length < length ? '${price}1' : price).idr();
+    return (price.length < length ? '${price}1' : price).idr(separator: separator);
   }
 
   // generate random name

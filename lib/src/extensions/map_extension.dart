@@ -64,6 +64,32 @@ extension MapStringExtension on Map<String, dynamic> {
   }
 
   /// ``` dart
+  /// Map<String, dynamic> data = {'name': 'John Doe'}.lowers(['name']); // {'name': 'john doe'}
+  /// ```
+  Map<String, dynamic> lowers([List<String> keys = const []]) {
+    return map((key, value) {
+      if (keys.contains(key)) {
+        return MapEntry(key, value.toString().toLowerCase());
+      } else {
+        return MapEntry(key, value);
+      }
+    });
+  }
+
+  /// ``` dart
+  /// Map<String, dynamic> data = {'name': 'John Doe'}.uppers(['name']); // {'name': 'JOHN DOE'}
+  /// ```
+  Map<String, dynamic> uppers([List<String> keys = const []]) {
+    return map((key, value) {
+      if (keys.contains(key)) {
+        return MapEntry(key, value.toString().toUpperCase());
+      } else {
+        return MapEntry(key, value);
+      }
+    });
+  }
+
+  /// ``` dart
   /// Map<String, dynamic> data = {'price': 2500}.currency(['price']); // {'price': '2.500'}
   /// ```
   Map<String, dynamic> currency([List<String> keys = const [], String prefix = '', String separator = '.']) {

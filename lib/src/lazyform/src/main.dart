@@ -233,6 +233,7 @@ class LzForm {
           bool disabled = false,
           bool readonly = true,
           bool autofocus = false,
+          bool showControl = true,
           Function(String value)? onChange,
           Function(String value)? onSubmit,
           LzFormLabelStyle? labelStyle}) =>
@@ -247,6 +248,7 @@ class LzForm {
           disabled: disabled,
           readonly: readonly,
           autofocus: autofocus,
+          showControl: showControl,
           onChange: onChange,
           onSubmit: onSubmit,
           labelStyle: labelStyle);
