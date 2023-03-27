@@ -16,7 +16,7 @@ extension MapTextEditingControllerExtension on Map<String, TextEditingController
   }
 }
 
-extension MapExtension on Map<String, dynamic> {
+extension MapStringExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'name': 'John'}.add({'id': 1}); // {'name': 'John', 'id': 1}
   /// ```
@@ -90,5 +90,21 @@ extension MapExtension on Map<String, dynamic> {
 
   Map<String, dynamic> get([List<String> keys = const []]) {
     return this..removeWhere((key, value) => !keys.contains(key));
+  }
+
+  /// ``` dart
+  /// Map<String, dynamic> data = {'no': 1, 'label': 'Apple'}.renameKeys({
+  ///   'no': 'id', 'label': 'name'
+  /// }); // {'id': 1, 'name': 'Apple'}
+  /// ```
+
+  Map<String, dynamic> renameKeys(Map<String, String> map) {
+    return this.map((key, value) {
+      if (map.containsKey(key)) {
+        return MapEntry(map[key]!, value);
+      } else {
+        return MapEntry(key, value);
+      }
+    });
   }
 }
