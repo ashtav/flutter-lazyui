@@ -119,7 +119,7 @@ class LzForm {
           Option? initValue,
           FormModel? model,
           bool disabled = false,
-          expandValue = false,
+          bool expandValue = false,
           Function(String value)? onChange,
           Future<dynamic>? Function(SelectController selector)? onTap,
           dynamic Function(SelectController selector)? onSelect,
