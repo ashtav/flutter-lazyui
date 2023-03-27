@@ -62,6 +62,26 @@ class LzForm {
   }
 
   /* ---------------------------------------------------------------
+  | LzForm Reset
+  | */
+
+  /// ``` dart
+  /// LzForm.reset(forms, only: ['name', 'email']);
+  /// ```
+
+  static void reset(Map<String, FormModel> forms, {List<String> only = const [], List<String> except = const []}) {
+    for (var e in forms.keys) {
+      if (only.isNotEmpty && only.contains(e)) {
+        forms[e]!.controller.text = '';
+      } else if (except.isNotEmpty && !except.contains(e)) {
+        forms[e]!.controller.text = '';
+      } else if (only.isEmpty && except.isEmpty) {
+        forms[e]!.controller.text = '';
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
   | LzForm Input
   | */
 
