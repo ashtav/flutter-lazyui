@@ -31,7 +31,7 @@ class GetImage extends StatelessWidget {
         ),
       );
     } else if (image is String && image.contains('http')) {
-      return CachedNetworkImage(
+      widget = CachedNetworkImage(
         fit: fit,
         imageUrl: image,
         progressIndicatorBuilder: (context, url, downloadProgress) {
