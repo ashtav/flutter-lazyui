@@ -38,8 +38,14 @@ class Faker {
   }
 
   // generate random email
-  static String email([String domain = 'gmail.com']) {
-    return '${name().toLowerCase().replaceAll(' ', '')}@$domain';
+  static String email({String domain = 'gmail.com', bool addNumber = false}) {
+    String result = name().toLowerCase().replaceAll(' ', '');
+
+    if (addNumber) {
+      result += '${DateTime.now().microsecond.toString().substring(0, 3)}@$domain';
+    }
+
+    return result;
   }
 
   // generate random phone number

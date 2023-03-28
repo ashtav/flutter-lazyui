@@ -56,4 +56,9 @@ extension WidgetExtension on Widget {
   /// YourWidget().ignore()
   /// ```
   IgnorePointer ignore([bool ignoring = true]) => IgnorePointer(ignoring: ignoring, child: this);
+
+  /// ``` dart
+  /// YourWidget().hide()
+  /// ```
+  Visibility hide([bool value = true]) => Visibility(visible: !value, child: this);
 }

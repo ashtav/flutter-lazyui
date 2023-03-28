@@ -53,7 +53,7 @@ class FormView6 extends StatelessWidget {
               ),
             ],
           ),
-          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty'], readonly: false, max: 100000, min: -5),
+          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty'], readonly: false, max: 100000, min: 200),
           LzForm.input(
               label: 'Full Screen Select *',
               hint: 'Select something here',
