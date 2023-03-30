@@ -99,7 +99,7 @@ class LzImage<T> extends StatelessWidget {
 
     // check available type
     if (!availables.contains(image.runtimeType)) {
-      logg('Image type not available', name: 'LzImage');
+      logg('Image type is not available | $image', name: 'LzImage', color: LogColor.cyan);
       return SizedBox(
         width: width,
         height: height,

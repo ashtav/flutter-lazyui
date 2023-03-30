@@ -62,3 +62,54 @@ extension WidgetExtension on Widget {
   /// ```
   Visibility hide([bool value = true]) => Visibility(visible: !value, child: this);
 }
+
+extension CustomAppbarExtension on AppBar {
+  AppBar backIcon(IconData icon) {
+    return AppBar(
+        leading: CustomBackButton(icon: icon),
+        title: title,
+        actions: actions,
+        automaticallyImplyLeading: automaticallyImplyLeading,
+        backgroundColor: backgroundColor,
+        centerTitle: centerTitle,
+        elevation: elevation,
+        flexibleSpace: flexibleSpace,
+        iconTheme: iconTheme,
+        leadingWidth: leadingWidth,
+        primary: primary,
+        shadowColor: shadowColor,
+        shape: shape,
+        systemOverlayStyle: systemOverlayStyle,
+        titleSpacing: titleSpacing,
+        toolbarHeight: toolbarHeight,
+        toolbarOpacity: toolbarOpacity,
+        toolbarTextStyle: toolbarTextStyle,
+        titleTextStyle: titleTextStyle,
+        bottomOpacity: bottomOpacity,
+        surfaceTintColor: surfaceTintColor,
+        actionsIconTheme: actionsIconTheme,
+        bottom: bottom,
+        foregroundColor: foregroundColor,
+        excludeHeaderSemantics: excludeHeaderSemantics,
+        key: key,
+        notificationPredicate: notificationPredicate,
+        scrolledUnderElevation: scrolledUnderElevation);
+  }
+}
+
+class CustomBackButton extends StatelessWidget {
+  const CustomBackButton({super.key, this.icon});
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    assert(debugCheckHasMaterialLocalizations(context));
+    return IconButton(
+      icon: const BackButtonIcon(),
+      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
+      onPressed: () {
+        Navigator.maybePop(context);
+      },
+    );
+  }
+}

@@ -43,6 +43,8 @@ class Faker {
 
     if (addNumber) {
       result += '${DateTime.now().microsecond.toString().substring(0, 3)}@$domain';
+    } else {
+      result += '@$domain';
     }
 
     return result;
