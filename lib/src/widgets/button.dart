@@ -239,9 +239,16 @@ class LzButtonControl extends ChangeNotifier {
   String buttonText = '';
   bool isSubmit = false, enabled = true;
 
-  LzButtonControl submit() {
+  LzButtonControl submit({Duration? abortOn}) {
     isSubmit = true;
     notifyListeners();
+
+    if (abortOn != null) {
+      Future.delayed(abortOn, () {
+        abort();
+      });
+    }
+
     return this;
   }
 

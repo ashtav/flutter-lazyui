@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import 'values.dart';
 
-extension ListenableExtension on Listenable {
-  AnimatedBuilder watch(Widget Function() child) {
+extension ListenableExtension<T extends ChangeNotifier> on T {
+  AnimatedBuilder watch(Widget Function(T) child) {
     return AnimatedBuilder(
       animation: this,
-      builder: (context, _) => child(),
+      builder: (context, _) => child(this),
     );
   }
 }

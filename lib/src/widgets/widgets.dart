@@ -545,20 +545,11 @@ class LzBadge extends StatelessWidget {
   }
 }
 
-/// ```dart
-/// int active = 1;
-/// Slidebar(active: active, spacing: 10, size: (int i) => [i == active ? 20 : 5, 5]),
-/// ```
-
 class Slidebar extends StatelessWidget {
-  final int length;
-
-  /// size = [width, height]
-  final List<double> Function(int index)? size;
-  final int active;
-  final Color? activeColor, color;
-  final double radius, spacing;
-  final CrossAxisAlignment position;
+  /// ```dart
+  /// int active = 1;
+  /// Slidebar(active: active, spacing: 10, size: (int i) => [i == active ? 20 : 5, 5]),
+  /// ```
   const Slidebar(
       {super.key,
       this.length = 3,
@@ -567,8 +558,17 @@ class Slidebar extends StatelessWidget {
       this.color,
       this.activeColor,
       this.radius = 5.0,
-      this.spacing = 5,
+      this.spacing = 7,
       this.position = Caa.center});
+
+  final int length;
+
+  /// size = [width, height]
+  final List<double> Function(int index)? size;
+  final int active;
+  final Color? activeColor, color;
+  final double radius, spacing;
+  final CrossAxisAlignment position;
 
   @override
   Widget build(BuildContext context) {
@@ -577,6 +577,7 @@ class Slidebar extends StatelessWidget {
 
     return Row(
       crossAxisAlignment: position,
+      mainAxisSize: Mas.min,
       children: List.generate(length, (i) {
         if (size != null) {
           List<double> size = this.size!(i);

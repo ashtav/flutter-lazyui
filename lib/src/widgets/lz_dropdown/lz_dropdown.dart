@@ -217,7 +217,7 @@ class _LzDropdownWidget extends StatelessWidget {
       child: SingleChildScrollView(
           physics: BounceScroll(),
           child: notifier.watch(
-            () {
+            (_) {
               final options = notifier.options;
 
               return Col(

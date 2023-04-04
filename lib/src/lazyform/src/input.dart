@@ -127,7 +127,7 @@ class Input extends StatelessWidget {
 
           // Text Length
           indicator
-              ? notifier.watch(() => Textr(
+              ? notifier.watch((_) => Textr(
                     '${notifier.textLength}/${notifier.maxLength}',
                     style: style?.copyWith(fontSize: 14, color: Colors.black45),
                     margin: Ei.only(r: isSuffix ? 50 : 0, l: 15),

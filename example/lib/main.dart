@@ -1,4 +1,5 @@
 import 'package:example/pages/another_widget_view.dart';
+import 'package:example/pages/app_intro.dart';
 import 'package:example/pages/form_view_6.dart';
 import 'package:example/pages/item_view.dart';
 import 'package:example/pages/nodata_view.dart';
@@ -85,7 +86,8 @@ class HomePage extends StatelessWidget {
       'Forms 4',
       'Forms 5',
       'Forms 6',
-      'Coach Trainer'
+      'Coach Trainer',
+      'App Intro Example',
     ];
 
     void onFeatureTap(int index) async {
@@ -208,6 +210,10 @@ class HomePage extends StatelessWidget {
 
         case 'Coach Trainer':
           context.push(const CoachTrainerView());
+          break;
+
+        case 'App Intro Example':
+          context.push(const AppIntro());
           break;
         default:
       }

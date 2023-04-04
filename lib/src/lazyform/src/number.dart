@@ -167,7 +167,7 @@ class Number extends StatelessWidget {
     }
 
     Widget suffixWidget = showControl
-        ? notifier.watch(() => Row(
+        ? notifier.watch((_) => Row(
               mainAxisAlignment: Maa.end,
               children: List.generate(2, (i) {
                 return IgnorePointer(
