@@ -51,7 +51,7 @@ class CustomDialog extends StatelessWidget {
                     BoxShadow(color: Utils.hex('fff'), spreadRadius: 25, blurRadius: 25, offset: const Offset(0, -7)),
                   ]),
                   child: const Icon(La.times),
-                ),
+                ).onTap(() => context.pop()),
               )
           ],
         ));
