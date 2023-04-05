@@ -9,6 +9,8 @@
 
 import 'dart:math' as math;
 
+import 'package:lazyui/lazyui.dart';
+
 // define a Map to store the fuzzy set
 Map<String, dynamic> _fuzzyset = {};
 
@@ -158,7 +160,7 @@ void _add(String value, int gramSize) {
 __get(String value, int gramSize, double minMatchScore) {
   String normalizedValue = value.toLowerCase();
   Map matches = {}, gramCounts = _gramCounter(normalizedValue, gramSize);
-  List items = _fuzzyset['items'][gramSize];
+  List items = _fuzzyset['items'][gramSize] ?? [];
   int sumOfSquareGramCounts = 0, gramCount, i, index, otherGramCount;
 
   gramCounts.forEach((key, value) {
@@ -312,5 +314,9 @@ class FuzzySet {
     _fuzzyset["exactSet"] = {};
     _fuzzyset["matchDict"] = {};
     _fuzzyset["items"] = {};
+  }
+
+  void debug() {
+    logg(_fuzzyset);
   }
 }
