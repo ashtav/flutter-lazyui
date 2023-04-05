@@ -310,13 +310,18 @@ class FuzzySet {
     }
   }
 
-  Future<void> clear() async {
+  Future<void> clear({bool itemsOnly = false}) async {
+    if (itemsOnly) {
+      _fuzzyset["items"] = {};
+      return;
+    }
+
     _fuzzyset["exactSet"] = {};
     _fuzzyset["matchDict"] = {};
     _fuzzyset["items"] = {};
   }
 
   void debug() {
-    logg(_fuzzyset);
+    logg(_fuzzyset, limit: 3500);
   }
 }

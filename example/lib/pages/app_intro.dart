@@ -59,7 +59,7 @@ class AppIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: AppIntro3());
+    return const Scaffold(body: AppIntro2());
   }
 }
 
