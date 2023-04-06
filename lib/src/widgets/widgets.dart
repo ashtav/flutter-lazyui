@@ -713,17 +713,18 @@ class Textml extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextStyle? textStyle = Theme.of(context).textTheme.bodyMedium;
+
     return RichText(
       text: TextSpan(
-        children: parseText(text),
+        style: textStyle,
+        children: parseText(text, textStyle: textStyle),
       ),
     );
   }
 
-  List<TextSpan> parseText(String text) {
+  List<TextSpan> parseText(String text, {TextStyle? textStyle}) {
     List<TextSpan> textSpans = [];
-
-    TextStyle textStyle = const TextStyle(color: Colors.black);
 
     final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+\s*)');
     final matches = regex.allMatches(text);
@@ -736,7 +737,7 @@ class Textml extends StatelessWidget {
 
     for (Map map in result) {
       if (map['type'] == 'bold') {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle.copyWith(fontWeight: FontWeight.bold)));
+        textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(fontWeight: FontWeight.bold)));
       } else {
         textSpans.add(TextSpan(text: map['word'], style: textStyle));
       }
