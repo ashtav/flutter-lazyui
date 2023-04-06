@@ -64,7 +64,7 @@ class AnotherWidgetView extends StatelessWidget {
               String imgURL = 'https://master.saddannusantara.com//storagethumbnails//mnYKQoxZYYWJpEkgoxWkYUl7oml634fTxjTZFo3a.png';
               return LzImage(imgURL, size: 100);
             }),
-          )
+          ),
         ],
       ),
     );

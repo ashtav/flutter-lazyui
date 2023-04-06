@@ -33,6 +33,7 @@ export 'src/utils/bot.dart';
 export 'src/utils/error_handler.dart';
 export 'src/utils/faker.dart';
 export 'src/utils/formatter.dart' show InputFormat;
+export 'src/utils/fuzzyset.dart';
 export 'src/utils/lipsum.dart';
 export 'src/utils/log.dart' hide colors;
 export 'src/utils/utils.dart';

@@ -35,7 +35,7 @@ class Switches extends StatelessWidget {
     });
 
     return notifier.watch(
-      () {
+      (_) {
         bool switched = notifier.switched.value;
 
         return Touch(

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:lazyui/lazyui.dart';
+
 import './constant.dart';
 
 class Faker {
@@ -19,7 +20,6 @@ class Faker {
       }
       return (startWith ?? Random().nextInt(10)).toString() + result;
     } catch (e) {
-      logg(e);
       return '0';
     }
   }
@@ -38,13 +38,21 @@ class Faker {
   }
 
   // generate random email
-  static String email() {
-    return '${name().toLowerCase().replaceAll(' ', '')}@gmail.com';
+  static String email({String domain = 'gmail.com', bool addNumber = false}) {
+    String result = name().toLowerCase().replaceAll(' ', '');
+
+    if (addNumber) {
+      result += '${DateTime.now().microsecond.toString().substring(0, 3)}@$domain';
+    } else {
+      result += '@$domain';
+    }
+
+    return result;
   }
 
   // generate random phone number
-  static String phone() {
-    return '08${Random().nextInt(999999999)}';
+  static String phone([String prefix = '08']) {
+    return '$prefix${Random().nextInt(999999999)}';
   }
 
   // generate random address
@@ -71,7 +79,59 @@ class Faker {
     return 'INV-${Random().nextInt(999999999)}';
   }
 
+  // generate random password with lowercase, uppercase, number, and special character
+  static String password({int length = 8, bool useSpecialChar = false}) {
+    List<String> specials = [
+      '!',
+      '@',
+      '#',
+      '\$',
+      '%',
+      '^',
+      '&',
+      '*',
+      '(',
+      ')',
+      '-',
+      '_',
+      '=',
+      '+',
+      '[',
+      ']',
+      '{',
+      '}',
+      '|',
+      ';',
+      ':',
+      ',',
+      '.',
+      '<',
+      '>',
+      '?',
+      '/'
+    ];
+    List<String> lower = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    List<String> upper = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+    List<String> numbers = '0123456789'.split('');
+
+    List<String> all = [...lower, ...upper, ...numbers];
+
+    if (useSpecialChar) {
+      all.addAll(specials);
+    }
+
+    String result = '';
+    for (int i = 0; i < length; i++) {
+      result += all[Random().nextInt(all.length)];
+    }
+
+    return result;
+  }
+
   // generate random image
+  /// ``` dart
+  /// Faker.image('avatar'); // for avatar, you can use avatar, food, or null
+  /// ```
   static String image([String? type]) {
     String github = 'https://raw.githubusercontent.com/ashtav/assets/master';
 

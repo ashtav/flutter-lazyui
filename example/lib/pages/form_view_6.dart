@@ -3,6 +3,37 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Widget? title;
+  final Function()? onBack;
+  final bool? centerTitle;
+  final List<Widget>? actions;
+
+  const CustomAppBar({
+    super.key,
+    this.title,
+    this.onBack,
+    this.centerTitle,
+    this.actions,
+  });
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: title,
+      leading: IconButton(
+        onPressed: onBack ?? () => context.pop(),
+        icon: const Icon(La.angleLeft),
+      ),
+      centerTitle: centerTitle,
+      actions: actions,
+    );
+  }
+}
+
 class FormView6 extends StatelessWidget {
   const FormView6({super.key});
 
@@ -12,8 +43,8 @@ class FormView6 extends StatelessWidget {
 
     return Wrapper(
         child: Scaffold(
-      appBar: AppBar(
-        title: const Text('Form View 6'),
+      appBar: const CustomAppBar(
+        title: Text('Form View 6'),
       ),
       body: LzFormList(
         style: const LzFormStyle(type: FormType.topAligned, inputLabelFontWeight: Fw.bold),
@@ -53,7 +84,7 @@ class FormView6 extends StatelessWidget {
               ),
             ],
           ),
-          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty'], readonly: false, max: 100000, min: -5),
+          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty'], readonly: false, max: 100000, min: 200),
           LzForm.input(
               label: 'Full Screen Select *',
               hint: 'Select something here',

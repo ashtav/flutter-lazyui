@@ -167,7 +167,7 @@ class Number extends StatelessWidget {
     }
 
     Widget suffixWidget = showControl
-        ? notifier.watch(() => Row(
+        ? notifier.watch((_) => Row(
               mainAxisAlignment: Maa.end,
               children: List.generate(2, (i) {
                 return IgnorePointer(
@@ -229,6 +229,12 @@ class Number extends StatelessWidget {
                               if (text.isEmpty || text == '-') {
                                 notifier.controller.text = '0';
                               }
+
+                              // check min
+                              if (text.getNumeric < min) {
+                                notifier.controller.text = min.toString();
+                                Utils.setCursorToLastPosition(notifier.controller);
+                              }
                             }
                           },
                           child: TextInputTransparent(
@@ -279,9 +285,6 @@ class Number extends StatelessWidget {
 
                               if (number > max) {
                                 notifier.controller.text = max.toString();
-                                Utils.setCursorToLastPosition(notifier.controller);
-                              } else if (number < min && value.isNotEmpty) {
-                                notifier.controller.text = min.toString();
                                 Utils.setCursorToLastPosition(notifier.controller);
                               }
                             },

@@ -82,8 +82,9 @@ class LzImage<T> extends StatelessWidget {
   final Color? color;
   final double? width, height, size;
   final double? radius;
+  final Widget? placeholder;
 
-  const LzImage(this.image, {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius});
+  const LzImage(this.image, {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius, this.placeholder});
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +100,7 @@ class LzImage<T> extends StatelessWidget {
 
     // check available type
     if (!availables.contains(image.runtimeType)) {
-      logg('Image type not available', name: 'LzImage');
+      logg('Image type is not available | $image', name: 'LzImage', color: LogColor.cyan);
       return SizedBox(
         width: width,
         height: height,
@@ -164,7 +165,7 @@ class LzImage<T> extends StatelessWidget {
           imageUrl: path,
           width: width,
           height: height,
-          progressIndicatorBuilder: (context, url, downloadProgress) => shimmer,
+          progressIndicatorBuilder: (context, url, downloadProgress) => placeholder ?? shimmer,
           errorWidget: (context, url, error) => const Center(child: Icon(La.exclamationCircle)),
         );
       }
