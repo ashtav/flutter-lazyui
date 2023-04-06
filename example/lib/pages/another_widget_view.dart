@@ -73,45 +73,6 @@ class AnotherWidgetView extends StatelessWidget {
 
 // This widget is to make simple html output (bold, italic, underline, etc)
 
-class Textml extends StatelessWidget {
-  final String text;
-  const Textml(this.text, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: parseText(text),
-      ),
-    );
-  }
-
-  List<TextSpan> parseText(String text) {
-    List<TextSpan> textSpans = [];
-
-    TextStyle textStyle = const TextStyle(color: Colors.black);
-
-    final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+\s*)');
-    final matches = regex.allMatches(text);
-
-    final result = matches.map((match) {
-      final word = match.group(2) ?? match.group(3);
-      final type = match.group(1) != null ? 'bold' : 'normal';
-      return {'word': word, 'type': type};
-    }).toList();
-
-    for (Map map in result) {
-      if (map['type'] == 'bold') {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle.copyWith(fontWeight: FontWeight.bold)));
-      } else {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle));
-      }
-    }
-
-    return textSpans;
-  }
-}
-
 extension WidgetExtension on Widget {
   Widget getChild<T extends Widget>() {
     // only widget that has child property
