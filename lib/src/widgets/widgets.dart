@@ -407,6 +407,12 @@ class NoData extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| Poslign
+| ---------------------------------------------------------------------------
+| Shortcut of `Positioned.fill` with `Align` and `Container` inside
+| */
+
 class Poslign extends StatelessWidget {
   final AlignmentGeometry alignment;
   final Widget? child;
@@ -496,6 +502,12 @@ class Box extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| Padder
+| ---------------------------------------------------------------------------
+| Combination of Container and Column with default padding
+| */
+
 class Padder extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
@@ -525,6 +537,12 @@ class Padder extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| LzBadge
+| ---------------------------------------------------------------------------
+| LzBadge is a widget to show a badge with text
+| */
+
 class LzBadge extends StatelessWidget {
   final String text;
   final Color? color, textColor;
@@ -544,6 +562,12 @@ class LzBadge extends StatelessWidget {
     );
   }
 }
+
+/* --------------------------------------------------------------------------
+| Slidebar
+| ---------------------------------------------------------------------------
+| When you want to show a list of dots to show the current page or slide
+| */
 
 class Slidebar extends StatelessWidget {
   /// ```dart
@@ -600,6 +624,12 @@ class Slidebar extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| TextDivider
+| ---------------------------------------------------------------------------
+| TextDivider is a widget that divides the text with a line
+| */
+
 class TextDivider extends StatelessWidget {
   final Widget text;
   final double spacing, lineHeight;
@@ -627,6 +657,12 @@ class TextDivider extends StatelessWidget {
     );
   }
 }
+
+/* --------------------------------------------------------------------------
+| Loader
+| ---------------------------------------------------------------------------
+| Loader is a widget that displays a circular progress indicator.
+| */
 
 class Loader extends StatelessWidget {
   final double size, stroke;
@@ -656,25 +692,11 @@ class Loader extends StatelessWidget {
   }
 }
 
-enum LaziconType { nodata }
-
-class Lazicon {
-  static get(LaziconType type, {double size = 70, Color? colorFilter}) {
-    Map<LaziconType, String> icons = {
-      LaziconType.nodata: 'no-data.svg',
-    };
-
-    return SvgPicture.asset(
-      Lazy.assets(icons[type]!),
-      width: size,
-      height: size,
-      colorFilter: colorFilter.isNull ? null : ColorFilter.mode(colorFilter!, BlendMode.saturation),
-    );
-  }
-}
-
 /* --------------------------------------------------------------------------
 | LzListView
+| ---------------------------------------------------------------------------
+| LzListView is a ListView with a StreamBuilder to set the cacheExtent
+| So that the ListView will not be rebuilt when scrolling
 | */
 
 class LzListView extends StatelessWidget {
@@ -707,9 +729,15 @@ class LzListView extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| Textml
+| ---------------------------------------------------------------------------
+| Textml is a text widget that can parse simple html tags (bold, italic and underline)
+| */
+
 class Textml extends StatelessWidget {
   final String text;
-  const Textml(this.text, {super.key});
+  const Textml(this.text, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -726,23 +754,44 @@ class Textml extends StatelessWidget {
   List<TextSpan> parseText(String text, {TextStyle? textStyle}) {
     List<TextSpan> textSpans = [];
 
-    final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+\s*)');
+    final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+|\s)');
     final matches = regex.allMatches(text);
 
     final result = matches.map((match) {
       final word = match.group(2) ?? match.group(3);
-      final type = match.group(1) != null ? 'bold' : 'normal';
+      final type = match.group(1);
       return {'word': word, 'type': type};
     }).toList();
 
-    for (Map map in result) {
-      if (map['type'] == 'bold') {
+    for (Map<String, String?> map in result) {
+      if (map['type'] == 'b') {
         textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(fontWeight: FontWeight.bold)));
+      } else if (map['type'] == 'i') {
+        textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(fontStyle: FontStyle.italic)));
+      } else if (map['type'] == 'u') {
+        textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(decoration: TextDecoration.underline)));
       } else {
         textSpans.add(TextSpan(text: map['word'], style: textStyle));
       }
     }
 
     return textSpans;
+  }
+}
+
+enum LaziconType { nodata }
+
+class Lazicon {
+  static get(LaziconType type, {double size = 70, Color? colorFilter}) {
+    Map<LaziconType, String> icons = {
+      LaziconType.nodata: 'no-data.svg',
+    };
+
+    return SvgPicture.asset(
+      Lazy.assets(icons[type]!),
+      width: size,
+      height: size,
+      colorFilter: colorFilter.isNull ? null : ColorFilter.mode(colorFilter!, BlendMode.saturation),
+    );
   }
 }
