@@ -16,7 +16,7 @@ class CoachTrainerView extends StatelessWidget {
       },
       onInit: (control) {
         Utils.timer(() {
-          control.open();
+          control.open(keys: [key3, key1], orderByKey: true);
         }, 2.s);
       },
       targets: [

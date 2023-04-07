@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class AppTrainerController {
-  void Function() open = () {};
+  void Function({List<GlobalKey> keys, bool orderByKey}) open = ({keys = const [], orderByKey = false}) {};
 }
 
 class AppTrainer extends StatefulWidget {
@@ -40,7 +40,7 @@ class AppTrainer extends StatefulWidget {
 
 class _AppTrainerState extends State<AppTrainer> {
   bool isActive = false;
-  List<TargetFocus> targets = [];
+  List<TargetFocus> targets = [], specificTargets = [];
 
   void initTrainer() {
     targets = [];
@@ -139,11 +139,17 @@ class _AppTrainerState extends State<AppTrainer> {
     widget.onInit?.call(AppTrainerController()..open = showTutorial);
   }
 
-  void showTutorial() {
+  void showTutorial({List<GlobalKey> keys = const [], bool orderByKey = false}) {
     isActive = true;
 
+    specificTargets = targets.where((e) => keys.contains(e.keyTarget)).toList();
+
+    if (orderByKey) {
+      specificTargets.sort((a, b) => keys.indexOf(a.keyTarget!) - keys.indexOf(b.keyTarget!));
+    }
+
     TutorialCoachMark(
-      targets: targets,
+      targets: keys.isEmpty ? targets : specificTargets,
       hideSkip: true,
       colorShadow: widget.shadowColor,
       opacityShadow: widget.shadowOpacity,
