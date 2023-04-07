@@ -48,6 +48,7 @@ export 'src/widgets/dropdown.dart';
 export 'src/widgets/expandable_list.dart';
 export 'src/widgets/get_image.dart';
 export 'src/widgets/lz_dropdown/lz_dropdown.dart';
+export 'src/widgets/lz_popup_positioned.dart';
 export 'src/widgets/refreshtor.dart';
 export 'src/widgets/select_picker.dart';
 export 'src/widgets/skeleton.dart';

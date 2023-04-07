@@ -9,6 +9,8 @@ class CoachTrainerView extends StatelessWidget {
     final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey(), key4 = GlobalKey();
     AppTrainerController controller = AppTrainerController();
 
+    final forms = LzForm.make(['name']);
+
     return AppTrainer(
       controller: controller,
       onClickTarget: (target) {
@@ -16,8 +18,21 @@ class CoachTrainerView extends StatelessWidget {
       },
       onInit: (control) {
         Utils.timer(() {
-          control.open(keys: [key3, key1], orderByKey: true);
+          control.open(keys: [forms['name']!.key], orderByKey: true);
         }, 2.s);
+
+        // Utils.timer(() {
+        //   LzPopupPositioned.show(key1.context,
+        //       child: Col(
+        //         children: [
+        //           Text(
+        //             Faker.words(25),
+        //             style: Gfont.black,
+        //           )
+        //         ],
+        //       ),
+        //       builder: (child) => SlideUp(child: child.animate(onPlay: (c) => c.repeat(reverse: true)).moveY(begin: -5)));
+        // }, 1.s);
       },
       targets: [
         Target(
@@ -42,7 +57,7 @@ class CoachTrainerView extends StatelessWidget {
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
             align: ContentAlign.top),
         Target(
-            key: key4,
+            key: forms['name']!.key,
             title: 'Button Square',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
             align: ContentAlign.bottom,
@@ -72,7 +87,20 @@ class CoachTrainerView extends StatelessWidget {
           physics: BounceScroll(),
           children: [
             Col(
-              children: [LzButton(key: key4, text: 'Hello World!', onTap: (_) {})],
+              children: [
+                LzFormGroup(
+                  label: 'Biodata',
+                  prefixIcon: La.user,
+                  children: [
+                    LzForm.input(
+                      label: 'Name',
+                      hint: 'Enter your name',
+                      model: forms['name'],
+                    ),
+                  ],
+                ),
+                LzButton(key: key4, text: 'Hello World!', onTap: (_) {})
+              ],
             )
           ],
         ),
