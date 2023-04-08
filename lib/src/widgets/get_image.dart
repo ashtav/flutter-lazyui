@@ -176,6 +176,13 @@ class LzImage<T> extends StatelessWidget {
 
       else if (isPath) {
         result = Image.file(File(path), fit: fit, width: width, height: height);
+      } else {
+        String path = 'assets/images/$image';
+        result = Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(path), fit: fit),
+          ),
+        );
       }
     }
 
