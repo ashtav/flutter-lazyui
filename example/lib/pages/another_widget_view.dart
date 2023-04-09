@@ -10,6 +10,22 @@ class AnotherWidgetView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Another Widgets'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(La.bars),
+            onPressed: () {
+              List<IconData> icons = [La.infoCircle, La.edit, La.trashAlt];
+
+              BottomSheetOption(
+                options: ['See Detail', 'Edit', 'Delete'].options(icons: icons),
+                alignment: Maa.start,
+                onSelect: (value) {
+                  logg(value.option);
+                },
+              ).show(context);
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: Ei.all(20),
