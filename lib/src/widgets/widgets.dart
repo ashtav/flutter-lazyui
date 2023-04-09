@@ -737,16 +737,23 @@ class LzListView extends StatelessWidget {
 
 class Textml extends StatelessWidget {
   final String text;
-  const Textml(this.text, {Key? key}) : super(key: key);
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final TextDirection? textDirection;
+  final TextOverflow? overflow;
+  const Textml(this.text, {Key? key, this.style, this.textAlign, this.textDirection, this.overflow}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyMedium;
 
     return RichText(
+      textAlign: textAlign ?? Ta.start,
+      textDirection: textDirection,
+      overflow: overflow ?? TextOverflow.clip,
       text: TextSpan(
-        style: textStyle,
-        children: parseText(text, textStyle: textStyle),
+        style: style ?? textStyle,
+        children: parseText(text, textStyle: style ?? textStyle),
       ),
     );
   }
@@ -755,25 +762,29 @@ class Textml extends StatelessWidget {
     List<TextSpan> textSpans = [];
 
     final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+|\s)');
-    final matches = regex.allMatches(text);
 
-    final result = matches.map((match) {
-      final word = match.group(2) ?? match.group(3);
-      final type = match.group(1);
-      return {'word': word, 'type': type};
-    }).toList();
+    void processText(String text, {TextStyle? textStyle}) {
+      for (var match in regex.allMatches(text)) {
+        final word = match.group(2) ?? match.group(3);
+        final type = match.group(1);
 
-    for (Map<String, String?> map in result) {
-      if (map['type'] == 'b') {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(fontWeight: FontWeight.bold)));
-      } else if (map['type'] == 'i') {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(fontStyle: FontStyle.italic)));
-      } else if (map['type'] == 'u') {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle?.copyWith(decoration: TextDecoration.underline)));
-      } else {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle));
+        if (type == null) {
+          textSpans.add(TextSpan(text: word, style: textStyle));
+        } else {
+          TextStyle? updatedTextStyle;
+          if (type == 'b') {
+            updatedTextStyle = textStyle?.copyWith(fontWeight: FontWeight.bold);
+          } else if (type == 'i') {
+            updatedTextStyle = textStyle?.copyWith(fontStyle: FontStyle.italic);
+          } else if (type == 'u') {
+            updatedTextStyle = textStyle?.copyWith(decoration: TextDecoration.underline);
+          }
+          processText(word ?? '', textStyle: updatedTextStyle);
+        }
       }
     }
+
+    processText(text, textStyle: textStyle);
 
     return textSpans;
   }

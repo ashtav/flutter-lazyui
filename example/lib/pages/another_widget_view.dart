@@ -49,7 +49,10 @@ class AnotherWidgetView extends StatelessWidget {
           const SizedBox(
             height: 33,
           ),
-          const Textml('Hello <b>World</b>, I am <b>Jhon</b>'),
+          Textml(
+            'Hello <b>World</b>, I am <i>Jhon</i> from <b><u><i>Indonesia</i></u></b>',
+            style: Gfont.muted,
+          ),
           Container(
             decoration: BoxDecoration(border: Br.all()),
             padding: Ei.all(20),
@@ -59,12 +62,6 @@ class AnotherWidgetView extends StatelessWidget {
               style: Gfont.bold,
             ),
           ).getChild(),
-          Col(
-            children: List.generate(1, (i) {
-              String imgURL = 'https://master.saddannusantara.com//storagethumbnails//mnYKQoxZYYWJpEkgoxWkYUl7oml634fTxjTZFo3a.png';
-              return LzImage(imgURL, size: 100);
-            }),
-          ),
         ],
       ),
     );
