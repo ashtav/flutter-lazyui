@@ -15,7 +15,7 @@ class NoDataView extends StatelessWidget {
           physics: BounceScroll(),
           padding: Ei.all(20),
           children: [
-            Box(
+            LzBox(
               padding: Ei.all(0),
               radius: Br.radius(15),
               child: Col(

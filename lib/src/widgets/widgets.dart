@@ -436,9 +436,15 @@ class Poslign extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| LzBox
+| ---------------------------------------------------------------------------
+| LzBox is a shortcut of `Container` with some additional features
+| */
+
 enum BoxType { customize, clean }
 
-class Box extends StatelessWidget {
+class LzBox extends StatelessWidget {
   final Widget? child;
   final List<Widget> children;
   final EdgeInsetsGeometry? padding, margin;
@@ -454,7 +460,7 @@ class Box extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final BoxType type;
 
-  const Box(
+  const LzBox(
       {super.key,
       this.child,
       this.children = const [],
@@ -788,102 +794,6 @@ class Textml extends StatelessWidget {
     processText(text, textStyle: textStyle);
 
     return textSpans;
-  }
-}
-
-/* --------------------------------------------------------------------------
-| BottomSheetOption
-| ---------------------------------------------------------------------------
-| The widget that displays a list of options in a bottom sheet
-| */
-
-class BottomSheetOption extends StatelessWidget {
-  final String? title;
-  final IconData? icon;
-  final List<Option> options;
-  final Function(Option)? onSelect;
-  final String? cancelLabel;
-  final MainAxisAlignment? alignment;
-  final bool showIcon, closeOnSelect;
-  const BottomSheetOption(
-      {super.key,
-      this.title,
-      this.icon,
-      this.options = const [],
-      this.onSelect,
-      this.cancelLabel,
-      this.alignment,
-      this.showIcon = true,
-      this.closeOnSelect = true});
-
-  @override
-  Widget build(BuildContext context) {
-    List<Option> options = [...this.options, Option(option: cancelLabel ?? 'Cancel', icon: La.times)];
-
-    return Column(
-      mainAxisSize: Mas.min,
-      crossAxisAlignment: Caa.start,
-      children: [
-        Textr(
-          title ?? 'Options',
-          style: Gfont.fs20.white.bold,
-          icon: icon ?? La.clipboardList,
-          padding: Ei.all(20),
-        ),
-        Container(
-          decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
-          constraints: BoxConstraints(
-            maxHeight: context.height * 0.85,
-          ),
-          child: SingleChildScrollView(
-            physics: BounceScroll(),
-            padding: Ei.only(b: 15),
-            child: Col(
-              children: List.generate(options.length, (i) {
-                Option option = options[i];
-                String label = option.option;
-                IconData? icon = option.icon;
-
-                return InkW(
-                  onTap: () {
-                    onSelect?.call(options[i]);
-
-                    if (closeOnSelect) {
-                      context.pop();
-                    }
-                  },
-                  padding: Ei.all(22),
-                  border: Br.only(['t'], except: i == 0, width: i == options.length - 1 ? 3 : 1),
-                  child: Row(
-                    mainAxisAlignment: alignment ?? Maa.start,
-                    children: [
-                      if (icon != null && showIcon)
-                        Iconr(
-                          icon,
-                          margin: Ei.only(r: 15, b: 2),
-                        ),
-                      Text(
-                        label,
-                        style: Gfont.bold.muted,
-                        overflow: Tof.ellipsis,
-                      ).flexible(),
-                    ],
-                  ),
-                );
-              }),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  void show(BuildContext context) {
-    context.bottomSheet(
-      this,
-      backgroundColor: Colors.transparent,
-      enableDrag: true,
-    );
   }
 }
 
