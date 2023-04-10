@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of page;
 
-class CoachTrainerView extends StatelessWidget {
-  const CoachTrainerView({super.key});
+class AppTrainerView extends StatelessWidget {
+  const AppTrainerView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey(), key4 = GlobalKey();
+    final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey();
     AppTrainerController controller = AppTrainerController();
 
     final forms = LzForm.make(['name']);
@@ -65,7 +64,7 @@ class CoachTrainerView extends StatelessWidget {
       ],
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Coach Trainer'),
+          title: const Text('App Trainer'),
           actions: [
             IconButton(
                 onPressed: () {},
@@ -99,7 +98,6 @@ class CoachTrainerView extends StatelessWidget {
                     ),
                   ],
                 ),
-                LzButton(key: key4, text: 'Hello World!', onTap: (_) {})
               ],
             )
           ],

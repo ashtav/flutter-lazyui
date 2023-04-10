@@ -11,7 +11,7 @@ class LzDropdownController {
 }
 
 class LzDropdownOption {
-  static void show(
+  static Future show(
     BuildContext? context, {
     required List<Option> options,
     final Map<int, List<Option>> subOptions = const {},
@@ -19,13 +19,13 @@ class LzDropdownOption {
     final Offset offset = const Offset(20, 0),
     final LzDropdownStyle? style,
     final bool dismissOnSelect = true,
-  }) {
+  }) async {
     if (context == null) {
       logg('Context cannot be null');
       return;
     }
 
-    showDialog(
+    await showDialog(
       context: context,
       builder: (_) => _LzDropdownWidget(
           context: context,

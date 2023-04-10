@@ -1,9 +1,4 @@
-import 'dart:async';
-import 'dart:math' as math;
-
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of page;
 
 class AppIntroNotifier extends ChangeNotifier {
   int index = 0;
@@ -53,6 +48,10 @@ class AppIntroNotifier extends ChangeNotifier {
     dispose();
   }
 }
+
+/* --------------------------------------------------------------------------
+| Example of App Intro
+| */
 
 class AppIntro extends StatelessWidget {
   const AppIntro({super.key});
@@ -118,126 +117,88 @@ class AppIntro1 extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| Example of App Intro 2
+| */
+
 class AppIntro2 extends StatelessWidget {
   const AppIntro2({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final notifier = AppIntroNotifier();
+    List<String> images = [
+      'https://i.pinimg.com/originals/9a/75/4c/9a754c984978d5778ed7086c780dff0b.jpg',
+      'https://craftsonfire.com/wp-content/uploads/2019/10/home-office-1867761_960_720.jpg',
+      'https://miro.medium.com/v2/resize:fit:1200/1*pAJ0dPkq_t6q11WLcZ7alg.jpeg'
+    ];
+
     CarouselController carouselController = CarouselController();
 
-    return OnDisposed(
-      // onInit: () => notifier.startTimer(context.width),
-      // onDispose: () => notifier.onDispose(),
-      child: Col(
-        children: [
-          CarouselSlider(
-              carouselController: carouselController,
-              options: CarouselOptions(
-                  viewportFraction: 1,
-                  initialPage: 0,
-                  autoPlayInterval: 5.s,
-                  enableInfiniteScroll: false,
-                  height: context.height * 0.68,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  onPageChanged: (index, _) {
-                    notifier.onChange(index);
-                  },
-                  scrollPhysics: BounceScroll()),
-              items: List.generate(3, (i) {
-                return LzImage(
-                  'https://i.pinimg.com/originals/9a/75/4c/9a754c984978d5778ed7086c780dff0b.jpg',
-                  width: context.width,
-                  radius: 0,
-                );
-              })),
-          LineProgressIndicator(
-            repeat: true,
-            duration: 5.s,
-            onComplete: () {
-              if (notifier.index >= 2) {
-                notifier.index = 0;
-                carouselController.animateToPage(0);
-                return;
-              }
-
-              carouselController.nextPage();
-              notifier.index++;
-            },
-          ),
-          // notifier.watch((s) => AnimatedContainer(
-          //       duration: 150.ms,
-          //       height: 5,
-          //       color: Colors.black12,
-          //       width: s.width,
-          //     )),
-          Expanded(
-            child: Container(
-              padding: Ei.all(25),
-              child: Col(
-                children: [
-                  Text('Get Organized', style: Gfont.fs20.bold),
-                  Text(
-                    Faker.words(15),
-                    style: Gfont.muted,
-                  ).margin(t: 10, b: 35),
-                  Row(
-                    mainAxisAlignment: Maa.spaceBetween,
-                    children: [
-                      notifier.watch((s) => Slidebar(
-                            active: s.index,
-                            activeColor: LzColor.orange,
-                            size: (i) => [i == s.index ? 13 : 7, 7],
-                          )),
-                      LzButton(
-                          radius: 100,
-                          text: 'Get Started',
-                          spacing: 35,
-                          icon: La.arrowRight,
-                          onTap: (_) {
-                            _.submit(abortOn: 3.s);
-                          })
-                    ],
-                  ),
-                ],
-              ),
+    return Col(
+      children: [
+        CarouselSlider(
+            carouselController: carouselController,
+            options: CarouselOptions(
+                viewportFraction: 1,
+                initialPage: 0,
+                autoPlayInterval: 5.s,
+                enableInfiniteScroll: true,
+                height: context.height * 0.68,
+                autoPlayCurve: Curves.fastOutSlowIn,
+                onPageChanged: (index, _) {},
+                scrollPhysics: BounceScroll()),
+            items: List.generate(images.length, (i) {
+              return LzImage(
+                images[i],
+                width: context.width,
+                radius: 0,
+              );
+            })),
+        LineProgressIndicator(
+          repeat: true,
+          duration: 5.s,
+          onComplete: () {},
+        ),
+        Expanded(
+          child: Container(
+            padding: Ei.all(25),
+            child: Col(
+              children: [
+                Text('Get Organized', style: Gfont.fs20.bold),
+                Text(
+                  Faker.words(15),
+                  style: Gfont.muted,
+                ).margin(t: 10, b: 35),
+                Row(
+                  mainAxisAlignment: Maa.spaceBetween,
+                  children: [
+                    Slidebar(
+                      active: 0,
+                      activeColor: LzColor.orange,
+                      size: (i) => [i == 0 ? 13 : 7, 7],
+                    ),
+                    LzButton(
+                        radius: 100,
+                        text: 'Get Started',
+                        spacing: 35,
+                        icon: La.arrowRight,
+                        onTap: (_) {
+                          context.push(const FeaturesView());
+                        })
+                  ],
+                ),
+              ],
             ),
-          )
-        ],
-      ),
+          ),
+        )
+      ],
     );
   }
 }
 
-class OnDisposed extends StatefulWidget {
-  final Widget child;
-  final Function()? onInit, onDispose;
-  const OnDisposed({super.key, required this.child, this.onInit, this.onDispose});
-
-  @override
-  State<OnDisposed> createState() => _OnDisposedState();
-}
-
-class _OnDisposedState extends State<OnDisposed> {
-  @override
-  void dispose() {
-    widget.onDispose?.call();
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      widget.onInit?.call();
-    });
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return widget.child;
-  }
-}
+/* --------------------------------------------------------------------------
+| Example of App Intro 3
+| */
 
 class AppIntro3 extends StatelessWidget {
   const AppIntro3({super.key});
