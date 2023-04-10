@@ -140,8 +140,9 @@ class _AppTrainerState extends State<AppTrainer> {
   }
 
   void showTutorial({List<GlobalKey> keys = const [], bool orderByKey = false}) {
-    isActive = true;
+    if (isActive) return;
 
+    isActive = true;
     specificTargets = targets.where((e) => keys.contains(e.keyTarget)).toList();
 
     if (orderByKey) {

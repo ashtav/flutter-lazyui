@@ -110,7 +110,7 @@ class HomePage extends StatelessWidget {
           // });
 
           final options = ['Setting Account', 'Change Password', 'Logout'].make((data, i) => Option(option: data[i]));
-          LzDropdown.show(key.currentContext!, options: options);
+          LzDropdownOption.show(key.currentContext!, options: options);
           break;
 
         case 'LzDropdown In List':
@@ -239,7 +239,7 @@ class HomePage extends StatelessWidget {
                 // DropdownDialog.open(context, options: options, top: true, disableds: [2], dangers: [1], sparators: [3]);
 
                 final options = ['Option A', 'Option B', 'Option C', 'Option D', 'Option E'].make((data, i) => Option(option: data[i]));
-                LzDropdown.show(key2.currentContext!, options: options, offset: const Offset(20, 0));
+                LzDropdownOption.show(key2.currentContext!, options: options, offset: const Offset(20, 0));
               },
               icon: const Icon(
                 La.bars,

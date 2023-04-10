@@ -17,7 +17,7 @@ class ItemView extends StatelessWidget {
               key: key,
               onPressed: () {
                 final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
-                LzDropdown.show(key.currentContext!,
+                LzDropdownOption.show(key.currentContext!,
                     offset: const Offset(20, 0),
                     options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons),
                     style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
@@ -55,7 +55,7 @@ class ItemView extends StatelessWidget {
 
                       // final options = ['Edit', {'Delete': ['Cancel', 'Confirm']}].options2(icons: [La.pen, La.trash], subIcons: {1: [La.times, La.checkCircle]});
 
-                      LzDropdown.show(key.context, options: options, subOptions: subOptions, dismissOnSelect: false, onSelect: (control) {
+                      LzDropdownOption.show(key.context, options: options, subOptions: subOptions, dismissOnSelect: false, onSelect: (control) {
                         logg(control.option.toMap());
 
                         switch (control.option.option) {
@@ -107,7 +107,7 @@ class ItemView extends StatelessWidget {
                       onTap: (_) {
                         final options = ['Details', 'Archive', 'Edit', 'Delete'].make((data, i) => Option(option: data[i], disabled: i == 1));
 
-                        LzDropdown.show(keys[i].currentContext!,
+                        LzDropdownOption.show(keys[i].currentContext!,
                             options: options,
                             offset: const Offset(20, 0),
                             style: const LzDropdownStyle(useBorder: true, separators: [2], separatorHeight: 5),
@@ -144,7 +144,7 @@ class Item extends StatelessWidget {
         final options = ['Details', 'Archive', 'Edit', 'Delete'].options(icons: icons);
 
         // show dropdown
-        LzDropdown.show(context,
+        LzDropdownOption.show(context,
             options: options,
             offset: const Offset(20, 0),
             style: const LzDropdownStyle(useBorder: true, separators: [2], separatorHeight: 5),

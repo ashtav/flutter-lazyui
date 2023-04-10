@@ -16,13 +16,9 @@ class AnotherWidgetView extends StatelessWidget {
             onPressed: () {
               List<IconData> icons = [La.infoCircle, La.edit, La.trashAlt];
 
-              BottomSheetOption(
-                options: ['See Detail', 'Edit', 'Delete'].options(icons: icons),
-                alignment: Maa.start,
-                onSelect: (value) {
-                  logg(value.option);
-                },
-              ).show(context);
+              LzOption.show(context, options: ['See Detail', 'Edit', 'Delete'].options(icons: icons), confirmOnTap: [2], onSelect: (value) {
+                logg(value.option);
+              });
             },
           ),
         ],

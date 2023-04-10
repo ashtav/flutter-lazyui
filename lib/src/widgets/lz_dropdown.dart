@@ -10,7 +10,7 @@ class LzDropdownController {
   LzDropdownController({required this.option, required this.back});
 }
 
-class LzDropdown {
+class LzDropdownOption {
   static void show(
     BuildContext? context, {
     required List<Option> options,

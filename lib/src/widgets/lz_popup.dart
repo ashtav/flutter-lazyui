@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-class LzPopupPositioned {
+class LzPopup {
   static void show(BuildContext? context,
       {required Widget? child, Widget Function(Widget)? builder, Offset offset = const Offset(20, 0), EdgeInsetsGeometry? padding}) {
     if (context == null) {
