@@ -38,6 +38,7 @@ export 'src/utils/lipsum.dart';
 export 'src/utils/log.dart' hide colors;
 export 'src/utils/utils.dart';
 export 'src/values/constant.dart';
+export 'src/values/enum.dart';
 export 'src/values/font.dart';
 export 'src/widgets/animation.dart';
 export 'src/widgets/app_trainer/app_trainer.dart';

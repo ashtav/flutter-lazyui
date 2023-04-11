@@ -797,6 +797,83 @@ class Textml extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| LzPopoper
+| ---------------------------------------------------------------------------
+| LzPopoper is a widget that displays a pop-up window
+| */
+
+class LzPopoper extends StatelessWidget {
+  final Widget? child;
+  final Color? color;
+  final double? width, maxWidth;
+  final double minWidth;
+  final Offset offset;
+  final BorderRadiusGeometry? radius;
+  final BoxBorder? border;
+  final Position? caretAlign;
+  const LzPopoper(
+      {super.key,
+      this.child,
+      this.color,
+      this.width = 250,
+      this.minWidth = 250,
+      this.maxWidth,
+      this.offset = const Offset(.5, 0),
+      this.radius,
+      this.border,
+      this.caretAlign});
+
+  @override
+  Widget build(BuildContext context) {
+    double x = (width ?? 250) *
+        (offset.dx > 1
+            ? 1
+            : offset.dx < 0
+                ? 0
+                : offset.dx);
+
+    x = (x - 10) <= 15
+        ? x + 15
+        : x >= (width ?? 250)
+            ? x - 35
+            : x - 10;
+
+    Color color = this.color ?? Colors.white;
+    bool isTop = caretAlign == Position.top;
+
+    double radius = LazyUi.getConfig.radius;
+
+    return Stack(children: [
+      Container(
+        padding: Ei.all(20),
+        margin: Ei.only(b: isTop ? 0 : 14.95, t: isTop ? 14.95 : 0),
+        width: width,
+        constraints: BoxConstraints(
+          minWidth: minWidth,
+          maxWidth: maxWidth ?? context.width,
+        ),
+        decoration: BoxDecoration(color: color, borderRadius: this.radius ?? Br.radius(radius), border: border ?? Br.all()),
+        child: child,
+      ),
+      Positioned(
+          left: x,
+          bottom: isTop ? null : offset.dy,
+          top: !isTop ? null : offset.dy,
+          child: RotationTransition(
+            turns: AlwaysStoppedAnimation(isTop ? 180 : 180 / 360),
+            child: CustomPaint(
+              painter: CaretPainter(strokeColor: color, paintingStyle: PaintingStyle.fill, skew: 2),
+              child: const SizedBox(
+                height: 15,
+                width: 20,
+              ),
+            ),
+          ))
+    ]);
+  }
+}
+
 enum LaziconType { nodata }
 
 class Lazicon {

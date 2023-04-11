@@ -18,6 +18,7 @@ class FeaturesView extends StatelessWidget {
       'LzOption, Select Option',
       'Animation',
       'No Data',
+      'Toast'
     ];
 
     features.sort();
@@ -91,6 +92,14 @@ class Actions {
 
         case 'Animation':
           context.push(const AnimationView());
+          break;
+
+        case 'LzOption, Select Option':
+          context.push(const LzOptionView());
+          break;
+
+        case 'Toast':
+          context.push(const ToastView());
           break;
         default:
       }

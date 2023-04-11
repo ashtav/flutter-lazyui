@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+
 import 'pages/page.dart';
 import 'theme/theme.dart';
 
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
             data: MediaQuery.of(context).copyWith(
               textScaleFactor: fontDeviceSize > 1.1 ? 1.1 : 1.0,
             ),
-            child: LzLoadingOverlay(child: widget ?? Container()));
+            child: LzToastOverlay(child: widget));
       },
     );
   }

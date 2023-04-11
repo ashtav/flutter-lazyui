@@ -15,101 +15,74 @@ class AnimationView extends StatelessWidget {
         physics: BounceScroll(),
         padding: Ei.all(20),
         children: [
-          // Blink
-//           const Text("Blink Text")
-//               .animate(
-//                 onPlay: (controller) => controller.repeat(), // loop
-//               )
-//               .fade(delay: 500.ms),
+          Textr(
+            'Blink Text',
+            padding: Ei.only(v: 20),
+          ).animate(onPlay: (controller) => controller.repeat(reverse: true)).fade(delay: 100.ms),
 
-//           Container(
-//             margin: Ei.sym(v: 20),
-//             decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.white, border: Br.all()),
-//             child: Col(
-//               children: List.generate(3, (i) {
-//                 return Textr(
-//                   Lipsum.createWord(5).ucwords,
-//                   border: Br.only(['t'], except: i == 0),
-//                   padding: Ei.sym(v: 20, h: 20),
-//                   width: context.width,
-//                 ).animate(delay: ((i + 1) * 100).ms).slideY(duration: 400.ms);
-//               }),
-//             ),
-//           ),
+          LzBox(
+            padding: Ei.zero,
+            children: List.generate(3, (i) {
+              return InkW(
+                onTap: () {},
+                padding: Ei.all(20),
+                border: Br.only(['t'], except: i == 0),
+                child: Row(
+                  children: [
+                    Text('Slide Text $i'),
+                  ],
+                ),
+              ).animate().fadeIn(duration: 500.ms).slideY(duration: 400.ms, delay: (i * 100).ms, begin: 1);
+            }),
+          ),
 
-//           Text(
-//             "Hello World!",
-//             style: Gfont.fs20.bold,
-//           )
-//               .animate(
-//                 onPlay: (controller) => controller.repeat(),
-//               )
-//               .fadeIn() // uses `Animate.defaultDuration`
-//               .scale() // inherits duration from fadeIn
-//               .move(delay: 300.ms, duration: 600.ms) // runs after the above w/new duration
-//               .blurXY(), // inherits the delay & duration from move
+          Container(
+                  margin: Ei.only(t: 25),
+                  child: LzPopoper(
+                    color: Colors.black.withOpacity(.8),
+                    child: Text(
+                      Faker.words(15),
+                      style: Gfont.white,
+                    ),
+                  ))
+              .ignore()
+              .animate(onPlay: (c) => c.repeat(reverse: true), onComplete: (c) {})
+              .moveY(begin: -10, duration: 700.ms, curve: Curves.easeInOutSine),
 
-//           // an opacity of 1 is "neutral"
-//           const Text("Hello").animate().fade(), // begin=0, end=1
-//           const Text("Hello").animate().fade(begin: 0.5), // end=1
-//           const Text("Hello").animate().fade(end: 0.5), // begin=1
-//           const Text('Hello').animate().tint(color: Colors.purple),
+          Text(
+            "Blur Text!",
+            style: Gfont.fs20.bold,
+          )
+              .animate(
+                onPlay: (controller) => controller.repeat(),
+              )
+              .fadeIn() // uses `Animate.defaultDuration`
+              .scale() // inherits duration from fadeIn
+              .move(delay: 300.ms, duration: 600.ms) // runs after the above w/new duration
+              .blurXY(), // inherits the delay & duration from move
 
-//           const Text("Hello")
-//               .animate()
-//               .fadeIn(duration: 600.ms)
-//               .then(delay: 200.ms) // baseline=800ms
-//               .slide(),
+          Text(
+            'Text Color',
+            style: Gfont.bold,
+          ).animate(onPlay: (o) => o.repeat(reverse: true)).tint(color: Colors.purple, delay: 1.s, duration: 1.s),
 
-//           Column(
-//               children: AnimateList(
-//             interval: 400.ms,
-//             effects: [FadeEffect(duration: 300.ms)],
-//             children: const [Text("Hello"), Text("World"), Text("Goodbye")],
-//           )),
+          Row(
+              children:
+                  const [Text("This "), Text("Is An "), Text("Animated List")].animate().fadeIn(duration: 500.ms).slideX(duration: 500.ms, begin: 2)),
 
-// // or shorthand:
-//           Column(
-//             children: const [Text("Hello"), Text("World"), Text("Goodbye")].animate(interval: 400.ms).fade(duration: 300.ms),
-//           ),
-
-// // then:
-//           const Text("Hello World").animate().custom(
-//               duration: 500.ms,
-//               builder: (context, value, child) => Container(
-//                     color: Color.lerp(Colors.red, Colors.blue, value),
-//                     padding: const EdgeInsets.all(8),
-//                     child: child, // child is the Text widget being animated
-//                   )),
-
-//           Animate()
-//               .custom(
-//                 duration: 10.seconds,
-//                 begin: 10,
-//                 end: 0,
-//                 builder: (_, value, __) => Text(value.round().toString()),
-//               )
-//               .fadeOut(),
-
-//           Animate().toggle(
-//             duration: 2.seconds,
-//             builder: (_, value, __) => Text(value ? "Before" : "After"),
-//           ),
-
-//           const Text("Before").animate().swap(duration: 900.ms, builder: (_, child) => const Text("After")),
-
-//           const Text("Hello").animate().fadeIn(duration: 600.ms).callback(duration: 1300.ms, callback: (_) => logg('halfway')),
-
-//           InkW(
-//               onTap: () {},
-//               padding: Ei.sym(v: 15, h: 20),
-//               color: Colors.blueAccent,
-//               margin: Ei.only(t: 10),
-//               radius: Br.radius(5),
-//               child: Text(
-//                 'Tap Me',
-//                 style: Gfont.color(Colors.white),
-//               )).animate().shake(duration: const Duration(seconds: 12))
+          Animate(
+            onPlay: (o) => o.repeat(reverse: true),
+          )
+              .custom(
+                duration: 10.seconds,
+                begin: 10,
+                end: 0,
+                builder: (_, value, __) => Text(
+                  value.round().toString(),
+                  style: Gfont.fs(50).bold,
+                ),
+              )
+              .fadeOut(),
         ],
       ),
     );

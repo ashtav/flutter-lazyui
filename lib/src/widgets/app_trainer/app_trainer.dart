@@ -16,6 +16,8 @@ class AppTrainer extends StatefulWidget {
   final bool showOnInit, showSectionLabel;
   final Color shadowColor;
   final double shadowOpacity;
+  final Widget Function(Target target)? targetBuilder;
+
   const AppTrainer(
       {super.key,
       required this.child,
@@ -32,7 +34,8 @@ class AppTrainer extends StatefulWidget {
       this.showOnInit = true,
       this.showSectionLabel = false,
       this.shadowColor = Colors.black,
-      this.shadowOpacity = .8});
+      this.shadowOpacity = .8,
+      this.targetBuilder});
 
   @override
   State<AppTrainer> createState() => _AppTrainerState();
@@ -67,28 +70,36 @@ class _AppTrainerState extends State<AppTrainer> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: e.contents ??
                           [
-                            Container(
-                              padding: Ei.all(20),
-                              constraints: BoxConstraints(maxWidth: context.width * .6),
-                              decoration: BoxDecoration(borderRadius: Br.radius(5), border: Br.all(color: Colors.white)),
-                              child: Col(
-                                children: [
-                                  Iconr(
-                                    e.icon ?? La.bookOpen,
-                                    color: Colors.white,
-                                    margin: Ei.only(b: 35),
-                                    size: 30,
+                            widget.targetBuilder?.call(e) ??
+                                Container(
+                                  padding: Ei.all(20),
+                                  constraints: BoxConstraints(maxWidth: context.width * .6),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: [Colors.black.withOpacity(.3), Colors.transparent],
+                                      ),
+                                      borderRadius: Br.radius(5),
+                                      border: Br.all(color: Colors.white)),
+                                  child: Col(
+                                    children: [
+                                      Iconr(
+                                        e.icon ?? La.bookOpen,
+                                        color: Colors.white,
+                                        margin: Ei.only(b: 35),
+                                        size: 30,
+                                      ),
+                                      if (e.title != null)
+                                        Textr(
+                                          e.title ?? "Titulo lorem ipsum",
+                                          style: Gfont.bold.white,
+                                          margin: Ei.only(b: 15),
+                                        ),
+                                      Text(e.description ?? '', style: Gfont.white)
+                                    ],
                                   ),
-                                  if (e.title != null)
-                                    Textr(
-                                      e.title ?? "Titulo lorem ipsum",
-                                      style: Gfont.bold.white,
-                                      margin: Ei.only(b: 15),
-                                    ),
-                                  Text(e.description ?? '', style: Gfont.white)
-                                ],
-                              ),
-                            ),
+                                ),
                             if (widget.showSectionLabel)
                               Row(
                                 children: List.generate(3, (j) {
@@ -96,10 +107,10 @@ class _AppTrainerState extends State<AppTrainer> {
                                       ? Container(
                                           height: 20,
                                           width: 1,
-                                          color: isLast ? Colors.transparent : Colors.white,
+                                          color: isLast ? Colors.transparent : Colors.white60,
                                         )
                                       : InkW(
-                                          padding: Ei.sym(v: 15, h: 22),
+                                          padding: Ei.sym(v: 15, h: 30),
                                           onTap: isLast && j == 2
                                               ? null
                                               : () {
@@ -114,13 +125,17 @@ class _AppTrainerState extends State<AppTrainer> {
                                                     e.onNext?.call(controller);
                                                   }
                                                 },
-                                          child: Text(
-                                            j == 0
-                                                ? text
-                                                : isLast && j == 2
-                                                    ? ''
-                                                    : (widget.skipLabel ?? 'Skip'),
-                                            style: Gfont.white,
+                                          child: SlideUp(
+                                            key: ValueKey(e.key),
+                                            delay: (j * 100),
+                                            child: Text(
+                                              j == 0
+                                                  ? text
+                                                  : isLast && j == 2
+                                                      ? ''
+                                                      : (widget.skipLabel ?? 'Skip'),
+                                              style: Gfont.white,
+                                            ),
                                           ),
                                         );
                                 }),

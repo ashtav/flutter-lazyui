@@ -18,7 +18,7 @@ class AppTrainerView extends StatelessWidget {
       onInit: (control) {
         Utils.timer(() {
           control.open(keys: [forms['name']!.key], orderByKey: true);
-        }, 2.s);
+        }, 300.ms);
 
         // Utils.timer(() {
         //   LzPopupPositioned.show(key1.context,
@@ -57,11 +57,12 @@ class AppTrainerView extends StatelessWidget {
             align: ContentAlign.top),
         Target(
             key: forms['name']!.key,
-            title: 'Button Square',
+            title: 'Widget Square',
             description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
             align: ContentAlign.bottom,
             shape: ShapeLightFocus.RRect),
       ],
+      showSectionLabel: true,
       child: Scaffold(
         appBar: AppBar(
           title: const Text('App Trainer'),
@@ -85,28 +86,26 @@ class AppTrainerView extends StatelessWidget {
           padding: Ei.all(20),
           physics: BounceScroll(),
           children: [
-            Col(
+            LzFormGroup(
+              label: 'Biodata',
+              prefixIcon: La.user,
               children: [
-                LzFormGroup(
-                  label: 'Biodata',
-                  prefixIcon: La.user,
-                  children: [
-                    LzForm.input(
-                      label: 'Name',
-                      hint: 'Enter your name',
-                      model: forms['name'],
-                    ),
-                  ],
+                LzForm.input(
+                  label: 'Name',
+                  hint: 'Enter your name',
+                  model: forms['name'],
                 ),
               ],
+            ),
+            LzButton(
+              text: 'Tap to Show Trainer',
+              onTap: (_) => controller.open(),
             )
           ],
         ),
         floatingActionButton: FloatingActionButton(
           key: key3,
-          onPressed: () {
-            controller.open();
-          },
+          onPressed: () {},
           child: const Icon(La.plus),
         ),
       ),
