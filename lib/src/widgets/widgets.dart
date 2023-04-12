@@ -385,12 +385,11 @@ class NoData extends StatelessWidget {
                   padding: Ei.all(20),
                   decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
                   child: Lazicon.get(LaziconType.nodata, colorFilter: Colors.white)),
-            Textr(
+            Textml(
               message,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
               textAlign: Ta.center,
-              margin: Ei.only(t: 15),
-            ),
+            ).margin(t: 15),
             if (onTap != null)
               Touch(
                 onTap: onTap,
