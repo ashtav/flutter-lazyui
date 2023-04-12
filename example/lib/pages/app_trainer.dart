@@ -17,7 +17,7 @@ class AppTrainerView extends StatelessWidget {
       },
       onInit: (control) {
         Utils.timer(() {
-          control.open(keys: [forms['name']!.key], orderByKey: true);
+          control.show(keys: [forms['name']!.key], orderByKey: true);
         }, 300.ms);
 
         // Utils.timer(() {
@@ -99,7 +99,7 @@ class AppTrainerView extends StatelessWidget {
             ),
             LzButton(
               text: 'Tap to Show Trainer',
-              onTap: (_) => controller.open(),
+              onTap: (_) => controller.show(),
             )
           ],
         ),

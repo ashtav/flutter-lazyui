@@ -27,7 +27,10 @@ class LzOptionView extends StatelessWidget {
                   label: 'Custom Select Option',
                   hint: 'Tap to show option',
                   onTap: (_) {
-                    SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options());
+                    SelectPicker.show(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options(),
+                        onSelect: (o) {
+                      logg(o.toMap());
+                    });
                   })
             ],
           )

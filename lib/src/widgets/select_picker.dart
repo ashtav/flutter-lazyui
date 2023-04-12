@@ -243,9 +243,9 @@ class SelectPicker extends StatelessWidget {
     );
   }
 
-  static open(BuildContext context,
+  static show(BuildContext context,
       {required List<Option> options, Function(Option)? onSelect, Option? initialValue, String? textConfirm, bool fullScreen = false}) {
-    context.bottomSheet(SelectPicker(options: options, fullScreen: fullScreen, onSelect: (option) {}),
+    context.bottomSheet(SelectPicker(options: options, fullScreen: fullScreen, onSelect: onSelect),
         backgroundColor: Colors.transparent, useSafeArea: !fullScreen);
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class AppTrainerController {
-  void Function({List<GlobalKey> keys, bool orderByKey}) open = ({keys = const [], orderByKey = false}) {};
+  void Function({List<GlobalKey> keys, bool orderByKey}) show = ({keys = const [], orderByKey = false}) {};
 }
 
 class AppTrainer extends StatefulWidget {
@@ -151,7 +151,7 @@ class _AppTrainerState extends State<AppTrainer> {
       return showTutorial();
     }
 
-    widget.onInit?.call(AppTrainerController()..open = showTutorial);
+    widget.onInit?.call(AppTrainerController()..show = showTutorial);
   }
 
   void showTutorial({List<GlobalKey> keys = const [], bool orderByKey = false}) {
@@ -187,7 +187,7 @@ class _AppTrainerState extends State<AppTrainer> {
 
   @override
   Widget build(BuildContext context) {
-    widget.controller?.open = showTutorial;
+    widget.controller?.show = showTutorial;
     initTrainer();
 
     return WillPopScope(onWillPop: () async => !isActive, child: widget.child);

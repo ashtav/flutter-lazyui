@@ -237,7 +237,7 @@ class DropdownPositioned extends StatelessWidget {
 | ------------------------------------------------------- */
 
 ///```dart
-/// DropdownDialog.open(context,
+/// DropdownDialog.show(context,
 ///   options: ['Option 1', 'Option 2', 'Option 3'], icons: [Icons.info_outline, Icons.close, Icons.edit],
 ///   offset: const Offset(20, 90), disableds: [2], dangers: [1], onSelect: (o, i) {}
 /// );
@@ -254,7 +254,7 @@ class DropdownDialog extends StatelessWidget {
   /// use `offset` to adjust position of dropdown
   ///
   /// set `contextLess` = `true` to show dropdown based on offset only
-  static void open(BuildContext context,
+  static void show(BuildContext context,
       {List<String> options = const [],
       List<IconData> icons = const [],
       List<int> dangers = const [],

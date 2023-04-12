@@ -89,7 +89,7 @@ class FormView6 extends StatelessWidget {
               label: 'Full Screen Select *',
               hint: 'Select something here',
               onTap: (model) {
-                SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options());
+                SelectPicker.show(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options());
               }),
         ],
       ),
