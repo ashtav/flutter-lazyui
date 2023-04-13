@@ -710,6 +710,7 @@ class LzListView extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
 
+  /// Custom listview with cacheExtent, bounce scroll and default padding
   const LzListView({super.key, this.children = const [], this.padding, this.physics});
 
   @override

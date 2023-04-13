@@ -1,32 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/src/extensions/list_extension.dart';
+import 'package:lazyui/lazyui.dart';
 
-import '../../ext/shimmer.dart';
-
-/// ``` dart
-/// Skeleton(size: 15); // width and height is 15
-/// Skeleton(size: [50, 15]); // width is 50, height is 15
-/// Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
-/// Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
-/// ```
 class Skeleton extends StatelessWidget {
-  final Color baseColor, highlightColor, color;
+  final Color color;
+  final Color? darkColor;
   final double radius;
+  final LzRadius? radiusOnly;
   final EdgeInsets? margin;
-  final bool darkMode;
+  final double brightness;
 
   /// [width, height], or [width:[min, max], height:[min, max]]
   final dynamic size;
 
+  /// ``` dart
+  /// Skeleton(size: 15); // width and height is 15
+  /// Skeleton(size: [50, 15]); // width is 50, height is 15
+  /// Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
+  /// Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
+  /// Skeleton(size: [[15, 50], [5, 15]], radiusOnly: LzRadius());
+  /// ```
   const Skeleton(
       {Key? key,
-      this.baseColor = Colors.black26,
-      this.highlightColor = Colors.black12,
-      this.color = Colors.black54,
+      this.color = Colors.black,
+      this.darkColor,
       this.margin,
       this.size = const [50, 15],
       this.radius = 0,
-      this.darkMode = false})
+      this.radiusOnly,
+      this.brightness = .5})
       : super(key: key);
 
   @override
@@ -41,7 +42,7 @@ class Skeleton extends StatelessWidget {
       List sizes = size;
 
       // size.length < 2, eg: [50]
-      if (size.length < 2) sizes = [size[0], size[0]];
+      if ((size as List).length < 2) sizes = [size[0], size[0]];
 
       bool isSizeWList = sizes[0] is List, isSizeHList = sizes[1] is List;
 
@@ -63,21 +64,61 @@ class Skeleton extends StatelessWidget {
         maxH = sizes[1];
       }
     } else {
-      minW = maxW = minH = maxH = (size is int) ? size.toDouble() : size;
+      minW = maxW = minH = maxH = (size is int) ? (size as int).toDouble() : size as double;
     }
+
+    // prevent brightness out of range
+    double brightness = this.brightness < 0
+        ? 0
+        : this.brightness > 1
+            ? 1
+            : this.brightness;
+
+    // base color
+    double bs = brightness - .2;
+    double bsOpacity = bs < 0
+        ? 0
+        : bs > 1
+            ? 1
+            : bs;
 
     return Container(
       margin: margin,
       child: Shimmer.fromColors(
-        baseColor: baseColor,
-        highlightColor: darkMode ? Colors.white.withOpacity(.5) : highlightColor,
+        baseColor: (darkColor == null ? color : Utils.getInvertedColor(darkColor!)).withOpacity(bsOpacity),
+        highlightColor: (darkColor == null ? color : Utils.getInvertedColor(darkColor!)).withOpacity(brightness),
         child: Container(
           width: [minW, maxW].numInRange(),
           height: [minH, maxH].numInRange(),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius)),
+          decoration: BoxDecoration(
+              color: (darkColor == null ? color : Utils.getInvertedColor(darkColor!)).withOpacity(brightness),
+              borderRadius: radiusOnly != null ? LzRadius.getRadius(radiusOnly!) : BorderRadius.circular(radius)),
         ),
       ),
     );
+  }
+}
+
+class LzRadius {
+  final double tl, tr, bl, br;
+  final double? tlr, blr, ltb, rtb, others, all;
+
+  LzRadius({this.tl = 0, this.tr = 0, this.bl = 0, this.br = 0, this.tlr = 0, this.blr = 0, this.ltb = 0, this.rtb = 0, this.others, this.all});
+
+  // convert LzRadius to BorderRadius
+  static BorderRadius getRadius(LzRadius radius) {
+    return BorderRadius.only(
+      topLeft: Radius.circular(radius.all ?? radius.others ?? radius.tlr ?? radius.ltb ?? radius.tl),
+      topRight: Radius.circular(radius.all ?? radius.others ?? radius.tlr ?? radius.rtb ?? radius.tr),
+      bottomLeft: Radius.circular(radius.all ?? radius.others ?? radius.blr ?? radius.ltb ?? radius.bl),
+      bottomRight: Radius.circular(radius.all ?? radius.others ?? radius.blr ?? radius.rtb ?? radius.br),
+    );
+  }
+}
+
+extension SkeletonExtension on Skeleton {
+  Widget iterate(int value) {
+    return Expanded(child: Col(children: List.generate(value, (i) => this)));
   }
 }

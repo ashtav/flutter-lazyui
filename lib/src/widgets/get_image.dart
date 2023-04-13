@@ -35,7 +35,7 @@ class GetImage extends StatelessWidget {
         fit: fit,
         imageUrl: image,
         progressIndicatorBuilder: (context, url, downloadProgress) {
-          return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
+          return Skeleton(size: size, radius: radius ?? 10);
         },
         errorWidget: (context, url, error) => const Center(),
       );
@@ -82,9 +82,10 @@ class LzImage<T> extends StatelessWidget {
   final Color? color;
   final double? width, height, size;
   final double? radius;
-  final Widget? placeholder;
+  final Widget? placeholder, errorWidget;
 
-  const LzImage(this.image, {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius, this.placeholder});
+  const LzImage(this.image,
+      {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius, this.placeholder, this.errorWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -104,10 +105,11 @@ class LzImage<T> extends StatelessWidget {
       return SizedBox(
         width: width,
         height: height,
-        child: const Center(
-            child: Icon(
-          La.exclamationCircle,
-        )),
+        child: errorWidget ??
+            const Center(
+                child: Icon(
+              La.exclamationCircle,
+            )),
       );
     }
 
@@ -166,7 +168,7 @@ class LzImage<T> extends StatelessWidget {
           width: width,
           height: height,
           progressIndicatorBuilder: (context, url, downloadProgress) => placeholder ?? shimmer,
-          errorWidget: (context, url, error) => const Center(child: Icon(La.exclamationCircle)),
+          errorWidget: (context, url, error) => errorWidget ?? const Center(child: Icon(La.exclamationCircle)),
         );
       }
 
