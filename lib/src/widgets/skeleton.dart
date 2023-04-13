@@ -104,7 +104,7 @@ class LzRadius {
   final double tl, tr, bl, br;
   final double? tlr, blr, ltb, rtb, others, all;
 
-  LzRadius({this.tl = 0, this.tr = 0, this.bl = 0, this.br = 0, this.tlr = 0, this.blr = 0, this.ltb = 0, this.rtb = 0, this.others, this.all});
+  LzRadius({this.tl = 0, this.tr = 0, this.bl = 0, this.br = 0, this.tlr, this.blr, this.ltb, this.rtb, this.others, this.all});
 
   // convert LzRadius to BorderRadius
   static BorderRadius getRadius(LzRadius radius) {

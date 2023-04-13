@@ -873,13 +873,16 @@ class LzPopover extends StatelessWidget {
     ]);
   }
 
-  void show(BuildContext context, {Offset offset = const Offset(20, 0), Widget Function(Widget child)? builder}) {
+  void show(BuildContext context, {Offset offset = const Offset(20, 0), bool isAtBottom = false, Widget Function(Widget child)? builder}) {
     final box = context.findRenderObject() as RenderBox?;
     final o = box?.localToGlobal(Offset.zero);
 
     // get x and y values
     double dx = o?.dx ?? 0;
     double dy = o?.dy ?? 0;
+
+    // get width and height context
+    double height = box?.size.height ?? 0;
 
     double popoverWidth = width ?? 250;
 
@@ -888,6 +891,10 @@ class LzPopover extends StatelessWidget {
         : dx < 0
             ? (0 + offset.dx)
             : dx);
+
+    if (isAtBottom) {
+      dy = dy + height + offset.dy;
+    }
 
     context.dialog(Stack(
       children: [
