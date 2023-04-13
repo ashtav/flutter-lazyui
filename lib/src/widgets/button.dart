@@ -362,4 +362,6 @@ extension LzButtonExtension on LzButton {
         textColor: textColor,
         gradient: gradient,
       );
+
+  Widget sized(double width) => SizedBox(width: width, child: this);
 }
