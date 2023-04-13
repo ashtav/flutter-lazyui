@@ -884,11 +884,10 @@ class LzPopover extends StatelessWidget {
     double popoverWidth = width ?? 250;
 
     dx = (dx > (context.width - popoverWidth)
-            ? (context.width - popoverWidth)
-            : dx < 0
-                ? 0
-                : dx) -
-        offset.dx;
+        ? (context.width - popoverWidth) - offset.dx
+        : dx < 0
+            ? (0 + offset.dx)
+            : dx);
 
     context.dialog(Stack(
       children: [
