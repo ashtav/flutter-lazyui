@@ -38,7 +38,7 @@ class AnimationView extends StatelessWidget {
 
           Container(
                   margin: Ei.only(t: 25),
-                  child: LzPopoper(
+                  child: LzPopover(
                     color: Colors.black.withOpacity(.8),
                     child: Text(
                       Faker.words(15),

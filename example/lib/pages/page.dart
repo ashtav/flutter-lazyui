@@ -18,6 +18,7 @@ part 'expandable_list_view.dart';
 part 'form_view.dart';
 part 'lz_dropdown.dart';
 part 'lz_option_view.dart';
+part 'lz_popover_view.dart';
 part 'nodata.dart';
 part 'skeleton_view.dart';
 part 'toast_view.dart';

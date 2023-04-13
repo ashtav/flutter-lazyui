@@ -798,12 +798,12 @@ class Textml extends StatelessWidget {
 }
 
 /* --------------------------------------------------------------------------
-| LzPopoper
+| LzPopover
 | ---------------------------------------------------------------------------
-| LzPopoper is a widget that displays a pop-up window
+| LzPopover is a widget that displays a pop-up window
 | */
 
-class LzPopoper extends StatelessWidget {
+class LzPopover extends StatelessWidget {
   final Widget? child;
   final Color? color;
   final double? width, maxWidth;
@@ -812,7 +812,7 @@ class LzPopoper extends StatelessWidget {
   final BorderRadiusGeometry? radius;
   final BoxBorder? border;
   final Position? caretAlign;
-  const LzPopoper(
+  const LzPopover(
       {super.key,
       this.child,
       this.color,
@@ -871,6 +871,34 @@ class LzPopoper extends StatelessWidget {
             ),
           ))
     ]);
+  }
+
+  void show(BuildContext context, {Offset offset = const Offset(20, 0), Widget Function(Widget child)? builder}) {
+    final box = context.findRenderObject() as RenderBox?;
+    final o = box?.localToGlobal(Offset.zero);
+
+    // get x and y values
+    double dx = o?.dx ?? 0;
+    double dy = o?.dy ?? 0;
+
+    double popoverWidth = width ?? 250;
+
+    dx = (dx > (context.width - popoverWidth)
+            ? (context.width - popoverWidth)
+            : dx < 0
+                ? 0
+                : dx) -
+        offset.dx;
+
+    context.dialog(Stack(
+      children: [
+        Positioned(
+          left: dx,
+          top: dy,
+          child: builder?.call(this) ?? this,
+        )
+      ],
+    ));
   }
 }
 
