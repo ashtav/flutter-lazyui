@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -63,6 +65,28 @@ extension WidgetExtension on Widget {
   /// YourWidget().hide()
   /// ```
   Visibility hide([bool value = true]) => Visibility(visible: !value, child: this);
+
+  /// ``` dart
+  /// YourWidget().lzBlur()
+  /// ```
+  Widget lzBlur(BuildContext context, {double sigmaX = 5, double sigmaY = 5, Duration? duration, bool show = true}) {
+    return Stack(
+      children: [
+        this,
+        AnimatedOpacity(
+          duration: duration ?? 300.ms,
+          opacity: show ? 1 : 0,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
+            child: SizedBox(
+              width: context.width,
+              height: context.height,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 extension CustomAppbarExtension on AppBar {

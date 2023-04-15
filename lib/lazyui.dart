@@ -51,6 +51,7 @@ export 'src/widgets/get_image.dart';
 export 'src/widgets/lz_bottom_sheet_option.dart';
 export 'src/widgets/lz_dropdown.dart';
 export 'src/widgets/lz_popup.dart';
+export 'src/widgets/lz_profile.dart';
 export 'src/widgets/refreshtor.dart';
 export 'src/widgets/select_picker.dart';
 export 'src/widgets/skeleton.dart';
