@@ -2,6 +2,7 @@ library page;
 
 import 'dart:async';
 import 'dart:math' as math;
+import 'dart:ui';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -23,3 +24,4 @@ part 'lz_button_view.dart';
 part 'nodata.dart';
 part 'skeleton_view.dart';
 part 'toast_view.dart';
+part 'profile_view.dart';

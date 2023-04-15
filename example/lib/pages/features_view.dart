@@ -21,7 +21,8 @@ class FeaturesView extends StatelessWidget {
       'Toast',
       'Skeleton',
       'LzPopover',
-      'LzButton'
+      'LzButton',
+      'Profile Design Example',
     ];
 
     features.sort();
@@ -115,6 +116,10 @@ class Actions {
 
         case 'LzButton':
           context.push(const ButtonView());
+          break;
+
+        case 'Profile Design Example':
+          context.push(const ProfileView());
           break;
         default:
       }

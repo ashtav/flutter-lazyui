@@ -6,8 +6,16 @@ import './constant.dart';
 
 class Faker {
   // generate random words based on length
-  static String words([int length = 3]) {
-    return Lipsum.createWord(length);
+  static String words([int length = 3, int? paragraph]) {
+    String result = Lipsum.createWord(length);
+
+    if (paragraph != null) {
+      for (var i = 0; i < paragraph; i++) {
+        result += '\n\n${Lipsum.createWord(length)}';
+      }
+    }
+
+    return result;
   }
 
   // generate random number based on length
