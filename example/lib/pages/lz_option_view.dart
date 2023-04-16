@@ -1,10 +1,14 @@
 part of page;
 
+List<String> _addresses = List.generate(15, (i) => Faker.address());
+
 class LzOptionView extends StatelessWidget {
   const LzOptionView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    Option? selected;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('LzOption View'),
@@ -33,7 +37,16 @@ class LzOptionView extends StatelessWidget {
                     });
                   })
             ],
-          )
+          ),
+          LzForm.input(
+              label: 'Custom Selective Option',
+              hint: 'Tap to show option',
+              onTap: (_) {
+                LzSelectiveOption.show(context, initValue: selected, options: _addresses.options(values: List.generate(15, (i) => i)),
+                    onSelect: (option) {
+                  selected = option;
+                });
+              })
         ],
       ),
     );

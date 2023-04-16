@@ -8,7 +8,6 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LzProfile(
-      snap: true,
       header: LzProfileHeader(
           image: imageUrl,
           label: 'Ashta Lorem Ipsum',

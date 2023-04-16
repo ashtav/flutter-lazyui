@@ -709,9 +709,11 @@ class LzListView extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
+  final ScrollController? controller;
+  final bool shrinkWrap;
 
   /// Custom listview with cacheExtent, bounce scroll and default padding
-  const LzListView({super.key, this.children = const [], this.padding, this.physics});
+  const LzListView({super.key, this.children = const [], this.padding, this.physics, this.controller, this.shrinkWrap = false});
 
   @override
   Widget build(BuildContext context) {
@@ -728,6 +730,8 @@ class LzListView extends StatelessWidget {
     return StreamBuilder<double>(
         stream: controller.stream,
         builder: (BuildContext context, snap) => ListView(
+              controller: this.controller,
+              shrinkWrap: shrinkWrap,
               physics: physics ?? BounceScroll(),
               cacheExtent: snap.data,
               padding: padding ?? Ei.all(spacing),

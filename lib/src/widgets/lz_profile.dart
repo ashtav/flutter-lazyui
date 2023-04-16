@@ -5,7 +5,7 @@ class LzProfile extends StatelessWidget {
   final LzProfileHeader header;
   final List<Widget> children;
   final bool snap;
-  const LzProfile({super.key, required this.header, this.children = const [], this.snap = false});
+  const LzProfile({super.key, required this.header, this.children = const [], this.snap = true});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,10 @@ class LzProfile extends StatelessWidget {
               children: children,
             ),
 
+            // header
             _ProfileHeader(notifier: notifier),
 
-            // addition widget
+            // floating button
             notifier.watch((state) => Positioned(
                 top: state.frameHeight - 30,
                 right: 20,
@@ -44,8 +45,8 @@ class LzProfile extends StatelessWidget {
             // appbar widget
             Positioned(
               top: context.padding.top + 10,
-              left: 15,
-              right: 15,
+              left: 5,
+              right: 5,
               child: Row(
                 mainAxisAlignment: Maa.spaceBetween,
                 children: [
@@ -119,7 +120,7 @@ class _ProfileHeader extends StatelessWidget {
       double f = state.frameHeight;
 
       // set image size based on scroll value
-      // interpolasi linier dan normalisasi
+      // interpolation linier & normalization
       double inSizes([double defaultValue = 70, finalValue = 20, bool increase = false]) {
         if (f > 200) {
           return defaultValue;
@@ -129,7 +130,6 @@ class _ProfileHeader extends StatelessWidget {
         double sizeRange = defaultValue - finalValue;
         double inverse = 1 - normalized;
 
-        // Menyesuaikan perhitungan berdasarkan parameter increase
         if (increase) {
           return defaultValue + (inverse * sizeRange);
         } else {
@@ -137,62 +137,58 @@ class _ProfileHeader extends StatelessWidget {
         }
       }
 
-      return Stack(
-        children: [
-          GestureDetector(
-            onVerticalDragUpdate: (details) => state.onImageDragUpdate(details),
-            child: Container(
-              color: LzColor.black,
-              height: notifier.frameHeight,
-              width: context.width,
-              child: Stack(
-                children: [
-                  image.lzBlur(context, sigmaX: 35, sigmaY: 35, show: hasMedium).clip(),
-                  Positioned(
-                      bottom: inSizes(20, -15),
-                      left: f > 200 ? 20 : inSizes(20, 150),
-                      right: hasSmall ? (60 * state.header.actions.length).toDouble() : 20,
-                      child: Row(
-                        mainAxisAlignment: Maa.center,
-                        children: [
-                          AnimatedContainer(
-                            duration: 350.ms,
-                            curve: Curves.linearToEaseOut,
-                            width: hasMedium ? inSizes(70, 10) : 0,
-                            height: hasMedium ? inSizes(70, 10) : 0,
-                            margin: Ei.only(r: hasMedium ? 15 : 0),
-                            child: LzImage(
-                              state.header.image,
-                              radius: 50,
+      return GestureDetector(
+        onVerticalDragUpdate: (details) => state.onImageDragUpdate(details),
+        child: Container(
+          color: LzColor.black,
+          height: notifier.frameHeight,
+          width: context.width,
+          child: Stack(
+            children: [
+              image.lzBlur(context, sigmaX: 35, sigmaY: 35, show: hasMedium).clip(),
+              Positioned(
+                  bottom: inSizes(20, -15),
+                  left: f > 200 ? 20 : inSizes(20, 150),
+                  right: hasSmall ? (60 * state.header.actions.length).toDouble() : 20,
+                  child: Row(
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      AnimatedContainer(
+                        duration: 350.ms,
+                        curve: Curves.linearToEaseOut,
+                        width: hasMedium ? inSizes(70, 10) : 0,
+                        height: hasMedium ? inSizes(70, 10) : 0,
+                        margin: Ei.only(r: hasMedium ? 15 : 0),
+                        child: LzImage(
+                          state.header.image,
+                          radius: 50,
+                        ),
+                      ).onTap(() => state.onProfileExpanded()),
+                      Flexible(
+                        child: Col(
+                          children: [
+                            Text(
+                              state.header.label ?? '-',
+                              style: Gfont.fs(inSizes(25, 10)).white.bold,
+                              overflow: Tof.ellipsis,
                             ),
-                          ),
-                          Flexible(
-                            child: Col(
-                              children: [
-                                Text(
-                                  state.header.label ?? '-',
-                                  style: Gfont.fs(inSizes(25, 10)).white.bold,
+                            if (state.header.subLabel != null)
+                              ResizedSwitched(
+                                show: !hasSmall,
+                                child: Text(
+                                  state.header.subLabel ?? '',
+                                  style: Gfont.white,
                                   overflow: Tof.ellipsis,
                                 ),
-                                if (state.header.subLabel != null)
-                                  ResizedSwitched(
-                                    show: !hasSmall,
-                                    child: Text(
-                                      state.header.subLabel ?? '',
-                                      style: Gfont.white,
-                                      overflow: Tof.ellipsis,
-                                    ),
-                                  ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ).ignore()),
-                ],
-              ),
-            ),
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
           ),
-        ],
+        ),
       );
     });
   }
@@ -211,9 +207,9 @@ class _ProfileNotifier extends ChangeNotifier {
     }
 
     if (pixels < 0) {
-      updateImgHeight(defHeight + pixels.abs());
+      setFrameHeight(defHeight + pixels.abs());
     } else {
-      if (frameHeight <= 120) {
+      if (frameHeight <= 101) {
         position = 1;
       } else {
         if (pixels > (defHeight / 3) && position != 2) {
@@ -223,14 +219,13 @@ class _ProfileNotifier extends ChangeNotifier {
         }
       }
 
-      updateImgHeight(defHeight - pixels);
+      setFrameHeight(defHeight - pixels);
     }
   }
 
   void onInit() {
     defHeight = header.height ?? 400;
     frameHeight = defHeight;
-
     notifyListeners();
   }
 
@@ -238,13 +233,12 @@ class _ProfileNotifier extends ChangeNotifier {
     scrollController.addListener(listenToScroll);
   }
 
-  // data
   double defHeight = 0;
   double frameHeight = 0;
-  int position = 3; // available 1, 2, 3
+  int position = 3; // only 1, 2, 3
   bool snap = false;
 
-  void updateImgHeight(double value) {
+  void setFrameHeight(double value) {
     frameHeight = value < 0 ? 0 : value;
 
     if (frameHeight < 100) {
@@ -256,9 +250,8 @@ class _ProfileNotifier extends ChangeNotifier {
   }
 
   void onPointerUp() {
-    double pixels = scrollController.position.pixels;
-
-    logg('---- on pointer up | $pixels | $position | $frameHeight | ${defHeight / 3}');
+    // double pixels = scrollController.position.pixels;
+    // logg('---- on pointer up | $pixels | $position | $frameHeight | ${defHeight / 3}');
 
     if (snap) {
       if (position == 3 && frameHeight < defHeight) {
@@ -298,8 +291,7 @@ class _ProfileNotifier extends ChangeNotifier {
     scrollController.jumpTo(newHeight);
   }
 
-  void state(Function() action) {
-    action();
-    notifyListeners();
+  void onProfileExpanded() {
+    scrollController.animateTo(0, duration: 150.ms, curve: Curves.easeIn);
   }
 }

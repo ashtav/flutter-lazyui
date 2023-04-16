@@ -119,6 +119,6 @@ class LzRadius {
 
 extension SkeletonExtension on Skeleton {
   Widget iterate(int value) {
-    return Expanded(child: Col(children: List.generate(value, (i) => this)));
+    return Col(children: List.generate(value, (i) => this));
   }
 }

@@ -51,7 +51,7 @@ class SkeletonView extends StatelessWidget {
                     ),
                     Skeleton(
                       size: [
-                        [50, context.width],
+                        [50, context.width - 180],
                         15
                       ],
                       radius: 5,
