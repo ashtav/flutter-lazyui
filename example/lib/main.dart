@@ -5,12 +5,13 @@ import 'pages/page.dart';
 import 'theme/theme.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   LazyUi.config(
       radius: 5,
       primaryColor: LzColors.dark,
+      theme: AppTheme.light,
       widgets: () {
-        Utils.setSystemUI(navBarColor: Colors.white);
-
         LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
 
         Errors.config(

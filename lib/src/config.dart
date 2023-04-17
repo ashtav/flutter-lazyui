@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 Map _config = {
-  'radius': 2.0,
+  'radius': 5.0,
   'spacing': 20.0,
   'primary_color': '#212121',
   'text_style': GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black),
@@ -49,10 +49,19 @@ class LazyUi {
   }
 
   // setters
-  static void config({double radius = 5.0, double spacing = 20.0, Color? primaryColor, Function()? widgets}) {
+  static void config({double radius = 5.0, double spacing = 20.0, Color? primaryColor, AppTheme theme = AppTheme.system, Function()? widgets}) {
     _config['radius'] = radius;
     _config['spacing'] = spacing;
     _config['primary_color'] = primaryColor;
+
+    // set theme
+    if (theme == AppTheme.dark) {
+      Utils.setSystemUI(navBarColor: Colors.black);
+    } else if (theme == AppTheme.light) {
+      Utils.setSystemUI(navBarColor: Colors.white);
+    } else {
+      Utils.setSystemUI();
+    }
 
     widgets?.call();
   }
@@ -62,3 +71,5 @@ class Lazy {
   static String assets(String value) => 'packages/lazyui/assets/images/$value';
   static TextStyle? textStyle(BuildContext context) => Theme.of(context).textTheme.bodyMedium;
 }
+
+enum AppTheme { light, dark, system }

@@ -23,6 +23,7 @@ class FeaturesView extends StatelessWidget {
       'LzPopover',
       'LzButton',
       'Profile Design Example',
+      'Refreshtor',
     ];
 
     features.sort();
@@ -120,6 +121,10 @@ class Actions {
 
         case 'Profile Design Example':
           context.push(const ProfileView());
+          break;
+
+        case 'Refreshtor':
+          context.push(const RefreshtorView());
           break;
         default:
       }

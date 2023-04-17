@@ -24,3 +24,4 @@ part 'nodata.dart';
 part 'skeleton_view.dart';
 part 'toast_view.dart';
 part 'profile_view.dart';
+part 'refreshtor_view.dart';
