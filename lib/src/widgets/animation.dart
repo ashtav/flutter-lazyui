@@ -109,7 +109,7 @@ class _LineProgressIndicatorState extends State<LineProgressIndicator> with Sing
         builder: (context, child) {
           return LinearProgressIndicator(
             backgroundColor: widget.backgroundColor ?? Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(widget.progressColor ?? LzColor.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(widget.progressColor ?? LzColors.orange),
             value: _animationController.value,
           );
         },

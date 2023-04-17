@@ -4,6 +4,7 @@ import '../../lazyui.dart';
 
 enum ButtonType { primary, secondary, danger, success, warning, dark, white }
 
+@Deprecated('Use LzButton instead')
 class Button extends StatelessWidget {
   final String? text;
   final IconData? icon;

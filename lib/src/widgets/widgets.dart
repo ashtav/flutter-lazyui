@@ -352,18 +352,18 @@ class NoScrollGlow extends ScrollBehavior {
 
 enum NoDataType { type1, type2 }
 
-class NoData extends StatelessWidget {
+class LzNoData extends StatelessWidget {
   final IconData? icon;
   final String? message, onTapMessage;
   final Function()? onTap;
   final NoDataType type;
-  const NoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap, this.type = NoDataType.type1});
+  const LzNoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap, this.type = NoDataType.type1});
 
   @override
   Widget build(BuildContext context) {
     Color primaryColor = LazyUi.getConfig.primaryColor;
-    String message = this.message ?? LazyUi.getConfig.widgets['no_data']?['message'] ?? 'No Data';
-    String onTapMessage = this.onTapMessage ?? LazyUi.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
+    String message = this.message ?? 'No Data';
+    String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
     return Container(
       padding: Ei.all(20),

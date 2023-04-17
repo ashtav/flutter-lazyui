@@ -178,7 +178,7 @@ class SelectPicker extends StatelessWidget {
                                         overflow: Tof.ellipsis,
                                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                               fontWeight: Fw.bold,
-                                              color: LzColor.black,
+                                              color: LzColors.black,
                                             ),
                                       ),
                                     ));

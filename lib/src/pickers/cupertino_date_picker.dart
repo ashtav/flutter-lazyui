@@ -281,7 +281,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                                     textAlign: Ta.center,
                                     maxLines: 1,
                                     overflow: Tof.ellipsis,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black),
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black),
                                   ),
                                 ));
                           }),
@@ -320,7 +320,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                           overflow: Tof.ellipsis,
                           maxLines: 1,
                           icon: La.calendar,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black))),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black))),
                 ),
             ],
           ),

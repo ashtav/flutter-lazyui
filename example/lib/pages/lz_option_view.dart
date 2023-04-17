@@ -8,6 +8,7 @@ class LzOptionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Option? selected;
+    final forms = LzForm.make(['selective']);
 
     return Scaffold(
       appBar: AppBar(
@@ -41,11 +42,15 @@ class LzOptionView extends StatelessWidget {
           LzForm.input(
               label: 'Custom Selective Option',
               hint: 'Tap to show option',
-              onTap: (_) {
-                LzSelectiveOption.show(context, initValue: selected, options: _addresses.options(values: List.generate(15, (i) => i)),
-                    onSelect: (option) {
+              model: forms['selective'],
+              onTap: (model) {
+                LzSelectiveOption.show(context,
+                    title: 'Select Address',
+                    initValue: selected,
+                    options: _addresses.options(values: List.generate(15, (i) => i)), onSelect: (option) {
+                  model.text = option.option;
                   selected = option;
-                });
+                }, activeColor: Colors.orange, suffix: const Icon(La.angleRight, color: Colors.black45));
               })
         ],
       ),

@@ -2,7 +2,7 @@ import 'dart:developer';
 
 enum LogColor { normal, yellow, blue, green, red, purple, cyan, brightBlue }
 
-Map<LogColor, dynamic> colors = {
+Map<LogColor, dynamic> _colors = {
   LogColor.normal: '0m', // normal
   LogColor.yellow: '93m', // yellow
   LogColor.blue: '34m', // blue
@@ -13,7 +13,7 @@ Map<LogColor, dynamic> colors = {
   LogColor.brightBlue: '94m', // bright blue
 };
 
-String colorize(String value, LogColor color) => '\x1B[${colors[color]}$value\x1B[0m';
+String colorize(String value, LogColor color) => '\x1B[${_colors[color]}$value\x1B[0m';
 
 /// ```dart
 /// // show on debug console with custom color and limit

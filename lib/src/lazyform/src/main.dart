@@ -432,7 +432,7 @@ class LzFormList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LzFormTheme.setActiveColor(LzColor.blue);
+    LzFormTheme.setActiveColor(LzColors.blue);
 
     if (style?.activeColor != null) {
       LzFormTheme.setActiveColor(style!.activeColor!);

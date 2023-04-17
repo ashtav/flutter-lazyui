@@ -174,7 +174,7 @@ class AppIntro2 extends StatelessWidget {
                   children: [
                     Slidebar(
                       active: 0,
-                      activeColor: LzColor.orange,
+                      activeColor: LzColors.orange,
                       size: (i) => [i == 0 ? 13 : 7, 7],
                     ),
                     LzButton(

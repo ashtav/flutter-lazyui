@@ -9,6 +9,7 @@ import 'package:lazyui/lazyui.dart';
 ///   onConfirm: (ok) { }).show(context);
 ///```
 
+@Deprecated('Use LzConfirm instead')
 class Confirm extends StatelessWidget {
   final IconData? icon;
   final double iconSize;
@@ -32,8 +33,8 @@ class Confirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = LazyUi.getConfig.radius;
-    String cancelText = this.cancelText ?? LazyUi.getConfig.widgets['confirm']?['cancel'] ?? 'Cancel';
-    String confirmText = this.confirmText ?? LazyUi.getConfig.widgets['confirm']?['confirm'] ?? 'Confirm';
+    String cancelText = this.cancelText ?? 'Cancel';
+    String confirmText = this.confirmText ?? 'Confirm';
 
     return CenterDialog(
       borderRadius: borderRadius ?? Br.radius(radius),
@@ -112,6 +113,8 @@ class Confirm extends StatelessWidget {
 ///   });
 ///```
 
+String? _cancelText, _confirmText;
+
 class LzConfirm extends StatelessWidget {
   final IconData? icon;
   final double iconSize;
@@ -137,8 +140,8 @@ class LzConfirm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = LazyUi.getConfig.radius;
-    String cancelText = this.cancelText ?? LazyUi.getConfig.widgets['confirm']?['cancel'] ?? 'Cancel';
-    String confirmText = this.confirmText ?? LazyUi.getConfig.widgets['confirm']?['confirm'] ?? 'Confirm';
+    String cancelText = this.cancelText ?? _cancelText ?? 'Cancel';
+    String confirmText = this.confirmText ?? _confirmText ?? 'Confirm';
 
     return CenterDialog(
       borderRadius: this.radius ?? Br.radius(radius),
@@ -203,5 +206,10 @@ class LzConfirm extends StatelessWidget {
 
   Future show(BuildContext context) async {
     showDialog(context: context, builder: (_) => this);
+  }
+
+  static config({String? cancel, String? confirm}) {
+    _cancelText = cancel;
+    _confirmText = confirm;
   }
 }

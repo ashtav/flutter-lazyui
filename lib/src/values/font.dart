@@ -5,13 +5,13 @@ TextStyle gfont = LazyUi.getConfig.textStyle!;
 
 class Gfont {
   // font color
-  static final TextStyle black = gfont.copyWith(color: LzColor.black);
+  static final TextStyle black = gfont.copyWith(color: LzColors.black);
   static final TextStyle white = gfont.copyWith(color: Colors.white);
   static final TextStyle red = gfont.copyWith(color: Colors.redAccent);
-  static final TextStyle orange = gfont.copyWith(color: LzColor.orange);
-  static final TextStyle blue = gfont.copyWith(color: LzColor.blue);
-  static final TextStyle green = gfont.copyWith(color: LzColor.green);
-  static final TextStyle grey = gfont.copyWith(color: LzColor.grey);
+  static final TextStyle orange = gfont.copyWith(color: LzColors.orange);
+  static final TextStyle blue = gfont.copyWith(color: LzColors.blue);
+  static final TextStyle green = gfont.copyWith(color: LzColors.green);
+  static final TextStyle grey = gfont.copyWith(color: LzColors.grey);
 
   // font size
   static final TextStyle fs10 = gfont.copyWith(fontSize: 10);
@@ -39,7 +39,7 @@ extension TextStyleExtension on TextStyle {
   TextStyle get normal => copyWith(fontWeight: FontWeight.normal);
   TextStyle get muted => copyWith(color: Colors.black54);
   TextStyle get white => copyWith(color: Colors.white);
-  TextStyle get black => copyWith(color: LzColor.black);
+  TextStyle get black => copyWith(color: LzColors.black);
 
   TextStyle fsize(double size) => copyWith(fontSize: size);
   TextStyle fcolor(Color color) => copyWith(color: color);

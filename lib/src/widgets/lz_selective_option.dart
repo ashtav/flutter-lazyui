@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 /// ``` dart
-/// LzSelectiveOption.show(context, options: ['See Detail', 'Edit', 'Delete'].options(icons: icons), confirmOnTap: [2], onSelect: (value) {
+/// LzSelectiveOption.show(context, options: [].options() onSelect: (value) {
 ///   logg(value.option);
 /// });
-///
-/// // You can set confirmOnTap: [{2: 'Cancel|Delete'}]
 /// ```
 
 class LzSelectiveOption {
@@ -16,11 +14,11 @@ class LzSelectiveOption {
     IconData? icon,
     Option? initValue,
     required List<Option> options,
-    List confirmOnTap = const [],
     Function(Option)? onSelect,
-    String? cancelLabel,
+    Color? activeColor,
     MainAxisAlignment? alignment,
     bool dismissOnSelect = true,
+    Widget? suffix,
   }) {
     context.bottomSheet(
         _LzSelectiveOptionWidget(
@@ -29,11 +27,11 @@ class LzSelectiveOption {
           icon: icon,
           initValue: initValue,
           options: options,
-          confirmOnTap: confirmOnTap,
           onSelect: onSelect,
-          cancelLabel: cancelLabel,
+          activeColor: activeColor,
           alignment: alignment,
           dismissOnSelect: dismissOnSelect,
+          suffix: suffix,
         ),
         backgroundColor: Colors.transparent,
         enableDrag: true);
@@ -46,11 +44,11 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
   final IconData? icon;
   final Option? initValue;
   final List<Option> options;
-  final List confirmOnTap;
   final Function(Option)? onSelect;
-  final String? cancelLabel;
+  final Color? activeColor;
   final MainAxisAlignment? alignment;
   final bool dismissOnSelect;
+  final Widget? suffix;
 
   const _LzSelectiveOptionWidget(
       {required this.context,
@@ -58,93 +56,113 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
       this.icon,
       this.initValue,
       required this.options,
-      this.confirmOnTap = const [],
       this.onSelect,
-      this.cancelLabel,
+      this.activeColor,
       this.alignment,
-      this.dismissOnSelect = true});
+      this.dismissOnSelect = true,
+      this.suffix});
 
   @override
   Widget build(BuildContext context) {
     List<Option> options = this.options;
     final notifier = LzSelectiveOptionNotifier(options);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      int index = options.indexWhere((e) => e.toMap().toString() == initValue?.toMap().toString());
-      notifier.onSelect(context, initValue, index);
-    });
+    return FutureBuilder(
+        future: Future.delayed(300.ms),
+        builder: (_, snap) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            int index = options.indexWhere((e) => e.toMap().toString() == initValue?.toMap().toString());
+            notifier.toIndex(context, initValue, index);
+          });
 
-    return Column(
-      mainAxisSize: Mas.min,
-      crossAxisAlignment: Caa.start,
-      children: [
-        if (title != null)
-          Textr(
-            title ?? 'Options',
-            style: Gfont.fs20.white.bold,
-            icon: icon ?? La.clipboardList,
-            padding: Ei.all(20),
-          ),
-        Container(
-          decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
-          constraints: BoxConstraints(
-            maxHeight: context.height * 0.65,
-          ),
-          child: ListView(
-            physics: BounceScroll(),
-            shrinkWrap: true,
-            controller: notifier.scrollController,
-            children: List.generate(options.length, (i) {
-              final option = options[i];
-              String label = option.option;
+          if (snap.connectionState == ConnectionState.done) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              int index = options.indexWhere((e) => e.toMap().toString() == initValue?.toMap().toString());
+              notifier.onSelect(context, initValue, index);
+            });
+          }
 
-              return notifier.watch((state) {
-                bool isSelected = state.selected?.toMap().toString() == option.toMap().toString();
+          return Column(
+            mainAxisSize: Mas.min,
+            crossAxisAlignment: Caa.start,
+            children: [
+              if (title != null)
+                Textr(
+                  title ?? 'Options',
+                  style: Gfont.fs20.white.bold,
+                  icon: icon ?? La.clipboardList,
+                  padding: Ei.all(20),
+                ),
+              Container(
+                decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
+                constraints: BoxConstraints(
+                  maxHeight: context.height * 0.65,
+                ),
+                child: AnimatedOpacity(
+                  duration: 300.ms,
+                  opacity: snap.connectionState == ConnectionState.done ? 1 : 0,
+                  child: ListView(
+                    physics: BounceScroll(),
+                    shrinkWrap: true,
+                    controller: notifier.scrollController,
+                    children: List.generate(options.length, (i) {
+                      final option = options[i];
+                      String label = option.option;
 
-                return Opacity(
-                  opacity: option.disabled ? .5 : 1,
-                  child: Stack(
-                    key: state.keys[i],
-                    children: [
-                      InkW(
-                        onTap: option.disabled
-                            ? null
-                            : () {
-                                if (dismissOnSelect) context.pop();
-                                onSelect?.call(option);
-                                state.onSelect(context, option, i);
-                              },
-                        padding: Ei.all(22),
-                        border: Br.only(['t'], except: i == 0),
-                        color: isSelected ? lighten(Colors.blue, mixFactor: .05) : Colors.white,
-                        child: Row(
-                          mainAxisAlignment: alignment ?? Maa.start,
-                          children: [
-                            Text(
-                              label,
-                              style: Gfont.color(isSelected ? Colors.blue : LzColor.black),
-                            ).flexible(),
-                          ],
-                        ),
-                      ),
-                      AnimatedPositioned(
-                          duration: 150.ms,
-                          top: 0,
-                          left: isSelected ? 0 : -5,
-                          child: Container(
-                            width: 5,
-                            height: context.height,
-                            decoration: BoxDecoration(color: LzColor.black),
-                          ))
-                    ],
+                      return notifier.watch((state) {
+                        bool isSelected = state.selected?.toMap().toString() == option.toMap().toString();
+
+                        return Opacity(
+                          opacity: option.disabled ? .5 : 1,
+                          child: Stack(
+                            key: state.keys[i],
+                            children: [
+                              InkW(
+                                onTap: option.disabled
+                                    ? null
+                                    : () {
+                                        if (dismissOnSelect) context.pop();
+                                        onSelect?.call(option);
+                                        state.onSelect(context, option, i, duration: 250.ms);
+                                      },
+                                padding: Ei.all(22),
+                                border: Br.only(['t'], except: i == 0),
+                                color: isSelected ? LzColors.lighten(activeColor ?? Colors.blue, mixFactor: .05) : Colors.white,
+                                child: Row(
+                                  mainAxisAlignment: suffix != null ? Maa.spaceBetween : alignment ?? Maa.start,
+                                  children: [
+                                    Text(
+                                      label,
+                                      style: Gfont.color(isSelected ? activeColor ?? Colors.blue : LzColors.black),
+                                    ).flexible(),
+                                    if (suffix != null)
+                                      Container(
+                                        margin: Ei.only(l: 15),
+                                        child: suffix,
+                                      ),
+                                  ],
+                                ),
+                              ),
+                              AnimatedPositioned(
+                                  duration: 150.ms,
+                                  top: 0,
+                                  left: isSelected ? 0 : -5,
+                                  child: Container(
+                                    width: 5,
+                                    height: context.height,
+                                    decoration: BoxDecoration(color: activeColor ?? Colors.blue),
+                                  ))
+                            ],
+                          ),
+                        );
+                      });
+                    }),
                   ),
-                );
-              });
-            }),
-          ),
-        ).clip(tlr: 8),
-      ],
-    );
+                ),
+              ).clip(tlr: 8)
+            ],
+          );
+        });
   }
 }
 
@@ -160,7 +178,32 @@ class LzSelectiveOptionNotifier extends ChangeNotifier {
     keys = List.generate(options.length, (i) => GlobalKey());
   }
 
-  void onSelect(BuildContext context, Option? value, int i) {
+  void toIndex(BuildContext context, Option? value, int i) {
+    if (i < 0) {
+      return;
+    }
+
+    double fs = Theme.of(context).textTheme.bodyMedium?.fontSize ?? 16.5;
+    final text = TextSpan(text: value?.option ?? '');
+
+    final textPainter = TextPainter(text: text, textDirection: TextDirection.ltr);
+    textPainter.layout();
+    final textWidth = textPainter.width;
+
+    final screenWidth = MediaQuery.of(context).size.width;
+    const paddingWidth = 22 * 2; // 22 is the padding of the list item
+    final remainingWidth = screenWidth - paddingWidth;
+    final rowCount = (textWidth / remainingWidth).ceil();
+
+    final height = (fs + paddingWidth + (fs * rowCount)) - 10.3;
+
+    double to = i * height;
+    // logg('-- jump to: $to');
+
+    scrollController.jumpTo(to);
+  }
+
+  void onSelect(BuildContext context, Option? value, int i, {Duration? duration}) {
     try {
       selected = value;
       notifyListeners();
@@ -169,27 +212,6 @@ class LzSelectiveOptionNotifier extends ChangeNotifier {
         return;
       }
 
-      double fs = 16.5;
-      double p = 22;
-
-      final text = TextSpan(text: value?.option ?? '', style: TextStyle(fontSize: fs));
-
-      final textPainter = TextPainter(text: text, textDirection: TextDirection.ltr);
-      textPainter.layout();
-      final textWidth = textPainter.width;
-
-      final screenWidth = MediaQuery.of(context).size.width;
-      final paddingWidth = p * 2;
-      final remainingWidth = screenWidth - paddingWidth;
-      final rowCount = (textWidth / remainingWidth).ceil();
-
-      final height = (fs + paddingWidth + (fs * rowCount)) - 10.3;
-
-      double to = i * height;
-      // logg('-- jump to: $to');
-
-      scrollController.jumpTo(to);
-
       Utils.timer(() {
         final k = keys[i];
         final context = k.currentContext;
@@ -197,7 +219,7 @@ class LzSelectiveOptionNotifier extends ChangeNotifier {
         if (context != null) {
           Scrollable.ensureVisible(
             context,
-            duration: 300.ms,
+            duration: duration ?? 100.ms,
             curve: Curves.linear,
             alignment: 0.5,
           );
@@ -207,16 +229,4 @@ class LzSelectiveOptionNotifier extends ChangeNotifier {
       Utils.errorCatcher(e, s);
     }
   }
-}
-
-Color lighten(Color color, {double mixFactor = .5}) {
-  // Pastikan mixFactor berada dalam kisaran 0.0 hingga 1.0
-  mixFactor = mixFactor.clamp(0.0, 1.0);
-
-  // Gunakan faktor campuran yang dihitung untuk menciptakan warna yang lebih tipis
-  int red = (color.red * mixFactor + 255 * (1 - mixFactor)).round();
-  int green = (color.green * mixFactor + 255 * (1 - mixFactor)).round();
-  int blue = (color.blue * mixFactor + 255 * (1 - mixFactor)).round();
-
-  return Color.fromARGB(color.alpha, red, green, blue);
 }

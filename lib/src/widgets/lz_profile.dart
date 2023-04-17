@@ -140,7 +140,7 @@ class _ProfileHeader extends StatelessWidget {
       return GestureDetector(
         onVerticalDragUpdate: (details) => state.onImageDragUpdate(details),
         child: Container(
-          color: LzColor.black,
+          color: LzColors.black,
           height: notifier.frameHeight,
           width: context.width,
           child: Stack(

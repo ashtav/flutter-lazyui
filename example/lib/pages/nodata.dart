@@ -9,7 +9,7 @@ class NoDataView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('No Data'),
         ),
-        body: NoData(
+        body: LzNoData(
           message: 'Opps! There is no data to show',
           onTap: () {
             // do something...

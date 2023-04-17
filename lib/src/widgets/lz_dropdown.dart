@@ -257,12 +257,12 @@ class _LzDropdownWidget extends StatelessWidget {
                         child: Row(
                           mainAxisSize: Mas.min,
                           children: [
-                            if (icon != null) Iconr(icon, margin: Ei.only(r: 15), color: option.style?.color ?? LzColor.dark),
+                            if (icon != null) Iconr(icon, margin: Ei.only(r: 15), color: option.style?.color ?? LzColors.dark),
                             Flexible(
                                 child: Text(
                               optionName,
                               style: LazyUi.getConfig.textStyle?.copyWith(
-                                  color: option.style?.color ?? LzColor.dark, fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
+                                  color: option.style?.color ?? LzColors.dark, fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
                             )),
                           ],
                         ),

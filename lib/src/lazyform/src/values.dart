@@ -115,7 +115,7 @@ class FeedbackMessage extends StatelessWidget {
 | Set or get active color for radio, checkbox and switches
 | */
 
-Color _formThemeColor = LzColor.blue;
+Color _formThemeColor = LzColors.blue;
 
 class LzFormTheme {
   static Color get activeColor => _formThemeColor;
