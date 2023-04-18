@@ -350,14 +350,13 @@ class NoScrollGlow extends ScrollBehavior {
   }
 }
 
-enum NoDataType { type1, type2 }
-
 class LzNoData extends StatelessWidget {
   final IconData? icon;
+  final Widget? iconWidget;
   final String? message, onTapMessage;
   final Function()? onTap;
-  final NoDataType type;
-  const LzNoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap, this.type = NoDataType.type1});
+  final EdgeInsetsGeometry? padding;
+  const LzNoData({super.key, this.icon, this.iconWidget, this.message, this.onTapMessage, this.onTap, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -366,25 +365,18 @@ class LzNoData extends StatelessWidget {
     String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
     return Container(
-      padding: Ei.all(20),
+      padding: padding ?? Ei.all(20),
       child: Center(
         child: Column(
           mainAxisAlignment: Maa.center,
           children: [
-            if (type == NoDataType.type1)
-              Iconr(
-                icon ?? Icons.info_outline,
-                color: Colors.black38,
-                size: 50,
-                margin: Ei.only(b: 25),
-              ),
-            if (type == NoDataType.type2)
-              Container(
-                  width: 100,
-                  height: 100,
-                  padding: Ei.all(20),
-                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                  child: Lazicon.get(LaziconType.nodata, colorFilter: Colors.white)),
+            iconWidget ??
+                Iconr(
+                  icon ?? Icons.info_outline,
+                  color: Colors.black38,
+                  size: 50,
+                  margin: Ei.only(b: 25),
+                ),
             Textml(
               message,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),

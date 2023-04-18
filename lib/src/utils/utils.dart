@@ -349,7 +349,8 @@ Try to check [$member]''';
   /// ```
   static Future<String> fileToBase64(File file) async {
     try {
-      String base64Image = base64Encode(file.readAsBytesSync());
+      final bytes = await file.readAsBytes();
+      String base64Image = base64Encode(bytes);
       return base64Image;
     } catch (e) {
       rethrow;
