@@ -15,7 +15,7 @@ class RefreshtorView extends StatelessWidget {
           },
           type: RefrehtorType.curve,
           child: LzListView(
-            children: [Text(Faker.words(35, 5))],
+            children: [Textml('<b>Please pull down to refresh.</b> ${Faker.words(15)}\n'), Text(Faker.words(35, 5))],
           ),
         ));
   }

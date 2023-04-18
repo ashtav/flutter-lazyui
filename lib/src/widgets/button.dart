@@ -105,7 +105,8 @@ class LzButton extends StatelessWidget {
   final IconData? icon;
   final IconAlign iconAlign;
   final Function(LzButtonControl state)? onTap;
-  final double? spacing, radius;
+  final double? radius;
+  final EdgeInsetsGeometry? padding;
   final LzRadius? customRadius;
   final ButtonType type;
   final Color? color;
@@ -118,7 +119,7 @@ class LzButton extends StatelessWidget {
       this.icon,
       this.iconAlign = IconAlign.left,
       this.onTap,
-      this.spacing,
+      this.padding,
       this.radius,
       this.customRadius,
       this.type = ButtonType.white,
@@ -231,7 +232,7 @@ class LzButton extends StatelessWidget {
               ),
               child: InkW(
                 onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
-                padding: Ei.sym(v: gradient ? 17 : 16, h: spacing ?? 20),
+                padding: padding ?? Ei.sym(v: gradient ? 17 : 16, h: 20),
                 radius: customRadius == null ? Br.radius(radius ?? configRadius) : LzRadius.getRadius(customRadius!),
                 color: gradient || outline ? null : buttonColor,
                 border: gradient ? null : Br.all(color: type == ButtonType.white && !outline ? null : color ?? buttonColors[type]),
@@ -317,7 +318,7 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
         customRadius: customRadius,
         type: ButtonType.primary,
@@ -332,7 +333,7 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
         customRadius: customRadius,
         type: ButtonType.secondary,
@@ -347,7 +348,7 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
         customRadius: customRadius,
         type: ButtonType.danger,
@@ -362,7 +363,7 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
         customRadius: customRadius,
         type: ButtonType.success,
@@ -377,7 +378,7 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
         customRadius: customRadius,
         type: ButtonType.warning,
@@ -392,7 +393,7 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
         customRadius: customRadius,
         type: ButtonType.dark,
@@ -419,7 +420,7 @@ extension LzButtonGroupExtension on List<LzButton> {
         text: child.text,
         icon: child.icon,
         onTap: child.onTap,
-        spacing: child.spacing,
+        padding: child.padding,
         radius: child.radius,
         customRadius: direction == Axis.vertical
             ? (i == 0

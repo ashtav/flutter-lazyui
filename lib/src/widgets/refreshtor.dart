@@ -2,7 +2,7 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-enum RefrehtorType { curve, bar }
+enum RefrehtorType { curve, bar, arrow }
 
 class Refreshtor extends StatelessWidget {
   final Future<void> Function() onRefresh;
@@ -31,7 +31,7 @@ class Refreshtor extends StatelessWidget {
           alignment: Alignment.topCenter,
           children: [
             CustomPaint(
-                painter: CurvedShapePainter(value: value * .4, color: backgroundColor),
+                painter: _CurvedShapePainter(value: value * .4, color: backgroundColor),
                 child: AnimatedContainer(
                   duration: 300.ms,
                   width: context.width,
@@ -67,43 +67,96 @@ class Refreshtor extends StatelessWidget {
         );
 
     // bar refresh indicator
-    Widget barRefresh(double value, bool isArmed) => Stack(
+    Widget barRefresh(double value, bool isArmed, bool isFinish) => Stack(
           alignment: Alignment.topCenter,
           children: [
-            SizedBox(
-              width: context.width,
-              child: AnimatedOpacity(
-                duration: 300.ms,
-                opacity: value > 1 ? 1 : value,
-                child: Column(
-                  mainAxisSize: Mas.min,
-                  mainAxisAlignment: Maa.center,
-                  children: [
-                    AnimatedContainer(
-                        margin: Ei.only(t: 35 * value),
-                        duration: 100.ms,
-                        height: 2,
-                        width: 50 * value,
-                        decoration: BoxDecoration(
-                            color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
-                            borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
-                    SlideSwitched(
-                      withOpacity: true,
-                      child: value < .3
-                          ? const None()
-                          : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
-                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  fontSize: 13,
-                                  fontWeight: isArmed ? Fw.bold : Fw.normal,
-                                  color: isArmed
-                                      ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
-                                      : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
-                              margin: Ei.only(t: 15 * value)),
-                    ),
-                  ],
+            if (!isFinish)
+              SizedBox(
+                width: context.width,
+                child: AnimatedOpacity(
+                  duration: 300.ms,
+                  opacity: value > 1 ? 1 : value,
+                  child: Column(
+                    mainAxisSize: Mas.min,
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      AnimatedContainer(
+                          margin: Ei.only(t: 35 * value),
+                          duration: 100.ms,
+                          curve: Curves.linearToEaseOut,
+                          height: 2,
+                          width: 50 * value,
+                          decoration: BoxDecoration(
+                              color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
+                              borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+                      SlideSwitched(
+                        withOpacity: true,
+                        child: value < .2
+                            ? const None()
+                            : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontSize: 13,
+                                    fontWeight: isArmed ? Fw.bold : Fw.normal,
+                                    color: isArmed
+                                        ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
+                                        : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
+                                margin: Ei.only(t: 15 * value)),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+          ],
+        );
+
+    Widget arrowRefresh(double value, bool isArmed, bool isFinish) => Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            if (!isFinish)
+              SizedBox(
+                width: context.width,
+                child: AnimatedOpacity(
+                  duration: 300.ms,
+                  opacity: value > 1 ? 1 : value,
+                  child: Column(
+                    mainAxisSize: Mas.min,
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      SlideSwitched(
+                          direction: SlideDirection.down,
+                          withOpacity: true,
+                          child: value < .1
+                              ? const None()
+                              : Container(
+                                  margin: Ei.only(t: 25 * value),
+                                  child: ResizedSwitched(
+                                    show: true,
+                                    alignment: Alignment.center,
+                                    child: SizedBox(
+                                      key: ValueKey(isArmed),
+                                      width: context.width,
+                                      child: Iconr(
+                                        isArmed ? La.arrowUp : La.arrowDown,
+                                      ).lzBlink(isArmed, 300.ms),
+                                    ),
+                                  ),
+                                )),
+                      SlideSwitched(
+                          withOpacity: true,
+                          child: value < .2
+                              ? const None()
+                              : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                      fontSize: 13,
+                                      fontWeight: isArmed ? Fw.bold : Fw.normal,
+                                      color: isArmed
+                                          ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
+                                          : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
+                                  margin: Ei.only(t: 15 * value))),
+                    ],
+                  ),
+                ),
+              ),
           ],
         );
 
@@ -118,13 +171,14 @@ class Refreshtor extends StatelessWidget {
             AnimatedBuilder(
               animation: controller,
               builder: (BuildContext context, Widget? _) {
-                Color primaryColor = LazyUi.getConfig.primaryColor;
+                // Color primaryColor = LazyUi.getConfig.primaryColor;
                 double value = controller.value;
                 bool isArmed = controller.isArmed;
 
                 Map<RefrehtorType, Widget> contents = {
                   RefrehtorType.curve: curveRefresh(value, isArmed),
-                  RefrehtorType.bar: barRefresh(value, isArmed),
+                  RefrehtorType.bar: barRefresh(value, isArmed, controller.isFinalizing),
+                  RefrehtorType.arrow: arrowRefresh(value, isArmed, controller.isFinalizing),
                 };
 
                 return contents[type]!;
@@ -137,11 +191,11 @@ class Refreshtor extends StatelessWidget {
   }
 }
 
-class CurvedShapePainter extends CustomPainter {
+class _CurvedShapePainter extends CustomPainter {
   final double value;
   final Color? color;
 
-  CurvedShapePainter({required this.value, this.color});
+  _CurvedShapePainter({required this.value, this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

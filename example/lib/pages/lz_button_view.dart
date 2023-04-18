@@ -29,9 +29,9 @@ class ButtonView extends StatelessWidget {
             margin: Ei.only(b: 15, t: 25),
           ),
           [
-            LzButton(text: 'Primary Button', icon: La.user, iconAlign: IconAlign.right, onTap: (state) {}).primary(),
+            LzButton(text: 'Left Align + Icon', icon: La.user, iconAlign: IconAlign.right, onTap: (state) {}).primary(),
             LzButton(
-              text: 'Warning Button',
+              text: 'Right Align',
               onTap: (state) {},
             ).warning(),
           ].group(textAlign: Ta.justify).margin(b: 15),

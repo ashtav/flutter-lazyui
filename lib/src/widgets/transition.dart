@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/src/extensions/duration_extension.dart';
 
@@ -285,7 +286,15 @@ class ResizedSwitched extends StatelessWidget {
   final bool show;
   final bool useOpacity;
   final Axis axis;
-  const ResizedSwitched({Key? key, this.child, this.duration, required this.show, this.useOpacity = true, this.axis = Axis.vertical})
+  final AlignmentGeometry alignment;
+  const ResizedSwitched(
+      {Key? key,
+      this.child,
+      this.duration,
+      required this.show,
+      this.useOpacity = true,
+      this.axis = Axis.vertical,
+      this.alignment = Alignment.centerLeft})
       : super(key: key);
 
   @override
@@ -294,7 +303,7 @@ class ResizedSwitched extends StatelessWidget {
       duration: duration ?? const Duration(milliseconds: 250),
       transitionBuilder: (Widget child, Animation<double> animation) {
         Widget resizedChild = Align(
-          alignment: Alignment.centerLeft,
+          alignment: alignment,
           child: SizeTransition(
             axisAlignment: -1.0,
             axis: axis,

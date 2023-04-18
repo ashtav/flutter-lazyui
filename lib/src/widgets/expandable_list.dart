@@ -13,8 +13,16 @@ class ExpandableList extends StatefulWidget {
   final bool multiple, border, titleEllipsis;
   final int? initValue;
   final double? radius;
+  final EdgeInsetsGeometry? padding;
   const ExpandableList(
-      {Key? key, this.children = const [], this.multiple = false, this.initValue, this.radius, this.border = true, this.titleEllipsis = false})
+      {Key? key,
+      this.children = const [],
+      this.multiple = false,
+      this.initValue,
+      this.radius,
+      this.padding,
+      this.border = true,
+      this.titleEllipsis = false})
       : super(key: key);
 
   @override
@@ -120,35 +128,38 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
         child: Col(
           children: List.generate(length, (i) {
             String title = widget.children[i].title;
+            final controller = controllers[i];
 
             return Container(
               decoration: BoxDecoration(border: Br.only(['t'], except: i == 0)),
               child: Col(
                 children: [
-                  InkW(
-                      onTap: () {
-                        onTap(i);
-                      },
-                      padding: Ei.all(20),
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: Maa.spaceBetween,
-                        children: [
-                          Flexible(
-                              child: Textr(
-                            title,
-                            margin: Ei.only(r: 15),
-                            overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
-                          )),
-                          RotationTransition(turns: turnsTween.animate(controllers[i]), child: const Icon(La.angleRight, color: Colors.black38))
-                        ],
-                      )),
+                  AnimatedBuilder(
+                      animation: controller,
+                      builder: (_, __) => InkW(
+                          onTap: () {
+                            onTap(i);
+                          },
+                          padding: Ei.all(20),
+                          color: Colors.white,
+                          border: Br.only([controller.value > .01 ? 'b' : '']),
+                          child: Row(
+                            mainAxisAlignment: Maa.spaceBetween,
+                            children: [
+                              Flexible(
+                                  child: Textr(
+                                title,
+                                margin: Ei.only(r: 15),
+                                overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
+                              )),
+                              RotationTransition(turns: turnsTween.animate(controller), child: const Icon(La.angleRight, color: Colors.black38))
+                            ],
+                          ))),
                   SizeTransition(
                       axisAlignment: 1.0,
                       sizeFactor: animations[i],
                       child: Container(
-                        padding: Ei.all(20),
-                        decoration: BoxDecoration(border: Br.only(['t'])),
+                        padding: widget.padding ?? Ei.all(20),
                         child: widget.children[i].child,
                       )),
                 ],

@@ -106,7 +106,6 @@ class AppIntro1 extends StatelessWidget {
           LzButton(
               radius: 100,
               text: 'Get Started',
-              spacing: 35,
               icon: La.arrowRight,
               onTap: (_) {
                 _.submit(abortOn: 3.s);
@@ -180,7 +179,6 @@ class AppIntro2 extends StatelessWidget {
                     LzButton(
                         radius: 100,
                         text: 'Get Started',
-                        spacing: 35,
                         icon: La.arrowRight,
                         onTap: (_) {
                           context.push(const FeaturesView());

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -87,6 +88,17 @@ extension WidgetExtension on Widget {
       ],
     );
   }
+
+  Widget lzBlink(bool shouldBlink, [Duration? duration]) {
+    if (shouldBlink) {
+      return _BlinkingWidget(
+        duration: duration ?? 300.s,
+        child: this,
+      );
+    } else {
+      return this;
+    }
+  }
 }
 
 extension CustomAppbarExtension on AppBar {
@@ -136,6 +148,49 @@ class CustomBackButton extends StatelessWidget {
       onPressed: () {
         Navigator.maybePop(context);
       },
+    );
+  }
+}
+
+class _BlinkingWidget extends StatefulWidget {
+  final Widget child;
+  final Duration duration;
+
+  const _BlinkingWidget({required this.child, required this.duration});
+
+  @override
+  _BlinkingWidgetState createState() => _BlinkingWidgetState();
+}
+
+class _BlinkingWidgetState extends State<_BlinkingWidget> {
+  bool _visible = true;
+  Timer? timer;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (mounted) {
+      timer = Timer.periodic(widget.duration, (timer) {
+        setState(() {
+          _visible = !_visible;
+        });
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedOpacity(
+      opacity: _visible ? 1.0 : 0.0,
+      duration: widget.duration,
+      child: widget.child,
     );
   }
 }

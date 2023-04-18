@@ -117,3 +117,43 @@ class _LineProgressIndicatorState extends State<LineProgressIndicator> with Sing
     );
   }
 }
+
+class RotateAnimated extends StatefulWidget {
+  final Widget child;
+  final double angle;
+  final Duration? duration;
+
+  const RotateAnimated({super.key, required this.child, required this.angle, this.duration});
+
+  @override
+  State<RotateAnimated> createState() => _RotateAnimatedState();
+}
+
+class _RotateAnimatedState extends State<RotateAnimated> with TickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: widget.duration ?? 300.ms,
+      vsync: this,
+    )..repeat();
+    _animation = Tween<double>(begin: 0, end: widget.angle).animate(_animationController);
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RotationTransition(
+      turns: _animation,
+      child: widget.child,
+    );
+  }
+}
