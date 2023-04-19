@@ -101,6 +101,7 @@ extension ListMapExtension on List<Map> {
 | */
 
 extension ListStringExtension on List<String> {
+  // convert list string to Option Widget
   List<Option> options(
       {List values = const [],
       List<IconData> icons = const [],
@@ -126,5 +127,23 @@ extension ListStringExtension on List<String> {
           style: style));
     }
     return options;
+  }
+
+  // convert list string to Text Widget
+
+  /// ``` dart
+  /// ['A', 'B', 'C', 'D', 'E'].toTexts()
+  /// ```
+  List<Text> toTexts({TextStyle? style, TextAlign? align, TextOverflow? overflow}) {
+    List<Text> texts = [];
+    for (int i = 0; i < length; i++) {
+      texts.add(Text(
+        this[i],
+        style: style,
+        textAlign: align,
+        overflow: overflow,
+      ));
+    }
+    return texts;
   }
 }

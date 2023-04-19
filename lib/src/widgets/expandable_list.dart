@@ -10,7 +10,7 @@ class ExpandableContent {
 
 class ExpandableList extends StatefulWidget {
   final List<ExpandableContent> children;
-  final bool multiple, border, titleEllipsis;
+  final bool multiple, border, titleEllipsis, focusOnExpand;
   final int? initValue;
   final double? radius;
   final EdgeInsetsGeometry? padding;
@@ -22,7 +22,8 @@ class ExpandableList extends StatefulWidget {
       this.radius,
       this.padding,
       this.border = true,
-      this.titleEllipsis = false})
+      this.titleEllipsis = false,
+      this.focusOnExpand = true})
       : super(key: key);
 
   @override
@@ -130,6 +131,8 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
             String title = widget.children[i].title;
             final controller = controllers[i];
 
+            final gkey = GlobalKey();
+
             return Container(
               decoration: BoxDecoration(border: Br.only(['t'], except: i == 0)),
               child: Col(
@@ -137,8 +140,15 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
                   AnimatedBuilder(
                       animation: controller,
                       builder: (_, __) => InkW(
-                          onTap: () {
+                          key: gkey,
+                          onTap: () async {
                             onTap(i);
+
+                            // scroll to this widget
+                            if (gkey.currentContext != null && widget.focusOnExpand && controller.value <= 0) {
+                              await Future.delayed(300.ms);
+                              Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
+                            }
                           },
                           padding: Ei.all(20),
                           color: Colors.white,

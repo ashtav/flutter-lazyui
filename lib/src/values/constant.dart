@@ -28,6 +28,22 @@ class LzColors {
   }
 
   /// ```dart
+  /// LzColors.darken(Colors.orange);
+  /// ```
+
+  static Color darken(Color color, {double mixFactor = .5}) {
+    // make sure mixFactor is in the range 0.0 to 1.0
+    mixFactor = mixFactor.clamp(0.0, 1.0);
+
+    // use the calculated mix factor to create a darkened color
+    int red = (color.red * (1 - mixFactor)).round();
+    int green = (color.green * (1 - mixFactor)).round();
+    int blue = (color.blue * (1 - mixFactor)).round();
+
+    return Color.fromARGB(color.alpha, red, green, blue);
+  }
+
+  /// ```dart
   /// LzColors.inverse(Colors.black); // white
   /// ```
 

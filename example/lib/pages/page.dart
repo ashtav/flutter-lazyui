@@ -25,3 +25,4 @@ part 'skeleton_view.dart';
 part 'toast_view.dart';
 part 'profile_view.dart';
 part 'refreshtor_view.dart';
+part 'popup_dialog_view.dart';

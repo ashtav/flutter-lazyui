@@ -405,6 +405,7 @@ extension LzButtonExtension on LzButton {
       );
 
   Widget sized(double width) => SizedBox(width: width, child: this);
+  Widget block() => SizedBox(width: double.infinity, child: this);
 }
 
 extension LzButtonGroupExtension on List<LzButton> {

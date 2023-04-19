@@ -192,10 +192,10 @@ class CenterDialog extends StatelessWidget {
   final double margin;
   final BorderRadius? borderRadius;
   final String? closeMessage;
-  final bool tapClose;
+  final bool showTapClose;
 
   const CenterDialog(
-      {Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero, this.closeMessage, this.tapClose = false})
+      {Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero, this.closeMessage, this.showTapClose = false})
       : super(key: key);
 
   @override
@@ -209,7 +209,7 @@ class CenterDialog extends StatelessWidget {
               color: Colors.transparent,
               child: Container(margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child))),
         ),
-        if (tapClose) IgnorePointer(child: Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
+        if (showTapClose) IgnorePointer(child: Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
       ],
     );
   }
@@ -790,6 +790,38 @@ class Textml extends StatelessWidget {
     processText(text, textStyle: textStyle);
 
     return textSpans;
+  }
+}
+
+/* --------------------------------------------------------------------------
+| IntrinsicButton
+| ---------------------------------------------------------------------------
+| IntrinsicButton is a widget that displays a button with a equal width
+| */
+
+class IntrinsicButton extends StatelessWidget {
+  final List<Widget> children;
+  final bool withBorder;
+  final EdgeInsetsGeometry? padding;
+  final Function(int)? onTap;
+  const IntrinsicButton({super.key, this.children = const [], this.withBorder = true, this.padding, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(border: withBorder ? Br.only(['t']) : null),
+      child: Intrinsic(
+        children: List.generate(children.length, (i) {
+          return Expanded(
+              child: InkW(
+            onTap: onTap == null ? null : () => onTap?.call(i),
+            padding: padding ?? Ei.all(20),
+            border: withBorder ? Br.only(['l'], except: i == 0) : null,
+            child: children[i],
+          ));
+        }),
+      ),
+    );
   }
 }
 

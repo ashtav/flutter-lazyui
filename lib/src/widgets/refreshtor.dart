@@ -10,48 +10,60 @@ class Refreshtor extends StatelessWidget {
   final String? text, releaseText;
   final Color? indicatorColor, textColor, releaseTextColor, backgroundColor;
   final RefrehtorType type;
+  final double offsetToArmed;
 
-  const Refreshtor({
-    Key? key,
-    required this.onRefresh,
-    required this.child,
-    this.text,
-    this.releaseText,
-    this.indicatorColor,
-    this.textColor,
-    this.releaseTextColor,
-    this.backgroundColor,
-    this.type = RefrehtorType.bar,
-  }) : super(key: key);
+  const Refreshtor(
+      {Key? key,
+      required this.onRefresh,
+      required this.child,
+      this.text,
+      this.releaseText,
+      this.indicatorColor,
+      this.textColor,
+      this.releaseTextColor,
+      this.backgroundColor,
+      this.type = RefrehtorType.bar,
+      this.offsetToArmed = 80})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // curve refresh indicator
-    Widget curveRefresh(double value, bool isArmed) => Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            CustomPaint(
-                painter: _CurvedShapePainter(value: value * .4, color: backgroundColor),
-                child: AnimatedContainer(
-                  duration: 300.ms,
-                  width: context.width,
-                  height: value < .2 ? 0 : 55 * value,
-                )),
-            AnimatedOpacity(
-              duration: 300.ms,
-              opacity: value > 1 ? 1 : value,
-              child: Column(
-                mainAxisSize: Mas.min,
-                mainAxisAlignment: Maa.center,
-                children: [
-                  AnimatedContainer(
-                      margin: Ei.only(b: 15 * value),
-                      duration: 100.ms,
-                      height: 2 * value,
-                      width: context.width * value,
-                      decoration: BoxDecoration(
-                          color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
-                          borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+    Widget curveRefresh(double value, IndicatorController controller) {
+      bool isArmed = controller.isArmed;
+      bool isFinal = controller.isFinalizing;
+      bool isLoading = controller.isLoading;
+
+      return Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          CustomPaint(
+              painter: _CurvedShapePainter(value: isLoading || isFinal ? 0 : value * .4, color: backgroundColor),
+              child: AnimatedContainer(
+                duration: 300.ms,
+                width: context.width,
+                height: isLoading || isFinal
+                    ? 0
+                    : value < .2
+                        ? 0
+                        : 55 * value,
+              )),
+          AnimatedOpacity(
+            duration: 300.ms,
+            opacity: value > 1 ? 1 : value,
+            child: Column(
+              mainAxisSize: Mas.min,
+              mainAxisAlignment: Maa.center,
+              children: [
+                AnimatedContainer(
+                    margin: Ei.only(b: 15 * value),
+                    duration: 100.ms,
+                    height: 2 * value,
+                    width: context.width * value,
+                    decoration: BoxDecoration(
+                        color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
+                        borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+                if (!isLoading && !isFinal)
                   Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                           fontSize: 13,
@@ -60,36 +72,96 @@ class Refreshtor extends StatelessWidget {
                               ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
                               : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
                       margin: Ei.only(t: 5 * value))
-                ],
-              ),
+              ],
             ),
-          ],
-        );
+          ),
+        ],
+      );
+    }
 
     // bar refresh indicator
-    Widget barRefresh(double value, bool isArmed, bool isFinish) => Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            if (!isFinish)
-              SizedBox(
-                width: context.width,
-                child: AnimatedOpacity(
-                  duration: 300.ms,
-                  opacity: value > 1 ? 1 : value,
-                  child: Column(
-                    mainAxisSize: Mas.min,
-                    mainAxisAlignment: Maa.center,
-                    children: [
-                      AnimatedContainer(
-                          margin: Ei.only(t: 35 * value),
-                          duration: 100.ms,
-                          curve: Curves.linearToEaseOut,
-                          height: 2,
-                          width: 50 * value,
-                          decoration: BoxDecoration(
-                              color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
-                              borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
-                      SlideSwitched(
+    Widget barRefresh(double value, IndicatorController controller) {
+      bool isArmed = controller.isArmed;
+      bool isFinal = controller.isFinalizing;
+      bool isLoading = controller.isLoading;
+
+      return Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          if (!isLoading && !isFinal)
+            SizedBox(
+              width: context.width,
+              child: AnimatedOpacity(
+                duration: 300.ms,
+                opacity: value > 1 ? 1 : value,
+                child: Column(
+                  mainAxisSize: Mas.min,
+                  mainAxisAlignment: Maa.center,
+                  children: [
+                    AnimatedContainer(
+                        margin: Ei.only(t: 35 * value),
+                        duration: 100.ms,
+                        curve: Curves.linearToEaseOut,
+                        height: 2,
+                        width: 50 * value,
+                        decoration: BoxDecoration(color: indicatorColor ?? LzColors.dark, borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+                    SlideSwitched(
+                      withOpacity: true,
+                      child: value < .2
+                          ? const None()
+                          : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  fontSize: 13,
+                                  fontWeight: isArmed ? Fw.bold : Fw.normal,
+                                  color: isArmed ? (releaseTextColor ?? LzColors.dark) : textColor ?? LzColors.dark),
+                              margin: Ei.only(t: 15 * value)),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
+      );
+    }
+
+    Widget arrowRefresh(double value, IndicatorController controller) {
+      bool isArmed = controller.isArmed;
+      bool isFinal = controller.isFinalizing;
+      bool isLoading = controller.isLoading;
+
+      return Stack(
+        alignment: Alignment.topCenter,
+        children: [
+          if (!isLoading && !isFinal)
+            SizedBox(
+              width: context.width,
+              child: AnimatedOpacity(
+                duration: 300.ms,
+                opacity: value > 1 ? 1 : value,
+                child: Column(
+                  mainAxisSize: Mas.min,
+                  mainAxisAlignment: Maa.center,
+                  children: [
+                    SlideSwitched(
+                        direction: SlideDirection.down,
+                        withOpacity: true,
+                        child: value < .1
+                            ? const None()
+                            : Container(
+                                margin: Ei.only(t: 25 * value),
+                                child: ResizedSwitched(
+                                  show: true,
+                                  alignment: Alignment.center,
+                                  child: SizedBox(
+                                    key: ValueKey(isArmed),
+                                    width: context.width,
+                                    child: Iconr(
+                                      isArmed ? La.arrowUp : La.arrowDown,
+                                    ).lzBlink(isArmed, 300.ms),
+                                  ),
+                                ),
+                              )),
+                    SlideSwitched(
                         withOpacity: true,
                         child: value < .2
                             ? const None()
@@ -97,71 +169,19 @@ class Refreshtor extends StatelessWidget {
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                     fontSize: 13,
                                     fontWeight: isArmed ? Fw.bold : Fw.normal,
-                                    color: isArmed
-                                        ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
-                                        : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
-                                margin: Ei.only(t: 15 * value)),
-                      ),
-                    ],
-                  ),
+                                    color: isArmed ? (releaseTextColor ?? LzColors.dark) : textColor ?? LzColors.dark),
+                                margin: Ei.only(t: 15 * value))),
+                  ],
                 ),
               ),
-          ],
-        );
-
-    Widget arrowRefresh(double value, bool isArmed, bool isFinish) => Stack(
-          alignment: Alignment.topCenter,
-          children: [
-            if (!isFinish)
-              SizedBox(
-                width: context.width,
-                child: AnimatedOpacity(
-                  duration: 300.ms,
-                  opacity: value > 1 ? 1 : value,
-                  child: Column(
-                    mainAxisSize: Mas.min,
-                    mainAxisAlignment: Maa.center,
-                    children: [
-                      SlideSwitched(
-                          direction: SlideDirection.down,
-                          withOpacity: true,
-                          child: value < .1
-                              ? const None()
-                              : Container(
-                                  margin: Ei.only(t: 25 * value),
-                                  child: ResizedSwitched(
-                                    show: true,
-                                    alignment: Alignment.center,
-                                    child: SizedBox(
-                                      key: ValueKey(isArmed),
-                                      width: context.width,
-                                      child: Iconr(
-                                        isArmed ? La.arrowUp : La.arrowDown,
-                                      ).lzBlink(isArmed, 300.ms),
-                                    ),
-                                  ),
-                                )),
-                      SlideSwitched(
-                          withOpacity: true,
-                          child: value < .2
-                              ? const None()
-                              : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      fontSize: 13,
-                                      fontWeight: isArmed ? Fw.bold : Fw.normal,
-                                      color: isArmed
-                                          ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
-                                          : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
-                                  margin: Ei.only(t: 15 * value))),
-                    ],
-                  ),
-                ),
-              ),
-          ],
-        );
+            ),
+        ],
+      );
+    }
 
     return CustomRefreshIndicator(
         onRefresh: onRefresh,
+        offsetToArmed: offsetToArmed,
         builder: (
           BuildContext context,
           Widget child,
@@ -173,12 +193,11 @@ class Refreshtor extends StatelessWidget {
               builder: (BuildContext context, Widget? _) {
                 // Color primaryColor = LazyUi.getConfig.primaryColor;
                 double value = controller.value;
-                bool isArmed = controller.isArmed;
 
                 Map<RefrehtorType, Widget> contents = {
-                  RefrehtorType.curve: curveRefresh(value, isArmed),
-                  RefrehtorType.bar: barRefresh(value, isArmed, controller.isFinalizing),
-                  RefrehtorType.arrow: arrowRefresh(value, isArmed, controller.isFinalizing),
+                  RefrehtorType.curve: curveRefresh(value, controller),
+                  RefrehtorType.bar: barRefresh(value, controller),
+                  RefrehtorType.arrow: arrowRefresh(value, controller),
                 };
 
                 return contents[type]!;

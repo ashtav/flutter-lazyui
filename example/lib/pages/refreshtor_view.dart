@@ -5,13 +5,18 @@ class RefreshtorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Future getData() async {
+      await Future.delayed(1.s);
+      LzToast.show('Refreshed!', position: Position.center, icon: La.checkCircle);
+    }
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Refreshtor'),
         ),
         body: Refreshtor(
           onRefresh: () async {
-            LzToast.show('Refreshing...', position: Position.center, icon: La.infoCircle);
+            await getData();
           },
           type: RefrehtorType.curve,
           child: LzListView(
