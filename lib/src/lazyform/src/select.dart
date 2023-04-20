@@ -65,10 +65,6 @@ class Select extends StatelessWidget {
         if (notifier.controller.text.trim().isNotEmpty) {
           notifier.setTextLength(notifier.controller.text.length);
         }
-
-        notifier.controller.addListener(() {
-          notifier.setTextLength(notifier.controller.text.length);
-        });
       }
 
       // set options
@@ -161,6 +157,10 @@ class Select extends StatelessWidget {
 
                                   notifier.setOption(option);
                                   onSelect?.call(selectController);
+
+                                  if ((formListAncestor?.cleanOnType ?? false) && !notifier.data['valid']) {
+                                    notifier.clear();
+                                  }
                                 }),
                             backgroundColor: Colors.transparent);
                       }

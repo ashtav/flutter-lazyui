@@ -138,6 +138,10 @@ class Radio extends StatelessWidget {
                                     : () {
                                         notifier.setOption(options[i]);
                                         onChange?.call(options[i]);
+
+                                        if ((formListAncestor?.cleanOnType ?? false) && !notifier.data['valid']) {
+                                          notifier.clear();
+                                        }
                                       },
                                 margin: Ei.only(b: 10),
                                 child: Row(

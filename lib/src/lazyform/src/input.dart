@@ -16,6 +16,7 @@ class Input extends StatelessWidget {
   final Function(String)? onChange, onSubmit;
   final Function(TextEditingController)? onTap;
   final IconData? suffixIcon;
+  final LzInputicon? suffix;
   final LzFormLabelStyle? labelStyle;
 
   /// The length of the list must be 2, the first is the visible icon, the second is the hidden icon
@@ -44,6 +45,7 @@ class Input extends StatelessWidget {
       this.onSubmit,
       this.onTap,
       this.suffixIcon,
+      this.suffix,
       this.obsecureIcons = const [],
       this.labelStyle});
 
@@ -92,13 +94,17 @@ class Input extends StatelessWidget {
 
         notifier.controller.addListener(() {
           notifier.setTextLength(notifier.controller.text.length);
+
+          if (onTap != null && notifier.controller.text.isNotEmpty) {
+            notifier.clear();
+          }
         });
       }
     });
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isSuffix = obsecureToggle || onTap != null || suffixIcon != null;
+    bool isSuffix = obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
     bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // get text style
@@ -157,13 +163,25 @@ class Input extends StatelessWidget {
     | Suffix Widget
     | */
 
+    // adjust suffix style
+    LzInputicon? adjustSuffix;
+
+    if (suffix != null) {
+      adjustSuffix = LzInputicon(
+        icon: suffix!.icon,
+        borderColor: suffix!.borderColor ?? (formListAncestor?.style?.inputBorderColor ?? Colors.black12),
+        onTap: suffix!.onTap,
+      );
+    }
+
     Widget suffixWidget = isSuffix
-        ? Iconr(
-            suffixIcon ?? La.angleDown,
-            color: Colors.black45,
-            padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
-          )
+        ? adjustSuffix ??
+            Iconr(
+              suffixIcon ?? La.angleDown,
+              color: Colors.black45,
+              padding: Ei.only(h: 15, v: 15),
+              border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+            )
         : const None();
 
     Widget field = ClipRRect(
@@ -198,20 +216,25 @@ class Input extends StatelessWidget {
                 children: [
                   Col(
                     children: [
-                      TextInputTransparent(
-                        hint: hint,
-                        controller: model?.controller,
-                        maxLength: maxLength,
-                        maxLines: maxLines,
-                        node: focusNode,
-                        enabled: enabled,
-                        autofocus: autofocus,
-                        obsecure: obsecureToggle ? notifier.obsecure : obsecure,
-                        keyboard: keyboard,
-                        formatters: formatters,
-                        onChange: onChange,
-                        onSubmit: onSubmit,
-                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: isSuffix ? 65 : 15),
+                      FocusScope(
+                        onFocusChange: (value) {
+                          if (!value && notifier.controller.text.trim().isNotEmpty) notifier.clear();
+                        },
+                        child: TextInputTransparent(
+                          hint: hint,
+                          controller: model?.controller,
+                          maxLength: maxLength,
+                          maxLines: maxLines,
+                          node: focusNode,
+                          enabled: enabled,
+                          autofocus: autofocus,
+                          obsecure: obsecureToggle ? notifier.obsecure : obsecure,
+                          keyboard: keyboard,
+                          formatters: formatters,
+                          onChange: onChange,
+                          onSubmit: onSubmit,
+                          contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: isSuffix ? 65 : 15),
+                        ),
                       ),
 
                       /* ----------------------------------------------------

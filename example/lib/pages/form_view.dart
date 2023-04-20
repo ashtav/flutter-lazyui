@@ -14,6 +14,7 @@ class FormView extends StatelessWidget {
         title: const Text('Form View'),
       ),
       body: LzFormList(
+        cleanOnType: true,
         style: LzFormStyle(activeColor: LzColors.dark, inputBorderColor: Colors.black26, type: FormType.topAligned),
         children: [
           LzForm.input(label: 'Your Name *', hint: 'Input your name', indicator: true, model: forms['name']),
@@ -90,6 +91,15 @@ class FormView extends StatelessWidget {
           ),
           LzForm.number(label: 'Number *', hint: 'Input your number', model: forms['number'], min: 25, max: 100, readonly: false),
           LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
+          LzForm.input(
+              label: 'Input with Suffix',
+              hint: 'You can type or tap suffix',
+              suffix: LzInputicon(
+                icon: La.mapMarked,
+                onTap: () {
+                  LzToast.show('Open address', icon: La.mapMarked);
+                },
+              )),
           LzForm.switches(label: 'Active|Inactive'),
           const SizedBox(
             height: 50,
@@ -127,7 +137,7 @@ class FormView extends StatelessWidget {
 
 class MyController {
   static Future<List<Map<String, dynamic>>> getProvince() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(500.ms);
     return [
       {'id': 1, 'name': 'Bali'},
       {'id': 2, 'name': 'Jakarta'},

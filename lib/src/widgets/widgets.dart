@@ -673,14 +673,14 @@ class Loader extends StatelessWidget {
     return Container(margin: margin, child: SizedBox(width: size, height: size, child: CircularProgressIndicator(color: color, strokeWidth: stroke)));
   }
 
-  static Widget bar({String? message, bool center = true}) {
+  static Widget bar({String? message, bool center = true, double size = 90}) {
     TextStyle? textStyle = LazyUi.getConfig.textStyle;
 
     Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(
         Lazy.assets('loading-bar.gif'),
-        width: 90,
-        height: 90,
+        width: size,
+        height: size,
         fit: BoxFit.contain,
       ),
       message == null ? const None() : Text(message, style: textStyle?.copyWith(color: Colors.black54))

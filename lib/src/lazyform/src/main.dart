@@ -104,6 +104,7 @@ class LzForm {
           Function(String value)? onSubmit,
           Function(TextEditingController model)? onTap,
           IconData? suffixIcon,
+          LzInputicon? suffix,
           List<IconData> obsecureIcons = const [],
           LzFormLabelStyle? labelStyle}) =>
       Input(
@@ -125,6 +126,7 @@ class LzForm {
           onSubmit: onSubmit,
           onTap: onTap,
           suffixIcon: suffixIcon,
+          suffix: suffix,
           obsecureIcons: obsecureIcons,
           labelStyle: labelStyle);
 
@@ -428,7 +430,10 @@ class LzFormList extends StatelessWidget {
   final ScrollPhysics? physics;
   final LzFormStyle? style;
 
-  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.style});
+  /// If true, the form will be cleared from errors messages when typing
+  final bool cleanOnType;
+
+  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.style, this.cleanOnType = false});
 
   @override
   Widget build(BuildContext context) {

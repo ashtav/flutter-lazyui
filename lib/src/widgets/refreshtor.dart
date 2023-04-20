@@ -157,6 +157,7 @@ class Refreshtor extends StatelessWidget {
                                     width: context.width,
                                     child: Iconr(
                                       isArmed ? La.arrowUp : La.arrowDown,
+                                      color: indicatorColor ?? LzColors.dark,
                                     ).lzBlink(isArmed, 300.ms),
                                   ),
                                 ),
