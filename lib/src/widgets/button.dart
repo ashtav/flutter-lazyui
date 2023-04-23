@@ -109,8 +109,7 @@ class LzButton extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final LzRadius? customRadius;
   final ButtonType type;
-  final Color? color;
-  final Color? textColor;
+  final Color? color, textColor, borderColor;
   final TextAlign textAlign;
   final bool gradient, outline;
   const LzButton(
@@ -125,6 +124,7 @@ class LzButton extends StatelessWidget {
       this.type = ButtonType.white,
       this.color,
       this.textColor,
+      this.borderColor,
       this.textAlign = TextAlign.center,
       this.gradient = false,
       this.outline = false});
@@ -235,7 +235,7 @@ class LzButton extends StatelessWidget {
                 padding: padding ?? Ei.sym(v: gradient ? 17 : 16, h: 20),
                 radius: customRadius == null ? Br.radius(radius ?? configRadius) : LzRadius.getRadius(customRadius!),
                 color: gradient || outline ? null : buttonColor,
-                border: gradient ? null : Br.all(color: type == ButtonType.white && !outline ? null : color ?? buttonColors[type]),
+                border: gradient ? null : Br.all(color: borderColor ?? (type == ButtonType.white && !outline ? null : color ?? buttonColors[type])),
                 child: Row(
                   mainAxisAlignment: aligns[textAlign] ?? Maa.center,
                   mainAxisSize: Mas.min,
@@ -327,6 +327,8 @@ extension LzButtonExtension on LzButton {
         iconAlign: iconAlign,
         gradient: gradient,
         outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton secondary([Color? textColor]) => LzButton(
@@ -342,6 +344,8 @@ extension LzButtonExtension on LzButton {
         iconAlign: iconAlign,
         gradient: gradient,
         outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton danger([Color? textColor]) => LzButton(
@@ -357,6 +361,8 @@ extension LzButtonExtension on LzButton {
         iconAlign: iconAlign,
         gradient: gradient,
         outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton success([Color? textColor]) => LzButton(
@@ -372,6 +378,8 @@ extension LzButtonExtension on LzButton {
         iconAlign: iconAlign,
         gradient: gradient,
         outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton warning([Color? textColor]) => LzButton(
@@ -387,6 +395,8 @@ extension LzButtonExtension on LzButton {
         iconAlign: iconAlign,
         gradient: gradient,
         outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton dark([Color? textColor]) => LzButton(
@@ -402,6 +412,25 @@ extension LzButtonExtension on LzButton {
         iconAlign: iconAlign,
         gradient: gradient,
         outline: outline,
+        color: color,
+        borderColor: borderColor,
+      );
+
+  LzButton border([Color? borderColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        padding: padding,
+        radius: radius,
+        customRadius: customRadius,
+        type: type,
+        textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
+        gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   Widget sized(double width) => SizedBox(width: width, child: this);

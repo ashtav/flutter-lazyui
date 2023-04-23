@@ -630,22 +630,23 @@ class Slidebar extends StatelessWidget {
 
 class TextDivider extends StatelessWidget {
   final Widget text;
-  final double spacing, lineHeight;
+  final double spacing, height, lineHeight;
   final Color? backgroundColor, lineColor;
-  const TextDivider(this.text, {super.key, this.spacing = 15, this.lineHeight = 1, this.backgroundColor, this.lineColor});
+  const TextDivider(this.text, {super.key, this.spacing = 15, this.height = 30, this.lineHeight = 1, this.backgroundColor, this.lineColor});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const SizedBox(
-          height: 30,
+        SizedBox(
+          height: height,
+          width: context.width,
         ),
         Poslign(
           alignment: Alignment.center,
           child: Container(
             height: lineHeight >= 15 ? 15 : lineHeight,
-            color: lineColor ?? Colors.grey,
+            color: lineColor ?? Colors.black26,
             width: context.width,
           ),
         ),
