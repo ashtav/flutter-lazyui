@@ -39,12 +39,12 @@ class LoginExampleView extends StatelessWidget {
                 child: Col(
                   children: [
                     Textr(
-                      'Selamat Datang di Galang',
+                      'Welcome to LazyUi',
                       style: Gfont.fs(24).bold.white,
                       margin: Ei.only(b: 5),
                     ),
                     Text(
-                      'Layanan pengambilan sampah paling amanah yang siap datang ke rumah Anda.',
+                      Faker.words(20),
                       style: Gfont.white,
                     ).margin(b: 100),
                   ],
@@ -56,7 +56,7 @@ class LoginExampleView extends StatelessWidget {
                   children: [
                     Slidebar(color: Colors.white, activeColor: Colors.white, size: (int i) => [i == 0 ? 20 : 5, 5]).margin(b: 15, t: 25),
                     LzButton(
-                      text: 'Masuk dengan Nomor Telepon',
+                      text: 'Continue with phone number',
                       icon: La.mobileAlt,
                       onTap: (state) {},
                     ).border(LzColors.dark).sized(context.width - 40),
@@ -69,7 +69,7 @@ class LoginExampleView extends StatelessWidget {
             children: [
               const TextDivider(
                 Text(
-                  'Atau masuk dengan',
+                  'Or login with',
                 ),
                 backgroundColor: Colors.white,
               ),

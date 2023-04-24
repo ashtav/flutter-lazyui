@@ -135,58 +135,58 @@ class AppIntro2 extends StatelessWidget {
 
     return Col(
       children: [
-        CarouselSlider(
-            carouselController: carouselController,
-            options: CarouselOptions(
-                viewportFraction: 1,
-                initialPage: 0,
-                autoPlayInterval: 5.s,
-                enableInfiniteScroll: true,
-                height: context.height * 0.68,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                onPageChanged: (index, _) {},
-                scrollPhysics: BounceScroll()),
-            items: List.generate(images.length, (i) {
-              return LzImage(
-                images[i],
-                width: context.width,
-                radius: 0,
-              );
-            })),
+        Expanded(
+          child: CarouselSlider(
+              carouselController: carouselController,
+              options: CarouselOptions(
+                  viewportFraction: 1,
+                  initialPage: 0,
+                  autoPlayInterval: 5.s,
+                  enableInfiniteScroll: true,
+                  height: context.height,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  onPageChanged: (index, _) {},
+                  scrollPhysics: BounceScroll()),
+              items: List.generate(images.length, (i) {
+                return LzImage(
+                  images[i],
+                  width: context.width,
+                  radius: 0,
+                );
+              })),
+        ),
         LineProgressIndicator(
           repeat: true,
           duration: 5.s,
           onComplete: () {},
         ),
-        Expanded(
-          child: Container(
-            padding: Ei.all(25),
-            child: Col(
-              children: [
-                Text('Get Organized', style: Gfont.fs20.bold),
-                Text(
-                  Faker.words(15),
-                  style: Gfont.muted,
-                ).margin(t: 10, b: 35),
-                Row(
-                  mainAxisAlignment: Maa.spaceBetween,
-                  children: [
-                    Slidebar(
-                      active: 0,
-                      activeColor: LzColors.orange,
-                      size: (i) => [i == 0 ? 13 : 7, 7],
-                    ),
-                    LzButton(
-                        radius: 100,
-                        text: 'Get Started',
-                        icon: La.arrowRight,
-                        onTap: (_) {
-                          context.push(const FeaturesView());
-                        })
-                  ],
-                ),
-              ],
-            ),
+        Container(
+          padding: Ei.all(25),
+          child: Col(
+            children: [
+              Text('Get Organized', style: Gfont.fs20.bold),
+              Text(
+                Faker.words(15),
+                style: Gfont.muted,
+              ).margin(t: 10, b: 35),
+              Row(
+                mainAxisAlignment: Maa.spaceBetween,
+                children: [
+                  Slidebar(
+                    active: 0,
+                    activeColor: LzColors.orange,
+                    size: (i) => [i == 0 ? 13 : 7, 7],
+                  ),
+                  LzButton(
+                      radius: 100,
+                      text: 'Get Started',
+                      icon: La.arrowRight,
+                      onTap: (_) {
+                        context.push(const FeaturesView());
+                      })
+                ],
+              ),
+            ],
           ),
         )
       ],

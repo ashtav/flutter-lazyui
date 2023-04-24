@@ -99,6 +99,18 @@ extension WidgetExtension on Widget {
       return this;
     }
   }
+
+  Widget lzStyle({BoxBorder? border, EdgeInsetsGeometry? padding, EdgeInsetsGeometry? margin, Color? color, BorderRadiusGeometry? radius}) {
+    return Container(
+      decoration: BoxDecoration(color: color, border: border, borderRadius: radius),
+      padding: padding,
+      margin: margin,
+      child: ClipRRect(
+        borderRadius: radius ?? BorderRadius.zero,
+        child: this,
+      ),
+    );
+  }
 }
 
 extension CustomAppbarExtension on AppBar {

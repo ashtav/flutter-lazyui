@@ -27,3 +27,4 @@ part 'profile_view.dart';
 part 'refreshtor_view.dart';
 part 'popup_dialog_view.dart';
 part 'login_example.dart';
+part 'widgets_view.dart';

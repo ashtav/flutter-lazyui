@@ -25,7 +25,8 @@ class FeaturesView extends StatelessWidget {
       'Profile Design Example',
       'Refreshtor',
       'Popup Dialog',
-      'Login Example'
+      'Login Example',
+      'Widgets'
     ];
 
     features.sort();
@@ -135,6 +136,10 @@ class Actions {
 
         case 'Login Example':
           context.push(const LoginExampleView());
+          break;
+
+        case 'Widgets':
+          context.push(const WidgetsView());
           break;
         default:
       }

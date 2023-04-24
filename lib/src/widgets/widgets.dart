@@ -446,7 +446,7 @@ class LzBox extends StatelessWidget {
   final Gradient? gradient;
   final BoxShape shape;
   final BoxConstraints? constraints;
-  final CrossAxisAlignment crossAxisAlignment;
+  final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize mainAxisSize;
   final MainAxisAlignment mainAxisAlignment;
   final BoxType type;
@@ -464,7 +464,7 @@ class LzBox extends StatelessWidget {
       this.gradient,
       this.shape = BoxShape.rectangle,
       this.constraints,
-      this.crossAxisAlignment = Caa.start,
+      this.crossAxisAlignment,
       this.mainAxisSize = Mas.min,
       this.mainAxisAlignment = Maa.start,
       this.type = BoxType.customize});
@@ -493,8 +493,42 @@ class LzBox extends StatelessWidget {
               Column(
                   mainAxisSize: mainAxisSize,
                   mainAxisAlignment: mainAxisAlignment,
-                  crossAxisAlignment: isCleanType ? Caa.center : crossAxisAlignment,
+                  crossAxisAlignment: crossAxisAlignment ?? (isCleanType ? Caa.center : Caa.start),
                   children: children)),
+    );
+  }
+
+  static Widget clean(
+      {Widget? child,
+      List<Widget> children = const [],
+      EdgeInsetsGeometry? padding,
+      EdgeInsetsGeometry? margin,
+      CrossAxisAlignment? crossAxisAlignment,
+      MainAxisSize mainAxisSize = Mas.min,
+      MainAxisAlignment mainAxisAlignment = Maa.start,
+      BoxConstraints? constraints,
+      BoxShape shape = BoxShape.rectangle,
+      BoxBorder? border,
+      Color? color,
+      BorderRadiusGeometry? radius,
+      List<BoxShadow>? boxShadow,
+      Gradient? gradient}) {
+    return LzBox(
+      child: child,
+      children: children,
+      padding: padding,
+      margin: margin,
+      type: BoxType.clean,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      mainAxisAlignment: mainAxisAlignment,
+      constraints: constraints,
+      shape: shape,
+      border: border,
+      color: color,
+      radius: radius,
+      boxShadow: boxShadow,
+      gradient: gradient,
     );
   }
 }
@@ -629,7 +663,7 @@ class Slidebar extends StatelessWidget {
 | */
 
 class TextDivider extends StatelessWidget {
-  final Widget text;
+  final Text text;
   final double spacing, height, lineHeight;
   final Color? backgroundColor, lineColor;
   const TextDivider(this.text, {super.key, this.spacing = 15, this.height = 30, this.lineHeight = 1, this.backgroundColor, this.lineColor});
