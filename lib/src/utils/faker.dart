@@ -10,7 +10,7 @@ class Faker {
     String result = Lipsum.createWord(length);
 
     if (paragraph != null) {
-      for (var i = 0; i < paragraph; i++) {
+      for (var i = 0; i < paragraph - 1; i++) {
         result += '\n\n${Lipsum.createWord(length)}';
       }
     }

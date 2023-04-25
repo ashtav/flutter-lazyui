@@ -40,4 +40,6 @@ flutter:
     - family: LineAwesomeIcons
       fonts:
         - asset: assets/fonts/LineAwesome.ttf
-          weight: 400
+    - family: TablerIcons
+      fonts:
+        - asset: assets/fonts/TablerIcons.ttf

@@ -206,3 +206,11 @@ class _BlinkingWidgetState extends State<_BlinkingWidget> {
     );
   }
 }
+
+/* --------------------------------------------------------------------------
+| Custom Icons Extension
+| */
+
+extension CustomIconsExtension on Icon {
+  IconButton onPressed(Function() onPressed, {String? tooltip}) => IconButton(icon: this, tooltip: tooltip, onPressed: onPressed);
+}

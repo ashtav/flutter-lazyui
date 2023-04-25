@@ -11,6 +11,7 @@ export 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 export 'ext/line_awesome.dart';
 export 'ext/shimmer.dart';
+export 'ext/tabler_icons.dart';
 export 'src/config.dart' hide Lazy;
 export 'src/extensions/color_extension.dart';
 export 'src/extensions/context_extension.dart';
