@@ -63,6 +63,9 @@ class FormView extends StatelessWidget {
 
                     // set options
                     selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
+                    selector.option = const Option(option: 'Jakarta', value: 2);
+
+                    // logg(selector.option?.toMap());
                   },
                   onSelect: (selector) {
                     // You can set value (Option, String (option), or dynamic (value)

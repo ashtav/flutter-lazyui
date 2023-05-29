@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/lazyui.dart' hide Intl, TextDirection;
 
 /// ``` dart
 /// LzSelectiveOption.show(context, options: [].options() onSelect: (value) {
