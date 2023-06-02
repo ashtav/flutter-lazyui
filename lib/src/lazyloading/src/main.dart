@@ -7,7 +7,7 @@ import 'animations/animation.dart';
 import 'indicator.dart';
 import 'overlay_entry.dart';
 
-enum LzToastPosition { top, center, bottom }
+final _toastNotifier = ToastNotifier(), _overlayNotifier = OverlayNotifier();
 
 class LzToast {
   /// animation duration of indicator, default 200ms.
@@ -43,9 +43,9 @@ class LzToast {
   }) {
     return (BuildContext context, Widget? child) {
       if (builder != null) {
-        return builder(context, LzLoadingOverlay(child: child));
+        return builder(context, LzToastOverlay(child: child));
       } else {
-        return LzLoadingOverlay(child: child);
+        return LzToastOverlay(child: child);
       }
     };
   }
@@ -62,86 +62,78 @@ class LzToast {
   | LzToast.overlay('Please wait...', indicator: LzToastIndicator.spiner())
   | */
 
-  static void show(
-    String message, {
-    IconData? icon,
-    bool dismissOnTap = false,
-    Duration? duration,
-    LzToastPosition position = LzToastPosition.bottom,
-  }) {
-    notifier.toggle(message, icon: icon, duration: duration, dismissOnTap: dismissOnTap, position: position);
+  static void show(String message,
+      {IconData? icon, bool dismissOnTap = false, Duration? duration, Position position = Position.bottom, int? maxLength}) {
+    _toastNotifier.toggle(message, icon: icon, duration: duration, position: position, maxLength: maxLength);
   }
 
-  static void overlay(
+  static overlay(
     String message, {
     Widget? indicator,
     bool dismissOnTap = false,
   }) {
-    notifier.toggle(message, dismissOnTap: dismissOnTap, type: ToastType.overlay);
+    _overlayNotifier.toggle(message, dismissOnTap: dismissOnTap);
   }
 
   /// dismiss loading
-  static void dismiss() => notifier.dismiss();
+  static void dismiss() => _overlayNotifier.dismiss();
 }
 
 enum ToastType { overlay, show }
 
-class LzToastNotifier extends ChangeNotifier {
-  bool show = false, dismissOnTap = false, backdrop = false;
-
-  /// Prefix icon of toast
-  IconData? icon;
-
-  /// Message of toast
+// Toast Notifier
+class ToastNotifier extends ChangeNotifier {
+  bool show = false;
   String message = '';
+  Timer? timer;
+  IconData? icon;
+  Position position = Position.bottom;
+  int? maxLength;
 
-  /// Duration of toast
-  Duration duration = 2.s;
-
-  /// Position of toast
-  LzToastPosition position = LzToastPosition.bottom;
-
-  /// Type of toast
-  ToastType type = ToastType.show;
-
-  /// Timer of toast
-  Timer? _timer;
-
-  void toggle(String message,
-      {IconData? icon,
-      Duration? duration,
-      bool dismissOnTap = false,
-      LzToastPosition position = LzToastPosition.bottom,
-      ToastType type = ToastType.show}) {
-    _timer?.cancel();
-
+  void toggle(String message, {IconData? icon, Duration? duration, Position position = Position.bottom, int? maxLength}) {
+    timer?.cancel();
     show = true;
-    backdrop = true;
 
-    this.message = message;
     this.icon = icon;
-    this.duration = duration ?? 2.s;
-    this.dismissOnTap = dismissOnTap;
     this.position = position;
-    this.type = type;
+    this.message = message;
+    this.maxLength = maxLength;
 
     notifyListeners();
 
-    if (type == ToastType.show) {
-      _timer = Timer(this.duration, () {
-        show = false;
-        _timer?.cancel();
-        notifyListeners();
-      });
-    }
+    timer = Timer(duration ?? 2.s, () {
+      show = false;
+      timer?.cancel();
+      notifyListeners();
+    });
+  }
+}
+
+// Overlay Notifier
+class OverlayNotifier extends ChangeNotifier {
+  bool show = false, backdrop = false;
+  String message = '';
+  Timer? timer;
+
+  void toggle(String message, {bool dismissOnTap = false}) {
+    timer?.cancel();
+    show = true;
+    this.message = message;
+
+    timer = Timer(10.ms, () {
+      backdrop = true;
+      notifyListeners();
+    });
+
+    notifyListeners();
   }
 
   void dismiss() {
-    _timer?.cancel();
+    timer?.cancel();
     backdrop = false;
     notifyListeners();
 
-    Timer(100.ms, () {
+    timer = Timer(100.ms, () {
       show = false;
       notifyListeners();
     });
@@ -149,103 +141,107 @@ class LzToastNotifier extends ChangeNotifier {
 }
 
 class LzToastWidget extends StatelessWidget {
-  final LzToastNotifier notifier;
-  const LzToastWidget({super.key, required this.notifier});
+  const LzToastWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
-    Map<LzToastPosition, AlignmentGeometry> positions = {
-      LzToastPosition.top: AlignmentDirectional.topCenter,
-      LzToastPosition.center: AlignmentDirectional.center,
-      LzToastPosition.bottom: AlignmentDirectional.bottomCenter,
+    Map<Position, AlignmentGeometry> positions = {
+      Position.top: AlignmentDirectional.topCenter,
+      Position.center: AlignmentDirectional.center,
+      Position.bottom: AlignmentDirectional.bottomCenter,
     };
 
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
 
-    return AnimatedBuilder(
-        animation: notifier,
-        builder: (context, _) {
-          bool isShow = notifier.show;
-          String message = notifier.message;
-          IconData? icon = notifier.icon;
+    Widget overlayContent = _overlayNotifier.watch((o) => Stack(
+          alignment: AlignmentDirectional.center,
+          children: [
+            AnimatedSwitcher(
+                duration: 130.ms,
+                transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
+                child: o.show
+                    ? Container(
+                        margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
+                        padding: Ei.sym(v: 20, h: 20),
+                        decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
+                        child: Column(
+                          mainAxisSize: Mas.min,
+                          mainAxisAlignment: Maa.center,
+                          children: [
+                            const LoadingIndicator(),
+                            Textr(
+                              o.message,
+                              style: style?.copyWith(color: Colors.white),
+                              margin: Ei.only(t: 15),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const None()),
+          ],
+        ));
 
-          if (notifier.type == ToastType.overlay) {
-            return Stack(alignment: AlignmentDirectional.center, children: [
-              isShow
-                  ? AnimatedOpacity(
-                      duration: 300.ms,
-                      opacity: notifier.backdrop ? 1 : 0,
-                      child: Container(
-                        width: double.infinity,
-                        height: double.infinity,
-                        color: Colors.black.withOpacity(0.5),
-                      ))
-                  : const None(),
-              AnimatedSwitcher(
-                  switchInCurve: Curves.easeIn,
-                  switchOutCurve: Curves.easeIn,
-                  duration: 130.ms,
+    Widget toastContent = _toastNotifier.watch((t) => Stack(
+          alignment: positions[t.position]!,
+          children: [
+            AnimatedOpacity(
+              duration: 150.ms,
+              opacity: t.show ? 1 : 0,
+              child: AnimatedSwitcher(
+                  switchInCurve: Curves.linearToEaseOut,
+                  switchOutCurve: Curves.easeOutBack,
+                  duration: 350.ms,
                   transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
                         scale: animation,
                         child: child,
                       ),
-                  child: isShow
-                      ? Container(
-                          margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
-                          padding: Ei.sym(v: 20, h: 20),
-                          decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
-                          child: Column(
-                            mainAxisSize: Mas.min,
-                            mainAxisAlignment: Maa.center,
-                            children: [
-                              const LoadingIndicator(),
-                              Textr(
-                                message,
-                                style: style?.copyWith(color: Colors.white),
-                                textAlign: icon == null ? Ta.center : Ta.start,
-                                icon: icon,
-                                margin: Ei.only(t: 15),
-                              ),
-                            ],
-                          ),
-                        )
-                      : const None())
-            ]);
-          }
+                  child: t.show
+                      ? IgnorePointer(
+                          key: ValueKey(t.message),
+                          child: Container(
+                            margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
+                            padding: Ei.sym(v: 13, h: 20),
+                            decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
+                            child: AnimatedSwitcher(
+                                duration: 350.ms,
+                                transitionBuilder: (Widget child, Animation<double> animation) {
+                                  return FadeTransition(
+                                    opacity: animation,
+                                    child: child,
+                                  );
+                                },
+                                child: Textr(
+                                  t.maxLength != null && t.message.length > t.maxLength! ? '${t.message.substring(0, t.maxLength!)}...' : t.message,
+                                  style: style?.copyWith(color: Colors.white),
+                                  textAlign: t.icon == null ? Ta.center : Ta.start,
+                                  icon: t.icon,
+                                  key: UniqueKey(),
+                                )),
+                          ))
+                      : const None()),
+            )
+          ],
+        ));
 
-          return Stack(
-            alignment: positions[notifier.position]!,
-            children: [
-              AnimatedOpacity(
-                duration: 100.ms,
-                opacity: isShow ? 1 : 0,
-                child: AnimatedSwitcher(
-                    switchInCurve: Curves.easeIn,
-                    switchOutCurve: Curves.easeIn,
-                    duration: 130.ms,
-                    transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
-                          scale: animation,
-                          child: child,
-                        ),
-                    child: isShow
-                        ? IgnorePointer(
-                            key: UniqueKey(),
-                            child: Container(
-                              margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
-                              padding: Ei.sym(v: 13, h: 20),
-                              decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
-                              child: Textr(
-                                message,
-                                style: style?.copyWith(color: Colors.white),
-                                textAlign: icon == null ? Ta.center : Ta.start,
-                                icon: icon,
-                              ),
-                            ),
-                          )
-                        : const None()),
-              )
-            ],
-          );
-        });
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        _overlayNotifier.watch((o) => o.show
+            ? AnimatedOpacity(
+                duration: 150.ms,
+                opacity: o.backdrop ? 1 : 0,
+                child: Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.black.withOpacity(0.5),
+                ))
+            : const None()),
+        overlayContent,
+        toastContent
+      ],
+    );
   }
 }

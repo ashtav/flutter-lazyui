@@ -24,11 +24,32 @@ class Utils {
   }
 
   /// ``` dart
+  /// Utils.isColorLight('fff'); // true
+  /// ```
+
+  static bool isColorLight(Color color) {
+    final double luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    return luminance > 0.5;
+  }
+
+  /// ``` dart
   /// catch (e, s){
   ///   Utils.errorCatcher(e, s);
   /// }
   /// ```
-  static errorCatcher(e, StackTrace s) {
+  static errorCatcher(e, StackTrace s, {bool tracing = false}) {
+    if (tracing) {
+      final frames = Trace.from(s).terse.frames;
+      List<String> members = frames.take(5).map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})').toList();
+      String member = members.join(', ');
+
+      String message = '''$e
+Try to check [$member]''';
+
+      logg(message, name: 'ERROR');
+      return;
+    }
+
     List frames = Trace.current().frames, terseFrames = Trace.from(s).terse.frames;
     Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0], trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
 
@@ -270,6 +291,8 @@ class Utils {
     max = max is int ? max.toDouble() : max;
 
     if (isMaxList) {
+      max as List;
+
       if (max.length == 1) max.add(max[0]);
       max = max.map((e) => e is int ? e.toDouble() : e).toList();
     }
@@ -326,7 +349,8 @@ class Utils {
   /// ```
   static Future<String> fileToBase64(File file) async {
     try {
-      String base64Image = base64Encode(file.readAsBytesSync());
+      final bytes = await file.readAsBytes();
+      String base64Image = base64Encode(bytes);
       return base64Image;
     } catch (e) {
       rethrow;
@@ -373,7 +397,7 @@ class Utils {
   }
 
   /// ```dart
-  /// String text = await Utils.htmlToText('<p>HTML</p>');
+  /// String text = await Utils.htmlToText('<p>HTML</p>'); // output: HTML
   /// ```
   static String htmlToText(String html) {
     // replace <br /> = \n
@@ -517,6 +541,7 @@ class Utils {
   /// Utils.getDateStringFormat('2000-12-10'); // y-m-d
   /// ```
 
+  // This function is used to get the date format of a date string
   static String? getDateStringFormat(String dateString) {
     Map<String, RegExp> formatRegexMap = {
       'y-m-d': RegExp(r'^\d{4}-\d{2}-\d{2}$'),

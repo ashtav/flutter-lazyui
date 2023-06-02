@@ -16,10 +16,10 @@ class InputFormat {
 
   /// ```dart
   /// formatters: [
-  ///   InputFormat.regExp('[a-zA-Z]')
+  ///   InputFormat.allowRegex('[a-zA-Z]')
   /// ]
   /// ```
-  static TextInputFormatter regExp(String pattern) => FilteringTextInputFormatter.allow(RegExp(pattern));
+  static TextInputFormatter allowRegex(String pattern) => FilteringTextInputFormatter.allow(RegExp(pattern));
 }
 
 class _LowerCaseTextFormatter extends TextInputFormatter {

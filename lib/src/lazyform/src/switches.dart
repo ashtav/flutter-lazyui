@@ -18,6 +18,7 @@ class Switches extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = SwitchesNotifier();
+    notifier.switched.value = initValue;
 
     if (id != null) switchesNotifier[id!] = notifier;
 
@@ -35,7 +36,7 @@ class Switches extends StatelessWidget {
     });
 
     return notifier.watch(
-      () {
+      (_) {
         bool switched = notifier.switched.value;
 
         return Touch(

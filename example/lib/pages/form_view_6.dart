@@ -3,6 +3,37 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final Widget? title;
+  final Function()? onBack;
+  final bool? centerTitle;
+  final List<Widget>? actions;
+
+  const CustomAppBar({
+    super.key,
+    this.title,
+    this.onBack,
+    this.centerTitle,
+    this.actions,
+  });
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: title,
+      leading: IconButton(
+        onPressed: onBack ?? () => context.pop(),
+        icon: const Icon(La.angleLeft),
+      ),
+      centerTitle: centerTitle,
+      actions: actions,
+    );
+  }
+}
+
 class FormView6 extends StatelessWidget {
   const FormView6({super.key});
 
@@ -12,8 +43,8 @@ class FormView6 extends StatelessWidget {
 
     return Wrapper(
         child: Scaffold(
-      appBar: AppBar(
-        title: const Text('Form View 6'),
+      appBar: const CustomAppBar(
+        title: Text('Form View 6'),
       ),
       body: LzFormList(
         style: const LzFormStyle(type: FormType.topAligned, inputLabelFontWeight: Fw.bold),
@@ -31,10 +62,10 @@ class FormView6 extends StatelessWidget {
                   label: 'Event Type *',
                   hint: 'Select event type',
                   model: forms['type'],
-                  options: ['Offline', 'Online'].makeOptions(values: [1, 2]),
+                  options: ['Offline', 'Online'].options(values: [1, 2]),
                   onSelect: (selector) {
-                    final offlines = ['Seminar', 'Workshop', 'Training'].makeOptions();
-                    final onlines = ['Webinar', 'Live Streaming', 'E-Learning'].makeOptions();
+                    final offlines = ['Seminar', 'Workshop', 'Training'].options();
+                    final onlines = ['Webinar', 'Live Streaming', 'E-Learning'].options();
 
                     final category = forms['category']?.notifier;
                     category?.setOption(null);
@@ -49,15 +80,16 @@ class FormView6 extends StatelessWidget {
                 label: 'Event Category *',
                 hint: 'Select event category',
                 model: forms['category'],
+                options: ['Lorem', 'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing'].options(),
               ),
             ],
           ),
-          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty']),
+          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty'], readonly: false, max: 100000, min: 200),
           LzForm.input(
               label: 'Full Screen Select *',
               hint: 'Select something here',
               onTap: (model) {
-                SelectPicker.open(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].makeOptions());
+                SelectPicker.show(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options());
               }),
         ],
       ),
@@ -70,6 +102,8 @@ class FormView6 extends StatelessWidget {
                   'qty': 'Qty must be greater than 2, current value is {value}',
                 }),
                 notifierType: FormValidateNotifier.text);
+
+            logg(form.value);
           }).dark().theme1(),
     ));
   }

@@ -1,7 +1,8 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/lazyui.dart' hide TextDirection;
 
 import '../config.dart';
 
@@ -15,20 +16,38 @@ class Iconr extends StatelessWidget {
   final AlignmentGeometry? alignment;
   final Color? color;
   final double? size;
+  final bool flipX, flipY, flip;
 
-  const Iconr(this.icon, {Key? key, this.margin, this.padding, this.width, this.radius, this.color, this.size, this.alignment, this.border})
+  const Iconr(this.icon,
+      {Key? key,
+      this.margin,
+      this.padding,
+      this.width,
+      this.radius,
+      this.color,
+      this.size,
+      this.alignment,
+      this.border,
+      this.flipX = false,
+      this.flipY = false,
+      this.flip = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Widget iconWidget = Icon(icon, color: color, size: size);
+
     return Container(
-      alignment: alignment,
-      padding: padding,
-      margin: margin,
-      width: width,
-      decoration: BoxDecoration(border: border, borderRadius: radius),
-      child: Icon(icon, color: color, size: size),
-    );
+        alignment: alignment,
+        padding: padding,
+        margin: margin,
+        width: width,
+        decoration: BoxDecoration(border: border, borderRadius: radius),
+        child: flip
+            ? Transform.rotate(angle: pi, child: iconWidget)
+            : flipX || flipY
+                ? Transform(alignment: Alignment.center, transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi), child: iconWidget)
+                : iconWidget);
   }
 }
 
@@ -173,10 +192,10 @@ class CenterDialog extends StatelessWidget {
   final double margin;
   final BorderRadius? borderRadius;
   final String? closeMessage;
-  final bool tapClose;
+  final bool showTapClose;
 
   const CenterDialog(
-      {Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero, this.closeMessage, this.tapClose = false})
+      {Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero, this.closeMessage, this.showTapClose = false})
       : super(key: key);
 
   @override
@@ -190,7 +209,7 @@ class CenterDialog extends StatelessWidget {
               color: Colors.transparent,
               child: Container(margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child))),
         ),
-        if (tapClose) IgnorePointer(child: Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
+        if (showTapClose) IgnorePointer(child: Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
       ],
     );
   }
@@ -331,47 +350,38 @@ class NoScrollGlow extends ScrollBehavior {
   }
 }
 
-enum NoDataType { type1, type2 }
-
-class NoData extends StatelessWidget {
+class LzNoData extends StatelessWidget {
   final IconData? icon;
+  final Widget? iconWidget;
   final String? message, onTapMessage;
   final Function()? onTap;
-  final NoDataType type;
-  const NoData({super.key, this.icon, this.message, this.onTapMessage, this.onTap, this.type = NoDataType.type1});
+  final EdgeInsetsGeometry? padding;
+  const LzNoData({super.key, this.icon, this.iconWidget, this.message, this.onTapMessage, this.onTap, this.padding});
 
   @override
   Widget build(BuildContext context) {
     Color primaryColor = LazyUi.getConfig.primaryColor;
-    String message = this.message ?? LazyUi.getConfig.widgets['no_data']?['message'] ?? 'No Data';
-    String onTapMessage = this.onTapMessage ?? LazyUi.getConfig.widgets['no_data']?['on_tap_message'] ?? 'Tap to refresh';
+    String message = this.message ?? 'No Data';
+    String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
     return Container(
-      padding: Ei.all(20),
+      padding: padding ?? Ei.all(20),
       child: Center(
         child: Column(
           mainAxisAlignment: Maa.center,
           children: [
-            if (type == NoDataType.type1)
-              Iconr(
-                icon ?? Icons.info_outline,
-                color: Colors.black38,
-                size: 50,
-                margin: Ei.only(b: 25),
-              ),
-            if (type == NoDataType.type2)
-              Container(
-                  width: 100,
-                  height: 100,
-                  padding: Ei.all(20),
-                  decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
-                  child: Lazicon.get(LaziconType.nodata, colorFilter: Colors.white)),
-            Textr(
+            iconWidget ??
+                Iconr(
+                  icon ?? Icons.info_outline,
+                  color: Colors.black38,
+                  size: 50,
+                  margin: Ei.only(b: 25),
+                ),
+            Textml(
               message,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
               textAlign: Ta.center,
-              margin: Ei.only(t: 15),
-            ),
+            ).margin(t: 15),
             if (onTap != null)
               Touch(
                 onTap: onTap,
@@ -387,6 +397,12 @@ class NoData extends StatelessWidget {
     );
   }
 }
+
+/* --------------------------------------------------------------------------
+| Poslign
+| ---------------------------------------------------------------------------
+| Shortcut of `Positioned.fill` with `Align` and `Container` inside
+| */
 
 class Poslign extends StatelessWidget {
   final AlignmentGeometry alignment;
@@ -411,9 +427,15 @@ class Poslign extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| LzBox
+| ---------------------------------------------------------------------------
+| LzBox is a shortcut of `Container` with some additional features
+| */
+
 enum BoxType { customize, clean }
 
-class Box extends StatelessWidget {
+class LzBox extends StatelessWidget {
   final Widget? child;
   final List<Widget> children;
   final EdgeInsetsGeometry? padding, margin;
@@ -424,12 +446,12 @@ class Box extends StatelessWidget {
   final Gradient? gradient;
   final BoxShape shape;
   final BoxConstraints? constraints;
-  final CrossAxisAlignment crossAxisAlignment;
+  final CrossAxisAlignment? crossAxisAlignment;
   final MainAxisSize mainAxisSize;
   final MainAxisAlignment mainAxisAlignment;
   final BoxType type;
 
-  const Box(
+  const LzBox(
       {super.key,
       this.child,
       this.children = const [],
@@ -442,7 +464,7 @@ class Box extends StatelessWidget {
       this.gradient,
       this.shape = BoxShape.rectangle,
       this.constraints,
-      this.crossAxisAlignment = Caa.start,
+      this.crossAxisAlignment,
       this.mainAxisSize = Mas.min,
       this.mainAxisAlignment = Maa.start,
       this.type = BoxType.customize});
@@ -471,11 +493,51 @@ class Box extends StatelessWidget {
               Column(
                   mainAxisSize: mainAxisSize,
                   mainAxisAlignment: mainAxisAlignment,
-                  crossAxisAlignment: isCleanType ? Caa.center : crossAxisAlignment,
+                  crossAxisAlignment: crossAxisAlignment ?? (isCleanType ? Caa.center : Caa.start),
                   children: children)),
     );
   }
+
+  static Widget clean(
+      {Widget? child,
+      List<Widget> children = const [],
+      EdgeInsetsGeometry? padding,
+      EdgeInsetsGeometry? margin,
+      CrossAxisAlignment? crossAxisAlignment,
+      MainAxisSize mainAxisSize = Mas.min,
+      MainAxisAlignment mainAxisAlignment = Maa.start,
+      BoxConstraints? constraints,
+      BoxShape shape = BoxShape.rectangle,
+      BoxBorder? border,
+      Color? color,
+      BorderRadiusGeometry? radius,
+      List<BoxShadow>? boxShadow,
+      Gradient? gradient}) {
+    return LzBox(
+      child: child,
+      children: children,
+      padding: padding,
+      margin: margin,
+      type: BoxType.clean,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      mainAxisAlignment: mainAxisAlignment,
+      constraints: constraints,
+      shape: shape,
+      border: border,
+      color: color,
+      radius: radius,
+      boxShadow: boxShadow,
+      gradient: gradient,
+    );
+  }
 }
+
+/* --------------------------------------------------------------------------
+| Padder
+| ---------------------------------------------------------------------------
+| Combination of Container and Column with default padding
+| */
 
 class Padder extends StatelessWidget {
   final List<Widget> children;
@@ -506,37 +568,63 @@ class Padder extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| LzBadge
+| ---------------------------------------------------------------------------
+| LzBadge is a widget to show a badge with text
+| */
+
 class LzBadge extends StatelessWidget {
   final String text;
   final Color? color, textColor;
   final BorderRadiusGeometry? radius;
   final EdgeInsetsGeometry? padding;
   final double? fontSize;
-  const LzBadge({super.key, required this.text, this.color, this.textColor, this.radius, this.padding, this.fontSize});
+  final BoxBorder? border;
+  const LzBadge({super.key, required this.text, this.color, this.textColor, this.radius, this.padding, this.fontSize, this.border});
 
   @override
   Widget build(BuildContext context) {
     Color color = this.color ?? Colors.orange;
 
     return Container(
-      decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: radius ?? Br.radius(3)),
+      decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: radius ?? Br.radius(3), border: border ?? Br.all(color: color)),
       padding: padding ?? Ei.sym(v: 3, h: 10),
       child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor ?? color, fontSize: fontSize)),
     );
   }
 }
 
+/* --------------------------------------------------------------------------
+| Slidebar
+| ---------------------------------------------------------------------------
+| When you want to show a list of dots to show the current page or slide
+| */
+
 class Slidebar extends StatelessWidget {
+  /// ```dart
+  /// int active = 1;
+  /// Slidebar(active: active, spacing: 10, size: (int i) => [i == active ? 20 : 5, 5]),
+  /// ```
+  const Slidebar(
+      {super.key,
+      this.length = 3,
+      this.size,
+      this.active = 0,
+      this.color,
+      this.activeColor,
+      this.radius = 5.0,
+      this.spacing = 7,
+      this.position = Caa.center});
+
   final int length;
 
   /// size = [width, height]
   final List<double> Function(int index)? size;
   final int active;
   final Color? activeColor, color;
-  final double radius;
+  final double radius, spacing;
   final CrossAxisAlignment position;
-  const Slidebar(
-      {super.key, this.length = 3, this.size, this.active = 0, this.color, this.activeColor, this.radius = 5.0, this.position = Caa.center});
 
   @override
   Widget build(BuildContext context) {
@@ -545,6 +633,7 @@ class Slidebar extends StatelessWidget {
 
     return Row(
       crossAxisAlignment: position,
+      mainAxisSize: Mas.min,
       children: List.generate(length, (i) {
         if (size != null) {
           List<double> size = this.size!(i);
@@ -554,7 +643,7 @@ class Slidebar extends StatelessWidget {
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          margin: Ei.only(r: 5),
+          margin: Ei.only(r: spacing),
           width: width,
           height: height,
           decoration: BoxDecoration(
@@ -567,24 +656,31 @@ class Slidebar extends StatelessWidget {
   }
 }
 
+/* --------------------------------------------------------------------------
+| TextDivider
+| ---------------------------------------------------------------------------
+| TextDivider is a widget that divides the text with a line
+| */
+
 class TextDivider extends StatelessWidget {
-  final Widget text;
-  final double spacing, lineHeight;
+  final Text text;
+  final double spacing, height, lineHeight;
   final Color? backgroundColor, lineColor;
-  const TextDivider(this.text, {super.key, this.spacing = 15, this.lineHeight = 1, this.backgroundColor, this.lineColor});
+  const TextDivider(this.text, {super.key, this.spacing = 15, this.height = 30, this.lineHeight = 1, this.backgroundColor, this.lineColor});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        const SizedBox(
-          height: 30,
+        SizedBox(
+          height: height,
+          width: context.width,
         ),
         Poslign(
           alignment: Alignment.center,
           child: Container(
             height: lineHeight >= 15 ? 15 : lineHeight,
-            color: lineColor ?? Colors.grey,
+            color: lineColor ?? Colors.black26,
             width: context.width,
           ),
         ),
@@ -594,6 +690,12 @@ class TextDivider extends StatelessWidget {
     );
   }
 }
+
+/* --------------------------------------------------------------------------
+| Loader
+| ---------------------------------------------------------------------------
+| Loader is a widget that displays a circular progress indicator.
+| */
 
 class Loader extends StatelessWidget {
   final double size, stroke;
@@ -606,20 +708,266 @@ class Loader extends StatelessWidget {
     return Container(margin: margin, child: SizedBox(width: size, height: size, child: CircularProgressIndicator(color: color, strokeWidth: stroke)));
   }
 
-  static Widget bar({String? message, bool center = true}) {
+  static Widget bar({String? message, bool center = true, double size = 90}) {
     TextStyle? textStyle = LazyUi.getConfig.textStyle;
 
     Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(
         Lazy.assets('loading-bar.gif'),
-        width: 90,
-        height: 90,
+        width: size,
+        height: size,
         fit: BoxFit.contain,
       ),
       message == null ? const None() : Text(message, style: textStyle?.copyWith(color: Colors.black54))
     ]);
 
     return center ? Center(child: child) : child;
+  }
+}
+
+/* --------------------------------------------------------------------------
+| LzListView
+| ---------------------------------------------------------------------------
+| LzListView is a ListView with a StreamBuilder to set the cacheExtent
+| So that the ListView will not be rebuilt when scrolling
+| */
+
+class LzListView extends StatelessWidget {
+  final List<Widget> children;
+  final EdgeInsetsGeometry? padding;
+  final ScrollPhysics? physics;
+  final ScrollController? controller;
+  final bool shrinkWrap;
+
+  /// Custom listview with cacheExtent, bounce scroll and default padding
+  const LzListView({super.key, this.children = const [], this.padding, this.physics, this.controller, this.shrinkWrap = false});
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = StreamController<double>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      RenderBox box = context.findRenderObject() as RenderBox;
+      double height = (box.size.height * 3);
+      controller.sink.add(height);
+    });
+
+    double spacing = LazyUi.getConfig.spacing;
+
+    return StreamBuilder<double>(
+        stream: controller.stream,
+        builder: (BuildContext context, snap) => ListView(
+              controller: this.controller,
+              shrinkWrap: shrinkWrap,
+              physics: physics ?? BounceScroll(),
+              cacheExtent: snap.data,
+              padding: padding ?? Ei.all(spacing),
+              children: children,
+            ));
+  }
+}
+
+/* --------------------------------------------------------------------------
+| Textml
+| ---------------------------------------------------------------------------
+| Textml is a text widget that can parse simple html tags (bold, italic and underline)
+| */
+
+class Textml extends StatelessWidget {
+  final String text;
+  final TextStyle? style;
+  final TextAlign? textAlign;
+  final TextDirection? textDirection;
+  final TextOverflow? overflow;
+  const Textml(this.text, {Key? key, this.style, this.textAlign, this.textDirection, this.overflow}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    TextStyle? textStyle = Theme.of(context).textTheme.bodyMedium;
+
+    return RichText(
+      textAlign: textAlign ?? Ta.start,
+      textDirection: textDirection,
+      overflow: overflow ?? TextOverflow.clip,
+      text: TextSpan(
+        style: style ?? textStyle,
+        children: parseText(text, textStyle: style ?? textStyle),
+      ),
+    );
+  }
+
+  List<TextSpan> parseText(String text, {TextStyle? textStyle}) {
+    List<TextSpan> textSpans = [];
+
+    final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+|\s)');
+
+    void processText(String text, {TextStyle? textStyle}) {
+      for (var match in regex.allMatches(text)) {
+        final word = match.group(2) ?? match.group(3);
+        final type = match.group(1);
+
+        if (type == null) {
+          textSpans.add(TextSpan(text: word, style: textStyle));
+        } else {
+          TextStyle? updatedTextStyle;
+          if (type == 'b') {
+            updatedTextStyle = textStyle?.copyWith(fontWeight: FontWeight.bold);
+          } else if (type == 'i') {
+            updatedTextStyle = textStyle?.copyWith(fontStyle: FontStyle.italic);
+          } else if (type == 'u') {
+            updatedTextStyle = textStyle?.copyWith(decoration: TextDecoration.underline);
+          }
+          processText(word ?? '', textStyle: updatedTextStyle);
+        }
+      }
+    }
+
+    processText(text, textStyle: textStyle);
+
+    return textSpans;
+  }
+}
+
+/* --------------------------------------------------------------------------
+| IntrinsicButton
+| ---------------------------------------------------------------------------
+| IntrinsicButton is a widget that displays a button with a equal width
+| */
+
+class IntrinsicButton extends StatelessWidget {
+  final List<Widget> children;
+  final bool withBorder;
+  final EdgeInsetsGeometry? padding;
+  final Function(int)? onTap;
+  const IntrinsicButton({super.key, this.children = const [], this.withBorder = true, this.padding, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(border: withBorder ? Br.only(['t']) : null),
+      child: Intrinsic(
+        children: List.generate(children.length, (i) {
+          return Expanded(
+              child: InkW(
+            onTap: onTap == null ? null : () => onTap?.call(i),
+            padding: padding ?? Ei.all(20),
+            border: withBorder ? Br.only(['l'], except: i == 0) : null,
+            child: children[i],
+          ));
+        }),
+      ),
+    );
+  }
+}
+
+/* --------------------------------------------------------------------------
+| LzPopover
+| ---------------------------------------------------------------------------
+| LzPopover is a widget that displays a pop-up window
+| */
+
+class LzPopover extends StatelessWidget {
+  final Widget? child;
+  final Color? color;
+  final double? width, maxWidth;
+  final double minWidth;
+  final Offset offset;
+  final BorderRadiusGeometry? radius;
+  final BoxBorder? border;
+  final Position? caretAlign;
+  const LzPopover(
+      {super.key,
+      this.child,
+      this.color,
+      this.width = 250,
+      this.minWidth = 250,
+      this.maxWidth,
+      this.offset = const Offset(.5, 0),
+      this.radius,
+      this.border,
+      this.caretAlign});
+
+  @override
+  Widget build(BuildContext context) {
+    double x = (width ?? 250) *
+        (offset.dx > 1
+            ? 1
+            : offset.dx < 0
+                ? 0
+                : offset.dx);
+
+    x = (x - 10) <= 15
+        ? x + 15
+        : x >= (width ?? 250)
+            ? x - 35
+            : x - 10;
+
+    Color color = this.color ?? Colors.white;
+    bool isTop = caretAlign == Position.top;
+
+    double radius = LazyUi.getConfig.radius;
+
+    return Stack(children: [
+      Container(
+        padding: Ei.all(20),
+        margin: Ei.only(b: isTop ? 0 : 14.95, t: isTop ? 14.95 : 0),
+        width: width,
+        constraints: BoxConstraints(
+          minWidth: minWidth,
+          maxWidth: maxWidth ?? context.width,
+        ),
+        decoration: BoxDecoration(color: color, borderRadius: this.radius ?? Br.radius(radius), border: border ?? Br.all()),
+        child: child,
+      ),
+      Positioned(
+          left: x,
+          bottom: isTop ? null : offset.dy,
+          top: !isTop ? null : offset.dy,
+          child: RotationTransition(
+            turns: AlwaysStoppedAnimation(isTop ? 180 : 180 / 360),
+            child: CustomPaint(
+              painter: CaretPainter(strokeColor: color, paintingStyle: PaintingStyle.fill, skew: 2),
+              child: const SizedBox(
+                height: 15,
+                width: 20,
+              ),
+            ),
+          ))
+    ]);
+  }
+
+  void show(BuildContext context, {Offset offset = const Offset(20, 0), bool isAtBottom = false, Widget Function(Widget child)? builder}) {
+    final box = context.findRenderObject() as RenderBox?;
+    final o = box?.localToGlobal(Offset.zero);
+
+    // get x and y values
+    double dx = o?.dx ?? 0;
+    double dy = o?.dy ?? 0;
+
+    // get width and height context
+    double height = box?.size.height ?? 0;
+
+    double popoverWidth = width ?? 250;
+
+    dx = (dx > (context.width - popoverWidth)
+        ? (context.width - popoverWidth) - offset.dx
+        : dx < 0
+            ? (0 + offset.dx)
+            : dx);
+
+    if (isAtBottom) {
+      dy = dy + height + offset.dy;
+    }
+
+    context.dialog(Stack(
+      children: [
+        Positioned(
+          left: dx,
+          top: dy,
+          child: builder?.call(this) ?? this,
+        )
+      ],
+    ));
   }
 }
 
@@ -637,39 +985,5 @@ class Lazicon {
       height: size,
       colorFilter: colorFilter.isNull ? null : ColorFilter.mode(colorFilter!, BlendMode.saturation),
     );
-  }
-}
-
-/* --------------------------------------------------------------------------
-| LzListView
-| */
-
-class LzListView extends StatelessWidget {
-  final List<Widget> children;
-  final EdgeInsetsGeometry? padding;
-  final ScrollPhysics? physics;
-
-  const LzListView({super.key, this.children = const [], this.padding, this.physics});
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = StreamController<double>();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      RenderBox box = context.findRenderObject() as RenderBox;
-      double height = (box.size.height * 3);
-      controller.sink.add(height);
-    });
-
-    double spacing = LazyUi.getConfig.spacing;
-
-    return StreamBuilder<double>(
-        stream: controller.stream,
-        builder: (BuildContext context, snap) => ListView(
-              physics: physics ?? BounceScroll(),
-              cacheExtent: snap.data,
-              padding: padding ?? Ei.all(spacing),
-              children: children,
-            ));
   }
 }

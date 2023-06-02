@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart' as lz;
 
 extension DynamicExtension on dynamic {
@@ -90,4 +91,8 @@ extension DynamicExtension on dynamic {
   // void get logg {
   //   lz.logg(this);
   // }
+}
+
+extension GlobalKeyExtension on GlobalKey<State<StatefulWidget>> {
+  BuildContext? get context => currentContext;
 }

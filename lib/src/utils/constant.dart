@@ -26,26 +26,21 @@ class Const {
   ];
 
   static List<String> address = [
-    'Jl. Raya Seminyak',
-    'Jl. Pantai Kuta',
-    'Jl. Sunset Road',
-    'Jl. Legian',
-    'Jl. Raya Ubud',
-    'Jl. Raya Uluwatu',
-    'Jl. Raya Sanur',
-    'Jl. Raya Nusa Dua',
-    'Jl. Raya Tanjung Benoa',
-    'Jl. Raya Jimbaran',
-    'Jl. Monkey Forest',
-    'Jl. Batu Belig',
-    'Jl. Taman Sari',
-    'Jl. Petitenget',
-    'Jl. Batubolong',
-    'Jl. Kayu Aya',
-    'Jl. Basangkasa',
-    'Jl. Nakula',
-    'Jl. Dewi Sri',
-    'Jl. Mengwi'
+    'Jl. Raya Kuta, Gang Cempaka, No. 17, Kuta, Bali',
+    'Jl. Gunung Payung, Block F, No. 11, Nusa Dua, Bali',
+    'Jl. Tirta Empul, G. 3, No. 8, Gianyar, Bali',
+    'Jl. Raya Ubud, Block B, No. 21, Ubud, Bali',
+    'Jl. Hanoman, Gang Melati, No. 9, Denpasar, Bali',
+    'Jl. Pantai Berawa, G. 6, No. 12, Canggu, Bali',
+    'Jl. Kediri, Block D, No. 7, Tabanan, Bali',
+    'Jl. Gatot Subroto, G. 4, No. 15, Sanur, Bali',
+    'Jl. Raya Kintamani, Block A, No. 3, Bangli, Bali',
+    'Jl. Raya Candidasa, G. 9, No. 14, Karangasem, Bali',
+    'Jl. Teuku Umar, Gang Pandan, No. 6, Denpasar, Bali',
+    'Jl. Batu Belig, Block C, No. 2, Seminyak, Bali',
+    'Jl. Raya Sukawati, G. 5, No. 19, Sukawati, Bali',
+    'Jl. Pulau Sari, Block E, No. 10, Jimbaran, Bali',
+    'Jl. Padang Tegal, Gang Sabtu, No. 11, Ubud, Bali'
   ];
 
   static List<String> months = [

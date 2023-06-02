@@ -14,7 +14,7 @@ class LazyLoadingContainer extends StatefulWidget {
   final bool animation;
   final bool freeInteract;
   final ToastType type;
-  final LzToastPosition position;
+  final Position position;
 
   const LazyLoadingContainer(
       {Key? key,
@@ -25,7 +25,7 @@ class LazyLoadingContainer extends StatefulWidget {
       this.animation = true,
       this.freeInteract = false,
       this.type = ToastType.overlay,
-      this.position = LzToastPosition.bottom})
+      this.position = Position.bottom})
       : super(key: key);
 
   @override
@@ -40,10 +40,10 @@ class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleT
   bool get isPersistentCallbacks => _ambiguate(SchedulerBinding.instance)!.schedulerPhase == SchedulerPhase.persistentCallbacks;
 
   // Toast Position
-  Map<LzToastPosition, AlignmentGeometry> positions = {
-    LzToastPosition.top: AlignmentDirectional.topCenter,
-    LzToastPosition.center: AlignmentDirectional.center,
-    LzToastPosition.bottom: AlignmentDirectional.bottomCenter,
+  Map<Position, AlignmentGeometry> positions = {
+    Position.top: AlignmentDirectional.topCenter,
+    Position.center: AlignmentDirectional.center,
+    Position.bottom: AlignmentDirectional.bottomCenter,
   };
 
   @override

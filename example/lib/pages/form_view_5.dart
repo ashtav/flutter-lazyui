@@ -94,7 +94,7 @@ class FormView5 extends StatelessWidget {
                     keyboard: Tit.number,
                     maxLength: 0),
               ]),
-          Box(
+          LzBox(
             children: [
               Row(
                 crossAxisAlignment: Caa.start,

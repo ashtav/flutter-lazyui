@@ -4,6 +4,7 @@ import '../../lazyui.dart';
 
 enum ButtonType { primary, secondary, danger, success, warning, dark, white }
 
+@Deprecated('Use LzButton instead')
 class Button extends StatelessWidget {
   final String? text;
   final IconData? icon;
@@ -97,26 +98,36 @@ class Button extends StatelessWidget {
 | LzButton
 | */
 
+enum IconAlign { left, right }
+
 class LzButton extends StatelessWidget {
   final String? text;
   final IconData? icon;
-  final Function(LzButtonControl control)? onTap;
-  final double? spacing, radius;
+  final IconAlign iconAlign;
+  final Function(LzButtonControl state)? onTap;
+  final double? radius;
+  final EdgeInsetsGeometry? padding;
+  final LzRadius? customRadius;
   final ButtonType type;
-  final Color? color;
-  final Color? textColor;
-  final bool gradient;
+  final Color? color, textColor, borderColor;
+  final TextAlign textAlign;
+  final bool gradient, outline;
   const LzButton(
       {super.key,
       this.text,
       this.icon,
+      this.iconAlign = IconAlign.left,
       this.onTap,
-      this.spacing,
+      this.padding,
       this.radius,
+      this.customRadius,
       this.type = ButtonType.white,
       this.color,
       this.textColor,
-      this.gradient = false});
+      this.borderColor,
+      this.textAlign = TextAlign.center,
+      this.gradient = false,
+      this.outline = false});
 
   @override
   Widget build(BuildContext context) {
@@ -128,16 +139,16 @@ class LzButton extends StatelessWidget {
     Duration duration = const Duration(milliseconds: 150);
 
     Map<ButtonType, Color> buttonColors = {
-      ButtonType.primary: Utils.hex('#60a5fa'),
+      ButtonType.primary: Utils.hex('#206bc4'),
       ButtonType.secondary: Utils.hex('#9ca3af'),
-      ButtonType.danger: Utils.hex('#f87171'),
-      ButtonType.success: Utils.hex('#4ade80'),
-      ButtonType.warning: Utils.hex('#fb923c'),
+      ButtonType.danger: Utils.hex('#d63939'),
+      ButtonType.success: Utils.hex('#2fb344'),
+      ButtonType.warning: Utils.hex('#f76707'),
       ButtonType.dark: Utils.hex('#0f172a'),
       ButtonType.white: Colors.white,
     };
 
-    Color buttonTextColor = textColor ?? (type == ButtonType.white ? Utils.hex('#1e293b') : Colors.white);
+    Color buttonTextColor = textColor ?? (outline ? buttonColors[type]! : (type == ButtonType.white ? Utils.hex('#1e293b') : Colors.white));
 
     Widget buttonWidget = AnimatedBuilder(
         animation: notifier,
@@ -155,6 +166,55 @@ class LzButton extends StatelessWidget {
               child: child);
 
           Color buttonColor = color ?? (buttonColors[type] ?? Colors.white);
+
+          double iconTextSpace = isSubmit
+              ? 15
+              : icon.isNotNull
+                  ? 15
+                  : 0;
+
+          List<Widget> buttonContent = [
+            icon == null
+                ? switcher(isSubmit
+                    ? Loader(
+                        key: UniqueKey(),
+                        color: buttonTextColor,
+                      )
+                    : const None())
+                : switcher(isSubmit
+                    ? Loader(
+                        key: UniqueKey(),
+                        color: buttonTextColor,
+                      )
+                    : Icon(
+                        icon!,
+                        key: UniqueKey(),
+                        color: buttonTextColor,
+                        size: 18,
+                      )),
+
+            // Button Text
+            notifier.buttonText.trim().isEmpty
+                ? const None()
+                : AnimatedContainer(
+                    duration: duration,
+                    margin: Ei.only(l: iconAlign == IconAlign.left ? iconTextSpace : 0, r: iconAlign == IconAlign.right ? iconTextSpace : 0),
+                    child: Text(
+                      notifier.buttonText,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
+                      overflow: Tof.ellipsis,
+                    ),
+                  ).flexible(),
+          ];
+
+          // align
+          final aligns = {
+            TextAlign.center: Maa.center,
+            TextAlign.left: Maa.start,
+            TextAlign.right: Maa.end,
+            TextAlign.justify: Maa.spaceBetween,
+          };
+
           return AnimatedOpacity(
             opacity: isSubmit || !notifier.enabled ? 0.7 : 1,
             duration: duration,
@@ -172,48 +232,14 @@ class LzButton extends StatelessWidget {
               ),
               child: InkW(
                 onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
-                padding: Ei.sym(v: gradient ? 17 : 16, h: spacing ?? 20),
-                radius: Br.radius(radius ?? configRadius),
-                color: gradient ? null : buttonColor,
-                border: gradient ? null : Br.all(color: type == ButtonType.white ? null : color ?? buttonColors[type]),
+                padding: padding ?? Ei.sym(v: gradient ? 17 : 16, h: 20),
+                radius: customRadius == null ? Br.radius(radius ?? configRadius) : LzRadius.getRadius(customRadius!),
+                color: gradient || outline ? null : buttonColor,
+                border: gradient ? null : Br.all(color: borderColor ?? (type == ButtonType.white && !outline ? null : color ?? buttonColors[type])),
                 child: Row(
-                  mainAxisAlignment: Maa.center,
+                  mainAxisAlignment: aligns[textAlign] ?? Maa.center,
                   mainAxisSize: Mas.min,
-                  children: [
-                    icon == null
-                        ? switcher(isSubmit
-                            ? Loader(
-                                key: UniqueKey(),
-                                color: buttonTextColor,
-                              )
-                            : const None())
-                        : switcher(isSubmit
-                            ? Loader(
-                                key: UniqueKey(),
-                                color: buttonTextColor,
-                              )
-                            : Icon(
-                                icon!,
-                                key: UniqueKey(),
-                                color: buttonTextColor,
-                                size: 18,
-                              )),
-
-                    // Button Text
-                    AnimatedContainer(
-                      duration: duration,
-                      margin: Ei.only(
-                          l: isSubmit
-                              ? 15
-                              : icon.isNotNull
-                                  ? 15
-                                  : 0),
-                      child: Text(
-                        notifier.buttonText,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
-                      ),
-                    ),
-                  ],
+                  children: iconAlign == IconAlign.left ? buttonContent : buttonContent.reversed.toList(),
                 ),
               ),
             ),
@@ -230,9 +256,16 @@ class LzButtonControl extends ChangeNotifier {
   String buttonText = '';
   bool isSubmit = false, enabled = true;
 
-  LzButtonControl submit() {
+  LzButtonControl submit({Duration? abortOn}) {
     isSubmit = true;
     notifyListeners();
+
+    if (abortOn != null) {
+      Future.delayed(abortOn, () {
+        abort();
+      });
+    }
+
     return this;
   }
 
@@ -285,65 +318,174 @@ extension LzButtonExtension on LzButton {
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
+        customRadius: customRadius,
         type: ButtonType.primary,
         textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
         gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton secondary([Color? textColor]) => LzButton(
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
+        customRadius: customRadius,
         type: ButtonType.secondary,
         textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
         gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton danger([Color? textColor]) => LzButton(
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
+        customRadius: customRadius,
         type: ButtonType.danger,
         textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
         gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton success([Color? textColor]) => LzButton(
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
+        customRadius: customRadius,
         type: ButtonType.success,
         textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
         gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton warning([Color? textColor]) => LzButton(
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
+        customRadius: customRadius,
         type: ButtonType.warning,
         textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
         gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
 
   LzButton dark([Color? textColor]) => LzButton(
         text: text,
         icon: icon,
         onTap: onTap,
-        spacing: spacing,
+        padding: padding,
         radius: radius,
+        customRadius: customRadius,
         type: ButtonType.dark,
         textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
         gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
       );
+
+  LzButton border([Color? borderColor]) => LzButton(
+        text: text,
+        icon: icon,
+        onTap: onTap,
+        padding: padding,
+        radius: radius,
+        customRadius: customRadius,
+        type: type,
+        textColor: textColor,
+        textAlign: textAlign,
+        iconAlign: iconAlign,
+        gradient: gradient,
+        outline: outline,
+        color: color,
+        borderColor: borderColor,
+      );
+
+  Widget sized(double width) => SizedBox(width: width, child: this);
+  Widget block() => SizedBox(width: double.infinity, child: this);
+}
+
+extension LzButtonGroupExtension on List<LzButton> {
+  Widget group({Axis direction = Axis.vertical, double? width, double? radius, TextAlign? textAlign}) {
+    double configRadius = LazyUi.getConfig.radius;
+
+    List<LzButton> contents = List.generate(length, (i) {
+      final child = this[i];
+
+      double radiuss = radius ?? (child.radius ?? configRadius);
+
+      final button = LzButton(
+        text: child.text,
+        icon: child.icon,
+        onTap: child.onTap,
+        padding: child.padding,
+        radius: child.radius,
+        customRadius: direction == Axis.vertical
+            ? (i == 0
+                ? LzRadius(tlr: radiuss)
+                : i == length - 1
+                    ? LzRadius(blr: radiuss)
+                    : LzRadius(all: 0))
+            : (i == 0
+                ? LzRadius(ltb: radiuss)
+                : i == length - 1
+                    ? LzRadius(rtb: radiuss)
+                    : LzRadius(all: 0)),
+        type: child.type,
+        textColor: child.textColor,
+        textAlign: textAlign ?? child.textAlign,
+        iconAlign: child.iconAlign,
+        gradient: child.gradient,
+        outline: child.outline,
+      );
+
+      return button;
+    });
+
+    return direction == Axis.horizontal
+        ? SizedBox(
+            width: 200,
+            child: Row(
+              mainAxisSize: Mas.min,
+              children: List.generate(
+                contents.length,
+                (i) => width == null ? contents[i] : contents[i].sized(width),
+              ),
+            ))
+        : Column(
+            children: contents.map((e) => e.sized(width ?? double.infinity)).toList(),
+          );
+  }
 }

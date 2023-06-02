@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+// @Deprecated('Use LzImage widget instead')
 class GetImage extends StatelessWidget {
   final dynamic image;
   final dynamic size, maxSize;
@@ -30,11 +31,11 @@ class GetImage extends StatelessWidget {
         ),
       );
     } else if (image is String && image.contains('http')) {
-      return CachedNetworkImage(
+      widget = CachedNetworkImage(
         fit: fit,
         imageUrl: image,
         progressIndicatorBuilder: (context, url, downloadProgress) {
-          return Skeleton(size: size, highlightColor: skeletonColor ?? Colors.black54, radius: radius ?? 10);
+          return Skeleton(size: size, radius: radius ?? 10);
         },
         errorWidget: (context, url, error) => const Center(),
       );
@@ -81,8 +82,10 @@ class LzImage<T> extends StatelessWidget {
   final Color? color;
   final double? width, height, size;
   final double? radius;
+  final Widget? placeholder, errorWidget;
 
-  const LzImage(this.image, {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius});
+  const LzImage(this.image,
+      {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius, this.placeholder, this.errorWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -98,14 +101,15 @@ class LzImage<T> extends StatelessWidget {
 
     // check available type
     if (!availables.contains(image.runtimeType)) {
-      logg('Image type not available', name: 'LzImage');
+      logg('Image type is not available | $image', name: 'LzImage', color: LogColor.cyan);
       return SizedBox(
         width: width,
         height: height,
-        child: const Center(
-            child: Icon(
-          La.exclamationCircle,
-        )),
+        child: errorWidget ??
+            const Center(
+                child: Icon(
+              La.exclamationCircle,
+            )),
       );
     }
 
@@ -163,8 +167,8 @@ class LzImage<T> extends StatelessWidget {
           imageUrl: path,
           width: width,
           height: height,
-          progressIndicatorBuilder: (context, url, downloadProgress) => shimmer,
-          errorWidget: (context, url, error) => const Center(child: Icon(La.exclamationCircle)),
+          progressIndicatorBuilder: (context, url, downloadProgress) => placeholder ?? shimmer,
+          errorWidget: (context, url, error) => errorWidget ?? const Center(child: Icon(La.exclamationCircle)),
         );
       }
 
@@ -174,6 +178,13 @@ class LzImage<T> extends StatelessWidget {
 
       else if (isPath) {
         result = Image.file(File(path), fit: fit, width: width, height: height);
+      } else {
+        String path = 'assets/images/$image';
+        result = Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(image: AssetImage(path), fit: fit),
+          ),
+        );
       }
     }
 

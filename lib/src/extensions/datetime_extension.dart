@@ -1,15 +1,26 @@
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
-extension DateTimeExtension on DateTime {
+extension DateTimeDynamicExtension on DateTime? {
   /// https://api.flutter.dev/flutter/intl/DateFormat-class.html
   /// ```dart
   /// DateTime.now().format(); // 2022-11-05
   /// ```
   String format([String format = 'yyyy-MM-dd', String? locale]) {
     if (locale != null) initializeDateFormatting(locale, null);
-    return DateFormat(format, locale).format(this);
+    return DateFormat(format, locale).format(this ?? DateTime.now());
   }
+}
+
+extension DateTimeExtension on DateTime {
+  /// https://api.flutter.dev/flutter/intl/DateFormat-class.html
+  /// ```dart
+  /// DateTime.now().format(); // 2022-11-05
+  /// ```
+  // String format([String format = 'yyyy-MM-dd', String? locale]) {
+  //   if (locale != null) initializeDateFormatting(locale, null);
+  //   return DateFormat(format, locale).format(this);
+  // }
 
   /// ```dart
   /// DateTime.now().weekOfMonth; // get week of month

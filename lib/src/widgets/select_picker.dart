@@ -4,21 +4,35 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+class OptionStyle {
+  final bool bold;
+  final Color? color;
+
+  const OptionStyle({this.bold = false, this.color});
+}
+
 class Option {
   final String option;
   final dynamic value;
   final bool disabled;
   final int index;
   final IconData? icon;
+  final OptionStyle? style;
 
-  const Option({required this.option, this.value, this.disabled = false, this.index = 0, this.icon});
+  const Option({required this.option, this.value, this.disabled = false, this.index = 0, this.icon, this.style});
 
   factory Option.fromMap(Map<String, dynamic> map) {
-    return Option(option: map['option'], value: map['value'], disabled: map['disabled'] ?? false, index: map['index'] ?? 0, icon: map['icon']);
+    return Option(
+        option: map['option'],
+        value: map['value'],
+        disabled: map['disabled'] ?? false,
+        index: map['index'] ?? 0,
+        icon: map['icon'],
+        style: map['style']);
   }
 
   Map<String, dynamic> toMap() {
-    return {'option': option, 'value': value, 'disabled': disabled, 'index': index, 'icon': icon};
+    return {'option': option, 'value': value, 'disabled': disabled, 'index': index, 'icon': icon, 'style': style};
   }
 }
 
@@ -44,7 +58,6 @@ class SelectPicker extends StatelessWidget {
         ? {'option': options.isEmpty ? null : options[i]}
         : {'option': options.isEmpty ? null : options[i], 'value': values.isEmpty ? null : values[i]};
 
-    Color primaryColor = LazyUi.getConfig.primaryColor;
     double radius = LazyUi.getConfig.radius;
     BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
@@ -104,9 +117,14 @@ class SelectPicker extends StatelessWidget {
                             },
                             children: List<Widget>.generate(options.length, (int index) {
                               return Center(
-                                child: Text(
-                                  options[index],
-                                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                child: Container(
+                                  constraints: BoxConstraints(maxWidth: context.width * .75),
+                                  child: Text(
+                                    options[index],
+                                    overflow: Tof.ellipsis,
+                                    textAlign: Ta.center,
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                  ),
                                 ),
                               );
                             })),
@@ -158,7 +176,10 @@ class SelectPicker extends StatelessWidget {
                                         textAlign: Ta.center,
                                         maxLines: 1,
                                         overflow: Tof.ellipsis,
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black),
+                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                              fontWeight: Fw.bold,
+                                              color: LzColors.black,
+                                            ),
                                       ),
                                     ));
                               }),
@@ -222,9 +243,9 @@ class SelectPicker extends StatelessWidget {
     );
   }
 
-  static open(BuildContext context,
+  static show(BuildContext context,
       {required List<Option> options, Function(Option)? onSelect, Option? initialValue, String? textConfirm, bool fullScreen = false}) {
-    context.bottomSheet(SelectPicker(options: options, fullScreen: fullScreen, onSelect: (option) {}),
+    context.bottomSheet(SelectPicker(options: options, fullScreen: fullScreen, onSelect: onSelect),
         backgroundColor: Colors.transparent, useSafeArea: !fullScreen);
   }
 }

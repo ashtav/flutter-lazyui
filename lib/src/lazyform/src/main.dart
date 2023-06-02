@@ -62,6 +62,26 @@ class LzForm {
   }
 
   /* ---------------------------------------------------------------
+  | LzForm Reset
+  | */
+
+  /// ``` dart
+  /// LzForm.reset(forms, only: ['name', 'email']);
+  /// ```
+
+  static void reset(Map<String, FormModel> forms, {List<String> only = const [], List<String> except = const []}) {
+    for (var e in forms.keys) {
+      if (only.isNotEmpty && only.contains(e)) {
+        forms[e]!.controller.text = '';
+      } else if (except.isNotEmpty && !except.contains(e)) {
+        forms[e]!.controller.text = '';
+      } else if (only.isEmpty && except.isEmpty) {
+        forms[e]!.controller.text = '';
+      }
+    }
+  }
+
+  /* ---------------------------------------------------------------
   | LzForm Input
   | */
 
@@ -84,6 +104,7 @@ class LzForm {
           Function(String value)? onSubmit,
           Function(TextEditingController model)? onTap,
           IconData? suffixIcon,
+          LzInputicon? suffix,
           List<IconData> obsecureIcons = const [],
           LzFormLabelStyle? labelStyle}) =>
       Input(
@@ -105,6 +126,7 @@ class LzForm {
           onSubmit: onSubmit,
           onTap: onTap,
           suffixIcon: suffixIcon,
+          suffix: suffix,
           obsecureIcons: obsecureIcons,
           labelStyle: labelStyle);
 
@@ -119,6 +141,7 @@ class LzForm {
           Option? initValue,
           FormModel? model,
           bool disabled = false,
+          bool expandValue = false,
           Function(String value)? onChange,
           Future<dynamic>? Function(SelectController selector)? onTap,
           dynamic Function(SelectController selector)? onSelect,
@@ -130,6 +153,7 @@ class LzForm {
           initValue: initValue,
           model: model,
           disabled: disabled,
+          expandValue: expandValue,
           onChange: onChange,
           onTap: onTap,
           onSelect: onSelect,
@@ -211,6 +235,7 @@ class LzForm {
           bool disabled = false,
           bool readonly = true,
           bool autofocus = false,
+          bool showControl = true,
           Function(String value)? onChange,
           Function(String value)? onSubmit,
           LzFormLabelStyle? labelStyle}) =>
@@ -225,6 +250,7 @@ class LzForm {
           disabled: disabled,
           readonly: readonly,
           autofocus: autofocus,
+          showControl: showControl,
           onChange: onChange,
           onSubmit: onSubmit,
           labelStyle: labelStyle);
@@ -260,7 +286,8 @@ class LzForm {
       List<String> max = const [],
       List<String> email = const [],
       FormMessages? messages,
-      FormValidateNotifier notifierType = FormValidateNotifier.toast}) {
+      FormValidateNotifier notifierType = FormValidateNotifier.toast,
+      bool singleNotifier = true}) {
     try {
       Map<String, TextEditingController> controllers = Map.fromIterables(forms.keys, forms.values.map((e) => e.controller));
       Map<String, FormNotifier> notifiers = Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
@@ -351,7 +378,25 @@ class LzForm {
         if (notifierType == FormValidateNotifier.toast) {
           Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.CENTER);
         } else if (notifierType == FormValidateNotifier.text) {
-          notifiers[errorKey]?.setMessage(errorMessage, false);
+          if (singleNotifier) {
+            notifiers[errorKey]?.setMessage(errorMessage, false);
+          } else {
+            final group = errorFields.groupBy('key', addKeys: ['key']);
+
+            for (Map e in group) {
+              Map map = (e[e['key']] as List).first;
+
+              String key = map['key'];
+              String type = map['type'];
+              String message = map['message'] ?? 'Unknown error';
+
+              if (messages != null) {
+                message = messages.get(type, key) ?? message;
+              }
+
+              notifiers[key]?.setMessage(message, false);
+            }
+          }
         }
 
         // scroll to the error field
@@ -385,11 +430,14 @@ class LzFormList extends StatelessWidget {
   final ScrollPhysics? physics;
   final LzFormStyle? style;
 
-  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.style});
+  /// If true, the form will be cleared from errors messages when typing
+  final bool cleanOnType;
+
+  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.style, this.cleanOnType = false});
 
   @override
   Widget build(BuildContext context) {
-    LzFormTheme.setActiveColor(LzColor.blue);
+    LzFormTheme.setActiveColor(LzColors.blue);
 
     if (style?.activeColor != null) {
       LzFormTheme.setActiveColor(style!.activeColor!);

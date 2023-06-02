@@ -11,7 +11,7 @@ class Number extends StatelessWidget {
   final FormModel? model;
   final int initialValue, min, max;
   final FocusNode? node;
-  final bool disabled, readonly, autofocus;
+  final bool disabled, readonly, autofocus, showControl;
   final Function(String)? onChange, onSubmit;
   final LzFormLabelStyle? labelStyle;
 
@@ -22,11 +22,12 @@ class Number extends StatelessWidget {
       this.model,
       this.initialValue = 1,
       this.min = 1,
-      this.max = 1000,
+      this.max = 100,
       this.node,
       this.disabled = false,
       this.readonly = true,
       this.autofocus = false,
+      this.showControl = true,
       this.onChange,
       this.onSubmit,
       this.labelStyle});
@@ -55,10 +56,11 @@ class Number extends StatelessWidget {
     }
 
     final notifier = model?.notifier ?? FormNotifier();
-    List<TextInputFormatter> formatters = [InputFormat.numeric];
+    List<TextInputFormatter> formatters = [InputFormat.allowRegex("[0-9-]")];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      formatters = [LengthLimitingTextInputFormatter(11)];
+      formatters = [...formatters, LengthLimitingTextInputFormatter(11)];
+      notifier.setMaxLength('$max'.length);
 
       // listen to controller
       if (model?.controller != null) {
@@ -164,26 +166,28 @@ class Number extends StatelessWidget {
       Utils.setCursorToLastPosition(notifier.controller);
     }
 
-    Widget suffixWidget = notifier.watch(() => Row(
-          mainAxisAlignment: Maa.end,
-          children: List.generate(2, (i) {
-            return IgnorePointer(
-              ignoring: (notifier.disabled ?? disabled),
-              child: GestureDetector(
-                onTap: () => onInputAction(i),
-                onLongPress: () => onInputAction(i, isLongPress: true),
-                onLongPressUp: () => onReleaseAction(),
-                behavior: HitTestBehavior.translucent,
-                child: Iconr(
-                  i == 0 ? La.minus : La.plus,
-                  color: Colors.black45,
-                  padding: Ei.only(h: 15, v: 15),
-                  border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
-                ),
-              ),
-            );
-          }),
-        ));
+    Widget suffixWidget = showControl
+        ? notifier.watch((_) => Row(
+              mainAxisAlignment: Maa.end,
+              children: List.generate(2, (i) {
+                return IgnorePointer(
+                  ignoring: (notifier.disabled ?? disabled),
+                  child: GestureDetector(
+                    onTap: () => onInputAction(i),
+                    onLongPress: () => onInputAction(i, isLongPress: true),
+                    onLongPressUp: () => onReleaseAction(),
+                    behavior: HitTestBehavior.translucent,
+                    child: Iconr(
+                      i == 0 ? La.minus : La.plus,
+                      color: Colors.black45,
+                      padding: Ei.only(h: 15, v: 15),
+                      border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+                    ),
+                  ),
+                );
+              }),
+            ))
+        : const None();
 
     Widget field = ClipRRect(
       key: model?.key,
@@ -193,7 +197,7 @@ class Number extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
+          Color borderColor = isValid || isGrouping ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
           FocusNode focusNode = node ?? notifier.node;
@@ -216,18 +220,78 @@ class Number extends StatelessWidget {
                 children: [
                   Col(
                     children: [
-                      TextInputTransparent(
-                        hint: hint,
-                        controller: model?.controller,
-                        maxLength: maxLength,
-                        node: focusNode,
-                        enabled: enabled,
-                        autofocus: autofocus,
-                        keyboard: Tit.number,
-                        formatters: formatters,
-                        onChange: onChange,
-                        onSubmit: onSubmit,
-                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 65),
+                      FocusScope(
+                        child: Focus(
+                          onFocusChange: (value) {
+                            if (!value) {
+                              final text = notifier.controller.text.trim();
+
+                              if (text.isEmpty || text == '-') {
+                                notifier.controller.text = '0';
+                              }
+
+                              // check min
+                              if (text.getNumeric < min) {
+                                notifier.controller.text = min.toString();
+                                Utils.setCursorToLastPosition(notifier.controller);
+                              }
+                            }
+                          },
+                          child: TextInputTransparent(
+                            hint: hint,
+                            controller: model?.controller,
+                            maxLength: maxLength,
+                            node: focusNode,
+                            enabled: enabled,
+                            autofocus: autofocus,
+                            keyboard: Tit.number,
+                            formatters: formatters,
+                            onChange: (String value) {
+                              onChange?.call(value);
+
+                              if (value == '-') {
+                                return;
+                              }
+
+                              if (value.split('-').length > 2) {
+                                notifier.controller.text = '-';
+                                Utils.setCursorToLastPosition(notifier.controller);
+                                return;
+                              }
+
+                              // check if there are minuses after number
+                              if (value.indexOf('-') > 0) {
+                                notifier.controller.text = value.replaceAll('-', '');
+                                Utils.setCursorToLastPosition(notifier.controller);
+                                return;
+                              }
+
+                              // don't allow there is 0 at the beginning
+                              if (value.startsWith('0') && value.length > 1) {
+                                notifier.controller.text = value.substring(1);
+                                Utils.setCursorToLastPosition(notifier.controller);
+                                return;
+                              }
+
+                              // don't allow there is 0 after -
+                              if (value.startsWith('-0') && value.length > 2) {
+                                notifier.controller.text = value.substring(0, 1) + value.substring(2);
+                                Utils.setCursorToLastPosition(notifier.controller);
+                                return;
+                              }
+
+                              // check min and max
+                              int number = value.getNumeric;
+
+                              if (number > max) {
+                                notifier.controller.text = max.toString();
+                                Utils.setCursorToLastPosition(notifier.controller);
+                              }
+                            },
+                            onSubmit: onSubmit,
+                            contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: showControl ? 65 : 15),
+                          ),
+                        ),
                       ),
 
                       /* ----------------------------------------------------

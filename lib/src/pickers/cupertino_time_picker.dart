@@ -231,7 +231,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
                                     textAlign: Ta.center,
                                     maxLines: 1,
                                     overflow: Tof.ellipsis,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black),
+                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black),
                                   ),
                                 ));
                           }),
@@ -270,7 +270,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
                           overflow: Tof.ellipsis,
                           maxLines: 1,
                           icon: La.clock,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColor.black))),
+                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black))),
                 ),
             ],
           ),

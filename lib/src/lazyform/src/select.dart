@@ -12,7 +12,7 @@ class Select extends StatelessWidget {
   final List<Option> options;
   final Option? initValue;
   final FormModel? model;
-  final bool disabled;
+  final bool disabled, expandValue;
   final Function(String)? onChange;
   final Future? Function(SelectController controller)? onTap;
   final Function(SelectController controller)? onSelect;
@@ -26,6 +26,7 @@ class Select extends StatelessWidget {
       this.initValue,
       this.model,
       this.disabled = false,
+      this.expandValue = false,
       this.onChange,
       this.onTap,
       this.onSelect,
@@ -64,10 +65,6 @@ class Select extends StatelessWidget {
         if (notifier.controller.text.trim().isNotEmpty) {
           notifier.setTextLength(notifier.controller.text.length);
         }
-
-        notifier.controller.addListener(() {
-          notifier.setTextLength(notifier.controller.text.length);
-        });
       }
 
       // set options
@@ -126,7 +123,7 @@ class Select extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
+          Color borderColor = isValid || isGrouping ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
           Color disabledColor = Utils.hex('#f3f4f6');
 
@@ -147,6 +144,10 @@ class Select extends StatelessWidget {
                       // get options
                       List<Option> options = selectController.options ?? notifier.options;
 
+                      if (selectController.option != null) {
+                        notifier.setOption(selectController.option);
+                      }
+
                       if (ok && options.isNotEmpty && context.mounted) {
                         FocusScope.of(context).unfocus();
 
@@ -160,6 +161,10 @@ class Select extends StatelessWidget {
 
                                   notifier.setOption(option);
                                   onSelect?.call(selectController);
+
+                                  if ((formListAncestor?.cleanOnType ?? false) && !notifier.data['valid']) {
+                                    notifier.clear();
+                                  }
                                 }),
                             backgroundColor: Colors.transparent);
                       }
@@ -176,7 +181,8 @@ class Select extends StatelessWidget {
                         controller: model?.controller,
                         enabled: false,
                         onChange: onChange,
-                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 15),
+                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 65),
+                        maxLines: expandValue ? 50 : null,
                       ),
 
                       /* ----------------------------------------------------

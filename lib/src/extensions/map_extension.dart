@@ -16,7 +16,7 @@ extension MapTextEditingControllerExtension on Map<String, TextEditingController
   }
 }
 
-extension MapExtension on Map<String, dynamic> {
+extension MapStringExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'name': 'John'}.add({'id': 1}); // {'name': 'John', 'id': 1}
   /// ```
@@ -64,6 +64,32 @@ extension MapExtension on Map<String, dynamic> {
   }
 
   /// ``` dart
+  /// Map<String, dynamic> data = {'name': 'John Doe'}.lowers(['name']); // {'name': 'john doe'}
+  /// ```
+  Map<String, dynamic> lowers([List<String> keys = const []]) {
+    return map((key, value) {
+      if (keys.contains(key)) {
+        return MapEntry(key, value.toString().toLowerCase());
+      } else {
+        return MapEntry(key, value);
+      }
+    });
+  }
+
+  /// ``` dart
+  /// Map<String, dynamic> data = {'name': 'John Doe'}.uppers(['name']); // {'name': 'JOHN DOE'}
+  /// ```
+  Map<String, dynamic> uppers([List<String> keys = const []]) {
+    return map((key, value) {
+      if (keys.contains(key)) {
+        return MapEntry(key, value.toString().toUpperCase());
+      } else {
+        return MapEntry(key, value);
+      }
+    });
+  }
+
+  /// ``` dart
   /// Map<String, dynamic> data = {'price': 2500}.currency(['price']); // {'price': '2.500'}
   /// ```
   Map<String, dynamic> currency([List<String> keys = const [], String prefix = '', String separator = '.']) {
@@ -90,5 +116,21 @@ extension MapExtension on Map<String, dynamic> {
 
   Map<String, dynamic> get([List<String> keys = const []]) {
     return this..removeWhere((key, value) => !keys.contains(key));
+  }
+
+  /// ``` dart
+  /// Map<String, dynamic> data = {'no': 1, 'label': 'Apple'}.renameKeys({
+  ///   'no': 'id', 'label': 'name'
+  /// }); // {'id': 1, 'name': 'Apple'}
+  /// ```
+
+  Map<String, dynamic> renameKeys(Map<String, String> map) {
+    return this.map((key, value) {
+      if (map.containsKey(key)) {
+        return MapEntry(map[key]!, value);
+      } else {
+        return MapEntry(key, value);
+      }
+    });
   }
 }

@@ -10,13 +10,25 @@ class AnotherWidgetView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Another Widgets'),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(La.bars),
+            onPressed: () {
+              List<IconData> icons = [La.infoCircle, La.edit, La.trashAlt];
+
+              LzOption.show(context, options: ['See Detail', 'Edit', 'Delete'].options(icons: icons), confirmOnTap: [2], onSelect: (value) {
+                logg(value.option);
+              });
+            },
+          ),
+        ],
       ),
       body: ListView(
         padding: Ei.all(20),
         physics: BounceScroll(),
         children: [
           Textr(
-            Faker.random(),
+            Faker.words(),
             icon: La.user,
           ),
           const Textr(
@@ -37,7 +49,7 @@ class AnotherWidgetView extends StatelessWidget {
           const SizedBox(
             height: 33,
           ),
-          Slidebar(active: 1, size: (int i) => [i == 1 ? 20 : 5, 5]),
+          Slidebar(active: 1, spacing: 10, size: (int i) => [i == 1 ? 20 : 5, 5]),
           const SizedBox(
             height: 33,
           ),
@@ -49,7 +61,10 @@ class AnotherWidgetView extends StatelessWidget {
           const SizedBox(
             height: 33,
           ),
-          const Textml('Hello <b>World</b>, I am <b>Jhon</b>'),
+          Textml(
+            'Hello <b>World</b>, I am <i>Jhon</i> from <b><u><i>Indonesia</i></u></b>',
+            style: Gfont.muted,
+          ),
           Container(
             decoration: BoxDecoration(border: Br.all()),
             padding: Ei.all(20),
@@ -59,12 +74,6 @@ class AnotherWidgetView extends StatelessWidget {
               style: Gfont.bold,
             ),
           ).getChild(),
-          Col(
-            children: List.generate(1, (i) {
-              String imgURL = 'https://master.saddannusantara.com//storagethumbnails//mnYKQoxZYYWJpEkgoxWkYUl7oml634fTxjTZFo3a.png';
-              return LzImage(imgURL, size: 100);
-            }),
-          )
         ],
       ),
     );
@@ -72,45 +81,6 @@ class AnotherWidgetView extends StatelessWidget {
 }
 
 // This widget is to make simple html output (bold, italic, underline, etc)
-
-class Textml extends StatelessWidget {
-  final String text;
-  const Textml(this.text, {super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: parseText(text),
-      ),
-    );
-  }
-
-  List<TextSpan> parseText(String text) {
-    List<TextSpan> textSpans = [];
-
-    TextStyle textStyle = const TextStyle(color: Colors.black);
-
-    final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+\s*)');
-    final matches = regex.allMatches(text);
-
-    final result = matches.map((match) {
-      final word = match.group(2) ?? match.group(3);
-      final type = match.group(1) != null ? 'bold' : 'normal';
-      return {'word': word, 'type': type};
-    }).toList();
-
-    for (Map map in result) {
-      if (map['type'] == 'bold') {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle.copyWith(fontWeight: FontWeight.bold)));
-      } else {
-        textSpans.add(TextSpan(text: map['word'], style: textStyle));
-      }
-    }
-
-    return textSpans;
-  }
-}
 
 extension WidgetExtension on Widget {
   Widget getChild<T extends Widget>() {

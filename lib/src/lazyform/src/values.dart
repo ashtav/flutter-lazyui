@@ -82,31 +82,51 @@ class FeedbackMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
 
-    return AnimatedSwitcher(
-      duration: const Duration(milliseconds: 150),
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        final tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
-        return SlideTransition(position: tween.animate(animation), child: child);
-      },
-      child: isValid
-          ? const None()
-          : SizedBox(
-              key: ValueKey(errorMessage),
-              width: context.width,
-              child: Textr(
-                errorMessage,
-                style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
-                margin: Ei.only(
-                    l: leftLess ? 0 : 15,
-                    b: 13,
-                    r: leftLess
-                        ? 0
-                        : isSuffix
-                            ? (padRight ?? 65)
-                            : 15),
-              ),
-            ),
+    return ResizedSwitched(
+      show: !isValid,
+      child: SizedBox(
+        key: ValueKey(errorMessage),
+        width: context.width,
+        child: Textr(
+          errorMessage,
+          style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
+          margin: Ei.only(
+              l: leftLess ? 0 : 15,
+              b: 13,
+              r: leftLess
+                  ? 0
+                  : isSuffix
+                      ? (padRight ?? 65)
+                      : 15),
+        ),
+      ),
     );
+
+    // return AnimatedSwitcher(
+    //   duration: const Duration(milliseconds: 150),
+    //   transitionBuilder: (Widget child, Animation<double> animation) {
+    //     final tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
+    //     return SlideTransition(position: tween.animate(animation), child: child);
+    //   },
+    //   child: isValid
+    //       ? const None()
+    //       : SizedBox(
+    //           key: ValueKey(errorMessage),
+    //           width: context.width,
+    //           child: Textr(
+    //             errorMessage,
+    //             style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
+    //             margin: Ei.only(
+    //                 l: leftLess ? 0 : 15,
+    //                 b: 13,
+    //                 r: leftLess
+    //                     ? 0
+    //                     : isSuffix
+    //                         ? (padRight ?? 65)
+    //                         : 15),
+    //           ),
+    //         ),
+    // );
   }
 }
 
@@ -115,7 +135,7 @@ class FeedbackMessage extends StatelessWidget {
 | Set or get active color for radio, checkbox and switches
 | */
 
-Color _formThemeColor = LzColor.blue;
+Color _formThemeColor = LzColors.blue;
 
 class LzFormTheme {
   static Color get activeColor => _formThemeColor;
@@ -134,5 +154,22 @@ class LzFormTheme {
 class LzFormControl {
   static switches(String id) {
     switchesNotifier[id]?.setSwitched();
+  }
+}
+
+class LzInputicon extends StatelessWidget {
+  final IconData icon;
+  final Function()? onTap;
+  final Color? borderColor;
+  const LzInputicon({super.key, required this.icon, this.onTap, this.borderColor});
+
+  @override
+  Widget build(BuildContext context) {
+    return Iconr(
+      icon,
+      color: Colors.black45,
+      padding: Ei.only(h: 15, v: 15),
+      border: Br.only(['l'], color: (borderColor ?? Colors.black12)),
+    ).onTap(() => onTap?.call());
   }
 }
