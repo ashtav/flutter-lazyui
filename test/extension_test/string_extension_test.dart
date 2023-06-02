@@ -6,7 +6,7 @@ import 'package:lazyui/lazyui.dart';
 void main() {
   String ucwords = 'john doe'.ucwords;
   String ucfirst = 'john doe'.ucfirst;
-  String firstChar = 'John Doe'.firstChar(length: 2);
+  String firstChar = 'John Doe'.initials(length: 2);
   int getNumeric = 'lipsum99'.getNumeric;
   DateTime toDate = "2023-02-10 00:00:00".toDate();
   String rsb = 'lorem ipsum dolor'.removeStringBefore('ipsum');

@@ -49,7 +49,7 @@ class AnotherWidgetView extends StatelessWidget {
           const SizedBox(
             height: 33,
           ),
-          Slidebar(active: 1, spacing: 10, size: (int i) => [i == 1 ? 20 : 5, 5]),
+          LzSlidebar(active: 1, spacing: 10, size: (int i) => [i == 1 ? 20 : 5, 5]),
           const SizedBox(
             height: 33,
           ),

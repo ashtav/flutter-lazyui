@@ -19,10 +19,16 @@ String colorize(String value, LogColor color) => '\x1B[${_colors[color]}$value\x
 /// // show on debug console with custom color and limit
 /// logg('lorem ipsum', color: LogColor.red, limit: 3000);
 /// ```
-logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
+logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? name, bool nolimit = false}) {
   // max length
   String valueString = '$value';
-  String subStr = '$value'.substring(0, valueString.length > limit ? limit : valueString.length);
+  String subStr = '$value'.substring(
+      0,
+      nolimit
+          ? 999999
+          : valueString.length > limit
+              ? limit
+              : valueString.length);
 
   // print on debug console
   String message = colorize(subStr, color);

@@ -43,9 +43,9 @@ extension StringExtension on String {
   }
 
   /// ``` dart
-  /// 'John Doe'.firstChar(length = 2); // JD
+  /// 'John Doe'.initials(length = 2); // JD
   /// ```
-  String firstChar({bool firstUppercase = true, int length = 2}) {
+  String initials({bool firstUppercase = true, int length = 2}) {
     String result = '';
 
     try {

@@ -221,53 +221,6 @@ Try to check [$member]''';
     }
   }
 
-  ///
-  /// ```dart
-  /// ListView(
-  ///   controller: yourScrollController,
-  ///   children: [
-  ///     YourWidget(
-  ///       key: yourGlobalKey
-  ///     )
-  ///   ]
-  /// )
-  ///
-  /// onTap: (){
-  ///   Utils.scrollToWidget(yourGlobalKey, yourScrollController, MediaQuery.of(context).size.width);
-  /// }
-  /// ```
-
-  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
-    if (key.currentContext != null) {
-      RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
-
-      // get width of widget
-      double w = box.size.width;
-
-      // get horizontal position of widget
-      double dx = box.localToGlobal(Offset.zero).dx;
-
-      // get max scroll of List
-      double ms = controller.position.maxScrollExtent;
-
-      // get pixel of scroll position
-      double pixel = controller.position.pixels;
-
-      // result, the center position of widget
-      double pos = (pixel + dx) - (screenWidth / 2) + (w / 2);
-
-      // scroll to position
-      controller.animateTo(
-          pos < 0
-              ? 0
-              : pos > ms
-                  ? ms
-                  : pos,
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.ease);
-    }
-  }
-
   /// This function will set scroll to default position when user scroll to max position
   /// ``` dart
   /// List max = [10, 50]; // [top, bottom]

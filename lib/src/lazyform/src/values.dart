@@ -4,6 +4,15 @@ import 'package:lazyui/lazyui.dart';
 import 'notifier.dart';
 import 'switches.dart';
 
+class SelectController {
+  String? label;
+  List<Option>? options;
+  Option? option;
+  TextEditingController? controller;
+
+  SelectController({this.label, this.options, this.controller, this.option});
+}
+
 /* ---------------------------------------------------------------
 | Form Label Style
 | */

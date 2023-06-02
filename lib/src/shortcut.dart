@@ -52,11 +52,12 @@ class Br {
   /// ``` dart
   /// borderRadius: Br.radiusOnly()
   /// ```
-  static BorderRadius radiusOnly({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr}) => BorderRadius.only(
-      topLeft: Radius.circular(tl ?? tlr ?? 0),
-      topRight: Radius.circular(tr ?? tlr ?? 0),
-      bottomLeft: Radius.circular(bl ?? blr ?? 0),
-      bottomRight: Radius.circular(br ?? blr ?? 0));
+  static BorderRadius radiusOnly({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? ltb, double? rtb}) =>
+      BorderRadius.only(
+          topLeft: Radius.circular(tl ?? tlr ?? ltb ?? 0),
+          topRight: Radius.circular(tr ?? tlr ?? rtb ?? 0),
+          bottomLeft: Radius.circular(bl ?? blr ?? ltb ?? 0),
+          bottomRight: Radius.circular(br ?? blr ?? rtb ?? 0));
 
   /// ``` dart
   /// borderRadius: Br.circle
@@ -157,9 +158,9 @@ class Wa {
   static const WrapAlignment start = WrapAlignment.start;
   static const WrapAlignment center = WrapAlignment.center;
   static const WrapAlignment end = WrapAlignment.end;
-  static const WrapAlignment spaceAround = WrapAlignment.end;
-  static const WrapAlignment spaceBetween = WrapAlignment.end;
-  static const WrapAlignment spaceEvenly = WrapAlignment.end;
+  static const WrapAlignment spaceAround = WrapAlignment.spaceAround;
+  static const WrapAlignment spaceBetween = WrapAlignment.spaceBetween;
+  static const WrapAlignment spaceEvenly = WrapAlignment.spaceEvenly;
 }
 
 /* --------------------------------------------------------------------------------

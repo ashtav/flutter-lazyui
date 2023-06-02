@@ -23,7 +23,6 @@ class LaziconView extends StatelessWidget {
                 height: 160,
                 child: Center(
                     child: Column(children: [
-                  Lazicon.get(LaziconType.nodata),
                   Textr(
                     'LaziconType.nodata',
                     style: Gfont.fs14.muted,

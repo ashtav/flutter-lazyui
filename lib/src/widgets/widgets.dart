@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart' hide TextDirection;
 
 import '../config.dart';
+import 'custom_painter.dart';
 
 /// combination betweeen Icon and Container
 class Iconr extends StatelessWidget {
@@ -596,17 +597,17 @@ class LzBadge extends StatelessWidget {
 }
 
 /* --------------------------------------------------------------------------
-| Slidebar
+| LzSlidebar
 | ---------------------------------------------------------------------------
 | When you want to show a list of dots to show the current page or slide
 | */
 
-class Slidebar extends StatelessWidget {
+class LzSlidebar extends StatelessWidget {
   /// ```dart
   /// int active = 1;
-  /// Slidebar(active: active, spacing: 10, size: (int i) => [i == active ? 20 : 5, 5]),
+  /// LzSlidebar(active: active, spacing: 10, size: (int i) => [i == active ? 20 : 5, 5]),
   /// ```
-  const Slidebar(
+  const LzSlidebar(
       {super.key,
       this.length = 3,
       this.size,
@@ -968,22 +969,5 @@ class LzPopover extends StatelessWidget {
         )
       ],
     ));
-  }
-}
-
-enum LaziconType { nodata }
-
-class Lazicon {
-  static get(LaziconType type, {double size = 70, Color? colorFilter}) {
-    Map<LaziconType, String> icons = {
-      LaziconType.nodata: 'no-data.svg',
-    };
-
-    return SvgPicture.asset(
-      Lazy.assets(icons[type]!),
-      width: size,
-      height: size,
-      colorFilter: colorFilter.isNull ? null : ColorFilter.mode(colorFilter!, BlendMode.saturation),
-    );
   }
 }

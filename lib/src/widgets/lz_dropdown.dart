@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'custom_painter.dart';
+
 class LzDropdownController {
   final Option option;
   final void Function() back;

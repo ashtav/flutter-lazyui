@@ -61,7 +61,7 @@ class ExProductDetail extends StatelessWidget {
                           ['Category', 'Brand', 'Price'][i],
                           style: Gfont.muted,
                         ),
-                        Text(['Shoes', 'Brand Name', Faker.price()][i], style: Gfont.xbold(i == 2)),
+                        Text(['Shoes', 'Brand Name', Faker.price()][i], style: Gfont.fbold(i == 2)),
                       ],
                     );
                   }),
