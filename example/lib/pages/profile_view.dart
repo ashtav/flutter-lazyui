@@ -1,6 +1,7 @@
 part of page;
 
-String imageUrl = 'https://raw.githubusercontent.com/ashtav/assets/master/avatar/11.jpg';
+String imageUrl =
+    'https://raw.githubusercontent.com/ashtav/assets/master/avatar/11.jpg';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -13,8 +14,12 @@ class ProfileView extends StatelessWidget {
           label: 'Ashta Lorem Ipsum',
           subLabel: 'Software Engineer',
           actions: [
-            IconButton(onPressed: () {}, icon: const Icon(La.qrcode, color: Colors.white)),
-            IconButton(onPressed: () {}, icon: const Icon(La.cog, color: Colors.white)),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(La.qrcode, color: Colors.white)),
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(La.cog, color: Colors.white)),
           ],
           floatingButton: LzProfileFloatingButton(
             onTap: () {},
@@ -28,8 +33,16 @@ class ProfileView extends StatelessWidget {
         ),
         Col(
           children: List.generate(3, (i) {
-            List<String> labels = ['Tap to change your phone number', 'Username', 'Bio'],
-                values = ['+62 8123 6000 000', '@ashta', 'As a Software Engineer, who needs a social life when you can debug alone all night? '];
+            List<String> labels = [
+                  'Tap to change your phone number',
+                  'Username',
+                  'Bio'
+                ],
+                values = [
+                  '+62 8123 6000 000',
+                  '@ashta',
+                  'As a Software Engineer, who needs a social life when you can debug alone all night? '
+                ];
 
             return InkW(
               onTap: () {},

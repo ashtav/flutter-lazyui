@@ -13,13 +13,18 @@ Map<LogColor, dynamic> _colors = {
   LogColor.brightBlue: '94m', // bright blue
 };
 
-String colorize(String value, LogColor color) => '\x1B[${_colors[color]}$value\x1B[0m';
+String colorize(String value, LogColor color) =>
+    '\x1B[${_colors[color]}$value\x1B[0m';
 
 /// ```dart
 /// // show on debug console with custom color and limit
 /// logg('lorem ipsum', color: LogColor.red, limit: 3000);
 /// ```
-logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? name, bool nolimit = false}) {
+logg(dynamic value,
+    {LogColor color = LogColor.yellow,
+    int limit = 500,
+    String? name,
+    bool nolimit = false}) {
   // max length
   String valueString = '$value';
   String subStr = '$value'.substring(
@@ -32,10 +37,12 @@ logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? 
 
   // print on debug console
   String message = colorize(subStr, color);
-  log(subStr.length < valueString.length ? '$message.....' : message, name: name ?? 'LOG');
+  log(subStr.length < valueString.length ? '$message.....' : message,
+      name: name ?? 'LOG');
 }
 
-logs(List values, {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
+logs(List values,
+    {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
   for (var value in values) {
     logg(value, color: color, limit: limit, name: name);
   }

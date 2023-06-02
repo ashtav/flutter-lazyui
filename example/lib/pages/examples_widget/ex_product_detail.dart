@@ -61,7 +61,8 @@ class ExProductDetail extends StatelessWidget {
                           ['Category', 'Brand', 'Price'][i],
                           style: Gfont.muted,
                         ),
-                        Text(['Shoes', 'Brand Name', Faker.price()][i], style: Gfont.fbold(i == 2)),
+                        Text(['Shoes', 'Brand Name', Faker.price()][i],
+                            style: Gfont.fbold(i == 2)),
                       ],
                     );
                   }),
@@ -110,7 +111,12 @@ class ExProductDetail extends StatelessWidget {
                               return LzImage(
                                 images[i],
                                 size: 55,
-                              ).lzStyle(border: Br.all(color: LzColors.dark), radius: Br.radius(5), margin: Ei.only(l: i == 0 ? 0 : 8)).onTap(() {
+                              )
+                                  .lzStyle(
+                                      border: Br.all(color: LzColors.dark),
+                                      radius: Br.radius(5),
+                                      margin: Ei.only(l: i == 0 ? 0 : 8))
+                                  .onTap(() {
                                 state.carouselController.animateToPage(i);
                               });
                             }),
@@ -180,7 +186,8 @@ class LzListGroup extends StatelessWidget {
   final List<Widget> children;
   final Function(int index)? onTap;
   final double? radius;
-  const LzListGroup({super.key, this.children = const [], this.onTap, this.radius});
+  const LzListGroup(
+      {super.key, this.children = const [], this.onTap, this.radius});
 
   @override
   Widget build(BuildContext context) {

@@ -11,33 +11,48 @@ extension ContextExtension on BuildContext {
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
   EdgeInsets get windowPadding => MediaQueryData.fromWindow(window).padding;
 
-  void focus([FocusNode? node]) => FocusScope.of(this).requestFocus(node ?? FocusNode());
+  void focus([FocusNode? node]) =>
+      FocusScope.of(this).requestFocus(node ?? FocusNode());
   void pop([dynamic result]) => Navigator.pop(this, result);
 
-  Future<T?> push<T extends Object?>(Widget page) => Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
+  Future<T?> push<T extends Object?>(Widget page) =>
+      Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
 
   // push replace
   Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
-      Navigator.pushAndRemoveUntil<T>(this, MaterialPageRoute(builder: (_) => page), (_) => false);
+      Navigator.pushAndRemoveUntil<T>(
+          this, MaterialPageRoute(builder: (_) => page), (_) => false);
 
   // push named
-  Future<T?> pushNamed<T extends Object?>(String routeName, {Object? arguments}) => Navigator.pushNamed<T>(this, routeName, arguments: arguments);
+  Future<T?> pushNamed<T extends Object?>(String routeName,
+          {Object? arguments}) =>
+      Navigator.pushNamed<T>(this, routeName, arguments: arguments);
 
   // push named replace
-  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName, {Object? arguments}) =>
-      Navigator.pushNamedAndRemoveUntil<T>(this, routeName, (_) => false, arguments: arguments);
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName,
+          {Object? arguments}) =>
+      Navigator.pushNamedAndRemoveUntil<T>(this, routeName, (_) => false,
+          arguments: arguments);
 
   // show dialog
   Future<T?> dialog<T extends Object?>(Widget widget, {bool dismiss = true}) {
-    return showDialog<T>(context: this, barrierDismissible: dismiss, builder: (_) => widget);
+    return showDialog<T>(
+        context: this, barrierDismissible: dismiss, builder: (_) => widget);
   }
 
   // show bottom sheet
   Future<T?> bottomSheet<T extends Object?>(Widget widget,
-      {bool dismiss = true, bool useSafeArea = true, bool enableDrag = false, Color? backgroundColor, bool isScrollControlled = true}) {
+      {bool dismiss = true,
+      bool useSafeArea = true,
+      bool enableDrag = false,
+      Color? backgroundColor,
+      bool isScrollControlled = true}) {
     Widget wrapper(Widget child) => Container(
-        padding: Ei.only(t: useSafeArea ? MediaQueryData.fromWindow(window).padding.top : 0),
-        decoration: BoxDecoration(color: backgroundColor ?? (useSafeArea ? Colors.white : Colors.transparent)),
+        padding: Ei.only(
+            t: useSafeArea ? MediaQueryData.fromWindow(window).padding.top : 0),
+        decoration: BoxDecoration(
+            color: backgroundColor ??
+                (useSafeArea ? Colors.white : Colors.transparent)),
         child: child);
 
     return showModalBottomSheet<T>(

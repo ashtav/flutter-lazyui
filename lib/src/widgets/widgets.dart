@@ -47,7 +47,11 @@ class Iconr extends StatelessWidget {
         child: flip
             ? Transform.rotate(angle: pi, child: iconWidget)
             : flipX || flipY
-                ? Transform(alignment: Alignment.center, transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi), child: iconWidget)
+                ? Transform(
+                    alignment: Alignment.center,
+                    transform:
+                        flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
+                    child: iconWidget)
                 : iconWidget);
   }
 }
@@ -60,7 +64,12 @@ class IconStyle {
   final CrossAxisAlignment position;
   final bool asSuffix;
 
-  const IconStyle({this.size, this.space, this.color, this.position = Caa.start, this.asSuffix = false});
+  const IconStyle(
+      {this.size,
+      this.space,
+      this.color,
+      this.position = Caa.start,
+      this.asSuffix = false});
 }
 
 class Textr extends StatelessWidget {
@@ -106,10 +115,16 @@ class Textr extends StatelessWidget {
         padding: padding,
         margin: margin,
         width: width,
-        decoration: BoxDecoration(border: border, borderRadius: radius, color: color),
+        decoration:
+            BoxDecoration(border: border, borderRadius: radius, color: color),
         child: child);
 
-    Widget textWidget = Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines);
+    Widget textWidget = Text(text,
+        style: style,
+        textAlign: textAlign,
+        overflow: overflow,
+        softWrap: softwrap,
+        maxLines: maxLines);
 
     if (icon != null) {
       double iconSize = iconStyle?.size ?? style?.fontSize ?? 15;
@@ -120,7 +135,9 @@ class Textr extends StatelessWidget {
           icon!,
           color: iconStyle?.color ?? style?.color,
           size: iconSize + 4,
-          margin: asSuffix ? Ei.only(l: iconStyle?.space ?? 12) : Ei.only(r: iconStyle?.space ?? 12),
+          margin: asSuffix
+              ? Ei.only(l: iconStyle?.space ?? 12)
+              : Ei.only(r: iconStyle?.space ?? 12),
         ),
         Flexible(child: textWidget),
       ];
@@ -135,7 +152,12 @@ class Textr extends StatelessWidget {
     }
 
     return wrapper(
-      Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines),
+      Text(text,
+          style: style,
+          textAlign: textAlign,
+          overflow: overflow,
+          softWrap: softwrap,
+          maxLines: maxLines),
     );
   }
 }
@@ -170,7 +192,12 @@ class Col extends StatelessWidget {
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
 
-  const Col({Key? key, this.children = const <Widget>[], this.mainAxisAlignment = Maa.start, this.mainAxisSize = Mas.min}) : super(key: key);
+  const Col(
+      {Key? key,
+      this.children = const <Widget>[],
+      this.mainAxisAlignment = Maa.start,
+      this.mainAxisSize = Mas.min})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +223,12 @@ class CenterDialog extends StatelessWidget {
   final bool showTapClose;
 
   const CenterDialog(
-      {Key? key, required this.child, this.margin = 15, this.borderRadius = BorderRadius.zero, this.closeMessage, this.showTapClose = false})
+      {Key? key,
+      required this.child,
+      this.margin = 15,
+      this.borderRadius = BorderRadius.zero,
+      this.closeMessage,
+      this.showTapClose = false})
       : super(key: key);
 
   @override
@@ -208,9 +240,15 @@ class CenterDialog extends StatelessWidget {
           padding: Ei.only(b: context.viewInsets.bottom),
           child: Material(
               color: Colors.transparent,
-              child: Container(margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child))),
+              child: Container(
+                  margin: EdgeInsets.all(margin),
+                  child: ClipRRect(borderRadius: borderRadius, child: child))),
         ),
-        if (showTapClose) IgnorePointer(child: Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
+        if (showTapClose)
+          IgnorePointer(
+              child: Text(closeMessage ?? 'Tap to close',
+                  style:
+                      Lazy.textStyle(context)?.copyWith(color: Colors.white)))
       ],
     );
   }
@@ -221,7 +259,9 @@ class Intrinsic extends StatelessWidget {
   final List<Widget> children;
   final Axis axis;
 
-  const Intrinsic({Key? key, required this.children, this.axis = Axis.horizontal}) : super(key: key);
+  const Intrinsic(
+      {Key? key, required this.children, this.axis = Axis.horizontal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => IntrinsicHeight(
@@ -288,10 +328,16 @@ class InkW extends StatelessWidget {
               onLongPress: onLongPress,
               splashColor: !enableSplash
                   ? Colors.transparent
-                  : splash ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.08)),
+                  : splash ??
+                      (color == null || !splashByBaseColor
+                          ? const Color.fromRGBO(0, 0, 0, .03)
+                          : color?.withOpacity(.08)),
               highlightColor: !enableSplash
                   ? Colors.transparent
-                  : highlightColor ?? (color == null || !splashByBaseColor ? const Color.fromRGBO(0, 0, 0, .03) : color?.withOpacity(.1)),
+                  : highlightColor ??
+                      (color == null || !splashByBaseColor
+                          ? const Color.fromRGBO(0, 0, 0, .03)
+                          : color?.withOpacity(.1)),
               onTap: onTap,
               borderRadius: radius,
               child: Container(
@@ -319,12 +365,16 @@ class Touch extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? margin;
 
-  const Touch({Key? key, this.child, this.onTap, this.onDoubleTap, this.margin}) : super(key: key);
+  const Touch({Key? key, this.child, this.onTap, this.onDoubleTap, this.margin})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-        onTap: onTap, onDoubleTap: onDoubleTap, behavior: HitTestBehavior.translucent, child: Container(margin: margin, child: child));
+        onTap: onTap,
+        onDoubleTap: onDoubleTap,
+        behavior: HitTestBehavior.translucent,
+        child: Container(margin: margin, child: child));
   }
 }
 
@@ -346,7 +396,8 @@ class None extends StatelessWidget {
 /// ```
 class NoScrollGlow extends ScrollBehavior {
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+  Widget buildOverscrollIndicator(
+      BuildContext context, Widget child, ScrollableDetails details) {
     return child;
   }
 }
@@ -357,7 +408,14 @@ class LzNoData extends StatelessWidget {
   final String? message, onTapMessage;
   final Function()? onTap;
   final EdgeInsetsGeometry? padding;
-  const LzNoData({super.key, this.icon, this.iconWidget, this.message, this.onTapMessage, this.onTap, this.padding});
+  const LzNoData(
+      {super.key,
+      this.icon,
+      this.iconWidget,
+      this.message,
+      this.onTapMessage,
+      this.onTap,
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +438,10 @@ class LzNoData extends StatelessWidget {
                 ),
             Textml(
               message,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black54),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: Colors.black54),
               textAlign: Ta.center,
             ).margin(t: 15),
             if (onTap != null)
@@ -388,7 +449,10 @@ class LzNoData extends StatelessWidget {
                 onTap: onTap,
                 child: Textr(
                   onTapMessage,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: primaryColor, fontWeight: Fw.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: primaryColor, fontWeight: Fw.bold),
                   padding: Ei.sym(v: 7, h: 20),
                 ),
               ),
@@ -410,7 +474,12 @@ class Poslign extends StatelessWidget {
   final Widget? child;
   final EdgeInsetsGeometry? margin;
   final bool ignoring;
-  const Poslign({super.key, required this.alignment, this.child, this.ignoring = false, this.margin});
+  const Poslign(
+      {super.key,
+      required this.alignment,
+      this.child,
+      this.ignoring = false,
+      this.margin});
 
   @override
   Widget build(BuildContext context) {
@@ -494,7 +563,8 @@ class LzBox extends StatelessWidget {
               Column(
                   mainAxisSize: mainAxisSize,
                   mainAxisAlignment: mainAxisAlignment,
-                  crossAxisAlignment: crossAxisAlignment ?? (isCleanType ? Caa.center : Caa.start),
+                  crossAxisAlignment: crossAxisAlignment ??
+                      (isCleanType ? Caa.center : Caa.start),
                   children: children)),
     );
   }
@@ -582,16 +652,31 @@ class LzBadge extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final double? fontSize;
   final BoxBorder? border;
-  const LzBadge({super.key, required this.text, this.color, this.textColor, this.radius, this.padding, this.fontSize, this.border});
+  const LzBadge(
+      {super.key,
+      required this.text,
+      this.color,
+      this.textColor,
+      this.radius,
+      this.padding,
+      this.fontSize,
+      this.border});
 
   @override
   Widget build(BuildContext context) {
     Color color = this.color ?? Colors.orange;
 
     return Container(
-      decoration: BoxDecoration(color: color.withOpacity(.15), borderRadius: radius ?? Br.radius(3), border: border ?? Br.all(color: color)),
+      decoration: BoxDecoration(
+          color: color.withOpacity(.15),
+          borderRadius: radius ?? Br.radius(3),
+          border: border ?? Br.all(color: color)),
       padding: padding ?? Ei.sym(v: 3, h: 10),
-      child: Text(text, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor ?? color, fontSize: fontSize)),
+      child: Text(text,
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: textColor ?? color, fontSize: fontSize)),
     );
   }
 }
@@ -648,7 +733,9 @@ class LzSlidebar extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: active == i ? (activeColor ?? Theme.of(context).primaryColor) : (color ?? Colors.grey),
+            color: active == i
+                ? (activeColor ?? Theme.of(context).primaryColor)
+                : (color ?? Colors.grey),
             borderRadius: BorderRadius.circular(radius),
           ),
         );
@@ -667,7 +754,13 @@ class TextDivider extends StatelessWidget {
   final Text text;
   final double spacing, height, lineHeight;
   final Color? backgroundColor, lineColor;
-  const TextDivider(this.text, {super.key, this.spacing = 15, this.height = 30, this.lineHeight = 1, this.backgroundColor, this.lineColor});
+  const TextDivider(this.text,
+      {super.key,
+      this.spacing = 15,
+      this.height = 30,
+      this.lineHeight = 1,
+      this.backgroundColor,
+      this.lineColor});
 
   @override
   Widget build(BuildContext context) {
@@ -686,7 +779,11 @@ class TextDivider extends StatelessWidget {
           ),
         ),
         Poslign(
-            alignment: Alignment.center, child: Container(padding: Ei.sym(h: spacing), color: backgroundColor ?? Utils.hex('fafafa'), child: text))
+            alignment: Alignment.center,
+            child: Container(
+                padding: Ei.sym(h: spacing),
+                color: backgroundColor ?? Utils.hex('fafafa'),
+                child: text))
       ],
     );
   }
@@ -702,24 +799,35 @@ class Loader extends StatelessWidget {
   final double size, stroke;
   final EdgeInsetsGeometry? margin;
   final Color? color;
-  const Loader({Key? key, this.size = 18, this.stroke = 2, this.margin, this.color}) : super(key: key);
+  const Loader(
+      {Key? key, this.size = 18, this.stroke = 2, this.margin, this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(margin: margin, child: SizedBox(width: size, height: size, child: CircularProgressIndicator(color: color, strokeWidth: stroke)));
+    return Container(
+        margin: margin,
+        child: SizedBox(
+            width: size,
+            height: size,
+            child:
+                CircularProgressIndicator(color: color, strokeWidth: stroke)));
   }
 
   static Widget bar({String? message, bool center = true, double size = 90}) {
     TextStyle? textStyle = LazyUi.getConfig.textStyle;
 
-    Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
+    Widget child =
+        Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(
         Lazy.assets('loading-bar.gif'),
         width: size,
         height: size,
         fit: BoxFit.contain,
       ),
-      message == null ? const None() : Text(message, style: textStyle?.copyWith(color: Colors.black54))
+      message == null
+          ? const None()
+          : Text(message, style: textStyle?.copyWith(color: Colors.black54))
     ]);
 
     return center ? Center(child: child) : child;
@@ -741,7 +849,13 @@ class LzListView extends StatelessWidget {
   final bool shrinkWrap;
 
   /// Custom listview with cacheExtent, bounce scroll and default padding
-  const LzListView({super.key, this.children = const [], this.padding, this.physics, this.controller, this.shrinkWrap = false});
+  const LzListView(
+      {super.key,
+      this.children = const [],
+      this.padding,
+      this.physics,
+      this.controller,
+      this.shrinkWrap = false});
 
   @override
   Widget build(BuildContext context) {
@@ -780,7 +894,9 @@ class Textml extends StatelessWidget {
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final TextOverflow? overflow;
-  const Textml(this.text, {Key? key, this.style, this.textAlign, this.textDirection, this.overflow}) : super(key: key);
+  const Textml(this.text,
+      {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -816,7 +932,8 @@ class Textml extends StatelessWidget {
           } else if (type == 'i') {
             updatedTextStyle = textStyle?.copyWith(fontStyle: FontStyle.italic);
           } else if (type == 'u') {
-            updatedTextStyle = textStyle?.copyWith(decoration: TextDecoration.underline);
+            updatedTextStyle =
+                textStyle?.copyWith(decoration: TextDecoration.underline);
           }
           processText(word ?? '', textStyle: updatedTextStyle);
         }
@@ -840,7 +957,12 @@ class IntrinsicButton extends StatelessWidget {
   final bool withBorder;
   final EdgeInsetsGeometry? padding;
   final Function(int)? onTap;
-  const IntrinsicButton({super.key, this.children = const [], this.withBorder = true, this.padding, this.onTap});
+  const IntrinsicButton(
+      {super.key,
+      this.children = const [],
+      this.withBorder = true,
+      this.padding,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -917,7 +1039,10 @@ class LzPopover extends StatelessWidget {
           minWidth: minWidth,
           maxWidth: maxWidth ?? context.width,
         ),
-        decoration: BoxDecoration(color: color, borderRadius: this.radius ?? Br.radius(radius), border: border ?? Br.all()),
+        decoration: BoxDecoration(
+            color: color,
+            borderRadius: this.radius ?? Br.radius(radius),
+            border: border ?? Br.all()),
         child: child,
       ),
       Positioned(
@@ -927,7 +1052,10 @@ class LzPopover extends StatelessWidget {
           child: RotationTransition(
             turns: AlwaysStoppedAnimation(isTop ? 180 : 180 / 360),
             child: CustomPaint(
-              painter: CaretPainter(strokeColor: color, paintingStyle: PaintingStyle.fill, skew: 2),
+              painter: CaretPainter(
+                  strokeColor: color,
+                  paintingStyle: PaintingStyle.fill,
+                  skew: 2),
               child: const SizedBox(
                 height: 15,
                 width: 20,
@@ -937,7 +1065,10 @@ class LzPopover extends StatelessWidget {
     ]);
   }
 
-  void show(BuildContext context, {Offset offset = const Offset(20, 0), bool isAtBottom = false, Widget Function(Widget child)? builder}) {
+  void show(BuildContext context,
+      {Offset offset = const Offset(20, 0),
+      bool isAtBottom = false,
+      Widget Function(Widget child)? builder}) {
     final box = context.findRenderObject() as RenderBox?;
     final o = box?.localToGlobal(Offset.zero);
 

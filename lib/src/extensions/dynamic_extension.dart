@@ -7,7 +7,8 @@ extension DynamicExtension on dynamic {
   /// 2500.7.idr() // Rp2.500,7
   /// '3500.4'.idr() // Rp3.500,4
   /// ```
-  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+  String idr(
+      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
     try {
       String num = '0', digits = '';
 
@@ -30,13 +31,19 @@ extension DynamicExtension on dynamic {
           return 'Rp?';
       }
 
-      bool allowDecimal = runtimeType == int || runtimeType == String && !toString().contains(separator);
+      bool allowDecimal = runtimeType == int ||
+          runtimeType == String && !toString().contains(separator);
 
-      String result =
-          lz.NumberFormat.currency(locale: 'id_ID', decimalDigits: allowDecimal ? decimalDigits : 0, symbol: symbol).format(int.parse(num));
+      String result = lz.NumberFormat.currency(
+              locale: 'id_ID',
+              decimalDigits: allowDecimal ? decimalDigits : 0,
+              symbol: symbol)
+          .format(int.parse(num));
 
       result = result.replaceAll('.', separator);
-      return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
+      return digits.isEmpty
+          ? result
+          : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';
     }

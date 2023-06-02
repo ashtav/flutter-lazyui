@@ -15,8 +15,8 @@ void main() {
         LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
 
         Errors.config(
-            botToken: '1650513497:AAG5-o3fW_Fe45xOJfNMAxDxRDrLXPubdHM',
-            chatId: '1099040541',
+            botToken: '<bot_token>',
+            chatId: '<chat_id>',
             useBot: true,
             errorBuilder: (ErrorInfo info) {
               String message = 'This is custom error message: ${info.error}, ${info.device}';

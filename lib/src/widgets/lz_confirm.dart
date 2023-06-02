@@ -53,7 +53,10 @@ class LzConfirm extends StatelessWidget {
                       : const None(),
                   Textr(
                     title,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
                     textAlign: Ta.center,
                     margin: Ei.only(b: 10),
                   ),

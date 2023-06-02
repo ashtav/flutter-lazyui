@@ -6,9 +6,11 @@ class La {
   static const _kFontFam = 'packages/lazyui/LineAwesomeIcons';
 
   static const IconData i500px = IconData(0xf26e, fontFamily: _kFontFam);
-  static const IconData accessibleIcon = IconData(0xf368, fontFamily: _kFontFam);
+  static const IconData accessibleIcon =
+      IconData(0xf368, fontFamily: _kFontFam);
   static const IconData accusoft = IconData(0xf369, fontFamily: _kFontFam);
-  static const IconData acquisitionsIncorporated = IconData(0xf6af, fontFamily: _kFontFam);
+  static const IconData acquisitionsIncorporated =
+      IconData(0xf6af, fontFamily: _kFontFam);
   static const IconData ad = IconData(0xf641, fontFamily: _kFontFam);
   static const IconData addressBook = IconData(0xf2b9, fontFamily: _kFontFam);
   static const IconData addressCard = IconData(0xf2bb, fontFamily: _kFontFam);
@@ -16,7 +18,8 @@ class La {
   static const IconData adn = IconData(0xf170, fontFamily: _kFontFam);
   static const IconData adobe = IconData(0xf778, fontFamily: _kFontFam);
   static const IconData adversal = IconData(0xf36a, fontFamily: _kFontFam);
-  static const IconData affiliatetheme = IconData(0xf36b, fontFamily: _kFontFam);
+  static const IconData affiliatetheme =
+      IconData(0xf36b, fontFamily: _kFontFam);
   static const IconData airFreshener = IconData(0xf5d0, fontFamily: _kFontFam);
   static const IconData airbnb = IconData(0xf834, fontFamily: _kFontFam);
   static const IconData algolia = IconData(0xf36c, fontFamily: _kFontFam);
@@ -29,14 +32,18 @@ class La {
   static const IconData amazon = IconData(0xf270, fontFamily: _kFontFam);
   static const IconData amazonPay = IconData(0xf42c, fontFamily: _kFontFam);
   static const IconData ambulance = IconData(0xf0f9, fontFamily: _kFontFam);
-  static const IconData americanSignLanguageInterpreting = IconData(0xf2a3, fontFamily: _kFontFam);
+  static const IconData americanSignLanguageInterpreting =
+      IconData(0xf2a3, fontFamily: _kFontFam);
   static const IconData amilia = IconData(0xf36d, fontFamily: _kFontFam);
   static const IconData anchor = IconData(0xf13d, fontFamily: _kFontFam);
   static const IconData android = IconData(0xf17b, fontFamily: _kFontFam);
   static const IconData angellist = IconData(0xf209, fontFamily: _kFontFam);
-  static const IconData angleDoubleDown = IconData(0xf103, fontFamily: _kFontFam);
-  static const IconData angleDoubleLeft = IconData(0xf100, fontFamily: _kFontFam);
-  static const IconData angleDoubleRight = IconData(0xf101, fontFamily: _kFontFam);
+  static const IconData angleDoubleDown =
+      IconData(0xf103, fontFamily: _kFontFam);
+  static const IconData angleDoubleLeft =
+      IconData(0xf100, fontFamily: _kFontFam);
+  static const IconData angleDoubleRight =
+      IconData(0xf101, fontFamily: _kFontFam);
   static const IconData angleDoubleUp = IconData(0xf102, fontFamily: _kFontFam);
   static const IconData angleDown = IconData(0xf107, fontFamily: _kFontFam);
   static const IconData angleLeft = IconData(0xf104, fontFamily: _kFontFam);
@@ -54,13 +61,20 @@ class La {
   static const IconData applePay = IconData(0xf415, fontFamily: _kFontFam);
   static const IconData archive = IconData(0xf187, fontFamily: _kFontFam);
   static const IconData archway = IconData(0xf557, fontFamily: _kFontFam);
-  static const IconData arrowAltCircleDown = IconData(0xf358, fontFamily: _kFontFam);
-  static const IconData arrowAltCircleLeft = IconData(0xf359, fontFamily: _kFontFam);
-  static const IconData arrowAltCircleRight = IconData(0xf35a, fontFamily: _kFontFam);
-  static const IconData arrowAltCircleUp = IconData(0xf35b, fontFamily: _kFontFam);
-  static const IconData arrowCircleDown = IconData(0xf0ab, fontFamily: _kFontFam);
-  static const IconData arrowCircleLeft = IconData(0xf0a8, fontFamily: _kFontFam);
-  static const IconData arrowCircleRight = IconData(0xf0a9, fontFamily: _kFontFam);
+  static const IconData arrowAltCircleDown =
+      IconData(0xf358, fontFamily: _kFontFam);
+  static const IconData arrowAltCircleLeft =
+      IconData(0xf359, fontFamily: _kFontFam);
+  static const IconData arrowAltCircleRight =
+      IconData(0xf35a, fontFamily: _kFontFam);
+  static const IconData arrowAltCircleUp =
+      IconData(0xf35b, fontFamily: _kFontFam);
+  static const IconData arrowCircleDown =
+      IconData(0xf0ab, fontFamily: _kFontFam);
+  static const IconData arrowCircleLeft =
+      IconData(0xf0a8, fontFamily: _kFontFam);
+  static const IconData arrowCircleRight =
+      IconData(0xf0a9, fontFamily: _kFontFam);
   static const IconData arrowCircleUp = IconData(0xf0aa, fontFamily: _kFontFam);
   static const IconData arrowDown = IconData(0xf063, fontFamily: _kFontFam);
   static const IconData arrowLeft = IconData(0xf060, fontFamily: _kFontFam);
@@ -70,7 +84,8 @@ class La {
   static const IconData arrowsAltH = IconData(0xf337, fontFamily: _kFontFam);
   static const IconData arrowsAltV = IconData(0xf338, fontFamily: _kFontFam);
   static const IconData artstation = IconData(0xf77a, fontFamily: _kFontFam);
-  static const IconData assistiveListeningSystems = IconData(0xf2a2, fontFamily: _kFontFam);
+  static const IconData assistiveListeningSystems =
+      IconData(0xf2a2, fontFamily: _kFontFam);
   static const IconData asterisk = IconData(0xf069, fontFamily: _kFontFam);
   static const IconData asymmetrik = IconData(0xf372, fontFamily: _kFontFam);
   static const IconData at = IconData(0xf1fa, fontFamily: _kFontFam);
@@ -78,7 +93,8 @@ class La {
   static const IconData atlassian = IconData(0xf77b, fontFamily: _kFontFam);
   static const IconData atom = IconData(0xf5d2, fontFamily: _kFontFam);
   static const IconData audible = IconData(0xf373, fontFamily: _kFontFam);
-  static const IconData audioDescription = IconData(0xf29e, fontFamily: _kFontFam);
+  static const IconData audioDescription =
+      IconData(0xf29e, fontFamily: _kFontFam);
   static const IconData autoprefixer = IconData(0xf41c, fontFamily: _kFontFam);
   static const IconData avianex = IconData(0xf374, fontFamily: _kFontFam);
   static const IconData aviato = IconData(0xf421, fontFamily: _kFontFam);
@@ -90,21 +106,26 @@ class La {
   static const IconData backward = IconData(0xf04a, fontFamily: _kFontFam);
   static const IconData bacon = IconData(0xf7e5, fontFamily: _kFontFam);
   static const IconData balanceScale = IconData(0xf24e, fontFamily: _kFontFam);
-  static const IconData balanceScaleLeft = IconData(0xf515, fontFamily: _kFontFam);
-  static const IconData balanceScaleRight = IconData(0xf516, fontFamily: _kFontFam);
+  static const IconData balanceScaleLeft =
+      IconData(0xf515, fontFamily: _kFontFam);
+  static const IconData balanceScaleRight =
+      IconData(0xf516, fontFamily: _kFontFam);
   static const IconData ban = IconData(0xf05e, fontFamily: _kFontFam);
   static const IconData bandAid = IconData(0xf462, fontFamily: _kFontFam);
   static const IconData bandcamp = IconData(0xf2d5, fontFamily: _kFontFam);
   static const IconData barcode = IconData(0xf02a, fontFamily: _kFontFam);
   static const IconData bars = IconData(0xf0c9, fontFamily: _kFontFam);
   static const IconData baseballBall = IconData(0xf433, fontFamily: _kFontFam);
-  static const IconData basketballBall = IconData(0xf434, fontFamily: _kFontFam);
+  static const IconData basketballBall =
+      IconData(0xf434, fontFamily: _kFontFam);
   static const IconData bath = IconData(0xf2cd, fontFamily: _kFontFam);
   static const IconData batteryEmpty = IconData(0xf244, fontFamily: _kFontFam);
   static const IconData batteryFull = IconData(0xf240, fontFamily: _kFontFam);
   static const IconData batteryHalf = IconData(0xf242, fontFamily: _kFontFam);
-  static const IconData batteryQuarter = IconData(0xf243, fontFamily: _kFontFam);
-  static const IconData batteryThreeQuarters = IconData(0xf241, fontFamily: _kFontFam);
+  static const IconData batteryQuarter =
+      IconData(0xf243, fontFamily: _kFontFam);
+  static const IconData batteryThreeQuarters =
+      IconData(0xf241, fontFamily: _kFontFam);
   static const IconData battleNet = IconData(0xf835, fontFamily: _kFontFam);
   static const IconData bed = IconData(0xf236, fontFamily: _kFontFam);
   static const IconData beer = IconData(0xf0fc, fontFamily: _kFontFam);
@@ -156,8 +177,10 @@ class La {
   static const IconData brain = IconData(0xf5dc, fontFamily: _kFontFam);
   static const IconData breadSlice = IconData(0xf7ec, fontFamily: _kFontFam);
   static const IconData briefcase = IconData(0xf0b1, fontFamily: _kFontFam);
-  static const IconData briefcaseMedical = IconData(0xf469, fontFamily: _kFontFam);
-  static const IconData broadcastTower = IconData(0xf519, fontFamily: _kFontFam);
+  static const IconData briefcaseMedical =
+      IconData(0xf469, fontFamily: _kFontFam);
+  static const IconData broadcastTower =
+      IconData(0xf519, fontFamily: _kFontFam);
   static const IconData broom = IconData(0xf51a, fontFamily: _kFontFam);
   static const IconData brush = IconData(0xf55d, fontFamily: _kFontFam);
   static const IconData btc = IconData(0xf15a, fontFamily: _kFontFam);
@@ -167,7 +190,8 @@ class La {
   static const IconData bullhorn = IconData(0xf0a1, fontFamily: _kFontFam);
   static const IconData bullseye = IconData(0xf140, fontFamily: _kFontFam);
   static const IconData burn = IconData(0xf46a, fontFamily: _kFontFam);
-  static const IconData buromobelexperte = IconData(0xf37f, fontFamily: _kFontFam);
+  static const IconData buromobelexperte =
+      IconData(0xf37f, fontFamily: _kFontFam);
   static const IconData bus = IconData(0xf207, fontFamily: _kFontFam);
   static const IconData busAlt = IconData(0xf55e, fontFamily: _kFontFam);
   static const IconData businessTime = IconData(0xf64a, fontFamily: _kFontFam);
@@ -184,7 +208,8 @@ class La {
   static const IconData camera = IconData(0xf030, fontFamily: _kFontFam);
   static const IconData cameraRetro = IconData(0xf083, fontFamily: _kFontFam);
   static const IconData campground = IconData(0xf6bb, fontFamily: _kFontFam);
-  static const IconData canadianMapleLeaf = IconData(0xf785, fontFamily: _kFontFam);
+  static const IconData canadianMapleLeaf =
+      IconData(0xf785, fontFamily: _kFontFam);
   static const IconData candyCane = IconData(0xf786, fontFamily: _kFontFam);
   static const IconData cannabis = IconData(0xf55f, fontFamily: _kFontFam);
   static const IconData capsules = IconData(0xf46b, fontFamily: _kFontFam);
@@ -196,9 +221,12 @@ class La {
   static const IconData caretDown = IconData(0xf0d7, fontFamily: _kFontFam);
   static const IconData caretLeft = IconData(0xf0d9, fontFamily: _kFontFam);
   static const IconData caretRight = IconData(0xf0da, fontFamily: _kFontFam);
-  static const IconData caretSquareDown = IconData(0xf150, fontFamily: _kFontFam);
-  static const IconData caretSquareLeft = IconData(0xf191, fontFamily: _kFontFam);
-  static const IconData caretSquareRight = IconData(0xf152, fontFamily: _kFontFam);
+  static const IconData caretSquareDown =
+      IconData(0xf150, fontFamily: _kFontFam);
+  static const IconData caretSquareLeft =
+      IconData(0xf191, fontFamily: _kFontFam);
+  static const IconData caretSquareRight =
+      IconData(0xf152, fontFamily: _kFontFam);
   static const IconData caretSquareUp = IconData(0xf151, fontFamily: _kFontFam);
   static const IconData caretUp = IconData(0xf0d8, fontFamily: _kFontFam);
   static const IconData carrot = IconData(0xf787, fontFamily: _kFontFam);
@@ -221,8 +249,10 @@ class La {
   static const IconData certificate = IconData(0xf0a3, fontFamily: _kFontFam);
   static const IconData chair = IconData(0xf6c0, fontFamily: _kFontFam);
   static const IconData chalkboard = IconData(0xf51b, fontFamily: _kFontFam);
-  static const IconData chalkboardTeacher = IconData(0xf51c, fontFamily: _kFontFam);
-  static const IconData chargingStation = IconData(0xf5e7, fontFamily: _kFontFam);
+  static const IconData chalkboardTeacher =
+      IconData(0xf51c, fontFamily: _kFontFam);
+  static const IconData chargingStation =
+      IconData(0xf5e7, fontFamily: _kFontFam);
   static const IconData chartArea = IconData(0xf1fe, fontFamily: _kFontFam);
   static const IconData chartBar = IconData(0xf080, fontFamily: _kFontFam);
   static const IconData chartLine = IconData(0xf201, fontFamily: _kFontFam);
@@ -240,10 +270,14 @@ class La {
   static const IconData chessPawn = IconData(0xf443, fontFamily: _kFontFam);
   static const IconData chessQueen = IconData(0xf445, fontFamily: _kFontFam);
   static const IconData chessRook = IconData(0xf447, fontFamily: _kFontFam);
-  static const IconData chevronCircleDown = IconData(0xf13a, fontFamily: _kFontFam);
-  static const IconData chevronCircleLeft = IconData(0xf137, fontFamily: _kFontFam);
-  static const IconData chevronCircleRight = IconData(0xf138, fontFamily: _kFontFam);
-  static const IconData chevronCircleUp = IconData(0xf139, fontFamily: _kFontFam);
+  static const IconData chevronCircleDown =
+      IconData(0xf13a, fontFamily: _kFontFam);
+  static const IconData chevronCircleLeft =
+      IconData(0xf137, fontFamily: _kFontFam);
+  static const IconData chevronCircleRight =
+      IconData(0xf138, fontFamily: _kFontFam);
+  static const IconData chevronCircleUp =
+      IconData(0xf139, fontFamily: _kFontFam);
   static const IconData chevronDown = IconData(0xf078, fontFamily: _kFontFam);
   static const IconData chevronLeft = IconData(0xf053, fontFamily: _kFontFam);
   static const IconData chevronRight = IconData(0xf054, fontFamily: _kFontFam);
@@ -257,21 +291,26 @@ class La {
   static const IconData city = IconData(0xf64f, fontFamily: _kFontFam);
   static const IconData clinicMedical = IconData(0xf7f2, fontFamily: _kFontFam);
   static const IconData clipboard = IconData(0xf328, fontFamily: _kFontFam);
-  static const IconData clipboardCheck = IconData(0xf46c, fontFamily: _kFontFam);
+  static const IconData clipboardCheck =
+      IconData(0xf46c, fontFamily: _kFontFam);
   static const IconData clipboardList = IconData(0xf46d, fontFamily: _kFontFam);
   static const IconData clock = IconData(0xf017, fontFamily: _kFontFam);
   static const IconData clone = IconData(0xf24d, fontFamily: _kFontFam);
-  static const IconData closedCaptioning = IconData(0xf20a, fontFamily: _kFontFam);
+  static const IconData closedCaptioning =
+      IconData(0xf20a, fontFamily: _kFontFam);
   static const IconData cloud = IconData(0xf0c2, fontFamily: _kFontFam);
-  static const IconData cloudDownloadAlt = IconData(0xf381, fontFamily: _kFontFam);
+  static const IconData cloudDownloadAlt =
+      IconData(0xf381, fontFamily: _kFontFam);
   static const IconData cloudMeatball = IconData(0xf73b, fontFamily: _kFontFam);
   static const IconData cloudMoon = IconData(0xf6c3, fontFamily: _kFontFam);
   static const IconData cloudMoonRain = IconData(0xf73c, fontFamily: _kFontFam);
   static const IconData cloudRain = IconData(0xf73d, fontFamily: _kFontFam);
-  static const IconData cloudShowersHeavy = IconData(0xf740, fontFamily: _kFontFam);
+  static const IconData cloudShowersHeavy =
+      IconData(0xf740, fontFamily: _kFontFam);
   static const IconData cloudSun = IconData(0xf6c4, fontFamily: _kFontFam);
   static const IconData cloudSunRain = IconData(0xf743, fontFamily: _kFontFam);
-  static const IconData cloudUploadAlt = IconData(0xf382, fontFamily: _kFontFam);
+  static const IconData cloudUploadAlt =
+      IconData(0xf382, fontFamily: _kFontFam);
   static const IconData cloudscale = IconData(0xf383, fontFamily: _kFontFam);
   static const IconData cloudsmith = IconData(0xf384, fontFamily: _kFontFam);
   static const IconData cloudversify = IconData(0xf385, fontFamily: _kFontFam);
@@ -289,17 +328,21 @@ class La {
   static const IconData commentAlt = IconData(0xf27a, fontFamily: _kFontFam);
   static const IconData commentDollar = IconData(0xf651, fontFamily: _kFontFam);
   static const IconData commentDots = IconData(0xf4ad, fontFamily: _kFontFam);
-  static const IconData commentMedical = IconData(0xf7f5, fontFamily: _kFontFam);
+  static const IconData commentMedical =
+      IconData(0xf7f5, fontFamily: _kFontFam);
   static const IconData commentSlash = IconData(0xf4b3, fontFamily: _kFontFam);
   static const IconData comments = IconData(0xf086, fontFamily: _kFontFam);
-  static const IconData commentsDollar = IconData(0xf653, fontFamily: _kFontFam);
+  static const IconData commentsDollar =
+      IconData(0xf653, fontFamily: _kFontFam);
   static const IconData compactDisc = IconData(0xf51f, fontFamily: _kFontFam);
   static const IconData compass = IconData(0xf14e, fontFamily: _kFontFam);
   static const IconData compress = IconData(0xf066, fontFamily: _kFontFam);
-  static const IconData compressArrowsAlt = IconData(0xf78c, fontFamily: _kFontFam);
+  static const IconData compressArrowsAlt =
+      IconData(0xf78c, fontFamily: _kFontFam);
   static const IconData conciergeBell = IconData(0xf562, fontFamily: _kFontFam);
   static const IconData confluence = IconData(0xf78d, fontFamily: _kFontFam);
-  static const IconData connectdevelop = IconData(0xf20e, fontFamily: _kFontFam);
+  static const IconData connectdevelop =
+      IconData(0xf20e, fontFamily: _kFontFam);
   static const IconData contao = IconData(0xf26d, fontFamily: _kFontFam);
   static const IconData cookie = IconData(0xf563, fontFamily: _kFontFam);
   static const IconData cookieBite = IconData(0xf564, fontFamily: _kFontFam);
@@ -308,20 +351,34 @@ class La {
   static const IconData cottonBureau = IconData(0xf89e, fontFamily: _kFontFam);
   static const IconData couch = IconData(0xf4b8, fontFamily: _kFontFam);
   static const IconData cpanel = IconData(0xf388, fontFamily: _kFontFam);
-  static const IconData creativeCommons = IconData(0xf25e, fontFamily: _kFontFam);
-  static const IconData creativeCommonsBy = IconData(0xf4e7, fontFamily: _kFontFam);
-  static const IconData creativeCommonsNc = IconData(0xf4e8, fontFamily: _kFontFam);
-  static const IconData creativeCommonsNcEu = IconData(0xf4e9, fontFamily: _kFontFam);
-  static const IconData creativeCommonsNcJp = IconData(0xf4ea, fontFamily: _kFontFam);
-  static const IconData creativeCommonsNd = IconData(0xf4eb, fontFamily: _kFontFam);
-  static const IconData creativeCommonsPd = IconData(0xf4ec, fontFamily: _kFontFam);
-  static const IconData creativeCommonsPdAlt = IconData(0xf4ed, fontFamily: _kFontFam);
-  static const IconData creativeCommonsRemix = IconData(0xf4ee, fontFamily: _kFontFam);
-  static const IconData creativeCommonsSa = IconData(0xf4ef, fontFamily: _kFontFam);
-  static const IconData creativeCommonsSampling = IconData(0xf4f0, fontFamily: _kFontFam);
-  static const IconData creativeCommonsSamplingPlus = IconData(0xf4f1, fontFamily: _kFontFam);
-  static const IconData creativeCommonsShare = IconData(0xf4f2, fontFamily: _kFontFam);
-  static const IconData creativeCommonsZero = IconData(0xf4f3, fontFamily: _kFontFam);
+  static const IconData creativeCommons =
+      IconData(0xf25e, fontFamily: _kFontFam);
+  static const IconData creativeCommonsBy =
+      IconData(0xf4e7, fontFamily: _kFontFam);
+  static const IconData creativeCommonsNc =
+      IconData(0xf4e8, fontFamily: _kFontFam);
+  static const IconData creativeCommonsNcEu =
+      IconData(0xf4e9, fontFamily: _kFontFam);
+  static const IconData creativeCommonsNcJp =
+      IconData(0xf4ea, fontFamily: _kFontFam);
+  static const IconData creativeCommonsNd =
+      IconData(0xf4eb, fontFamily: _kFontFam);
+  static const IconData creativeCommonsPd =
+      IconData(0xf4ec, fontFamily: _kFontFam);
+  static const IconData creativeCommonsPdAlt =
+      IconData(0xf4ed, fontFamily: _kFontFam);
+  static const IconData creativeCommonsRemix =
+      IconData(0xf4ee, fontFamily: _kFontFam);
+  static const IconData creativeCommonsSa =
+      IconData(0xf4ef, fontFamily: _kFontFam);
+  static const IconData creativeCommonsSampling =
+      IconData(0xf4f0, fontFamily: _kFontFam);
+  static const IconData creativeCommonsSamplingPlus =
+      IconData(0xf4f1, fontFamily: _kFontFam);
+  static const IconData creativeCommonsShare =
+      IconData(0xf4f2, fontFamily: _kFontFam);
+  static const IconData creativeCommonsZero =
+      IconData(0xf4f3, fontFamily: _kFontFam);
   static const IconData creditCard = IconData(0xf09d, fontFamily: _kFontFam);
   static const IconData criticalRole = IconData(0xf6c9, fontFamily: _kFontFam);
   static const IconData crop = IconData(0xf125, fontFamily: _kFontFam);
@@ -364,7 +421,8 @@ class La {
   static const IconData diceTwo = IconData(0xf528, fontFamily: _kFontFam);
   static const IconData digg = IconData(0xf1a6, fontFamily: _kFontFam);
   static const IconData digitalOcean = IconData(0xf391, fontFamily: _kFontFam);
-  static const IconData digitalTachograph = IconData(0xf566, fontFamily: _kFontFam);
+  static const IconData digitalTachograph =
+      IconData(0xf566, fontFamily: _kFontFam);
   static const IconData directions = IconData(0xf5eb, fontFamily: _kFontFam);
   static const IconData discord = IconData(0xf392, fontFamily: _kFontFam);
   static const IconData discourse = IconData(0xf393, fontFamily: _kFontFam);
@@ -384,11 +442,13 @@ class La {
   static const IconData dove = IconData(0xf4ba, fontFamily: _kFontFam);
   static const IconData download = IconData(0xf019, fontFamily: _kFontFam);
   static const IconData draft2digital = IconData(0xf396, fontFamily: _kFontFam);
-  static const IconData draftingCompass = IconData(0xf568, fontFamily: _kFontFam);
+  static const IconData draftingCompass =
+      IconData(0xf568, fontFamily: _kFontFam);
   static const IconData dragon = IconData(0xf6d5, fontFamily: _kFontFam);
   static const IconData drawPolygon = IconData(0xf5ee, fontFamily: _kFontFam);
   static const IconData dribbble = IconData(0xf17d, fontFamily: _kFontFam);
-  static const IconData dribbbleSquare = IconData(0xf397, fontFamily: _kFontFam);
+  static const IconData dribbbleSquare =
+      IconData(0xf397, fontFamily: _kFontFam);
   static const IconData dropbox = IconData(0xf16b, fontFamily: _kFontFam);
   static const IconData drum = IconData(0xf569, fontFamily: _kFontFam);
   static const IconData drumSteelpan = IconData(0xf56a, fontFamily: _kFontFam);
@@ -413,8 +473,10 @@ class La {
   static const IconData empire = IconData(0xf1d1, fontFamily: _kFontFam);
   static const IconData envelope = IconData(0xf0e0, fontFamily: _kFontFam);
   static const IconData envelopeOpen = IconData(0xf2b6, fontFamily: _kFontFam);
-  static const IconData envelopeOpenText = IconData(0xf658, fontFamily: _kFontFam);
-  static const IconData envelopeSquare = IconData(0xf199, fontFamily: _kFontFam);
+  static const IconData envelopeOpenText =
+      IconData(0xf658, fontFamily: _kFontFam);
+  static const IconData envelopeSquare =
+      IconData(0xf199, fontFamily: _kFontFam);
   static const IconData envira = IconData(0xf299, fontFamily: _kFontFam);
   static const IconData equals = IconData(0xf52c, fontFamily: _kFontFam);
   static const IconData eraser = IconData(0xf12d, fontFamily: _kFontFam);
@@ -426,22 +488,30 @@ class La {
   static const IconData evernote = IconData(0xf839, fontFamily: _kFontFam);
   static const IconData exchangeAlt = IconData(0xf362, fontFamily: _kFontFam);
   static const IconData exclamation = IconData(0xf12a, fontFamily: _kFontFam);
-  static const IconData exclamationCircle = IconData(0xf06a, fontFamily: _kFontFam);
-  static const IconData exclamationTriangle = IconData(0xf071, fontFamily: _kFontFam);
+  static const IconData exclamationCircle =
+      IconData(0xf06a, fontFamily: _kFontFam);
+  static const IconData exclamationTriangle =
+      IconData(0xf071, fontFamily: _kFontFam);
   static const IconData expand = IconData(0xf065, fontFamily: _kFontFam);
-  static const IconData expandArrowsAlt = IconData(0xf31e, fontFamily: _kFontFam);
+  static const IconData expandArrowsAlt =
+      IconData(0xf31e, fontFamily: _kFontFam);
   static const IconData expeditedssl = IconData(0xf23e, fontFamily: _kFontFam);
-  static const IconData externalLinkAlt = IconData(0xf35d, fontFamily: _kFontFam);
-  static const IconData externalLinkSquareAlt = IconData(0xf360, fontFamily: _kFontFam);
+  static const IconData externalLinkAlt =
+      IconData(0xf35d, fontFamily: _kFontFam);
+  static const IconData externalLinkSquareAlt =
+      IconData(0xf360, fontFamily: _kFontFam);
   static const IconData eye = IconData(0xf06e, fontFamily: _kFontFam);
   static const IconData eyeDropper = IconData(0xf1fb, fontFamily: _kFontFam);
   static const IconData eyeSlash = IconData(0xf070, fontFamily: _kFontFam);
   static const IconData facebook = IconData(0xf09a, fontFamily: _kFontFam);
   static const IconData facebookF = IconData(0xf39e, fontFamily: _kFontFam);
-  static const IconData facebookMessenger = IconData(0xf39f, fontFamily: _kFontFam);
-  static const IconData facebookSquare = IconData(0xf082, fontFamily: _kFontFam);
+  static const IconData facebookMessenger =
+      IconData(0xf39f, fontFamily: _kFontFam);
+  static const IconData facebookSquare =
+      IconData(0xf082, fontFamily: _kFontFam);
   static const IconData fan = IconData(0xf863, fontFamily: _kFontFam);
-  static const IconData fantasyFlightGames = IconData(0xf6dc, fontFamily: _kFontFam);
+  static const IconData fantasyFlightGames =
+      IconData(0xf6dc, fontFamily: _kFontFam);
   static const IconData fastBackward = IconData(0xf049, fontFamily: _kFontFam);
   static const IconData fastForward = IconData(0xf050, fontFamily: _kFontFam);
   static const IconData fax = IconData(0xf1ac, fontFamily: _kFontFam);
@@ -465,12 +535,16 @@ class La {
   static const IconData fileImage = IconData(0xf1c5, fontFamily: _kFontFam);
   static const IconData fileImport = IconData(0xf56f, fontFamily: _kFontFam);
   static const IconData fileInvoice = IconData(0xf570, fontFamily: _kFontFam);
-  static const IconData fileInvoiceDollar = IconData(0xf571, fontFamily: _kFontFam);
+  static const IconData fileInvoiceDollar =
+      IconData(0xf571, fontFamily: _kFontFam);
   static const IconData fileMedical = IconData(0xf477, fontFamily: _kFontFam);
-  static const IconData fileMedicalAlt = IconData(0xf478, fontFamily: _kFontFam);
+  static const IconData fileMedicalAlt =
+      IconData(0xf478, fontFamily: _kFontFam);
   static const IconData filePdf = IconData(0xf1c1, fontFamily: _kFontFam);
-  static const IconData filePowerpoint = IconData(0xf1c4, fontFamily: _kFontFam);
-  static const IconData filePrescription = IconData(0xf572, fontFamily: _kFontFam);
+  static const IconData filePowerpoint =
+      IconData(0xf1c4, fontFamily: _kFontFam);
+  static const IconData filePrescription =
+      IconData(0xf572, fontFamily: _kFontFam);
   static const IconData fileSignature = IconData(0xf573, fontFamily: _kFontFam);
   static const IconData fileUpload = IconData(0xf574, fontFamily: _kFontFam);
   static const IconData fileVideo = IconData(0xf1c8, fontFamily: _kFontFam);
@@ -482,7 +556,8 @@ class La {
   static const IconData fingerprint = IconData(0xf577, fontFamily: _kFontFam);
   static const IconData fire = IconData(0xf06d, fontFamily: _kFontFam);
   static const IconData fireAlt = IconData(0xf7e4, fontFamily: _kFontFam);
-  static const IconData fireExtinguisher = IconData(0xf134, fontFamily: _kFontFam);
+  static const IconData fireExtinguisher =
+      IconData(0xf134, fontFamily: _kFontFam);
   static const IconData firefox = IconData(0xf269, fontFamily: _kFontFam);
   static const IconData firstAid = IconData(0xf479, fontFamily: _kFontFam);
   static const IconData firstOrder = IconData(0xf2b0, fontFamily: _kFontFam);
@@ -504,13 +579,16 @@ class La {
   static const IconData folderPlus = IconData(0xf65e, fontFamily: _kFontFam);
   static const IconData font = IconData(0xf031, fontFamily: _kFontFam);
   static const IconData fontAwesome = IconData(0xf2b4, fontFamily: _kFontFam);
-  static const IconData fontAwesomeAlt = IconData(0xf35c, fontFamily: _kFontFam);
-  static const IconData fontAwesomeFlag = IconData(0xf425, fontFamily: _kFontFam);
+  static const IconData fontAwesomeAlt =
+      IconData(0xf35c, fontFamily: _kFontFam);
+  static const IconData fontAwesomeFlag =
+      IconData(0xf425, fontFamily: _kFontFam);
   static const IconData fonticons = IconData(0xf280, fontFamily: _kFontFam);
   static const IconData fonticonsFi = IconData(0xf3a2, fontFamily: _kFontFam);
   static const IconData footballBall = IconData(0xf44e, fontFamily: _kFontFam);
   static const IconData fortAwesome = IconData(0xf286, fontFamily: _kFontFam);
-  static const IconData fortAwesomeAlt = IconData(0xf3a3, fontFamily: _kFontFam);
+  static const IconData fortAwesomeAlt =
+      IconData(0xf3a3, fontFamily: _kFontFam);
   static const IconData forumbee = IconData(0xf211, fontFamily: _kFontFam);
   static const IconData forward = IconData(0xf04e, fontFamily: _kFontFam);
   static const IconData foursquare = IconData(0xf180, fontFamily: _kFontFam);
@@ -522,8 +600,10 @@ class La {
   static const IconData fulcrum = IconData(0xf50b, fontFamily: _kFontFam);
   static const IconData funnelDollar = IconData(0xf662, fontFamily: _kFontFam);
   static const IconData futbol = IconData(0xf1e3, fontFamily: _kFontFam);
-  static const IconData galacticRepublic = IconData(0xf50c, fontFamily: _kFontFam);
-  static const IconData galacticSenate = IconData(0xf50d, fontFamily: _kFontFam);
+  static const IconData galacticRepublic =
+      IconData(0xf50c, fontFamily: _kFontFam);
+  static const IconData galacticSenate =
+      IconData(0xf50d, fontFamily: _kFontFam);
   static const IconData gamepad = IconData(0xf11b, fontFamily: _kFontFam);
   static const IconData gasPump = IconData(0xf52f, fontFamily: _kFontFam);
   static const IconData gavel = IconData(0xf0e3, fontFamily: _kFontFam);
@@ -546,7 +626,8 @@ class La {
   static const IconData gitter = IconData(0xf426, fontFamily: _kFontFam);
   static const IconData glassCheers = IconData(0xf79f, fontFamily: _kFontFam);
   static const IconData glassMartini = IconData(0xf000, fontFamily: _kFontFam);
-  static const IconData glassMartiniAlt = IconData(0xf57b, fontFamily: _kFontFam);
+  static const IconData glassMartiniAlt =
+      IconData(0xf57b, fontFamily: _kFontFam);
   static const IconData glassWhiskey = IconData(0xf7a0, fontFamily: _kFontFam);
   static const IconData glasses = IconData(0xf530, fontFamily: _kFontFam);
   static const IconData glide = IconData(0xf2a5, fontFamily: _kFontFam);
@@ -565,14 +646,16 @@ class La {
   static const IconData googlePlay = IconData(0xf3ab, fontFamily: _kFontFam);
   static const IconData googlePlus = IconData(0xf2b3, fontFamily: _kFontFam);
   static const IconData googlePlusG = IconData(0xf0d5, fontFamily: _kFontFam);
-  static const IconData googlePlusSquare = IconData(0xf0d4, fontFamily: _kFontFam);
+  static const IconData googlePlusSquare =
+      IconData(0xf0d4, fontFamily: _kFontFam);
   static const IconData googleWallet = IconData(0xf1ee, fontFamily: _kFontFam);
   static const IconData gopuram = IconData(0xf664, fontFamily: _kFontFam);
   static const IconData graduationCap = IconData(0xf19d, fontFamily: _kFontFam);
   static const IconData gratipay = IconData(0xf184, fontFamily: _kFontFam);
   static const IconData grav = IconData(0xf2d6, fontFamily: _kFontFam);
   static const IconData greaterThan = IconData(0xf531, fontFamily: _kFontFam);
-  static const IconData greaterThanEqual = IconData(0xf532, fontFamily: _kFontFam);
+  static const IconData greaterThanEqual =
+      IconData(0xf532, fontFamily: _kFontFam);
   static const IconData grimace = IconData(0xf57f, fontFamily: _kFontFam);
   static const IconData grin = IconData(0xf580, fontFamily: _kFontFam);
   static const IconData grinAlt = IconData(0xf581, fontFamily: _kFontFam);
@@ -580,16 +663,21 @@ class La {
   static const IconData grinBeamSweat = IconData(0xf583, fontFamily: _kFontFam);
   static const IconData grinHearts = IconData(0xf584, fontFamily: _kFontFam);
   static const IconData grinSquint = IconData(0xf585, fontFamily: _kFontFam);
-  static const IconData grinSquintTears = IconData(0xf586, fontFamily: _kFontFam);
+  static const IconData grinSquintTears =
+      IconData(0xf586, fontFamily: _kFontFam);
   static const IconData grinStars = IconData(0xf587, fontFamily: _kFontFam);
   static const IconData grinTears = IconData(0xf588, fontFamily: _kFontFam);
   static const IconData grinTongue = IconData(0xf589, fontFamily: _kFontFam);
-  static const IconData grinTongueSquint = IconData(0xf58a, fontFamily: _kFontFam);
-  static const IconData grinTongueWink = IconData(0xf58b, fontFamily: _kFontFam);
+  static const IconData grinTongueSquint =
+      IconData(0xf58a, fontFamily: _kFontFam);
+  static const IconData grinTongueWink =
+      IconData(0xf58b, fontFamily: _kFontFam);
   static const IconData grinWink = IconData(0xf58c, fontFamily: _kFontFam);
-  static const IconData gripHorizontal = IconData(0xf58d, fontFamily: _kFontFam);
+  static const IconData gripHorizontal =
+      IconData(0xf58d, fontFamily: _kFontFam);
   static const IconData gripLines = IconData(0xf7a4, fontFamily: _kFontFam);
-  static const IconData gripLinesVertical = IconData(0xf7a5, fontFamily: _kFontFam);
+  static const IconData gripLinesVertical =
+      IconData(0xf7a5, fontFamily: _kFontFam);
   static const IconData gripVertical = IconData(0xf58e, fontFamily: _kFontFam);
   static const IconData gripfire = IconData(0xf3ac, fontFamily: _kFontFam);
   static const IconData grunt = IconData(0xf3ad, fontFamily: _kFontFam);
@@ -597,21 +685,26 @@ class La {
   static const IconData gulp = IconData(0xf3ae, fontFamily: _kFontFam);
   static const IconData hSquare = IconData(0xf0fd, fontFamily: _kFontFam);
   static const IconData hackerNews = IconData(0xf1d4, fontFamily: _kFontFam);
-  static const IconData hackerNewsSquare = IconData(0xf3af, fontFamily: _kFontFam);
+  static const IconData hackerNewsSquare =
+      IconData(0xf3af, fontFamily: _kFontFam);
   static const IconData hackerrank = IconData(0xf5f7, fontFamily: _kFontFam);
   static const IconData hamburger = IconData(0xf805, fontFamily: _kFontFam);
   static const IconData hammer = IconData(0xf6e3, fontFamily: _kFontFam);
   static const IconData hamsa = IconData(0xf665, fontFamily: _kFontFam);
   static const IconData handHolding = IconData(0xf4bd, fontFamily: _kFontFam);
-  static const IconData handHoldingHeart = IconData(0xf4be, fontFamily: _kFontFam);
-  static const IconData handHoldingUsd = IconData(0xf4c0, fontFamily: _kFontFam);
+  static const IconData handHoldingHeart =
+      IconData(0xf4be, fontFamily: _kFontFam);
+  static const IconData handHoldingUsd =
+      IconData(0xf4c0, fontFamily: _kFontFam);
   static const IconData handLizard = IconData(0xf258, fontFamily: _kFontFam);
-  static const IconData handMiddleFinger = IconData(0xf806, fontFamily: _kFontFam);
+  static const IconData handMiddleFinger =
+      IconData(0xf806, fontFamily: _kFontFam);
   static const IconData handPaper = IconData(0xf256, fontFamily: _kFontFam);
   static const IconData handPeace = IconData(0xf25b, fontFamily: _kFontFam);
   static const IconData handPointDown = IconData(0xf0a7, fontFamily: _kFontFam);
   static const IconData handPointLeft = IconData(0xf0a5, fontFamily: _kFontFam);
-  static const IconData handPointRight = IconData(0xf0a4, fontFamily: _kFontFam);
+  static const IconData handPointRight =
+      IconData(0xf0a4, fontFamily: _kFontFam);
   static const IconData handPointUp = IconData(0xf0a6, fontFamily: _kFontFam);
   static const IconData handPointer = IconData(0xf25a, fontFamily: _kFontFam);
   static const IconData handRock = IconData(0xf255, fontFamily: _kFontFam);
@@ -649,7 +742,8 @@ class La {
   static const IconData horseHead = IconData(0xf7ab, fontFamily: _kFontFam);
   static const IconData hospital = IconData(0xf0f8, fontFamily: _kFontFam);
   static const IconData hospitalAlt = IconData(0xf47d, fontFamily: _kFontFam);
-  static const IconData hospitalSymbol = IconData(0xf47e, fontFamily: _kFontFam);
+  static const IconData hospitalSymbol =
+      IconData(0xf47e, fontFamily: _kFontFam);
   static const IconData hotTub = IconData(0xf593, fontFamily: _kFontFam);
   static const IconData hotdog = IconData(0xf80f, fontFamily: _kFontFam);
   static const IconData hotel = IconData(0xf594, fontFamily: _kFontFam);
@@ -657,7 +751,8 @@ class La {
   static const IconData hourglass = IconData(0xf254, fontFamily: _kFontFam);
   static const IconData hourglassEnd = IconData(0xf253, fontFamily: _kFontFam);
   static const IconData hourglassHalf = IconData(0xf252, fontFamily: _kFontFam);
-  static const IconData hourglassStart = IconData(0xf251, fontFamily: _kFontFam);
+  static const IconData hourglassStart =
+      IconData(0xf251, fontFamily: _kFontFam);
   static const IconData houseDamage = IconData(0xf6f1, fontFamily: _kFontFam);
   static const IconData houzz = IconData(0xf27c, fontFamily: _kFontFam);
   static const IconData hryvnia = IconData(0xf6f2, fontFamily: _kFontFam);
@@ -682,7 +777,8 @@ class La {
   static const IconData infoCircle = IconData(0xf05a, fontFamily: _kFontFam);
   static const IconData instagram = IconData(0xf16d, fontFamily: _kFontFam);
   static const IconData intercom = IconData(0xf7af, fontFamily: _kFontFam);
-  static const IconData internetExplorer = IconData(0xf26b, fontFamily: _kFontFam);
+  static const IconData internetExplorer =
+      IconData(0xf26b, fontFamily: _kFontFam);
   static const IconData invision = IconData(0xf7b0, fontFamily: _kFontFam);
   static const IconData ioxhost = IconData(0xf208, fontFamily: _kFontFam);
   static const IconData italic = IconData(0xf033, fontFamily: _kFontFam);
@@ -752,10 +848,14 @@ class La {
   static const IconData locationArrow = IconData(0xf124, fontFamily: _kFontFam);
   static const IconData lock = IconData(0xf023, fontFamily: _kFontFam);
   static const IconData lockOpen = IconData(0xf3c1, fontFamily: _kFontFam);
-  static const IconData longArrowAltDown = IconData(0xf309, fontFamily: _kFontFam);
-  static const IconData longArrowAltLeft = IconData(0xf30a, fontFamily: _kFontFam);
-  static const IconData longArrowAltRight = IconData(0xf30b, fontFamily: _kFontFam);
-  static const IconData longArrowAltUp = IconData(0xf30c, fontFamily: _kFontFam);
+  static const IconData longArrowAltDown =
+      IconData(0xf309, fontFamily: _kFontFam);
+  static const IconData longArrowAltLeft =
+      IconData(0xf30a, fontFamily: _kFontFam);
+  static const IconData longArrowAltRight =
+      IconData(0xf30b, fontFamily: _kFontFam);
+  static const IconData longArrowAltUp =
+      IconData(0xf30c, fontFamily: _kFontFam);
   static const IconData lowVision = IconData(0xf2a8, fontFamily: _kFontFam);
   static const IconData luggageCart = IconData(0xf59d, fontFamily: _kFontFam);
   static const IconData lyft = IconData(0xf3c3, fontFamily: _kFontFam);
@@ -793,7 +893,8 @@ class La {
   static const IconData megaport = IconData(0xf5a3, fontFamily: _kFontFam);
   static const IconData meh = IconData(0xf11a, fontFamily: _kFontFam);
   static const IconData mehBlank = IconData(0xf5a4, fontFamily: _kFontFam);
-  static const IconData mehRollingEyes = IconData(0xf5a5, fontFamily: _kFontFam);
+  static const IconData mehRollingEyes =
+      IconData(0xf5a5, fontFamily: _kFontFam);
   static const IconData memory = IconData(0xf538, fontFamily: _kFontFam);
   static const IconData mendeley = IconData(0xf7b3, fontFamily: _kFontFam);
   static const IconData menorah = IconData(0xf676, fontFamily: _kFontFam);
@@ -802,8 +903,10 @@ class La {
   static const IconData microchip = IconData(0xf2db, fontFamily: _kFontFam);
   static const IconData microphone = IconData(0xf130, fontFamily: _kFontFam);
   static const IconData microphoneAlt = IconData(0xf3c9, fontFamily: _kFontFam);
-  static const IconData microphoneAltSlash = IconData(0xf539, fontFamily: _kFontFam);
-  static const IconData microphoneSlash = IconData(0xf131, fontFamily: _kFontFam);
+  static const IconData microphoneAltSlash =
+      IconData(0xf539, fontFamily: _kFontFam);
+  static const IconData microphoneSlash =
+      IconData(0xf131, fontFamily: _kFontFam);
   static const IconData microscope = IconData(0xf610, fontFamily: _kFontFam);
   static const IconData microsoft = IconData(0xf3ca, fontFamily: _kFontFam);
   static const IconData minus = IconData(0xf068, fontFamily: _kFontFam);
@@ -820,7 +923,8 @@ class La {
   static const IconData moneyBill = IconData(0xf0d6, fontFamily: _kFontFam);
   static const IconData moneyBillAlt = IconData(0xf3d1, fontFamily: _kFontFam);
   static const IconData moneyBillWave = IconData(0xf53a, fontFamily: _kFontFam);
-  static const IconData moneyBillWaveAlt = IconData(0xf53b, fontFamily: _kFontFam);
+  static const IconData moneyBillWaveAlt =
+      IconData(0xf53b, fontFamily: _kFontFam);
   static const IconData moneyCheck = IconData(0xf53c, fontFamily: _kFontFam);
   static const IconData moneyCheckAlt = IconData(0xf53d, fontFamily: _kFontFam);
   static const IconData monument = IconData(0xf5a6, fontFamily: _kFontFam);
@@ -848,7 +952,8 @@ class La {
   static const IconData objectGroup = IconData(0xf247, fontFamily: _kFontFam);
   static const IconData objectUngroup = IconData(0xf248, fontFamily: _kFontFam);
   static const IconData odnoklassniki = IconData(0xf263, fontFamily: _kFontFam);
-  static const IconData odnoklassnikiSquare = IconData(0xf264, fontFamily: _kFontFam);
+  static const IconData odnoklassnikiSquare =
+      IconData(0xf264, fontFamily: _kFontFam);
   static const IconData oilCan = IconData(0xf613, fontFamily: _kFontFam);
   static const IconData oldRepublic = IconData(0xf510, fontFamily: _kFontFam);
   static const IconData om = IconData(0xf679, fontFamily: _kFontFam);
@@ -873,7 +978,8 @@ class La {
   static const IconData paragraph = IconData(0xf1dd, fontFamily: _kFontFam);
   static const IconData parking = IconData(0xf540, fontFamily: _kFontFam);
   static const IconData passport = IconData(0xf5ab, fontFamily: _kFontFam);
-  static const IconData pastafarianism = IconData(0xf67b, fontFamily: _kFontFam);
+  static const IconData pastafarianism =
+      IconData(0xf67b, fontFamily: _kFontFam);
   static const IconData paste = IconData(0xf0ea, fontFamily: _kFontFam);
   static const IconData patreon = IconData(0xf3d9, fontFamily: _kFontFam);
   static const IconData pause = IconData(0xf04c, fontFamily: _kFontFam);
@@ -896,13 +1002,16 @@ class La {
   static const IconData periscope = IconData(0xf3da, fontFamily: _kFontFam);
   static const IconData personBooth = IconData(0xf756, fontFamily: _kFontFam);
   static const IconData phabricator = IconData(0xf3db, fontFamily: _kFontFam);
-  static const IconData phoenixFramework = IconData(0xf3dc, fontFamily: _kFontFam);
-  static const IconData phoenixSquadron = IconData(0xf511, fontFamily: _kFontFam);
+  static const IconData phoenixFramework =
+      IconData(0xf3dc, fontFamily: _kFontFam);
+  static const IconData phoenixSquadron =
+      IconData(0xf511, fontFamily: _kFontFam);
   static const IconData phone = IconData(0xf095, fontFamily: _kFontFam);
   static const IconData phoneAlt = IconData(0xf879, fontFamily: _kFontFam);
   static const IconData phoneSlash = IconData(0xf3dd, fontFamily: _kFontFam);
   static const IconData phoneSquare = IconData(0xf098, fontFamily: _kFontFam);
-  static const IconData phoneSquareAlt = IconData(0xf87b, fontFamily: _kFontFam);
+  static const IconData phoneSquareAlt =
+      IconData(0xf87b, fontFamily: _kFontFam);
   static const IconData phoneVolume = IconData(0xf2a0, fontFamily: _kFontFam);
   static const IconData photoVideo = IconData(0xf87c, fontFamily: _kFontFam);
   static const IconData php = IconData(0xf457, fontFamily: _kFontFam);
@@ -914,12 +1023,15 @@ class La {
   static const IconData pills = IconData(0xf484, fontFamily: _kFontFam);
   static const IconData pinterest = IconData(0xf0d2, fontFamily: _kFontFam);
   static const IconData pinterestP = IconData(0xf231, fontFamily: _kFontFam);
-  static const IconData pinterestSquare = IconData(0xf0d3, fontFamily: _kFontFam);
+  static const IconData pinterestSquare =
+      IconData(0xf0d3, fontFamily: _kFontFam);
   static const IconData pizzaSlice = IconData(0xf818, fontFamily: _kFontFam);
-  static const IconData placeOfWorship = IconData(0xf67f, fontFamily: _kFontFam);
+  static const IconData placeOfWorship =
+      IconData(0xf67f, fontFamily: _kFontFam);
   static const IconData plane = IconData(0xf072, fontFamily: _kFontFam);
   static const IconData planeArrival = IconData(0xf5af, fontFamily: _kFontFam);
-  static const IconData planeDeparture = IconData(0xf5b0, fontFamily: _kFontFam);
+  static const IconData planeDeparture =
+      IconData(0xf5b0, fontFamily: _kFontFam);
   static const IconData play = IconData(0xf04b, fontFamily: _kFontFam);
   static const IconData playCircle = IconData(0xf144, fontFamily: _kFontFam);
   static const IconData playstation = IconData(0xf3df, fontFamily: _kFontFam);
@@ -939,19 +1051,23 @@ class La {
   static const IconData pray = IconData(0xf683, fontFamily: _kFontFam);
   static const IconData prayingHands = IconData(0xf684, fontFamily: _kFontFam);
   static const IconData prescription = IconData(0xf5b1, fontFamily: _kFontFam);
-  static const IconData prescriptionBottle = IconData(0xf485, fontFamily: _kFontFam);
-  static const IconData prescriptionBottleAlt = IconData(0xf486, fontFamily: _kFontFam);
+  static const IconData prescriptionBottle =
+      IconData(0xf485, fontFamily: _kFontFam);
+  static const IconData prescriptionBottleAlt =
+      IconData(0xf486, fontFamily: _kFontFam);
   static const IconData print = IconData(0xf02f, fontFamily: _kFontFam);
   static const IconData procedures = IconData(0xf487, fontFamily: _kFontFam);
   static const IconData productHunt = IconData(0xf288, fontFamily: _kFontFam);
-  static const IconData projectDiagram = IconData(0xf542, fontFamily: _kFontFam);
+  static const IconData projectDiagram =
+      IconData(0xf542, fontFamily: _kFontFam);
   static const IconData pushed = IconData(0xf3e1, fontFamily: _kFontFam);
   static const IconData puzzlePiece = IconData(0xf12e, fontFamily: _kFontFam);
   static const IconData python = IconData(0xf3e2, fontFamily: _kFontFam);
   static const IconData qq = IconData(0xf1d6, fontFamily: _kFontFam);
   static const IconData qrcode = IconData(0xf029, fontFamily: _kFontFam);
   static const IconData question = IconData(0xf128, fontFamily: _kFontFam);
-  static const IconData questionCircle = IconData(0xf059, fontFamily: _kFontFam);
+  static const IconData questionCircle =
+      IconData(0xf059, fontFamily: _kFontFam);
   static const IconData quidditch = IconData(0xf458, fontFamily: _kFontFam);
   static const IconData quinscape = IconData(0xf459, fontFamily: _kFontFam);
   static const IconData quora = IconData(0xf2c4, fontFamily: _kFontFam);
@@ -1003,7 +1119,8 @@ class La {
   static const IconData rubleSign = IconData(0xf158, fontFamily: _kFontFam);
   static const IconData ruler = IconData(0xf545, fontFamily: _kFontFam);
   static const IconData rulerCombined = IconData(0xf546, fontFamily: _kFontFam);
-  static const IconData rulerHorizontal = IconData(0xf547, fontFamily: _kFontFam);
+  static const IconData rulerHorizontal =
+      IconData(0xf547, fontFamily: _kFontFam);
   static const IconData rulerVertical = IconData(0xf548, fontFamily: _kFontFam);
   static const IconData running = IconData(0xf70c, fontFamily: _kFontFam);
   static const IconData rupeeSign = IconData(0xf156, fontFamily: _kFontFam);
@@ -1023,7 +1140,8 @@ class La {
   static const IconData sdCard = IconData(0xf7c2, fontFamily: _kFontFam);
   static const IconData search = IconData(0xf002, fontFamily: _kFontFam);
   static const IconData searchDollar = IconData(0xf688, fontFamily: _kFontFam);
-  static const IconData searchLocation = IconData(0xf689, fontFamily: _kFontFam);
+  static const IconData searchLocation =
+      IconData(0xf689, fontFamily: _kFontFam);
   static const IconData searchMinus = IconData(0xf010, fontFamily: _kFontFam);
   static const IconData searchPlus = IconData(0xf00e, fontFamily: _kFontFam);
   static const IconData searchengin = IconData(0xf3eb, fontFamily: _kFontFam);
@@ -1035,7 +1153,8 @@ class La {
   static const IconData shapes = IconData(0xf61f, fontFamily: _kFontFam);
   static const IconData share = IconData(0xf064, fontFamily: _kFontFam);
   static const IconData shareAlt = IconData(0xf1e0, fontFamily: _kFontFam);
-  static const IconData shareAltSquare = IconData(0xf1e1, fontFamily: _kFontFam);
+  static const IconData shareAltSquare =
+      IconData(0xf1e1, fontFamily: _kFontFam);
   static const IconData shareSquare = IconData(0xf14d, fontFamily: _kFontFam);
   static const IconData shekelSign = IconData(0xf20b, fontFamily: _kFontFam);
   static const IconData shieldAlt = IconData(0xf3ed, fontFamily: _kFontFam);
@@ -1044,7 +1163,8 @@ class La {
   static const IconData shirtsinbulk = IconData(0xf214, fontFamily: _kFontFam);
   static const IconData shoePrints = IconData(0xf54b, fontFamily: _kFontFam);
   static const IconData shoppingBag = IconData(0xf290, fontFamily: _kFontFam);
-  static const IconData shoppingBasket = IconData(0xf291, fontFamily: _kFontFam);
+  static const IconData shoppingBasket =
+      IconData(0xf291, fontFamily: _kFontFam);
   static const IconData shoppingCart = IconData(0xf07a, fontFamily: _kFontFam);
   static const IconData shopware = IconData(0xf5b5, fontFamily: _kFontFam);
   static const IconData shower = IconData(0xf2cc, fontFamily: _kFontFam);
@@ -1065,7 +1185,8 @@ class La {
   static const IconData skiing = IconData(0xf7c9, fontFamily: _kFontFam);
   static const IconData skiingNordic = IconData(0xf7ca, fontFamily: _kFontFam);
   static const IconData skull = IconData(0xf54c, fontFamily: _kFontFam);
-  static const IconData skullCrossbones = IconData(0xf714, fontFamily: _kFontFam);
+  static const IconData skullCrossbones =
+      IconData(0xf714, fontFamily: _kFontFam);
   static const IconData skyatlas = IconData(0xf216, fontFamily: _kFontFam);
   static const IconData skype = IconData(0xf17e, fontFamily: _kFontFam);
   static const IconData slack = IconData(0xf198, fontFamily: _kFontFam);
@@ -1083,7 +1204,8 @@ class La {
   static const IconData sms = IconData(0xf7cd, fontFamily: _kFontFam);
   static const IconData snapchat = IconData(0xf2ab, fontFamily: _kFontFam);
   static const IconData snapchatGhost = IconData(0xf2ac, fontFamily: _kFontFam);
-  static const IconData snapchatSquare = IconData(0xf2ad, fontFamily: _kFontFam);
+  static const IconData snapchatSquare =
+      IconData(0xf2ad, fontFamily: _kFontFam);
   static const IconData snowboarding = IconData(0xf7ce, fontFamily: _kFontFam);
   static const IconData snowflake = IconData(0xf2dc, fontFamily: _kFontFam);
   static const IconData snowman = IconData(0xf7d0, fontFamily: _kFontFam);
@@ -1092,18 +1214,26 @@ class La {
   static const IconData solarPanel = IconData(0xf5ba, fontFamily: _kFontFam);
   static const IconData sort = IconData(0xf0dc, fontFamily: _kFontFam);
   static const IconData sortAlphaDown = IconData(0xf15d, fontFamily: _kFontFam);
-  static const IconData sortAlphaDownAlt = IconData(0xf881, fontFamily: _kFontFam);
+  static const IconData sortAlphaDownAlt =
+      IconData(0xf881, fontFamily: _kFontFam);
   static const IconData sortAlphaUp = IconData(0xf15e, fontFamily: _kFontFam);
-  static const IconData sortAlphaUpAlt = IconData(0xf882, fontFamily: _kFontFam);
-  static const IconData sortAmountDown = IconData(0xf160, fontFamily: _kFontFam);
-  static const IconData sortAmountDownAlt = IconData(0xf884, fontFamily: _kFontFam);
+  static const IconData sortAlphaUpAlt =
+      IconData(0xf882, fontFamily: _kFontFam);
+  static const IconData sortAmountDown =
+      IconData(0xf160, fontFamily: _kFontFam);
+  static const IconData sortAmountDownAlt =
+      IconData(0xf884, fontFamily: _kFontFam);
   static const IconData sortAmountUp = IconData(0xf161, fontFamily: _kFontFam);
-  static const IconData sortAmountUpAlt = IconData(0xf885, fontFamily: _kFontFam);
+  static const IconData sortAmountUpAlt =
+      IconData(0xf885, fontFamily: _kFontFam);
   static const IconData sortDown = IconData(0xf0dd, fontFamily: _kFontFam);
-  static const IconData sortNumericDown = IconData(0xf162, fontFamily: _kFontFam);
-  static const IconData sortNumericDownAlt = IconData(0xf886, fontFamily: _kFontFam);
+  static const IconData sortNumericDown =
+      IconData(0xf162, fontFamily: _kFontFam);
+  static const IconData sortNumericDownAlt =
+      IconData(0xf886, fontFamily: _kFontFam);
   static const IconData sortNumericUp = IconData(0xf163, fontFamily: _kFontFam);
-  static const IconData sortNumericUpAlt = IconData(0xf887, fontFamily: _kFontFam);
+  static const IconData sortNumericUpAlt =
+      IconData(0xf887, fontFamily: _kFontFam);
   static const IconData sortUp = IconData(0xf0de, fontFamily: _kFontFam);
   static const IconData soundcloud = IconData(0xf1be, fontFamily: _kFontFam);
   static const IconData sourcetree = IconData(0xf7d3, fontFamily: _kFontFam);
@@ -1126,7 +1256,8 @@ class La {
   static const IconData stackpath = IconData(0xf842, fontFamily: _kFontFam);
   static const IconData stamp = IconData(0xf5bf, fontFamily: _kFontFam);
   static const IconData star = IconData(0xf005, fontFamily: _kFontFam);
-  static const IconData starAndCrescent = IconData(0xf699, fontFamily: _kFontFam);
+  static const IconData starAndCrescent =
+      IconData(0xf699, fontFamily: _kFontFam);
   static const IconData starHalf = IconData(0xf089, fontFamily: _kFontFam);
   static const IconData starHalfAlt = IconData(0xf5c0, fontFamily: _kFontFam);
   static const IconData starOfDavid = IconData(0xf69a, fontFamily: _kFontFam);
@@ -1154,11 +1285,13 @@ class La {
   static const IconData stroopwafel = IconData(0xf551, fontFamily: _kFontFam);
   static const IconData studiovinari = IconData(0xf3f8, fontFamily: _kFontFam);
   static const IconData stumbleupon = IconData(0xf1a4, fontFamily: _kFontFam);
-  static const IconData stumbleuponCircle = IconData(0xf1a3, fontFamily: _kFontFam);
+  static const IconData stumbleuponCircle =
+      IconData(0xf1a3, fontFamily: _kFontFam);
   static const IconData subscript = IconData(0xf12c, fontFamily: _kFontFam);
   static const IconData subway = IconData(0xf239, fontFamily: _kFontFam);
   static const IconData suitcase = IconData(0xf0f2, fontFamily: _kFontFam);
-  static const IconData suitcaseRolling = IconData(0xf5c1, fontFamily: _kFontFam);
+  static const IconData suitcaseRolling =
+      IconData(0xf5c1, fontFamily: _kFontFam);
   static const IconData sun = IconData(0xf185, fontFamily: _kFontFam);
   static const IconData superpowers = IconData(0xf2dd, fontFamily: _kFontFam);
   static const IconData superscript = IconData(0xf12b, fontFamily: _kFontFam);
@@ -1189,8 +1322,10 @@ class La {
   static const IconData teethOpen = IconData(0xf62f, fontFamily: _kFontFam);
   static const IconData telegram = IconData(0xf2c6, fontFamily: _kFontFam);
   static const IconData telegramPlane = IconData(0xf3fe, fontFamily: _kFontFam);
-  static const IconData temperatureHigh = IconData(0xf769, fontFamily: _kFontFam);
-  static const IconData temperatureLow = IconData(0xf76b, fontFamily: _kFontFam);
+  static const IconData temperatureHigh =
+      IconData(0xf769, fontFamily: _kFontFam);
+  static const IconData temperatureLow =
+      IconData(0xf76b, fontFamily: _kFontFam);
   static const IconData tencentWeibo = IconData(0xf1d5, fontFamily: _kFontFam);
   static const IconData tenge = IconData(0xf7d7, fontFamily: _kFontFam);
   static const IconData terminal = IconData(0xf120, fontFamily: _kFontFam);
@@ -1204,11 +1339,16 @@ class La {
   static const IconData themeco = IconData(0xf5c6, fontFamily: _kFontFam);
   static const IconData themeisle = IconData(0xf2b2, fontFamily: _kFontFam);
   static const IconData thermometer = IconData(0xf491, fontFamily: _kFontFam);
-  static const IconData thermometerEmpty = IconData(0xf2cb, fontFamily: _kFontFam);
-  static const IconData thermometerFull = IconData(0xf2c7, fontFamily: _kFontFam);
-  static const IconData thermometerHalf = IconData(0xf2c9, fontFamily: _kFontFam);
-  static const IconData thermometerQuarter = IconData(0xf2ca, fontFamily: _kFontFam);
-  static const IconData thermometerThreeQuarters = IconData(0xf2c8, fontFamily: _kFontFam);
+  static const IconData thermometerEmpty =
+      IconData(0xf2cb, fontFamily: _kFontFam);
+  static const IconData thermometerFull =
+      IconData(0xf2c7, fontFamily: _kFontFam);
+  static const IconData thermometerHalf =
+      IconData(0xf2c9, fontFamily: _kFontFam);
+  static const IconData thermometerQuarter =
+      IconData(0xf2ca, fontFamily: _kFontFam);
+  static const IconData thermometerThreeQuarters =
+      IconData(0xf2c8, fontFamily: _kFontFam);
   static const IconData thinkPeaks = IconData(0xf731, fontFamily: _kFontFam);
   static const IconData thumbsDown = IconData(0xf165, fontFamily: _kFontFam);
   static const IconData thumbsUp = IconData(0xf164, fontFamily: _kFontFam);
@@ -1229,17 +1369,20 @@ class La {
   static const IconData torah = IconData(0xf6a0, fontFamily: _kFontFam);
   static const IconData toriiGate = IconData(0xf6a1, fontFamily: _kFontFam);
   static const IconData tractor = IconData(0xf722, fontFamily: _kFontFam);
-  static const IconData tradeFederation = IconData(0xf513, fontFamily: _kFontFam);
+  static const IconData tradeFederation =
+      IconData(0xf513, fontFamily: _kFontFam);
   static const IconData trademark = IconData(0xf25c, fontFamily: _kFontFam);
   static const IconData trafficLight = IconData(0xf637, fontFamily: _kFontFam);
   static const IconData train = IconData(0xf238, fontFamily: _kFontFam);
   static const IconData tram = IconData(0xf7da, fontFamily: _kFontFam);
   static const IconData transgender = IconData(0xf224, fontFamily: _kFontFam);
-  static const IconData transgenderAlt = IconData(0xf225, fontFamily: _kFontFam);
+  static const IconData transgenderAlt =
+      IconData(0xf225, fontFamily: _kFontFam);
   static const IconData trash = IconData(0xf1f8, fontFamily: _kFontFam);
   static const IconData trashAlt = IconData(0xf2ed, fontFamily: _kFontFam);
   static const IconData trashRestore = IconData(0xf829, fontFamily: _kFontFam);
-  static const IconData trashRestoreAlt = IconData(0xf82a, fontFamily: _kFontFam);
+  static const IconData trashRestoreAlt =
+      IconData(0xf82a, fontFamily: _kFontFam);
   static const IconData tree = IconData(0xf1bb, fontFamily: _kFontFam);
   static const IconData trello = IconData(0xf181, fontFamily: _kFontFam);
   static const IconData tripadvisor = IconData(0xf262, fontFamily: _kFontFam);
@@ -1267,7 +1410,8 @@ class La {
   static const IconData undo = IconData(0xf0e2, fontFamily: _kFontFam);
   static const IconData undoAlt = IconData(0xf2ea, fontFamily: _kFontFam);
   static const IconData uniregistry = IconData(0xf404, fontFamily: _kFontFam);
-  static const IconData universalAccess = IconData(0xf29a, fontFamily: _kFontFam);
+  static const IconData universalAccess =
+      IconData(0xf29a, fontFamily: _kFontFam);
   static const IconData university = IconData(0xf19c, fontFamily: _kFontFam);
   static const IconData unlink = IconData(0xf127, fontFamily: _kFontFam);
   static const IconData unlock = IconData(0xf09c, fontFamily: _kFontFam);
@@ -1327,7 +1471,8 @@ class La {
   static const IconData vk = IconData(0xf189, fontFamily: _kFontFam);
   static const IconData vnv = IconData(0xf40b, fontFamily: _kFontFam);
   static const IconData voicemail = IconData(0xf897, fontFamily: _kFontFam);
-  static const IconData volleyballBall = IconData(0xf45f, fontFamily: _kFontFam);
+  static const IconData volleyballBall =
+      IconData(0xf45f, fontFamily: _kFontFam);
   static const IconData volumeDown = IconData(0xf027, fontFamily: _kFontFam);
   static const IconData volumeMute = IconData(0xf6a9, fontFamily: _kFontFam);
   static const IconData volumeOff = IconData(0xf026, fontFamily: _kFontFam);
@@ -1347,26 +1492,32 @@ class La {
   static const IconData weightHanging = IconData(0xf5cd, fontFamily: _kFontFam);
   static const IconData weixin = IconData(0xf1d7, fontFamily: _kFontFam);
   static const IconData whatsapp = IconData(0xf232, fontFamily: _kFontFam);
-  static const IconData whatsappSquare = IconData(0xf40c, fontFamily: _kFontFam);
+  static const IconData whatsappSquare =
+      IconData(0xf40c, fontFamily: _kFontFam);
   static const IconData wheelchair = IconData(0xf193, fontFamily: _kFontFam);
   static const IconData whmcs = IconData(0xf40d, fontFamily: _kFontFam);
   static const IconData wifi = IconData(0xf1eb, fontFamily: _kFontFam);
   static const IconData wikipediaW = IconData(0xf266, fontFamily: _kFontFam);
   static const IconData wind = IconData(0xf72e, fontFamily: _kFontFam);
   static const IconData windowClose = IconData(0xf410, fontFamily: _kFontFam);
-  static const IconData windowMaximize = IconData(0xf2d0, fontFamily: _kFontFam);
-  static const IconData windowMinimize = IconData(0xf2d1, fontFamily: _kFontFam);
+  static const IconData windowMaximize =
+      IconData(0xf2d0, fontFamily: _kFontFam);
+  static const IconData windowMinimize =
+      IconData(0xf2d1, fontFamily: _kFontFam);
   static const IconData windowRestore = IconData(0xf2d2, fontFamily: _kFontFam);
   static const IconData windows = IconData(0xf17a, fontFamily: _kFontFam);
   static const IconData wineBottle = IconData(0xf72f, fontFamily: _kFontFam);
   static const IconData wineGlass = IconData(0xf4e3, fontFamily: _kFontFam);
   static const IconData wineGlassAlt = IconData(0xf5ce, fontFamily: _kFontFam);
   static const IconData wix = IconData(0xf5cf, fontFamily: _kFontFam);
-  static const IconData wizardsOfTheCoast = IconData(0xf730, fontFamily: _kFontFam);
-  static const IconData wolfPackBattalion = IconData(0xf514, fontFamily: _kFontFam);
+  static const IconData wizardsOfTheCoast =
+      IconData(0xf730, fontFamily: _kFontFam);
+  static const IconData wolfPackBattalion =
+      IconData(0xf514, fontFamily: _kFontFam);
   static const IconData wonSign = IconData(0xf159, fontFamily: _kFontFam);
   static const IconData wordpress = IconData(0xf19a, fontFamily: _kFontFam);
-  static const IconData wordpressSimple = IconData(0xf411, fontFamily: _kFontFam);
+  static const IconData wordpressSimple =
+      IconData(0xf411, fontFamily: _kFontFam);
   static const IconData wpbeginner = IconData(0xf297, fontFamily: _kFontFam);
   static const IconData wpexplorer = IconData(0xf2de, fontFamily: _kFontFam);
   static const IconData wpforms = IconData(0xf298, fontFamily: _kFontFam);
@@ -1380,7 +1531,8 @@ class La {
   static const IconData yahoo = IconData(0xf19e, fontFamily: _kFontFam);
   static const IconData yammer = IconData(0xf840, fontFamily: _kFontFam);
   static const IconData yandex = IconData(0xf413, fontFamily: _kFontFam);
-  static const IconData yandexInternational = IconData(0xf414, fontFamily: _kFontFam);
+  static const IconData yandexInternational =
+      IconData(0xf414, fontFamily: _kFontFam);
   static const IconData yarn = IconData(0xf7e3, fontFamily: _kFontFam);
   static const IconData yelp = IconData(0xf1e9, fontFamily: _kFontFam);
   static const IconData yenSign = IconData(0xf157, fontFamily: _kFontFam);

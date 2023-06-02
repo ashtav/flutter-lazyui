@@ -36,7 +36,8 @@ class Select extends StatelessWidget {
   Widget build(BuildContext context) {
     // get parent widget name
     final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
+    final formListAncestor =
+        context.findAncestorWidgetOfExactType<LzFormList>();
 
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
@@ -51,7 +52,8 @@ class Select extends StatelessWidget {
       }
     }
 
-    if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
+    if (formListAncestor != null &&
+        formListAncestor.style?.type == FormType.topAligned) {
       isTopAligned = true;
     }
 
@@ -92,7 +94,8 @@ class Select extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ?? formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ??
+                      formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -110,10 +113,13 @@ class Select extends StatelessWidget {
       La.angleDown,
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
-      border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+      border: Br.only(['l'],
+          color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
     );
 
-    SelectController selectController = SelectController(label: label?.replaceAll('*', '').trim(), controller: model?.controller);
+    SelectController selectController = SelectController(
+        label: label?.replaceAll('*', '').trim(),
+        controller: model?.controller);
 
     Widget field = ClipRRect(
       key: model?.key,
@@ -123,7 +129,9 @@ class Select extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid || isGrouping ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
+          Color borderColor = isValid || isGrouping
+              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
           Color disabledColor = Utils.hex('#f3f4f6');
 
@@ -142,7 +150,8 @@ class Select extends StatelessWidget {
                       if (callback is bool) ok = callback;
 
                       // get options
-                      List<Option> options = selectController.options ?? notifier.options;
+                      List<Option> options =
+                          selectController.options ?? notifier.options;
 
                       if (selectController.option != null) {
                         notifier.setOption(selectController.option);
@@ -162,7 +171,9 @@ class Select extends StatelessWidget {
                                   notifier.setOption(option);
                                   onSelect?.call(selectController);
 
-                                  if ((formListAncestor?.cleanOnType ?? false) && !notifier.data['valid']) {
+                                  if ((formListAncestor?.cleanOnType ??
+                                          false) &&
+                                      !notifier.data['valid']) {
                                     notifier.clear();
                                   }
                                 }),
@@ -170,7 +181,9 @@ class Select extends StatelessWidget {
                       }
                     },
               color: enabled ? Colors.white : disabledColor,
-              border: isGrouping ? Br.only(['t'], except: isFirst, color: borderColor) : Br.all(color: borderColor),
+              border: isGrouping
+                  ? Br.only(['t'], except: isFirst, color: borderColor)
+                  : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
@@ -181,7 +194,11 @@ class Select extends StatelessWidget {
                         controller: model?.controller,
                         enabled: false,
                         onChange: onChange,
-                        contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: 65),
+                        contentPadding: Ei.only(
+                            t: noLabel || isTopAligned ? 14 : 40,
+                            b: isValid ? 14 : 5,
+                            l: 15,
+                            r: 65),
                         maxLines: expandValue ? 50 : null,
                       ),
 
@@ -196,7 +213,11 @@ class Select extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (!isTopAligned) Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: 15, t: 13), child: labelWidget),
+                  if (!isTopAligned)
+                    Poslign(
+                        alignment: Alignment.topLeft,
+                        margin: Ei.only(h: 15, t: 13),
+                        child: labelWidget),
                   Poslign(alignment: Alignment.centerRight, child: suffixWidget)
                 ],
               ));
@@ -206,7 +227,10 @@ class Select extends StatelessWidget {
 
     return (isTopAligned
             ? Col(
-                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
+                children: [
+                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
+                  field
+                ],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

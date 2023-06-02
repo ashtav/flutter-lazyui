@@ -30,7 +30,8 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['month_year'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await Pickers.datePicker(context, type: DatePickerType.monthYear);
+                    DateTime? date = await Pickers.datePicker(context,
+                        type: DatePickerType.monthYear);
                     if (date != null) model.text = date.format('MMMM yyyy');
                   }),
               LzForm.input(
@@ -39,7 +40,8 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['year'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await Pickers.datePicker(context, type: DatePickerType.year);
+                    DateTime? date = await Pickers.datePicker(context,
+                        type: DatePickerType.year);
                     if (date != null) model.text = date.format('yyyy');
                   }),
             ],

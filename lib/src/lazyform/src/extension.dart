@@ -16,7 +16,8 @@ extension FormModelExtension on Map<String, FormModel> {
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```
-  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const []}) {
+  Map<String, FormModel> fill(Map<String, dynamic> data,
+      {List<String> except = const []}) {
     for (var e in data.keys) {
       if (containsKey(e) && !except.contains(e)) {
         this[e]!.controller.text = data[e] == null ? '' : data[e].toString();

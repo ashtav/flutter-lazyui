@@ -2,7 +2,6 @@ name: lazyui
 description: Make it fast as possible it can.
 version: 0.0.1
 homepage: https://github.com/ashtav/flutter-lazyui.git
-publish_to: none
 
 environment:
   sdk: '>=2.18.4 <3.0.0'

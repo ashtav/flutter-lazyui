@@ -35,23 +35,32 @@ class CupertinoDatePickerWidget extends StatelessWidget {
     init = init.isAfter(last) ? last : init;
     init = init.isBefore(first) ? first : init;
 
-    List<String> months = Const.months.map((e) => useShortMonths ? e.substring(0, 3) : e).toList();
+    List<String> months = Const.months
+        .map((e) => useShortMonths ? e.substring(0, 3) : e)
+        .toList();
 
     /* ------------------------------------------------------------
     | On Init
     ------------------------------------ */
 
     // default date selected
-    PickerNotifier notifier = PickerNotifier({'month': months[init.month - 1], 'year': init.year});
-    Map<String, dynamic> selected = {'date': init.day, 'month': months[init.month - 1], 'year': init.year};
+    PickerNotifier notifier =
+        PickerNotifier({'month': months[init.month - 1], 'year': init.year});
+    Map<String, dynamic> selected = {
+      'date': init.day,
+      'month': months[init.month - 1],
+      'year': init.year
+    };
 
     int maxYear = last.year + 1;
 
     // iterations
     Map<String, List> iterations = {
-      'date': List.generate(31, (index) => (index + 1).toString().padLeft(2, '0')),
+      'date':
+          List.generate(31, (index) => (index + 1).toString().padLeft(2, '0')),
       'month': List.generate(12, (index) => months[index]),
-      'year': List.generate(maxYear - first.year, (index) => (index + first.year)),
+      'year':
+          List.generate(maxYear - first.year, (index) => (index + first.year)),
     };
 
     /* ------------------------------------------------------------
@@ -81,7 +90,8 @@ class CupertinoDatePickerWidget extends StatelessWidget {
         'is_min_month': dateTime.month == first.month,
         'is_max_day': date > daysInMonth + 1,
         'days_in_month': daysInMonth,
-        'is_min_day_r': year <= first.year && month < first.month && date < first.day,
+        'is_min_day_r':
+            year <= first.year && month < first.month && date < first.day,
         'is_min_month_r': year <= first.year && month < first.month - 1,
       };
     }
@@ -203,7 +213,9 @@ class CupertinoDatePickerWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: Br.radius(radius, except: ['bl', 'br']),
         child: Container(
-          decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
+          decoration: BoxDecoration(
+              color: Utils.hex('f1f1f1'),
+              borderRadius: Br.radius(radius, except: ['bl', 'br'])),
           height: context.height * (context.width > 395 ? .6 : .45),
           child: Stack(
             children: [
@@ -228,7 +240,9 @@ class CupertinoDatePickerWidget extends StatelessWidget {
 
                             return Expanded(
                                 child: Container(
-                                    decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)), child: cupertinoPickerWidget(value)));
+                                    decoration: BoxDecoration(
+                                        border: Br.only(['l'], except: t == 0)),
+                                    child: cupertinoPickerWidget(value)));
                           }),
                         ),
                       ),
@@ -270,18 +284,25 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                                   DateTime date = dateProperties()['selected'];
                                   Navigator.pop(context, date);
                                 },
-                                padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                                padding: Ei.sym(
+                                    v: 13, h: confirm.length > 25 ? 25 : 45),
                                 radius: Br.radius(25),
                                 color: Utils.hex('fff'),
                                 border: Br.all(),
                                 child: Container(
-                                  constraints: BoxConstraints(maxWidth: context.width * .4),
+                                  constraints: BoxConstraints(
+                                      maxWidth: context.width * .4),
                                   child: Text(
                                     confirm,
                                     textAlign: Ta.center,
                                     maxLines: 1,
                                     overflow: Tof.ellipsis,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            fontWeight: Fw.bold,
+                                            color: LzColors.black),
                                   ),
                                 ));
                           }),
@@ -320,7 +341,11 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                           overflow: Tof.ellipsis,
                           maxLines: 1,
                           icon: La.calendar,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black))),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  fontWeight: Fw.bold, color: LzColors.black))),
                 ),
             ],
           ),
@@ -362,7 +387,8 @@ class CupertinioPickerWidget extends StatelessWidget {
         scrollController: controller,
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
-          decoration: BoxDecoration(color: Colors.white.withOpacity(.4), border: Br.only([''])),
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(.4), border: Br.only([''])),
         ),
         onSelectedItemChanged: onChange,
         children: List<Widget>.generate(items.length, (int index) {
@@ -387,7 +413,8 @@ class CupertinioPickerWidget extends StatelessWidget {
                             fontSize: isYearOnly ? 35 : 16.5,
                             color: styles[type] == null
                                 ? Colors.black87
-                                : index >= styles[type][0] && index <= styles[type][1]
+                                : index >= styles[type][0] &&
+                                        index <= styles[type][1]
                                     ? Colors.black87
                                     : Colors.black26),
                       ),

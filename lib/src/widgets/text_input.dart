@@ -58,13 +58,20 @@ class TextInputTransparent extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       minLines: 1,
-      inputFormatters: [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...formatters],
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
+        ...formatters
+      ],
       selectionControls: selectionControls,
       decoration: InputDecoration(
         isDense: true,
         contentPadding: contentPadding ?? Ei.sym(v: 13.5),
         hintText: hint,
-        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black38),
+        hintStyle: hintStyle ??
+            Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Colors.black38),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
