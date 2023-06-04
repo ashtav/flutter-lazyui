@@ -3275,11 +3275,15 @@ class Ti {
   static const IconData squareRoundedCheckFilled = TablerIconData(0xf6df);
   static const IconData squareRoundedChevronDownFilled = TablerIconData(0xf6e0);
   static const IconData squareRoundedChevronLeftFilled = TablerIconData(0xf6e1);
-  static const IconData squareRoundedChevronRightFilled = TablerIconData(0xf6e2);
+  static const IconData squareRoundedChevronRightFilled =
+      TablerIconData(0xf6e2);
   static const IconData squareRoundedChevronUpFilled = TablerIconData(0xf6e3);
-  static const IconData squareRoundedChevronsDownFilled = TablerIconData(0xf6e4);
-  static const IconData squareRoundedChevronsLeftFilled = TablerIconData(0xf6e5);
-  static const IconData squareRoundedChevronsRightFilled = TablerIconData(0xf6e6);
+  static const IconData squareRoundedChevronsDownFilled =
+      TablerIconData(0xf6e4);
+  static const IconData squareRoundedChevronsLeftFilled =
+      TablerIconData(0xf6e5);
+  static const IconData squareRoundedChevronsRightFilled =
+      TablerIconData(0xf6e6);
   static const IconData squareRoundedChevronsUpFilled = TablerIconData(0xf6e7);
   static const IconData squareRoundedPlusFilled = TablerIconData(0xf6e8);
   static const IconData squareRoundedXFilled = TablerIconData(0xf6e9);

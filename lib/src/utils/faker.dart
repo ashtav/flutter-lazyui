@@ -37,7 +37,8 @@ class Faker {
     int randomInt = Random().nextInt(pow(10, length) as int);
     String price = randomInt.toString();
 
-    return (price.length < length ? '${price}1' : price).idr(separator: separator);
+    return (price.length < length ? '${price}1' : price)
+        .idr(separator: separator);
   }
 
   // generate random name
@@ -50,7 +51,8 @@ class Faker {
     String result = name().toLowerCase().replaceAll(' ', '');
 
     if (addNumber) {
-      result += '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
+      result +=
+          '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
     } else {
       result += '@$domain';
     }

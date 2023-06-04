@@ -2,7 +2,6 @@ name: lazyui
 description: Make it fast as possible it can.
 version: 0.0.1
 homepage: https://github.com/ashtav/flutter-lazyui.git
-publish_to: none
 
 environment:
   sdk: '>=2.18.4 <3.0.0'
@@ -15,7 +14,6 @@ dependencies:
   device_info_plus: ^8.1.0
   flutter:
     sdk: flutter
-  flutter_keyboard_visibility: ^5.4.0
   flutter_spinkit: ^5.1.0
   flutter_svg: ^2.0.1
   fluttertoast: ^8.2.1

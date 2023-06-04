@@ -68,7 +68,8 @@ class ExNavbar extends StatelessWidget {
                       color: Colors.white,
                       child: Icon(
                         icons[i],
-                        color: state.index == i ? Colors.black87 : Colors.black45,
+                        color:
+                            state.index == i ? Colors.black87 : Colors.black45,
                       ),
                     ),
                   );

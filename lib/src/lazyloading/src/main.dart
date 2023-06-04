@@ -63,8 +63,16 @@ class LzToast {
   | */
 
   static void show(String message,
-      {IconData? icon, bool dismissOnTap = false, Duration? duration, Position position = Position.bottom, int? maxLength}) {
-    _toastNotifier.toggle(message, icon: icon, duration: duration, position: position, maxLength: maxLength);
+      {IconData? icon,
+      bool dismissOnTap = false,
+      Duration? duration,
+      Position position = Position.bottom,
+      int? maxLength}) {
+    _toastNotifier.toggle(message,
+        icon: icon,
+        duration: duration,
+        position: position,
+        maxLength: maxLength);
   }
 
   static overlay(
@@ -90,7 +98,11 @@ class ToastNotifier extends ChangeNotifier {
   Position position = Position.bottom;
   int? maxLength;
 
-  void toggle(String message, {IconData? icon, Duration? duration, Position position = Position.bottom, int? maxLength}) {
+  void toggle(String message,
+      {IconData? icon,
+      Duration? duration,
+      Position position = Position.bottom,
+      int? maxLength}) {
     timer?.cancel();
     show = true;
 
@@ -158,15 +170,21 @@ class LzToastWidget extends StatelessWidget {
           children: [
             AnimatedSwitcher(
                 duration: 130.ms,
-                transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    ),
+                transitionBuilder:
+                    (Widget child, Animation<double> animation) =>
+                        FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
                 child: o.show
                     ? Container(
-                        margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
+                        margin: Ei.only(
+                            b: MediaQuery.of(context).viewInsets.bottom + 50,
+                            others: 50),
                         padding: Ei.sym(v: 20, h: 20),
-                        decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
+                        decoration: BoxDecoration(
+                            borderRadius: Br.radius(5),
+                            color: Colors.black.withOpacity(.8)),
                         child: Column(
                           mainAxisSize: Mas.min,
                           mainAxisAlignment: Maa.center,
@@ -194,29 +212,41 @@ class LzToastWidget extends StatelessWidget {
                   switchInCurve: Curves.linearToEaseOut,
                   switchOutCurve: Curves.easeOutBack,
                   duration: 350.ms,
-                  transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
-                        scale: animation,
-                        child: child,
-                      ),
+                  transitionBuilder:
+                      (Widget child, Animation<double> animation) =>
+                          ScaleTransition(
+                            scale: animation,
+                            child: child,
+                          ),
                   child: t.show
                       ? IgnorePointer(
                           key: ValueKey(t.message),
                           child: Container(
-                            margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
+                            margin: Ei.only(
+                                b: MediaQuery.of(context).viewInsets.bottom +
+                                    50,
+                                others: 50),
                             padding: Ei.sym(v: 13, h: 20),
-                            decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
+                            decoration: BoxDecoration(
+                                borderRadius: Br.radius(5),
+                                color: Colors.black.withOpacity(.8)),
                             child: AnimatedSwitcher(
                                 duration: 350.ms,
-                                transitionBuilder: (Widget child, Animation<double> animation) {
+                                transitionBuilder: (Widget child,
+                                    Animation<double> animation) {
                                   return FadeTransition(
                                     opacity: animation,
                                     child: child,
                                   );
                                 },
                                 child: Textr(
-                                  t.maxLength != null && t.message.length > t.maxLength! ? '${t.message.substring(0, t.maxLength!)}...' : t.message,
+                                  t.maxLength != null &&
+                                          t.message.length > t.maxLength!
+                                      ? '${t.message.substring(0, t.maxLength!)}...'
+                                      : t.message,
                                   style: style?.copyWith(color: Colors.white),
-                                  textAlign: t.icon == null ? Ta.center : Ta.start,
+                                  textAlign:
+                                      t.icon == null ? Ta.center : Ta.start,
                                   icon: t.icon,
                                   key: UniqueKey(),
                                 )),

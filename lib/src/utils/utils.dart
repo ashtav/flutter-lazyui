@@ -17,7 +17,8 @@ class Utils {
 
     // if color code length is 3, make complete color code
     if (color.length == 3) {
-      color = '${color[0]}${color[0]}${color[1]}${color[1]}${color[2]}${color[2]}';
+      color =
+          '${color[0]}${color[0]}${color[1]}${color[1]}${color[2]}${color[2]}';
     }
 
     return Color(int.parse('0xff$color'));
@@ -28,7 +29,8 @@ class Utils {
   /// ```
 
   static bool isColorLight(Color color) {
-    final double luminance = (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
+    final double luminance =
+        (0.299 * color.red + 0.587 * color.green + 0.114 * color.blue) / 255;
     return luminance > 0.5;
   }
 
@@ -40,7 +42,10 @@ class Utils {
   static errorCatcher(e, StackTrace s, {bool tracing = false}) {
     if (tracing) {
       final frames = Trace.from(s).terse.frames;
-      List<String> members = frames.take(5).map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})').toList();
+      List<String> members = frames
+          .take(5)
+          .map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})')
+          .toList();
       String member = members.join(', ');
 
       String message = '''$e
@@ -50,8 +55,10 @@ Try to check [$member]''';
       return;
     }
 
-    List frames = Trace.current().frames, terseFrames = Trace.from(s).terse.frames;
-    Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0], trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
+    List frames = Trace.current().frames,
+        terseFrames = Trace.from(s).terse.frames;
+    Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0],
+        trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
 
     String errorLocation = '${frame.member}', errorLine = '${trace.line}';
     logg('-- Error on $errorLocation (Line $errorLine), $e', name: 'ERROR');
@@ -63,7 +70,11 @@ Try to check [$member]''';
   /// Utils.setSystemUI();
   /// ```
   static setSystemUI(
-      {Brightness brightness = Brightness.dark, Color? statusBarColor, Color? navDividerColor, Brightness? navBarIconColor, Color? navBarColor}) {
+      {Brightness brightness = Brightness.dark,
+      Color? statusBarColor,
+      Color? navDividerColor,
+      Brightness? navBarIconColor,
+      Color? navBarColor}) {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         systemNavigationBarIconBrightness: navBarIconColor ?? Brightness.dark,
         statusBarIconBrightness: brightness,
@@ -75,7 +86,9 @@ Try to check [$member]''';
   /// ``` dart
   /// Utils.statusBar(true); // set false to hide
   /// ```
-  static void statusBar([bool show = true]) => SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: show ? SystemUiOverlay.values : []);
+  static void statusBar([bool show = true]) =>
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+          overlays: show ? SystemUiOverlay.values : []);
 
   // CLIPBOARD =============================================
 
@@ -92,45 +105,62 @@ Try to check [$member]''';
   ///   // do something...
   /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
   /// ```
-  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
+  static Timer timer(void Function() then, [Duration? duration]) =>
+      Timer(duration ?? 100.ms, then);
 
   /// ``` dart
   /// Utils.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Sabtu, 20 Maret 2021
   /// ```
-  static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) => DateTime.fromMillisecondsSinceEpoch(ms).format(format);
+  static String msToDateTime(int ms, {String format = 'dd/MM/yyyy'}) =>
+      DateTime.fromMillisecondsSinceEpoch(ms).format(format);
 
   /// ```dart
   /// String timeElapsed = Utils.timeElapsed('2021-02-24 11:12:30', inDay: 'day ago');
   /// // put value with String or DateTime only
   /// // only for 1 month calculation
   /// ```
-  static String timeElapsed(dynamic dateTime, {String? inDay, String? inHour, String? inMinute, String justNow = 'just now'}) {
+  static String timeElapsed(dynamic dateTime,
+      {String? inDay,
+      String? inHour,
+      String? inMinute,
+      String justNow = 'just now'}) {
     try {
-      Duration compare(DateTime x, DateTime y) => Duration(microseconds: (x.microsecondsSinceEpoch - y.microsecondsSinceEpoch).abs());
+      Duration compare(DateTime x, DateTime y) => Duration(
+          microseconds:
+              (x.microsecondsSinceEpoch - y.microsecondsSinceEpoch).abs());
 
       DateTime date = dateTime is String ? DateTime.parse(dateTime) : dateTime;
 
       DateTime x = DateTime.now();
-      DateTime y = DateTime(date.year, date.month, date.day, date.hour, date.minute, date.second);
+      DateTime y = DateTime(
+          date.year, date.month, date.day, date.hour, date.minute, date.second);
 
       Duration diff = compare(x, y);
-      String h = '${date.hour}'.padLeft(2, '0'), m = '${date.minute}'.padLeft(2, '0'), s = '${date.second}'.padLeft(2, '0');
+      String h = '${date.hour}'.padLeft(2, '0'),
+          m = '${date.minute}'.padLeft(2, '0'),
+          s = '${date.second}'.padLeft(2, '0');
 
-      String dateTimeStr = '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')} $h:$m:$s';
+      String dateTimeStr =
+          '${date.year}-${'${date.month}'.padLeft(2, '0')}-${'${date.day}'.padLeft(2, '0')} $h:$m:$s';
 
       // if init value more then current time
       if (y.millisecondsSinceEpoch > x.millisecondsSinceEpoch) {
         return '-';
       }
 
-      String textInDay(int value) => inDay ?? (value > 1 ? 'days ago' : 'day ago');
-      String textInHour(int value) => inHour ?? (value > 1 ? 'hours ago' : 'hour ago');
-      String textInMinute(int value) => inMinute ?? (value > 1 ? 'minutes ago' : 'minute ago');
+      String textInDay(int value) =>
+          inDay ?? (value > 1 ? 'days ago' : 'day ago');
+      String textInHour(int value) =>
+          inHour ?? (value > 1 ? 'hours ago' : 'hour ago');
+      String textInMinute(int value) =>
+          inMinute ?? (value > 1 ? 'minutes ago' : 'minute ago');
 
       if (diff.inSeconds >= 60) {
         if (diff.inMinutes >= 60) {
           if (diff.inHours >= 24) {
-            return diff.inDays > 31 ? dateTimeStr : '${diff.inDays} ${textInDay(diff.inDays)}';
+            return diff.inDays > 31
+                ? dateTimeStr
+                : '${diff.inDays} ${textInDay(diff.inDays)}';
           } else {
             return '${diff.inHours} ${textInHour(diff.inHours)}';
           }
@@ -165,8 +195,10 @@ Try to check [$member]''';
   /// ``` dart
   /// Utils.randString(10); // generate random string value
   /// ```
-  static String randString(int length, {bool withSymbol = false, List<String> customChar = const []}) {
-    String chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  static String randString(int length,
+      {bool withSymbol = false, List<String> customChar = const []}) {
+    String chars =
+        'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
     if (customChar.isNotEmpty) {
       chars = customChar.join();
@@ -191,8 +223,12 @@ Try to check [$member]''';
   /// TextEditingController name = TextEditingController();
   /// Utils.setCursorToLastPosition(name);
   /// ```
-  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
-    Timer(Duration(milliseconds: time), () => controller.selection = TextSelection.fromPosition(TextPosition(offset: controller.text.length)));
+  static setCursorToLastPosition(TextEditingController controller,
+      [int time = 0]) {
+    Timer(
+        Duration(milliseconds: time),
+        () => controller.selection = TextSelection.fromPosition(
+            TextPosition(offset: controller.text.length)));
   }
 
   // SCROLL =================================================
@@ -201,14 +237,19 @@ Try to check [$member]''';
   /// ScrollController scroll = ScrollController();
   /// Utils.scrollTo(scroll);
   /// ```
-  static scrollTo(ScrollController scrollController, {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
+  static scrollTo(ScrollController scrollController,
+      {int duration = 300,
+      int delay = 50,
+      AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
+            to == AxisDirection.down
+                ? scrollController.position.maxScrollExtent
+                : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -218,53 +259,6 @@ Try to check [$member]''';
       }
     } catch (e) {
       rethrow;
-    }
-  }
-
-  ///
-  /// ```dart
-  /// ListView(
-  ///   controller: yourScrollController,
-  ///   children: [
-  ///     YourWidget(
-  ///       key: yourGlobalKey
-  ///     )
-  ///   ]
-  /// )
-  ///
-  /// onTap: (){
-  ///   Utils.scrollToWidget(yourGlobalKey, yourScrollController, MediaQuery.of(context).size.width);
-  /// }
-  /// ```
-
-  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
-    if (key.currentContext != null) {
-      RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
-
-      // get width of widget
-      double w = box.size.width;
-
-      // get horizontal position of widget
-      double dx = box.localToGlobal(Offset.zero).dx;
-
-      // get max scroll of List
-      double ms = controller.position.maxScrollExtent;
-
-      // get pixel of scroll position
-      double pixel = controller.position.pixels;
-
-      // result, the center position of widget
-      double pos = (pixel + dx) - (screenWidth / 2) + (w / 2);
-
-      // scroll to position
-      controller.animateTo(
-          pos < 0
-              ? 0
-              : pos > ms
-                  ? ms
-                  : pos,
-          duration: const Duration(milliseconds: 250),
-          curve: Curves.ease);
     }
   }
 
@@ -310,7 +304,10 @@ Try to check [$member]''';
   /// ```dart
   /// Utils.orientation([DeviceOrientation.landscapeLeft]);
   /// ```
-  static void orientation([List<DeviceOrientation> orientations = const [DeviceOrientation.portraitUp]]) {
+  static void orientation(
+      [List<DeviceOrientation> orientations = const [
+        DeviceOrientation.portraitUp
+      ]]) {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
@@ -319,7 +316,8 @@ Try to check [$member]''';
   /// ```dart
   /// File file = await Utils.urlToFile('FILE-URL');
   /// ```
-  static Future<File> urlToFile(String imageUrl, {String format = 'png'}) async {
+  static Future<File> urlToFile(String imageUrl,
+      {String format = 'png'}) async {
     try {
       // get temporary directory of device.
       Directory tempDir = await getTemporaryDirectory();
@@ -328,7 +326,8 @@ Try to check [$member]''';
       String tempPath = tempDir.path;
 
       // create a new file in temporary path with random file name.
-      File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
+      File file =
+          File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
 
       // call http.get method and pass imageUrl into it to get response.
       http.Response response = await http.get(Uri.parse(imageUrl));
@@ -392,7 +391,8 @@ Try to check [$member]''';
     var bytes = await rootBundle.load('assets/$imageName');
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/$fileName.png');
-    await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    await file.writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
     return file;
   }
 
@@ -473,7 +473,8 @@ Try to check [$member]''';
   /// Utils.checkModel('users.json', {'id': 1, 'name': 'John Doe'})
   /// // jsonPath must be = 'filename.json', put in assets/models
   /// ```
-  static Future<bool> checkModel(String path, Map<String, dynamic> jsonData, {bool ignoreNull = false}) async {
+  static Future<bool> checkModel(String path, Map<String, dynamic> jsonData,
+      {bool ignoreNull = false}) async {
     bool isOk = true;
 
     try {
@@ -505,7 +506,8 @@ Try to check [$member]''';
         }).join(', ');
 
         String wrong = wrongType.map((e) {
-          String modelType = colorize(model[e.keys.first].runtimeType.toString(), LogColor.yellow);
+          String modelType = colorize(
+              model[e.keys.first].runtimeType.toString(), LogColor.yellow);
           String resType = colorize(e.values.first.toString(), LogColor.yellow);
           return '${colorize(e.keys.first, LogColor.yellow)} property of your model must be $resType not $modelType';
         }).join(', ');
@@ -521,7 +523,8 @@ Try to check [$member]''';
           isOk = false;
 
           if (message.isNotEmpty) message += '\n\n';
-          message += 'You have ${wrongType.length} wrong type of data :\n$wrong';
+          message +=
+              'You have ${wrongType.length} wrong type of data :\n$wrong';
         }
 
         if (message.isNotEmpty) {

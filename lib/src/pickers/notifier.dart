@@ -19,8 +19,12 @@ class PickerNotifier extends ValueNotifier {
   }
 
   void scrollTo(String type, int index, {int duration = 100}) {
-    map[type]?.animateToItem(index, duration: Duration(milliseconds: duration), curve: Curves.easeInOut);
+    map[type]?.animateToItem(index,
+        duration: Duration(milliseconds: duration), curve: Curves.easeInOut);
   }
 
-  List dateRanges = [0, 30], monthRanges = [0, 11], hourRanges = [0, 23], minuteRanges = [0, 59];
+  List dateRanges = [0, 30],
+      monthRanges = [0, 11],
+      hourRanges = [0, 23],
+      minuteRanges = [0, 59];
 }

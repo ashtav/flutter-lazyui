@@ -28,11 +28,13 @@ class Gfont {
 
   static final TextStyle bold = gfont.copyWith(fontWeight: FontWeight.bold);
   static final TextStyle normal = gfont.copyWith(fontWeight: FontWeight.normal);
-  static final TextStyle muted = gfont.copyWith(fontWeight: FontWeight.normal, color: Colors.black54);
+  static final TextStyle muted =
+      gfont.copyWith(fontWeight: FontWeight.normal, color: Colors.black54);
 
   static TextStyle fs(double size) => gfont.copyWith(fontSize: size);
   static TextStyle color(Color color) => gfont.copyWith(color: color);
-  static TextStyle xbold(bool value) => gfont.copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
+  static TextStyle fbold(bool value) =>
+      gfont.copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
 }
 
 extension TextStyleExtension on TextStyle {
@@ -49,6 +51,8 @@ extension TextStyleExtension on TextStyle {
 
   TextStyle fsize(double size) => copyWith(fontSize: size);
   TextStyle fcolor(Color color) => copyWith(color: color);
-  TextStyle fopacity(double opacity) => copyWith(color: color?.withOpacity(opacity));
-  TextStyle xbold(bool value) => gfont.copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
+  TextStyle fopacity(double opacity) =>
+      copyWith(color: color?.withOpacity(opacity));
+  TextStyle fbold(bool value) =>
+      gfont.copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
 }

@@ -4,6 +4,15 @@ import 'package:lazyui/lazyui.dart';
 import 'notifier.dart';
 import 'switches.dart';
 
+class SelectController {
+  String? label;
+  List<Option>? options;
+  Option? option;
+  TextEditingController? controller;
+
+  SelectController({this.label, this.options, this.controller, this.option});
+}
+
 /* ---------------------------------------------------------------
 | Form Label Style
 | */
@@ -13,7 +22,8 @@ class LzFormLabelStyle {
   final FontWeight? fontWeight;
   final Color? color;
 
-  const LzFormLabelStyle({this.fontSize, this.letterSpacing, this.fontWeight, this.color});
+  const LzFormLabelStyle(
+      {this.fontSize, this.letterSpacing, this.fontWeight, this.color});
 }
 
 /* ---------------------------------------------------------------
@@ -76,7 +86,13 @@ class FeedbackMessage extends StatelessWidget {
   final String errorMessage;
   final bool leftLess, isSuffix;
   final double? padRight;
-  const FeedbackMessage({super.key, this.isValid = true, this.errorMessage = '', this.leftLess = false, this.isSuffix = false, this.padRight});
+  const FeedbackMessage(
+      {super.key,
+      this.isValid = true,
+      this.errorMessage = '',
+      this.leftLess = false,
+      this.isSuffix = false,
+      this.padRight});
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +177,8 @@ class LzInputicon extends StatelessWidget {
   final IconData icon;
   final Function()? onTap;
   final Color? borderColor;
-  const LzInputicon({super.key, required this.icon, this.onTap, this.borderColor});
+  const LzInputicon(
+      {super.key, required this.icon, this.onTap, this.borderColor});
 
   @override
   Widget build(BuildContext context) {

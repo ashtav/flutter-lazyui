@@ -7,7 +7,8 @@ class RefreshtorView extends StatelessWidget {
   Widget build(BuildContext context) {
     Future getData() async {
       await Future.delayed(1.s);
-      LzToast.show('Refreshed!', position: Position.center, icon: La.checkCircle);
+      LzToast.show('Refreshed!',
+          position: Position.center, icon: La.checkCircle);
     }
 
     return Scaffold(
@@ -20,7 +21,11 @@ class RefreshtorView extends StatelessWidget {
           },
           type: RefrehtorType.curve,
           child: LzListView(
-            children: [Textml('<b>Please pull down to refresh.</b> ${Faker.words(15)}\n'), Text(Faker.words(35, 5))],
+            children: [
+              Textml(
+                  '<b>Please pull down to refresh.</b> ${Faker.words(15)}\n'),
+              Text(Faker.words(35, 5))
+            ],
           ),
         ));
   }

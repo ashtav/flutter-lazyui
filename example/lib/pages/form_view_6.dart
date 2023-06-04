@@ -47,7 +47,8 @@ class FormView6 extends StatelessWidget {
         title: Text('Form View 6'),
       ),
       body: LzFormList(
-        style: const LzFormStyle(type: FormType.topAligned, inputLabelFontWeight: Fw.bold),
+        style: const LzFormStyle(
+            type: FormType.topAligned, inputLabelFontWeight: Fw.bold),
         children: [
           LzForm.input(
             label: 'Name *',
@@ -64,8 +65,10 @@ class FormView6 extends StatelessWidget {
                   model: forms['type'],
                   options: ['Offline', 'Online'].options(values: [1, 2]),
                   onSelect: (selector) {
-                    final offlines = ['Seminar', 'Workshop', 'Training'].options();
-                    final onlines = ['Webinar', 'Live Streaming', 'E-Learning'].options();
+                    final offlines =
+                        ['Seminar', 'Workshop', 'Training'].options();
+                    final onlines =
+                        ['Webinar', 'Live Streaming', 'E-Learning'].options();
 
                     final category = forms['category']?.notifier;
                     category?.setOption(null);
@@ -80,16 +83,33 @@ class FormView6 extends StatelessWidget {
                 label: 'Event Category *',
                 hint: 'Select event category',
                 model: forms['category'],
-                options: ['Lorem', 'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing'].options(),
+                options: [
+                  'Lorem',
+                  'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing'
+                ].options(),
               ),
             ],
           ),
-          LzForm.number(label: 'Item Qty *', hint: 'Input item qty', model: forms['qty'], readonly: false, max: 100000, min: 200),
+          LzForm.number(
+              label: 'Item Qty *',
+              hint: 'Input item qty',
+              model: forms['qty'],
+              readonly: false,
+              max: 100000,
+              min: 200),
           LzForm.input(
               label: 'Full Screen Select *',
               hint: 'Select something here',
               onTap: (model) {
-                SelectPicker.show(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options());
+                SelectPicker.show(context,
+                    fullScreen: true,
+                    options: [
+                      'Seminar',
+                      'Workshop',
+                      'Training',
+                      'Meeting',
+                      'Playing'
+                    ].options());
               }),
         ],
       ),
@@ -110,7 +130,16 @@ class FormView6 extends StatelessWidget {
 }
 
 class FormController {
-  final forms = LzForm.make(['id', 'name', 'answer', 'province', 'city', 'district', 'bank', 'account']);
+  final forms = LzForm.make([
+    'id',
+    'name',
+    'answer',
+    'province',
+    'city',
+    'district',
+    'bank',
+    'account'
+  ]);
 
   List<Option> provinces = const [
     Option(option: 'Bali', value: 1),
@@ -161,7 +190,8 @@ class FormController {
       logg(map2); // {"id": "12008", "answer": "Assassin"}
 
       final map3 = LzForm.validate(forms);
-      logg(map3.value.removes(['name'])); // {"id": "12008", "answer": "Assassin"}
+      logg(map3.value
+          .removes(['name'])); // {"id": "12008", "answer": "Assassin"}
       logg(map3.value.get(['answer'])); // {"answer": "Assassin"}
     } catch (e, s) {
       Errors.check(e, s);

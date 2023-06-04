@@ -32,12 +32,15 @@ class LazyLoadingContainer extends StatefulWidget {
   LazyLoadingContainerState createState() => LazyLoadingContainerState();
 }
 
-class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleTickerProviderStateMixin {
+class LazyLoadingContainerState extends State<LazyLoadingContainer>
+    with SingleTickerProviderStateMixin {
   late String _message;
   late AnimationController animationController;
 
   // https://docs.flutter.dev/development/tools/sdk/release-notes/release-notes-3.0.0
-  bool get isPersistentCallbacks => _ambiguate(SchedulerBinding.instance)!.schedulerPhase == SchedulerPhase.persistentCallbacks;
+  bool get isPersistentCallbacks =>
+      _ambiguate(SchedulerBinding.instance)!.schedulerPhase ==
+      SchedulerPhase.persistentCallbacks;
 
   // Toast Position
   Map<Position, AlignmentGeometry> positions = {
@@ -71,7 +74,9 @@ class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleT
   Future<void> show(bool animation) {
     if (isPersistentCallbacks) {
       Completer completer = Completer();
-      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) => completer.complete(animationController.forward(from: animation ? 0 : 1)));
+      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
+          completer
+              .complete(animationController.forward(from: animation ? 0 : 1)));
       return completer.future;
     } else {
       return animationController.forward(from: animation ? 0 : 1);
@@ -81,7 +86,9 @@ class LazyLoadingContainerState extends State<LazyLoadingContainer> with SingleT
   Future<void> dismiss(bool animation) {
     if (isPersistentCallbacks) {
       Completer completer = Completer();
-      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) => completer.complete(animationController.reverse(from: animation ? 1 : 0)));
+      _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) =>
+          completer
+              .complete(animationController.reverse(from: animation ? 1 : 0)));
       return completer.future;
     } else {
       return animationController.reverse(from: animation ? 1 : 0);

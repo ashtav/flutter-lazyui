@@ -53,7 +53,10 @@ extension ListMapExtension on List<Map> {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key,
+      {String? setKeyAs,
+      Function(dynamic)? wrapWith,
+      List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];
@@ -134,7 +137,8 @@ extension ListStringExtension on List<String> {
   /// ``` dart
   /// ['A', 'B', 'C', 'D', 'E'].toTexts()
   /// ```
-  List<Text> toTexts({TextStyle? style, TextAlign? align, TextOverflow? overflow}) {
+  List<Text> toTexts(
+      {TextStyle? style, TextAlign? align, TextOverflow? overflow}) {
     List<Text> texts = [];
     for (int i = 0; i < length; i++) {
       texts.add(Text(

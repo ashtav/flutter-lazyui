@@ -18,7 +18,9 @@ class AnimationView extends StatelessWidget {
           Textr(
             'Blink Text',
             padding: Ei.only(v: 20),
-          ).animate(onPlay: (controller) => controller.repeat(reverse: true)).fade(delay: 100.ms),
+          )
+              .animate(onPlay: (controller) => controller.repeat(reverse: true))
+              .fade(delay: 100.ms),
 
           LzBox(
             padding: Ei.zero,
@@ -32,7 +34,10 @@ class AnimationView extends StatelessWidget {
                     Text('Slide Text $i'),
                   ],
                 ),
-              ).animate().fadeIn(duration: 500.ms).slideY(duration: 400.ms, delay: (i * 100).ms, begin: 1);
+              )
+                  .animate()
+                  .fadeIn(duration: 500.ms)
+                  .slideY(duration: 400.ms, delay: (i * 100).ms, begin: 1);
             }),
           ),
 
@@ -46,7 +51,8 @@ class AnimationView extends StatelessWidget {
                     ),
                   ))
               .ignore()
-              .animate(onPlay: (c) => c.repeat(reverse: true), onComplete: (c) {})
+              .animate(
+                  onPlay: (c) => c.repeat(reverse: true), onComplete: (c) {})
               .moveY(begin: -10, duration: 700.ms, curve: Curves.easeInOutSine),
 
           Text(
@@ -58,17 +64,27 @@ class AnimationView extends StatelessWidget {
               )
               .fadeIn() // uses `Animate.defaultDuration`
               .scale() // inherits duration from fadeIn
-              .move(delay: 300.ms, duration: 600.ms) // runs after the above w/new duration
+              .move(
+                  delay: 300.ms,
+                  duration: 600.ms) // runs after the above w/new duration
               .blurXY(), // inherits the delay & duration from move
 
           Text(
             'Text Color',
             style: Gfont.bold,
-          ).animate(onPlay: (o) => o.repeat(reverse: true)).tint(color: Colors.purple, delay: 1.s, duration: 1.s),
+          )
+              .animate(onPlay: (o) => o.repeat(reverse: true))
+              .tint(color: Colors.purple, delay: 1.s, duration: 1.s),
 
           Row(
-              children:
-                  const [Text("This "), Text("Is An "), Text("Animated List")].animate().fadeIn(duration: 500.ms).slideX(duration: 500.ms, begin: 2)),
+              children: const [
+            Text("This "),
+            Text("Is An "),
+            Text("Animated List")
+          ]
+                  .animate()
+                  .fadeIn(duration: 500.ms)
+                  .slideX(duration: 500.ms, begin: 2)),
 
           Animate(
             onPlay: (o) => o.repeat(reverse: true),

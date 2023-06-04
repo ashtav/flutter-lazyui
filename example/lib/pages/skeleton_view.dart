@@ -34,7 +34,8 @@ class SkeletonView extends StatelessWidget {
           Container(
             padding: Ei.all(20),
             margin: Ei.only(t: 25),
-            decoration: BoxDecoration(color: Utils.hex('0b1120'), borderRadius: Br.radius(5)),
+            decoration: BoxDecoration(
+                color: Utils.hex('0b1120'), borderRadius: Br.radius(5)),
             child: Col(
               children: [
                 Text(

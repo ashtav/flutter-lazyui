@@ -6,7 +6,15 @@ class FormView3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['name', 'birthday', 'fruit', 'hobby', 'email', 'password', 'province']).fill({'email': 'ashtaaav@gmail.com'});
+    final forms = LzForm.make([
+      'name',
+      'birthday',
+      'fruit',
+      'hobby',
+      'email',
+      'password',
+      'province'
+    ]).fill({'email': 'ashtaaav@gmail.com'});
 
     return Wrapper(
         child: Scaffold(
@@ -20,19 +28,31 @@ class FormView3 extends StatelessWidget {
             label: 'Bio',
             prefixIcon: La.user,
             children: [
-              LzForm.input(label: 'Your Name *', hint: 'Input your name', indicator: true, model: forms['name']),
+              LzForm.input(
+                  label: 'Your Name *',
+                  hint: 'Input your name',
+                  indicator: true,
+                  model: forms['name']),
               LzForm.input(
                   label: 'Birthday *',
                   hint: 'Input your birthday',
                   model: forms['birthday'],
                   suffixIcon: La.calendar,
                   onTap: (model) {
-                    DateTime now = DateTime.now(), max = DateTime(now.year - 18, now.month, now.day);
-                    DateTime dateTime = model.text.isEmpty ? max : model.text.toDate();
+                    DateTime now = DateTime.now(),
+                        max = DateTime(now.year - 18, now.month, now.day);
+                    DateTime dateTime =
+                        model.text.isEmpty ? max : model.text.toDate();
 
-                    Pickers.datePicker(context, type: DatePickerType.all, initialDate: dateTime, firstDate: DateTime(1960), lastDate: max)
+                    Pickers.datePicker(context,
+                            type: DatePickerType.all,
+                            initialDate: dateTime,
+                            firstDate: DateTime(1960),
+                            lastDate: max)
                         .then((value) {
-                      if (value != null) model.text = value.format('dd-MM-yyyy');
+                      if (value != null) {
+                        model.text = value.format('dd-MM-yyyy');
+                      }
                     });
                   }),
             ],
@@ -47,17 +67,40 @@ class FormView3 extends StatelessWidget {
           LzForm.radio(
               label: 'Favorite Fruit *',
               options: List.generate(
-                  7, (i) => Option(option: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon'][i], disabled: i != 2)),
+                  7,
+                  (i) => Option(
+                      option: [
+                        'Mango',
+                        'Banana',
+                        'Apple',
+                        'Orange',
+                        'Durian',
+                        'Melon',
+                        'Watermelon'
+                      ][i],
+                      disabled: i != 2)),
               model: forms['fruit']),
           LzForm.checkbox(
               label: 'Hobbies *',
-              options: List.generate(5, (i) => Option(option: ['Swimming', 'Reading', 'Coding', 'Cooking', 'Playing Music'][i])),
+              options: List.generate(
+                  5,
+                  (i) => Option(
+                          option: [
+                        'Swimming',
+                        'Reading',
+                        'Coding',
+                        'Cooking',
+                        'Playing Music'
+                      ][i])),
               model: forms['hobby']),
           LzFormGroup(
             label: 'Account',
             prefixIcon: La.lock,
             children: [
-              LzForm.input(label: 'Email *', hint: 'Input your email address', model: forms['email']),
+              LzForm.input(
+                  label: 'Email *',
+                  hint: 'Input your email address',
+                  model: forms['email']),
               LzForm.input(
                   label: 'Password *',
                   hint: 'Input your password',
@@ -83,7 +126,9 @@ class FormView3 extends StatelessWidget {
                     LzToast.dismiss();
 
                     // set options
-                    selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
+                    selector.options = data
+                        .map((e) => Option(option: e['name'], value: e['id']))
+                        .toList();
                   },
                   onSelect: (selector) {
                     // You can set value (Option, String (option), or dynamic (value)
@@ -94,11 +139,19 @@ class FormView3 extends StatelessWidget {
               LzForm.select(
                   label: 'City *',
                   hint: 'Please select city',
-                  options: const [Option(option: 'Denpasar', value: 1), Option(option: 'Tabanan', value: 2)]),
-              LzForm.select(label: 'District *', hint: 'Please select district'),
+                  options: const [
+                    Option(option: 'Denpasar', value: 1),
+                    Option(option: 'Tabanan', value: 2)
+                  ]),
+              LzForm.select(
+                  label: 'District *', hint: 'Please select district'),
             ],
           ),
-          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
+          LzForm.input(
+              label: 'Salary *',
+              hint: 'Input your salary',
+              keyboard: Tit.number,
+              formatters: [InputFormat.idr()]),
           LzForm.input(label: 'About You *', hint: 'Tell us about you'),
           LzForm.switches(label: 'Active|Inactive', activeColor: Colors.blue),
           Col(
@@ -135,7 +188,8 @@ class FormView3 extends StatelessWidget {
               min: ['password:6', 'name:5'],
               messages: FormMessages(required: {
                 'name': 'Please input your name',
-                'fruit': 'Please select one of your favorite fruit, thanks for read this long important message!',
+                'fruit':
+                    'Please select one of your favorite fruit, thanks for read this long important message!',
                 'email': 'Please input your email address',
                 'password': 'Please input your password',
               }, email: {

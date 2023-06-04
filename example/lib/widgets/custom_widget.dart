@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class OnDisposed extends StatefulWidget {
   final Widget child;
   final Function()? onInit, onDispose;
-  const OnDisposed({super.key, required this.child, this.onInit, this.onDispose});
+  const OnDisposed(
+      {super.key, required this.child, this.onInit, this.onDispose});
 
   @override
   State<OnDisposed> createState() => _OnDisposedState();

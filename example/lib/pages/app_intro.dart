@@ -99,7 +99,7 @@ class AppIntro1 extends StatelessWidget {
             textAlign: Ta.center,
             style: Gfont.muted,
           ).margin(t: 10, b: 25),
-          notifier.watch((s) => Slidebar(
+          notifier.watch((s) => LzSlidebar(
                 active: s.index,
                 size: (i) => [i == s.index ? 13 : 7, 7],
               ).margin(b: 45)),
@@ -172,7 +172,7 @@ class AppIntro2 extends StatelessWidget {
               Row(
                 mainAxisAlignment: Maa.spaceBetween,
                 children: [
-                  Slidebar(
+                  LzSlidebar(
                     active: 0,
                     activeColor: LzColors.orange,
                     size: (i) => [i == 0 ? 13 : 7, 7],
@@ -222,7 +222,10 @@ class AppIntro3 extends StatelessWidget {
             children: [
               notifier.watch((s) {
                 double value = s.index / 5;
-                return CircularValueWidget(value: value, size: 70, backgroundColor: Colors.transparent);
+                return CircularValueWidget(
+                    value: value,
+                    size: 70,
+                    backgroundColor: Colors.transparent);
               }),
               Poslign(
                 alignment: Alignment.center,
@@ -233,7 +236,9 @@ class AppIntro3 extends StatelessWidget {
                         notifier.onChange(value >= 6 ? 0 : value);
                       },
                       radius: Br.circle,
-                      border: Br.all(color: s.index >= 5 ? Colors.blue : Colors.transparent),
+                      border: Br.all(
+                          color:
+                              s.index >= 5 ? Colors.blue : Colors.transparent),
                       color: s.index >= 5 ? Colors.white : Colors.black12,
                       child: Center(
                           child: Icon(
@@ -269,7 +274,8 @@ class CircularValueWidget extends StatefulWidget {
   State<CircularValueWidget> createState() => _CircularValueWidgetState();
 }
 
-class _CircularValueWidgetState extends State<CircularValueWidget> with SingleTickerProviderStateMixin {
+class _CircularValueWidgetState extends State<CircularValueWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -300,7 +306,8 @@ class _CircularValueWidgetState extends State<CircularValueWidget> with SingleTi
     if (widget.value != oldWidget.value) {
       _controller.reset();
       _controller.forward();
-      _animation = Tween<double>(begin: oldWidget.value, end: widget.value).animate(
+      _animation =
+          Tween<double>(begin: oldWidget.value, end: widget.value).animate(
         CurvedAnimation(
           parent: _controller,
           curve: Curves.easeOut,
@@ -375,6 +382,8 @@ class _CircularValuePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(_CircularValuePainter oldDelegate) {
-    return oldDelegate.value != value || oldDelegate.backgroundColor != backgroundColor || oldDelegate.fillColor != fillColor;
+    return oldDelegate.value != value ||
+        oldDelegate.backgroundColor != backgroundColor ||
+        oldDelegate.fillColor != fillColor;
   }
 }

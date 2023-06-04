@@ -37,7 +37,8 @@ class AppTrainerView extends StatelessWidget {
         Target(
           key: key1,
           title: 'Search Icon',
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
+          description:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
         ),
         Target(
           key: key2,
@@ -47,18 +48,21 @@ class AppTrainerView extends StatelessWidget {
             // control.skip();
             control.next();
           },
-          description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
+          description:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
         ),
         Target(
             key: key3,
             identify: 'fab',
             title: 'Floating Action Button',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
+            description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
             align: ContentAlign.top),
         Target(
             key: forms['name']!.key,
             title: 'Widget Square',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
+            description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar tortor eget maximus iaculis.',
             align: ContentAlign.bottom,
             shape: ShapeLightFocus.RRect),
       ],
