@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -9,7 +7,8 @@ extension ContextExtension on BuildContext {
   EdgeInsets get padding => MediaQuery.of(this).padding;
   EdgeInsets get viewPadding => MediaQuery.of(this).viewPadding;
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
-  EdgeInsets get windowPadding => MediaQueryData.fromWindow(window).padding;
+  EdgeInsets get windowPadding =>
+      MediaQueryData.fromView(View.of(this)).padding;
 
   void focus([FocusNode? node]) =>
       FocusScope.of(this).requestFocus(node ?? FocusNode());
@@ -49,7 +48,9 @@ extension ContextExtension on BuildContext {
       bool isScrollControlled = true}) {
     Widget wrapper(Widget child) => Container(
         padding: Ei.only(
-            t: useSafeArea ? MediaQueryData.fromWindow(window).padding.top : 0),
+            t: useSafeArea
+                ? MediaQueryData.fromView(View.of(this)).padding.top
+                : 0),
         decoration: BoxDecoration(
             color: backgroundColor ??
                 (useSafeArea ? Colors.white : Colors.transparent)),
