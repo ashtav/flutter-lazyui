@@ -8,7 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  animator: ^3.2.0
+  animator: ^3.3.0
   cached_network_image: ^3.2.3
   custom_refresh_indicator: ^2.0.1
   device_info_plus: ^8.1.0
@@ -19,7 +19,7 @@ dependencies:
   fluttertoast: ^8.2.1
   google_fonts: ^4.0.3
   http: ^0.13.5
-  intl: ^0.17.0
+  intl: ^0.18.0
   path_provider: ^2.0.12
   stack_trace: ^1.11.0
   teledart: ^0.5.4
