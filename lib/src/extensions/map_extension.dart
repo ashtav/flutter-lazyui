@@ -1,19 +1,13 @@
-import 'package:flutter/material.dart';
+part of extensions;
 
-import './dynamic_extension.dart';
-import './string_extension.dart';
-
-extension MapTextEditingControllerExtension
-    on Map<String, TextEditingController> {
+extension MapTextEditingControllerExtension on Map<String, TextEditingController> {
   /// ``` dart
   /// Map<String, dynamic> data = forms.toMap(manipulate: (map) {
   ///   return map.numberOnly(['price', 'stock']).ucwords(['name']);
   /// });
   /// ```
-  Map<String, dynamic> toMap(
-      {Map<String, dynamic> Function(Map<String, dynamic>)? manipulate}) {
-    Map<String, dynamic> map =
-        this.map((key, value) => MapEntry(key, value.text));
+  Map<String, dynamic> toMap({Map<String, dynamic> Function(Map<String, dynamic>)? manipulate}) {
+    Map<String, dynamic> map = this.map((key, value) => MapEntry(key, value.text));
 
     return manipulate == null ? map : manipulate(map);
   }
@@ -95,14 +89,16 @@ extension MapStringExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'price': 2500}.currency(['price']); // {'price': '2.500'}
   /// ```
-  Map<String, dynamic> currency(
-      [List<String> keys = const [],
-      String prefix = '',
-      String separator = '.']) {
+  Map<String, dynamic> currency([List<String> keys = const [], String prefix = '', String locale = 'id_ID']) {
     return map((key, value) {
       if (keys.contains(key)) {
-        return MapEntry(
-            key, value.toString().idr(symbol: prefix, separator: separator));
+        String result = NumberFormat.currency(
+          locale: locale,
+          decimalDigits: 0,
+          symbol: prefix,
+        ).format(int.parse(value.toString()));
+
+        return MapEntry(key, result);
       } else {
         return MapEntry(key, value);
       }

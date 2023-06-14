@@ -1,5 +1,4 @@
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
+part of extensions;
 
 extension DateTimeDynamicExtension on DateTime? {
   /// https://api.flutter.dev/flutter/intl/DateFormat-class.html

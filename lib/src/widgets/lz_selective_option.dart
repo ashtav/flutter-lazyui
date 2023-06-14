@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart' hide Intl, TextDirection;
+part of widgets;
 
 /// ``` dart
 /// LzSelectiveOption.show(context, options: [].options() onSelect: (value) {
@@ -71,15 +70,13 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
         future: Future.delayed(300.ms),
         builder: (_, snap) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
-            int index = options.indexWhere(
-                (e) => e.toMap().toString() == initValue?.toMap().toString());
+            int index = options.indexWhere((e) => e.toMap().toString() == initValue?.toMap().toString());
             notifier.toIndex(context, initValue, index);
           });
 
           if (snap.connectionState == ConnectionState.done) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
-              int index = options.indexWhere(
-                  (e) => e.toMap().toString() == initValue?.toMap().toString());
+              int index = options.indexWhere((e) => e.toMap().toString() == initValue?.toMap().toString());
               notifier.onSelect(context, initValue, index);
             });
           }
@@ -91,13 +88,12 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
               if (title != null)
                 Textr(
                   title ?? 'Options',
-                  style: Gfont.fs20.white.bold,
+                  style: LazyUi.getConfig.textStyle?.copyWith(fontSize: 20, fontWeight: Fw.bold, color: Colors.white),
                   icon: icon ?? La.clipboardList,
                   padding: Ei.all(20),
                 ),
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
+                decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
                 constraints: BoxConstraints(
                   maxHeight: context.height * 0.65,
                 ),
@@ -113,8 +109,7 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
                       String label = option.option;
 
                       return notifier.watch((state) {
-                        bool isSelected = state.selected?.toMap().toString() ==
-                            option.toMap().toString();
+                        bool isSelected = state.selected?.toMap().toString() == option.toMap().toString();
 
                         return Opacity(
                           opacity: option.disabled ? .5 : 1,
@@ -127,26 +122,17 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
                                     : () {
                                         if (dismissOnSelect) context.pop();
                                         onSelect?.call(option);
-                                        state.onSelect(context, option, i,
-                                            duration: 250.ms);
+                                        state.onSelect(context, option, i, duration: 250.ms);
                                       },
                                 padding: Ei.all(22),
                                 border: Br.only(['t'], except: i == 0),
-                                color: isSelected
-                                    ? LzColors.lighten(
-                                        activeColor ?? Colors.blue,
-                                        mixFactor: .05)
-                                    : Colors.white,
+                                color: isSelected ? LzColors.lighten(activeColor ?? Colors.blue, mixFactor: .05) : Colors.white,
                                 child: Row(
-                                  mainAxisAlignment: suffix != null
-                                      ? Maa.spaceBetween
-                                      : alignment ?? Maa.start,
+                                  mainAxisAlignment: suffix != null ? Maa.spaceBetween : alignment ?? Maa.start,
                                   children: [
                                     Text(
                                       label,
-                                      style: Gfont.color(isSelected
-                                          ? activeColor ?? Colors.blue
-                                          : LzColors.black),
+                                      style: LazyUi.getConfig.textStyle?.copyWith(color: isSelected ? activeColor ?? Colors.blue : LzColors.black),
                                     ).flexible(),
                                     if (suffix != null)
                                       Container(
@@ -163,8 +149,7 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
                                   child: Container(
                                     width: 5,
                                     height: context.height,
-                                    decoration: BoxDecoration(
-                                        color: activeColor ?? Colors.blue),
+                                    decoration: BoxDecoration(color: activeColor ?? Colors.blue),
                                   ))
                             ],
                           ),
@@ -200,8 +185,7 @@ class LzSelectiveOptionNotifier extends ChangeNotifier {
     double fs = Theme.of(context).textTheme.bodyMedium?.fontSize ?? 16.5;
     final text = TextSpan(text: value?.option ?? '');
 
-    final textPainter =
-        TextPainter(text: text, textDirection: TextDirection.ltr);
+    final textPainter = TextPainter(text: text, textDirection: TextDirection.ltr);
     textPainter.layout();
     final textWidth = textPainter.width;
 
@@ -218,8 +202,7 @@ class LzSelectiveOptionNotifier extends ChangeNotifier {
     scrollController.jumpTo(to);
   }
 
-  void onSelect(BuildContext context, Option? value, int i,
-      {Duration? duration}) {
+  void onSelect(BuildContext context, Option? value, int i, {Duration? duration}) {
     try {
       selected = value;
       notifyListeners();

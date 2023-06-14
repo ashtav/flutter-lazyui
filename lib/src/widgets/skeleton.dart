@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of widgets;
 
 class Skeleton extends StatelessWidget {
   final Color color;
@@ -64,8 +63,7 @@ class Skeleton extends StatelessWidget {
         maxH = sizes[1];
       }
     } else {
-      minW = maxW = minH =
-          maxH = (size is int) ? (size as int).toDouble() : size as double;
+      minW = maxW = minH = maxH = (size is int) ? (size as int).toDouble() : size as double;
     }
 
     // prevent brightness out of range
@@ -86,54 +84,17 @@ class Skeleton extends StatelessWidget {
     return Container(
       margin: margin,
       child: Shimmer.fromColors(
-        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!))
-            .withOpacity(bsOpacity),
-        highlightColor:
-            (darkColor == null ? color : LzColors.inverse(darkColor!))
-                .withOpacity(brightness),
+        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(bsOpacity),
+        highlightColor: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(brightness),
         child: Container(
           width: [minW, maxW].numInRange(),
           height: [minH, maxH].numInRange(),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: BoxDecoration(
-              color: (darkColor == null ? color : LzColors.inverse(darkColor!))
-                  .withOpacity(brightness),
-              borderRadius: radiusOnly != null
-                  ? LzRadius.getRadius(radiusOnly!)
-                  : BorderRadius.circular(radius)),
+              color: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(brightness),
+              borderRadius: radiusOnly != null ? LzRadius.getRadius(radiusOnly!) : BorderRadius.circular(radius)),
         ),
       ),
-    );
-  }
-}
-
-class LzRadius {
-  final double tl, tr, bl, br;
-  final double? tlr, blr, ltb, rtb, others, all;
-
-  LzRadius(
-      {this.tl = 0,
-      this.tr = 0,
-      this.bl = 0,
-      this.br = 0,
-      this.tlr,
-      this.blr,
-      this.ltb,
-      this.rtb,
-      this.others,
-      this.all});
-
-  // convert LzRadius to BorderRadius
-  static BorderRadius getRadius(LzRadius radius) {
-    return BorderRadius.only(
-      topLeft: Radius.circular(
-          radius.all ?? radius.others ?? radius.tlr ?? radius.ltb ?? radius.tl),
-      topRight: Radius.circular(
-          radius.all ?? radius.others ?? radius.tlr ?? radius.rtb ?? radius.tr),
-      bottomLeft: Radius.circular(
-          radius.all ?? radius.others ?? radius.blr ?? radius.ltb ?? radius.bl),
-      bottomRight: Radius.circular(
-          radius.all ?? radius.others ?? radius.blr ?? radius.rtb ?? radius.br),
     );
   }
 }

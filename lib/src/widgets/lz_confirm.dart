@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of widgets;
 
 String? _cancelText, _confirmText;
 
@@ -53,10 +52,7 @@ class LzConfirm extends StatelessWidget {
                       : const None(),
                   Textr(
                     title,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
                     textAlign: Ta.center,
                     margin: Ei.only(b: 10),
                   ),

@@ -1,7 +1,4 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
-import 'package:lazyui/lazyui.dart';
+part of utils;
 
 Map<String, dynamic> _errorConfig = {
   'bot': {'token': '', 'chat_id': '', 'active': true},
@@ -14,12 +11,7 @@ class ErrorInfo {
   final String error;
   final NetworkError? networkError;
 
-  ErrorInfo(
-      {this.device,
-      this.botToken,
-      this.chatId,
-      required this.error,
-      this.networkError});
+  ErrorInfo({this.device, this.botToken, this.chatId, required this.error, this.networkError});
 }
 
 class NetworkError {
@@ -28,12 +20,7 @@ class NetworkError {
 }
 
 class Errors {
-  static void config(
-      {String? botToken,
-      String? chatId,
-      bool useBot = true,
-      bool useList = false,
-      Function(ErrorInfo info)? errorBuilder}) {
+  static void config({String? botToken, String? chatId, bool useBot = true, bool useList = false, Function(ErrorInfo info)? errorBuilder}) {
     try {
       _errorConfig['bot']['token'] = botToken;
       _errorConfig['bot']['chat_id'] = chatId;
@@ -51,19 +38,12 @@ class Errors {
   /// ```
   /// `useList` = `true`, will show the list of function that related to the error
 
-  static check(e, StackTrace s,
-      {bool? useList,
-      bool disabledBot = false,
-      NetworkError? networkError}) async {
+  static check(e, StackTrace s, {bool? useList, bool disabledBot = false, NetworkError? networkError}) async {
     try {
       // ---------------------------------------------------------------------
       // Check Errors Caused by Internet Connection
 
-      List<String> failsNetwork = [
-        'SocketException',
-        'Failed host lookup',
-        'NetworkException'
-      ];
+      List<String> failsNetwork = ['SocketException', 'Failed host lookup', 'NetworkException'];
       String errorMessage = '-';
 
       if (failsNetwork.any((n) => e.toString().contains(n))) {
@@ -75,10 +55,7 @@ class Errors {
         final frames = Trace.from(s).terse.frames;
 
         if (useList ?? _errorConfig['use_list']) {
-          List<String> members = frames
-              .take(4)
-              .map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})')
-              .toList();
+          List<String> members = frames.take(4).map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})').toList();
           String member = members.join(', ');
 
           String message = '''$e
@@ -89,8 +66,7 @@ Try to check [$member]''';
         } else {
           for (Frame f in frames.take(1)) {
             int? line = f.line, col = f.column;
-            String location = f.uri.toString().replaceAll('package:', ''),
-                member = f.member ?? 'Unknown';
+            String location = f.uri.toString().replaceAll('package:', ''), member = f.member ?? 'Unknown';
 
             String message = '''Error on $member ($line:$col), $e 
                               File location: $location''';
@@ -122,10 +98,7 @@ Try to check [$member]''';
         String chatId = _errorConfig['bot']['chat_id'] ?? '';
         bool isUseBot = _errorConfig['bot']['active'] ?? false;
 
-        if (isUseBot &&
-            botToken.isNotEmpty &&
-            chatId.isNotEmpty &&
-            !disabledBot) {
+        if (isUseBot && botToken.isNotEmpty && chatId.isNotEmpty && !disabledBot) {
           DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
           String? brand, model, system, sdk;
 
@@ -164,14 +137,9 @@ Try to check [$member]''';
           String message = messages.join('\n');
 
           if (_errorConfig['error_info'] != null) {
-            void Function(ErrorInfo info) errorBuilder =
-                _errorConfig['error_info'];
-            ErrorInfo info = ErrorInfo(
-                device: device,
-                error: errorMessage.toString(),
-                botToken: botToken,
-                chatId: chatId,
-                networkError: networkError);
+            void Function(ErrorInfo info) errorBuilder = _errorConfig['error_info'];
+            ErrorInfo info =
+                ErrorInfo(device: device, error: errorMessage.toString(), botToken: botToken, chatId: chatId, networkError: networkError);
 
             errorBuilder(info);
           } else {
@@ -180,7 +148,7 @@ Try to check [$member]''';
         }
       }
     } catch (e, s) {
-      logg('-- Errors.check : $e $s');
+      Utils.errorCatcher(e, s, tracing: true);
     }
   }
 }

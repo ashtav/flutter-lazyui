@@ -34,7 +34,10 @@ class ExamplePopup1 extends StatelessWidget {
         onTap: (int index) {
           logg(index);
         },
-        children: ['Android', 'iOS'].toTexts(align: Ta.center),
+        children: ['Android', 'iOS'].make((data, i) => Text(
+              data[i],
+              textAlign: Ta.center,
+            )),
       ),
       children: [
         Iconr(
