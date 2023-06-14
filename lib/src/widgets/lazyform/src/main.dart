@@ -10,7 +10,11 @@ class LzForm {
   final Map<String, dynamic> value;
   final Map<String, dynamic> extra;
 
-  LzForm({this.ok = false, this.error, this.value = const {}, this.extra = const {}});
+  LzForm(
+      {this.ok = false,
+      this.error,
+      this.value = const {},
+      this.extra = const {}});
 
   /* ---------------------------------------------------------------
   | LzForm Make Model
@@ -28,7 +32,12 @@ class LzForm {
       notifiers[e] = FormNotifier();
     }
 
-    return Map.fromIterables(keys, List.generate(keys.length, (i) => FormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
+    return Map.fromIterables(
+        keys,
+        List.generate(
+            keys.length,
+            (i) =>
+                FormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
   }
 
   /* ---------------------------------------------------------------
@@ -38,7 +47,9 @@ class LzForm {
   /// ``` dart
   /// LzForm.fill(forms, {'name': 'John Doe'});
   /// ```
-  static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data, {List<String> except = const []}) {
+  static Map<String, FormModel> fill(
+      Map<String, FormModel> forms, Map<String, dynamic> data,
+      {List<String> except = const []}) {
     for (var e in data.keys) {
       if (forms.containsKey(e) && !except.contains(e)) {
         forms[e]!.controller.text = data[e] == null ? '' : data[e].toString();
@@ -56,7 +67,8 @@ class LzForm {
   /// LzForm.reset(forms, only: ['name', 'email']);
   /// ```
 
-  static void reset(Map<String, FormModel> forms, {List<String> only = const [], List<String> except = const []}) {
+  static void reset(Map<String, FormModel> forms,
+      {List<String> only = const [], List<String> except = const []}) {
     for (var e in forms.keys) {
       if (only.isNotEmpty && only.contains(e)) {
         forms[e]!.controller.text = '';
@@ -204,8 +216,19 @@ class LzForm {
   /// )
   /// ```
 
-  static Switches switches({Key? key, String? label, String? id, bool initValue = false, Function(bool)? onChange, Color? activeColor}) =>
-      Switches(label: label, id: id, initValue: initValue, onChange: onChange, activeColor: activeColor);
+  static Switches switches(
+          {Key? key,
+          String? label,
+          String? id,
+          bool initValue = false,
+          Function(bool)? onChange,
+          Color? activeColor}) =>
+      Switches(
+          label: label,
+          id: id,
+          initValue: initValue,
+          onChange: onChange,
+          activeColor: activeColor);
 
   /* ---------------------------------------------------------------
   | LzForm Input
@@ -276,9 +299,12 @@ class LzForm {
       FormValidateNotifier notifierType = FormValidateNotifier.toast,
       bool singleNotifier = true}) {
     try {
-      Map<String, TextEditingController> controllers = Map.fromIterables(forms.keys, forms.values.map((e) => e.controller));
-      Map<String, FormNotifier> notifiers = Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
-      Map<String, GlobalKey> globalKeys = Map.fromIterables(forms.keys, forms.values.map((e) => e.key));
+      Map<String, TextEditingController> controllers =
+          Map.fromIterables(forms.keys, forms.values.map((e) => e.controller));
+      Map<String, FormNotifier> notifiers =
+          Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
+      Map<String, GlobalKey> globalKeys =
+          Map.fromIterables(forms.keys, forms.values.map((e) => e.key));
 
       List<Map<String, dynamic>> errorFields = [];
 
@@ -289,7 +315,8 @@ class LzForm {
         required = controllers.keys.toList();
       } else if (isRequiredAllExcept) {
         required.remove('*');
-        required = controllers.keys.toList()..removeWhere((e) => required.contains(e));
+        required = controllers.keys.toList()
+          ..removeWhere((e) => required.contains(e));
       }
 
       List<String> formKeys = controllers.keys.toList();
@@ -306,8 +333,11 @@ class LzForm {
         | Required
         | */
 
-        if (controllers[key] != null && controllers[key]!.text.trim().isEmpty && required.contains(key)) {
-          errorFields.add({'key': key, 'type': 'required', 'message': '$key is required'});
+        if (controllers[key] != null &&
+            controllers[key]!.text.trim().isEmpty &&
+            required.contains(key)) {
+          errorFields.add(
+              {'key': key, 'type': 'required', 'message': '$key is required'});
         }
 
         /* ------------------------------------------------------------------------
@@ -316,8 +346,14 @@ class LzForm {
 
         for (var e in min) {
           List split = splitter(e);
-          if (controllers[key] != null && controllers[key]!.text.trim().length < split[1] && split[0] == key) {
-            errorFields.add({'key': key, 'type': 'min', 'message': '$key must be at least ${split[1]} characters'});
+          if (controllers[key] != null &&
+              controllers[key]!.text.trim().length < split[1] &&
+              split[0] == key) {
+            errorFields.add({
+              'key': key,
+              'type': 'min',
+              'message': '$key must be at least ${split[1]} characters'
+            });
           }
         }
 
@@ -327,8 +363,14 @@ class LzForm {
 
         for (var e in max) {
           List split = splitter(e);
-          if (controllers[key] != null && controllers[key]!.text.trim().length > split[1] && split[0] == key) {
-            errorFields.add({'key': key, 'type': 'max', 'message': '$key must be at most ${split[1]} characters'});
+          if (controllers[key] != null &&
+              controllers[key]!.text.trim().length > split[1] &&
+              split[0] == key) {
+            errorFields.add({
+              'key': key,
+              'type': 'max',
+              'message': '$key must be at most ${split[1]} characters'
+            });
           }
         }
 
@@ -336,8 +378,14 @@ class LzForm {
         | Email
         | */
 
-        if (controllers[key] != null && !controllers[key]!.text.trim().toString().isEmail && email.contains(key)) {
-          errorFields.add({'key': key, 'type': 'email', 'message': '$key is not a valid email'});
+        if (controllers[key] != null &&
+            !controllers[key]!.text.trim().toString().isEmail &&
+            email.contains(key)) {
+          errorFields.add({
+            'key': key,
+            'type': 'email',
+            'message': '$key is not a valid email'
+          });
         }
       }
 
@@ -346,7 +394,8 @@ class LzForm {
       | */
 
       // Get keys that are not contained in the errorFields
-      List<String> keys = controllers.keys.toList()..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
+      List<String> keys = controllers.keys.toList()
+        ..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
 
       // Clear all notifiers
       for (String k in keys) {
@@ -363,7 +412,8 @@ class LzForm {
         }
 
         if (notifierType == FormValidateNotifier.toast) {
-          Fluttertoast.showToast(msg: errorMessage, gravity: ToastGravity.CENTER);
+          Fluttertoast.showToast(
+              msg: errorMessage, gravity: ToastGravity.CENTER);
         } else if (notifierType == FormValidateNotifier.text) {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);
@@ -389,16 +439,25 @@ class LzForm {
         // scroll to the error field
         GlobalKey? key = globalKeys[errorKey];
         if (key != null && key.currentContext != null) {
-          Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+          Scrollable.ensureVisible(key.currentContext!,
+              duration: const Duration(milliseconds: 300), alignment: .09);
         }
 
-        return LzForm(ok: false, error: FormErrorInfo(key: errorKey, type: errorType, message: errorMessage), value: controllers.toMap());
+        return LzForm(
+            ok: false,
+            error: FormErrorInfo(
+                key: errorKey, type: errorType, message: errorMessage),
+            value: controllers.toMap());
       }
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }
 
-    return LzForm(ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.controller)).toMap());
+    return LzForm(
+        ok: true,
+        value:
+            Map.fromIterables(forms.keys, forms.values.map((e) => e.controller))
+                .toMap());
   }
 }
 
@@ -420,7 +479,13 @@ class LzFormList extends StatelessWidget {
   /// If true, the form will be cleared from errors messages when typing
   final bool cleanOnType;
 
-  const LzFormList({super.key, this.children = const [], this.padding, this.physics, this.style, this.cleanOnType = false});
+  const LzFormList(
+      {super.key,
+      this.children = const [],
+      this.padding,
+      this.physics,
+      this.style,
+      this.cleanOnType = false});
 
   @override
   Widget build(BuildContext context) {
@@ -461,5 +526,9 @@ class LzFormStyle {
   final Color? activeColor, inputBorderColor;
   final FontWeight? inputLabelFontWeight;
 
-  const LzFormStyle({this.type = FormType.grouped, this.activeColor, this.inputBorderColor, this.inputLabelFontWeight});
+  const LzFormStyle(
+      {this.type = FormType.grouped,
+      this.activeColor,
+      this.inputBorderColor,
+      this.inputLabelFontWeight});
 }

@@ -5,15 +5,23 @@ class CupertinoTimePickerWidget extends StatelessWidget {
   final DateTime? firstDate;
   final DateTime? lastDate;
   final String? title, confirmLabel;
-  const CupertinoTimePickerWidget({super.key, this.initialDate, this.firstDate, this.lastDate, this.title, this.confirmLabel});
+  const CupertinoTimePickerWidget(
+      {super.key,
+      this.initialDate,
+      this.firstDate,
+      this.lastDate,
+      this.title,
+      this.confirmLabel});
 
   @override
   Widget build(BuildContext context) {
     DateTime now = DateTime.now();
 
     DateTime init = initialDate ?? now;
-    DateTime first = firstDate ?? DateTime(now.year, now.month, now.day, 0, 0, 0);
-    DateTime last = lastDate ?? DateTime(now.year, now.month, now.day, 23, 59, 59);
+    DateTime first =
+        firstDate ?? DateTime(now.year, now.month, now.day, 0, 0, 0);
+    DateTime last =
+        lastDate ?? DateTime(now.year, now.month, now.day, 23, 59, 59);
 
     init = init.isAfter(last) ? last : init;
     init = init.isBefore(first) ? first : init;
@@ -23,13 +31,15 @@ class CupertinoTimePickerWidget extends StatelessWidget {
     ------------------------------------ */
 
     // default date selected
-    PickerNotifier notifier = PickerNotifier({'hour': init.hour, 'minute': init.minute});
+    PickerNotifier notifier =
+        PickerNotifier({'hour': init.hour, 'minute': init.minute});
     Map<String, dynamic> selected = {'hour': init.hour, 'minute': init.minute};
 
     // iterations
     Map<String, List> iterations = {
       'hour': List.generate(24, (index) => (index).toString().padLeft(2, '0')),
-      'minute': List.generate(60, (index) => (index).toString().padLeft(2, '0')),
+      'minute':
+          List.generate(60, (index) => (index).toString().padLeft(2, '0')),
     };
 
     /* ------------------------------------------------------------
@@ -112,7 +122,8 @@ class CupertinoTimePickerWidget extends StatelessWidget {
       int duration = 1000;
 
       int h = iterations['hour']!.indexOf(init.hour.toString().padLeft(2, '0'));
-      int m = iterations['minute']!.indexOf(init.minute.toString().padLeft(2, '0'));
+      int m =
+          iterations['minute']!.indexOf(init.minute.toString().padLeft(2, '0'));
 
       int hh = (h - 5) < 0 ? 0 : h - 5;
       int mm = (m - 5) < 0 ? 0 : m - 5;
@@ -159,7 +170,9 @@ class CupertinoTimePickerWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: Br.radius(radius, except: ['bl', 'br']),
         child: Container(
-          decoration: BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
+          decoration: BoxDecoration(
+              color: Utils.hex('f1f1f1'),
+              borderRadius: Br.radius(radius, except: ['bl', 'br'])),
           height: context.height * (context.width > 395 ? .6 : .45),
           child: Stack(
             children: [
@@ -175,7 +188,9 @@ class CupertinoTimePickerWidget extends StatelessWidget {
                             String value = ['hour', 'minute'][t];
                             return Expanded(
                                 child: Container(
-                                    decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)), child: cupertinoPickerWidget(value)));
+                                    decoration: BoxDecoration(
+                                        border: Br.only(['l'], except: t == 0)),
+                                    child: cupertinoPickerWidget(value)));
                           }),
                         ),
                       ),
@@ -216,18 +231,25 @@ class CupertinoTimePickerWidget extends StatelessWidget {
                                   DateTime date = timeProperties()['selected'];
                                   Navigator.pop(context, date);
                                 },
-                                padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                                padding: Ei.sym(
+                                    v: 13, h: confirm.length > 25 ? 25 : 45),
                                 radius: Br.radius(25),
                                 color: Utils.hex('fff'),
                                 border: Br.all(),
                                 child: Container(
-                                  constraints: BoxConstraints(maxWidth: context.width * .4),
+                                  constraints: BoxConstraints(
+                                      maxWidth: context.width * .4),
                                   child: Text(
                                     confirm,
                                     textAlign: Ta.center,
                                     maxLines: 1,
                                     overflow: Tof.ellipsis,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(
+                                            fontWeight: Fw.bold,
+                                            color: LzColors.black),
                                   ),
                                 ));
                           }),
@@ -266,7 +288,11 @@ class CupertinoTimePickerWidget extends StatelessWidget {
                           overflow: Tof.ellipsis,
                           maxLines: 1,
                           icon: La.clock,
-                          style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, color: LzColors.black))),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(
+                                  fontWeight: Fw.bold, color: LzColors.black))),
                 ),
             ],
           ),
@@ -283,7 +309,12 @@ class CupertinioTimePickerWidget extends StatelessWidget {
   final PickerNotifier notifier;
   final String type;
   const CupertinioTimePickerWidget(
-      {super.key, required this.controller, this.onChange, this.items = const [], required this.notifier, this.type = 'hour'});
+      {super.key,
+      required this.controller,
+      this.onChange,
+      this.items = const [],
+      required this.notifier,
+      this.type = 'hour'});
 
   @override
   Widget build(BuildContext context) {
@@ -297,7 +328,8 @@ class CupertinioTimePickerWidget extends StatelessWidget {
         scrollController: controller,
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
-          decoration: BoxDecoration(color: Colors.white.withOpacity(.4), border: Br.only([''])),
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(.4), border: Br.only([''])),
         ),
         onSelectedItemChanged: onChange,
         children: List<Widget>.generate(items.length, (int index) {
@@ -321,7 +353,8 @@ class CupertinioTimePickerWidget extends StatelessWidget {
                             fontSize: 35,
                             color: styles[type] == null
                                 ? Colors.black87
-                                : index >= styles[type][0] && index <= styles[type][1]
+                                : index >= styles[type][0] &&
+                                        index <= styles[type][1]
                                     ? Colors.black87
                                     : Colors.black26),
                       ),

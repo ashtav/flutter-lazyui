@@ -4,27 +4,61 @@ extension WidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().margin() // Only works on widget with no margin property
   /// ```
-  Widget margin({double? t, double? b, double? l, double? r, double? v, double? h, double others = 0, double? all}) => Container(
+  Widget margin(
+          {double? t,
+          double? b,
+          double? l,
+          double? r,
+          double? v,
+          double? h,
+          double others = 0,
+          double? all}) =>
+      Container(
         margin: all != null
             ? EdgeInsets.all(all)
-            : EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others),
+            : EdgeInsets.only(
+                bottom: v ?? b ?? others,
+                top: v ?? t ?? others,
+                left: h ?? l ?? others,
+                right: h ?? r ?? others),
         child: this,
       );
 
   /// ``` dart
   /// YourWidget().padding() // Only works on widget with no padding property
   /// ```
-  Widget padding({double? t, double? b, double? l, double? r, double? v, double? h, double others = 0, double? all}) => Padding(
+  Widget padding(
+          {double? t,
+          double? b,
+          double? l,
+          double? r,
+          double? v,
+          double? h,
+          double others = 0,
+          double? all}) =>
+      Padding(
         padding: all != null
             ? EdgeInsets.all(all)
-            : EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others),
+            : EdgeInsets.only(
+                bottom: v ?? b ?? others,
+                top: v ?? t ?? others,
+                left: h ?? l ?? others,
+                right: h ?? r ?? others),
         child: this,
       );
 
   /// ``` dart
   /// YourWidget().clip() // Only works on widget with no clip property
   /// ```
-  Widget clip({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? all}) => ClipRRect(
+  Widget clip(
+          {double? tl,
+          double? tr,
+          double? bl,
+          double? br,
+          double? tlr,
+          double? blr,
+          double? all}) =>
+      ClipRRect(
         borderRadius: all != null
             ? BorderRadius.all(Radius.circular(all))
             : BorderRadius.only(
@@ -38,7 +72,8 @@ extension WidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().flexible()
   /// ```
-  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: this);
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) =>
+      Flexible(flex: flex, fit: fit, child: this);
 
   /// ``` dart
   /// YourWidget().onTap(() {})
@@ -48,25 +83,34 @@ extension WidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().border(Br.all(), width: 1, color: Colors.black)
   /// ```
-  Widget border(BoxBorder border, {BorderRadiusGeometry? radius, Color? color}) => Container(
-        decoration: BoxDecoration(borderRadius: radius, color: color, border: border),
+  Widget border(BoxBorder border,
+          {BorderRadiusGeometry? radius, Color? color}) =>
+      Container(
+        decoration:
+            BoxDecoration(borderRadius: radius, color: color, border: border),
         child: this,
       );
 
   /// ``` dart
   /// YourWidget().ignore()
   /// ```
-  IgnorePointer ignore([bool ignoring = true]) => IgnorePointer(ignoring: ignoring, child: this);
+  IgnorePointer ignore([bool ignoring = true]) =>
+      IgnorePointer(ignoring: ignoring, child: this);
 
   /// ``` dart
   /// YourWidget().hide()
   /// ```
-  Visibility hide([bool value = true]) => Visibility(visible: !value, child: this);
+  Visibility hide([bool value = true]) =>
+      Visibility(visible: !value, child: this);
 
   /// ``` dart
   /// YourWidget().lzBlur()
   /// ```
-  Widget lzBlur(BuildContext context, {double sigmaX = 5, double sigmaY = 5, Duration? duration, bool show = true}) {
+  Widget lzBlur(BuildContext context,
+      {double sigmaX = 5,
+      double sigmaY = 5,
+      Duration? duration,
+      bool show = true}) {
     return Stack(
       children: [
         this,
@@ -96,9 +140,15 @@ extension WidgetExtension on Widget {
     }
   }
 
-  Widget lzStyle({BoxBorder? border, EdgeInsetsGeometry? padding, EdgeInsetsGeometry? margin, Color? color, BorderRadiusGeometry? radius}) {
+  Widget lzStyle(
+      {BoxBorder? border,
+      EdgeInsetsGeometry? padding,
+      EdgeInsetsGeometry? margin,
+      Color? color,
+      BorderRadiusGeometry? radius}) {
     return Container(
-      decoration: BoxDecoration(color: color, border: border, borderRadius: radius),
+      decoration:
+          BoxDecoration(color: color, border: border, borderRadius: radius),
       padding: padding,
       margin: margin,
       child: ClipRRect(
@@ -208,5 +258,6 @@ class _BlinkingWidgetState extends State<_BlinkingWidget> {
 | */
 
 extension CustomIconsExtension on Icon {
-  IconButton onPressed(Function() onPressed, {String? tooltip}) => IconButton(icon: this, tooltip: tooltip, onPressed: onPressed);
+  IconButton onPressed(Function() onPressed, {String? tooltip}) =>
+      IconButton(icon: this, tooltip: tooltip, onPressed: onPressed);
 }

@@ -9,12 +9,20 @@ class LzFormGroup extends StatelessWidget {
   final double? labelSize;
   final SublabelStyle sublabelStyle;
   const LzFormGroup(
-      {super.key, this.label, this.sublabel, this.prefixIcon, this.children = const [], this.labelSize, this.sublabelStyle = SublabelStyle.text});
+      {super.key,
+      this.label,
+      this.sublabel,
+      this.prefixIcon,
+      this.children = const [],
+      this.labelSize,
+      this.sublabelStyle = SublabelStyle.text});
 
   @override
   Widget build(BuildContext context) {
-    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
-    Color borderColor = (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
+    final formListAncestor =
+        context.findAncestorWidgetOfExactType<LzFormList>();
+    Color borderColor =
+        (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
 
     // allowed widget
     List allowed = [Input, Select, Radio, Checkbox, Number, Switches];
@@ -29,15 +37,18 @@ class LzFormGroup extends StatelessWidget {
     }
 
     // count not allowed widget
-    int count = this.children.where((e) => !allowed.contains(e.runtimeType)).length;
+    int count =
+        this.children.where((e) => !allowed.contains(e.runtimeType)).length;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
 
     // sublabel style
     bool isCardWarning = sublabelStyle == SublabelStyle.cardWarning;
-    Color sublabelBorderColor = isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
-    Color sublabelColor = isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
+    Color sublabelBorderColor =
+        isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
+    Color sublabelColor =
+        isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
     Color sublabelTextColor = isCardWarning ? Colors.orange : Colors.black;
 
     return Col(
@@ -61,7 +72,8 @@ class LzFormGroup extends StatelessWidget {
                 )
               : Textr(
                   sublabel!,
-                  style: style?.copyWith(fontSize: 14, color: sublabelTextColor),
+                  style:
+                      style?.copyWith(fontSize: 14, color: sublabelTextColor),
                   margin: Ei.only(b: 15),
                   border: Br.all(color: sublabelBorderColor),
                   padding: Ei.sym(v: 13, h: 15),
@@ -72,7 +84,10 @@ class LzFormGroup extends StatelessWidget {
         // Fields
         Container(
           margin: Ei.only(b: 20),
-          decoration: BoxDecoration(border: Br.all(color: borderColor), color: Colors.white, borderRadius: Br.radius(5)),
+          decoration: BoxDecoration(
+              border: Br.all(color: borderColor),
+              color: Colors.white,
+              borderRadius: Br.radius(5)),
           child: ClipRRect(
             borderRadius: Br.radius(5),
             child: Col(

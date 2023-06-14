@@ -1,7 +1,8 @@
 part of widgets;
 
 class AppTrainerController {
-  void Function({List<GlobalKey> keys, bool orderByKey}) show = ({keys = const [], orderByKey = false}) {};
+  void Function({List<GlobalKey> keys, bool orderByKey}) show =
+      ({keys = const [], orderByKey = false}) {};
 }
 
 class AppTrainer extends StatefulWidget {
@@ -62,7 +63,9 @@ class _AppTrainerState extends State<AppTrainer> {
                   align: e.align,
                   builder: (context, controller) {
                     bool isLast = i >= length - 1;
-                    String text = isLast ? (widget.finishLabel ?? 'Finish') : (widget.nextLabel ?? 'Next');
+                    String text = isLast
+                        ? (widget.finishLabel ?? 'Finish')
+                        : (widget.nextLabel ?? 'Next');
 
                     return Column(
                       mainAxisSize: MainAxisSize.min,
@@ -72,12 +75,16 @@ class _AppTrainerState extends State<AppTrainer> {
                             widget.targetBuilder?.call(e) ??
                                 Container(
                                   padding: Ei.all(20),
-                                  constraints: BoxConstraints(maxWidth: context.width * .6),
+                                  constraints: BoxConstraints(
+                                      maxWidth: context.width * .6),
                                   decoration: BoxDecoration(
                                       gradient: LinearGradient(
                                         begin: Alignment.topLeft,
                                         end: Alignment.bottomRight,
-                                        colors: [Colors.black.withOpacity(.3), Colors.transparent],
+                                        colors: [
+                                          Colors.black.withOpacity(.3),
+                                          Colors.transparent
+                                        ],
                                       ),
                                       borderRadius: Br.radius(5),
                                       border: Br.all(color: Colors.white)),
@@ -92,10 +99,13 @@ class _AppTrainerState extends State<AppTrainer> {
                                       if (e.title != null)
                                         Textr(
                                           e.title ?? "Titulo lorem ipsum",
-                                          style: LazyUi.getConfig.textStyle?.copyWith(color: Colors.white),
+                                          style: LazyUi.getConfig.textStyle
+                                              ?.copyWith(color: Colors.white),
                                           margin: Ei.only(b: 15),
                                         ),
-                                      Text(e.description ?? '', style: LazyUi.getConfig.textStyle?.copyWith(color: Colors.white))
+                                      Text(e.description ?? '',
+                                          style: LazyUi.getConfig.textStyle
+                                              ?.copyWith(color: Colors.white))
                                     ],
                                   ),
                                 ),
@@ -106,7 +116,9 @@ class _AppTrainerState extends State<AppTrainer> {
                                       ? Container(
                                           height: 20,
                                           width: 1,
-                                          color: isLast ? Colors.transparent : Colors.white60,
+                                          color: isLast
+                                              ? Colors.transparent
+                                              : Colors.white60,
                                         )
                                       : InkW(
                                           padding: Ei.sym(v: 15, h: 30),
@@ -132,8 +144,11 @@ class _AppTrainerState extends State<AppTrainer> {
                                                   ? text
                                                   : isLast && j == 2
                                                       ? ''
-                                                      : (widget.skipLabel ?? 'Skip'),
-                                              style: LazyUi.getConfig.textStyle?.copyWith(color: Colors.white),
+                                                      : (widget.skipLabel ??
+                                                          'Skip'),
+                                              style: LazyUi.getConfig.textStyle
+                                                  ?.copyWith(
+                                                      color: Colors.white),
                                             ),
                                           ),
                                         );
@@ -153,14 +168,16 @@ class _AppTrainerState extends State<AppTrainer> {
     widget.onInit?.call(AppTrainerController()..show = showTutorial);
   }
 
-  void showTutorial({List<GlobalKey> keys = const [], bool orderByKey = false}) {
+  void showTutorial(
+      {List<GlobalKey> keys = const [], bool orderByKey = false}) {
     if (isActive) return;
 
     isActive = true;
     specificTargets = targets.where((e) => keys.contains(e.keyTarget)).toList();
 
     if (orderByKey) {
-      specificTargets.sort((a, b) => keys.indexOf(a.keyTarget!) - keys.indexOf(b.keyTarget!));
+      specificTargets.sort(
+          (a, b) => keys.indexOf(a.keyTarget!) - keys.indexOf(b.keyTarget!));
     }
 
     TutorialCoachMark(

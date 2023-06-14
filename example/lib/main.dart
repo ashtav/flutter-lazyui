@@ -19,7 +19,8 @@ void main() {
             chatId: '<chat_id>',
             useBot: true,
             errorBuilder: (ErrorInfo info) {
-              String message = 'This is custom error message: ${info.error}, ${info.device}';
+              String message =
+                  'This is custom error message: ${info.error}, ${info.device}';
               Bot.sendMessage(message, info.botToken!, info.chatId!);
             });
       });

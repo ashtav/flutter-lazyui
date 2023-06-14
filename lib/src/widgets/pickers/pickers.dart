@@ -67,8 +67,12 @@ class Pickers {
         context: context,
         backgroundColor: Colors.transparent,
         isScrollControlled: true,
-        builder: (c) =>
-            CupertinoTimePickerWidget(initialDate: initialDate, firstDate: firstDate, lastDate: lastDate, title: title, confirmLabel: confirmLabel));
+        builder: (c) => CupertinoTimePickerWidget(
+            initialDate: initialDate,
+            firstDate: firstDate,
+            lastDate: lastDate,
+            title: title,
+            confirmLabel: confirmLabel));
 
     return result;
   }

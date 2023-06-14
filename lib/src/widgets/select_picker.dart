@@ -7,12 +7,19 @@ class SelectPicker extends StatelessWidget {
   final String? textConfirm;
   final bool fullScreen;
 
-  const SelectPicker({Key? key, this.options = const [], this.onSelect, this.initialValue, this.textConfirm, this.fullScreen = false})
+  const SelectPicker(
+      {Key? key,
+      this.options = const [],
+      this.onSelect,
+      this.initialValue,
+      this.textConfirm,
+      this.fullScreen = false})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int i = this.options.indexWhere((e) => e.toMap().toString() == initialValue?.toMap().toString());
+    int i = this.options.indexWhere(
+        (e) => e.toMap().toString() == initialValue?.toMap().toString());
     i = i == -1 ? 0 : i;
 
     List<String> options = this.options.map((e) => e.option).toList();
@@ -20,7 +27,10 @@ class SelectPicker extends StatelessWidget {
 
     Map<String, dynamic> result = values.isEmpty
         ? {'option': options.isEmpty ? null : options[i]}
-        : {'option': options.isEmpty ? null : options[i], 'value': values.isEmpty ? null : values[i]};
+        : {
+            'option': options.isEmpty ? null : options[i],
+            'value': values.isEmpty ? null : values[i]
+          };
 
     double radius = LazyUi.getConfig.radius;
     BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
@@ -28,7 +38,9 @@ class SelectPicker extends StatelessWidget {
     bool isMobile = context.width < 600;
 
     double toDecimal(double value) {
-      return value >= 1000 ? .4 : value / pow(10, value.ceil().toString().length);
+      return value >= 1000
+          ? .4
+          : value / pow(10, value.ceil().toString().length);
     }
 
     double magnification = fullScreen ? 1.5 : 1.2;
@@ -50,7 +62,8 @@ class SelectPicker extends StatelessWidget {
                     : isMobile
                         ? 300
                         : context.height * .5,
-                decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: borderRadius),
                 child: SafeArea(
                   top: false,
                   child: Column(
@@ -63,31 +76,43 @@ class SelectPicker extends StatelessWidget {
                             offAxisFraction: 0,
                             diameterRatio: diameterRatio,
                             squeeze: squeeze,
-                            scrollController: FixedExtentScrollController(initialItem: i),
+                            scrollController:
+                                FixedExtentScrollController(initialItem: i),
                             selectionOverlay: Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(border: Br.only(['b', 't'])),
+                              decoration:
+                                  BoxDecoration(border: Br.only(['b', 't'])),
                             ),
 
                             // This is called when selected item is changed.
                             onSelectedItemChanged: (int selectedItem) {
                               if (onSelect != null) {
                                 if (values.isNotEmpty) {
-                                  result = {'option': options[selectedItem], 'value': values.length < selectedItem ? null : values[selectedItem]};
+                                  result = {
+                                    'option': options[selectedItem],
+                                    'value': values.length < selectedItem
+                                        ? null
+                                        : values[selectedItem]
+                                  };
                                 } else {
                                   result = {'option': options[selectedItem]};
                                 }
                               }
                             },
-                            children: List<Widget>.generate(options.length, (int index) {
+                            children: List<Widget>.generate(options.length,
+                                (int index) {
                               return Center(
                                 child: Container(
-                                  constraints: BoxConstraints(maxWidth: context.width * .75),
+                                  constraints: BoxConstraints(
+                                      maxWidth: context.width * .75),
                                   child: Text(
                                     options[index],
                                     overflow: Tof.ellipsis,
                                     textAlign: Ta.center,
-                                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(fontSize: 16),
                                   ),
                                 ),
                               );
@@ -129,18 +154,24 @@ class SelectPicker extends StatelessWidget {
                                         Navigator.pop(context);
                                       }
                                     },
-                                    padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                                    padding: Ei.sym(
+                                        v: 13,
+                                        h: confirm.length > 25 ? 25 : 45),
                                     radius: Br.radius(25),
                                     color: Utils.hex('fff'),
                                     border: Br.all(),
                                     child: Container(
-                                      constraints: BoxConstraints(maxWidth: context.width * .4),
+                                      constraints: BoxConstraints(
+                                          maxWidth: context.width * .4),
                                       child: Text(
                                         confirm,
                                         textAlign: Ta.center,
                                         maxLines: 1,
                                         overflow: Tof.ellipsis,
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
                                               fontWeight: Fw.bold,
                                               color: LzColors.black,
                                             ),
@@ -169,8 +200,15 @@ class SelectPicker extends StatelessWidget {
   }
 
   static show(BuildContext context,
-      {required List<Option> options, Function(Option)? onSelect, Option? initialValue, String? textConfirm, bool fullScreen = false}) {
-    context.bottomSheet(SelectPicker(options: options, fullScreen: fullScreen, onSelect: onSelect),
-        backgroundColor: Colors.transparent, useSafeArea: !fullScreen);
+      {required List<Option> options,
+      Function(Option)? onSelect,
+      Option? initialValue,
+      String? textConfirm,
+      bool fullScreen = false}) {
+    context.bottomSheet(
+        SelectPicker(
+            options: options, fullScreen: fullScreen, onSelect: onSelect),
+        backgroundColor: Colors.transparent,
+        useSafeArea: !fullScreen);
   }
 }

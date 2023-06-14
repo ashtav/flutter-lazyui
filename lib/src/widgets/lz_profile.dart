@@ -4,7 +4,11 @@ class LzProfile extends StatelessWidget {
   final LzProfileHeader header;
   final List<Widget> children;
   final bool snap;
-  const LzProfile({super.key, required this.header, this.children = const [], this.snap = true});
+  const LzProfile(
+      {super.key,
+      required this.header,
+      this.children = const [],
+      this.snap = true});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +43,10 @@ class LzProfile extends StatelessWidget {
                 top: state.frameHeight - 30,
                 right: 20,
                 child: ScaleSwitched(
-                    alignment: Alignment.center, child: state.frameHeight < 120 ? const None() : (state.header.floatingButton ?? const None())))),
+                    alignment: Alignment.center,
+                    child: state.frameHeight < 120
+                        ? const None()
+                        : (state.header.floatingButton ?? const None())))),
 
             // appbar widget
             Positioned(
@@ -77,7 +84,14 @@ class LzProfileHeader {
   final double? height;
   final LzProfileFloatingButton? floatingButton;
 
-  LzProfileHeader({this.image, this.label, this.subLabel, this.leading, this.actions = const [], this.height, this.floatingButton});
+  LzProfileHeader(
+      {this.image,
+      this.label,
+      this.subLabel,
+      this.leading,
+      this.actions = const [],
+      this.height,
+      this.floatingButton});
 }
 
 class LzProfileFloatingButton extends StatelessWidget {
@@ -120,7 +134,8 @@ class _ProfileHeader extends StatelessWidget {
 
       // set image size based on scroll value
       // interpolation linier & normalization
-      double inSizes([double defaultValue = 70, finalValue = 20, bool increase = false]) {
+      double inSizes(
+          [double defaultValue = 70, finalValue = 20, bool increase = false]) {
         if (f > 200) {
           return defaultValue;
         }
@@ -144,11 +159,15 @@ class _ProfileHeader extends StatelessWidget {
           width: context.width,
           child: Stack(
             children: [
-              image.lzBlur(context, sigmaX: 35, sigmaY: 35, show: hasMedium).clip(),
+              image
+                  .lzBlur(context, sigmaX: 35, sigmaY: 35, show: hasMedium)
+                  .clip(),
               Positioned(
                   bottom: inSizes(20, -15),
                   left: f > 200 ? 20 : inSizes(20, 150),
-                  right: hasSmall ? (60 * state.header.actions.length).toDouble() : 20,
+                  right: hasSmall
+                      ? (60 * state.header.actions.length).toDouble()
+                      : 20,
                   child: Row(
                     mainAxisAlignment: Maa.center,
                     children: [
@@ -201,7 +220,8 @@ class _ProfileNotifier extends ChangeNotifier {
     double pixels = scrollController.position.pixels;
 
     if (pixels < -70) {
-      scrollController.animateTo(pixels, duration: 250.ms, curve: Curves.easeInBack);
+      scrollController.animateTo(pixels,
+          duration: 250.ms, curve: Curves.easeInBack);
       return;
     }
 

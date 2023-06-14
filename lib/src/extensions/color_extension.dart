@@ -22,14 +22,16 @@ extension CustomColorExtension on Color {
   /// @param [mixFactor] The amount by which to lighten the color, represented as a fraction between 0 and 1.
   /// Defaults to 0.5, which lightens the color by 50%.
   /// @return A new [Color] object representing the lightened color.
-  Color lighten([double mixFactor = .5]) => LzColors.lighten(this, mixFactor: mixFactor);
+  Color lighten([double mixFactor = .5]) =>
+      LzColors.lighten(this, mixFactor: mixFactor);
 
   /// Darkens the color by a given factor.
   ///
   /// @param [mixFactor] The amount by which to darken the color, represented as a fraction between 0 and 1.
   /// Defaults to 0.5, which darkens the color by 50%.
   /// @return A new [Color] object representing the darkened color.
-  Color darken([double mixFactor = .5]) => LzColors.darken(this, mixFactor: mixFactor);
+  Color darken([double mixFactor = .5]) =>
+      LzColors.darken(this, mixFactor: mixFactor);
 
   /// Inverts the color.
   ///

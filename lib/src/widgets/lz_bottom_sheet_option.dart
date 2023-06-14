@@ -64,7 +64,10 @@ class _LzOptionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Option> options = [...this.options, Option(option: cancelLabel ?? 'Cancel', icon: La.times)];
+    List<Option> options = [
+      ...this.options,
+      Option(option: cancelLabel ?? 'Cancel', icon: La.times)
+    ];
     final notifier = LzOptionNotifier();
 
     return Column(
@@ -73,12 +76,14 @@ class _LzOptionWidget extends StatelessWidget {
       children: [
         Textr(
           title ?? 'Options',
-          style: LazyUi.getConfig.textStyle?.copyWith(fontSize: 20, color: Colors.white, fontWeight: Fw.bold),
+          style: LazyUi.getConfig.textStyle?.copyWith(
+              fontSize: 20, color: Colors.white, fontWeight: Fw.bold),
           icon: icon ?? La.clipboardList,
           padding: Ei.all(20),
         ),
         Container(
-          decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
+          decoration: BoxDecoration(
+              color: Colors.white, borderRadius: Br.radiusOnly(tlr: 8)),
           constraints: BoxConstraints(
             maxHeight: context.height * 0.85,
           ),
@@ -127,14 +132,17 @@ class _LzOptionWidget extends StatelessWidget {
                 return notifier.watch((s) => Opacity(
                       opacity: [-1, i].contains(s.indexFocus) ? 1 : .5,
                       child: InkW(
-                          onTap: cotIndex.contains(i) || ![-1, i].contains(s.indexFocus)
+                          onTap: cotIndex.contains(i) ||
+                                  ![-1, i].contains(s.indexFocus)
                               ? null
                               : () {
                                   if (dismissOnSelect) context.pop();
                                   onSelect?.call(option);
                                 },
                           padding: Ei.all(cotIndex.contains(i) ? 0 : 22),
-                          border: Br.only(['t'], except: i == 0, width: i == options.length - 1 ? 3 : 1),
+                          border: Br.only(['t'],
+                              except: i == 0,
+                              width: i == options.length - 1 ? 3 : 1),
                           child: cotIndex.contains(i)
                               ? SwipeAction(
                                   onSwipe: (value) {
@@ -176,21 +184,31 @@ class SwipeAction extends StatefulWidget {
   final Function(bool)? onSwipe;
   final String? cotCancelLabel, cotConfirmLabel;
 
-  const SwipeAction({super.key, required this.child, this.onTap, this.onSwipe, this.cotCancelLabel, this.cotConfirmLabel});
+  const SwipeAction(
+      {super.key,
+      required this.child,
+      this.onTap,
+      this.onSwipe,
+      this.cotCancelLabel,
+      this.cotConfirmLabel});
 
   @override
   State<SwipeAction> createState() => _SwipeActionState();
 }
 
-class _SwipeActionState extends State<SwipeAction> with SingleTickerProviderStateMixin {
+class _SwipeActionState extends State<SwipeAction>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<Offset> _animation;
 
   @override
   initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 150));
-    _animation = Tween(begin: const Offset(0.0, 0.0), end: const Offset(-1, 0.0)).animate(CurveTween(curve: Curves.decelerate).animate(_controller));
+    _controller = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
+    _animation =
+        Tween(begin: const Offset(0.0, 0.0), end: const Offset(-1, 0.0))
+            .animate(CurveTween(curve: Curves.decelerate).animate(_controller));
   }
 
   @override
@@ -244,9 +262,14 @@ class _SwipeActionState extends State<SwipeAction> with SingleTickerProviderStat
                                       }
                                     },
                                     padding: Ei.all(22),
-                                    color: i == 0 ? Utils.hex('f9f9f9') : Colors.white,
+                                    color: i == 0
+                                        ? Utils.hex('f9f9f9')
+                                        : Colors.white,
                                     child: Text(
-                                      [widget.cotCancelLabel ?? 'Cancel', widget.cotConfirmLabel ?? 'Confirm'][i],
+                                      [
+                                        widget.cotCancelLabel ?? 'Cancel',
+                                        widget.cotConfirmLabel ?? 'Confirm'
+                                      ][i],
                                       style: Gfont.bold.muted,
                                       overflow: Tof.ellipsis,
                                     ),

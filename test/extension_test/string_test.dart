@@ -39,7 +39,9 @@ void main() {
       expect(''.initials(), '');
     });
 
-    test('should return an empty string if the input string does not contain any characters', () {
+    test(
+        'should return an empty string if the input string does not contain any characters',
+        () {
       expect('   '.initials(), '');
     });
   });
@@ -55,7 +57,9 @@ void main() {
       expect(''.getNumeric, 0);
     });
 
-    test('should return 0 if the input string does not contain any numeric characters', () {
+    test(
+        'should return 0 if the input string does not contain any numeric characters',
+        () {
       expect('abc'.getNumeric, 0);
       expect('!@#\$%^&*()'.getNumeric, 0);
     });
@@ -65,7 +69,8 @@ void main() {
     test('should remove HTML tags from a string', () {
       expect('<h1>Hello World</h1>'.removeHtmlTag, 'Hello World');
       expect('<p>This is a paragraph</p>'.removeHtmlTag, 'This is a paragraph');
-      expect('<div><span>Text inside span</span></div>'.removeHtmlTag, 'Text inside span');
+      expect('<div><span>Text inside span</span></div>'.removeHtmlTag,
+          'Text inside span');
     });
 
     test('should return an empty string if the input string is empty', () {

@@ -9,7 +9,15 @@ class LzImage<T> extends StatelessWidget {
   final Widget? placeholder, errorWidget;
 
   const LzImage(this.image,
-      {super.key, this.fit = BoxFit.cover, this.color, this.width, this.height, this.size, this.radius, this.placeholder, this.errorWidget});
+      {super.key,
+      this.fit = BoxFit.cover,
+      this.color,
+      this.width,
+      this.height,
+      this.size,
+      this.radius,
+      this.placeholder,
+      this.errorWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +33,8 @@ class LzImage<T> extends StatelessWidget {
 
     // check available type
     if (!availables.contains(image.runtimeType)) {
-      logg('Image type is not available | $image', name: 'LzImage', color: LogColor.cyan);
+      logg('Image type is not available | $image',
+          name: 'LzImage', color: LogColor.cyan);
       return SizedBox(
         width: width,
         height: height,
@@ -48,14 +57,16 @@ class LzImage<T> extends StatelessWidget {
 
       bool isSvg = path.split('.').last.toLowerCase() == 'svg';
       bool isUrl = path.contains('http');
-      bool isPath = path.split('/').length > 2; // ex: /storage/emulated/0/Download/IMG_20210101_000000.jpg
+      bool isPath = path.split('/').length >
+          2; // ex: /storage/emulated/0/Download/IMG_20210101_000000.jpg
 
       /* --------------------------------------------------------------------------------------
       | SVG
       | */
 
       if (isSvg) {
-        result = SvgPicture.asset('assets/images/$image', width: width, height: height);
+        result = SvgPicture.asset('assets/images/$image',
+            width: width, height: height);
       }
 
       /* --------------------------------------------------------------------------------------
@@ -82,7 +93,9 @@ class LzImage<T> extends StatelessWidget {
           child: Container(
             width: width,
             height: height,
-            decoration: BoxDecoration(color: Colors.black54, borderRadius: BorderRadius.circular(radius)),
+            decoration: BoxDecoration(
+                color: Colors.black54,
+                borderRadius: BorderRadius.circular(radius)),
           ),
         );
 
@@ -91,8 +104,10 @@ class LzImage<T> extends StatelessWidget {
           imageUrl: path,
           width: width,
           height: height,
-          progressIndicatorBuilder: (context, url, downloadProgress) => placeholder ?? shimmer,
-          errorWidget: (context, url, error) => errorWidget ?? const Center(child: Icon(La.exclamationCircle)),
+          progressIndicatorBuilder: (context, url, downloadProgress) =>
+              placeholder ?? shimmer,
+          errorWidget: (context, url, error) =>
+              errorWidget ?? const Center(child: Icon(La.exclamationCircle)),
         );
       }
 
@@ -117,7 +132,8 @@ class LzImage<T> extends StatelessWidget {
     | */
 
     else if (image is Uint8List) {
-      result = Image.memory(image as Uint8List, fit: fit, width: width, height: height);
+      result = Image.memory(image as Uint8List,
+          fit: fit, width: width, height: height);
     }
 
     /* --------------------------------------------------------------------------------------
@@ -125,7 +141,8 @@ class LzImage<T> extends StatelessWidget {
     | */
 
     else if (image is File) {
-      result = Image.file(image as File, fit: fit, width: width, height: height);
+      result =
+          Image.file(image as File, fit: fit, width: width, height: height);
     } else {
       String path = 'assets/images/$image';
       result = Container(

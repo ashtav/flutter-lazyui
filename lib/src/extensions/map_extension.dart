@@ -1,13 +1,16 @@
 part of extensions;
 
-extension MapTextEditingControllerExtension on Map<String, TextEditingController> {
+extension MapTextEditingControllerExtension
+    on Map<String, TextEditingController> {
   /// ``` dart
   /// Map<String, dynamic> data = forms.toMap(manipulate: (map) {
   ///   return map.numberOnly(['price', 'stock']).ucwords(['name']);
   /// });
   /// ```
-  Map<String, dynamic> toMap({Map<String, dynamic> Function(Map<String, dynamic>)? manipulate}) {
-    Map<String, dynamic> map = this.map((key, value) => MapEntry(key, value.text));
+  Map<String, dynamic> toMap(
+      {Map<String, dynamic> Function(Map<String, dynamic>)? manipulate}) {
+    Map<String, dynamic> map =
+        this.map((key, value) => MapEntry(key, value.text));
 
     return manipulate == null ? map : manipulate(map);
   }
@@ -89,7 +92,10 @@ extension MapStringExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'price': 2500}.currency(['price']); // {'price': '2.500'}
   /// ```
-  Map<String, dynamic> currency([List<String> keys = const [], String prefix = '', String locale = 'id_ID']) {
+  Map<String, dynamic> currency(
+      [List<String> keys = const [],
+      String prefix = '',
+      String locale = 'id_ID']) {
     return map((key, value) {
       if (keys.contains(key)) {
         String result = NumberFormat.currency(

@@ -16,7 +16,10 @@ class BlinkAnimate extends StatelessWidget {
       cycles: 0,
       builder: (context, anim, f) {
         double opacity = double.parse('${anim.value}');
-        return AnimatedOpacity(duration: const Duration(milliseconds: 300), opacity: opacity >= 150 ? 1 : 0, child: child);
+        return AnimatedOpacity(
+            duration: const Duration(milliseconds: 300),
+            opacity: opacity >= 150 ? 1 : 0,
+            child: child);
       },
     );
   }
@@ -47,7 +50,8 @@ class LineProgressIndicator extends StatefulWidget {
   State<LineProgressIndicator> createState() => _LineProgressIndicatorState();
 }
 
-class _LineProgressIndicatorState extends State<LineProgressIndicator> with SingleTickerProviderStateMixin {
+class _LineProgressIndicatorState extends State<LineProgressIndicator>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   void listenStatus(AnimationStatus status) {
@@ -107,7 +111,8 @@ class _LineProgressIndicatorState extends State<LineProgressIndicator> with Sing
         builder: (context, child) {
           return LinearProgressIndicator(
             backgroundColor: widget.backgroundColor ?? Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(widget.progressColor ?? LzColors.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(
+                widget.progressColor ?? LzColors.orange),
             value: _animationController.value,
           );
         },
@@ -121,13 +126,15 @@ class RotateAnimated extends StatefulWidget {
   final double angle;
   final Duration? duration;
 
-  const RotateAnimated({super.key, required this.child, required this.angle, this.duration});
+  const RotateAnimated(
+      {super.key, required this.child, required this.angle, this.duration});
 
   @override
   State<RotateAnimated> createState() => _RotateAnimatedState();
 }
 
-class _RotateAnimatedState extends State<RotateAnimated> with TickerProviderStateMixin {
+class _RotateAnimatedState extends State<RotateAnimated>
+    with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
 
@@ -138,7 +145,8 @@ class _RotateAnimatedState extends State<RotateAnimated> with TickerProviderStat
       duration: widget.duration ?? 300.ms,
       vsync: this,
     )..repeat();
-    _animation = Tween<double>(begin: 0, end: widget.angle).animate(_animationController);
+    _animation = Tween<double>(begin: 0, end: widget.angle)
+        .animate(_animationController);
   }
 
   @override

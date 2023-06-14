@@ -56,7 +56,10 @@ class LzButton extends StatelessWidget {
       ButtonType.white: Colors.white,
     };
 
-    Color buttonTextColor = textColor ?? (outline ? buttonColors[type]! : (type == ButtonType.white ? Utils.hex('#1e293b') : Colors.white));
+    Color buttonTextColor = textColor ??
+        (outline
+            ? buttonColors[type]!
+            : (type == ButtonType.white ? Utils.hex('#1e293b') : Colors.white));
 
     Widget buttonWidget = AnimatedBuilder(
         animation: notifier,
@@ -106,10 +109,13 @@ class LzButton extends StatelessWidget {
                 ? const None()
                 : AnimatedContainer(
                     duration: duration,
-                    margin: Ei.only(l: iconAlign == IconAlign.left ? iconTextSpace : 0, r: iconAlign == IconAlign.right ? iconTextSpace : 0),
+                    margin: Ei.only(
+                        l: iconAlign == IconAlign.left ? iconTextSpace : 0,
+                        r: iconAlign == IconAlign.right ? iconTextSpace : 0),
                     child: Text(
                       notifier.buttonText,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: buttonTextColor, fontWeight: Fw.bold),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: buttonTextColor, fontWeight: Fw.bold),
                       overflow: Tof.ellipsis,
                     ),
                   ).flexible(),
@@ -139,15 +145,27 @@ class LzButton extends StatelessWidget {
                     : null,
               ),
               child: InkW(
-                onTap: isSubmit || !notifier.enabled ? null : () => onTap?.call(notifier),
+                onTap: isSubmit || !notifier.enabled
+                    ? null
+                    : () => onTap?.call(notifier),
                 padding: padding ?? Ei.sym(v: gradient ? 17 : 16, h: 20),
-                radius: customRadius == null ? Br.radius(radius ?? configRadius) : LzRadius.getRadius(customRadius!),
+                radius: customRadius == null
+                    ? Br.radius(radius ?? configRadius)
+                    : LzRadius.getRadius(customRadius!),
                 color: gradient || outline ? null : buttonColor,
-                border: gradient ? null : Br.all(color: borderColor ?? (type == ButtonType.white && !outline ? null : color ?? buttonColors[type])),
+                border: gradient
+                    ? null
+                    : Br.all(
+                        color: borderColor ??
+                            (type == ButtonType.white && !outline
+                                ? null
+                                : color ?? buttonColors[type])),
                 child: Row(
                   mainAxisAlignment: aligns[textAlign] ?? Maa.center,
                   mainAxisSize: Mas.min,
-                  children: iconAlign == IconAlign.left ? buttonContent : buttonContent.reversed.toList(),
+                  children: iconAlign == IconAlign.left
+                      ? buttonContent
+                      : buttonContent.reversed.toList(),
                 ),
               ),
             ),
@@ -207,7 +225,11 @@ extension LzButtonExtension on LzButton {
         decoration: BoxDecoration(
             boxShadow: style == LzButtonStyle.shadow
                 ? [
-                    BoxShadow(color: shadowColor ?? Utils.hex('fafafa'), spreadRadius: 30, blurRadius: 25, offset: const Offset(0, 0)),
+                    BoxShadow(
+                        color: shadowColor ?? Utils.hex('fafafa'),
+                        spreadRadius: 30,
+                        blurRadius: 25,
+                        offset: const Offset(0, 0)),
                   ]
                 : []),
         child: this);
@@ -217,7 +239,11 @@ extension LzButtonExtension on LzButton {
     return Container(
         padding: Ei.all(spacing ?? LazyUi.getConfig.spacing),
         decoration: BoxDecoration(boxShadow: [
-          BoxShadow(color: shadowColor ?? Utils.hex('fafafa'), spreadRadius: 30, blurRadius: 25, offset: const Offset(0, 0)),
+          BoxShadow(
+              color: shadowColor ?? Utils.hex('fafafa'),
+              spreadRadius: 30,
+              blurRadius: 25,
+              offset: const Offset(0, 0)),
         ]),
         child: this);
   }
@@ -346,7 +372,11 @@ extension LzButtonExtension on LzButton {
 }
 
 extension LzButtonGroupExtension on List<LzButton> {
-  Widget group({Axis direction = Axis.vertical, double? width, double? radius, TextAlign? textAlign}) {
+  Widget group(
+      {Axis direction = Axis.vertical,
+      double? width,
+      double? radius,
+      TextAlign? textAlign}) {
     double configRadius = LazyUi.getConfig.radius;
 
     List<LzButton> contents = List.generate(length, (i) {
@@ -393,7 +423,8 @@ extension LzButtonGroupExtension on List<LzButton> {
               ),
             ))
         : Column(
-            children: contents.map((e) => e.sized(width ?? double.infinity)).toList(),
+            children:
+                contents.map((e) => e.sized(width ?? double.infinity)).toList(),
           );
   }
 }

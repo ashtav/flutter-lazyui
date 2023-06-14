@@ -49,7 +49,8 @@ class Input extends StatelessWidget {
   Widget build(BuildContext context) {
     // get parent widget name
     final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
+    final formListAncestor =
+        context.findAncestorWidgetOfExactType<LzFormList>();
 
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
@@ -64,7 +65,8 @@ class Input extends StatelessWidget {
       }
     }
 
-    if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
+    if (formListAncestor != null &&
+        formListAncestor.style?.type == FormType.topAligned) {
       isTopAligned = true;
     }
 
@@ -72,7 +74,10 @@ class Input extends StatelessWidget {
     List<TextInputFormatter> formatters = [];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      formatters = [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...this.formatters];
+      formatters = [
+        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
+        ...this.formatters
+      ];
       notifier.setMaxLength(maxLength < 1 ? 1 : maxLength);
 
       // setting input formatter
@@ -100,7 +105,8 @@ class Input extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isSuffix = obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
+    bool isSuffix =
+        obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
     bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // get text style
@@ -120,7 +126,8 @@ class Input extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ?? formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ??
+                      formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -144,14 +151,17 @@ class Input extends StatelessWidget {
     | */
 
     IconData obsShowIcon = obsecureIcons.isNotEmpty ? obsecureIcons[0] : La.eye;
-    IconData obsHideIcon = obsecureIcons.length > 1 ? obsecureIcons[1] : La.eyeSlash;
+    IconData obsHideIcon =
+        obsecureIcons.length > 1 ? obsecureIcons[1] : La.eyeSlash;
 
     Widget obsecureToggleWidget(bool obsecure) => Touch(
           onTap: () => notifier.setObsecure(!obsecure),
           child: Iconr(
             obsecure ? obsShowIcon : obsHideIcon,
             padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+            border: Br.only(['l'],
+                color: (formListAncestor?.style?.inputBorderColor ??
+                    Colors.black12)),
           ),
         );
 
@@ -165,7 +175,8 @@ class Input extends StatelessWidget {
     if (suffix != null) {
       adjustSuffix = LzInputicon(
         icon: suffix!.icon,
-        borderColor: suffix!.borderColor ?? (formListAncestor?.style?.inputBorderColor ?? Colors.black12),
+        borderColor: suffix!.borderColor ??
+            (formListAncestor?.style?.inputBorderColor ?? Colors.black12),
         onTap: suffix!.onTap,
       );
     }
@@ -176,7 +187,9 @@ class Input extends StatelessWidget {
               suffixIcon ?? La.angleDown,
               color: Colors.black45,
               padding: Ei.only(h: 15, v: 15),
-              border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+              border: Br.only(['l'],
+                  color: (formListAncestor?.style?.inputBorderColor ??
+                      Colors.black12)),
             )
         : const None();
 
@@ -188,7 +201,9 @@ class Input extends StatelessWidget {
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
-          Color borderColor = isValid || isGrouping ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12) : Colors.redAccent;
+          Color borderColor = isValid || isGrouping
+              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
           FocusNode focusNode = node ?? notifier.node;
@@ -197,18 +212,24 @@ class Input extends StatelessWidget {
           bool? isDisabled = notifier.disabled;
           bool? isReadonly = notifier.readonly;
 
-          bool enabled = onTap == null && (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
+          bool enabled = onTap == null &&
+              (isDisabled ?? !disabled) &&
+              (isReadonly ?? !readonly);
 
           // update formatters (length, on index 0)
-          int ioLengthLimiting = formatters.indexWhere((e) => e is LengthLimitingTextInputFormatter);
+          int ioLengthLimiting = formatters
+              .indexWhere((e) => e is LengthLimitingTextInputFormatter);
           if (ioLengthLimiting > -1) {
-            formatters[ioLengthLimiting] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
+            formatters[ioLengthLimiting] =
+                LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
 
           return InkW(
               onTap: onTap != null ? () => onTap!(notifier.controller) : null,
               color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
-              border: isGrouping ? Br.only(['t'], except: isFirst, color: borderColor) : Br.all(color: borderColor),
+              border: isGrouping
+                  ? Br.only(['t'], except: isFirst, color: borderColor)
+                  : Br.all(color: borderColor),
               radius: isGrouping ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
@@ -216,7 +237,8 @@ class Input extends StatelessWidget {
                     children: [
                       FocusScope(
                         onFocusChange: (value) {
-                          if (!value && notifier.controller.text.trim().isNotEmpty) {
+                          if (!value &&
+                              notifier.controller.text.trim().isNotEmpty) {
                             notifier.clear();
                           }
                         },
@@ -228,12 +250,17 @@ class Input extends StatelessWidget {
                           node: focusNode,
                           enabled: enabled,
                           autofocus: autofocus,
-                          obsecure: obsecureToggle ? notifier.obsecure : obsecure,
+                          obsecure:
+                              obsecureToggle ? notifier.obsecure : obsecure,
                           keyboard: keyboard,
                           formatters: formatters,
                           onChange: onChange,
                           onSubmit: onSubmit,
-                          contentPadding: Ei.only(t: noLabel || isTopAligned ? 14 : 40, b: isValid ? 14 : 5, l: 15, r: isSuffix ? 65 : 15),
+                          contentPadding: Ei.only(
+                              t: noLabel || isTopAligned ? 14 : 40,
+                              b: isValid ? 14 : 5,
+                              l: 15,
+                              r: isSuffix ? 65 : 15),
                         ),
                       ),
 
@@ -248,8 +275,16 @@ class Input extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (!isTopAligned) Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: 15, t: 13), child: labelWidget),
-                  Poslign(alignment: Alignment.centerRight, child: obsecureToggle ? obsecureToggleWidget(notifier.obsecure) : suffixWidget)
+                  if (!isTopAligned)
+                    Poslign(
+                        alignment: Alignment.topLeft,
+                        margin: Ei.only(h: 15, t: 13),
+                        child: labelWidget),
+                  Poslign(
+                      alignment: Alignment.centerRight,
+                      child: obsecureToggle
+                          ? obsecureToggleWidget(notifier.obsecure)
+                          : suffixWidget)
                 ],
               ));
         },
@@ -258,7 +293,10 @@ class Input extends StatelessWidget {
 
     return (isTopAligned
             ? Col(
-                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
+                children: [
+                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
+                  field
+                ],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

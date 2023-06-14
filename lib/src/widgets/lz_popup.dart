@@ -2,7 +2,10 @@ part of widgets;
 
 class LzPopup {
   static void show(BuildContext? context,
-      {required Widget? child, Widget Function(Widget)? builder, Offset offset = const Offset(20, 0), EdgeInsetsGeometry? padding}) {
+      {required Widget? child,
+      Widget Function(Widget)? builder,
+      Offset offset = const Offset(20, 0),
+      EdgeInsetsGeometry? padding}) {
     if (context == null) {
       logg('Context cannot be null');
       return;
@@ -63,7 +66,8 @@ class _LzPupupWidget extends StatelessWidget {
       double itemWidth = box?.size.width ?? 0;
 
       // get dropdown width
-      final localBox = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
+      final localBox =
+          dropdownKey.currentContext?.findRenderObject() as RenderBox?;
       double ddWidth = localBox?.size.width ?? 0;
       double ddHeight = localBox?.size.height ?? 0;
 
@@ -112,7 +116,8 @@ class _LzPupupWidget extends StatelessWidget {
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // get final dropdown position
-        final finalDropdown = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
+        final finalDropdown =
+            dropdownKey.currentContext?.findRenderObject() as RenderBox?;
         final ddOffset = finalDropdown?.localToGlobal(Offset.zero);
 
         double ddXleft = ddOffset?.dx ?? 0;
@@ -124,7 +129,8 @@ class _LzPupupWidget extends StatelessWidget {
           cx = ddXleft + 15;
         }
 
-        caretController.sink.add(CaretValue(flip: isOut, offset: Offset(cx, cy)));
+        caretController.sink
+            .add(CaretValue(flip: isOut, offset: Offset(cx, cy)));
       });
     });
 
@@ -135,7 +141,8 @@ class _LzPupupWidget extends StatelessWidget {
     Widget caretWidget = StreamBuilder<CaretValue>(
         stream: caretController.stream,
         builder: (_, snap) {
-          CaretValue value = snap.data ?? CaretValue(flip: false, offset: Offset.zero);
+          CaretValue value =
+              snap.data ?? CaretValue(flip: false, offset: Offset.zero);
 
           bool flip = value.flip;
           Offset offset = value.offset;
@@ -168,7 +175,8 @@ class _LzPupupWidget extends StatelessWidget {
     Widget content = Container(
       key: dropdownKey,
       margin: Ei.only(v: 12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
+      decoration:
+          BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
       constraints: BoxConstraints(maxHeight: context.height * .6),
       child: SingleChildScrollView(
           padding: padding ?? Ei.all(20),
@@ -182,7 +190,10 @@ class _LzPupupWidget extends StatelessWidget {
     Widget stack = Stack(
       children: [
         caretWidget,
-        StreamBuilder(stream: controller.stream, builder: (_, snap) => Positioned(left: snap.data?.dx, top: snap.data?.dy, child: content))
+        StreamBuilder(
+            stream: controller.stream,
+            builder: (_, snap) => Positioned(
+                left: snap.data?.dx, top: snap.data?.dy, child: content))
       ],
     );
 
