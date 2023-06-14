@@ -92,7 +92,7 @@ date.weekOfYear; // get week of year
 ##### Duration
 ```dart
 Timer(1.s, () => print('1 second later')); // 1 second
-// You can use .ms, .s, .m, .h, .d
+// You can use .ms, .s, .m, .h, .d, .w, .M, .y
 ```
 
 ##### Manipulate String
@@ -102,7 +102,6 @@ String name = 'john doe 94';
 name.ucfirst(); // convert first letter to uppercase
 name.ucwords(); // convert first letter of each word to uppercase
 name.initials(length = 2); // get initials, it will return jd
-name.getNumeric; // get numeric, it will return 94
 
 "2023-03-03 00:00:00".toDate(); // convert string to DateTime
 
@@ -125,6 +124,7 @@ item.ucfirst(['name']) // convert first letter to uppercase
 item.ucwords(['name']) // convert first letter of each word to uppercase
 item.lowers(['name']) // convert to lowercase
 item.uppers(['name']) // convert to uppercase
+item.currency(['price'], prefix: 'Rp', locale: 'id_ID') // convert to currency, it will return Rp1.000,00
 ```
 
 ### Custom Widget
