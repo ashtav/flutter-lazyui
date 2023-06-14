@@ -1,3 +1,5 @@
+LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter. It is created for developers who prefer not to write long lines of code.
+
 ## Usage
 
 To use this plugin, add `lazyui` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
