@@ -1,6 +1,6 @@
 part of extensions;
 
-extension ListExtension on List {
+extension ListExtension<T> on List<T> {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
   /// ```
@@ -13,13 +13,13 @@ extension ListExtension on List {
   }
 
   /// ``` dart
-  /// List<Option> options = ['A', 'B', 'C', 'D', 'E'].make((data, i) => Option(option: data[i]))
+  /// List<Option> options = ['A', 'B', 'C', 'D', 'E'].make((data, i) => Option(option: data))
   /// ```
 
-  List<T> make<T>(T Function(List data, int i) callback) {
-    List<T> list = [];
+  List<E> make<E>(E Function(T data, int i) callback) {
+    List<E> list = [];
     for (int i = 0; i < length; i++) {
-      list.add(callback(this, i));
+      list.add(callback(this[i], i));
     }
     return list;
   }

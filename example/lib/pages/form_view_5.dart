@@ -30,8 +30,7 @@ class FormView5 extends StatelessWidget {
                   keyboard: Tit.number,
                   maxLength: 5,
                   onChange: (value) => controller.getUser(value)),
-              LzForm.input(
-                  hint: 'Your name here', model: forms['name'], disabled: true),
+              LzForm.input(hint: 'Your name here', model: forms['name'], disabled: true),
             ],
           ),
           LzForm.input(
@@ -73,25 +72,18 @@ class FormView5 extends StatelessWidget {
           ),
           LzFormGroup(
               label: 'Set Max Length',
-              sublabel:
-                  'You can set max length for input field. This is useful for bank account number.',
+              sublabel: 'You can set max length for input field. This is useful for bank account number.',
               sublabelStyle: SublabelStyle.cardWarning,
               prefixIcon: La.idCard,
               children: [
                 LzForm.select(
                     label: 'Bank *',
                     hint: 'Please select your bank',
-                    options: ['BCA', 'BNI', 'BRI', 'Mandiri'].make((data, i) =>
-                        Option(option: data[i], value: [10, 10, 15, 13][i])),
+                    options: ['BCA', 'BNI', 'BRI', 'Mandiri'].make((data, i) => Option(option: data, value: [10, 10, 15, 13][i])),
                     model: forms['bank'],
                     onSelect: (selector) {
                       int maxLength = selector.option?.value ?? 0;
-                      forms['account']
-                          ?.notifier
-                          .setText('')
-                          .setMaxLength(maxLength)
-                          .setDisabled(false)
-                          .setFocus();
+                      forms['account']?.notifier.setText('').setMaxLength(maxLength).setDisabled(false).setFocus();
                     }),
                 LzForm.input(
                     label: 'Your Answer *',
@@ -133,16 +125,7 @@ class FormView5 extends StatelessWidget {
 }
 
 class FormController {
-  final forms = LzForm.make([
-    'id',
-    'name',
-    'answer',
-    'province',
-    'city',
-    'district',
-    'bank',
-    'account'
-  ]);
+  final forms = LzForm.make(['id', 'name', 'answer', 'province', 'city', 'district', 'bank', 'account']);
 
   List<Option> provinces = const [
     Option(option: 'Bali', value: 1),
@@ -193,8 +176,7 @@ class FormController {
       logg(map2); // {"id": "12008", "answer": "Assassin"}
 
       final map3 = LzForm.validate(forms);
-      logg(map3.value
-          .removes(['name'])); // {"id": "12008", "answer": "Assassin"}
+      logg(map3.value.removes(['name'])); // {"id": "12008", "answer": "Assassin"}
       logg(map3.value.get(['answer'])); // {"answer": "Assassin"}
     } catch (e, s) {
       Errors.check(e, s);

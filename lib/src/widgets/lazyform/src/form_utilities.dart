@@ -6,7 +6,10 @@ class SelectController {
   Option? option;
   TextEditingController? controller;
 
-  SelectController({this.label, this.options, this.controller, this.option});
+  /// This function is used to set extra value to the controller
+  Function(dynamic value) setExtra;
+
+  SelectController({this.label, this.options, this.controller, this.option, required this.setExtra});
 }
 
 /* ---------------------------------------------------------------

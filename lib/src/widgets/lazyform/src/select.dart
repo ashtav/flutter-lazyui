@@ -110,7 +110,12 @@ class Select extends StatelessWidget {
       border: Br.only(['l'], color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
     );
 
-    SelectController selectController = SelectController(label: label?.replaceAll('*', '').trim(), controller: model?.controller);
+    SelectController selectController = SelectController(
+        label: label?.replaceAll('*', '').trim(),
+        controller: model?.controller,
+        setExtra: (value) {
+          notifier.extra = value;
+        });
 
     Widget field = ClipRRect(
       key: model?.key,

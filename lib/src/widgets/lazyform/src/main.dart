@@ -8,8 +8,9 @@ class LzForm {
   final bool ok;
   final FormErrorInfo? error;
   final Map<String, dynamic> value;
+  final Map<String, dynamic> extra;
 
-  LzForm({this.ok = false, this.error, this.value = const {}});
+  LzForm({this.ok = false, this.error, this.value = const {}, this.extra = const {}});
 
   /* ---------------------------------------------------------------
   | LzForm Make Model

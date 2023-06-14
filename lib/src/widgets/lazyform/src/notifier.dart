@@ -18,6 +18,9 @@ class FormNotifier extends ChangeNotifier {
   // max length text input
   int maxLength = 0;
 
+  // store extra data
+  dynamic extra;
+
   // get error message
   String get errorMessage => data['error'];
   bool get isValid => data['valid'];
