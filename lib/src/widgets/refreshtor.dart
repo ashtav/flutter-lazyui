@@ -9,6 +9,7 @@ class Refreshtor extends StatelessWidget {
   final Color? indicatorColor, textColor, releaseTextColor, backgroundColor;
   final RefrehtorType type;
   final double offsetToArmed;
+  final double? height;
 
   const Refreshtor(
       {Key? key,
@@ -21,7 +22,8 @@ class Refreshtor extends StatelessWidget {
       this.releaseTextColor,
       this.backgroundColor,
       this.type = RefrehtorType.bar,
-      this.offsetToArmed = 80})
+      this.offsetToArmed = 80,
+      this.height})
       : super(key: key);
 
   @override
@@ -36,9 +38,7 @@ class Refreshtor extends StatelessWidget {
         alignment: Alignment.topCenter,
         children: [
           CustomPaint(
-              painter: _CurvedShapePainter(
-                  value: isLoading || isFinal ? 0 : value * .4,
-                  color: backgroundColor),
+              painter: _CurvedShapePainter(value: isLoading || isFinal ? 0 : value * .4, color: backgroundColor),
               child: AnimatedContainer(
                 duration: 300.ms,
                 width: context.width,
@@ -61,33 +61,19 @@ class Refreshtor extends StatelessWidget {
                     height: 2 * value,
                     width: context.width * value,
                     decoration: BoxDecoration(
-                        color: indicatorColor ??
-                            (LzColors.isDark(backgroundColor ?? Colors.white)
-                                ? Colors.white
-                                : LzColors.dark),
+                        color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
                         borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
                 if (!isLoading && !isFinal)
                   AnimatedOpacity(
                     duration: 300.ms,
                     opacity: value > .2 ? 1 : 0,
-                    child: Textr(
-                        isArmed
-                            ? (releaseText ?? 'Release to refresh')
-                            : (text ?? 'Pull down to refresh'),
+                    child: Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                             fontSize: 13,
                             fontWeight: isArmed ? Fw.bold : Fw.normal,
                             color: isArmed
-                                ? (releaseTextColor ??
-                                    (LzColors.isDark(
-                                            backgroundColor ?? Colors.white)
-                                        ? Colors.white
-                                        : LzColors.dark))
-                                : textColor ??
-                                    (LzColors.isDark(
-                                            backgroundColor ?? Colors.white)
-                                        ? Colors.white
-                                        : LzColors.dark)),
+                                ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
+                                : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
                         margin: Ei.only(t: 5 * value)),
                   )
               ],
@@ -122,27 +108,16 @@ class Refreshtor extends StatelessWidget {
                         curve: Curves.linearToEaseOut,
                         height: 2,
                         width: 50 * value,
-                        decoration: BoxDecoration(
-                            color: indicatorColor ?? LzColors.dark,
-                            borderRadius:
-                                Br.radius(50 * (1 - value.clamp(0, 1))))),
+                        decoration: BoxDecoration(color: indicatorColor ?? LzColors.dark, borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
                     SlideSwitched(
                       withOpacity: true,
                       child: value < .2
                           ? const None()
-                          : Textr(
-                              isArmed
-                                  ? (releaseText ?? 'Release to refresh')
-                                  : (text ?? 'Pull down to refresh'),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                      fontSize: 13,
-                                      fontWeight: isArmed ? Fw.bold : Fw.normal,
-                                      color: isArmed
-                                          ? (releaseTextColor ?? LzColors.dark)
-                                          : textColor ?? LzColors.dark),
+                          : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                  fontSize: 13,
+                                  fontWeight: isArmed ? Fw.bold : Fw.normal,
+                                  color: isArmed ? (releaseTextColor ?? LzColors.dark) : textColor ?? LzColors.dark),
                               margin: Ei.only(t: 15 * value)),
                     ),
                   ],
@@ -195,21 +170,11 @@ class Refreshtor extends StatelessWidget {
                         withOpacity: true,
                         child: value < .2
                             ? const None()
-                            : Textr(
-                                isArmed
-                                    ? (releaseText ?? 'Release to refresh')
-                                    : (text ?? 'Pull down to refresh'),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium
-                                    ?.copyWith(
-                                        fontSize: 13,
-                                        fontWeight:
-                                            isArmed ? Fw.bold : Fw.normal,
-                                        color: isArmed
-                                            ? (releaseTextColor ??
-                                                LzColors.dark)
-                                            : textColor ?? LzColors.dark),
+                            : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                    fontSize: 13,
+                                    fontWeight: isArmed ? Fw.bold : Fw.normal,
+                                    color: isArmed ? (releaseTextColor ?? LzColors.dark) : textColor ?? LzColors.dark),
                                 margin: Ei.only(t: 15 * value))),
                   ],
                 ),
@@ -240,7 +205,7 @@ class Refreshtor extends StatelessWidget {
                   RefrehtorType.arrow: arrowRefresh(value, controller),
                 };
 
-                return contents[type]!;
+                return Container(margin: Ei.only(t: height ?? 0), child: contents[type]!);
               },
             ),
             child
@@ -265,8 +230,7 @@ class _CurvedShapePainter extends CustomPainter {
     final path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);
-    path.quadraticBezierTo(
-        size.width / 2, size.height + (150 * value), size.width, size.height);
+    path.quadraticBezierTo(size.width / 2, size.height + (150 * value), size.width, size.height);
     path.lineTo(size.width, 0);
     path.close();
 
