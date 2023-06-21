@@ -6,7 +6,7 @@ class LzFormGroup extends StatelessWidget {
   final String? label, sublabel;
   final IconData? prefixIcon;
   final List<Widget> children;
-  final double? labelSize;
+  final double? labelSize, bottomSpace;
   final SublabelStyle sublabelStyle;
   const LzFormGroup(
       {super.key,
@@ -14,7 +14,7 @@ class LzFormGroup extends StatelessWidget {
       this.sublabel,
       this.prefixIcon,
       this.children = const [],
-      this.labelSize,
+      this.labelSize, this.bottomSpace,
       this.sublabelStyle = SublabelStyle.text});
 
   @override
@@ -51,6 +51,8 @@ class LzFormGroup extends StatelessWidget {
         isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
     Color sublabelTextColor = isCardWarning ? Colors.orange : Colors.black;
 
+    double configRadius = LazyUi.getConfig.radius;
+
     return Col(
       children: [
         // Label
@@ -83,13 +85,13 @@ class LzFormGroup extends StatelessWidget {
 
         // Fields
         Container(
-          margin: Ei.only(b: 20),
+          margin: Ei.only(b: bottomSpace ?? 20),
           decoration: BoxDecoration(
               border: Br.all(color: borderColor),
               color: Colors.white,
-              borderRadius: Br.radius(5)),
-          child: ClipRRect(
-            borderRadius: Br.radius(5),
+              borderRadius: Br.radius(configRadius)),
+          child: ClipRRect( 
+            borderRadius: Br.radius(configRadius),
             child: Col(
               children: List.generate(children.length, (i) {
                 Widget child = children[i];

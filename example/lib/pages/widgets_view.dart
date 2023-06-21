@@ -5,7 +5,7 @@ class WidgetsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> features = ['Icons', 'Product Details', 'Navbar'];
+    List<String> features = ['Icons', 'Product Details', 'Navbar', 'Login'];
 
     features.sort();
 
@@ -58,6 +58,10 @@ class Actions {
 
         case 'Navbar':
           context.push(const ExNavbar());
+          break;
+
+        case 'Login':
+          context.push(const ExLogin());
           break;
 
         default:

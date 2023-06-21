@@ -55,13 +55,13 @@ class LzToast {
   | LzToast.overlay('Please wait...', indicator: LzToastIndicator.spiner())
   | */
 
-  static void show(String message,
+  static void show(String? message,
       {IconData? icon,
       bool dismissOnTap = false,
       Duration? duration,
       Position position = Position.bottom,
       int? maxLength}) {
-    _toastNotifier.toggle(message,
+    _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration,
         position: position,
