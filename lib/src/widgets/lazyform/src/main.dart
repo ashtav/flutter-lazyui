@@ -84,6 +84,13 @@ class LzForm {
   | LzForm Input
   | */
 
+  /// ``` dart
+  /// LzForm.input(
+  ///   label: 'Your Name *',
+  ///   hint: 'Input your name',
+  ///   formatter: [InputFormat.ucwords],
+  ///   model: forms['name'])
+  /// ```
   static Input input(
           {String? label,
           String? hint,
@@ -161,7 +168,7 @@ class LzForm {
   /* ---------------------------------------------------------------
   | LzForm Radio
   | */
-
+  
   static Radio radio(
           {String? label,
           List<Option> options = const [],

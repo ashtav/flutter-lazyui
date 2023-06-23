@@ -13,6 +13,7 @@ class InputFormat {
   static TextInputFormatter get lowercase => _LowerCaseTextFormatter();
   static TextInputFormatter get uppercase => _UpperCaseTextFormatter();
   static TextInputFormatter get ucwords => _UcwordsFormatter();
+  static TextInputFormatter get ucfirst => _UcfirstFormatter();
   static TextInputFormatter idr([String separator = '.']) =>
       _ThousandFormatter(separator: separator);
 
@@ -58,6 +59,30 @@ class _UcwordsFormatter extends TextInputFormatter {
       int selectionIndexFromTheRight =
           newValue.text.length - newValue.selection.extentOffset;
       String newString = newValue.text.ucwords;
+
+      return TextEditingValue(
+        text: newString,
+        selection: TextSelection.collapsed(
+          offset: newString.length - selectionIndexFromTheRight,
+        ),
+      );
+    } else {
+      return newValue;
+    }
+  }
+}
+
+// UCFIRST FORMATTER
+class _UcfirstFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue.copyWith(text: '');
+    } else if (newValue.text.compareTo(oldValue.text) != 0) {
+      int selectionIndexFromTheRight =
+          newValue.text.length - newValue.selection.extentOffset;
+      String newString = newValue.text.ucfirst;
 
       return TextEditingValue(
         text: newString,
