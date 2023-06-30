@@ -5,7 +5,8 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['date', 'month_year', 'year', 'time']);
+    final forms =
+        LzForm.make(['date', 'date_month', 'month_year', 'year', 'time', 'datetime']);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,6 +24,16 @@ class DateTimePicker extends StatelessWidget {
                   onTap: (model) async {
                     DateTime? date = await Pickers.datePicker(context);
                     if (date != null) model.text = date.format();
+                  }),
+              LzForm.input(
+                  label: 'Date & Month',
+                  hint: 'Select date & month',
+                  model: forms['date_month'],
+                  suffixIcon: La.calendar,
+                  onTap: (model) async {
+                    DateTime? date = await Pickers.datePicker(context,
+                        type: DatePickerType.dateMonth);
+                    if (date != null) model.text = date.format('dd MMMM yyyy');
                   }),
               LzForm.input(
                   label: 'Month & Year',
@@ -46,15 +57,26 @@ class DateTimePicker extends StatelessWidget {
                   }),
             ],
           ),
-          LzForm.input(
-              label: 'Time',
-              hint: 'Select your time',
-              model: forms['time'],
-              suffixIcon: La.clock,
-              onTap: (model) async {
-                DateTime? date = await Pickers.timePicker(context);
-                if (date != null) model.text = date.format('HH:mm a');
-              })
+          LzFormGroup(children: [
+            LzForm.input(
+                label: 'Time',
+                hint: 'Select your time',
+                model: forms['time'],
+                suffixIcon: La.clock,
+                onTap: (model) async {
+                  DateTime? date = await Pickers.timePicker(context);
+                  if (date != null) model.text = date.format('HH:mm a');
+                }),
+            LzForm.input(
+                label: 'Date Time',
+                hint: 'Select date and time',
+                model: forms['datetime'],
+                suffixIcon: La.calendar,
+                onTap: (model) async {
+                  DateTime? date = await Pickers.dateTimePicker(context, firstDate: DateTime(2020, 2, 10), lastDate: DateTime(2030, 5, 25), initialDate: DateTime(2022, 6, 10));
+                  if (date != null) model.text = date.format('dd MMMM yyyy HH:mm a');
+                })
+          ])
         ],
       ),
     );

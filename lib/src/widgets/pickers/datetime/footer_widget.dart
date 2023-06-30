@@ -1,0 +1,73 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:lazyui/config/config.dart';
+import 'package:lazyui/externals/line_awesome.dart';
+import 'package:lazyui/src/extensions/extensions.dart';
+import 'package:lazyui/src/utils/utils.dart';
+import 'package:lazyui/src/widgets/widgets.dart';
+
+class PickerFooterWidget extends StatelessWidget {
+  final String? confirmLabel;
+  final Function()? onConfirm;
+  const PickerFooterWidget({super.key, this.confirmLabel, this.onConfirm});
+
+  @override
+  Widget build(BuildContext context) {
+    return Poslign(
+      alignment: Alignment.bottomCenter,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: Maa.center,
+          children: [
+            SlideUp(
+              delay: 300,
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Utils.hex('f1f1f1'),
+                      spreadRadius: 15,
+                      blurRadius: 25,
+                      offset: const Offset(0, -5),
+                    ),
+                  ],
+                ),
+                child: Builder(builder: (context) {
+                  String confirm = confirmLabel ?? 'Confirm';
+
+                  return InkW(
+                      onTap: onConfirm,
+                      padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                      radius: Br.radius(25),
+                      color: Utils.hex('fff'),
+                      border: Br.all(),
+                      child: Container(
+                        constraints: BoxConstraints(maxWidth: context.width * .4),
+                        child: Text(
+                          confirm,
+                          textAlign: Ta.center,
+                          maxLines: 1,
+                          overflow: Tof.ellipsis,
+                          style: Lazy.textStyle(context)?.copyWith(fontWeight: Fw.bold, color: LzColors.black),
+                        ),
+                      ));
+                }),
+              ),
+            ),
+            Touch(
+              onTap: () => context.pop(),
+              child: SlideUp(
+                delay: 400,
+                child: Iconr(
+                  La.times,
+                  padding: Ei.all(20),
+                ),
+              ),
+            )
+          ],
+        ).margin(b: 15, l: 60),
+      ),
+    );
+  }
+}

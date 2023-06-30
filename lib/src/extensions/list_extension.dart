@@ -4,8 +4,8 @@ extension ListExtension<T> on List<T> {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
   /// ```
-  List getRandom([int length = 1]) {
-    List result = [];
+  List<T> getRandom([int length = 1]) {
+    List<T> result = [];
     for (int i = 0; i < length; i++) {
       result.add(this[Random().nextInt(this.length)]);
     }
@@ -44,9 +44,7 @@ extension ListMapExtension on List<Map> {
   /// }, addKeys: ['gender']);
   /// ```
   List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs,
-      Function(dynamic)? wrapWith,
-      List<String> addKeys = const []}) {
+      {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];
@@ -120,5 +118,19 @@ extension ListStringExtension on List<String> {
           style: style));
     }
     return options;
+  }
+}
+
+extension RangeIteration on List<int> {
+  List<int> iterate({bool reversed = false}) {
+    final start = this[0];
+    final end = this[1];
+    final result = <int>[];
+
+    for (var i = start; i <= end; i++) {
+      result.add(i);
+    }
+
+    return reversed ? result.reversed.toList() : result;
   }
 }

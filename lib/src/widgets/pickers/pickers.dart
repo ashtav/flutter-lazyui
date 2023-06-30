@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/config/constant.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'datetime/datetime_selector.dart';
 import 'notifier.dart';
 
 part 'cupertino_date_picker.dart';
+part 'cupertino_datetime_picker.dart';
 part 'cupertino_time_picker.dart';
 
 class Pickers {
@@ -29,11 +31,8 @@ class Pickers {
       return null;
     }
 
-    DateTime? result = await showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        builder: (c) => CupertinoDatePickerWidget(
+    DateTime? result = await context.bottomSheet(
+        CupertinoDatePickerWidget(
             initialDate: initialDate,
             firstDate: firstDate,
             lastDate: lastDate,
@@ -41,7 +40,10 @@ class Pickers {
             type: type,
             alignment: alignment,
             title: title,
-            confirmLabel: confirmLabel));
+            confirmLabel: confirmLabel),
+        enableDrag: true,
+        useSafeArea: false,
+        isScrollControlled: true);
 
     return result;
   }
@@ -63,16 +65,47 @@ class Pickers {
       return null;
     }
 
-    DateTime? result = await showModalBottomSheet(
-        context: context,
-        backgroundColor: Colors.transparent,
-        isScrollControlled: true,
-        builder: (c) => CupertinoTimePickerWidget(
+    DateTime? result = await context.bottomSheet(
+        CupertinoTimePickerWidget(
             initialDate: initialDate,
             firstDate: firstDate,
             lastDate: lastDate,
             title: title,
-            confirmLabel: confirmLabel));
+            confirmLabel: confirmLabel),
+        enableDrag: true,
+        useSafeArea: false,
+        isScrollControlled: true);
+
+    return result;
+  }
+
+  /* ------------------------------------------------------------
+  | DATE TIME PICKER
+  ------------------------------------ */
+
+  static Future<DateTime?> dateTimePicker(
+    BuildContext context, {
+    DateTime? initialDate,
+    DateTime? firstDate,
+    DateTime? lastDate,
+    String? title,
+    String confirmLabel = 'Confirm',
+  }) async {
+    if (firstDate != null && lastDate != null && firstDate.isAfter(lastDate)) {
+      logg('First date must be smaller than last date', name: 'Pickers');
+      return null;
+    }
+
+    DateTime? result = await context.bottomSheet(
+        DateTimeSelector(
+            initialDate: initialDate,
+            firstDate: firstDate,
+            lastDate: lastDate,
+            title: title,
+            confirmLabel: confirmLabel),
+        enableDrag: true,
+        useSafeArea: false,
+        isScrollControlled: true);
 
     return result;
   }

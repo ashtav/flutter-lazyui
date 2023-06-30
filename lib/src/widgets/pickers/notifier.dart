@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class PickerNotifier extends ValueNotifier {
+class PickerNotifier extends ValueNotifier  {
   PickerNotifier(super.value);
 
   void toggle(Map data) => value = data;
-  bool hasInit = false;
+  bool hasInit = false, isTimeMode = false;
 
   Map<String, FixedExtentScrollController> map = {
     'date': FixedExtentScrollController(initialItem: 0),
@@ -27,4 +27,10 @@ class PickerNotifier extends ValueNotifier {
       monthRanges = [0, 11],
       hourRanges = [0, 23],
       minuteRanges = [0, 59];
+
+  void toggleTimeMode(){
+    isTimeMode = !isTimeMode;
+    notifyListeners();
+  }
 }
+
