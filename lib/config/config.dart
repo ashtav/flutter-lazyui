@@ -6,6 +6,7 @@ Map _config = {
   'spacing': 20.0,
   'primary_color': '#212121',
   'text_style': GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black),
+  'toast_position': Position.bottom
 };
 
 class LazyUiOptions {

@@ -22,17 +22,21 @@ extension CustomDynamicExtension on dynamic {
   /// print(displayName); // If name is null or empty, the output will be '-'
   /// ```
   ///
-  T orIf<T>([dynamic value, List conditions = const [null, '']]) {
+  T orIf<T>([T? value, List conditions = const [null, '']]) {
     Type type = runtimeType;
-    dynamic result = '-';
+    dynamic result;
 
     if (value == null) {
-      if (type is int) {
+      if (type is int && T is int || T == int) {
         result = 0;
-      } else if (type is double) {
+      } else if (type is double && T is double || T == double) {
         result = 0.0;
-      } else if (type is bool) {
+      } else if (type is bool && T is bool || T == bool) {
         result = false;
+      } else if (type is String && T is String || T == String) {
+        result = '-';
+      } else if (type is List && T is List || T == List) {
+        result = [];
       }
     } else {
       result = value;

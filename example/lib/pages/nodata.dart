@@ -5,14 +5,21 @@ class NoDataView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('No Data'),
         ),
         body: LzNoData(
-          message: 'Opps! There is no data to show',
+          message: 'Opps! No Data Found.\nTap refresh or please try again later',
           onTap: () {
             // do something...
+
+            try {
+              
+            } catch (e, s) {
+              Utils.errorCatcher(e, s);
+            }
           },
         ));
   }
