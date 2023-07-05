@@ -112,7 +112,7 @@ extension ListStringExtension on List<String> {
 
       options.add(Option(
           option: this[i],
-          value: values.length > i ? values[i] : this[i],
+          value: values.length > i ? values[i] : null,
           icon: icons.length > i ? icons[i] : null,
           disabled: disabled,
           style: style));

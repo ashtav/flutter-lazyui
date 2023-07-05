@@ -5,16 +5,8 @@ class FormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make([
-      'name',
-      'birthday',
-      'fruit',
-      'hobby',
-      'email',
-      'password',
-      'province',
-      'number'
-    ]).fill({'email': 'ashtaaav@gmail.com'});
+    final forms = LzForm.make(['name', 'birthday', 'fruit', 'hobby', 'email', 'password', 'province', 'number'])
+        .fill({'email': 'ashtaaav@gmail.com'});
 
     return Wrapper(
         child: Scaffold(
@@ -23,16 +15,9 @@ class FormView extends StatelessWidget {
       ),
       body: LzFormList(
         cleanOnType: true,
-        style: LzFormStyle(
-            activeColor: LzColors.dark,
-            inputBorderColor: Colors.black26,
-            type: FormType.topAligned),
+        style: LzFormStyle(activeColor: LzColors.dark, inputBorderColor: Colors.black26, type: FormType.topAligned),
         children: [
-          LzForm.input(
-              label: 'Your Name *',
-              hint: 'Input your name',
-              indicator: true,
-              model: forms['name']),
+          LzForm.input(label: 'Your Name *', hint: 'Input your name', indicator: true, model: forms['name']),
           LzForm.input(
               label: 'Birthday *',
               hint: 'Input your birthday',
@@ -44,50 +29,28 @@ class FormView extends StatelessWidget {
               }),
           LzForm.radio(
               label: 'Radio Input *',
-              options: [
-                'Mango',
-                'Banana',
-                'Apple',
-                'Orange',
-                'Durian',
-                'Melon',
-                'Watermelon'
-              ].make((data, i) =>
-                  Option(option: data, disabled: [0, 1, 3].contains(i))),
+              options: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon']
+                  .make((data, i) => Option(option: data, disabled: [0, 1, 3].contains(i))),
               model: forms['fruit']),
           LzForm.checkbox(
               label: 'Checkbox *',
               options: List.generate(
                   5,
                   (i) => Option(
-                      option: [
-                        'Swimming',
-                        'Reading',
-                        'Coding',
-                        'Cooking',
-                        'Playing Music'
-                      ][i],
-                      disabled: i == 1)),
+                      option: ['Swimming', 'Reading', 'Coding', 'Cooking', 'Playing Music'][i], disabled: i == 1)),
               model: forms['hobby']),
           LzFormGroup(
             label: 'Account',
             prefixIcon: La.lock,
             children: [
+              LzForm.input(label: 'Email *', hint: 'Input your email address', model: forms['email']),
               LzForm.input(
-                  label: 'Email *',
-                  hint: 'Input your email address',
-                  model: forms['email']),
-              LzForm.input(
-                  label: 'Password *',
-                  hint: 'Input your password',
-                  model: forms['password'],
-                  obsecureToggle: true),
+                  label: 'Password *', hint: 'Input your password', model: forms['password'], obsecureToggle: true),
             ],
           ),
           LzFormGroup(
             label: 'Address',
-            sublabel:
-                'Please select your province, city and district. Let me know if you have a problem.',
+            sublabel: 'Please select your province, city and district. Let me know if you have a problem.',
             prefixIcon: La.mapMarked,
             children: [
               // set options based on data from server
@@ -103,9 +66,7 @@ class FormView extends StatelessWidget {
                     LzToast.dismiss();
 
                     // set options
-                    selector.options = data
-                        .map((e) => Option(option: e['name'], value: e['id']))
-                        .toList();
+                    selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
                     selector.option = const Option(option: 'Jakarta', value: 2);
 
                     // logg(selector.option?.toMap());
@@ -119,12 +80,8 @@ class FormView extends StatelessWidget {
               LzForm.select(
                   label: 'City *',
                   hint: 'Please select city',
-                  options: const [
-                    Option(option: 'Denpasar', value: 1),
-                    Option(option: 'Tabanan', value: 2)
-                  ]),
-              LzForm.select(
-                  label: 'District *', hint: 'Please select district'),
+                  options: const [Option(option: 'Denpasar', value: 1), Option(option: 'Tabanan', value: 2)]),
+              LzForm.select(label: 'District *', hint: 'Please select district'),
             ],
           ),
           LzFormGroup(
@@ -134,26 +91,15 @@ class FormView extends StatelessWidget {
               LzForm.select(
                   label: 'Bank Account *',
                   labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
-                  options: ['BCA', 'BNI', 'BRI', 'Mandiri']
-                      .options(values: [10, 10, 15, 13]),
+                  options: ['BCA', 'BNI', 'BRI', 'Mandiri'].options(values: [10, 10, 15, 13]),
                   hint: 'Please select your bank account'),
-              LzForm.input(
-                  label: 'Bank Account Number *',
-                  hint: 'Input your bank account number')
+              LzForm.input(label: 'Bank Account Number *', hint: 'Input your bank account number')
             ],
           ),
           LzForm.number(
-              label: 'Number *',
-              hint: 'Input your number',
-              model: forms['number'],
-              min: 25,
-              max: 100,
-              readonly: false),
+              label: 'Number *', hint: 'Input your number', model: forms['number'], min: 25, max: 100, readonly: false),
           LzForm.input(
-              label: 'Salary *',
-              hint: 'Input your salary',
-              keyboard: Tit.number,
-              formatters: [InputFormat.idr()]),
+              label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
           LzForm.input(
               label: 'Input with Suffix',
               hint: 'You can type or tap suffix',
@@ -196,9 +142,7 @@ class FormView extends StatelessWidget {
             }
 
             logg(form.value); // get value from form
-            logg(forms['province']
-                ?.notifier
-                .extra); // get extra data from select
+            logg(forms['province']?.notifier.extra); // get extra data from select
           }).style(LzButtonStyle.shadow, spacing: 20),
     ));
   }
