@@ -18,6 +18,7 @@ export 'externals/shimmer.dart';
 export 'externals/tabler_icons.dart';
 export 'src/extensions/extensions.dart';
 export 'src/utils/utils.dart';
+export 'src/widgets/animations/ripple_animation.dart';
 export 'src/widgets/lazyform/lazyform.dart';
 export 'src/widgets/lazyloading/lazy_loading.dart';
 export 'src/widgets/pickers/pickers.dart';
