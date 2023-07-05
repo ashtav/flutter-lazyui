@@ -19,14 +19,14 @@ class Pickers {
 
   static Future<DateTime?> datePicker(BuildContext context,
       {DateTime? initialDate,
-      DateTime? firstDate,
-      DateTime? lastDate,
+      DateTime? minDate,
+      DateTime? maxDate,
       String? title,
       String confirmLabel = 'Confirm',
       bool useShortMonths = false,
       DatePickerType type = DatePickerType.all,
       AlignmentGeometry? alignment}) async {
-    if (firstDate != null && lastDate != null && firstDate.isAfter(lastDate)) {
+    if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       logg('First date must be smaller than last date', name: 'Pickers');
       return null;
     }
@@ -34,8 +34,8 @@ class Pickers {
     DateTime? result = await context.bottomSheet(
         CupertinoDatePickerWidget(
             initialDate: initialDate,
-            firstDate: firstDate,
-            lastDate: lastDate,
+            minDate: minDate,
+            maxDate: maxDate,
             useShortMonths: useShortMonths,
             type: type,
             alignment: alignment,
@@ -55,12 +55,12 @@ class Pickers {
   static Future<DateTime?> timePicker(
     BuildContext context, {
     DateTime? initialDate,
-    DateTime? firstDate,
-    DateTime? lastDate,
+    DateTime? minDate,
+    DateTime? maxDate,
     String? title,
     String confirmLabel = 'Confirm',
   }) async {
-    if (firstDate != null && lastDate != null && firstDate.isAfter(lastDate)) {
+    if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       logg('First date must be smaller than last date', name: 'Pickers');
       return null;
     }
@@ -68,8 +68,8 @@ class Pickers {
     DateTime? result = await context.bottomSheet(
         CupertinoTimePickerWidget(
             initialDate: initialDate,
-            firstDate: firstDate,
-            lastDate: lastDate,
+            minDate: minDate,
+            maxDate: maxDate,
             title: title,
             confirmLabel: confirmLabel),
         enableDrag: true,

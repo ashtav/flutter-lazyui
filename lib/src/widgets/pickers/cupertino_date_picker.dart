@@ -4,8 +4,8 @@ enum DatePickerType { all, dateMonth, monthYear, year }
 
 class CupertinoDatePickerWidget extends StatelessWidget {
   final DateTime? initialDate;
-  final DateTime? firstDate;
-  final DateTime? lastDate;
+  final DateTime? minDate;
+  final DateTime? maxDate;
   final String? title, confirmLabel;
   final bool useShortMonths;
   final DatePickerType type;
@@ -13,8 +13,8 @@ class CupertinoDatePickerWidget extends StatelessWidget {
   const CupertinoDatePickerWidget(
       {super.key,
       this.initialDate,
-      this.firstDate,
-      this.lastDate,
+      this.minDate,
+      this.maxDate,
       this.title,
       this.confirmLabel,
       this.useShortMonths = false,
@@ -26,8 +26,8 @@ class CupertinoDatePickerWidget extends StatelessWidget {
     logg('initialized');
 
     DateTime init = initialDate ?? DateTime.now();
-    DateTime first = firstDate ?? DateTime.now();
-    DateTime last = lastDate ?? DateTime(DateTime.now().year + 10, 12, 31);
+    DateTime first = minDate ?? DateTime.now();
+    DateTime last = maxDate ?? DateTime(DateTime.now().year + 10, 12, 31);
 
     init = init.isAfter(last) ? last : init;
     init = init.isBefore(first) ? first : init;

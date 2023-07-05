@@ -2,14 +2,14 @@ part of pickers;
 
 class CupertinoTimePickerWidget extends StatelessWidget {
   final DateTime? initialDate;
-  final DateTime? firstDate;
-  final DateTime? lastDate;
+  final DateTime? minDate;
+  final DateTime? maxDate;
   final String? title, confirmLabel;
   const CupertinoTimePickerWidget(
       {super.key,
       this.initialDate,
-      this.firstDate,
-      this.lastDate,
+      this.minDate,
+      this.maxDate,
       this.title,
       this.confirmLabel});
 
@@ -19,9 +19,9 @@ class CupertinoTimePickerWidget extends StatelessWidget {
 
     DateTime init = initialDate ?? now;
     DateTime first =
-        firstDate ?? DateTime(now.year, now.month, now.day, 0, 0, 0);
+        minDate ?? DateTime(now.year, now.month, now.day, 0, 0, 0);
     DateTime last =
-        lastDate ?? DateTime(now.year, now.month, now.day, 23, 59, 59);
+        maxDate ?? DateTime(now.year, now.month, now.day, 23, 59, 59);
 
     init = init.isAfter(last) ? last : init;
     init = init.isBefore(first) ? first : init;

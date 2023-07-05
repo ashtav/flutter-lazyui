@@ -47,8 +47,8 @@ class FormView3 extends StatelessWidget {
                     Pickers.datePicker(context,
                             type: DatePickerType.all,
                             initialDate: dateTime,
-                            firstDate: DateTime(1960),
-                            lastDate: max)
+                            minDate: DateTime(1960),
+                            maxDate: max)
                         .then((value) {
                       if (value != null) {
                         model.text = value.format('dd-MM-yyyy');
