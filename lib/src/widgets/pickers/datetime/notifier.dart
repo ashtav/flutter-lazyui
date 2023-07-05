@@ -4,7 +4,7 @@ import 'package:lazyui/lazyui.dart';
 
 class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
   DateTimePickerNotifier(super.value) {
-    onInit(initDate: value['init'], minDate: value['first'], maxDate: value['last']);
+    onInit(initDate: value['init'], minDate: value['min'], maxDate: value['max']);
   }
 
   List<int> dateRanges = [0, 30],
@@ -13,9 +13,7 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
       hourRanges = [0, 23],
       minuteRanges = [0, 59];
 
-  DateTime selectedDate = DateTime.now(),
-      minDate = DateTime.now().subtract(3.y),
-      maxDate = DateTime.now();
+  DateTime selectedDate = DateTime.now(), minDate = DateTime.now().subtract(3.y), maxDate = DateTime.now();
 
   List<int> dates = [];
 
@@ -51,55 +49,37 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
 
   // date validation, check min or max date
   Future<bool> validateDate(String type, {required int fromIndex}) async {
-    // when date is changed, if date is not valid then animate to last valid date and return false
-    final controller = controls[type]!;
+    int y = dates[0], m = dates[1], d = dates[2];
 
     // date validation
     // get number of days in month
-    int daysInMonth = DateTime(dates[0], dates[1] + 1, 0).day;
+    int daysInMonth = DateTime(y, m + 1, 0).day;
 
-    logg(maxDate);
+    void animateTo(String key, List<int> ranges, int value) {
+      final index = ranges.iterate().indexOf(value);
+      controls[key]!.animateToItem(index - 1, duration: 250.ms, curve: Curves.easeInOut);
+    }
 
     // if date is greater than max date in month
-    if(dates[2] > daysInMonth){
+    if (dates[2] > daysInMonth) {
       final i = dateRanges.iterate().indexOf(daysInMonth);
       controls['date']!.animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
       return false;
     }
 
-    // if current month is less than max month
-    else if(dates[1] < maxDate.month && dates[0] == maxDate.year) {
-      final i = monthRanges.iterate().indexOf(minDate.month);
-      controls['month']!.animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
+    // if current month is more than min month
+    else if (DateTime(y, m, d).isBefore(minDate)) {
+      if(m < minDate.month) animateTo('month', monthRanges, minDate.month);
+      if(d < minDate.day) animateTo('date', dateRanges, minDate.day);
       return false;
     }
 
-    else if(dates[2] < maxDate.day && dates[1] == maxDate.month && dates[0] == maxDate.year) {
-      final i = dateRanges.iterate().indexOf(minDate.day);
-      controls['date']!.animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
+    // if current month is less than min month
+    else if (DateTime(y, m, d).isAfter(maxDate)) {
+      if(m > maxDate.month) animateTo('month', monthRanges, maxDate.month);
+      if(d > maxDate.day) animateTo('date', dateRanges, maxDate.day);
       return false;
     }
-
-    else if(dates[1] > minDate.month && dates[0] == minDate.year) {
-      final i = monthRanges.iterate().indexOf(minDate.month);
-      controls['month']!.animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
-      return false;
-    }
-
-    else if(dates[2] > minDate.day && dates[1] == minDate.month && dates[0] == minDate.year) {
-      final i = dateRanges.iterate().indexOf(minDate.day);
-      controls['date']!.animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
-      return false;
-    }
-
-
-    // int year = dates[0], month = dates[1], day = dates[2];
-    // final date = DateTime(year, month, day);
-
-    // if (date.year != year || date.month != month || date.day != day) {
-    //   controller.animateToItem(fromIndex, duration: 250.ms, curve: Curves.easeInOut);
-    //   return false;
-    // }
 
     return true;
   }
@@ -148,18 +128,16 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
     selectedDate = initDate ?? DateTime.now();
     dates = [selectedDate.year, selectedDate.month, selectedDate.day];
 
-    logg(initDate);
-
     // set start and end date
     this.minDate = minDate ?? DateTime.now().subtract(5.y);
     this.maxDate = maxDate ?? DateTime.now();
 
-      // set ranges
+    // set ranges
     yearRanges = [this.minDate.year, this.maxDate.year];
 
     // set initial values
-    int day = dateRanges.iterate().indexOf(selectedDate.day) - 1;
-    int month = monthRanges.iterate().indexOf(selectedDate.month) - 1;
+    int day = dateRanges.iterate().indexOf(selectedDate.day - 1);
+    int month = monthRanges.iterate().indexOf(selectedDate.month - 1);
     int year = yearRanges.iterate(reversed: true).indexOf(selectedDate.year);
 
     controls['date'] = FixedExtentScrollController(initialItem: day);

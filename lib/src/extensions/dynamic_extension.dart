@@ -9,39 +9,50 @@ extension ListenableExtension<T extends ChangeNotifier> on T {
   }
 }
 
-extension CustomDynamicExtension on dynamic {
-  /// Return the value if it satisfies the specified conditions, otherwise return a default value.
-  ///
-  /// The optional [value] parameter is the value to be checked.
-  /// The optional [conditions] parameter is a list of conditions that the value needs to satisfy (default: [null, '']).
-  ///
-  /// Example usage:
+extension IntOrIfExtension on int? {
+  int orIf([int defaultValue = 0, List<dynamic> conditions = const [null]]) {
+    if (this == null || conditions.contains(this)) {
+      return defaultValue;
+    }
+    return this!;
+  }
+}
+
+extension DoubleOrIfExtension on double? {
+  double orIf([double defaultValue = 0, List<dynamic> conditions = const [null]]) {
+    if (this == null || conditions.contains(this)) {
+      return defaultValue;
+    }
+    return this!;
+  }
+}
+
+extension BoolOrIfExtension on bool? {
+  bool orIf([bool defaultValue = false, List<dynamic> conditions = const [null]]) {
+    if (this == null || conditions.contains(this)) {
+      return defaultValue;
+    }
+    return this!;
+  }
+}
+
+extension StringOrIfExtension on String? {
+  /// Instead of
   /// ```dart
   /// String? name;
-  /// String displayName = name.orIf('-', [null, '']);
-  /// print(displayName); // If name is null or empty, the output will be '-'
+  /// String displayName = (name == null || name == '') ? '-' : name;
   /// ```
-  ///
-  T orIf<T>([T? value, List conditions = const [null, '']]) {
-    Type type = runtimeType;
-    dynamic result;
+  /// 
+  /// You can write
+  /// ```dart
+  /// String displayName = name.orIf('-') 
+  /// name.orIf('-', [null, '-', 'null']) // to add custom conditions
+  /// ```
 
-    if (value == null) {
-      if (type is int && T is int || T == int) {
-        result = 0;
-      } else if (type is double && T is double || T == double) {
-        result = 0.0;
-      } else if (type is bool && T is bool || T == bool) {
-        result = false;
-      } else if (type is String && T is String || T == String) {
-        result = '-';
-      } else if (type is List && T is List || T == List) {
-        result = [];
-      }
-    } else {
-      result = value;
+  String orIf([String defaultValue = '-', List<dynamic> conditions = const [null, '']]) {
+    if (this == null || conditions.contains(this)) {
+      return defaultValue;
     }
-
-    return conditions.contains(this) ? result : this;
+    return this!;
   }
 }

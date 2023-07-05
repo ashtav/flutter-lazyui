@@ -13,8 +13,8 @@ import 'time_selector_widget.dart';
 
 class DateTimeSelector extends StatelessWidget {
   final DateTime? initialDate;
-  final DateTime? firstDate;
-  final DateTime? lastDate;
+  final DateTime? minDate;
+  final DateTime? maxDate;
   final String? title, confirmLabel;
   final bool useShortMonths;
   final DatePickerType type;
@@ -23,8 +23,8 @@ class DateTimeSelector extends StatelessWidget {
   const DateTimeSelector(
       {super.key,
       this.initialDate,
-      this.firstDate,
-      this.lastDate,
+      this.minDate,
+      this.maxDate,
       this.title,
       this.confirmLabel,
       this.useShortMonths = false,
@@ -33,7 +33,7 @@ class DateTimeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = DateTimePickerNotifier({'init': initialDate, 'first': firstDate, 'last': lastDate});
+    final notifier = DateTimePickerNotifier({'init': initialDate, 'min': minDate, 'max': maxDate});
 
     Widget cupertinoPickerWidget(String widgetType) {
       List value = notifier.iterations(widgetType);
@@ -95,8 +95,13 @@ class DateTimeSelector extends StatelessWidget {
 
                   // footer, button confirmation and close
                   PickerFooterWidget(
+                    notifier: notifier,
                     onConfirm: () {
-                      logg(notifier.selectedDate);
+                      if(notifier.isTimeMode) {
+                        return notifier.toggleTimeMode();
+                      }
+
+                      context.pop(notifier.selectedDate);
                     },
                   ),
 

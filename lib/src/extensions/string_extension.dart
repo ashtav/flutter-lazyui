@@ -44,9 +44,7 @@ extension StringExtension on String {
 
     try {
       List<String> char = trim().split(' ');
-      char
-          .take(length)
-          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '';
@@ -94,9 +92,8 @@ extension StringExtension on String {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
       .hasMatch(this);
 
-  bool get isUrl => RegExp(
-          r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$')
-      .hasMatch(this);
+  bool get isUrl =>
+      RegExp(r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$').hasMatch(this);
 
   /// Format the given value as Indonesian Rupiah (IDR) currency string.
   ///
@@ -112,8 +109,7 @@ extension StringExtension on String {
   /// String priceWithDecimal = idr(25000.50, decimalDigits: 2);
   /// print(priceWithDecimal); // Rp25.000,50
   /// ```
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
     try {
       String num = '0', digits = '';
 
@@ -136,8 +132,7 @@ extension StringExtension on String {
           return 'Rp?';
       }
 
-      bool allowDecimal = runtimeType == int ||
-          (runtimeType == String && !toString().contains(separator));
+      bool allowDecimal = runtimeType == int || (runtimeType == String && !toString().contains(separator));
 
       String result = NumberFormat.currency(
         locale: 'id_ID',
@@ -146,9 +141,7 @@ extension StringExtension on String {
       ).format(int.parse(num));
 
       result = result.replaceAll('.', separator);
-      return digits.isEmpty
-          ? result
-          : '$result,${digits.split('').take(decimalDigits).join('')}';
+      return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';
     }
@@ -159,7 +152,7 @@ extension NullableStringExtension on String? {
   /// ``` dart
   /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
   /// "10-02-2023 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
-  /// // Support yyyy-MM-dd and dd-MM-yyyy format
+  /// // Support yyyy-MM-dd, dd-MM-yyyy format, with - or / separator
   /// ```
   DateTime toDate({bool toLocal = false}) {
     try {
@@ -183,8 +176,7 @@ extension NullableStringExtension on String? {
           RegExp? r = formatRegexMap[format];
 
           if (dateString.contains(' ')) {
-            dateString =
-                dateString.split(' ')[0]; // extract date portion of string
+            dateString = dateString.split(' ')[0]; // extract date portion of string
           } else {
             dateString = dateString;
           }
@@ -198,17 +190,25 @@ extension NullableStringExtension on String? {
         return result;
       }
 
-      if (dateString != null) {
+      if (dateString != null && dateString != '') {
+        final fullDate = dateString.split(' ');
+
         String? format = getDateStringFormat(dateString);
         DateTime result = DateTime.now();
 
+        if (format == 'd/m/y') {
+          format = 'd-m-y';
+          dateString = dateString.replaceAll('/', '-');
+        }
+
         if (format != null && format == 'd-m-y') {
           RegExp regex = RegExp(r'^(\d{2})-(\d{2})-(\d{4})$');
-          List<String> dateParts =
-              (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ??
-                      [])
-                  .cast();
+          List<String> dateParts = (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ?? []).cast();
           String ymd = '${dateParts[0]}-${dateParts[1]}-${dateParts[2]}';
+
+          if(fullDate.length > 1) {
+            ymd += ' ${fullDate[1]}';
+          }
 
           result = DateTime.parse(ymd);
         } else {

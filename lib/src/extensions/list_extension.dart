@@ -119,6 +119,34 @@ extension ListStringExtension on List<String> {
     }
     return options;
   }
+
+  /// Formats a date range with time.
+  ///
+  /// The `dateRangeFormat` method can be called on a `String` object representing a date range with time. The date range should consist of two elements separated by a space.
+  ///
+  /// Example:
+  /// ```dart
+  /// String range = '2023-07-01 10:00 2023-07-01 14:30';
+  /// String formattedRange = range.dateRangeFormat();
+  /// print(formattedRange); // Output: 2023-07-01, 10:00 - 14:30
+  /// ```
+  ///
+  /// The method returns the formatted date range as a `String`.
+  ///
+  /// If the dates in the first and second elements are the same, the format will be `<date>, <time1> - <time2>`. For example: `2023-07-01, 10:00 - 14:30`.
+  /// If the dates in the first and second elements are different, the format will be `<date1> <time1> - <date2> <time2>`. For example: `2023-07-01 10:00 - 2023-07-02 14:30`.
+
+  String dateRangeFormat() {
+    final map = this.map((e) {
+      final split = e.split(' ');
+      return {'date': split[0], 'time': split.length > 1 ? split[1] : '00:00'};
+    }).toList();
+
+    String date1 = map[0]['date']!, date2 = map[1]['date']!;
+    String time1 = map[0]['time']!, time2 = map[1]['time']!;
+
+    return date1 == date2 ? '$date1, $time1 - $time2' : '$date1 $time1 - $date2 $time2';
+  }
 }
 
 extension RangeIteration on List<int> {

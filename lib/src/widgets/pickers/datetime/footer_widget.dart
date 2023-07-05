@@ -4,12 +4,14 @@ import 'package:lazyui/config/config.dart';
 import 'package:lazyui/externals/line_awesome.dart';
 import 'package:lazyui/src/extensions/extensions.dart';
 import 'package:lazyui/src/utils/utils.dart';
+import 'package:lazyui/src/widgets/pickers/datetime/notifier.dart';
 import 'package:lazyui/src/widgets/widgets.dart';
 
 class PickerFooterWidget extends StatelessWidget {
   final String? confirmLabel;
   final Function()? onConfirm;
-  const PickerFooterWidget({super.key, this.confirmLabel, this.onConfirm});
+  final DateTimePickerNotifier notifier;
+  const PickerFooterWidget({super.key, this.confirmLabel, this.onConfirm, required this.notifier});
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +58,13 @@ class PickerFooterWidget extends StatelessWidget {
               ),
             ),
             Touch(
-              onTap: () => context.pop(),
+              onTap: () {
+                if(notifier.isTimeMode) {
+                  return notifier.toggleTimeMode();
+                }
+
+                context.pop();
+              },
               child: SlideUp(
                 delay: 400,
                 child: Iconr(

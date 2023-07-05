@@ -73,8 +73,8 @@ class DateTimePicker extends StatelessWidget {
                 model: forms['datetime'],
                 suffixIcon: La.calendar,
                 onTap: (model) async {
-                  DateTime? date = await Pickers.dateTimePicker(context, firstDate: DateTime(2020, 2, 10), lastDate: DateTime(2030, 5, 25), initialDate: DateTime(2022, 6, 10));
-                  if (date != null) model.text = date.format('dd MMMM yyyy HH:mm a');
+                  DateTime? date = await Pickers.dateTimePicker(context, maxDate: DateTime.now().add(1.y), initialDate: model.text.toDate());
+                  if (date != null) model.text = date.format('dd/MM/yyyy HH:mm a');
                 })
           ])
         ],
