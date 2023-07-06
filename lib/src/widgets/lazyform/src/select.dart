@@ -163,7 +163,7 @@ class Select extends StatelessWidget {
                         // show options
                         context.bottomSheet(
                             SelectPicker(
-                                initialValue: initValue ?? notifier.option,
+                                initialValue: notifier.option ?? initValue,
                                 options: options,
                                 onSelect: (option) {
                                   selectController.option = option;

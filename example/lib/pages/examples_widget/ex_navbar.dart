@@ -19,7 +19,7 @@ class ExNavbar extends StatelessWidget {
             color: Colors.black54,
           ),
           Text(
-            data[i],
+            data,
             style: Gfont.fs20.bold,
           ).margin(b: 10, t: 15),
           Text(

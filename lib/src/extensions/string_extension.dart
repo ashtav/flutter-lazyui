@@ -141,7 +141,11 @@ extension StringExtension on String {
       ).format(int.parse(num));
 
       result = result.replaceAll('.', separator);
-      return digits.isEmpty ? result : '$result,${digits.split('').take(decimalDigits).join('')}';
+      return digits.isEmpty
+          ? result
+          : decimalDigits == 0
+              ? result
+              : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
       return 'Rp?';
     }
@@ -149,6 +153,10 @@ extension StringExtension on String {
 }
 
 extension NullableStringExtension on String? {
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  }
+
   /// ``` dart
   /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
   /// "10-02-2023 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
@@ -206,7 +214,7 @@ extension NullableStringExtension on String? {
           List<String> dateParts = (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ?? []).cast();
           String ymd = '${dateParts[0]}-${dateParts[1]}-${dateParts[2]}';
 
-          if(fullDate.length > 1) {
+          if (fullDate.length > 1) {
             ymd += ' ${fullDate[1]}';
           }
 

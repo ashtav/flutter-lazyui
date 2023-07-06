@@ -14,6 +14,7 @@ part 'context_extension.dart';
 part 'datetime_extension.dart';
 part 'duration_extension.dart';
 part 'dynamic_extension.dart';
+part 'int_extension.dart';
 part 'list_extension.dart';
 part 'map_extension.dart';
 part 'string_extension.dart';
