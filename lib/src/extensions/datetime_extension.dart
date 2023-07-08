@@ -50,4 +50,11 @@ extension DateTimeExtension on DateTime {
 
     return wom;
   }
+
+  /// ```dart
+  /// DateTime.now().daysInMonth; // get days in month
+  /// ```
+  int get daysInMonth {
+    return DateTime(year, month + 1, 0).day;
+  }
 }
