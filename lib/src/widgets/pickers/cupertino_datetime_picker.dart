@@ -323,7 +323,7 @@ class CupertinoDateTimePickerWidget extends StatelessWidget {
                   List<String> types = ['date', 'month', 'year'];
 
                   return SlideUp(
-                    delay: 400,
+                    delay: 250,
                     child: Center(
                       child: Column(
                         children: [

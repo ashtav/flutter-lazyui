@@ -179,7 +179,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
               Builder(
                 builder: (context) {
                   return SlideUp(
-                    delay: 400,
+                    delay: 250,
                     child: Center(
                       child: SizedBox(
                         height: context.height * 0.4,

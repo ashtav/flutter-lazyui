@@ -56,3 +56,11 @@ extension StringOrIfExtension on String? {
     return this!;
   }
 }
+
+extension DynamicExtension on dynamic {
+  // check null or empty
+  bool get hasNullOrEmpty => this == null || toString().trim() == '';
+
+  // check null
+  bool get hasNull => this == null;
+}
