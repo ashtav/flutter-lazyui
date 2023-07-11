@@ -1,6 +1,7 @@
 library lazyui;
 
 export 'package:cached_network_image/cached_network_image.dart';
+export 'package:device_info_plus/device_info_plus.dart';
 export 'package:flutter_svg/flutter_svg.dart';
 export 'package:fluttertoast/fluttertoast.dart';
 export 'package:google_fonts/google_fonts.dart';
