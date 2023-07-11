@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:lazyui/lazyui.dart';
 
+part 'bool_extension.dart';
 part 'color_extension.dart';
 part 'context_extension.dart';
 part 'datetime_extension.dart';

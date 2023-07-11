@@ -23,6 +23,18 @@ extension ListExtension<T> on List<T> {
     }
     return list;
   }
+
+  /// ``` dart
+  /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')
+  /// ```
+  void updateWhere(bool Function(T e) condition, Function(List<T> data, int index) onUpdate, {Function()? onFail}) {
+    int i = indexWhere(condition);
+    if (i >= 0) {
+      onUpdate(this, i);
+      return;
+    }
+    onFail?.call();
+  }
 }
 
 extension ListNumExtension on List<num> {
@@ -150,7 +162,6 @@ extension ListStringExtension on List<String> {
 }
 
 extension RangeIteration on List<int> {
-
   /// ```dart
   /// [1, 5].iterate() // [1, 2, 3, 4, 5]
   /// [1, 5].iterate(reversed: true) // [5, 4, 3, 2, 1]
