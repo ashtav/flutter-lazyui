@@ -266,7 +266,6 @@ class _LzDropdownWidget extends StatelessWidget {
                         constraints:
                             const BoxConstraints(minWidth: 200, maxWidth: 250),
                         child: Row(
-                          mainAxisSize: Mas.min,
                           children: [
                             if (icon != null)
                               Iconr(icon,
