@@ -64,3 +64,7 @@ extension DynamicExtension on dynamic {
   // check null
   bool get hasNull => this == null;
 }
+
+extension KeyExtension on GlobalKey {
+  BuildContext? get context => currentContext;
+}

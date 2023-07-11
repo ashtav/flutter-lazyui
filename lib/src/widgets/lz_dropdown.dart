@@ -17,8 +17,9 @@ class LzDropdownOption {
     final LzDropdownStyle? style,
     final bool dismissOnSelect = true,
   }) async {
+    
     if (context == null) {
-      logg('Context cannot be null');
+      logg('Context not found!');
       return;
     }
 
