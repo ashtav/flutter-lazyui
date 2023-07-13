@@ -35,6 +35,15 @@ extension ListExtension<T> on List<T> {
     }
     onFail?.call();
   }
+
+  /// ```dart
+  /// List<int> numbers = [1, 2, 3, 4, 5];
+  /// numbers.generate((item, i) => Text(item.toString()));
+  /// ```
+
+  List<Widget> generate(Widget Function(T item, int i) generator) {
+    return List.generate(length, (i) => generator(this[i], i));
+  }
 }
 
 extension ListNumExtension on List<num> {
@@ -176,5 +185,18 @@ extension RangeIteration on List<int> {
     }
 
     return reversed ? result.reversed.toList() : result;
+  }
+
+  /// ```dart
+  /// get random value from list
+  /// [1, 5].randomize // it will return random value between 1 and 5
+  /// [3].randomize // it will return random value between 1 and 3
+  /// ```
+
+  int get randomize {
+    if (isEmpty) return 0;
+    int start = this[0], end = length > 1 ? this[1] : start;
+    List<int> numbers = length > 1 ? List.generate(end, (i) => i + start) : List.generate(start, (i) => i + 1);
+    return numbers.getRandom().first;
   }
 }
