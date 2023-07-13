@@ -19,6 +19,10 @@ class LazyUi {
     _defaultPrimaryColor = primaryColor ?? LzColors.hex('#212121');
     _defaultTextStyle = textStyle;
 
+    if(textStyle?.color == null){
+      _defaultTextStyle = textStyle?.copyWith(color: LzColors.black);
+    }
+
     switch (theme) {
       case AppTheme.dark:
         Utils.setSystemUI(navBarColor: Colors.black);
@@ -41,7 +45,7 @@ class Lazy {
   static double getRadius = _defaultRadius;
   static double getSpacing = _defaultSpacing;
   static Color getPrimaryColor = _defaultPrimaryColor;
-  static TextStyle font = _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
+  static TextStyle get font => _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
 }
 
 enum AppTheme { light, dark, system }

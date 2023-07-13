@@ -26,7 +26,8 @@ class FeaturesView extends StatelessWidget {
       'Refreshtor',
       'Popup Dialog',
       'Login Example',
-      'Widgets'
+      'Widgets',
+      'LzConfirm'
     ];
 
     features.sort();
@@ -140,6 +141,10 @@ class Actions {
 
         case 'Widgets':
           context.push(const WidgetsView());
+          break;
+
+        case 'LzConfirm':
+          context.push(const LzConfirmView());
           break;
         default:
       }

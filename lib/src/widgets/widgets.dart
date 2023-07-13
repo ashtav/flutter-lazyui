@@ -16,6 +16,7 @@ import 'package:lazyui/config/enum.dart';
 import 'package:lazyui/config/font.dart';
 import 'package:lazyui/externals/line_awesome.dart';
 import 'package:lazyui/externals/shimmer.dart';
+import 'package:lazyui/externals/tabler_icons.dart';
 import 'package:lazyui/src/extensions/extensions.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 

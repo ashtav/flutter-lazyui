@@ -19,6 +19,7 @@ part 'expandable_list_view.dart';
 part 'form_view.dart';
 part 'login_example.dart';
 part 'lz_button_view.dart';
+part 'lz_confirm_view.dart';
 part 'lz_dropdown.dart';
 part 'lz_option_view.dart';
 part 'lz_popover_view.dart';

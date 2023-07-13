@@ -13,6 +13,7 @@ ThemeData appTheme = ThemeData(
   textTheme: TextTheme(
     bodyLarge: gfont,
     bodyMedium: gfont,
+    titleLarge: gfont,
     titleMedium: gfont,
     titleSmall: gfont,
   ),

@@ -13,7 +13,7 @@ void main() {
       theme: AppTheme.light,
       textStyle: GoogleFonts.nunito(fontSize: 15.5),
       widgets: () {
-        LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
+        LzConfirm.config(cancel: 'Cancel', confirm: 'Yes!');
         LzToast.config(position: Position.center);
         // LzImage.config(errorWidget: <your widget here>);
 
