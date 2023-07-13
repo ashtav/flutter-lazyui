@@ -30,7 +30,9 @@ int _levenshtein(String str1, String str2) {
         if (str1[j - 1] == str2[i - 1]) {
           value = (prev ?? 0);
         } else {
-          value = [current[j], current[j - 1], (prev ?? 0)].reduce((a, b) => a < b ? a : b) + 1;
+          value = [current[j], current[j - 1], (prev ?? 0)]
+                  .reduce((a, b) => a < b ? a : b) +
+              1;
         }
       } else {
         value = i + j;
@@ -49,7 +51,9 @@ int _levenshtein(String str1, String str2) {
 // where 1 means the strings are identical, and 0 means the strings are completely dissimilar.
 
 double _distance(String? str1, String? str2) {
-  if (str1 == null && str2 == null) throw Exception('Trying to compare two null values');
+  if (str1 == null && str2 == null) {
+    throw Exception('Trying to compare two null values');
+  }
   if (str1 == null || str2 == null) return 0;
   str1 = str1.toString();
   str2 = str2.toString();
@@ -71,7 +75,9 @@ List<String> _iterateGrams(String value, [int gramSize = 2]) {
   // u00C0-u00FF is latin characters
   // u0621-u064a is arabic letters
   // u0660-u0669 is arabic numerals
-  RegExp nonWordRe = RegExp(r'[^a-zA-Z0-9\u00C0-\u00FF\u0621-\u064A\u0660-\u0669, ]+', multiLine: true);
+  RegExp nonWordRe = RegExp(
+      r'[^a-zA-Z0-9\u00C0-\u00FF\u0621-\u064A\u0660-\u0669, ]+',
+      multiLine: true);
 
   String simplified = '-${value.toLowerCase().replaceAll(nonWordRe, '')}-';
 
@@ -202,7 +208,8 @@ __get(String value, int gramSize, double minMatchScore) {
     List<List> newResults = [];
     int endIndex = math.min(50, results.length);
     for (int i = 0; i < endIndex; ++i) {
-      newResults.add([_distance(results[i][1], normalizedValue), results[i][1]]);
+      newResults
+          .add([_distance(results[i][1], normalizedValue), results[i][1]]);
     }
     results = newResults;
     results.sort((a, b) => (b[0] as double).compareTo(a[0] as double));
@@ -227,7 +234,9 @@ List? _get(String value, double minMatchScore) {
   List results = [];
 
   // start with high gram size and if there are no results, go to lower gram sizes
-  for (int gramSize = _fuzzyset["gramSizeUpper"]; gramSize >= _fuzzyset["gramSizeLower"]; --gramSize) {
+  for (int gramSize = _fuzzyset["gramSizeUpper"];
+      gramSize >= _fuzzyset["gramSizeLower"];
+      --gramSize) {
     results = __get(value, gramSize, minMatchScore) ?? [];
 
     if (results.isNotEmpty) {
@@ -252,7 +261,11 @@ class FuzzySet {
   final bool useLevenshtein;
   final int gramSizeLower, gramSizeUpper;
 
-  FuzzySet({this.sources = const [], this.useLevenshtein = true, this.gramSizeLower = 2, this.gramSizeUpper = 3}) {
+  FuzzySet(
+      {this.sources = const [],
+      this.useLevenshtein = true,
+      this.gramSizeLower = 2,
+      this.gramSizeUpper = 3}) {
     try {
       // default options
       _fuzzyset["gramSizeLower"] = gramSizeLower;
@@ -301,7 +314,8 @@ class FuzzySet {
     }
   }
 
-  Future<List?> get(String value, {List? defaultValue, double minMatchScore = .33}) async {
+  Future<List?> get(String value,
+      {List? defaultValue, double minMatchScore = .33}) async {
     try {
       List? result = _get(value, minMatchScore);
       return result ?? defaultValue;

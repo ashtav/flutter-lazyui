@@ -54,7 +54,11 @@ class LoginExampleView extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: Col(
                   children: [
-                    Slidebar(color: Colors.white, activeColor: Colors.white, size: (int i) => [i == 0 ? 20 : 5, 5]).margin(b: 15, t: 25),
+                    LzSlidebar(
+                            color: Colors.white,
+                            activeColor: Colors.white,
+                            size: (int i) => [i == 0 ? 20 : 5, 5])
+                        .margin(b: 15, t: 25),
                     LzButton(
                       text: 'Continue with phone number',
                       icon: La.mobileAlt,

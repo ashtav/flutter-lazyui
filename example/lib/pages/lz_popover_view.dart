@@ -10,7 +10,9 @@ class PopoverView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Popover'),
-        actions: [IconButton(key: gkey, onPressed: () {}, icon: const Icon(La.user))],
+        actions: [
+          IconButton(key: gkey, onPressed: () {}, icon: const Icon(La.user))
+        ],
       ),
       body: LzListView(
         children: [
@@ -28,11 +30,16 @@ class PopoverView extends StatelessWidget {
                   Faker.words(15),
                   style: Gfont.white,
                 ),
-              ).show(gkey.context!,
+              ).show(gkey.currentContext!,
                   builder: (child) => child
                       .ignore()
-                      .animate(onPlay: (c) => c.repeat(reverse: true), onComplete: (c) {})
-                      .moveY(begin: -10, duration: 700.ms, curve: Curves.easeInOutSine));
+                      .animate(
+                          onPlay: (c) => c.repeat(reverse: true),
+                          onComplete: (c) {})
+                      .moveY(
+                          begin: -10,
+                          duration: 700.ms,
+                          curve: Curves.easeInOutSine));
             },
           ),
           LzImage(
@@ -46,12 +53,17 @@ class PopoverView extends StatelessWidget {
                 Faker.words(15),
                 style: Gfont.white,
               ),
-            ).show(gkey2.context!,
+            ).show(gkey2.currentContext!,
                 isAtBottom: true,
                 builder: (child) => child
                     .ignore()
-                    .animate(onPlay: (c) => c.repeat(reverse: true), onComplete: (c) {})
-                    .moveY(begin: -10, duration: 700.ms, curve: Curves.easeInOutSine));
+                    .animate(
+                        onPlay: (c) => c.repeat(reverse: true),
+                        onComplete: (c) {})
+                    .moveY(
+                        begin: -10,
+                        duration: 700.ms,
+                        curve: Curves.easeInOutSine));
           }),
         ],
       ),

@@ -5,8 +5,8 @@ class FormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms =
-        LzForm.make(['name', 'birthday', 'fruit', 'hobby', 'email', 'password', 'province', 'number']).fill({'email': 'ashtaaav@gmail.com'});
+    final forms = LzForm.make(['name', 'birthday', 'fruit', 'hobby', 'email', 'password', 'province', 'number'])
+        .fill({'email': 'ashtaaav@gmail.com'});
 
     return Wrapper(
         child: Scaffold(
@@ -30,18 +30,22 @@ class FormView extends StatelessWidget {
           LzForm.radio(
               label: 'Radio Input *',
               options: ['Mango', 'Banana', 'Apple', 'Orange', 'Durian', 'Melon', 'Watermelon']
-                  .make((data, i) => Option(option: data[i], disabled: [0, 1, 3].contains(i))),
+                  .make((data, i) => Option(option: data, disabled: [0, 1, 3].contains(i))),
               model: forms['fruit']),
           LzForm.checkbox(
               label: 'Checkbox *',
-              options: List.generate(5, (i) => Option(option: ['Swimming', 'Reading', 'Coding', 'Cooking', 'Playing Music'][i], disabled: i == 1)),
+              options: List.generate(
+                  5,
+                  (i) => Option(
+                      option: ['Swimming', 'Reading', 'Coding', 'Cooking', 'Playing Music'][i], disabled: i == 1)),
               model: forms['hobby']),
           LzFormGroup(
             label: 'Account',
             prefixIcon: La.lock,
             children: [
               LzForm.input(label: 'Email *', hint: 'Input your email address', model: forms['email']),
-              LzForm.input(label: 'Password *', hint: 'Input your password', model: forms['password'], obsecureToggle: true),
+              LzForm.input(
+                  label: 'Password *', hint: 'Input your password', model: forms['password'], obsecureToggle: true),
             ],
           ),
           LzFormGroup(
@@ -69,7 +73,7 @@ class FormView extends StatelessWidget {
                   },
                   onSelect: (selector) {
                     // You can set value (Option, String (option), or dynamic (value)
-                    // provinceId = selector.option?.value
+                    // selector.setExtra(selector.option?.value); // set extra data
                   }),
 
               // set options from parameter
@@ -92,8 +96,10 @@ class FormView extends StatelessWidget {
               LzForm.input(label: 'Bank Account Number *', hint: 'Input your bank account number')
             ],
           ),
-          LzForm.number(label: 'Number *', hint: 'Input your number', model: forms['number'], min: 25, max: 100, readonly: false),
-          LzForm.input(label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
+          LzForm.number(
+              label: 'Number *', hint: 'Input your number', model: forms['number'], min: 25, max: 100, readonly: false),
+          LzForm.input(
+              label: 'Salary *', hint: 'Input your salary', keyboard: Tit.number, formatters: [InputFormat.idr()]),
           LzForm.input(
               label: 'Input with Suffix',
               hint: 'You can type or tap suffix',
@@ -118,7 +124,8 @@ class FormView extends StatelessWidget {
                 min: ['password:6', 'name:5'],
                 messages: FormMessages(required: {
                   'name': 'Please input your name',
-                  'fruit': 'Please select one of your favorite fruit, this is an example of required with custom message.',
+                  'fruit':
+                      'Please select one of your favorite fruit, this is an example of required with custom message.',
                   'email': 'Please input your email address',
                   'password': 'Please input your password',
                 }, email: {
@@ -133,6 +140,9 @@ class FormView extends StatelessWidget {
             if (form.ok) {
               LzToast.show('Form is valid');
             }
+
+            logg(form.value); // get value from form
+            logg(forms['province']?.notifier.extra); // get extra data from select
           }).style(LzButtonStyle.shadow, spacing: 20),
     ));
   }

@@ -1,4 +1,4 @@
-import 'dart:math';
+part of utils;
 
 List<String> words = [
   "lorem",
@@ -1190,20 +1190,20 @@ List<String> words = [
 ];
 
 _randomInt(int min, int max) {
-  Random rnd = Random();
+  math.Random rnd = math.Random();
   return rnd.nextInt((max - min) + 1) + min;
 }
 
 class Lipsum {
   /// Creates [numWords] number of random words.
   static String createWord([int numWords = 1]) {
-    Random random;
+    math.Random random;
 
     if (numWords > 1) {
       return createSentence(sentenceLength: numWords, numSentences: 1);
     }
 
-    random = Random();
+    random = math.Random();
     return words[random.nextInt(words.length)];
   }
 
@@ -1212,7 +1212,8 @@ class Lipsum {
   /// Sentences are either exactly [sentenceLength] words in length, or a randomly
   /// generated length. [numSentences] defines the number of sentences generated.
   /// Returned sentences are punctuated.
-  static String createSentence({int sentenceLength = -1, int numSentences = 1}) {
+  static String createSentence(
+      {int sentenceLength = -1, int numSentences = 1}) {
     int wordIndex;
     String sentence;
 
@@ -1234,11 +1235,13 @@ class Lipsum {
   /// Paragraphs are comprised of a random number of sentences, or explicitly
   /// [numSentences] long. [numParagraphs] specifies the number of paragraphs
   /// to generate.
-  static String createParagraph({int numSentences = -1, int numParagraphs = 1}) {
+  static String createParagraph(
+      {int numSentences = -1, int numParagraphs = 1}) {
     List<String> sentences = [];
 
     if (numParagraphs > 1) {
-      return createText(numSentences: numSentences, numParagraphs: numParagraphs);
+      return createText(
+          numSentences: numSentences, numParagraphs: numParagraphs);
     }
 
     if (numSentences < 0) {

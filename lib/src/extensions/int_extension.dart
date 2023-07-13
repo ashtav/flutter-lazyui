@@ -1,30 +1,17 @@
-import 'dart:io';
-import 'dart:math';
-import 'dart:typed_data';
+part of extensions;
 
-import 'package:path_provider/path_provider.dart';
-
-extension IntExtension on int {
-  /// ``` dart
-  /// print(99025.formatBytes()); // 96.7 KB
-  /// ```
-  String formatBytes([int decimals = 1]) {
-    int bytes = int.parse(toString());
-    if (bytes <= 0) return "0 B";
-    const suffixes = ["B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
-    var i = (log(bytes) / log(1024)).floor();
-    return '${(bytes / pow(1024, i)).toStringAsFixed(decimals)} ${suffixes[i]}';
+extension IntExtension on int? {
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 }
 
-extension Uint8ListExtension on Uint8List {
-  Future<File> toFile([String? filename]) async {
-    final Directory tempDir = await getTemporaryDirectory();
-    File file = await File(
-            '${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png')
-        .create();
-    file.writeAsBytesSync(this);
-
-    return file;
-  }
+extension CustomIntExtension on int {
+  /// ``` dart
+  /// // This extension is used to convert int to bool
+  ///
+  /// 1.toBool; // true
+  /// 0.toBool; // false
+  /// ```
+  bool get toBool => this == 1 ? true : false;
 }

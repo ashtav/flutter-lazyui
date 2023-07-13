@@ -16,7 +16,10 @@ class AnotherWidgetView extends StatelessWidget {
             onPressed: () {
               List<IconData> icons = [La.infoCircle, La.edit, La.trashAlt];
 
-              LzOption.show(context, options: ['See Detail', 'Edit', 'Delete'].options(icons: icons), confirmOnTap: [2], onSelect: (value) {
+              LzOption.show(context,
+                  options:
+                      ['See Detail', 'Edit', 'Delete'].options(icons: icons),
+                  confirmOnTap: [2], onSelect: (value) {
                 logg(value.option);
               });
             },
@@ -49,7 +52,8 @@ class AnotherWidgetView extends StatelessWidget {
           const SizedBox(
             height: 33,
           ),
-          Slidebar(active: 1, spacing: 10, size: (int i) => [i == 1 ? 20 : 5, 5]),
+          LzSlidebar(
+              active: 1, spacing: 10, size: (int i) => [i == 1 ? 20 : 5, 5]),
           const SizedBox(
             height: 33,
           ),

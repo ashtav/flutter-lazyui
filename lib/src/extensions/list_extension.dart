@@ -1,16 +1,11 @@
-import 'dart:math';
+part of extensions;
 
-import 'package:flutter/material.dart';
-import 'package:lazyui/src/utils/log.dart';
-
-import '../widgets/select_picker.dart';
-
-extension ListExtension on List {
+extension ListExtension<T> on List<T> {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
   /// ```
-  List getRandom([int length = 1]) {
-    List result = [];
+  List<T> getRandom([int length = 1]) {
+    List<T> result = [];
     for (int i = 0; i < length; i++) {
       result.add(this[Random().nextInt(this.length)]);
     }
@@ -18,21 +13,28 @@ extension ListExtension on List {
   }
 
   /// ``` dart
-  /// List<Option> options = ['A', 'B', 'C', 'D', 'E'].make((data, i) => Option(option: data[i]))
+  /// List<Option> options = ['A', 'B', 'C', 'D', 'E'].make((data, i) => Option(option: data))
   /// ```
 
-  List<T> make<T>(T Function(List data, int i) callback) {
-    List<T> list = [];
+  List<E> make<E>(E Function(T data, int i) callback) {
+    List<E> list = [];
     for (int i = 0; i < length; i++) {
-      list.add(callback(this, i));
+      list.add(callback(this[i], i));
     }
     return list;
   }
 
   /// ``` dart
-  /// ['A', 'B', 'C', 'D', 'E'].logs; // A, B, C, D, E
+  /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')
   /// ```
-  void get logs => forEach((e) => logg(e));
+  void updateWhere(bool Function(T e) condition, Function(List<T> data, int index) onUpdate, {Function()? onFail}) {
+    int i = indexWhere(condition);
+    if (i >= 0) {
+      onUpdate(this, i);
+      return;
+    }
+    onFail?.call();
+  }
 }
 
 extension ListNumExtension on List<num> {
@@ -53,7 +55,8 @@ extension ListMapExtension on List<Map> {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key, {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
+  List<Map<dynamic, dynamic>> groupBy(String key,
+      {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];
@@ -121,7 +124,7 @@ extension ListStringExtension on List<String> {
 
       options.add(Option(
           option: this[i],
-          value: values.length > i ? values[i] : this[i],
+          value: values.length > i ? values[i] : null,
           icon: icons.length > i ? icons[i] : null,
           disabled: disabled,
           style: style));
@@ -129,21 +132,49 @@ extension ListStringExtension on List<String> {
     return options;
   }
 
-  // convert list string to Text Widget
-
-  /// ``` dart
-  /// ['A', 'B', 'C', 'D', 'E'].toTexts()
+  /// Formats a date range with time.
+  ///
+  /// The `dateRangeFormat` method can be called on a `String` object representing a date range with time. The date range should consist of two elements separated by a space.
+  ///
+  /// Example:
+  /// ```dart
+  /// String range = '2023-07-01 10:00 2023-07-01 14:30';
+  /// String formattedRange = range.dateRangeFormat();
+  /// print(formattedRange); // Output: 2023-07-01, 10:00 - 14:30
   /// ```
-  List<Text> toTexts({TextStyle? style, TextAlign? align, TextOverflow? overflow}) {
-    List<Text> texts = [];
-    for (int i = 0; i < length; i++) {
-      texts.add(Text(
-        this[i],
-        style: style,
-        textAlign: align,
-        overflow: overflow,
-      ));
+  ///
+  /// The method returns the formatted date range as a `String`.
+  ///
+  /// If the dates in the first and second elements are the same, the format will be `<date>, <time1> - <time2>`. For example: `2023-07-01, 10:00 - 14:30`.
+  /// If the dates in the first and second elements are different, the format will be `<date1> <time1> - <date2> <time2>`. For example: `2023-07-01 10:00 - 2023-07-02 14:30`.
+
+  String dateRangeFormat() {
+    final map = this.map((e) {
+      final split = e.split(' ');
+      return {'date': split[0], 'time': split.length > 1 ? split[1] : '00:00'};
+    }).toList();
+
+    String date1 = map[0]['date']!, date2 = map[1]['date']!;
+    String time1 = map[0]['time']!, time2 = map[1]['time']!;
+
+    return date1 == date2 ? '$date1, $time1 - $time2' : '$date1 $time1 - $date2 $time2';
+  }
+}
+
+extension RangeIteration on List<int> {
+  /// ```dart
+  /// [1, 5].iterate() // [1, 2, 3, 4, 5]
+  /// [1, 5].iterate(reversed: true) // [5, 4, 3, 2, 1]
+  /// ```
+  List<int> iterate({bool reversed = false}) {
+    final start = this[0];
+    final end = this[1];
+    final result = <int>[];
+
+    for (var i = start; i <= end; i++) {
+      result.add(i);
     }
-    return texts;
+
+    return reversed ? result.reversed.toList() : result;
   }
 }

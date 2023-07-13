@@ -11,15 +11,19 @@ void main() {
       radius: 5,
       primaryColor: LzColors.dark,
       theme: AppTheme.light,
+      textStyle: GoogleFonts.nunito(fontSize: 15.5),
       widgets: () {
         LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
+        LzToast.config(position: Position.center);
+        // LzImage.config(errorWidget: <your widget here>);
 
         Errors.config(
-            botToken: '1650513497:AAG5-o3fW_Fe45xOJfNMAxDxRDrLXPubdHM',
-            chatId: '1099040541',
+            botToken: '<bot_token>',
+            chatId: '<chat_id>',
             useBot: true,
             errorBuilder: (ErrorInfo info) {
-              String message = 'This is custom error message: ${info.error}, ${info.device}';
+              String message =
+                  'This is custom error message: ${info.error}, ${info.device}';
               Bot.sendMessage(message, info.botToken!, info.chatId!);
             });
       });

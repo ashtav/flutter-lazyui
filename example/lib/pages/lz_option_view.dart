@@ -22,9 +22,12 @@ class LzOptionView extends StatelessWidget {
                   label: 'Lz Option',
                   hint: 'Tap to show option',
                   onTap: (_) {
-                    LzOption.show(context, options: ['Detail', 'Edit', 'Delete'].options(icons: [La.infoCircle, La.edit, La.trash]), confirmOnTap: [
-                      {2: 'Cancel|Confirm'}
-                    ], onSelect: (option) {
+                    LzOption.show(context,
+                        options: ['Detail', 'Edit', 'Delete']
+                            .options(icons: [La.infoCircle, La.edit, La.trash]),
+                        confirmOnTap: [
+                          {2: 'Cancel|Confirm'}
+                        ], onSelect: (option) {
                       logg(option.option);
                     });
                   }),
@@ -32,8 +35,15 @@ class LzOptionView extends StatelessWidget {
                   label: 'Custom Select Option',
                   hint: 'Tap to show option',
                   onTap: (_) {
-                    SelectPicker.show(context, fullScreen: true, options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options(),
-                        onSelect: (o) {
+                    SelectPicker.show(context,
+                        fullScreen: true,
+                        options: [
+                          'Seminar',
+                          'Workshop',
+                          'Training',
+                          'Meeting',
+                          'Playing'
+                        ].options(), onSelect: (o) {
                       logg(o.toMap());
                     });
                   })
@@ -47,10 +57,14 @@ class LzOptionView extends StatelessWidget {
                 LzSelectiveOption.show(context,
                     title: 'Select Address',
                     initValue: selected,
-                    options: _addresses.options(values: List.generate(15, (i) => i)), onSelect: (option) {
+                    options:
+                        _addresses.options(values: List.generate(15, (i) => i)),
+                    onSelect: (option) {
                   model.text = option.option;
                   selected = option;
-                }, activeColor: Colors.orange, suffix: const Icon(La.angleRight, color: Colors.black45));
+                },
+                    activeColor: Colors.orange,
+                    suffix: const Icon(La.angleRight, color: Colors.black45));
               })
         ],
       ),

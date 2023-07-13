@@ -1,8 +1,8 @@
-import 'package:lazyui/lazyui.dart';
-import 'package:teledart/telegram.dart';
+part of utils;
 
 class Bot {
-  static Future<bool> sendMessage(String message, String token, String chatId) async {
+  static Future<bool> sendMessage(
+      String message, String token, String chatId) async {
     bool isOk = false;
 
     try {
@@ -20,14 +20,17 @@ class Bot {
       message = message.replaceAllMapped(RegExp(pattern), (match) => '');
 
       Telegram telegram = Telegram(token);
-      bool ok = await telegram.sendMessage(chatId, message, parseMode: 'HTML').then((res) => true).catchError((err) {
+      bool ok = await telegram
+          .sendMessage(chatId, message, parseMode: 'HTML')
+          .then((res) => true)
+          .catchError((err) {
         logg('Bot.sendMessage : $err');
         return false;
       });
 
       isOk = ok;
     } catch (e, s) {
-      Errors.check(e, s);
+      Utils.errorCatcher(e, s);
     }
 
     return isOk;

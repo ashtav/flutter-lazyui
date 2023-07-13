@@ -1,6 +1,9 @@
+LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter. Simplifying Flutter development for those who prefer efficiency. Fewer lines, cleaner code, quicker results. The essential tool for the streamlined developer.
+
 ## Usage
 
 To use this plugin, add `lazyui` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
+
 
 ### Example
 
@@ -53,301 +56,131 @@ Container(
 
 ```
 
-### Helpers
-Some functions you can use to simplify and shorten your code.
+### Icons
 
-##### Context
+We use two types of icons such as LineAwesome and TablerIcon. You can use them like this:
 
-```dart 
-context.height // get height of screen
-context.width // get width of screen
-context.padding // EdgeInsets
-context.viewPadding // EdgeInsets
-context.focus(FocusNode()) // set or unset focus
-context.pop() // pop current page
-context.push(YourPage()) // push new page
+```dart
+Icon(La.user) // for LineAwesome
+Icon(Ti.user) // for TablerIcon
+```
+
+### Custom Extension
+
+We've designed Custom Extensions in LazyUi to simplify and enhance your Flutter coding experience, making common tasks more efficient and intuitive.
+
+##### Color
+```dart
+
+Colors color = Colors.blue;
+
+color.lighten(.3); // lighten color by 30%
+color.darken(.3); // darken color by 30%
+color.inverse(); // inverse color
+color.isDark(); // check if color is dark
+```
+
+##### Date Time
+```dart
+const date = DateTime.now();
+
+date.format('yyyy-MM-dd HH:mm:ss'); // format date
+date.weekOfMonth; // get week of month
+date.weekOfYear; // get week of year
+```
+
+##### Duration
+```dart
+Timer(1.s, () => print('1 second later')); // 1 second
+// You can use .ms, .s, .m, .h, .d, .w, .M, .y
+```
+
+##### Manipulate String
+```dart
+String name = 'john doe 94';
+
+name.ucfirst(); // convert first letter to uppercase
+name.ucwords(); // convert first letter of each word to uppercase
+name.initials(length = 2); // get initials, it will return jd
+
+"2023-03-03 00:00:00".toDate(); // convert string to DateTime
 
 ```
 
-##### Number
+##### Manipulate Map
+```dart
+Map<String, dynamic> item = {
+    'name': 'Apple',
+    'price': '$1.00'
+};
 
-```dart 
-[50, 100].numInRange(double) // generate float number between 50 - 100
-[50, 100].numInRange(int) // generate integer number between 50 - 100
+item.add({'qty': 5}) // add new key-value pair
+item.removes(['price']) // remove key-value pair
+item.get(['name']) // get specific data, it will return {'name': 'Apple'}
+item.renameKey({'name': 'item_name'}) // rename key, from name to item_name
 
-Utils.randNum(18); // generate random int value, max length is 18
-Utils.randString(10); // generate random string value
-
-1500.idr() // convert to IDR currency, Rp1.500
-// Another example '2.500'.idr() -> Rp2.500, 3500.15.idr() -> Rp3.500,15
-
-'45'.isNumeric // true
-344.isNumeric // true
-
-99025.formatBytes() // 96.7 KB
+item.numeric(['price']) // convert to numeric, it will return price as double
+item.ucfirst(['name']) // convert first letter to uppercase
+item.ucwords(['name']) // convert first letter of each word to uppercase
+item.lowers(['name']) // convert to lowercase
+item.uppers(['name']) // convert to uppercase
+item.currency(['price'], prefix: 'Rp', locale: 'id_ID') // convert to currency, it will return Rp1.000,00
 ```
 
-##### List or Array
+### Custom Widget
 
-```dart 
-['a', 'b', '4', 'e', '1'].getRandom() // ['e']
+LazyUi's Custom Widgets are pre-built components designed to simplify your UI development process in Flutter, providing efficient and visually appealing solutions to common design challenges.
 
-/* ----------------------------------------
-| Grouping List<Map>
--------------------------------- */
+##### LazyConfig
 
-List<Map> data = [{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}]
-List<Map> group = data.groupBy('date')
-// result: [{'2022-01-01': [{'date': '2022-01-01', 'name': 'John'}, {'date': '2022-01-01', 'name': 'Jane'}]}]
-```
 
-##### String
+```dart
+// Put this code in your main.dart file after, WidgetsFlutterBinding.ensureInitialized();
 
-```dart 
+LazyUi.config(
+    radius: 5, // default radius for LazyUi custom widgets
+    primaryColor: LzColors.dark,
+    theme: AppTheme.light,
+    widgets: () {
+        // If you want to use LzConfirm widget
+        LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
+        
+        // If you want to use Telegram Bot for error handling
+        Errors.config(
+            botToken: '<bot_token>',
+            chatId: '<chat_id>',
+            useBot: true, // if false, error will be printed in console only
+            errorBuilder: (ErrorInfo info) {
+                // Here you can customize your error message
 
-'john doe'.ucwords // John Doe
-'john doe'.ucfirst // John doe
-'john doe'.firstChar() // JD
-'lipsum99'.getNumeric // 99
-'lorem ipsum dolor'.removeStringBefore('ipsum'); // ipsum dolor
-'lorem ipsum dolor'.removeStringAfter('ipsum'); // lorem ipsum
-'lorem ipsum dolor'.removeStringBetween('lorem','ipsum'); // lorem dolor
-'lorem ipsum dolor'.getStringBetween('lorem','ipsum'); // ipsum
-'<h1>Hello World</h1>'.removeHtmlTag; // Hello World
-'{}'.isJson; // true
-
-Lipsum.createWord(15) // generate dummy text
-```
-
-##### Map
-
-```dart 
-
-Map<String, TextEditingController> forms = {'name': TextEditingController()}
-Map<String, dynamic> data = forms.toMap(manipulate: (map) {
-    return map.numeric(['price', 'stock'])
-        .ucwords(['name'])
-        .ucfirst(['address'])
-        .currency(['price']);
-});
-
-/* ----------------------------------------
-| Map, TextEditingController & FocusNode
--------------------------------- */
-
-final forms = Forms.create(['name', {'stock': 1}]); // Only String and Map are allowed
-final nodes = Forms.createNodes(['name', 'stock']);
-
-// to validate Map<String, TextEditingController>
-Forms form = Forms.validate(forms, required: ['*']);
-
-if(!form.ok){
-    print(form.errors.message)
-}
-```
-
-##### Scroll
-
-```dart 
-
-/* ----------------------------------------
-| Scroll to Widget
--------------------------------- */
-
-ListView(
-    controller: yourScrollController,
-    children: [
-        YourWidget(
-            key: yourGlobalKey
-        )
-    ]
-)
-
-double size = context.width; // width or height
-Utils.scrollToWidget(yourGlobalKey, yourScrollController, size);
-
-/* ----------------------------------------
-| Scroll to TOP or BOTTOM
--------------------------------- */
-
-Utils.scrollTo(scroll, to: AxisDirection.up);
-
-/* ----------------------------------------
-| Max & Min Scroll
--------------------------------- */
-
-List max = [10, 50]; // [top, bottom]
-double max = 50; // top and bottom
-
-bool hasMax = Utils.scrollHasMax(scrollController, max);
-
-// For example:
-void yourScrollListener() {
-    double pixel = scrollController.position.pixels;
-
-    if (Utils.scrollHasMax(scrollController, [20, 50])) {
-        scrollController.animateTo(
-            pixel,
-            duration: const Duration(milliseconds: 250),
-            curve: Curves.easeInBack
+                String message = 'This is custom error message: ${info.error}, ${info.device}';
+                Bot.sendMessage(message, info.botToken!, info.chatId!);
+            }
         );
     }
-}
+);
 ```
 
-##### Status Bar
+##### Text Style
 
-```dart 
-
-Utils.statusBar(true); // Show or hide status bar
-Utils.setSystemUI(navBarColor: Colors.white); // Change status bar or navigation bar color
+```dart
+Text('hello', style: Gfont.orange.bold.fs(20))
 ```
 
-##### Images, Files
+##### Shortcuts
 
-```dart 
-
-// Convert base64 to file
-File file = Utils.base64ToFile('<your base64 string>');
-
-// Convert base64 to image
-File file = Utils.base64ToImage('<your base64 string>');
-
-// Convert image to file
-Utils.imageToFile('images/item.png')
-
-// Convert image url to file
-Utils.urlToFile('<your image url>')
-
-// Convert File to Base64
-Utils.fileToBase64(file);
-
-// Convert Uint8List to File
-File file = await [].toFile();
-
-// Convert Base64 to File
-File file = await '<base64-string>'.base64ToFile();
-
-// Convert Base64 to Image
-Image file = await '<base64-string>'.base64ToImage();
-
-// Convert asset image to File
-File file = await 'images/avatar.png'.imageToFile(); // from assets
-
-// Convert network image to File
-File file = await '<image-url>'.urlToFile();
+```dart
+CrossAxisAlignment.end // Caa.end
+EdgeInsets.all(15) // Ei.all(15)
+FontWeight.bold // Fw.bold
+MainAxisSize.min // Mas.min
+MainAxisAlignment.start // Maa.start
+TextAlign.justify // Ta.justify
+TextOverflow.ellipsis // To.ellipsis
+TextInputType.number // Tit.number
+WrapCrossAlignment.center // Wca.center
+WrapAlignment.spaceAround // Wa.spaceAround
 ```
 
-##### Date & Time
 
-```dart 
-
-String date = Utils.msToDateTime(1625386377499, format: 'D, d F Y h:i:s'); // Saturday, 20 March 2021
-DateTime.now().format('dd/MM/yyyy') // Date format
-
-DateTime.now().weekOfMonth // Get number of week in month
-DateTime.now().weekOfYear // Get number of week in year
-```
-
-##### Others
-
-```dart 
-
-Utils.hex('fff'); // White
-Utils.orientation([DeviceOrientation.landscapeLeft]); // Change device orientation
-Utils.copy('<content>'); // Copy text to clipboard
-
-String? text;
-text.isNull // true, instead of text == null
-
-String? name;
-name.orIf('-', [null, '']) // It's mean if name is null or empty, then return '-'
-
-logg('lorem ipsum', color: 'r', limit: 1500); // Print in debug console
-```
-
-### Widgets
-Some widgets you can use to simplify and shorten your code.
-
-```dart 
-// 1. Wrapper
-// set unfocus on tap outside of TextField
-Wrapper(child: Scaffold())
-
-// 2. BounceScroll
-ListView(physics: BounceScroll())
-
-// 3. CenterDialog
-showDialog(context: context, builder: (_) => CenterDialog(child: child))
-
-// 4. Intrinsic
-// Shortcut of `IntrinsicHeight` widget
-Intrinsic(children: List.generate(3, (i) => Expanded(child: child)))
-
-// 5. Skeleton
-Skeleton(size: 15); // width and height is 15
-Skeleton(size: [50, 15]); // width is 50, height is 15
-Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
-Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
-
-// 6. None
-// Shortcut of `SizedBox.shrink()`
-Container(child: const None())
-
-// 7. Touch
-// Short hand to use GestureDetector with translucent behavior
-Touch(onTap: () {}, child: child)
-
-// 8. InkW
-// Custom widget of `InkWell`
-InkW(onTap: (){}, child: child)
-
-// 9. Textr & Iconr
-// It's combination between Text or Icon and Container
-
-// 10. DropdownDialog
-DropdownDialog(context, options: ['Option 1', 'Option 2'], onSelect: (option, index) {})
-
-// 11. Confirm
-Confirm(
-    icon: Icons.info_outline_rounded,
-    title: 'Confirmation',
-    message: 'Are you sure to confirm this?',
-    onConfirm: (ok) {
-
-    }).show(context);
-
-// 12. GetImage
-GetImage('profile.png') // from assets
-GetImage('profile.svg') // from assets
-GetImage('https://example.com/profile.png') // from url
-
-// 13. Refreshtor
-Refreshtor(
-    onRefresh: () async {
-        // do something
-    },
-    child: ListView()
-)
-
-// 14. Forms
-Forms.input(label: 'Name', hint: 'Enter your name'),
-Forms.radio(label: 'Gender', options: ['Male', 'Female']),
-Forms.select(label: 'Country', options: ['Indonesia', 'Malaysia', 'Singapore']),
-Forms.checkbox(label: 'Hobbies', options: ['Reading', 'Cooking', 'Swimming']),
-Forms.switches(label: 'Available'),
-
-FormsGroup(
-    children: [
-        // Forms.input, Forms.radio, etc...
-    ]
-)
-
-// 15. Pickers (Date & Time)
-DateTime? date = await Pickers.datePicker(context, type: DatePickerType.monthYear);
-DateTime? time = await Pickers.timePicker(context);
-
-// 16. StackedListView
-StackedListView(stacked: YourWidget(), children: [])
-
-```
+For more information and examples, see the [example](https://github.com/ashtav/flutter-lazyui/tree/master/example).

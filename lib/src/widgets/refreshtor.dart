@@ -1,6 +1,4 @@
-import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of widgets;
 
 enum RefrehtorType { curve, bar, arrow }
 
@@ -11,6 +9,7 @@ class Refreshtor extends StatelessWidget {
   final Color? indicatorColor, textColor, releaseTextColor, backgroundColor;
   final RefrehtorType type;
   final double offsetToArmed;
+  final double? height;
 
   const Refreshtor(
       {Key? key,
@@ -23,7 +22,8 @@ class Refreshtor extends StatelessWidget {
       this.releaseTextColor,
       this.backgroundColor,
       this.type = RefrehtorType.bar,
-      this.offsetToArmed = 80})
+      this.offsetToArmed = 80,
+      this.height})
       : super(key: key);
 
   @override
@@ -64,14 +64,18 @@ class Refreshtor extends StatelessWidget {
                         color: indicatorColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark),
                         borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
                 if (!isLoading && !isFinal)
-                  Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 13,
-                          fontWeight: isArmed ? Fw.bold : Fw.normal,
-                          color: isArmed
-                              ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
-                              : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
-                      margin: Ei.only(t: 5 * value))
+                  AnimatedOpacity(
+                    duration: 300.ms,
+                    opacity: value > .2 ? 1 : 0,
+                    child: Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            fontSize: 13,
+                            fontWeight: isArmed ? Fw.bold : Fw.normal,
+                            color: isArmed
+                                ? (releaseTextColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark))
+                                : textColor ?? (LzColors.isDark(backgroundColor ?? Colors.white) ? Colors.white : LzColors.dark)),
+                        margin: Ei.only(t: 5 * value)),
+                  )
               ],
             ),
           ),
@@ -201,7 +205,7 @@ class Refreshtor extends StatelessWidget {
                   RefrehtorType.arrow: arrowRefresh(value, controller),
                 };
 
-                return contents[type]!;
+                return Container(margin: Ei.only(t: height ?? 0), child: contents[type]!);
               },
             ),
             child

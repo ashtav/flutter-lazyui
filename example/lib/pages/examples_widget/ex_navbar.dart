@@ -19,7 +19,7 @@ class ExNavbar extends StatelessWidget {
             color: Colors.black54,
           ),
           Text(
-            data[i],
+            data,
             style: Gfont.fs20.bold,
           ).margin(b: 10, t: 15),
           Text(
@@ -68,7 +68,8 @@ class ExNavbar extends StatelessWidget {
                       color: Colors.white,
                       child: Icon(
                         icons[i],
-                        color: state.index == i ? Colors.black87 : Colors.black45,
+                        color:
+                            state.index == i ? Colors.black87 : Colors.black45,
                       ),
                     ),
                   );

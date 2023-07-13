@@ -1,8 +1,4 @@
-import 'dart:math';
-
-import 'package:lazyui/lazyui.dart';
-
-import './constant.dart';
+part of utils;
 
 class Faker {
   // generate random words based on length
@@ -23,26 +19,35 @@ class Faker {
     try {
       String result = '';
       for (int i = 0; i < (length - 1); i++) {
-        int randomNumber = Random().nextInt(10);
+        int randomNumber = math.Random().nextInt(10);
         result += randomNumber.toString();
       }
-      return (startWith ?? Random().nextInt(10)).toString() + result;
+      return (startWith ?? math.Random().nextInt(10)).toString() + result;
     } catch (e) {
       return '0';
     }
   }
 
   // generate random price based on length
-  static String price([int length = 5, String separator = '.']) {
-    int randomInt = Random().nextInt(pow(10, length) as int);
+  static String price(
+      {int length = 5, String locale = 'id_ID', String prefix = ''}) {
+    int randomInt = math.Random().nextInt(math.pow(10, length) as int);
     String price = randomInt.toString();
 
-    return (price.length < length ? '${price}1' : price).idr(separator: separator);
+    final value = (price.length < length ? '${price}1' : price);
+
+    String result = NumberFormat.currency(
+      locale: locale,
+      decimalDigits: 0,
+      symbol: prefix,
+    ).format(int.parse(value));
+
+    return result;
   }
 
   // generate random name
   static String name() {
-    return Const.names[Random().nextInt(Const.names.length)];
+    return Const.names[math.Random().nextInt(Const.names.length)];
   }
 
   // generate random email
@@ -50,7 +55,8 @@ class Faker {
     String result = name().toLowerCase().replaceAll(' ', '');
 
     if (addNumber) {
-      result += '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
+      result +=
+          '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
     } else {
       result += '@$domain';
     }
@@ -60,31 +66,29 @@ class Faker {
 
   // generate random phone number
   static String phone([String prefix = '08']) {
-    return '$prefix${Random().nextInt(999999999)}';
+    return '$prefix${math.Random().nextInt(999999999)}';
   }
 
   // generate random address
   static String address() {
-    return Const.address[Random().nextInt(Const.address.length)];
+    return Const.address[math.Random().nextInt(Const.address.length)];
   }
 
   // generate random date
-  static String date() {
-    String day = (Random().nextInt(30) + 1).toString().padLeft(2, '0');
-    String month = (Random().nextInt(11) + 1).toString().padLeft(2, '0');
-    String year = (Random().nextInt(30) + 1990).toString();
-
-    return '$year-$month-$day';
+  static String date({String format = 'yyyy-MM-dd'}) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat(format).format(now);
+    return formattedDate;
   }
 
   // generate random time
   static String time() {
-    return '${Random().nextInt(24)}:${Random().nextInt(60)}:${Random().nextInt(60)}';
+    return '${math.Random().nextInt(24)}:${math.Random().nextInt(60)}:${math.Random().nextInt(60)}';
   }
 
   // generate random invoice number
   static String invoice() {
-    return 'INV-${Random().nextInt(999999999)}';
+    return 'INV-${math.Random().nextInt(999999999)}';
   }
 
   // generate random password with lowercase, uppercase, number, and special character
@@ -130,7 +134,7 @@ class Faker {
 
     String result = '';
     for (int i = 0; i < length; i++) {
-      result += all[Random().nextInt(all.length)];
+      result += all[math.Random().nextInt(all.length)];
     }
 
     return result;
@@ -148,9 +152,9 @@ class Faker {
 
     switch (type) {
       case 'avatar':
-        return '$github/avatar/${Random().nextInt(16) + 1}.jpg';
+        return '$github/avatar/${math.Random().nextInt(16) + 1}.jpg';
       default:
-        return '$github/food/${Random().nextInt(12) + 1}.jpg';
+        return '$github/food/${math.Random().nextInt(12) + 1}.jpg';
     }
   }
 }

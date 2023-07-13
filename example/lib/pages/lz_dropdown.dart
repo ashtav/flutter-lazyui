@@ -15,7 +15,7 @@ class LzDropdownView extends StatelessWidget {
               key: key,
               onPressed: () {
                 final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
-                LzDropdownOption.show(key.context,
+                LzDropdownOption.show(key.currentContext,
                     offset: const Offset(20, 0),
                     options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons),
                     style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
@@ -36,7 +36,8 @@ class LzDropdownView extends StatelessWidget {
                   key: gkey,
                   onTap: () {
                     final options = ['Details', 'Archive', 'Edit', 'Delete'].options(disableds: [1]);
-                    LzDropdownOption.show(gkey.context, options: options, offset: const Offset(20, 0), onSelect: (option) {});
+                    LzDropdownOption.show(gkey.currentContext,
+                        options: options, offset: const Offset(20, 0), onSelect: (option) {});
                   },
                   padding: Ei.sym(h: 20, v: 15),
                   color: Colors.white,
@@ -83,7 +84,8 @@ class ProductItem extends StatelessWidget {
               }),
         };
 
-        LzDropdownOption.show(context, options: options, subOptions: subOptions, dismissOnSelect: false, onSelect: (control) {
+        LzDropdownOption.show(context, options: options, subOptions: subOptions, dismissOnSelect: false,
+            onSelect: (control) {
           logg(control.option.toMap());
 
           switch (control.option.option) {

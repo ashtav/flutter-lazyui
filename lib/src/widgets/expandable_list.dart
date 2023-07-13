@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of widgets;
 
 class ExpandableContent {
   final String title;
@@ -30,7 +29,8 @@ class ExpandableList extends StatefulWidget {
   State<ExpandableList> createState() => _ExpandableListState();
 }
 
-class _ExpandableListState extends State<ExpandableList> with TickerProviderStateMixin {
+class _ExpandableListState extends State<ExpandableList>
+    with TickerProviderStateMixin {
   List<AnimationController> controllers = [];
   List<Animation<double>> animations = [];
   List<int> actives = [];
@@ -45,7 +45,10 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
   void init() {
     length = widget.children.length;
 
-    controllers = List.generate(length, (i) => AnimationController(vsync: this, duration: const Duration(milliseconds: 300)));
+    controllers = List.generate(
+        length,
+        (i) => AnimationController(
+            vsync: this, duration: const Duration(milliseconds: 300)));
     animations = List.generate(
         length,
         (i) => CurvedAnimation(
@@ -120,10 +123,12 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     return Container(
-      decoration: BoxDecoration(border: widget.border ? Br.all() : null, borderRadius: Br.radius(widget.radius ?? radius)),
+      decoration: BoxDecoration(
+          border: widget.border ? Br.all() : null,
+          borderRadius: Br.radius(widget.radius ?? radius)),
       child: ClipRRect(
         borderRadius: Br.radius(widget.radius ?? radius),
         child: Col(
@@ -145,9 +150,12 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
                             onTap(i);
 
                             // scroll to this widget
-                            if (gkey.currentContext != null && widget.focusOnExpand && controller.value <= 0) {
+                            if (gkey.currentContext != null &&
+                                widget.focusOnExpand &&
+                                controller.value <= 0) {
                               await Future.delayed(300.ms);
-                              Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
+                              Scrollable.ensureVisible(gkey.currentContext!,
+                                  duration: 250.ms);
                             }
                           },
                           padding: Ei.all(20),
@@ -160,9 +168,14 @@ class _ExpandableListState extends State<ExpandableList> with TickerProviderStat
                                   child: Textr(
                                 title,
                                 margin: Ei.only(r: 15),
-                                overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
+                                overflow: widget.titleEllipsis
+                                    ? Tof.ellipsis
+                                    : Tof.visible,
                               )),
-                              RotationTransition(turns: turnsTween.animate(controller), child: const Icon(La.angleRight, color: Colors.black38))
+                              RotationTransition(
+                                  turns: turnsTween.animate(controller),
+                                  child: const Icon(La.angleRight,
+                                      color: Colors.black38))
                             ],
                           ))),
                   SizeTransition(

@@ -18,12 +18,12 @@ class LaziconView extends StatelessWidget {
             children: List.generate(16, (i) {
               return Container(
                 width: (context.width / 4),
-                decoration: BoxDecoration(border: Br.only([i < 4 ? '' : 't', 'r'])),
+                decoration:
+                    BoxDecoration(border: Br.only([i < 4 ? '' : 't', 'r'])),
                 padding: Ei.all(15),
                 height: 160,
                 child: Center(
                     child: Column(children: [
-                  Lazicon.get(LaziconType.nodata),
                   Textr(
                     'LaziconType.nodata',
                     style: Gfont.fs14.muted,

@@ -1,5 +1,4 @@
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
+part of extensions;
 
 extension DateTimeDynamicExtension on DateTime? {
   /// https://api.flutter.dev/flutter/intl/DateFormat-class.html
@@ -50,5 +49,12 @@ extension DateTimeExtension on DateTime {
     }
 
     return wom;
+  }
+
+  /// ```dart
+  /// DateTime.now().daysInMonth; // get days in month
+  /// ```
+  int get daysInMonth {
+    return DateTime(year, month + 1, 0).day;
   }
 }

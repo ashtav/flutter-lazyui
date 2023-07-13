@@ -1,27 +1,25 @@
 name: lazyui
-description: Make it fast as possible it can.
-version: 0.0.1
+description: LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter. Simplifying Flutter development for those who prefer efficiency. Fewer lines, cleaner code, quicker results. The essential tool for the streamlined developer.
+version: 0.1.0
 homepage: https://github.com/ashtav/flutter-lazyui.git
-publish_to: none
 
 environment:
-  sdk: '>=2.18.4 <3.0.0'
+  sdk: '>=3.0.3 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
-  animator: ^3.2.0
+  animator: ^3.3.0
   cached_network_image: ^3.2.3
   custom_refresh_indicator: ^2.0.1
   device_info_plus: ^8.1.0
   flutter:
     sdk: flutter
-  flutter_keyboard_visibility: ^5.4.0
   flutter_spinkit: ^5.1.0
   flutter_svg: ^2.0.1
   fluttertoast: ^8.2.1
   google_fonts: ^4.0.3
   http: ^0.13.5
-  intl: ^0.17.0
+  intl: ^0.18.0
   path_provider: ^2.0.12
   stack_trace: ^1.11.0
   teledart: ^0.5.4

@@ -1,7 +1,4 @@
-import 'dart:async';
-
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of widgets;
 
 class LzDropdownController {
   final Option option;
@@ -19,9 +16,10 @@ class LzDropdownOption {
     final Offset offset = const Offset(20, 0),
     final LzDropdownStyle? style,
     final bool dismissOnSelect = true,
+    final MainAxisSize mainAxisSize = Mas.min,
   }) async {
     if (context == null) {
-      logg('Context cannot be null');
+      logg('Context not found!');
       return;
     }
 
@@ -34,7 +32,8 @@ class LzDropdownOption {
           offset: offset,
           onSelect: onSelect,
           style: style,
-          dismissOnSelect: dismissOnSelect),
+          dismissOnSelect: dismissOnSelect,
+          mainAxisSize: mainAxisSize),
     );
   }
 }
@@ -59,6 +58,7 @@ class _LzDropdownWidget extends StatelessWidget {
   final Function(LzDropdownController)? onSelect;
   final LzDropdownStyle? style;
   final bool dismissOnSelect;
+  final MainAxisSize mainAxisSize;
 
   const _LzDropdownWidget(
       {required this.context,
@@ -67,7 +67,8 @@ class _LzDropdownWidget extends StatelessWidget {
       this.offset = Offset.zero,
       this.onSelect,
       this.style,
-      this.dismissOnSelect = true});
+      this.dismissOnSelect = true,
+      this.mainAxisSize = Mas.min});
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +116,9 @@ class _LzDropdownWidget extends StatelessWidget {
 
       // prevent dx from going out of screen
       if (dx < 0) dx = (0 + offset.dx);
-      if ((dx + ddWidth + offset.dx) > context.width) dx = (context.width - ddWidth - (offset.dx));
+      if ((dx + ddWidth + offset.dx) > context.width) {
+        dx = (context.width - ddWidth - (offset.dx));
+      }
 
       // prevent dy from going out of screen
       if (dy + ddHeight > context.height) {
@@ -142,7 +145,7 @@ class _LzDropdownWidget extends StatelessWidget {
       double caretXPos = dxCaret + (itemWidth / 2) - 10; // 10 = caret width
 
       double cx = itemWidth >= context.width ? caretPosMax : caretXPos;
-      double cy = isOut ? caretYPosOut : dyCaret + 15;
+      double cy = isOut ? caretYPosOut : dyCaret + 20;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // get final dropdown position
@@ -192,7 +195,7 @@ class _LzDropdownWidget extends StatelessWidget {
                     skew: 2,
                   ),
                   child: const SizedBox(
-                    height: 15,
+                    height: 10,
                     width: 20,
                   ),
                 ),
@@ -249,20 +252,23 @@ class _LzDropdownWidget extends StatelessWidget {
                           },
                     padding: Ei.sym(v: 15, h: 20),
                     border: Br.only(['t'],
-                        except: useBorder ? i == 0 : !separators.contains(i - 1), width: separators.contains(i - 1) ? separatorHeight : 1),
+                        except: useBorder ? i == 0 : !separators.contains(i - 1),
+                        width: separators.contains(i - 1) ? separatorHeight : 1),
                     child: Opacity(
                       opacity: disabled ? .4 : 1,
                       child: Container(
                         constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
                         child: Row(
-                          mainAxisSize: Mas.min,
+                          mainAxisSize: mainAxisSize,
                           children: [
-                            if (icon != null) Iconr(icon, margin: Ei.only(r: 15), color: option.style?.color ?? LzColors.dark),
+                            if (icon != null)
+                              Iconr(icon, margin: Ei.only(r: 15), color: option.style?.color ?? LzColors.dark),
                             Flexible(
                                 child: Text(
                               optionName,
-                              style: LazyUi.getConfig.textStyle?.copyWith(
-                                  color: option.style?.color ?? LzColors.dark, fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
+                              style: Lazy.font.copyWith(
+                                  color: option.style?.color ?? LzColors.dark,
+                                  fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
                             )),
                           ],
                         ),

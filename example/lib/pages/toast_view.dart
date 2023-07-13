@@ -43,7 +43,8 @@ class ToastView extends StatelessWidget {
           LzButton(
             text: 'Show Toast with Message',
             onTap: (_) {
-              LzToast.show(forms['message']!.controller.text, duration: 3.s, icon: La.comment);
+              LzToast.show(forms['message']!.controller.text,
+                  duration: 3.s, icon: La.comment);
             },
           )
         ],

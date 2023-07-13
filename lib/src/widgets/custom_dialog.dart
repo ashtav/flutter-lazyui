@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of widgets;
 
 class CustomDialog extends StatelessWidget {
   final BorderRadiusGeometry? radius;
@@ -27,7 +26,7 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     return CenterDialog(
         showTapClose: showTapClose,
@@ -36,8 +35,13 @@ class CustomDialog extends StatelessWidget {
           children: [
             Container(
               width: context.width,
-              constraints: BoxConstraints(maxHeight: (context.height * .7) - (context.viewInsets.bottom / 2)),
-              decoration: BoxDecoration(gradient: gradientColor, color: color ?? Colors.white, borderRadius: this.radius ?? Br.radius(radius)),
+              constraints: BoxConstraints(
+                  maxHeight:
+                      (context.height * .7) - (context.viewInsets.bottom / 2)),
+              decoration: BoxDecoration(
+                  gradient: gradientColor,
+                  color: color ?? Colors.white,
+                  borderRadius: this.radius ?? Br.radius(radius)),
               child: Column(
                 mainAxisSize: Mas.min,
                 crossAxisAlignment: alignment ?? Caa.center,
@@ -60,7 +64,11 @@ class CustomDialog extends StatelessWidget {
                 child: Container(
                   padding: Ei.all(20),
                   decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
-                    BoxShadow(color: Utils.hex('fff'), spreadRadius: 25, blurRadius: 25, offset: const Offset(0, -7)),
+                    BoxShadow(
+                        color: Utils.hex('fff'),
+                        spreadRadius: 25,
+                        blurRadius: 25,
+                        offset: const Offset(0, -7)),
                   ]),
                   child: const Icon(La.times),
                 ).onTap(() => context.pop()),
