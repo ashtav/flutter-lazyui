@@ -3,7 +3,7 @@ import 'package:lazyui/src/utils/utils.dart';
 
 import 'config.dart';
 
-TextStyle gfont = LazyUi.getConfig.textStyle!;
+TextStyle gfont = Lazy.font;
 
 class Gfont {
   // font color

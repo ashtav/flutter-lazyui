@@ -266,7 +266,7 @@ class _LzDropdownWidget extends StatelessWidget {
                             Flexible(
                                 child: Text(
                               optionName,
-                              style: LazyUi.getConfig.textStyle?.copyWith(
+                              style: Lazy.font.copyWith(
                                   color: option.style?.color ?? LzColors.dark,
                                   fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
                             )),

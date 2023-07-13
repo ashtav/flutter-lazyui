@@ -51,7 +51,7 @@ class PickerFooterWidget extends StatelessWidget {
                           textAlign: Ta.center,
                           maxLines: 1,
                           overflow: Tof.ellipsis,
-                          style: Lazy.textStyle(context)?.copyWith(fontWeight: Fw.bold, color: LzColors.black),
+                          style: Lazy.textStyle(context).copyWith(fontWeight: Fw.bold, color: LzColors.black),
                         ),
                       ));
                 }),

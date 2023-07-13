@@ -90,7 +90,7 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
               if (title != null)
                 Textr(
                   title ?? 'Options',
-                  style: LazyUi.getConfig.textStyle?.copyWith(
+                  style: Lazy.font.copyWith(
                       fontSize: 20, fontWeight: Fw.bold, color: Colors.white),
                   icon: icon ?? La.clipboardList,
                   padding: Ei.all(20),
@@ -144,8 +144,7 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
                                   children: [
                                     Text(
                                       label,
-                                      style: LazyUi.getConfig.textStyle
-                                          ?.copyWith(
+                                      style: Lazy.font.copyWith(
                                               color: isSelected
                                                   ? activeColor ?? Colors.blue
                                                   : LzColors.black),

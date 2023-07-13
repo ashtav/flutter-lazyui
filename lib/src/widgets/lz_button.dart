@@ -42,7 +42,7 @@ class LzButton extends StatelessWidget {
     final notifier = LzButtonControl();
     notifier.setText(text ?? '');
 
-    double configRadius = LazyUi.getConfig.radius;
+    double configRadius = Lazy.getRadius;
 
     Duration duration = const Duration(milliseconds: 150);
 
@@ -237,7 +237,7 @@ extension LzButtonExtension on LzButton {
 
   Widget theme1({Color? shadowColor, double? spacing}) {
     return Container(
-        padding: Ei.all(spacing ?? LazyUi.getConfig.spacing),
+        padding: Ei.all(spacing ?? Lazy.getSpacing),
         decoration: BoxDecoration(boxShadow: [
           BoxShadow(
               color: shadowColor ?? Utils.hex('fafafa'),
@@ -377,7 +377,7 @@ extension LzButtonGroupExtension on List<LzButton> {
       double? width,
       double? radius,
       TextAlign? textAlign}) {
-    double configRadius = LazyUi.getConfig.radius;
+    double configRadius = Lazy.getRadius;
 
     List<LzButton> contents = List.generate(length, (i) {
       final child = this[i];

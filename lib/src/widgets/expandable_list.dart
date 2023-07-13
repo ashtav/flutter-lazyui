@@ -123,7 +123,7 @@ class _ExpandableListState extends State<ExpandableList>
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     return Container(
       decoration: BoxDecoration(

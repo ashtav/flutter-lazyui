@@ -11,9 +11,11 @@ void main() {
       radius: 5,
       primaryColor: LzColors.dark,
       theme: AppTheme.light,
+      textStyle: GoogleFonts.nunito(fontSize: 15.5),
       widgets: () {
         LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
         LzToast.config(position: Position.center);
+        // LzImage.config(errorWidget: <your widget here>);
 
         Errors.config(
             botToken: '<bot_token>',

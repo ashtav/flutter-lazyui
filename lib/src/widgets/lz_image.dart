@@ -1,5 +1,8 @@
 part of widgets;
 
+Widget? _defaultErrorWidget;
+double? _defaultRadius;
+
 class LzImage<T> extends StatelessWidget {
   final T image;
   final BoxFit fit;
@@ -33,12 +36,13 @@ class LzImage<T> extends StatelessWidget {
 
     // check available type
     if (!availables.contains(image.runtimeType)) {
-      logg('Image type is not available | $image',
+      logg('Image type is not available | $image | ${image.runtimeType}',
           name: 'LzImage', color: LogColor.cyan);
+
       return SizedBox(
         width: width,
         height: height,
-        child: errorWidget ??
+        child: errorWidget ?? _defaultErrorWidget ??
             const Center(
                 child: Icon(
               La.exclamationCircle,
@@ -49,7 +53,7 @@ class LzImage<T> extends StatelessWidget {
     late Widget result;
 
     // init radius
-    double radius = this.radius ?? LazyUi.getConfig.radius;
+    double radius = this.radius ?? _defaultRadius ?? Lazy.getRadius;
 
     // if string, check if it's a imageUrl, path, asset or svg
     if (image is String) {
@@ -107,7 +111,7 @@ class LzImage<T> extends StatelessWidget {
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               placeholder ?? shimmer,
           errorWidget: (context, url, error) =>
-              errorWidget ?? const Center(child: Icon(La.exclamationCircle)),
+              errorWidget ?? _defaultErrorWidget ?? const Center(child: Icon(La.exclamationCircle)),
         );
       }
 
@@ -157,5 +161,10 @@ class LzImage<T> extends StatelessWidget {
       height: height,
       child: result,
     ).clip(all: radius);
+  }
+
+  static config({Widget? errorWidget, double? radius}) {
+    _defaultErrorWidget = errorWidget;
+    _defaultRadius = radius;
   }
 }

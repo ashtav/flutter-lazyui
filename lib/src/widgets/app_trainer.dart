@@ -99,13 +99,11 @@ class _AppTrainerState extends State<AppTrainer> {
                                       if (e.title != null)
                                         Textr(
                                           e.title ?? "Titulo lorem ipsum",
-                                          style: LazyUi.getConfig.textStyle
-                                              ?.copyWith(color: Colors.white),
+                                          style: Lazy.font.copyWith(color: Colors.white),
                                           margin: Ei.only(b: 15),
                                         ),
                                       Text(e.description ?? '',
-                                          style: LazyUi.getConfig.textStyle
-                                              ?.copyWith(color: Colors.white))
+                                          style: Lazy.font.copyWith(color: Colors.white))
                                     ],
                                   ),
                                 ),
@@ -146,8 +144,7 @@ class _AppTrainerState extends State<AppTrainer> {
                                                       ? ''
                                                       : (widget.skipLabel ??
                                                           'Skip'),
-                                              style: LazyUi.getConfig.textStyle
-                                                  ?.copyWith(
+                                              style: Lazy.font.copyWith(
                                                       color: Colors.white),
                                             ),
                                           ),

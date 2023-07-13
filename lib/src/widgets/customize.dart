@@ -229,7 +229,7 @@ class CenterDialog extends StatelessWidget {
         if (showTapClose)
           IgnorePointer(
               child:
-                  Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context)?.copyWith(color: Colors.white)))
+                  Text(closeMessage ?? 'Tap to close', style: Lazy.textStyle(context).copyWith(color: Colors.white)))
       ],
     );
   }
@@ -389,7 +389,7 @@ class LzNoData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color primaryColor = LazyUi.getConfig.primaryColor;
+    Color primaryColor = Lazy.getPrimaryColor;
     String message = this.message ?? 'No Data';
     String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
@@ -503,8 +503,8 @@ class LzBox extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isCleanType = type == BoxType.clean;
 
-    double spacing = isCleanType ? 0 : LazyUi.getConfig.spacing;
-    double radius = isCleanType ? 0 : LazyUi.getConfig.radius;
+    double spacing = isCleanType ? 0 : Lazy.getSpacing;
+    double radius = isCleanType ? 0 : Lazy.getRadius;
 
     return Container(
       padding: padding ?? Ei.all(spacing),
@@ -754,7 +754,7 @@ class Loader extends StatelessWidget {
   }
 
   static Widget bar({String? message, bool center = true, double size = 90}) {
-    TextStyle? textStyle = LazyUi.getConfig.textStyle;
+    TextStyle? textStyle = Lazy.font;
 
     Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(
@@ -763,7 +763,7 @@ class Loader extends StatelessWidget {
         height: size,
         fit: BoxFit.contain,
       ),
-      message == null ? const None() : Text(message, style: textStyle?.copyWith(color: Colors.black54))
+      message == null ? const None() : Text(message, style: textStyle.copyWith(color: Colors.black54))
     ]);
 
     return center ? Center(child: child) : child;
@@ -847,7 +847,7 @@ class _LzListViewState extends State<LzListView> {
 
   @override
   Widget build(BuildContext context) {
-    double spacing = LazyUi.getConfig.spacing;
+    double spacing = Lazy.getSpacing;
 
     Widget content({double? cacheExtent}) => ListView(
           physics: widget.physics ?? BounceScroll(),
@@ -1077,7 +1077,7 @@ class LzPopover extends StatelessWidget {
     Color color = this.color ?? Colors.white;
     bool isTop = caretAlign == Position.top;
 
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     return Stack(children: [
       Container(

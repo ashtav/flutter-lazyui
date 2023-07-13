@@ -26,7 +26,7 @@ class CustomDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     return CenterDialog(
         showTapClose: showTapClose,

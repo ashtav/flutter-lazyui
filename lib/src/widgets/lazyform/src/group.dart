@@ -51,7 +51,7 @@ class LzFormGroup extends StatelessWidget {
         isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
     Color sublabelTextColor = isCardWarning ? Colors.orange : Colors.black;
 
-    double configRadius = LazyUi.getConfig.radius;
+    double configRadius = Lazy.getRadius;
 
     return Col(
       children: [

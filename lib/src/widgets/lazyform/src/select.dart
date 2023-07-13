@@ -76,7 +76,7 @@ class Select extends StatelessWidget {
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
-    double configRadius = LazyUi.getConfig.radius;
+    double configRadius = Lazy.getRadius;
 
     /* ----------------------------------------------------
     | Label Widget

@@ -124,9 +124,6 @@ class FormView5 extends StatelessWidget {
           text: 'Submit',
           onTap: (control) {
             controller.onSubmit();
-
-            final x = LazyUi.getConfig.toMap();
-            logg(x);
           }).dark().theme1(),
     ));
   }

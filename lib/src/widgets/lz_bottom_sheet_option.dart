@@ -76,7 +76,7 @@ class _LzOptionWidget extends StatelessWidget {
       children: [
         Textr(
           title ?? 'Options',
-          style: LazyUi.getConfig.textStyle?.copyWith(
+          style: Lazy.font.copyWith(
               fontSize: 20, color: Colors.white, fontWeight: Fw.bold),
           icon: icon ?? La.clipboardList,
           padding: Ei.all(20),

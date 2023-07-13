@@ -191,7 +191,7 @@ class LzListGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = this.radius ?? LazyUi.getConfig.radius;
+    double radius = this.radius ?? Lazy.getRadius;
 
     return Container(
       decoration: BoxDecoration(

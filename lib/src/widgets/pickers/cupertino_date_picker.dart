@@ -203,7 +203,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
               ));
     }
 
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     return ScrollConfiguration(
       behavior: NoScrollGlow(),

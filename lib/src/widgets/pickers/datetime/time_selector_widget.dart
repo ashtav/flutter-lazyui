@@ -16,7 +16,7 @@ class TimeSelectorWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // get default config
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
 
     Widget cupertinoTimePickerWidget(String widgetType) {
       List value = notifier.iterations(widgetType);

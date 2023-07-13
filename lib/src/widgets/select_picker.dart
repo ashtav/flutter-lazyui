@@ -23,7 +23,7 @@ class SelectPicker extends StatelessWidget {
         ? {'option': options.isEmpty ? null : options[i]}
         : {'option': options.isEmpty ? null : options[i], 'value': values.isEmpty ? null : values[i]};
 
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
     BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
     bool isMobile = context.width < 600;

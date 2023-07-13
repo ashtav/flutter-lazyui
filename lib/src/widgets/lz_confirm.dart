@@ -27,7 +27,7 @@ class LzConfirm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double radius = LazyUi.getConfig.radius;
+    double radius = Lazy.getRadius;
     String cancelText = this.cancelText ?? _cancelText ?? 'Cancel';
     String confirmText = this.confirmText ?? _confirmText ?? 'Confirm';
 
