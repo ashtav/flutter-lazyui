@@ -13,7 +13,7 @@ void main() {
       theme: AppTheme.light,
       widgets: () {
         LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
-        // LzToast.config(position: Position.center);
+        LzToast.config(position: Position.center);
 
         Errors.config(
             botToken: '<bot_token>',

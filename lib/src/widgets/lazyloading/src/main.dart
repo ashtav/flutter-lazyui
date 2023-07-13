@@ -1,7 +1,9 @@
 part of lazyloading;
 
 final _toastNotifier = ToastNotifier(), _overlayNotifier = OverlayNotifier();
-Position? _defaultPosition;
+
+Position _defaultPosition = Position.bottom;
+Duration _defaultDuration = 2.s;
 
 class LzToast {
   /// animation duration of indicator, default 200ms.
@@ -44,8 +46,9 @@ class LzToast {
     };
   }
 
-  static void config({Position? position}) {
-    _defaultPosition = position;
+  static void config({Position? position, Duration? duration}) {
+    _defaultPosition = position ?? _defaultPosition;
+    _defaultDuration = duration ?? _defaultDuration;
   }
 
   /* ----------------------------------------------------------
@@ -64,10 +67,10 @@ class LzToast {
       {IconData? icon,
       bool dismissOnTap = false,
       Duration? duration,
-      Position position = Position.bottom,
+      Position? position,
       int? maxLength}) {
     _toastNotifier.toggle(message.toString(),
-        icon: icon, duration: duration, position: _defaultPosition ?? position, maxLength: maxLength);
+        icon: icon, duration: duration ?? _defaultDuration, position: position ?? _defaultPosition, maxLength: maxLength);
   }
 
   static overlay(
@@ -98,13 +101,13 @@ class ToastNotifier extends ChangeNotifier {
     show = true;
 
     this.icon = icon;
-    this.position = _defaultPosition ?? position;
+    this.position = position ?? _defaultPosition;
     this.message = message;
     this.maxLength = maxLength;
 
     notifyListeners();
 
-    timer = Timer(duration ?? 2.s, () {
+    timer = Timer(duration ?? _defaultDuration, () {
       show = false;
       timer?.cancel();
       notifyListeners();
