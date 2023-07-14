@@ -25,7 +25,7 @@ class LzConfirmView extends StatelessWidget {
               },
               radius: Br.radius(7),
               padding: Ei.all(20),
-              child: const Text('Dialog Confirm'),
+              child: const Textr('Dialog Confirm'),
             ),
 
             InkW(
