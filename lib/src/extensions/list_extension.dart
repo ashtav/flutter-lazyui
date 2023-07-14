@@ -41,7 +41,7 @@ extension ListExtension<T> on List<T> {
   /// numbers.generate((item, i) => Text(item.toString()));
   /// ```
 
-  List<Widget> generate(Widget Function(T item, int i) generator) {
+  List<E> generate<E>(E Function(T item, int i) generator) {
     return List.generate(length, (i) => generator(this[i], i));
   }
 }
