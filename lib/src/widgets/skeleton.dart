@@ -100,7 +100,7 @@ class Skeleton extends StatelessWidget {
 }
 
 extension SkeletonExtension on Skeleton {
-  Widget iterate(int value, {CrossAxisAlignment aligment = CrossAxisAlignment.start}) {
-    return Column(crossAxisAlignment: aligment, children: List.generate(value, (i) => this));
+  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start}) {
+    return Column(crossAxisAlignment: alignment, children: List.generate(value, (i) => this));
   }
 }
