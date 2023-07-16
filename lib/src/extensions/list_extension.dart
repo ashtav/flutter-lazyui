@@ -168,15 +168,15 @@ extension RangeIteration on List<int> {
   /// ```
   List<int> iterate({bool reversed = false, int? fill}) {
     final start = this[0];
-    final end = this[1];
-    final result = <int>[];
+    final end = length > 1 ? this[1] : this[0];
+    List<int> result = <int>[];
 
     for (var i = start; i <= end; i++) {
       result.add(i);
     }
 
     if (fill != null) {
-      result.map((e) => fill).toList();
+      result = result.map((e) => fill).toList();
     }
 
     return reversed ? result.reversed.toList() : result;

@@ -14,4 +14,13 @@ extension CustomIntExtension on int {
   /// 0.toBool; // false
   /// ```
   bool get toBool => this == 1 ? true : false;
+
+  /// ``` dart
+  /// 7.iterate(); // [0, 1, 2, 3, 4, 5, 6, 7]
+  /// ```
+
+  List<int> iterate({bool reversed = false, int? fill}) {
+    final list = List.generate(this, (index) => fill ?? index);
+    return reversed ? list.reversed.toList() : list;
+  }
 }
