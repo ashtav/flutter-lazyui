@@ -1,4 +1,4 @@
-/*!
+/*
  * Tabler Icons 2.25.0 by tabler  https://tabler.io
  * License  https://github.com/tabler/tablerIcons/blob/master/LICENSE
  */
