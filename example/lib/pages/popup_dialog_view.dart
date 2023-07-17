@@ -14,6 +14,13 @@ class PopupDialogView extends StatelessWidget {
             onTap: (_) {
               context.dialog(const ExamplePopup1());
             },
+          ),
+          const SizedBox(height: 10),
+          LzButton(
+            text: 'Show Popup Lz Dialog ',
+            onTap: (_) {
+              context.generalDialog(const ExamplePopup2());
+            },
           )
         ],
       ),
@@ -52,6 +59,47 @@ class ExamplePopup1 extends StatelessWidget {
           textAlign: Ta.center,
           margin: Ei.only(t: 15),
         )
+      ],
+    );
+  }
+}
+
+class ExamplePopup2 extends StatelessWidget {
+  const ExamplePopup2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return LzDialog(
+      showXIcon: true,
+      footer: IntrinsicButton(
+        onTap: (i) {},
+        children: ['Cancel', 'Confirm'].make((data, i) => Text(
+              data,
+              textAlign: Ta.center,
+            )),
+      ),
+      children: [
+        Padder(
+          crossAxisAlignment: Caa.center,
+          children: [
+            const SizedBox(height: 25),
+            const Icon(
+              Ti.writing,
+              size: 45,
+              color: Colors.orange,
+            ),
+            Textr(
+              'Dialog Title',
+              style: Gfont.fs20.bold,
+              margin: Ei.only(t: 15),
+            ),
+            Textr(
+              Faker.words(19),
+              margin: Ei.only(t: 10, b: 25),
+              textAlign: Ta.center,
+            ),
+          ],
+        ),
       ],
     );
   }

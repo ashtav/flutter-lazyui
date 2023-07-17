@@ -31,6 +31,7 @@ part 'expandable_list.dart';
 part 'lz_bottom_sheet_option.dart';
 part 'lz_button.dart';
 part 'lz_confirm.dart';
+part 'lz_dialog.dart';
 part 'lz_dropdown.dart';
 part 'lz_image.dart';
 part 'lz_popup.dart';
