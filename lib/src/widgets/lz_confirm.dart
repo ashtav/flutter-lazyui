@@ -14,6 +14,7 @@ class LzConfirm extends StatelessWidget {
   final Function()? onCancel, onConfirm;
   final BorderRadius? radius;
   final LzConfirmType? type;
+  final bool dimissOnTap;
 
   const LzConfirm(
       {super.key,
@@ -22,13 +23,15 @@ class LzConfirm extends StatelessWidget {
       required this.message,
       this.titleSize = 17,
       this.iconSize = 50,
-      this.iconColor, this.confirmColor,
+      this.iconColor,
+      this.confirmColor,
       this.onCancel,
       this.onConfirm,
       this.cancelText,
       this.confirmText,
       this.radius,
-      this.type});
+      this.type,
+      this.dimissOnTap = true});
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +76,7 @@ class LzConfirm extends StatelessWidget {
               return Expanded(
                 child: InkW(
                   onTap: () {
-                    context.pop();
+                    if (dimissOnTap) context.pop();
 
                     if (i == 1) {
                       onConfirm?.call();
@@ -113,25 +116,30 @@ class LzConfirm extends StatelessWidget {
               margin: Ei.only(b: 25),
               color: iconColor ?? Colors.black54,
             ),
-            Textr(
-              title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
-              textAlign: Ta.center,
-              margin: Ei.only(b: 10),
-            ),
-            Textml(
-              message,
-              textAlign: Ta.center,
+            Padder(
+              padding: Ei.only(v: 0, h: 25),
+              children: [
+                Textr(
+                  title,
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
+                  textAlign: Ta.center,
+                  margin: Ei.only(b: 10),
+                ),
+                Textml(
+                  message,
+                  textAlign: Ta.center,
+                ),
+              ],
             ),
             const SizedBox(
               height: 35,
             ),
             InkW(
               onTap: () {
-                context.pop();
+                if (dimissOnTap) context.pop();
                 onConfirm?.call();
               },
-              color: confirmColor?? Colors.redAccent.lighten(0.8),
+              color: confirmColor ?? Colors.redAccent.lighten(0.8),
               padding: Ei.sym(v: 15, h: 35),
               radius: Br.radius(50),
               child: Text(confirmText, textAlign: Ta.center, style: Gfont.white.bold),
