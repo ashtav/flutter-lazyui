@@ -117,6 +117,7 @@ class LzConfirm extends StatelessWidget {
               color: iconColor ?? Colors.black54,
             ),
             Padder(
+              crossAxisAlignment: Caa.center,
               padding: Ei.only(v: 0, h: 25),
               children: [
                 Textr(
