@@ -24,7 +24,3 @@ class NoDataView extends StatelessWidget {
         ));
   }
 }
-
-class ClassName {
-  
-}
