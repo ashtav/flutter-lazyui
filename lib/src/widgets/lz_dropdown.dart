@@ -7,13 +7,18 @@ class LzDropdownController {
   LzDropdownController({required this.option, required this.back});
 }
 
+class CustomOffset {
+  final double? ty, by, dx;
+  const CustomOffset({this.ty, this.by, this.dx});
+}
+
 class LzDropdownOption {
   static Future show(
     BuildContext? context, {
     required List<Option> options,
     final Map<int, List<Option>> subOptions = const {},
-    Function(LzDropdownController state)? onSelect,
-    final Offset offset = const Offset(20, 0),
+    Function(LzDropdownController)? onSelect,
+    final CustomOffset? offset,
     final LzDropdownStyle? style,
     final bool dismissOnSelect = true,
     final MainAxisSize mainAxisSize = Mas.min,
@@ -54,7 +59,7 @@ class _LzDropdownWidget extends StatelessWidget {
   final BuildContext context;
   final List<Option> options;
   final Map<int, List<Option>> subOptions;
-  final Offset offset;
+  final CustomOffset? offset;
   final Function(LzDropdownController)? onSelect;
   final LzDropdownStyle? style;
   final bool dismissOnSelect;
@@ -64,7 +69,7 @@ class _LzDropdownWidget extends StatelessWidget {
       {required this.context,
       required this.options,
       this.subOptions = const {},
-      this.offset = Offset.zero,
+      this.offset,
       this.onSelect,
       this.style,
       this.dismissOnSelect = true,
@@ -76,6 +81,10 @@ class _LzDropdownWidget extends StatelessWidget {
     final controller = StreamController<Offset>();
     final caretController = StreamController<CaretValue>();
     final notifier = LzDropdownNotifier();
+
+    final offsetTy = offset?.ty ?? 0;
+    final offsetBy = offset?.by ?? 0;
+    final offsetDx = offset?.dx ?? 20;
 
     notifier.setOptions(options);
 
@@ -95,57 +104,52 @@ class _LzDropdownWidget extends StatelessWidget {
       double dx = o?.dx ?? 0;
       double dy = o?.dy ?? 0;
 
-      // get height of the widget (not dropdown item / content)
+      // get size of widget
       double itemHeight = box?.size.height ?? 0;
       double itemWidth = box?.size.width ?? 0;
 
-      // get dropdown width
+      // get size of dropdown
       final localBox = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
       double ddWidth = localBox?.size.width ?? 0;
       double ddHeight = localBox?.size.height ?? 0;
+      double ddPosY = dy + itemHeight;
 
       // get status bar height
-      double statusBarHeight = context.windowPadding.top;
+      // double statusBarHeight = context.windowPadding.top;
 
-      // reinitialize y value
-      dy += statusBarHeight;
-
-      if (itemWidth >= context.width) {
-        dx += itemWidth;
+      // set x position of dropdown ------------------------------------------------------------------------------------
+      if ((dx + ddWidth + offsetDx) > context.width) {
+        dx = (context.width - ddWidth - (offsetDx));
+      } else if (dx <= 0) {
+        dx = (0 + offsetDx);
       }
 
-      // prevent dx from going out of screen
-      if (dx < 0) dx = (0 + offset.dx);
-      if ((dx + ddWidth + offset.dx) > context.width) {
-        dx = (context.width - ddWidth - (offset.dx));
-      }
+      // set y position of dropdown ------------------------------------------------------------------------------------
 
-      // prevent dy from going out of screen
-      if (dy + ddHeight > context.height) {
-        dy = dy - ddHeight - itemHeight;
+      // // determine screen out
+      if ((ddPosY + ddHeight + itemHeight) > context.height) {
         isOut = true;
+        // dy = (dy - (ddHeight + (itemHeight / 2)));
+        dy = dy - (ddHeight + itemHeight / 2) - offsetBy;
+      } else {
+        dy += (itemHeight / 2);
       }
 
-      if (dx <= 0) {
-        dx += offset.dx;
-      }
-
-      dy += isOut ? (offset.dy + 7) : offset.dy - 17;
+      // dy += isOut ? (offset.dy + 7) : offset.dy - 17;
       controller.sink.add(Offset(dx, dy));
 
-      // set caret position
+      // set caret position --------------------------------------------------------------------------------------------
       double dxCaret = (o?.dx ?? 0);
-      double dyCaret = (o?.dy ?? 0);
 
       // caret position if item width >= screen width
-      double caretPosMax = (context.width - (30 + offset.dx));
+      double caretPosMax = (context.width - (offsetDx));
 
-      // caret position if is out of screen
-      double caretYPosOut = (dyCaret - (30 + offset.dy + 5));
+      // care position if is out of screen
+      double caretYPosOut = (dy - (offsetTy + 1)) + (ddHeight);
       double caretXPos = dxCaret + (itemWidth / 2) - 10; // 10 = caret width
 
       double cx = itemWidth >= context.width ? caretPosMax : caretXPos;
-      double cy = isOut ? caretYPosOut : dyCaret + 20;
+      double cy = isOut ? caretYPosOut : dy - 9;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // get final dropdown position
@@ -153,11 +157,11 @@ class _LzDropdownWidget extends StatelessWidget {
         final ddOffset = finalDropdown?.localToGlobal(Offset.zero);
 
         double ddXleft = ddOffset?.dx ?? 0;
-        double ddXRight = (ddXleft + ddWidth - offset.dx);
+        double ddXRight = (ddXleft + ddWidth - offsetDx);
 
         if (cx > ddXRight) {
           cx = ddXRight - 15;
-        } else if (cx < ddXleft) {
+        } else if (cx < ddXleft + 10) {
           cx = ddXleft + 15;
         }
 
@@ -166,7 +170,7 @@ class _LzDropdownWidget extends StatelessWidget {
 
       // note: 17 = (5 + content margin)
       // logg(
-      //     'dx: $dx, dy: $dy, ddWidth: $ddWidth, ddHeight: $ddHeight, itemHeight: $itemHeight, itemWidth: $itemWidth, statusBarHeight: $statusBarHeight, screenWidth: ${context.width}, isOut: $isOut');
+      //     'dx: $dx, dy: $dy, ddWidth: $ddWidth, ddHeight: $ddHeight, itemHeight: $itemHeight, itemWidth: $itemWidth, statusBarHeight: $statusBarHeight, screenWidth: ${context.width}, screenHeight: ${context.height}, isOut: $isOut');
     });
 
     /* ---------------------------------------------------------------------------------
@@ -181,7 +185,7 @@ class _LzDropdownWidget extends StatelessWidget {
           bool flip = value.flip;
           Offset offset = value.offset;
 
-          double dx = offset.dx, dy = offset.dy + this.offset.dy;
+          double dx = offset.dx, dy = offset.dy;
 
           return Positioned(
               top: dy,
@@ -214,7 +218,7 @@ class _LzDropdownWidget extends StatelessWidget {
 
     Widget content = Container(
       key: dropdownKey,
-      margin: Ei.only(v: 12),
+      // margin: Ei.only(v: 12),
       decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
       constraints: BoxConstraints(maxHeight: context.height * .6),
       child: SingleChildScrollView(

@@ -5,7 +5,7 @@ class LzDropdownView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final key = GlobalKey();
+    final key = GlobalKey(), bottomKey = GlobalKey();
 
     return Scaffold(
       appBar: AppBar(
@@ -16,7 +16,6 @@ class LzDropdownView extends StatelessWidget {
               onPressed: () {
                 final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
                 LzDropdownOption.show(key.currentContext,
-                    offset: const Offset(20, 0),
                     options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons),
                     style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
               },
@@ -36,8 +35,8 @@ class LzDropdownView extends StatelessWidget {
                   key: gkey,
                   onTap: () {
                     final options = ['Details', 'Archive', 'Edit', 'Delete'].options(disableds: [1]);
-                    LzDropdownOption.show(gkey.currentContext, 
-                        options: options, offset: const Offset(20, 0), onSelect: (option) {});
+                    LzDropdownOption.show(gkey.currentContext,
+                        options: options, onSelect: (option) {});
                   },
                   padding: Ei.sym(h: 20, v: 15),
                   color: Colors.white,
@@ -60,6 +59,21 @@ class LzDropdownView extends StatelessWidget {
               ],
             ),
           ),
+          Container(
+            padding: Ei.all(10),
+            decoration: BoxDecoration(
+              color: Colors.white, border: Br.only(['t'])
+            ),
+            child: Row(
+              children: [
+                Icon(Ti.settings, key: bottomKey).onPressed(() {
+                  LzDropdownOption.show(bottomKey.context,
+                      options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(),
+                      style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
+                })
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -86,8 +100,11 @@ class ProductItem extends StatelessWidget {
               }),
         };
 
-        LzDropdownOption.show(key.context, options: options, subOptions: subOptions, offset: const Offset(20, -21),
-            onSelect: (state) {
+        LzDropdownOption.show(key.context, options: options, subOptions: subOptions, 
+
+        offset: const CustomOffset(by: 43),
+        
+        onSelect: (state) {
           logg(state.option.toMap());
 
           switch (state.option.option) {
