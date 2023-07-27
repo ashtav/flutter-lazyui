@@ -12,7 +12,7 @@ class LzDropdownOption {
     BuildContext? context, {
     required List<Option> options,
     final Map<int, List<Option>> subOptions = const {},
-    Function(LzDropdownController)? onSelect,
+    Function(LzDropdownController state)? onSelect,
     final Offset offset = const Offset(20, 0),
     final LzDropdownStyle? style,
     final bool dismissOnSelect = true,
@@ -140,7 +140,7 @@ class _LzDropdownWidget extends StatelessWidget {
       // caret position if item width >= screen width
       double caretPosMax = (context.width - (30 + offset.dx));
 
-      // care position if is out of screen
+      // caret position if is out of screen
       double caretYPosOut = (dyCaret - (30 + offset.dy + 5));
       double caretXPos = dxCaret + (itemWidth / 2) - 10; // 10 = caret width
 
@@ -181,7 +181,7 @@ class _LzDropdownWidget extends StatelessWidget {
           bool flip = value.flip;
           Offset offset = value.offset;
 
-          double dx = offset.dx, dy = offset.dy;
+          double dx = offset.dx, dy = offset.dy + this.offset.dy;
 
           return Positioned(
               top: dy,
@@ -240,7 +240,7 @@ class _LzDropdownWidget extends StatelessWidget {
                             if (subOptions[i] != null && notifier.level == 0) {
                               notifier.setOptions(subOptions[i] ?? [], level: 1);
                             } else {
-                              if (dismissOnSelect) context.pop();
+                              if (dismissOnSelect && notifier.level == 0) context.pop();
 
                               final selected = Option.fromMap({...option.toMap(), 'index': i});
                               onSelect?.call(LzDropdownController(

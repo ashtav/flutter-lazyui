@@ -36,7 +36,7 @@ class LzDropdownView extends StatelessWidget {
                   key: gkey,
                   onTap: () {
                     final options = ['Details', 'Archive', 'Edit', 'Delete'].options(disableds: [1]);
-                    LzDropdownOption.show(gkey.currentContext,
+                    LzDropdownOption.show(gkey.currentContext, 
                         options: options, offset: const Offset(20, 0), onSelect: (option) {});
                   },
                   padding: Ei.sym(h: 20, v: 15),
@@ -72,6 +72,8 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final key = GlobalKey();
+
     return InkW(
       onTap: () {
         final options = ['Edit', 'Delete'].options(icons: [La.pen, La.trash], dangers: [1]);
@@ -84,13 +86,13 @@ class ProductItem extends StatelessWidget {
               }),
         };
 
-        LzDropdownOption.show(context, options: options, subOptions: subOptions, dismissOnSelect: false,
-            onSelect: (control) {
-          logg(control.option.toMap());
+        LzDropdownOption.show(key.context, options: options, subOptions: subOptions, offset: const Offset(20, -21),
+            onSelect: (state) {
+          logg(state.option.toMap());
 
-          switch (control.option.option) {
+          switch (state.option.option) {
             case 'Cancel':
-              control.back();
+              state.back();
 
               break;
 
@@ -98,8 +100,6 @@ class ProductItem extends StatelessWidget {
               logg('Deleted!');
 
               break;
-            default:
-              context.pop();
           }
 
           /* Or you can use this
@@ -122,8 +122,9 @@ class ProductItem extends StatelessWidget {
         mainAxisAlignment: Maa.spaceBetween,
         children: [
           Text(Faker.words().ucwords),
-          const Icon(
+          Icon(
             La.ellipsisV,
+            key: key,
           )
         ],
       ),
