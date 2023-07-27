@@ -9,7 +9,7 @@ class Iconr extends StatelessWidget {
   final double? width;
   final AlignmentGeometry? alignment;
   final Color? color;
-  final double? size;
+  final double? size, rotate;
   final bool flipX, flipY, flip;
 
   const Iconr(this.icon,
@@ -20,6 +20,7 @@ class Iconr extends StatelessWidget {
       this.radius,
       this.color,
       this.size,
+      this.rotate,
       this.alignment,
       this.border,
       this.flipX = false,
@@ -31,20 +32,22 @@ class Iconr extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget iconWidget = Icon(icon, color: color, size: size);
 
+    Widget flipWidget = flip
+            ? Transform.rotate(angle: pi, child: iconWidget)
+            : flipX || flipY
+                ? Transform(
+                    alignment: Alignment.center,
+                    transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
+                    child: iconWidget) : iconWidget;
+                
+
     return Container(
         alignment: alignment,
         padding: padding,
         margin: margin,
         width: width,
         decoration: BoxDecoration(border: border, borderRadius: radius),
-        child: flip
-            ? Transform.rotate(angle: pi, child: iconWidget)
-            : flipX || flipY
-                ? Transform(
-                    alignment: Alignment.center,
-                    transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
-                    child: iconWidget)
-                : iconWidget);
+        child: rotate == null ? flipWidget : Transform.rotate(angle: rotate!, child: flipWidget));
   }
 }
 
@@ -117,7 +120,7 @@ class Textr extends StatelessWidget {
           icon!,
           color: iconStyle?.color ?? style?.color,
           size: iconSize + 4,
-          margin: asSuffix ? Ei.only(l: iconStyle?.space ?? 12) : Ei.only(r: iconStyle?.space ?? 12),
+          margin: asSuffix ? Ei.only(l: iconStyle?.space ?? 10) : Ei.only(r: iconStyle?.space ?? 10),
         ),
         Flexible(child: textWidget),
       ];
