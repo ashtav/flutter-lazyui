@@ -11,7 +11,8 @@ class PickerFooterWidget extends StatelessWidget {
   final String? confirmLabel;
   final Function()? onConfirm;
   final DateTimePickerNotifier notifier;
-  const PickerFooterWidget({super.key, this.confirmLabel, this.onConfirm, required this.notifier});
+  const PickerFooterWidget(
+      {super.key, this.confirmLabel, this.onConfirm, required this.notifier});
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +46,15 @@ class PickerFooterWidget extends StatelessWidget {
                       color: Utils.hex('fff'),
                       border: Br.all(),
                       child: Container(
-                        constraints: BoxConstraints(maxWidth: context.width * .4),
+                        constraints:
+                            BoxConstraints(maxWidth: context.width * .4),
                         child: Text(
                           confirm,
                           textAlign: Ta.center,
                           maxLines: 1,
                           overflow: Tof.ellipsis,
-                          style: Lazy.textStyle(context).copyWith(fontWeight: Fw.bold, color: LzColors.black),
+                          style: Lazy.textStyle(context).copyWith(
+                              fontWeight: Fw.bold, color: LzColors.black),
                         ),
                       ));
                 }),
@@ -59,7 +62,7 @@ class PickerFooterWidget extends StatelessWidget {
             ),
             Touch(
               onTap: () {
-                if(notifier.isTimeMode) {
+                if (notifier.isTimeMode) {
                   return notifier.toggleTimeMode();
                 }
 

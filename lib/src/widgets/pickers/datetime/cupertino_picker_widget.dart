@@ -39,7 +39,8 @@ class CupertinioPickerWidget extends StatelessWidget {
         scrollController: controller,
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
-          decoration: BoxDecoration(color: Colors.white.withOpacity(.4), border: Br.only([''])),
+          decoration: BoxDecoration(
+              color: Colors.white.withOpacity(.4), border: Br.only([''])),
         ),
         onSelectedItemChanged: onChange,
         children: List<Widget>.generate(items.length, (int index) {
@@ -61,10 +62,11 @@ class CupertinioPickerWidget extends StatelessWidget {
                       child: Text(
                         items[index],
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            fontSize: style2  ? 35 : 16.5,
+                            fontSize: style2 ? 35 : 16.5,
                             color: styles[type] == null
                                 ? Colors.black87
-                                : index >= styles[type][0] && index <= styles[type][1]
+                                : index >= styles[type][0] &&
+                                        index <= styles[type][1]
                                     ? Colors.black87
                                     : Colors.black26),
                       ),

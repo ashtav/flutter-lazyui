@@ -33,7 +33,8 @@ class DateTimeSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = DateTimePickerNotifier({'init': initialDate, 'min': minDate, 'max': maxDate});
+    final notifier = DateTimePickerNotifier(
+        {'init': initialDate, 'min': minDate, 'max': maxDate});
 
     Widget cupertinoPickerWidget(String widgetType) {
       List value = notifier.iterations(widgetType);
@@ -45,7 +46,8 @@ class DateTimeSelector extends StatelessWidget {
           notifier: notifier,
           widgetType: widgetType,
           onChange: (int i) async {
-            state.setDate(widgetType, value[i], fromIndex: controller.initialItem, toIndex: i);
+            state.setDate(widgetType, value[i],
+                fromIndex: controller.initialItem, toIndex: i);
           },
           items: value.map((e) => e.toString()).toList(),
         );
@@ -60,8 +62,9 @@ class DateTimeSelector extends StatelessWidget {
         child: ClipRRect(
             borderRadius: Br.radius(radius, except: ['bl', 'br']),
             child: Container(
-                decoration:
-                    BoxDecoration(color: Utils.hex('f1f1f1'), borderRadius: Br.radius(radius, except: ['bl', 'br'])),
+                decoration: BoxDecoration(
+                    color: Utils.hex('f1f1f1'),
+                    borderRadius: Br.radius(radius, except: ['bl', 'br'])),
                 height: context.height * (context.width > 395 ? .6 : .45),
                 child: Stack(children: [
                   Builder(
@@ -81,8 +84,11 @@ class DateTimeSelector extends StatelessWidget {
 
                                     return Expanded(
                                         child: Container(
-                                            decoration: BoxDecoration(border: Br.only(['l'], except: t == 0)),
-                                            child: cupertinoPickerWidget(value)));
+                                            decoration: BoxDecoration(
+                                                border: Br.only(['l'],
+                                                    except: t == 0)),
+                                            child:
+                                                cupertinoPickerWidget(value)));
                                   }),
                                 ),
                               ),
@@ -97,7 +103,7 @@ class DateTimeSelector extends StatelessWidget {
                   PickerFooterWidget(
                     notifier: notifier,
                     onConfirm: () {
-                      if(notifier.isTimeMode) {
+                      if (notifier.isTimeMode) {
                         return notifier.toggleTimeMode();
                       }
 

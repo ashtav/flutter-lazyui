@@ -14,10 +14,25 @@ class LzDropdownView extends StatelessWidget {
           IconButton(
               key: key,
               onPressed: () {
-                final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
+                final icons = [
+                  La.pen,
+                  La.trash,
+                  La.bell,
+                  La.checkCircle,
+                  La.sortAmountDown,
+                  La.share
+                ];
                 LzDropdownOption.show(key.currentContext,
-                    options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons),
-                    style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
+                    options: [
+                      'Edit',
+                      'Delete',
+                      'Reminder',
+                      'Uncheck All',
+                      'Sort',
+                      'Share'
+                    ].options(icons: icons),
+                    style: const LzDropdownStyle(
+                        separators: [1], separatorHeight: 3));
               },
               icon: const Icon(La.bars))
         ],
@@ -34,7 +49,8 @@ class LzDropdownView extends StatelessWidget {
                 return InkW(
                   key: gkey,
                   onTap: () {
-                    final options = ['Details', 'Archive', 'Edit', 'Delete'].options(disableds: [1]);
+                    final options = ['Details', 'Archive', 'Edit', 'Delete']
+                        .options(disableds: [1]);
                     LzDropdownOption.show(gkey.currentContext,
                         options: options, onSelect: (option) {});
                   },
@@ -61,15 +77,22 @@ class LzDropdownView extends StatelessWidget {
           ),
           Container(
             padding: Ei.all(10),
-            decoration: BoxDecoration(
-              color: Colors.white, border: Br.only(['t'])
-            ),
+            decoration:
+                BoxDecoration(color: Colors.white, border: Br.only(['t'])),
             child: Row(
               children: [
                 Icon(Ti.settings, key: bottomKey).onPressed(() {
                   LzDropdownOption.show(bottomKey.context,
-                      options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(),
-                      style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
+                      options: [
+                        'Edit',
+                        'Delete',
+                        'Reminder',
+                        'Uncheck All',
+                        'Sort',
+                        'Share'
+                      ].options(),
+                      style: const LzDropdownStyle(
+                          separators: [1], separatorHeight: 3));
                 })
               ],
             ),
@@ -90,21 +113,23 @@ class ProductItem extends StatelessWidget {
 
     return InkW(
       onTap: () {
-        final options = ['Edit', 'Delete'].options(icons: [La.pen, La.trash], dangers: [1]);
+        final options =
+            ['Edit', 'Delete'].options(icons: [La.pen, La.trash], dangers: [1]);
 
         final subOptions = {
           1: ['Cancel', 'Confirm'].options(
               icons: [La.times, La.checkCircle],
               styles: (i) {
-                return {1: const OptionStyle(bold: true, color: Colors.redAccent)};
+                return {
+                  1: const OptionStyle(bold: true, color: Colors.redAccent)
+                };
               }),
         };
 
-        LzDropdownOption.show(key.context, options: options, subOptions: subOptions, 
-
-        offset: const CustomOffset(by: 43),
-        
-        onSelect: (state) {
+        LzDropdownOption.show(key.context,
+            options: options,
+            subOptions: subOptions,
+            offset: const CustomOffset(by: 43), onSelect: (state) {
           logg(state.option.toMap());
 
           switch (state.option.option) {

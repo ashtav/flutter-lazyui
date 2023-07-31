@@ -145,9 +145,9 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
                                     Text(
                                       label,
                                       style: Lazy.font.copyWith(
-                                              color: isSelected
-                                                  ? activeColor ?? Colors.blue
-                                                  : LzColors.black),
+                                          color: isSelected
+                                              ? activeColor ?? Colors.blue
+                                              : LzColors.black),
                                     ).flexible(),
                                     if (suffix != null)
                                       Container(

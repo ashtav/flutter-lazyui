@@ -28,7 +28,8 @@ class TimeSelectorWidget extends StatelessWidget {
           notifier: notifier,
           widgetType: 'time',
           onChange: (int i) async {
-            state.setDate(widgetType, int.parse(value[i].toString()), fromIndex: controller.initialItem, toIndex: i);
+            state.setDate(widgetType, int.parse(value[i].toString()),
+                fromIndex: controller.initialItem, toIndex: i);
           },
           items: value.map((e) => e.toString()).toList(),
         );
@@ -62,8 +63,10 @@ class TimeSelectorWidget extends StatelessWidget {
                               children: List.generate(2, (i) {
                             return Expanded(
                                 child: Container(
-                              decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
-                              child: cupertinoTimePickerWidget(['hour', 'minute'][i]),
+                              decoration: BoxDecoration(
+                                  border: Br.only(['l'], except: i == 0)),
+                              child: cupertinoTimePickerWidget(
+                                  ['hour', 'minute'][i]),
                             ));
                           })),
                         )

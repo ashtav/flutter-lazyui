@@ -224,7 +224,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                     types = ['month', 'year'];
                   } else if (type == DatePickerType.year) {
                     types = ['year'];
-                  } else if(type == DatePickerType.dateMonth) {
+                  } else if (type == DatePickerType.dateMonth) {
                     types = ['date', 'month'];
                   }
 

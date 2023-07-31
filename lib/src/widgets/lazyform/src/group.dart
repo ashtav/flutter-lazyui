@@ -14,7 +14,8 @@ class LzFormGroup extends StatelessWidget {
       this.sublabel,
       this.prefixIcon,
       this.children = const [],
-      this.labelSize, this.bottomSpace,
+      this.labelSize,
+      this.bottomSpace,
       this.sublabelStyle = SublabelStyle.text});
 
   @override
@@ -90,7 +91,7 @@ class LzFormGroup extends StatelessWidget {
               border: Br.all(color: borderColor),
               color: Colors.white,
               borderRadius: Br.radius(configRadius)),
-          child: ClipRRect( 
+          child: ClipRRect(
             borderRadius: Br.radius(configRadius),
             child: Col(
               children: List.generate(children.length, (i) {

@@ -135,7 +135,9 @@ extension ContextExtension on BuildContext {
       },
       transitionBuilder:
           (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
-        if (transitionBuilder != null) return transitionBuilder(buildContext, animation, secondaryAnimation, child);
+        if (transitionBuilder != null) {
+          return transitionBuilder(buildContext, animation, secondaryAnimation, child);
+        }
 
         return FadeTransition(
             opacity: animation,

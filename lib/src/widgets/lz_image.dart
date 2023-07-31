@@ -24,7 +24,6 @@ class LzImage<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // init size
     double? width = this.width, height = this.height;
 
@@ -43,7 +42,8 @@ class LzImage<T> extends StatelessWidget {
       return SizedBox(
         width: width,
         height: height,
-        child: errorWidget ?? _defaultErrorWidget ??
+        child: errorWidget ??
+            _defaultErrorWidget ??
             const Center(
                 child: Icon(
               La.exclamationCircle,
@@ -112,7 +112,9 @@ class LzImage<T> extends StatelessWidget {
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               placeholder ?? shimmer,
           errorWidget: (context, url, error) =>
-              errorWidget ?? _defaultErrorWidget ?? const Center(child: Icon(La.exclamationCircle)),
+              errorWidget ??
+              _defaultErrorWidget ??
+              const Center(child: Icon(La.exclamationCircle)),
         );
       }
 
@@ -123,8 +125,7 @@ class LzImage<T> extends StatelessWidget {
       else if (isPath) {
         result = Image.file(File(path), fit: fit, width: width, height: height);
       } else {
-
-        if(size == null && width == null && height == null) {
+        if (size == null && width == null && height == null) {
           width = 100;
           height = 100;
         }

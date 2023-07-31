@@ -4,7 +4,8 @@ import 'package:lazyui/lazyui.dart';
 
 class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
   DateTimePickerNotifier(super.value) {
-    onInit(initDate: value['init'], minDate: value['min'], maxDate: value['max']);
+    onInit(
+        initDate: value['init'], minDate: value['min'], maxDate: value['max']);
   }
 
   List<int> dateRanges = [0, 30],
@@ -13,7 +14,9 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
       hourRanges = [0, 23],
       minuteRanges = [0, 59];
 
-  DateTime selectedDate = DateTime.now(), minDate = DateTime.now().subtract(3.y), maxDate = DateTime.now();
+  DateTime selectedDate = DateTime.now(),
+      minDate = DateTime.now().subtract(3.y),
+      maxDate = DateTime.now();
 
   List<int> dates = [];
 
@@ -26,15 +29,19 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
   };
 
   List iterations(String key, {bool useShortMonths = false}) {
-    List<String> months = Const.months.map((e) => useShortMonths ? e.substring(0, 3) : e).toList();
+    List<String> months = Const.months
+        .map((e) => useShortMonths ? e.substring(0, 3) : e)
+        .toList();
     final years = yearRanges.iterate().reversed.toList();
 
     Map<String, List> maps = {
-      'date': List.generate(31, (index) => (index + 1).toString().padLeft(2, '0')),
+      'date':
+          List.generate(31, (index) => (index + 1).toString().padLeft(2, '0')),
       'month': List.generate(12, (index) => months[index]),
       'year': List.generate(years.length, (index) => years[index]),
       'hour': List.generate(24, (index) => (index).toString().padLeft(2, '0')),
-      'minute': List.generate(60, (index) => (index).toString().padLeft(2, '0')),
+      'minute':
+          List.generate(60, (index) => (index).toString().padLeft(2, '0')),
     };
 
     return maps[key]!;
@@ -57,34 +64,37 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
 
     void animateTo(String key, List<int> ranges, int value) {
       final index = ranges.iterate().indexOf(value);
-      controls[key]!.animateToItem(index - 1, duration: 250.ms, curve: Curves.easeInOut);
+      controls[key]!
+          .animateToItem(index - 1, duration: 250.ms, curve: Curves.easeInOut);
     }
 
     // if date is greater than max date in month
     if (dates[2] > daysInMonth) {
       final i = dateRanges.iterate().indexOf(daysInMonth);
-      controls['date']!.animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
+      controls['date']!
+          .animateToItem(i - 1, duration: 250.ms, curve: Curves.easeInOut);
       return false;
     }
 
     // if current month is more than min month
     else if (DateTime(y, m, d).isBefore(minDate)) {
-      if(m < minDate.month) animateTo('month', monthRanges, minDate.month);
-      if(d < minDate.day) animateTo('date', dateRanges, minDate.day);
+      if (m < minDate.month) animateTo('month', monthRanges, minDate.month);
+      if (d < minDate.day) animateTo('date', dateRanges, minDate.day);
       return false;
     }
 
     // if current month is less than min month
     else if (DateTime(y, m, d).isAfter(maxDate)) {
-      if(m > maxDate.month) animateTo('month', monthRanges, maxDate.month);
-      if(d > maxDate.day) animateTo('date', dateRanges, maxDate.day);
+      if (m > maxDate.month) animateTo('month', monthRanges, maxDate.month);
+      if (d > maxDate.day) animateTo('date', dateRanges, maxDate.day);
       return false;
     }
 
     return true;
   }
 
-  Future setDate(String type, dynamic value, {required int fromIndex, required int toIndex}) async {
+  Future setDate(String type, dynamic value,
+      {required int fromIndex, required int toIndex}) async {
     try {
       switch (type) {
         case 'date':
@@ -143,8 +153,10 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
     controls['date'] = FixedExtentScrollController(initialItem: day);
     controls['month'] = FixedExtentScrollController(initialItem: month);
     controls['year'] = FixedExtentScrollController(initialItem: year);
-    controls['hour'] = FixedExtentScrollController(initialItem: hourRanges.iterate().indexOf(selectedDate.hour));
-    controls['minute'] = FixedExtentScrollController(initialItem: minuteRanges.iterate().indexOf(selectedDate.minute));
+    controls['hour'] = FixedExtentScrollController(
+        initialItem: hourRanges.iterate().indexOf(selectedDate.hour));
+    controls['minute'] = FixedExtentScrollController(
+        initialItem: minuteRanges.iterate().indexOf(selectedDate.minute));
 
     notifyListeners();
   }

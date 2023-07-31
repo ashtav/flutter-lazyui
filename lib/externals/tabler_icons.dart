@@ -1745,7 +1745,8 @@ class Ti {
   static const IconData deviceIpadHorizontalCog = TablerIconData(0xf892);
   static const IconData deviceIpadHorizontalDollar = TablerIconData(0xf893);
   static const IconData deviceIpadHorizontalDown = TablerIconData(0xf894);
-  static const IconData deviceIpadHorizontalExclamation = TablerIconData(0xf895);
+  static const IconData deviceIpadHorizontalExclamation =
+      TablerIconData(0xf895);
   static const IconData deviceIpadHorizontalHeart = TablerIconData(0xf896);
   static const IconData deviceIpadHorizontalMinus = TablerIconData(0xf897);
   static const IconData deviceIpadHorizontalOff = TablerIconData(0xf898);
@@ -3811,15 +3812,19 @@ class Ti {
   static const IconData squareRoundedChevronLeft = TablerIconData(0xf62c);
   static const IconData squareRoundedChevronLeftFilled = TablerIconData(0xf6e1);
   static const IconData squareRoundedChevronRight = TablerIconData(0xf62d);
-  static const IconData squareRoundedChevronRightFilled = TablerIconData(0xf6e2);
+  static const IconData squareRoundedChevronRightFilled =
+      TablerIconData(0xf6e2);
   static const IconData squareRoundedChevronUp = TablerIconData(0xf62e);
   static const IconData squareRoundedChevronUpFilled = TablerIconData(0xf6e3);
   static const IconData squareRoundedChevronsDown = TablerIconData(0xf64f);
-  static const IconData squareRoundedChevronsDownFilled = TablerIconData(0xf6e4);
+  static const IconData squareRoundedChevronsDownFilled =
+      TablerIconData(0xf6e4);
   static const IconData squareRoundedChevronsLeft = TablerIconData(0xf650);
-  static const IconData squareRoundedChevronsLeftFilled = TablerIconData(0xf6e5);
+  static const IconData squareRoundedChevronsLeftFilled =
+      TablerIconData(0xf6e5);
   static const IconData squareRoundedChevronsRight = TablerIconData(0xf651);
-  static const IconData squareRoundedChevronsRightFilled = TablerIconData(0xf6e6);
+  static const IconData squareRoundedChevronsRightFilled =
+      TablerIconData(0xf6e6);
   static const IconData squareRoundedChevronsUp = TablerIconData(0xf652);
   static const IconData squareRoundedChevronsUpFilled = TablerIconData(0xf6e7);
   static const IconData squareRoundedFilled = TablerIconData(0xf6a5);

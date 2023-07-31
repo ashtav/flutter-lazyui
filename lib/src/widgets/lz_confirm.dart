@@ -60,7 +60,10 @@ class LzConfirm extends StatelessWidget {
                       : const None(),
                   Textr(
                     title,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
                     textAlign: Ta.center,
                     margin: Ei.only(b: 10),
                   ),
@@ -122,7 +125,10 @@ class LzConfirm extends StatelessWidget {
               children: [
                 Textr(
                   title,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(fontWeight: Fw.bold, fontSize: titleSize),
                   textAlign: Ta.center,
                   margin: Ei.only(b: 10),
                 ),
@@ -143,15 +149,19 @@ class LzConfirm extends StatelessWidget {
               color: confirmColor ?? Colors.redAccent.lighten(0.8),
               padding: Ei.sym(v: 15, h: 35),
               radius: Br.radius(50),
-              child: Text(confirmText, textAlign: Ta.center, style: Gfont.white.bold),
+              child: Text(confirmText,
+                  textAlign: Ta.center, style: Gfont.white.bold),
             ),
-            Textr(cancelText, padding: Ei.sym(v: 20, h: 20)).onTap(() => context.pop())
+            Textr(cancelText, padding: Ei.sym(v: 20, h: 20))
+                .onTap(() => context.pop())
           ]),
         )
       ],
     );
 
-    return (type ?? _confirmType) == LzConfirmType.dialog ? dialogCotnent : bottomContent;
+    return (type ?? _confirmType) == LzConfirmType.dialog
+        ? dialogCotnent
+        : bottomContent;
   }
 
   Future show(BuildContext context) async {
@@ -159,7 +169,8 @@ class LzConfirm extends StatelessWidget {
       return showDialog(context: context, builder: (_) => this);
     }
 
-    context.bottomSheet(this, backgroundColor: Colors.transparent, enableDrag: true);
+    context.bottomSheet(this,
+        backgroundColor: Colors.transparent, enableDrag: true);
   }
 
   static config({String? cancel, String? confirm, LzConfirmType? type}) {

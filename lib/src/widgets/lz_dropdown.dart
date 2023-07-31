@@ -109,7 +109,8 @@ class _LzDropdownWidget extends StatelessWidget {
       double itemWidth = box?.size.width ?? 0;
 
       // get size of dropdown
-      final localBox = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
+      final localBox =
+          dropdownKey.currentContext?.findRenderObject() as RenderBox?;
       double ddWidth = localBox?.size.width ?? 0;
       double ddHeight = localBox?.size.height ?? 0;
       double ddPosY = dy + itemHeight;
@@ -153,7 +154,8 @@ class _LzDropdownWidget extends StatelessWidget {
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         // get final dropdown position
-        final finalDropdown = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
+        final finalDropdown =
+            dropdownKey.currentContext?.findRenderObject() as RenderBox?;
         final ddOffset = finalDropdown?.localToGlobal(Offset.zero);
 
         double ddXleft = ddOffset?.dx ?? 0;
@@ -165,7 +167,8 @@ class _LzDropdownWidget extends StatelessWidget {
           cx = ddXleft + 15;
         }
 
-        caretController.sink.add(CaretValue(flip: isOut, offset: Offset(cx, cy)));
+        caretController.sink
+            .add(CaretValue(flip: isOut, offset: Offset(cx, cy)));
       });
 
       // note: 17 = (5 + content margin)
@@ -180,7 +183,8 @@ class _LzDropdownWidget extends StatelessWidget {
     Widget caretWidget = StreamBuilder<CaretValue>(
         stream: caretController.stream,
         builder: (_, snap) {
-          CaretValue value = snap.data ?? CaretValue(flip: false, offset: Offset.zero);
+          CaretValue value =
+              snap.data ?? CaretValue(flip: false, offset: Offset.zero);
 
           bool flip = value.flip;
           Offset offset = value.offset;
@@ -219,7 +223,8 @@ class _LzDropdownWidget extends StatelessWidget {
     Widget content = Container(
       key: dropdownKey,
       // margin: Ei.only(v: 12),
-      decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
+      decoration:
+          BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
       constraints: BoxConstraints(maxHeight: context.height * .6),
       child: SingleChildScrollView(
           physics: BounceScroll(),
@@ -242,11 +247,15 @@ class _LzDropdownWidget extends StatelessWidget {
                         : () {
                             // check sub options
                             if (subOptions[i] != null && notifier.level == 0) {
-                              notifier.setOptions(subOptions[i] ?? [], level: 1);
+                              notifier.setOptions(subOptions[i] ?? [],
+                                  level: 1);
                             } else {
-                              if (dismissOnSelect && notifier.level == 0) context.pop();
+                              if (dismissOnSelect && notifier.level == 0) {
+                                context.pop();
+                              }
 
-                              final selected = Option.fromMap({...option.toMap(), 'index': i});
+                              final selected = Option.fromMap(
+                                  {...option.toMap(), 'index': i});
                               onSelect?.call(LzDropdownController(
                                   option: selected,
                                   back: () {
@@ -256,23 +265,30 @@ class _LzDropdownWidget extends StatelessWidget {
                           },
                     padding: Ei.sym(v: 15, h: 20),
                     border: Br.only(['t'],
-                        except: useBorder ? i == 0 : !separators.contains(i - 1),
-                        width: separators.contains(i - 1) ? separatorHeight : 1),
+                        except:
+                            useBorder ? i == 0 : !separators.contains(i - 1),
+                        width:
+                            separators.contains(i - 1) ? separatorHeight : 1),
                     child: Opacity(
                       opacity: disabled ? .4 : 1,
                       child: Container(
-                        constraints: const BoxConstraints(minWidth: 200, maxWidth: 250),
+                        constraints:
+                            const BoxConstraints(minWidth: 200, maxWidth: 250),
                         child: Row(
                           mainAxisSize: mainAxisSize,
                           children: [
                             if (icon != null)
-                              Iconr(icon, margin: Ei.only(r: 15), color: option.style?.color ?? LzColors.dark),
+                              Iconr(icon,
+                                  margin: Ei.only(r: 15),
+                                  color: option.style?.color ?? LzColors.dark),
                             Flexible(
                                 child: Text(
                               optionName,
                               style: Lazy.font.copyWith(
                                   color: option.style?.color ?? LzColors.dark,
-                                  fontWeight: (option.style?.bold ?? false) ? Fw.bold : Fw.normal),
+                                  fontWeight: (option.style?.bold ?? false)
+                                      ? Fw.bold
+                                      : Fw.normal),
                             )),
                           ],
                         ),
@@ -280,7 +296,8 @@ class _LzDropdownWidget extends StatelessWidget {
                     ),
                   );
 
-                  return SlideUp(key: UniqueKey(), delay: i * 100, child: child);
+                  return SlideUp(
+                      key: UniqueKey(), delay: i * 100, child: child);
                 }),
               );
             },

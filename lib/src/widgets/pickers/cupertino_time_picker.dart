@@ -18,8 +18,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
     DateTime now = DateTime.now();
 
     DateTime init = initialDate ?? now;
-    DateTime first =
-        minDate ?? DateTime(now.year, now.month, now.day, 0, 0, 0);
+    DateTime first = minDate ?? DateTime(now.year, now.month, now.day, 0, 0, 0);
     DateTime last =
         maxDate ?? DateTime(now.year, now.month, now.day, 23, 59, 59);
 

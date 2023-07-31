@@ -41,28 +41,29 @@ class LzDialog extends StatelessWidget {
               child: Stack(
                 children: [
                   Container(
-                    color: Colors.white,
-                    child: Column(
-                      mainAxisSize: Mas.min,
-                      children: [
-                        Container(
-                          width: context.width,
-                          constraints: BoxConstraints(
-                              minHeight: 100, maxHeight: (context.height * .7) - (context.viewInsets.bottom / 2)),
-                          child: SingleChildScrollView(
-                            physics: BounceScroll(),
-                            padding: padding ?? Ei.all(20),
-                            child: Column(
-                              children: children,
+                      color: Colors.white,
+                      child: Column(
+                        mainAxisSize: Mas.min,
+                        children: [
+                          Container(
+                            width: context.width,
+                            constraints: BoxConstraints(
+                                minHeight: 100,
+                                maxHeight: (context.height * .7) -
+                                    (context.viewInsets.bottom / 2)),
+                            child: SingleChildScrollView(
+                              physics: BounceScroll(),
+                              padding: padding ?? Ei.all(20),
+                              child: Column(
+                                children: children,
+                              ),
                             ),
                           ),
-                        ),
-                  
-                        // footer
-                        footer ?? const None()
-                      ],
-                    )
-                  ).clip(all: radius),
+
+                          // footer
+                          footer ?? const None()
+                        ],
+                      )).clip(all: radius),
                   if (xIcon)
                     Poslign(
                       alignment: Alignment.topRight,

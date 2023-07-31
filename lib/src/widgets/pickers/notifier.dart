@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PickerNotifier extends ValueNotifier  {
+class PickerNotifier extends ValueNotifier {
   PickerNotifier(super.value);
 
   void toggle(Map data) => value = data;
@@ -28,9 +28,8 @@ class PickerNotifier extends ValueNotifier  {
       hourRanges = [0, 23],
       minuteRanges = [0, 59];
 
-  void toggleTimeMode(){
+  void toggleTimeMode() {
     isTimeMode = !isTimeMode;
     notifyListeners();
   }
 }
-

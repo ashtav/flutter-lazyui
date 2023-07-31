@@ -5,3 +5,11 @@
 ## 0.1.0
 
 * improvement and fix some bugs
+
+## 0.2.0
+
+* improvement and fix some bugs
+
+## 0.3.0
+
+* improvement and fix some bugs
