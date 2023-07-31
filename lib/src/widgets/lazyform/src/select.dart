@@ -153,9 +153,9 @@ class Select extends StatelessWidget {
                       List<Option> options =
                           selectController.options ?? notifier.options;
 
-                      if (selectController.option != null) {
-                        notifier.setOption(selectController.option);
-                      }
+                      // if (selectController.option != null) {
+                      //   notifier.setOption(selectController.option);
+                      // }
 
                       if (ok && options.isNotEmpty && context.mounted) {
                         FocusScope.of(context).unfocus();

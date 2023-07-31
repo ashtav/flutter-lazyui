@@ -44,7 +44,7 @@ class FormView3 extends StatelessWidget {
                     DateTime dateTime =
                         model.text.isEmpty ? max : model.text.toDate();
 
-                    Pickers.datePicker(context,
+                    LzPicker.datePicker(context,
                             type: DatePickerType.all,
                             initialDate: dateTime,
                             minDate: DateTime(1960),
@@ -62,7 +62,7 @@ class FormView3 extends StatelessWidget {
               hint: 'Input your time',
               suffixIcon: La.clock,
               onTap: (model) {
-                Pickers.timePicker(context, title: 'Select Timer');
+                LzPicker.timePicker(context, title: 'Select Timer');
               }),
           LzForm.radio(
               label: 'Favorite Fruit *',
@@ -198,7 +198,7 @@ class FormView3 extends StatelessWidget {
                 'name': 'Name must be at least 5 characters',
                 'password': 'Password must be at least 6 characters'
               }),
-              notifierType: FormValidateNotifier.text);
+              notifierType: LzFormNotifier.text);
 
           if (form.ok) {
             LzToast.show('Form is valid');

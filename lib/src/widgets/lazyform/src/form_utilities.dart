@@ -7,14 +7,9 @@ class SelectController {
   TextEditingController? controller;
 
   /// This function is used to set extra value to the controller
-  Function(dynamic value) setExtra;
+  void Function(dynamic value) setExtra;
 
-  SelectController(
-      {this.label,
-      this.options,
-      this.controller,
-      this.option,
-      required this.setExtra});
+  SelectController({this.label, this.options, this.controller, this.option, required this.setExtra});
 }
 
 /* ---------------------------------------------------------------
@@ -26,8 +21,7 @@ class LzFormLabelStyle {
   final FontWeight? fontWeight;
   final Color? color;
 
-  const LzFormLabelStyle(
-      {this.fontSize, this.letterSpacing, this.fontWeight, this.color});
+  const LzFormLabelStyle({this.fontSize, this.letterSpacing, this.fontWeight, this.color});
 }
 
 /* ---------------------------------------------------------------
@@ -70,7 +64,7 @@ class FormMessages {
 | Form Validate Notifier
 | */
 
-enum FormValidateNotifier { none, toast, text }
+enum LzFormNotifier { none, toast, text }
 
 /* ---------------------------------------------------------------
 | Form Error Info
@@ -181,8 +175,7 @@ class LzInputicon extends StatelessWidget {
   final IconData icon;
   final Function()? onTap;
   final Color? borderColor;
-  const LzInputicon(
-      {super.key, required this.icon, this.onTap, this.borderColor});
+  const LzInputicon({super.key, required this.icon, this.onTap, this.borderColor});
 
   @override
   Widget build(BuildContext context) {
@@ -200,8 +193,7 @@ extension FormModelExtension on Map<String, FormModel> {
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```
-  Map<String, FormModel> fill(Map<String, dynamic> data,
-      {List<String> except = const []}) {
+  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const []}) {
     for (var e in data.keys) {
       if (containsKey(e) && !except.contains(e)) {
         this[e]!.controller.text = data[e] == null ? '' : data[e].toString();
@@ -213,10 +205,42 @@ extension FormModelExtension on Map<String, FormModel> {
 
   /// ``` dart
   /// final forms = LzForm.make(['name', 'email', 'password']]);
+  /// forms.unfill(['name']);
+  /// ```
+
+  void unfill(List<String> keys) {
+    for (var e in keys) {
+      if (containsKey(e)) {
+        this[e]!.controller.text = '';
+        this[e]!.notifier.extra = null;
+        this[e]!.notifier.option = null;
+      }
+    }
+  }
+
+  LzForm validate(
+      {List<String> required = const [],
+      List<String> min = const [],
+      List<String> max = const [],
+      List<String> email = const [],
+      FormMessages? messages,
+      LzFormNotifier notifierType = LzFormNotifier.toast,
+      bool singleNotifier = true}) {
+    return LzForm.validate(this,
+        required: required,
+        min: min,
+        max: max,
+        messages: messages,
+        notifierType: notifierType,
+        singleNotifier: singleNotifier);
+  }
+
+  /// ``` dart
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.get('name');
   /// ```
-  String get(String key) {
-    return this[key]!.controller.text;
+  dynamic get(String key, {bool extra = false}) {
+    return extra ? this[key]!.notifier.extra : this[key]!.controller.text;
   }
 
   /// ``` dart

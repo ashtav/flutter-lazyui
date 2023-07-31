@@ -5,7 +5,7 @@ class FormView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['name', 'birthday', 'fruit', 'hobby', 'email', 'password', 'province', 'number'])
+    final forms = LzForm.make(['name', 'birthday', 'fruit', 'hobby', 'email', 'password', 'province', 'city', 'number'])
         .fill({'email': 'ashtaaav@gmail.com'});
 
     return Wrapper(
@@ -58,6 +58,7 @@ class FormView extends StatelessWidget {
                   label: 'Province *',
                   hint: 'Please select province',
                   model: forms['province'],
+                  // initValue: const Option(option: 'DKI Jakarta', value: 2),
                   onTap: (selector) async {
                     // get data from server
                     LzToast.overlay('Loading...');
@@ -67,20 +68,40 @@ class FormView extends StatelessWidget {
 
                     // set options
                     selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
-                    selector.option = const Option(option: 'Jakarta', value: 2);
+                    // selector.option = const Option(option: 'Jakarta', value: 2);
 
                     // logg(selector.option?.toMap());
                   },
                   onSelect: (selector) {
                     // You can set value (Option, String (option), or dynamic (value)
-                    // selector.setExtra(selector.option?.value); // set extra data
+                    selector.setExtra(selector.option?.value); // set extra data
+
+                    // clear city value
+                    forms.unfill(['city']);
                   }),
 
               // set options from parameter
               LzForm.select(
                   label: 'City *',
                   hint: 'Please select city',
+                  model: forms['city'],
+                  onTap: (selector) async {
+                    final provinceId = forms.get('province', extra: true);
+                    if(provinceId == null) {
+                      LzToast.show('Please select province first');
+                      return false;
+                    }
+
+                    // get data from server
+                    LzToast.overlay('Loading...');
+
+                    final data = await MyController.getCity(provinceId);
+                    LzToast.dismiss();
+
+                    selector.options = data.map((e) => Option(option: e['name'], value: e['id'])).toList();
+                  },
                   options: const [Option(option: 'Denpasar', value: 1), Option(option: 'Tabanan', value: 2)]),
+
               LzForm.select(label: 'District *', hint: 'Please select district'),
             ],
           ),
@@ -134,7 +155,7 @@ class FormView extends StatelessWidget {
                   'name': 'Name must be at least 5 characters',
                   'password': 'Password must be at least 6 characters'
                 }),
-                notifierType: FormValidateNotifier.text,
+                notifierType: LzFormNotifier.text,
                 singleNotifier: false);
 
             if (form.ok) {
@@ -150,13 +171,28 @@ class FormView extends StatelessWidget {
 
 class MyController {
   static Future<List<Map<String, dynamic>>> getProvince() async {
-    await Future.delayed(500.ms);
+    await Future.delayed(250.ms);
     return [
       {'id': 1, 'name': 'Bali'},
-      {'id': 2, 'name': 'Jakarta'},
+      {'id': 2, 'name': 'DKI Jakarta'},
       {'id': 3, 'name': 'Bandung'},
       {'id': 4, 'name': 'Surabaya'},
       {'id': 5, 'name': 'Yogyakarta'},
     ];
+  }
+
+  static Future<List<Map<String, dynamic>>> getCity(int provinceId) async {
+    await Future.delayed(500.ms);
+    return [
+      {'id': 1, 'name': 'Denpasar', 'province_id': 1},
+      {'id': 2, 'name': 'Tabanan', 'province_id': 1},
+      {'id': 3, 'name': 'Badung', 'province_id': 1},
+      {'id': 4, 'name': 'Gianyar', 'province_id': 1},
+      {'id': 5, 'name': 'Bangli', 'province_id': 1},
+      {'id': 6, 'name': 'Singaraja', 'province_id': 1},
+      {'id': 7, 'name': 'Jakarta Barat', 'province_id': 2},
+      {'id': 8, 'name': 'Jakarta Pusat', 'province_id': 2},
+      {'id': 9, 'name': 'Jakarta Selatan', 'province_id': 2},
+    ].where((e) => e['province_id'] == provinceId).toList();
   }
 }

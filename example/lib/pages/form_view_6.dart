@@ -121,7 +121,7 @@ class FormView6 extends StatelessWidget {
                 messages: FormMessages(min: {
                   'qty': 'Qty must be greater than 2, current value is {value}',
                 }),
-                notifierType: FormValidateNotifier.text);
+                notifierType: LzFormNotifier.text);
 
             logg(form.value);
           }).dark().theme1(),

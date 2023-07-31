@@ -22,7 +22,7 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['date'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await Pickers.datePicker(context);
+                    DateTime? date = await LzPicker.datePicker(context);
                     if (date != null) model.text = date.format();
                   }),
               LzForm.input(
@@ -31,7 +31,7 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['date_month'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await Pickers.datePicker(context,
+                    DateTime? date = await LzPicker.datePicker(context,
                         type: DatePickerType.dateMonth);
                     if (date != null) model.text = date.format('dd MMMM yyyy');
                   }),
@@ -41,7 +41,7 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['month_year'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await Pickers.datePicker(context,
+                    DateTime? date = await LzPicker.datePicker(context,
                         type: DatePickerType.monthYear);
                     if (date != null) model.text = date.format('MMMM yyyy');
                   }),
@@ -51,7 +51,7 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['year'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await Pickers.datePicker(context,
+                    DateTime? date = await LzPicker.datePicker(context,
                         type: DatePickerType.year);
                     if (date != null) model.text = date.format('yyyy');
                   }),
@@ -64,7 +64,7 @@ class DateTimePicker extends StatelessWidget {
                 model: forms['time'],
                 suffixIcon: La.clock,
                 onTap: (model) async {
-                  DateTime? date = await Pickers.timePicker(context);
+                  DateTime? date = await LzPicker.timePicker(context);
                   if (date != null) model.text = date.format('HH:mm a');
                 }),
             LzForm.input(
@@ -73,7 +73,7 @@ class DateTimePicker extends StatelessWidget {
                 model: forms['datetime'],
                 suffixIcon: La.calendar,
                 onTap: (model) async {
-                  DateTime? date = await Pickers.dateTimePicker(context, maxDate: DateTime.now().add(1.y), initialDate: model.text.toDate());
+                  DateTime? date = await LzPicker.dateTimePicker(context, maxDate: DateTime.now().add(1.y), initialDate: model.text.toDate());
                   if (date != null) model.text = date.format('dd/MM/yyyy HH:mm a');
                 })
           ])

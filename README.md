@@ -182,5 +182,60 @@ WrapCrossAlignment.center // Wca.center
 WrapAlignment.spaceAround // Wa.spaceAround
 ```
 
+### LzForm
+
+LzForm is a widget designed to streamline and simplify form creation in Flutter development.
+
+##### LzForm Widget
+
+```dart
+final forms = LzForm.make(['name', 'date']);
+
+ListView(
+    children: [
+        LzForm.input(label: 'Name', hint: 'Type your name', model: forms['name']),
+        LzForm.input(label: 'Date', hint: 'Input date', model: forms['date'], onTap: (model){
+            LzPicker.datePicker(context).then((value) {
+                if (value != null) {
+                    model.text = value.format('dd-MM-yyyy');
+                }
+            });
+
+            // Or you can use your favorite datepicker
+        }),
+
+        // You can explore other methods in LzForm, such as .radio, .select, and so on.
+    ]
+)
+```
+
+##### LzForm Validation
+
+```dart
+
+LzButton(
+    text: 'Submit',
+    onTap: (state) {
+        final form = forms.validate(required: ['*'], min: ['name:5'], message: FormMessages(
+            required: {
+                'name': 'Your name is required'
+            },
+            min: {
+                'name': 'Name must be at least 5 characters'
+            }
+        ));
+
+        if(form.ok){
+            state.submit(text: 'Submitting...'); // set loading to button
+            final payload = form.value;
+
+            // do request api...
+            // state.abort();
+        }
+    }
+)
+
+```
+
 
 For more information and examples, see the [example](https://github.com/ashtav/flutter-lazyui/tree/master/example).

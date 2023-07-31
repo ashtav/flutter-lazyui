@@ -303,7 +303,7 @@ class LzForm {
       List<String> max = const [],
       List<String> email = const [],
       FormMessages? messages,
-      FormValidateNotifier notifierType = FormValidateNotifier.toast,
+      LzFormNotifier notifierType = LzFormNotifier.toast,
       bool singleNotifier = true}) {
     try {
       Map<String, TextEditingController> controllers =
@@ -418,10 +418,10 @@ class LzForm {
           errorMessage = messages.get(errorType, errorKey) ?? errorMessage;
         }
 
-        if (notifierType == FormValidateNotifier.toast) {
+        if (notifierType == LzFormNotifier.toast) {
           Fluttertoast.showToast(
               msg: errorMessage, gravity: ToastGravity.CENTER);
-        } else if (notifierType == FormValidateNotifier.text) {
+        } else if (notifierType == LzFormNotifier.text) {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);
           } else {

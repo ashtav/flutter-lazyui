@@ -12,7 +12,7 @@ part 'cupertino_date_picker.dart';
 part 'cupertino_datetime_picker.dart';
 part 'cupertino_time_picker.dart';
 
-class Pickers {
+class LzPicker {
   /* ------------------------------------------------------------
   | DATE PICKER
   ------------------------------------ */
