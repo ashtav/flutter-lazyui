@@ -72,7 +72,7 @@ extension WidgetExtension on Widget {
   /// ```
 
   Widget opacity(double value, {bool animated = false, Duration? duration}) {
-    return animated ? AnimatedOpacity(opacity: value, duration: duration ?? 250.ms) : Opacity(opacity: value);
+    return animated ? AnimatedOpacity(opacity: value, duration: duration ?? 250.ms, child: this) : Opacity(opacity: value, child: this);
   }
 
   /// ``` dart
