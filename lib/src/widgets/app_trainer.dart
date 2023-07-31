@@ -17,6 +17,7 @@ class AppTrainer extends StatefulWidget {
   final Color shadowColor;
   final double shadowOpacity;
   final Widget Function(Target target)? targetBuilder;
+  final BuildContext? context;
 
   const AppTrainer(
       {super.key,
@@ -35,7 +36,8 @@ class AppTrainer extends StatefulWidget {
       this.showSectionLabel = false,
       this.shadowColor = Colors.black,
       this.shadowOpacity = .8,
-      this.targetBuilder});
+      this.targetBuilder,
+      this.context});
 
   @override
   State<AppTrainer> createState() => _AppTrainerState();
@@ -195,7 +197,7 @@ class _AppTrainerState extends State<AppTrainer> {
         widget.onFinish?.call();
         widget.onFinishOrSkip?.call();
       },
-    ).show(context: context);
+    ).show(context: widget.context ?? context);
   }
 
   @override
