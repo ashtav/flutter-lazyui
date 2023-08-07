@@ -46,7 +46,7 @@ class LzDropdownView extends StatelessWidget {
               children: List.generate(10, (i) {
                 final gkey = GlobalKey();
 
-                return InkW(
+                return InkTouch(
                   key: gkey,
                   onTap: () {
                     final options = ['Details', 'Archive', 'Edit', 'Delete']
@@ -111,7 +111,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final key = GlobalKey();
 
-    return InkW(
+    return InkTouch(
       onTap: () {
         final options =
             ['Edit', 'Delete'].options(icons: [La.pen, La.trash], dangers: [1]);

@@ -39,7 +39,7 @@ class PickerFooterWidget extends StatelessWidget {
                 child: Builder(builder: (context) {
                   String confirm = confirmLabel ?? 'Confirm';
 
-                  return InkW(
+                  return InkTouch(
                       onTap: onConfirm,
                       padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
                       radius: Br.radius(25),

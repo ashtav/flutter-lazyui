@@ -38,7 +38,7 @@ class TimeSelectorWidget extends StatelessWidget {
 
     return Poslign(
         alignment: Alignment.topRight,
-        child: InkW(
+        child: InkTouch(
             margin: Ei.only(t: 20, r: 20),
             onTap: () {
               notifier.toggleTimeMode();

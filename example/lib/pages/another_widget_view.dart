@@ -57,7 +57,7 @@ class AnotherWidgetView extends StatelessWidget {
           const SizedBox(
             height: 33,
           ),
-          const TextDivider(
+          const LzTextDivider(
             Text(
               'Text Line',
             ),

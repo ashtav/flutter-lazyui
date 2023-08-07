@@ -115,9 +115,9 @@ extension WidgetExtension on Widget {
   }
 
   /// ``` dart
-  /// YourWidget().lzBlur()
+  /// YourWidget().blur()
   /// ```
-  Widget lzBlur(BuildContext context,
+  Widget blur(BuildContext context,
       {double sigmaX = 5,
       double sigmaY = 5,
       Duration? duration,

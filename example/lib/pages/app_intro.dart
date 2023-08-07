@@ -230,7 +230,7 @@ class AppIntro3 extends StatelessWidget {
               Poslign(
                 alignment: Alignment.center,
                 margin: Ei.all(5),
-                child: notifier.watch((s) => InkW(
+                child: notifier.watch((s) => InkTouch(
                       onTap: () {
                         int value = notifier.index + 1;
                         notifier.onChange(value >= 6 ? 0 : value);

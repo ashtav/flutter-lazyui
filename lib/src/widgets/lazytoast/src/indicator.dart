@@ -1,15 +1,15 @@
-part of lazyloading;
+part of lazytoast;
 
-class LoadingIndicator extends StatefulWidget {
-  const LoadingIndicator({
+class ToastIndicator extends StatefulWidget {
+  const ToastIndicator({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<LoadingIndicator> createState() => _LoadingIndicatorState();
+  State<ToastIndicator> createState() => _ToastIndicatorState();
 }
 
-class _LoadingIndicatorState extends State<LoadingIndicator> {
+class _ToastIndicatorState extends State<ToastIndicator> {
   final double _size = 40;
 
   /// indicator color of loading
@@ -36,32 +36,32 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
     );
 
     // switch (EasyLoadingTheme.indicatorType) {
-    //   case EasyLoadingIndicatorType.fadingCircle:
+    //   case EasyToastIndicatorType.fadingCircle:
     //     _indicator = SpinKitFadingCircle(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.circle:
+    //   case EasyToastIndicatorType.circle:
     //     _indicator = SpinKitCircle(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.threeBounce:
+    //   case EasyToastIndicatorType.threeBounce:
     //     _indicator = SpinKitThreeBounce(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     width = _size * 2;
     //     break;
-    //   case EasyLoadingIndicatorType.chasingDots:
+    //   case EasyToastIndicatorType.chasingDots:
     //     _indicator = SpinKitChasingDots(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.wave:
+    //   case EasyToastIndicatorType.wave:
     //     _indicator = SpinKitWave(
     //       color: _indicatorColor,
     //       size: _size,
@@ -69,111 +69,111 @@ class _LoadingIndicatorState extends State<LoadingIndicator> {
     //     );
     //     width = _size * 1.25;
     //     break;
-    //   case EasyLoadingIndicatorType.wanderingCubes:
+    //   case EasyToastIndicatorType.wanderingCubes:
     //     _indicator = SpinKitWanderingCubes(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.rotatingCircle:
+    //   case EasyToastIndicatorType.rotatingCircle:
     //     _indicator = SpinKitRotatingCircle(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.rotatingPlain:
+    //   case EasyToastIndicatorType.rotatingPlain:
     //     _indicator = SpinKitRotatingPlain(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.doubleBounce:
+    //   case EasyToastIndicatorType.doubleBounce:
     //     _indicator = SpinKitDoubleBounce(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.fadingFour:
+    //   case EasyToastIndicatorType.fadingFour:
     //     _indicator = SpinKitFadingFour(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.fadingCube:
+    //   case EasyToastIndicatorType.fadingCube:
     //     _indicator = SpinKitFadingCube(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.pulse:
+    //   case EasyToastIndicatorType.pulse:
     //     _indicator = SpinKitPulse(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.cubeGrid:
+    //   case EasyToastIndicatorType.cubeGrid:
     //     _indicator = SpinKitCubeGrid(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.foldingCube:
+    //   case EasyToastIndicatorType.foldingCube:
     //     _indicator = SpinKitFoldingCube(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.pumpingHeart:
+    //   case EasyToastIndicatorType.pumpingHeart:
     //     _indicator = SpinKitPumpingHeart(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.dualRing:
+    //   case EasyToastIndicatorType.dualRing:
     //     _indicator = SpinKitDualRing(
     //       color: _indicatorColor,
     //       size: _size,
     //       lineWidth: EasyLoadingTheme.lineWidth,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.hourGlass:
+    //   case EasyToastIndicatorType.hourGlass:
     //     _indicator = SpinKitHourGlass(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.pouringHourGlass:
+    //   case EasyToastIndicatorType.pouringHourGlass:
     //     _indicator = SpinKitPouringHourGlass(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.fadingGrid:
+    //   case EasyToastIndicatorType.fadingGrid:
     //     _indicator = SpinKitFadingGrid(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.ring:
+    //   case EasyToastIndicatorType.ring:
     //     _indicator = SpinKitRing(
     //       color: _indicatorColor,
     //       size: _size,
     //       lineWidth: EasyLoadingTheme.lineWidth,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.ripple:
+    //   case EasyToastIndicatorType.ripple:
     //     _indicator = SpinKitRipple(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.spinningCircle:
+    //   case EasyToastIndicatorType.spinningCircle:
     //     _indicator = SpinKitSpinningCircle(
     //       color: _indicatorColor,
     //       size: _size,
     //     );
     //     break;
-    //   case EasyLoadingIndicatorType.squareCircle:
+    //   case EasyToastIndicatorType.squareCircle:
     //     _indicator = SpinKitSquareCircle(
     //       color: _indicatorColor,
     //       size: _size,

@@ -278,7 +278,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                           child: Builder(builder: (context) {
                             String confirm = confirmLabel ?? 'Confirm';
 
-                            return InkW(
+                            return InkTouch(
                                 onTap: () {
                                   DateTime date = dateProperties()['selected'];
                                   Navigator.pop(context, date);

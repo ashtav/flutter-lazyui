@@ -225,7 +225,7 @@ class CupertinoTimePickerWidget extends StatelessWidget {
                           child: Builder(builder: (context) {
                             String confirm = confirmLabel ?? 'Confirm';
 
-                            return InkW(
+                            return InkTouch(
                                 onTap: () {
                                   DateTime date = timeProperties()['selected'];
                                   Navigator.pop(context, date);

@@ -121,7 +121,7 @@ class _LzSelectiveOptionWidget extends StatelessWidget {
                           child: Stack(
                             key: state.keys[i],
                             children: [
-                              InkW(
+                              InkTouch(
                                 onTap: option.disabled
                                     ? null
                                     : () {

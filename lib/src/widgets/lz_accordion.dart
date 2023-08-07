@@ -1,19 +1,19 @@
 part of widgets;
 
-class ExpandableContent {
+class LzAccordionContent {
   final String title;
   final Widget child;
 
-  const ExpandableContent({required this.title, required this.child});
+  const LzAccordionContent({required this.title, required this.child});
 }
 
-class ExpandableList extends StatefulWidget {
-  final List<ExpandableContent> children;
+class LzAccordion extends StatefulWidget {
+  final List<LzAccordionContent> children;
   final bool multiple, border, titleEllipsis, focusOnExpand;
   final int? initValue;
   final double? radius;
   final EdgeInsetsGeometry? padding;
-  const ExpandableList(
+  const LzAccordion(
       {Key? key,
       this.children = const [],
       this.multiple = false,
@@ -26,10 +26,10 @@ class ExpandableList extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<ExpandableList> createState() => _ExpandableListState();
+  State<LzAccordion> createState() => _LzAccordionState();
 }
 
-class _ExpandableListState extends State<ExpandableList>
+class _LzAccordionState extends State<LzAccordion>
     with TickerProviderStateMixin {
   List<AnimationController> controllers = [];
   List<Animation<double>> animations = [];
@@ -111,7 +111,7 @@ class _ExpandableListState extends State<ExpandableList>
   }
 
   @override
-  void didUpdateWidget(ExpandableList oldWidget) {
+  void didUpdateWidget(LzAccordion oldWidget) {
     super.didUpdateWidget(oldWidget);
   }
 
@@ -144,7 +144,7 @@ class _ExpandableListState extends State<ExpandableList>
                 children: [
                   AnimatedBuilder(
                       animation: controller,
-                      builder: (_, __) => InkW(
+                      builder: (_, __) => InkTouch(
                           key: gkey,
                           onTap: () async {
                             onTap(i);

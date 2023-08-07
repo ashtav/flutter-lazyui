@@ -21,7 +21,7 @@ class WidgetsView extends StatelessWidget {
               children: List.generate(features.length, (i) {
                 String label = features[i];
 
-                return InkW(
+                return InkTouch(
                   onTap: () => Actions.execute(context, label),
                   padding: Ei.all(20),
                   color: Colors.white,

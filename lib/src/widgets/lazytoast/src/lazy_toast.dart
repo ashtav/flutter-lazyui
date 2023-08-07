@@ -1,26 +1,25 @@
-part of lazyloading;
+part of lazytoast;
 
 final _toastNotifier = ToastNotifier(), _overlayNotifier = OverlayNotifier();
 
 Position _defaultPosition = Position.bottom;
 Duration _defaultDuration = 2.s;
 
+class LzToastConfig {
+  Position? position;
+  Duration? duration;
+
+  LzToastConfig({this.position, this.duration});
+}
+
 class LzToast {
   /// animation duration of indicator, default 200ms.
   late Duration animationDuration;
 
-  /// loading custom animation, default null.
-  EasyLoadingAnimation? customAnimation;
-
-  /// background color of loading, only used for [LazyLoadingStyle.custom].
+  /// background color of loading
   Color? backgroundColor;
 
-  /// mask color of loading, only used for [LazyLoadingMaskType.custom].
-  Color? maskColor;
-
-  /// should dismiss on user tap.
-  bool? dismissOnTap;
-
+  /// overlay entry
   LazyLoadingOverlayEntry? overlayEntry;
 
   factory LzToast() => _instance;
@@ -46,9 +45,17 @@ class LzToast {
     };
   }
 
+  /// Set default loading style
+
   static void config({Position? position, Duration? duration}) {
     _defaultPosition = position ?? _defaultPosition;
     _defaultDuration = duration ?? _defaultDuration;
+  }
+
+  // Get default config
+
+  static LzToastConfig get getConfig {
+    return LzToastConfig(position: _defaultPosition, duration: _defaultDuration);
   }
 
   /* ----------------------------------------------------------
@@ -87,8 +94,6 @@ class LzToast {
   /// dismiss loading
   static void dismiss() => _overlayNotifier.dismiss();
 }
-
-enum ToastType { overlay, show }
 
 // Toast Notifier
 class ToastNotifier extends ChangeNotifier {
@@ -190,7 +195,7 @@ class LzToastWidget extends StatelessWidget {
                           mainAxisSize: Mas.min,
                           mainAxisAlignment: Maa.center,
                           children: [
-                            const LoadingIndicator(),
+                            const ToastIndicator(),
                             Textr(
                               o.message,
                               style: style?.copyWith(color: Colors.white),

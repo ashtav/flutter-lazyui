@@ -107,7 +107,7 @@ class Select extends StatelessWidget {
     | */
 
     Widget suffixWidget = Iconr(
-      La.angleDown,
+      Lazy.iconType == IconType.lineAwesome ? La.angleDown : Ti.chevronDown,
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
       border: Br.only(['l'],
@@ -138,7 +138,7 @@ class Select extends StatelessWidget {
           bool? isDisabled = notifier.disabled;
           bool enabled = (isDisabled ?? !disabled);
 
-          return InkW(
+          return InkTouch(
               onTap: !enabled
                   ? null
                   : () async {
@@ -189,7 +189,7 @@ class Select extends StatelessWidget {
                 children: [
                   Col(
                     children: [
-                      TextInputTransparent(
+                      LzTextField(
                         hint: hint,
                         controller: model?.controller,
                         enabled: false,

@@ -41,7 +41,7 @@ class ExamplePopup1 extends StatelessWidget {
         onTap: (int index) {
           logg(index);
         },
-        children: ['Android', 'iOS'].make((data, i) => Text(
+        children: ['Android', 'iOS'].generate((data, i) => Text(
               data[i],
               textAlign: Ta.center,
             )),
@@ -73,13 +73,13 @@ class ExamplePopup2 extends StatelessWidget {
       showXIcon: true,
       footer: IntrinsicButton(
         onTap: (i) {},
-        children: ['Cancel', 'Confirm'].make((data, i) => Text(
+        children: ['Cancel', 'Confirm'].generate((data, i) => Text(
               data,
               textAlign: Ta.center,
             )),
       ),
       children: [
-        Padder(
+        LzPadder(
           crossAxisAlignment: Caa.center,
           children: [
             const SizedBox(height: 25),

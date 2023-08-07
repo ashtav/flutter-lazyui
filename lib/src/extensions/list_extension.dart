@@ -16,13 +16,13 @@ extension ListExtension<T> on List<T> {
   /// List<Option> options = ['A', 'B', 'C', 'D', 'E'].make((data, i) => Option(option: data))
   /// ```
 
-  List<E> make<E>(E Function(T data, int i) callback) {
-    List<E> list = [];
-    for (int i = 0; i < length; i++) {
-      list.add(callback(this[i], i));
-    }
-    return list;
-  }
+  // List<E> make<E>(E Function(T data, int i) callback) {
+  //   List<E> list = [];
+  //   for (int i = 0; i < length; i++) {
+  //     list.add(callback(this[i], i));
+  //   }
+  //   return list;
+  // }
 
   /// ``` dart
   /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')

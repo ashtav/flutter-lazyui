@@ -122,7 +122,7 @@ class _AppTrainerState extends State<AppTrainer> {
                                               ? Colors.transparent
                                               : Colors.white60,
                                         )
-                                      : InkW(
+                                      : InkTouch(
                                           padding: Ei.sym(v: 15, h: 30),
                                           onTap: isLast && j == 2
                                               ? null

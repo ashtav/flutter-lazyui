@@ -39,7 +39,7 @@ class ExProductDetail extends StatelessWidget {
               ),
               Wrap(
                 children: List.generate(4, (i) {
-                  return InkW(
+                  return InkTouch(
                     onTap: () {},
                     padding: Ei.all(15),
                     color: Colors.white,
@@ -130,7 +130,7 @@ class ExProductDetail extends StatelessWidget {
             padding: Ei.only(t: context.padding.top + 10, others: 20),
             child: Row(
               children: [
-                InkW(
+                InkTouch(
                   onTap: () => context.pop(),
                   color: Colors.white,
                   padding: Ei.all(13),
@@ -201,7 +201,7 @@ class LzListGroup extends StatelessWidget {
       ),
       child: Col(
         children: List.generate(children.length, (i) {
-          return InkW(
+          return InkTouch(
             onTap: onTap == null ? null : () => onTap?.call(i),
             border: Br.only(['t'], except: i == 0),
             padding: Ei.all(20),

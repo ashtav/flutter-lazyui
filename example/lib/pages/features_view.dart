@@ -22,12 +22,12 @@ class FeaturesView extends StatelessWidget {
       'Skeleton',
       'LzPopover',
       'LzButton',
-      'Profile Design Example',
       'Refreshtor',
       'Popup Dialog',
       'Login Example',
       'Widgets',
-      'LzConfirm'
+      'LzConfirm',
+      'Custom Widgets'
     ];
 
     features.sort();
@@ -44,7 +44,7 @@ class FeaturesView extends StatelessWidget {
               children: List.generate(features.length, (i) {
                 String label = features[i];
 
-                return InkW(
+                return InkTouch(
                   onTap: () => Actions.execute(context, label),
                   padding: Ei.all(20),
                   color: Colors.white,
@@ -123,10 +123,6 @@ class Actions {
           context.push(const ButtonView());
           break;
 
-        case 'Profile Design Example':
-          context.push(const ProfileView());
-          break;
-
         case 'Refreshtor':
           context.push(const RefreshtorView());
           break;
@@ -145,6 +141,10 @@ class Actions {
 
         case 'LzConfirm':
           context.push(const LzConfirmView());
+          break;
+
+        case 'Custom Widgets':
+          context.push(const CustomWidgets());
           break;
         default:
       }

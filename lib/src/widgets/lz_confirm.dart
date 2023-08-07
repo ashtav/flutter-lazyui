@@ -77,7 +77,7 @@ class LzConfirm extends StatelessWidget {
             Intrinsic(
                 children: List.generate(2, (i) {
               return Expanded(
-                child: InkW(
+                child: InkTouch(
                   onTap: () {
                     if (dimissOnTap) context.pop();
 
@@ -119,7 +119,7 @@ class LzConfirm extends StatelessWidget {
               margin: Ei.only(b: 25),
               color: iconColor ?? Colors.black54,
             ),
-            Padder(
+            LzPadder(
               crossAxisAlignment: Caa.center,
               padding: Ei.only(v: 0, h: 25),
               children: [
@@ -141,7 +141,7 @@ class LzConfirm extends StatelessWidget {
             const SizedBox(
               height: 35,
             ),
-            InkW(
+            InkTouch(
               onTap: () {
                 if (dimissOnTap) context.pop();
                 onConfirm?.call();

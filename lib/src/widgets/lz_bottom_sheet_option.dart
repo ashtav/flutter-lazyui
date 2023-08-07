@@ -131,7 +131,7 @@ class _LzOptionWidget extends StatelessWidget {
 
                 return notifier.watch((s) => Opacity(
                       opacity: [-1, i].contains(s.indexFocus) ? 1 : .5,
-                      child: InkW(
+                      child: InkTouch(
                           onTap: cotIndex.contains(i) ||
                                   ![-1, i].contains(s.indexFocus)
                               ? null
@@ -226,7 +226,7 @@ class _SwipeActionState extends State<SwipeAction>
       children: <Widget>[
         SlideTransition(
             position: _animation,
-            child: InkW(
+            child: InkTouch(
               onTap: () {
                 _controller.forward();
                 widget.onSwipe?.call(true);
@@ -252,7 +252,7 @@ class _SwipeActionState extends State<SwipeAction>
                             return Expanded(
                               child: Opacity(
                                   opacity: _controller.value > 0 ? 1 : 0,
-                                  child: InkW(
+                                  child: InkTouch(
                                     onTap: () {
                                       if (i == 0) {
                                         _controller.reverse();

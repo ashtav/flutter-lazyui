@@ -147,7 +147,7 @@ class SelectPicker extends StatelessWidget {
                               child: Builder(builder: (context) {
                                 String confirm = textConfirm ?? 'Select';
 
-                                return InkW(
+                                return InkTouch(
                                     onTap: () {
                                       if (onSelect != null) {
                                         onSelect?.call(Option.fromMap(result));

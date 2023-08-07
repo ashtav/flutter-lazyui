@@ -13,3 +13,7 @@
 ## 0.3.0
 
 * improvement and fix some bugs
+
+## 0.4.0
+
+* improvement and fix some bugs

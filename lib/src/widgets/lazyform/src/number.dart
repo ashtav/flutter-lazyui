@@ -179,7 +179,7 @@ class Number extends StatelessWidget {
                     onLongPressUp: () => onReleaseAction(),
                     behavior: HitTestBehavior.translucent,
                     child: Iconr(
-                      i == 0 ? La.minus : La.plus,
+                      i == 0 ? (Lazy.iconType == IconType.lineAwesome ? La.minus : Ti.minus) : (Lazy.iconType == IconType.lineAwesome ? La.plus : Ti.plus),
                       color: Colors.black45,
                       padding: Ei.only(h: 15, v: 15),
                       border: Br.only(['l'],
@@ -221,7 +221,7 @@ class Number extends StatelessWidget {
                 LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
 
-          return InkW(
+          return InkTouch(
               color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
               border: isGrouping
                   ? Br.only(['t'], except: isFirst, color: borderColor)
@@ -249,7 +249,7 @@ class Number extends StatelessWidget {
                               }
                             }
                           },
-                          child: TextInputTransparent(
+                          child: LzTextField(
                             hint: hint,
                             controller: model?.controller,
                             maxLength: maxLength,

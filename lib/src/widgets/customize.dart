@@ -281,7 +281,7 @@ class Intrinsic extends StatelessWidget {
 }
 
 /// custom widget of `InkWell`
-class InkW extends StatelessWidget {
+class InkTouch extends StatelessWidget {
   final Widget? child;
   final Function(TapDownDetails? details)? onTapDown;
   final Function(TapUpDetails? details)? onTapUp;
@@ -295,7 +295,7 @@ class InkW extends StatelessWidget {
   final bool enableSplash, splashByBaseColor;
   final double opacity;
 
-  const InkW(
+  const InkTouch(
       {Key? key,
       this.child,
       this.elevation = 0,
@@ -615,19 +615,19 @@ class LzBox extends StatelessWidget {
 }
 
 /* --------------------------------------------------------------------------
-| Padder
+| LzPadder
 | ---------------------------------------------------------------------------
 | Combination of Container and Column with default padding
 | */
 
-class Padder extends StatelessWidget {
+class LzPadder extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
   final CrossAxisAlignment crossAxisAlignment;
   final MainAxisAlignment mainAxisAlignment;
   final MainAxisSize mainAxisSize;
 
-  const Padder(
+  const LzPadder(
       {super.key,
       this.children = const [],
       this.padding,
@@ -755,16 +755,16 @@ class LzSlidebar extends StatelessWidget {
 }
 
 /* --------------------------------------------------------------------------
-| TextDivider
+| LzTextDivider
 | ---------------------------------------------------------------------------
-| TextDivider is a widget that divides the text with a line
+| LzTextDivider is a widget that divides the text with a line
 | */
 
-class TextDivider extends StatelessWidget {
+class LzTextDivider extends StatelessWidget {
   final Text text;
   final double spacing, height, lineHeight;
   final Color? backgroundColor, lineColor;
-  const TextDivider(this.text,
+  const LzTextDivider(this.text,
       {super.key,
       this.spacing = 15,
       this.height = 30,
@@ -800,16 +800,16 @@ class TextDivider extends StatelessWidget {
 }
 
 /* --------------------------------------------------------------------------
-| Loader
+| LzLoader
 | ---------------------------------------------------------------------------
-| Loader is a widget that displays a circular progress indicator.
+| LzLoader is a widget that displays a circular progress indicator.
 | */
 
-class Loader extends StatelessWidget {
+class LzLoader extends StatelessWidget {
   final double size, stroke;
   final EdgeInsetsGeometry? margin;
   final Color? color;
-  const Loader(
+  const LzLoader(
       {Key? key, this.size = 18, this.stroke = 2, this.margin, this.color})
       : super(key: key);
 
@@ -856,7 +856,7 @@ class LzListView extends StatefulWidget {
   final ScrollController? controller;
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
-  final bool shrinkWrap;
+  final bool shrInkTouchrap;
   final ScrollPhysics? physics;
   final Function(ScrollController controller)? onScroll;
   final bool autoCache;
@@ -866,7 +866,7 @@ class LzListView extends StatefulWidget {
       this.scrollLimit,
       this.children = const [],
       this.padding,
-      this.shrinkWrap = false,
+      this.shrInkTouchrap = false,
       this.physics,
       this.onScroll,
       this.autoCache = false});
@@ -929,7 +929,7 @@ class _LzListViewState extends State<LzListView> {
           physics: widget.physics ?? BounceScroll(),
           controller: controller,
           padding: widget.padding ?? Ei.all(spacing),
-          shrinkWrap: widget.shrinkWrap,
+          shrinkWrap: widget.shrInkTouchrap,
           cacheExtent: cacheExtent,
           children: widget.children,
         );
@@ -949,14 +949,18 @@ class _LzListViewState extends State<LzListView> {
 | Textml is a text widget that can parse simple html tags (bold, italic and underline)
 | */
 
+/// ```dart
+/// Textml('<b color="fc1703">Text Bold Color</b> <i color="09f">Italic <b>blue bold</b> </i> <u><b>under</b>score</u>')
+/// ``` 
+
 class Textml extends StatelessWidget {
   final String text;
   final TextStyle? style;
   final TextAlign? textAlign;
   final TextDirection? textDirection;
   final TextOverflow? overflow;
-  const Textml(this.text,
-      {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
+
+  const Textml(this.text, {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
       : super(key: key);
 
   @override
@@ -964,44 +968,46 @@ class Textml extends StatelessWidget {
     TextStyle? textStyle = Theme.of(context).textTheme.bodyMedium;
 
     return RichText(
-      textAlign: textAlign ?? Ta.start,
+      textAlign: textAlign ?? TextAlign.start,
       textDirection: textDirection,
       overflow: overflow ?? TextOverflow.clip,
       text: TextSpan(
         style: style ?? textStyle,
-        children: parseText(text, textStyle: style ?? textStyle),
+        children: parseText(text, style: style ?? textStyle),
       ),
     );
   }
 
-  List<TextSpan> parseText(String text, {TextStyle? textStyle}) {
-    List<TextSpan> textSpans = [];
+  List<TextSpan> parseText(String text, {TextStyle? style}) {
+    final regex = RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|([^<]+)');
+    final matches = regex.allMatches(text);
 
-    final regex = RegExp(r'<(\w+)[^>]*>(.*?)<\/\1>|(\S+|\s)');
+    final textSpans = <TextSpan>[];
+    for (final match in matches) {
+      final type = match.group(1);
+      final color = match.group(2);
+      String content = match.group(3) ?? match.group(4) ?? '';
 
-    void processText(String text, {TextStyle? textStyle}) {
-      for (var match in regex.allMatches(text)) {
-        final word = match.group(2) ?? match.group(3);
-        final type = match.group(1);
+      TextStyle updatedStyle = style ?? const TextStyle();
+      if (type == 'b') {
+        updatedStyle = updatedStyle.copyWith(fontWeight: FontWeight.bold);
+      } else if (type == 'i') {
+        updatedStyle = updatedStyle.copyWith(fontStyle: FontStyle.italic);
+      } else if (type == 'u') {
+        updatedStyle = updatedStyle.copyWith(decoration: TextDecoration.underline);
+      }
 
-        if (type == null) {
-          textSpans.add(TextSpan(text: word, style: textStyle));
-        } else {
-          TextStyle? updatedTextStyle;
-          if (type == 'b') {
-            updatedTextStyle = textStyle?.copyWith(fontWeight: FontWeight.bold);
-          } else if (type == 'i') {
-            updatedTextStyle = textStyle?.copyWith(fontStyle: FontStyle.italic);
-          } else if (type == 'u') {
-            updatedTextStyle =
-                textStyle?.copyWith(decoration: TextDecoration.underline);
-          }
-          processText(word ?? '', textStyle: updatedTextStyle);
-        }
+      if (color != null) {
+        updatedStyle = updatedStyle.copyWith(color: Utils.hex(color));
+      }
+
+      if (content.contains('<') && content.contains('>')) {
+        List<TextSpan> nestedContent = parseText(content, style: updatedStyle);
+        textSpans.addAll(nestedContent);
+      } else {
+        textSpans.add(TextSpan(text: content, style: updatedStyle));
       }
     }
-
-    processText(text, textStyle: textStyle);
 
     return textSpans;
   }
@@ -1032,7 +1038,7 @@ class IntrinsicButton extends StatelessWidget {
       child: Intrinsic(
         children: List.generate(children.length, (i) {
           return Expanded(
-              child: InkW(
+              child: InkTouch(
             onTap: onTap == null ? null : () => onTap?.call(i),
             padding: padding ?? Ei.all(20),
             border: withBorder ? Br.only(['l'], except: i == 0) : null,
@@ -1044,7 +1050,23 @@ class IntrinsicButton extends StatelessWidget {
   }
 }
 
-class TextInputTransparent extends StatelessWidget {
+/// A [StatelessWidget] that provides a customized text field input.
+///
+/// The LzTextField widget allows you to customize a TextField with a variety of options such as hint,
+/// keyboard type, inputAction, onChange and onSubmit handlers, and many more.
+/// You can control the autofocus of the input with autofocus and enable or disable the input field with enabled.
+/// Text visibility can be toggled with obsecure. It also provides customization of text and hint style, alignment, etc.
+/// You can limit the text length using maxLength and control the text input format with formatters.
+///
+/// Example usage:
+/// ``` dart 
+/// LzTextField(
+///   hint: 'Enter your name',
+///   onChange: (value) => print('Changed to $value'),
+/// );
+/// ```
+
+class LzTextField extends StatelessWidget {
   final String? hint;
   final TextInputType? keyboard;
   final TextInputAction? inputAction;
@@ -1060,7 +1082,7 @@ class TextInputTransparent extends StatelessWidget {
   final TextStyle? textStyle, hintStyle;
   final TextSelectionControls? selectionControls;
 
-  const TextInputTransparent(
+  const LzTextField(
       {Key? key,
       this.hint,
       this.keyboard,

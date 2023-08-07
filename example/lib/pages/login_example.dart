@@ -71,7 +71,7 @@ class LoginExampleView extends StatelessWidget {
           )),
           Column(
             children: [
-              const TextDivider(
+              const LzTextDivider(
                 Text(
                   'Or login with',
                 ),

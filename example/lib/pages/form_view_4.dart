@@ -50,7 +50,7 @@ class FormView4 extends StatelessWidget {
                 'Durian',
                 'Melon',
                 'Watermelon'
-              ].make((data, i) =>
+              ].generate((data, i) =>
                   Option(option: data, disabled: [0, 1, 3].contains(i))),
               model: forms['fruit']),
           LzForm.checkbox(
@@ -125,7 +125,7 @@ class FormView4 extends StatelessWidget {
           LzForm.select(
               label: 'Bank Account *',
               labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
-              options: ['BCA', 'BNI', 'BRI', 'Mandiri'].make((data, i) =>
+              options: ['BCA', 'BNI', 'BRI', 'Mandiri'].generate((data, i) =>
                   Option(option: data, value: [10, 10, 15, 13][i])),
               hint: 'Please select your bank account'),
           LzForm.input(

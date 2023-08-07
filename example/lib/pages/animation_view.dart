@@ -25,7 +25,7 @@ class AnimationView extends StatelessWidget {
           LzBox(
             padding: Ei.zero,
             children: List.generate(3, (i) {
-              return InkW(
+              return InkTouch(
                 onTap: () {},
                 padding: Ei.all(20),
                 border: Br.only(['t'], except: i == 0),

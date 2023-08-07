@@ -1,4 +1,4 @@
-part of lazyloading;
+part of lazytoast;
 
 class LzToastOverlay extends StatefulWidget {
   final Widget? child;

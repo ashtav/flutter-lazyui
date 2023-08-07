@@ -87,13 +87,13 @@ class LzButton extends StatelessWidget {
           List<Widget> buttonContent = [
             icon == null
                 ? switcher(isSubmit
-                    ? Loader(
+                    ? LzLoader(
                         key: UniqueKey(),
                         color: buttonTextColor,
                       )
                     : const None())
                 : switcher(isSubmit
-                    ? Loader(
+                    ? LzLoader(
                         key: UniqueKey(),
                         color: buttonTextColor,
                       )
@@ -144,7 +144,7 @@ class LzButton extends StatelessWidget {
                         tileMode: TileMode.clamp)
                     : null,
               ),
-              child: InkW(
+              child: InkTouch(
                 onTap: isSubmit || !notifier.enabled
                     ? null
                     : () => onTap?.call(notifier),

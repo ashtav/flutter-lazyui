@@ -12,6 +12,7 @@ void main() {
       primaryColor: LzColors.dark,
       theme: AppTheme.light,
       textStyle: GoogleFonts.nunito(fontSize: 15.5),
+      iconType: IconType.tablerIcon,
       widgets: () {
         LzConfirm.config(cancel: 'Cancel', confirm: 'Yes!');
         LzToast.config(position: Position.center);

@@ -8,7 +8,7 @@ class ExNavbar extends StatelessWidget {
     final notifier = NavbarNotifier();
 
     List<IconData> icons = [Ti.home, Ti.book, Ti.bell, Ti.user];
-    List<Widget> pages = ['Home', 'Guidance', 'Notification', 'Account'].make(
+    List<Widget> pages = ['Home', 'Guidance', 'Notification', 'Account'].generate(
       (data, i) => Center(
           child: Column(
         mainAxisAlignment: Maa.center,
@@ -60,7 +60,7 @@ class ExNavbar extends StatelessWidget {
               Intrinsic(
                 children: List.generate(4, (i) {
                   return Expanded(
-                    child: InkW(
+                    child: InkTouch(
                       onTap: () {
                         state.onNavigate(i);
                       },

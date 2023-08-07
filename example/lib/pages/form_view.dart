@@ -53,7 +53,7 @@ class FormView extends StatelessWidget {
                 'Durian',
                 'Melon',
                 'Watermelon'
-              ].make((data, i) =>
+              ].generate((data, i) =>
                   Option(option: data, disabled: [0, 1, 3].contains(i))),
               model: forms['fruit']),
           LzForm.checkbox(

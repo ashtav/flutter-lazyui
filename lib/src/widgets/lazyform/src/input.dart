@@ -150,9 +150,9 @@ class Input extends StatelessWidget {
     | Obsecure Toggle Widget
     | */
 
-    IconData obsShowIcon = obsecureIcons.isNotEmpty ? obsecureIcons[0] : La.eye;
+    IconData obsShowIcon = obsecureIcons.isNotEmpty ? obsecureIcons[0] : Lazy.iconType == IconType.lineAwesome ? La.eye : Ti.eye;
     IconData obsHideIcon =
-        obsecureIcons.length > 1 ? obsecureIcons[1] : La.eyeSlash;
+        obsecureIcons.length > 1 ? obsecureIcons[1] : Lazy.iconType == IconType.lineAwesome ? La.eyeSlash : Ti.eyeOff;
 
     Widget obsecureToggleWidget(bool obsecure) => Touch(
           onTap: () => notifier.setObsecure(!obsecure),
@@ -184,7 +184,7 @@ class Input extends StatelessWidget {
     Widget suffixWidget = isSuffix
         ? adjustSuffix ??
             Iconr(
-              suffixIcon ?? La.angleDown,
+              suffixIcon ?? (Lazy.iconType == IconType.lineAwesome ? La.angleDown : Ti.chevronDown),
               color: Colors.black45,
               padding: Ei.only(h: 15, v: 15),
               border: Br.only(['l'],
@@ -224,7 +224,7 @@ class Input extends StatelessWidget {
                 LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
 
-          return InkW(
+          return InkTouch(
               onTap: onTap != null ? () => onTap!(notifier.controller) : null,
               color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
               border: isGrouping
@@ -242,7 +242,7 @@ class Input extends StatelessWidget {
                             notifier.clear();
                           }
                         },
-                        child: TextInputTransparent(
+                        child: LzTextField(
                           hint: hint,
                           controller: model?.controller,
                           maxLength: maxLength,

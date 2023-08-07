@@ -241,7 +241,7 @@ class _LzDropdownWidget extends StatelessWidget {
 
                   bool disabled = option.disabled;
 
-                  Widget child = InkW(
+                  Widget child = InkTouch(
                     onTap: disabled
                         ? null
                         : () {

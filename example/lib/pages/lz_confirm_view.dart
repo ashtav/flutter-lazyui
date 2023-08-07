@@ -13,7 +13,7 @@ class LzConfirmView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: Maa.center,
             children: [
-              InkW(
+              InkTouch(
                 onTap: () {
                   LzConfirm(
                     title: 'Widget Confirmation',
@@ -27,7 +27,7 @@ class LzConfirmView extends StatelessWidget {
                 padding: Ei.all(20),
                 child: const Textr('Dialog Confirm'),
               ),
-              InkW(
+              InkTouch(
                 onTap: () {
                   LzConfirm(
                     title: 'Widget Confirmation',
