@@ -161,6 +161,13 @@ LazyUi.config(
 );
 ```
 
+##### Custom Widgets
+
+```dart
+Iconr, Textr, Wrapper, BounceScroll, Col, CenterDialog, Intrinsic, InkTouch, Touch, None, NoScrollGlow, LzNoData, Poslign, LzBox, LzPadder, LzBadge, LzSlidebar, LzTextDivider, LzLoader, LzListView, Textml, IntrinsicButton, LzTextField, LzPopover
+```
+
+
 ##### Text Style
 
 ```dart
