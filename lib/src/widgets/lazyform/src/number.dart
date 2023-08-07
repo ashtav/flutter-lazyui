@@ -179,7 +179,13 @@ class Number extends StatelessWidget {
                     onLongPressUp: () => onReleaseAction(),
                     behavior: HitTestBehavior.translucent,
                     child: Iconr(
-                      i == 0 ? (Lazy.iconType == IconType.lineAwesome ? La.minus : Ti.minus) : (Lazy.iconType == IconType.lineAwesome ? La.plus : Ti.plus),
+                      i == 0
+                          ? (Lazy.iconType == IconType.lineAwesome
+                              ? La.minus
+                              : Ti.minus)
+                          : (Lazy.iconType == IconType.lineAwesome
+                              ? La.plus
+                              : Ti.plus),
                       color: Colors.black45,
                       padding: Ei.only(h: 15, v: 15),
                       border: Br.only(['l'],

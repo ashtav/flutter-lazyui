@@ -81,8 +81,9 @@ class FormView5 extends StatelessWidget {
                 LzForm.select(
                     label: 'Bank *',
                     hint: 'Please select your bank',
-                    options: ['BCA', 'BNI', 'BRI', 'Mandiri'].generate((data, i) =>
-                        Option(option: data, value: [10, 10, 15, 13][i])),
+                    options: ['BCA', 'BNI', 'BRI', 'Mandiri'].generate(
+                        (data, i) =>
+                            Option(option: data, value: [10, 10, 15, 13][i])),
                     model: forms['bank'],
                     onSelect: (selector) {
                       int maxLength = selector.option?.value ?? 0;

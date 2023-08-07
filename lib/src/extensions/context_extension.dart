@@ -36,12 +36,14 @@ extension ContextExtension on BuildContext {
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
 
   /// Gets the padding of the current window.
-  EdgeInsets get windowPadding => MediaQueryData.fromView(View.of(this)).padding;
+  EdgeInsets get windowPadding =>
+      MediaQueryData.fromView(View.of(this)).padding;
 
   /// Requests focus for a given [FocusNode]. If no [FocusNode] is given, a new one is created and focused.
   ///
   /// @param [node] The [FocusNode] to request focus for. Optional.
-  void focus([FocusNode? node]) => FocusScope.of(this).requestFocus(node ?? FocusNode());
+  void focus([FocusNode? node]) =>
+      FocusScope.of(this).requestFocus(node ?? FocusNode());
 
   /// Pops the current route off the navigation stack and returns a result.
   ///
@@ -58,7 +60,8 @@ extension ContextExtension on BuildContext {
   ///   await Navigator.push(context, MaterialPageRoute(builder: (_) => ProfilePage()));
   /// }
   /// ```
-  Future<T?> push<T extends Object?>(Widget page) => Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
+  Future<T?> push<T extends Object?>(Widget page) =>
+      Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
 
   /// Navigate to a new screen and replace the current screen with the given [page].
   ///
@@ -71,7 +74,8 @@ extension ContextExtension on BuildContext {
   /// }
   /// ```
   Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
-      Navigator.pushAndRemoveUntil<T>(this, MaterialPageRoute(builder: (_) => page), (_) => false);
+      Navigator.pushAndRemoveUntil<T>(
+          this, MaterialPageRoute(builder: (_) => page), (_) => false);
 
   /// Navigate to a new screen with the given [routeName].
   ///
@@ -84,7 +88,8 @@ extension ContextExtension on BuildContext {
   ///   await Navigator.pushNamed(context, '/details', arguments: {'id': 1});
   /// }
   /// ```
-  Future<T?> pushNamed<T extends Object?>(String routeName, {Object? arguments}) =>
+  Future<T?> pushNamed<T extends Object?>(String routeName,
+          {Object? arguments}) =>
       Navigator.pushNamed<T>(this, routeName, arguments: arguments);
 
   /// Navigate to a new screen with the given [routeName] and replace the current screen.
@@ -98,8 +103,10 @@ extension ContextExtension on BuildContext {
   ///   await Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
   /// }
   /// ```
-  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName, {Object? arguments}) =>
-      Navigator.pushNamedAndRemoveUntil<T>(this, routeName, (_) => false, arguments: arguments);
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName,
+          {Object? arguments}) =>
+      Navigator.pushNamedAndRemoveUntil<T>(this, routeName, (_) => false,
+          arguments: arguments);
 
   /// Show a dialog on top of the current screen.
   ///
@@ -113,7 +120,8 @@ extension ContextExtension on BuildContext {
   /// }
   /// ```
   Future<T?> dialog<T extends Object?>(Widget widget, {bool dismiss = true}) {
-    return showDialog<T>(context: this, barrierDismissible: dismiss, builder: (_) => widget);
+    return showDialog<T>(
+        context: this, barrierDismissible: dismiss, builder: (_) => widget);
   }
 
   /// Show a general dialog on top of the current screen.
@@ -124,19 +132,25 @@ extension ContextExtension on BuildContext {
       {bool dismiss = true,
       Duration? duration,
       double begin = .05,
-      Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transitionBuilder}) {
+      Widget Function(
+              BuildContext, Animation<double>, Animation<double>, Widget)?
+          transitionBuilder}) {
     return showGeneralDialog(
       context: this,
       barrierDismissible: dismiss,
       barrierLabel: MaterialLocalizations.of(this).modalBarrierDismissLabel,
       transitionDuration: duration ?? 200.ms,
-      pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+      pageBuilder: (BuildContext buildContext, Animation animation,
+          Animation secondaryAnimation) {
         return widget;
       },
-      transitionBuilder:
-          (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+      transitionBuilder: (BuildContext buildContext,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child) {
         if (transitionBuilder != null) {
-          return transitionBuilder(buildContext, animation, secondaryAnimation, child);
+          return transitionBuilder(
+              buildContext, animation, secondaryAnimation, child);
         }
 
         return FadeTransition(
@@ -173,8 +187,13 @@ extension ContextExtension on BuildContext {
       Color? backgroundColor,
       bool isScrollControlled = true}) {
     Widget wrapper(Widget child) => Container(
-          padding: EdgeInsets.only(top: useSafeArea ? MediaQueryData.fromView(View.of(this)).padding.top : 0),
-          decoration: BoxDecoration(color: backgroundColor ?? (useSafeArea ? Colors.white : Colors.transparent)),
+          padding: EdgeInsets.only(
+              top: useSafeArea
+                  ? MediaQueryData.fromView(View.of(this)).padding.top
+                  : 0),
+          decoration: BoxDecoration(
+              color: backgroundColor ??
+                  (useSafeArea ? Colors.white : Colors.transparent)),
           child: child,
         );
 

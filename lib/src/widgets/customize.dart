@@ -951,7 +951,7 @@ class _LzListViewState extends State<LzListView> {
 
 /// ```dart
 /// Textml('<b color="fc1703">Text Bold Color</b> <i color="09f">Italic <b>blue bold</b> </i> <u><b>under</b>score</u>')
-/// ``` 
+/// ```
 
 class Textml extends StatelessWidget {
   final String text;
@@ -960,7 +960,8 @@ class Textml extends StatelessWidget {
   final TextDirection? textDirection;
   final TextOverflow? overflow;
 
-  const Textml(this.text, {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
+  const Textml(this.text,
+      {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
       : super(key: key);
 
   @override
@@ -979,7 +980,8 @@ class Textml extends StatelessWidget {
   }
 
   List<TextSpan> parseText(String text, {TextStyle? style}) {
-    final regex = RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|([^<]+)');
+    final regex =
+        RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|([^<]+)');
     final matches = regex.allMatches(text);
 
     final textSpans = <TextSpan>[];
@@ -994,7 +996,8 @@ class Textml extends StatelessWidget {
       } else if (type == 'i') {
         updatedStyle = updatedStyle.copyWith(fontStyle: FontStyle.italic);
       } else if (type == 'u') {
-        updatedStyle = updatedStyle.copyWith(decoration: TextDecoration.underline);
+        updatedStyle =
+            updatedStyle.copyWith(decoration: TextDecoration.underline);
       }
 
       if (color != null) {
@@ -1059,7 +1062,7 @@ class IntrinsicButton extends StatelessWidget {
 /// You can limit the text length using maxLength and control the text input format with formatters.
 ///
 /// Example usage:
-/// ``` dart 
+/// ``` dart
 /// LzTextField(
 ///   hint: 'Enter your name',
 ///   onChange: (value) => print('Changed to $value'),

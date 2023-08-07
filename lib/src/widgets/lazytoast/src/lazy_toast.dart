@@ -55,7 +55,8 @@ class LzToast {
   // Get default config
 
   static LzToastConfig get getConfig {
-    return LzToastConfig(position: _defaultPosition, duration: _defaultDuration);
+    return LzToastConfig(
+        position: _defaultPosition, duration: _defaultDuration);
   }
 
   /* ----------------------------------------------------------

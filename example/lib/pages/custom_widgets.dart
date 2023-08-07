@@ -12,7 +12,8 @@ class CustomWidgets extends StatelessWidget {
         body: const LzListView(
           children: [
             Text('Textml:'),
-            Textml('<b color="fc1703">Text Bold Color</b> <i color="09f">Italic <b>blue bold</b> </i> <u><b>under</b>score</u> ')
+            Textml(
+                '<b color="fc1703">Text Bold Color</b> <i color="09f">Italic <b>blue bold</b> </i> <u><b>under</b>score</u> ')
           ],
         ));
   }

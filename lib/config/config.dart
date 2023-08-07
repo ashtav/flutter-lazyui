@@ -15,7 +15,6 @@ class LazyUi {
       TextStyle? textStyle,
       IconType iconType = IconType.lineAwesome,
       Function()? widgets}) {
-
     _defaultRadius = radius;
     _defaultSpacing = spacing;
     _defaultPrimaryColor = primaryColor ?? LzColors.hex('#212121');
@@ -68,4 +67,5 @@ class Lazy {
 }
 
 enum AppTheme { light, dark, system }
-enum IconType { lineAwesome, tablerIcon}
+
+enum IconType { lineAwesome, tablerIcon }

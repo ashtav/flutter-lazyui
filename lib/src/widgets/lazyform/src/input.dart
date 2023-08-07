@@ -150,9 +150,16 @@ class Input extends StatelessWidget {
     | Obsecure Toggle Widget
     | */
 
-    IconData obsShowIcon = obsecureIcons.isNotEmpty ? obsecureIcons[0] : Lazy.iconType == IconType.lineAwesome ? La.eye : Ti.eye;
-    IconData obsHideIcon =
-        obsecureIcons.length > 1 ? obsecureIcons[1] : Lazy.iconType == IconType.lineAwesome ? La.eyeSlash : Ti.eyeOff;
+    IconData obsShowIcon = obsecureIcons.isNotEmpty
+        ? obsecureIcons[0]
+        : Lazy.iconType == IconType.lineAwesome
+            ? La.eye
+            : Ti.eye;
+    IconData obsHideIcon = obsecureIcons.length > 1
+        ? obsecureIcons[1]
+        : Lazy.iconType == IconType.lineAwesome
+            ? La.eyeSlash
+            : Ti.eyeOff;
 
     Widget obsecureToggleWidget(bool obsecure) => Touch(
           onTap: () => notifier.setObsecure(!obsecure),
@@ -184,7 +191,10 @@ class Input extends StatelessWidget {
     Widget suffixWidget = isSuffix
         ? adjustSuffix ??
             Iconr(
-              suffixIcon ?? (Lazy.iconType == IconType.lineAwesome ? La.angleDown : Ti.chevronDown),
+              suffixIcon ??
+                  (Lazy.iconType == IconType.lineAwesome
+                      ? La.angleDown
+                      : Ti.chevronDown),
               color: Colors.black45,
               padding: Ei.only(h: 15, v: 15),
               border: Br.only(['l'],
