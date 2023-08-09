@@ -115,14 +115,15 @@ class ProductItem extends StatelessWidget {
           1: ['Cancel', 'Confirm', 'Sub Option A', 'Sub Option B'].options(pops: [
             0
           ], options: {
-            2: ['Sub A1', 'Sub A2', 'Sub A3'].options(pops: [0]),
+            2: ['Sub A1', 'Sub A2', 'Sub A3'].options(pops: [0], disableds: [2]),
             3: ['Sub B1', 'Sub B2'].options(pops: [0])
           })
         });
 
-        DropX.show([14, 10].contains(index) ? key : context, options: options, onSelect: (state) {
-          logg(state.option.toMap());
+        DropX.show([14, 10].contains(index) ? key : context, options: options, onSelect: (value) {
+          logg(value.toMap());
         });
+
 
         // final subOptions = {
         //   1: ['Cancel', 'Confirm'].options(
