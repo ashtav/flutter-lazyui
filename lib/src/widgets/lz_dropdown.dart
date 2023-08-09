@@ -339,3 +339,301 @@ class LzDropdownNotifier extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+
+// DropX -----------------------------------------------------------------------------------------------
+
+class DropX {
+  static Future show<T>(T key,
+      {List<Option> options = const [],
+      Offset? offset,
+      bool useCaret = true,
+      bool dismissOnTap = true,
+      Function(DropXController)? onSelect}) async {
+
+    if ([BuildContext, GlobalKey].contains(key.runtimeType)) return logg('Context is invalid!');
+    BuildContext context = key is GlobalKey ? key.currentContext! : key as BuildContext;
+
+    if (options.isEmpty) {
+      return logg('Options can not be empty');
+    }
+
+    return showDialog(
+        context: context,
+        builder: (_) => _DropXWidget(
+              context: context,
+              options: options,
+              offset: offset,
+              isContext: key is BuildContext,
+              useCaret: useCaret,
+              dismissOnTap: dismissOnTap,
+              onSelect: onSelect,
+            ));
+  }
+}
+
+class _Data {
+  final double x, y;
+  final double cx, cy;
+  final bool flip;
+
+  _Data(this.x, this.y, this.cx, this.cy, this.flip);
+}
+
+class _DropXWidget extends StatelessWidget {
+  final BuildContext context;
+  final List<Option> options;
+  final Offset? offset;
+  final bool isContext, useCaret, dismissOnTap;
+  final Function(DropXController)? onSelect;
+  const _DropXWidget(
+      {required this.context,
+      this.options = const [],
+      this.offset,
+      this.isContext = false,
+      this.useCaret = false,
+      this.dismissOnTap = true,
+      this.onSelect});
+
+  @override
+  Widget build(BuildContext context) {
+    final dropdownKey = GlobalKey();
+    final controller = StreamController<_Data>();
+    final notifier = DropXNotifier();
+
+    // do initializations here
+    notifier.optionsOrigin = options;
+    notifier.options = options;
+
+    // create a method to adjust dropdown position
+    void adjustDropdown() {
+      // offset digunakan untuk memberikan jarak (margin) antara dropdown dengan screen atau box
+      Offset offset = this.offset ?? const Offset(20, 0);
+
+      // data screen, status bar
+      double screenH = this.context.height, screenW = this.context.width;
+      double bar = this.context.windowPadding.top;
+      bool isOutOfScreen = false;
+
+      // basic position ------------------------------------------------------------------------------------------------
+
+      // render box of the widget
+      final box = this.context.findRenderObject() as RenderBox?;
+      final o = box?.localToGlobal(Offset.zero);
+
+      // dapatkan posisi (x, y)
+      double dx = o?.dx ?? 0;
+      double dy = o?.dy ?? 0;
+
+      // dapatkan ukuran box (w, h)
+      // double boxW = box?.size.width ?? 0;
+      double boxH = box?.size.height ?? 0;
+
+      // adjust dropdown position --------------------------------------------------------------------------------------
+
+      final dropdown = dropdownKey.context?.findRenderObject() as RenderBox?;
+      double ddWidth = dropdown?.size.width ?? 0;
+      double ddHeight = dropdown?.size.height ?? 0;
+
+      // untuk memeriksa apakah dropdown yang akan ditampilkan melebihi batas screen
+      // kita perlu mendapatkan posisi dropdown (x, y)
+      // tapi itu hanya bisa dilakukan jika dropdown sudah ditampilkan
+      // alternatif lain adalah, dengan mengambil posisi (x, y) dari box
+
+      double ddPosY = dy + ddHeight;
+      // double ddPosX = dx + ddWidth;
+
+      // jika dropdown melebihi batas screen Y
+      // maka dropdown akan ditampilkan di atas widget
+
+      if ((ddPosY + (bar * 2)) > screenH) {
+        dy = dy - ddHeight;
+        dy = dy - (!isContext ? (boxH * 2) + boxH : boxH / 2);
+        dy -= offset.dy;
+
+        isOutOfScreen = true;
+      } else {
+        dy = dy + (boxH / 2) + offset.dy;
+      }
+
+      // jika dropdown melebihi batas screen X
+      // maka dropdown akan ditampilkan di kiri widget
+
+      double ddRightX = dx + ddWidth; // posisi dropdown dari kanan
+
+      if ((ddRightX + offset.dx) >= screenW) {
+        dx = dx - (ddRightX - screenW) - offset.dx;
+        // dx = dx - (screenW - ddPosX) - offset.dx;
+      }
+
+      // jika dropdown kurang dari 0
+      // maka dropdown akan ditampilkan di 0
+
+      if ((dx - offset.dx) <= 0) {
+        dx = 0 + offset.dx;
+      }
+
+      // adjust caret position -----------------------------------------------------------------------------------------
+
+      double cx = o?.dx ?? 0, cy = isOutOfScreen ? (dy + ddHeight - 1) : dy - 9;
+      cx += 20;
+
+      if ((cx + 40) >= screenW) {
+        cx = screenW - 60;
+      } else if ((cx - 40) <= 0) {
+        cx = 40;
+      }
+
+      // logg(
+      //     'x: ${o?.dx}, y: ${o?.dy}, dx: $dx, dy: $dy, cx: $cx, cy: $cy, boxW: $boxW, boxH: $boxH, ddWidth: $ddWidth, ddHeight: $ddHeight, ddPosY: $ddPosY, ddPosX: $ddPosX, screenW: $screenW, screenH: $screenH');
+
+      // set stream data
+      controller.add(_Data(dx, dy, cx, cy, isOutOfScreen));
+    }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!this.context.mounted) {
+        return;
+      }
+
+      adjustDropdown();
+    });
+
+    return StreamBuilder<_Data>(
+        stream: controller.stream,
+        builder: (_, stream) {
+          final data = stream.data;
+
+          double x = data?.x ?? 0, cx = data?.cx ?? 0;
+          double y = data?.y ?? 0, cy = data?.cy ?? 0;
+          bool flip = data?.flip ?? false;
+
+          return Stack(
+            children: [
+              // caret widget
+              Positioned(
+                  top: cy,
+                  left: cx,
+                  child: RotationTransition(
+                    turns: AlwaysStoppedAnimation(flip ? 180 / 360 : 0),
+                    child: CustomPaint(
+                      painter: CaretPainter(
+                        strokeColor: Colors.white,
+                        paintingStyle: PaintingStyle.fill,
+                        skew: 2,
+                      ),
+                      child: const SizedBox(
+                        height: 10,
+                        width: 20,
+                      ),
+                    ),
+                  )),
+
+              // dropdown widget
+              Positioned(
+                top: y,
+                left: x,
+                child: Container(
+                  key: dropdownKey,
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(Lazy.getRadius)),
+                  constraints: BoxConstraints(maxHeight: context.height * 0.5, maxWidth: 240),
+                  child: SingleChildScrollView(
+                      physics: BounceScroll(),
+                      child: notifier.watch((state) => Col(
+                            children: state.options.generate((item, i) {
+                              bool disabled = item.disabled;
+                              bool danger = item.danger;
+
+                              // get icon data
+                              IconData? icon = item.icon;
+
+                              return SlideUp(
+                                key: UniqueKey(),
+                                delay: (i + 1) * 100,
+                                child: InkTouch(
+                                  onTap: disabled
+                                      ? null
+                                      : () {
+                                          List<Option> subOptions = item.options ?? [];
+
+                                          if (subOptions.isNotEmpty) {
+                                            state.setOptions(subOptions);
+
+                                            Utils.timer(() {
+                                              adjustDropdown();
+                                            }, 5.ms);
+
+                                            return;
+                                          }
+
+                                          if (item.pop) {
+                                            state.backToPrev();
+
+                                            Utils.timer(() {
+                                              adjustDropdown();
+                                            }, 5.ms);
+                                            return;
+                                          }
+
+                                          onSelect?.call(DropXController(item));
+                                          
+                                          if(dismissOnTap){
+                                            context.pop();
+                                          }
+                                        },
+                                  padding: Ei.sym(v: 15, h: 20),
+                                  border: Br.only(['t'], except: i == 0),
+                                  child: Row(
+                                    children: [
+                                      Textr(item.option,
+                                              style: Gfont.color(danger ? Colors.redAccent : LzColors.black),
+                                              icon: icon)
+                                          .flexible(),
+                                    ],
+                                  ).opacity(disabled ? 0.5 : 1),
+                                ),
+                              );
+                            }),
+                          ))),
+                ),
+              ),
+            ],
+          );
+        });
+  }
+}
+
+class DropXNotifier extends ChangeNotifier {
+  List<Option> optionsOrigin = [];
+  List<Option> options = [];
+  List treeOptions = [];
+
+  int index = 0;
+
+  void setOptions(List<Option> options) {
+    this.options = options;
+    treeOptions.add(options);
+    index++;
+    notifyListeners();
+  }
+
+  void backToPrev() {
+    index--;
+    treeOptions.removeLast();
+
+    if (treeOptions.isEmpty) {
+      options = optionsOrigin;
+      notifyListeners();
+      return;
+    }
+
+    options = treeOptions[index - 1];
+    notifyListeners();
+  }
+}
+
+class DropXController {
+  final Option option;
+
+  DropXController(this.option);
+}
