@@ -14,12 +14,26 @@ class LzDropdownView extends StatelessWidget {
           IconButton(
               key: key,
               onPressed: () {
-                final icons = [La.pen, La.trash, La.bell, La.checkCircle, La.sortAmountDown, La.share];
+                final icons = [
+                  La.pen,
+                  La.trash,
+                  La.bell,
+                  La.checkCircle,
+                  La.sortAmountDown,
+                  La.share
+                ];
                 // LzDropdownOption.show(key.currentContext,
                 //     options: ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons),
                 //     style: const LzDropdownStyle(separators: [1], separatorHeight: 3));
 
-                final options = ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options(icons: icons);
+                final options = [
+                  'Edit',
+                  'Delete',
+                  'Reminder',
+                  'Uncheck All',
+                  'Sort',
+                  'Share'
+                ].options(icons: icons);
                 DropX.show(key, options: options);
               },
               icon: const Icon(La.bars))
@@ -37,7 +51,8 @@ class LzDropdownView extends StatelessWidget {
                 return InkTouch(
                   key: gkey,
                   onTap: () {
-                    final options = ['Details', 'Archive', 'Edit', 'Delete'].options();
+                    final options =
+                        ['Details', 'Archive', 'Edit', 'Delete'].options();
                     DropX.show(gkey, options: options);
 
                     // final options = ['Details', 'Archive', 'Edit', 'Delete'].options(disableds: [1]);
@@ -67,7 +82,8 @@ class LzDropdownView extends StatelessWidget {
           ),
           Container(
             padding: Ei.all(10),
-            decoration: BoxDecoration(color: Colors.white, border: Br.only(['t'])),
+            decoration:
+                BoxDecoration(color: Colors.white, border: Br.only(['t'])),
             child: Row(
               children: [
                 Icon(Ti.settings, key: bottomKey).onPressed(() {
@@ -83,7 +99,14 @@ class LzDropdownView extends StatelessWidget {
                   //     style: const LzDropdownStyle(
                   //         separators: [1], separatorHeight: 3));
 
-                  final options = ['Edit', 'Delete', 'Reminder', 'Uncheck All', 'Sort', 'Share'].options();
+                  final options = [
+                    'Edit',
+                    'Delete',
+                    'Reminder',
+                    'Uncheck All',
+                    'Sort',
+                    'Share'
+                  ].options();
                   DropX.show(bottomKey, options: options);
                 })
               ],
@@ -112,18 +135,20 @@ class ProductItem extends StatelessWidget {
         ], dangers: [
           1
         ], options: {
-          1: ['Cancel', 'Confirm', 'Sub Option A', 'Sub Option B'].options(pops: [
+          1: ['Cancel', 'Confirm', 'Sub Option A', 'Sub Option B']
+              .options(pops: [
             0
           ], options: {
-            2: ['Sub A1', 'Sub A2', 'Sub A3'].options(pops: [0], disableds: [2]),
+            2: ['Sub A1', 'Sub A2', 'Sub A3']
+                .options(pops: [0], disableds: [2]),
             3: ['Sub B1', 'Sub B2'].options(pops: [0])
           })
         });
 
-        DropX.show([14, 10].contains(index) ? key : context, options: options, onSelect: (value) {
+        DropX.show([14, 10].contains(index) ? key : context, options: options,
+            onSelect: (value) {
           logg(value.toMap());
         });
-
 
         // final subOptions = {
         //   1: ['Cancel', 'Confirm'].options(
@@ -168,7 +193,9 @@ class ProductItem extends StatelessWidget {
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
         children: [
-          Text([14, 10].contains(index) ? '-- Key Context' : Faker.words().ucwords),
+          Text([14, 10].contains(index)
+              ? '-- Key Context'
+              : Faker.words().ucwords),
           Icon(
             La.ellipsisV,
             key: key,

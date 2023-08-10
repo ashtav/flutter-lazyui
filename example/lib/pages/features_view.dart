@@ -95,8 +95,8 @@ class Actions {
           context.push(const LzDropdownView());
           break;
 
-        case 'Expandable List':
-          context.push(const ExpandableListView());
+        case 'AccordionView':
+          context.push(const AccordionView());
           break;
 
         case 'Animation':

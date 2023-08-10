@@ -27,7 +27,9 @@ extension ListExtension<T> on List<T> {
   /// ``` dart
   /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')
   /// ```
-  void updateWhere(bool Function(T e) condition, Function(List<T> data, int index) onUpdate, {Function()? onFail}) {
+  void updateWhere(
+      bool Function(T e) condition, Function(List<T> data, int index) onUpdate,
+      {Function()? onFail}) {
     int i = indexWhere(condition);
     if (i >= 0) {
       onUpdate(this, i);
@@ -65,7 +67,9 @@ extension ListMapExtension on List<Map> {
   /// }, addKeys: ['gender']);
   /// ```
   List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs, Function(dynamic)? wrapWith, List<String> addKeys = const []}) {
+      {String? setKeyAs,
+      Function(dynamic)? wrapWith,
+      List<String> addKeys = const []}) {
     try {
       List<Map<dynamic, dynamic>> result = [];
       List keys = [];
@@ -135,13 +139,12 @@ extension ListStringExtension on List<String> {
       List<int> pops = const [],
       Map<int, List<Option>> options = const {},
       Map<int, OptionStyle> Function(int index)? styles}) {
-
     List<Option> localOptions = [];
 
     for (int i = 0; i < length; i++) {
       bool disabled = disableds.contains(i);
       bool danger = dangers.contains(i);
-      
+
       OptionStyle? style = styles?.call(i)[i];
 
       if (dangers.contains(i)) {
@@ -189,7 +192,9 @@ extension ListStringExtension on List<String> {
     String date1 = map[0]['date']!, date2 = map[1]['date']!;
     String time1 = map[0]['time']!, time2 = map[1]['time']!;
 
-    return date1 == date2 ? '$date1, $time1 - $time2' : '$date1 $time1 - $date2 $time2';
+    return date1 == date2
+        ? '$date1, $time1 - $time2'
+        : '$date1 $time1 - $date2 $time2';
   }
 }
 
@@ -223,7 +228,9 @@ extension RangeIteration on List<int> {
   int get randomize {
     if (isEmpty) return 0;
     int start = this[0], end = length > 1 ? this[1] : start;
-    List<int> numbers = length > 1 ? List.generate(end, (i) => i + start) : List.generate(start, (i) => i + 1);
+    List<int> numbers = length > 1
+        ? List.generate(end, (i) => i + start)
+        : List.generate(start, (i) => i + 1);
     return numbers.getRandom().first;
   }
 }

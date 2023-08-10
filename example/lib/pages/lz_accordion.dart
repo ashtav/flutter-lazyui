@@ -1,7 +1,7 @@
 part of page;
 
-class ExpandableListView extends StatelessWidget {
-  const ExpandableListView({super.key});
+class AccordionView extends StatelessWidget {
+  const AccordionView({super.key});
 
   @override
   Widget build(BuildContext context) {
