@@ -21,3 +21,7 @@
 ## 0.4.1
 
 * improvement and fix some bugs
+
+## 0.4.2
+
+* improvement and fix some bugs

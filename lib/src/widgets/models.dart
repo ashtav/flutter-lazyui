@@ -31,7 +31,7 @@ class Option {
         index: map['index'] ?? 0,
         icon: map['icon'],
         options: map['options'],
-        pop: map['pop'],
+        pop: map['pop'] ?? false,
         style: map['style']);
   }
 

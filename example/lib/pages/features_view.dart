@@ -14,7 +14,7 @@ class FeaturesView extends StatelessWidget {
       'App Trainer',
       'App Intro Example',
       'LzDropdown',
-      'Expandable List',
+      'LzAccordion',
       'LzOption, Select Option',
       'Animation',
       'No Data',
@@ -95,7 +95,7 @@ class Actions {
           context.push(const LzDropdownView());
           break;
 
-        case 'AccordionView':
+        case 'LzAccordion':
           context.push(const AccordionView());
           break;
 
