@@ -66,10 +66,27 @@ class LzImage<T> extends StatelessWidget {
           2; // ex: /storage/emulated/0/Download/IMG_20210101_000000.jpg
 
       /* --------------------------------------------------------------------------------------
+      | EMPTY STRING
+      | */
+
+      if (path.trim().isEmpty) {
+        result = SizedBox(
+          width: width,
+          height: height,
+          child: errorWidget ??
+              _defaultErrorWidget ??
+              const Center(
+                  child: Icon(
+                La.exclamationCircle,
+              )),
+        );
+      }
+
+      /* --------------------------------------------------------------------------------------
       | SVG
       | */
 
-      if (isSvg) {
+      else if (isSvg) {
         result = SvgPicture.asset('assets/images/$image',
             width: width, height: height);
       }
