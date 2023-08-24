@@ -6,6 +6,7 @@ class SelectPicker extends StatelessWidget {
   final Option? initialValue;
   final String? textConfirm;
   final bool fullScreen;
+  final int? maxLines;
 
   const SelectPicker(
       {Key? key,
@@ -13,7 +14,8 @@ class SelectPicker extends StatelessWidget {
       this.onSelect,
       this.initialValue,
       this.textConfirm,
-      this.fullScreen = false})
+      this.fullScreen = false,
+      this.maxLines})
       : super(key: key);
 
   @override
@@ -43,9 +45,30 @@ class SelectPicker extends StatelessWidget {
           : value / pow(10, value.ceil().toString().length);
     }
 
-    double magnification = fullScreen ? 1.5 : 1.2;
+    double maxLines = (this.maxLines ?? 1).toDouble();
+
+    if (maxLines >= 4) {
+      maxLines = 4;
+    }
+
+    double magnification = maxLines > 1
+        ? 1
+        : fullScreen
+            ? 1.5
+            : 1.2;
     double diameterRatio = fullScreen ? .5 : .8;
-    double squeeze = fullScreen ? .5 : 1;
+    double squeeze = 1.2;
+    double itemExtent = 40 * maxLines;
+
+    double height = fullScreen
+        ? context.height
+        : isMobile
+            ? 300
+            : context.height * .5;
+
+    if (maxLines > 2) {
+      height += (20 * maxLines);
+    }
 
     return FractionallySizedBox(
       widthFactor: isMobile ? 1 : toDecimal(context.width),
@@ -57,11 +80,7 @@ class SelectPicker extends StatelessWidget {
             ScrollConfiguration(
               behavior: NoScrollGlow(),
               child: Container(
-                height: fullScreen
-                    ? context.height
-                    : isMobile
-                        ? 300
-                        : context.height * .5,
+                height: height,
                 decoration: BoxDecoration(
                     color: Colors.white, borderRadius: borderRadius),
                 child: SafeArea(
@@ -72,7 +91,7 @@ class SelectPicker extends StatelessWidget {
                         child: CupertinoPicker(
                             magnification: magnification,
                             useMagnifier: false,
-                            itemExtent: 40,
+                            itemExtent: itemExtent,
                             offAxisFraction: 0,
                             diameterRatio: diameterRatio,
                             squeeze: squeeze,
@@ -109,6 +128,7 @@ class SelectPicker extends StatelessWidget {
                                     options[index],
                                     overflow: Tof.ellipsis,
                                     textAlign: Ta.center,
+                                    maxLines: maxLines.toInt(),
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium

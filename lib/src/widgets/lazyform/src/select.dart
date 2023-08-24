@@ -14,6 +14,7 @@ class Select extends StatelessWidget {
   final Future? Function(SelectController controller)? onTap;
   final Function(SelectController controller)? onSelect;
   final LzFormLabelStyle? labelStyle;
+  final int? maxLines;
 
   const Select(
       {super.key,
@@ -27,7 +28,8 @@ class Select extends StatelessWidget {
       this.onChange,
       this.onTap,
       this.onSelect,
-      this.labelStyle});
+      this.labelStyle,
+      this.maxLines});
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +167,7 @@ class Select extends StatelessWidget {
                             SelectPicker(
                                 initialValue: notifier.option ?? initValue,
                                 options: options,
+                                maxLines: maxLines,
                                 onSelect: (option) {
                                   selectController.option = option;
 

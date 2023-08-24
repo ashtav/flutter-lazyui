@@ -228,7 +228,7 @@ class Col extends StatelessWidget {
 class CenterDialog extends StatelessWidget {
   final Widget child;
   final double margin;
-  final BorderRadius? borderRadius;
+  final BorderRadiusGeometry borderRadius;
   final String? closeMessage;
   final bool showTapClose;
 

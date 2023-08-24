@@ -29,3 +29,11 @@
 ## 0.4.3
 
 * improvement and fix some bugs
+
+## 0.4.4
+
+* improvement and fix some bugs
+
+## 0.4.5
+
+* improvement and fix some bugs

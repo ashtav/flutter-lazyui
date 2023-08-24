@@ -148,7 +148,15 @@ class FormView extends StatelessWidget {
                   ]),
 
               LzForm.select(
-                  label: 'District *', hint: 'Please select district'),
+                  label: 'District *',
+                  hint: 'Please select district',
+                  maxLines: 2,
+                  options: [
+                    Faker.words(5),
+                    Faker.words(55),
+                    Faker.words(20),
+                    Faker.words(20)
+                  ].options()),
             ],
           ),
           LzFormGroup(

@@ -148,22 +148,25 @@ class LzForm {
           FormModel? model,
           bool disabled = false,
           bool expandValue = false,
+          int? maxLines,
           Function(String value)? onChange,
           Future<dynamic>? Function(SelectController selector)? onTap,
           dynamic Function(SelectController selector)? onSelect,
           LzFormLabelStyle? labelStyle}) =>
       Select(
-          label: label,
-          hint: hint,
-          options: options,
-          initValue: initValue,
-          model: model,
-          disabled: disabled,
-          expandValue: expandValue,
-          onChange: onChange,
-          onTap: onTap,
-          onSelect: onSelect,
-          labelStyle: labelStyle);
+        label: label,
+        hint: hint,
+        options: options,
+        initValue: initValue,
+        model: model,
+        disabled: disabled,
+        expandValue: expandValue,
+        onChange: onChange,
+        onTap: onTap,
+        onSelect: onSelect,
+        labelStyle: labelStyle,
+        maxLines: maxLines,
+      );
 
   /* ---------------------------------------------------------------
   | LzForm Radio
