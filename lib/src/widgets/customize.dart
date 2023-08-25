@@ -856,7 +856,7 @@ class LzListView extends StatefulWidget {
   final ScrollController? controller;
   final List<Widget> children;
   final EdgeInsetsGeometry? padding;
-  final bool shrInkTouchrap;
+  final bool shrinkWrap;
   final ScrollPhysics? physics;
   final Function(ScrollController controller)? onScroll;
   final bool autoCache;
@@ -866,7 +866,7 @@ class LzListView extends StatefulWidget {
       this.scrollLimit,
       this.children = const [],
       this.padding,
-      this.shrInkTouchrap = false,
+      this.shrinkWrap = false,
       this.physics,
       this.onScroll,
       this.autoCache = false});
@@ -929,7 +929,7 @@ class _LzListViewState extends State<LzListView> {
           physics: widget.physics ?? BounceScroll(),
           controller: controller,
           padding: widget.padding ?? Ei.all(spacing),
-          shrinkWrap: widget.shrInkTouchrap,
+          shrinkWrap: widget.shrinkWrap,
           cacheExtent: cacheExtent,
           children: widget.children,
         );

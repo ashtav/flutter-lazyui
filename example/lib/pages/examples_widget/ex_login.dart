@@ -9,7 +9,7 @@ class ExLogin extends StatelessWidget {
       child: Scaffold(
         body: Center(
           child: LzListView(
-            shrInkTouchrap: true,
+            shrinkWrap: true,
             scrollLimit: const [30], // index 0 = top, index 1 = bottom
             padding: Ei.only(v: 35, h: 40),
             onScroll: (controller) {

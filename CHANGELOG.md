@@ -37,3 +37,11 @@
 ## 0.4.5
 
 * improvement and fix some bugs
+
+## 0.4.6
+
+* improvement and fix some bugs
+
+## 0.4.7
+
+* improvement and fix some bugs

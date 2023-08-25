@@ -37,8 +37,7 @@ class DropX {
       return logg('Context is invalid!');
     }
 
-    BuildContext context =
-        key is GlobalKey ? key.currentContext! : key as BuildContext;
+    BuildContext context = key is GlobalKey ? key.currentContext! : key as BuildContext;
 
     if (options.isEmpty) {
       return logg('Options can not be empty');
@@ -224,11 +223,8 @@ class _DropXWidget extends StatelessWidget {
                 left: x,
                 child: Container(
                   key: dropdownKey,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: Br.radius(Lazy.getRadius)),
-                  constraints: BoxConstraints(
-                      maxHeight: context.height * 0.7, maxWidth: 240),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(Lazy.getRadius)),
+                  constraints: BoxConstraints(maxHeight: context.height * 0.7, maxWidth: 240),
                   child: SingleChildScrollView(
                       physics: BounceScroll(),
                       child: notifier.watch((state) => Col(
@@ -246,8 +242,11 @@ class _DropXWidget extends StatelessWidget {
                                   onTap: disabled
                                       ? null
                                       : () {
-                                          List<Option> subOptions =
-                                              item.options ?? [];
+                                          List<Option> subOptions = item.options ?? [];
+
+                                           if (dismissOnTap && subOptions.isEmpty && !item.pop) {
+                                            context.pop();
+                                          }
 
                                           if (subOptions.isNotEmpty) {
                                             state.setOptions(subOptions);
@@ -269,19 +268,13 @@ class _DropXWidget extends StatelessWidget {
                                           }
 
                                           onSelect?.call(item);
-
-                                          if (dismissOnTap) {
-                                            context.pop();
-                                          }
                                         },
                                   padding: Ei.sym(v: 15, h: 20),
                                   border: Br.only(['t'], except: i == 0),
                                   child: Row(
                                     children: [
                                       Textr(item.option,
-                                              style: Gfont.color(danger
-                                                  ? Colors.redAccent
-                                                  : LzColors.black),
+                                              style: Gfont.color(danger ? Colors.redAccent : LzColors.black),
                                               icon: icon)
                                           .flexible(),
                                     ],
