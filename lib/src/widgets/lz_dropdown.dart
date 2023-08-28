@@ -199,23 +199,24 @@ class _DropXWidget extends StatelessWidget {
           return Stack(
             children: [
               // caret widget
-              Positioned(
-                  top: cy,
-                  left: cx,
-                  child: RotationTransition(
-                    turns: AlwaysStoppedAnimation(flip ? 180 / 360 : 0),
-                    child: CustomPaint(
-                      painter: CaretPainter(
-                        strokeColor: Colors.white,
-                        paintingStyle: PaintingStyle.fill,
-                        skew: 2,
+              if (useCaret)
+                Positioned(
+                    top: cy,
+                    left: cx,
+                    child: RotationTransition(
+                      turns: AlwaysStoppedAnimation(flip ? 180 / 360 : 0),
+                      child: CustomPaint(
+                        painter: CaretPainter(
+                          strokeColor: Colors.white,
+                          paintingStyle: PaintingStyle.fill,
+                          skew: 2,
+                        ),
+                        child: const SizedBox(
+                          height: 10,
+                          width: 20,
+                        ),
                       ),
-                      child: const SizedBox(
-                        height: 10,
-                        width: 20,
-                      ),
-                    ),
-                  )),
+                    )),
 
               // dropdown widget
               Positioned(
@@ -244,7 +245,7 @@ class _DropXWidget extends StatelessWidget {
                                       : () {
                                           List<Option> subOptions = item.options ?? [];
 
-                                           if (dismissOnTap && subOptions.isEmpty && !item.pop) {
+                                          if (dismissOnTap && subOptions.isEmpty && !item.pop) {
                                             context.pop();
                                           }
 
