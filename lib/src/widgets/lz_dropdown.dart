@@ -109,11 +109,11 @@ class _DropXWidget extends StatelessWidget {
       final box = this.context.findRenderObject() as RenderBox?;
       final o = box?.localToGlobal(Offset.zero);
 
-      // dapatkan posisi (x, y)
+      // get (x, y) position of the widget
       double dx = o?.dx ?? 0;
       double dy = o?.dy ?? 0;
 
-      // dapatkan ukuran box (w, h)
+      // get size of the box (w, h)
       // double boxW = box?.size.width ?? 0;
       double boxH = box?.size.height ?? 0;
 
@@ -123,29 +123,35 @@ class _DropXWidget extends StatelessWidget {
       double ddWidth = dropdown?.size.width ?? 0;
       double ddHeight = dropdown?.size.height ?? 0;
 
-      // untuk memeriksa apakah dropdown yang akan ditampilkan melebihi batas screen
-      // kita perlu mendapatkan posisi dropdown (x, y)
-      // tapi itu hanya bisa dilakukan jika dropdown sudah ditampilkan
-      // alternatif lain adalah, dengan mengambil posisi (x, y) dari box
+      // to check if dropdown is out of screen
+      // we need to get dropdown position (x, y)
+      // but it can only be done if the dropdown is already displayed
+      // another alternative is, by getting the position (x, y) from the box
 
       double ddPosY = dy + ddHeight;
       // double ddPosX = dx + ddWidth;
 
-      // jika dropdown melebihi batas screen Y
-      // maka dropdown akan ditampilkan di atas widget
+      // if dropdown is out of screen Y
+      // then dropdown will be displayed above the widget
 
       if ((ddPosY + (bar * 2)) > screenH) {
         dy = dy - ddHeight;
         dy = dy - (!isContext ? (boxH * 2) + boxH : boxH / 2);
-        dy -= offset.dy;
+        // dy -= offset.dy;
+
+        if (offset.dy < 0) {
+          dy = dy - offset.dy;
+        } else {
+          dy = dy + offset.dy;
+        }
 
         isOutOfScreen = true;
       } else {
         dy = dy + (boxH / 2) + offset.dy;
       }
 
-      // jika dropdown melebihi batas screen X
-      // maka dropdown akan ditampilkan di kiri widget
+      // if dropdown is out of screen X
+      // then dropdown will be displayed on the left of the widget
 
       double ddRightX = dx + ddWidth; // posisi dropdown dari kanan
 
@@ -154,8 +160,8 @@ class _DropXWidget extends StatelessWidget {
         // dx = dx - (screenW - ddPosX) - offset.dx;
       }
 
-      // jika dropdown kurang dari 0
-      // maka dropdown akan ditampilkan di 0
+      // if dropdown is less than 0
+      // then dropdown will be displayed at 0
 
       if ((dx - offset.dx) <= 0) {
         dx = 0 + offset.dx;
@@ -171,6 +177,8 @@ class _DropXWidget extends StatelessWidget {
       } else if ((cx - 40) <= 0) {
         cx = 40;
       }
+
+      // cx -= offset.dx;
 
       // logg(
       //     'x: ${o?.dx}, y: ${o?.dy}, dx: $dx, dy: $dy, cx: $cx, cy: $cy, boxW: $boxW, boxH: $boxH, ddWidth: $ddWidth, ddHeight: $ddHeight, ddPosY: $ddPosY, ddPosX: $ddPosX, screenW: $screenW, screenH: $screenH');
