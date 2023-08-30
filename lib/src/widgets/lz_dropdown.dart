@@ -28,7 +28,7 @@ class CaretValue {
 class DropX {
   static Future show<T>(T key,
       {List<Option> options = const [],
-      Offset? offset,
+      Offset? offset, touchBased,
       bool useCaret = true,
       bool dismissOnTap = true,
       int? duration,
@@ -49,6 +49,7 @@ class DropX {
               context: context,
               options: options,
               offset: offset,
+              touchBased: touchBased,
               isContext: key is BuildContext,
               useCaret: useCaret,
               dismissOnTap: dismissOnTap,
@@ -69,7 +70,7 @@ class _Data {
 class _DropXWidget extends StatelessWidget {
   final BuildContext context;
   final List<Option> options;
-  final Offset? offset;
+  final Offset? offset, touchBased;
   final bool isContext, useCaret, dismissOnTap;
   final int duration;
   final Function(Option)? onSelect;
@@ -77,6 +78,7 @@ class _DropXWidget extends StatelessWidget {
       {required this.context,
       this.options = const [],
       this.offset,
+      this.touchBased,
       this.isContext = false,
       this.useCaret = false,
       this.dismissOnTap = true,
@@ -110,8 +112,8 @@ class _DropXWidget extends StatelessWidget {
       final o = box?.localToGlobal(Offset.zero);
 
       // get (x, y) position of the widget
-      double dx = o?.dx ?? 0;
-      double dy = o?.dy ?? 0;
+      double dx = touchBased?.dx ?? o?.dx ?? 0;
+      double dy = touchBased?.dy ?? o?.dy ?? 0;
 
       // get size of the box (w, h)
       // double boxW = box?.size.width ?? 0;
@@ -169,7 +171,7 @@ class _DropXWidget extends StatelessWidget {
 
       // adjust caret position -----------------------------------------------------------------------------------------
 
-      double cx = o?.dx ?? 0, cy = isOutOfScreen ? (dy + ddHeight - 1) : dy - 9;
+      double cx = (touchBased?.dx ?? o?.dx) ?? 0, cy = isOutOfScreen ? (dy + ddHeight - 1) : dy - 9;
       cx += 20;
 
       if ((cx + 40) >= screenW) {
@@ -178,7 +180,9 @@ class _DropXWidget extends StatelessWidget {
         cx = 40;
       }
 
-      // cx -= offset.dx;
+      if (cx + offset.dx + 40 >= screenW) {
+        cx -= offset.dx;
+      }
 
       // logg(
       //     'x: ${o?.dx}, y: ${o?.dy}, dx: $dx, dy: $dy, cx: $cx, cy: $cy, boxW: $boxW, boxH: $boxH, ddWidth: $ddWidth, ddHeight: $ddHeight, ddPosY: $ddPosY, ddPosX: $ddPosX, screenW: $screenW, screenH: $screenH');

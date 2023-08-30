@@ -44,9 +44,7 @@ extension StringExtension on String {
 
     try {
       List<String> char = trim().split(' ');
-      char
-          .take(length)
-          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '';
@@ -94,26 +92,24 @@ extension StringExtension on String {
           r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
       .hasMatch(this);
 
-  bool get isUrl => RegExp(
-          r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$')
-      .hasMatch(this);
+  bool get isUrl =>
+      RegExp(r'^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?$').hasMatch(this);
 
-  /// Format the given value as Indonesian Rupiah (IDR) currency string.
+  /// Format the given value as [currency] using the [NumberFormat] class.
   ///
-  /// The [symbol] parameter sets the currency symbol (default: 'Rp').
+  /// The [symbol] parameter sets the currency symbol (default: '$').
   /// The [decimalDigits] parameter sets the number of decimal digits to display (default: 0).
-  /// The [separator] parameter sets the thousands separator (default: '.').
+  /// The [separator] parameter sets the thousands separator (default: ',').
   ///
   /// Example usage:
   /// ```dart
-  /// String price = idr(15000);
-  /// print(price); // Rp15.000
+  /// String price = currency(15000);
+  /// print(price); // $15,000
   ///
-  /// String priceWithDecimal = idr(25000.50, decimalDigits: 2);
-  /// print(priceWithDecimal); // Rp25.000,50
+  /// String priceWithDecimal = currency(25000.50, decimalDigits: 2);
+  /// print(priceWithDecimal); // $25,000.50
   /// ```
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
     try {
       String num = '0', digits = '';
 
@@ -133,11 +129,10 @@ extension StringExtension on String {
           break;
 
         default:
-          return 'Rp?';
+          return '?';
       }
 
-      bool allowDecimal = runtimeType == int ||
-          (runtimeType == String && !toString().contains(separator));
+      bool allowDecimal = runtimeType == int || (runtimeType == String && !toString().contains(separator));
 
       String result = NumberFormat.currency(
         locale: 'id_ID',
@@ -155,13 +150,19 @@ extension StringExtension on String {
       return 'Rp?';
     }
   }
+
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  }
 }
 
 extension NullableStringExtension on String? {
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).idr(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  }
+
+  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+    return (this == null ? '0' : toString()).currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// ``` dart
@@ -196,8 +197,7 @@ extension NullableStringExtension on String? {
           RegExp? r = formatRegexMap[format];
 
           if (dateString.contains(' ')) {
-            dateString =
-                dateString.split(' ')[0]; // extract date portion of string
+            dateString = dateString.split(' ')[0]; // extract date portion of string
           } else {
             dateString = dateString;
           }
@@ -224,10 +224,7 @@ extension NullableStringExtension on String? {
 
         if (format != null && format == 'd-m-y') {
           RegExp regex = RegExp(r'^(\d{2})-(\d{2})-(\d{4})$');
-          List<String> dateParts =
-              (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ??
-                      [])
-                  .cast();
+          List<String> dateParts = (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ?? []).cast();
           String ymd = '${dateParts[0]}-${dateParts[1]}-${dateParts[2]}';
 
           if (fullDate.length > 1) {
