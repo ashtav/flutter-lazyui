@@ -115,7 +115,7 @@ extension WidgetExtension on Widget {
   }
 
   /// ``` dart
-  /// YourWidget().blur()
+  /// YourWidget().blur(); // default sigmaX = 5, sigmaY = 5, duration = 300ms, show = true
   /// ```
   Widget blur(BuildContext context,
       {double sigmaX = 5,
@@ -140,10 +140,13 @@ extension WidgetExtension on Widget {
     );
   }
 
-  Widget lzBlink(bool shouldBlink, [Duration? duration]) {
+  /// ``` dart
+  /// YourWidget().lzBlink(); // blink the widget
+  /// ```
+  Widget lzBlink([bool shouldBlink = true, Duration? duration]) {
     if (shouldBlink) {
       return _BlinkingWidget(
-        duration: duration ?? 300.s,
+        duration: duration ?? 300.ms,
         child: this,
       );
     } else {
@@ -151,6 +154,16 @@ extension WidgetExtension on Widget {
     }
   }
 
+  /// ``` dart
+  /// Container().lzRotate(90); // the value is in degree between 0 - 360
+  /// ```
+  Widget lzRotate(double value, {AlignmentGeometry alignment = Alignment.center}){
+    return Transform.rotate(angle: (value % 360) * (3.1415926535897932 / 180), alignment: alignment, child: this);
+  }
+
+  /// ``` dart
+  /// MyWidget().lzStyle(); // To make the widget have border, padding, margin, and radius quickly
+  /// ```
   Widget lzStyle(
       {BoxBorder? border,
       EdgeInsetsGeometry? padding,
