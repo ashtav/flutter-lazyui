@@ -1,0 +1,4 @@
+flutter create example
+dart format .
+dart pub publish --dry-run
+dart pub publish
