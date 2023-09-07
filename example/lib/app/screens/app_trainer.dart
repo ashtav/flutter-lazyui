@@ -50,8 +50,9 @@ class AppTrainerView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
             title: const Text('App Trainer'),
-            actions: [La.search, La.calendar]
-                .generate((icon, i) => Iconr(icon, flipX: true, key: [key1, key2][i]).onPressed(() => {}))),
+            actions: [La.search, La.calendar].generate((icon, i) =>
+                Iconr(icon, flipX: true, key: [key1, key2][i])
+                    .onPressed(() => {}))),
         body: LzListView(
           children: [
             LzForm.input(

@@ -10,7 +10,8 @@ extension LzIntOrIfExtension on int? {
 }
 
 extension LzDoubleOrIfExtension on double? {
-  double orIf([double defaultValue = 0, List<dynamic> conditions = const [null]]) {
+  double orIf(
+      [double defaultValue = 0, List<dynamic> conditions = const [null]]) {
     if (this == null || conditions.contains(this)) {
       return defaultValue;
     }
@@ -19,7 +20,8 @@ extension LzDoubleOrIfExtension on double? {
 }
 
 extension LzBoolOrIfExtension on bool? {
-  bool orIf([bool defaultValue = false, List<dynamic> conditions = const [null]]) {
+  bool orIf(
+      [bool defaultValue = false, List<dynamic> conditions = const [null]]) {
     if (this == null || conditions.contains(this)) {
       return defaultValue;
     }
@@ -40,7 +42,9 @@ extension LzStringOrIfExtension on String? {
   /// name.orIf('-', [null, '-', 'null']) // to add custom conditions
   /// ```
 
-  String orIf([String defaultValue = '-', List<dynamic> conditions = const [null, '']]) {
+  String orIf(
+      [String defaultValue = '-',
+      List<dynamic> conditions = const [null, '']]) {
     if (this == null || conditions.contains(this)) {
       return defaultValue;
     }

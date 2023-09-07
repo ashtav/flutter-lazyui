@@ -9,8 +9,8 @@ class LzConfirm extends StatelessWidget {
   final IconData? icon;
   final double titleSize, iconSize;
   final Color? iconColor, confirmColor;
-  final String title, message;
-  final String? cancelText, confirmText;
+  final String title;
+  final String? message, cancelText, confirmText;
   final Function()? onCancel, onConfirm;
   final BorderRadius? radius;
   final LzConfirmType? type;
@@ -20,7 +20,7 @@ class LzConfirm extends StatelessWidget {
       {super.key,
       this.icon,
       required this.title,
-      required this.message,
+      this.message,
       this.titleSize = 17,
       this.iconSize = 50,
       this.iconColor,
@@ -38,6 +38,13 @@ class LzConfirm extends StatelessWidget {
     double radius = LazyUi.radius;
     String cancelText = this.cancelText ?? _cancelText ?? 'Cancel';
     String confirmText = this.confirmText ?? _confirmText ?? 'Confirm';
+    String message = this.message ?? '';
+
+    List<String> titles = title.split(' ');
+
+    if (titles.length > 1 && this.message == null) {
+      message = 'Are you sure you want to ${titles[1].toLowerCase()}?';
+    }
 
     Widget dialogCotnent = CenterDialog(
       borderRadius: this.radius ?? Br.radius(radius),

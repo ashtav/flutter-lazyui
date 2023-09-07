@@ -19,7 +19,13 @@ class SelectOptionView extends StatelessWidget {
               onTap: (_) {
                 SelectPicker.show(context,
                     fullScreen: true,
-                    options: ['Seminar', 'Workshop', 'Training', 'Meeting', 'Playing'].options(), onSelect: (o) {
+                    options: [
+                      'Seminar',
+                      'Workshop',
+                      'Training',
+                      'Meeting',
+                      'Playing'
+                    ].options(), onSelect: (o) {
                   logg(o.toMap());
                 });
               }),
@@ -27,7 +33,9 @@ class SelectOptionView extends StatelessWidget {
               label: 'Long Content Select Option',
               hint: 'Tap to show option',
               onTap: (_) {
-                SelectPicker.show(context, maxLines: 2, options: 10.generate((item) => Faker.address()).options(),
+                SelectPicker.show(context,
+                    maxLines: 2,
+                    options: 10.generate((item) => Faker.address()).options(),
                     onSelect: (o) {
                   logg(o.toMap());
                 });

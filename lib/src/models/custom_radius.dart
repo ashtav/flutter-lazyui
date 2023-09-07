@@ -19,10 +19,14 @@ class CustomRadius {
   // convert LzRadius to BorderRadius
   static BorderRadius getRadius(CustomRadius radius) {
     return BorderRadius.only(
-      topLeft: Radius.circular(radius.all ?? radius.others ?? radius.tlr ?? radius.ltb ?? radius.tl),
-      topRight: Radius.circular(radius.all ?? radius.others ?? radius.tlr ?? radius.rtb ?? radius.tr),
-      bottomLeft: Radius.circular(radius.all ?? radius.others ?? radius.blr ?? radius.ltb ?? radius.bl),
-      bottomRight: Radius.circular(radius.all ?? radius.others ?? radius.blr ?? radius.rtb ?? radius.br),
+      topLeft: Radius.circular(
+          radius.all ?? radius.others ?? radius.tlr ?? radius.ltb ?? radius.tl),
+      topRight: Radius.circular(
+          radius.all ?? radius.others ?? radius.tlr ?? radius.rtb ?? radius.tr),
+      bottomLeft: Radius.circular(
+          radius.all ?? radius.others ?? radius.blr ?? radius.ltb ?? radius.bl),
+      bottomRight: Radius.circular(
+          radius.all ?? radius.others ?? radius.blr ?? radius.rtb ?? radius.br),
     );
   }
 }

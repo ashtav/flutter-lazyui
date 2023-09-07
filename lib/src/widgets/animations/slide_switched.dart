@@ -20,8 +20,10 @@ class SlideSwitched extends StatelessWidget {
         duration: duration ?? const Duration(milliseconds: 250),
         transitionBuilder: (Widget child, Animation<double> animation) {
           final Tween<Offset> tween = direction == SlideDirection.up
-              ? Tween<Offset>(begin: const Offset(0, 1), end: const Offset(0, 0))
-              : Tween<Offset>(begin: const Offset(0, -1), end: const Offset(0, 0));
+              ? Tween<Offset>(
+                  begin: const Offset(0, 1), end: const Offset(0, 0))
+              : Tween<Offset>(
+                  begin: const Offset(0, -1), end: const Offset(0, 0));
 
           final slideTransition = SlideTransition(
             position: tween.animate(animation),

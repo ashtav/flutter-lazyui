@@ -41,7 +41,8 @@ class Iconr extends StatelessWidget {
         : flipX || flipY
             ? Transform(
                 alignment: Alignment.center,
-                transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
+                transform:
+                    flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
                 child: iconWidget)
             : iconWidget;
 
@@ -51,6 +52,8 @@ class Iconr extends StatelessWidget {
         margin: margin,
         width: width,
         decoration: BoxDecoration(border: border, borderRadius: radius),
-        child: rotate == null ? flipWidget : Transform.rotate(angle: rotate!, child: flipWidget));
+        child: rotate == null
+            ? flipWidget
+            : Transform.rotate(angle: rotate!, child: flipWidget));
   }
 }

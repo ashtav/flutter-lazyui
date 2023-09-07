@@ -38,7 +38,10 @@ class LzNoData extends StatelessWidget {
                 ),
             Textml(
               message,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: textColor),
               textAlign: Ta.center,
             ),
             const SizedBox(height: 15),
@@ -47,7 +50,10 @@ class LzNoData extends StatelessWidget {
                 onTap: onTap,
                 child: Textr(
                   onTapMessage,
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: textColor, fontWeight: Fw.bold),
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: textColor, fontWeight: Fw.bold),
                   padding: Ei.sym(v: 7, h: 20),
                 ),
               ),

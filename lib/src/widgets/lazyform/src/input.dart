@@ -244,8 +244,8 @@ class Input extends StatelessWidget {
               child: Stack(
                 children: [
                   Column(
-                      crossAxisAlignment: Caa.start,
-                      mainAxisSize: Mas.min,
+                    crossAxisAlignment: Caa.start,
+                    mainAxisSize: Mas.min,
                     children: [
                       FocusScope(
                         onFocusChange: (value) {
@@ -305,8 +305,8 @@ class Input extends StatelessWidget {
 
     return (isTopAligned
             ? Column(
-                      crossAxisAlignment: Caa.start,
-                      mainAxisSize: Mas.min,
+                crossAxisAlignment: Caa.start,
+                mainAxisSize: Mas.min,
                 children: [
                   if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
                   field

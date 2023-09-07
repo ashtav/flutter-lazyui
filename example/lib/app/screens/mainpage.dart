@@ -46,7 +46,10 @@ class MainPageView extends StatelessWidget {
           border: Br.only(['t'], except: i == 0),
           child: Row(
             mainAxisAlignment: Maa.spaceBetween,
-            children: [Text(item), const Icon(Ti.chevronRight, color: Colors.black45)],
+            children: [
+              Text(item),
+              const Icon(Ti.chevronRight, color: Colors.black45)
+            ],
           ),
         );
       })),

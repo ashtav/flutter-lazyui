@@ -6,7 +6,8 @@ class DateTimePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['date', 'date_month', 'month_year', 'year', 'time', 'datetime']);
+    final forms = LzForm.make(
+        ['date', 'date_month', 'month_year', 'year', 'time', 'datetime']);
 
     return Scaffold(
       appBar: AppBar(
@@ -31,7 +32,8 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['date_month'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await LzPicker.datePicker(context, type: DatePickerType.dateMonth);
+                    DateTime? date = await LzPicker.datePicker(context,
+                        type: DatePickerType.dateMonth);
                     if (date != null) model.text = date.format('dd MMMM yyyy');
                   }),
               LzForm.input(
@@ -40,7 +42,8 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['month_year'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await LzPicker.datePicker(context, type: DatePickerType.monthYear);
+                    DateTime? date = await LzPicker.datePicker(context,
+                        type: DatePickerType.monthYear);
                     if (date != null) model.text = date.format('MMMM yyyy');
                   }),
               LzForm.input(
@@ -49,7 +52,8 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['year'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await LzPicker.datePicker(context, type: DatePickerType.year);
+                    DateTime? date = await LzPicker.datePicker(context,
+                        type: DatePickerType.year);
                     if (date != null) model.text = date.format('yyyy');
                   }),
             ],
@@ -71,7 +75,8 @@ class DateTimePicker extends StatelessWidget {
                 suffixIcon: La.calendar,
                 onTap: (model) async {
                   DateTime? date = await LzPicker.dateTimePicker(context,
-                      maxDate: DateTime.now().add(1.y), initialDate: model.text.toDate());
+                      maxDate: DateTime.now().add(1.y),
+                      initialDate: model.text.toDate());
                   if (date != null) {
                     model.text = date.format('dd/MM/yyyy HH:mm a');
                   }

@@ -15,27 +15,35 @@ class LzLoader extends StatelessWidget {
   final double size, stroke;
   final EdgeInsetsGeometry? margin;
   final Color? color;
-  const LzLoader({Key? key, this.size = 18, this.stroke = 2, this.margin, this.color}) : super(key: key);
+  const LzLoader(
+      {Key? key, this.size = 18, this.stroke = 2, this.margin, this.color})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
         margin: margin,
-        child:
-            SizedBox(width: size, height: size, child: CircularProgressIndicator(color: color, strokeWidth: stroke)));
+        child: SizedBox(
+            width: size,
+            height: size,
+            child:
+                CircularProgressIndicator(color: color, strokeWidth: stroke)));
   }
 
   static Widget bar({String? message, bool center = true, double size = 90}) {
     TextStyle? textStyle = LazyUi.font;
 
-    Widget child = Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
+    Widget child =
+        Column(mainAxisAlignment: center ? Maa.center : Maa.start, children: [
       Image.asset(
         getAsset('loading-bar.gif'),
         width: size,
         height: size,
         fit: BoxFit.contain,
       ),
-      message == null ? const None() : Text(message, style: textStyle.copyWith(color: Colors.black54))
+      message == null
+          ? const None()
+          : Text(message, style: textStyle.copyWith(color: Colors.black54))
     ]);
 
     return center ? Center(child: child) : child;

@@ -5,6 +5,7 @@ import 'package:lazyui/src/constants/enum.dart';
 
 import '../constants/color.dart';
 import '../utils/utils.dart';
+import '../widgets/lazytoast/lazytoast.dart';
 
 // variables
 TextStyle? _defaultTextStyle;
@@ -27,7 +28,7 @@ class LazyUi {
   static double get radius => _defaultRadius;
 
   // initialize configurations
-  static init(
+  static config(
       {AppTheme theme = AppTheme.light,
       TextStyle? defaultTextStyle,
       IconType icon = IconType.tablerIcon,
@@ -62,5 +63,17 @@ class LazyUi {
 
     // set default radius
     _defaultRadius = radius ?? _defaultRadius;
+  }
+
+  // builder
+  static Widget builder(BuildContext context, Widget? widget,
+      {double maxScalingFontSize = 1.1, bool useLazyToast = true}) {
+    double fontDeviceSize = MediaQuery.of(context).textScaleFactor;
+
+    return MediaQuery(
+        data: MediaQuery.of(context).copyWith(
+          textScaleFactor: fontDeviceSize > maxScalingFontSize ? maxScalingFontSize : 1.0,
+        ),
+        child: useLazyToast ? LzToastOverlay(child: widget) : widget ?? const SizedBox.shrink());
   }
 }

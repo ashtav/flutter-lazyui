@@ -15,5 +15,7 @@ part of widget;
 
 class Unglow extends ScrollBehavior {
   @override
-  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) => child;
+  Widget buildOverscrollIndicator(
+          BuildContext context, Widget child, ScrollableDetails details) =>
+      child;
 }

@@ -7,15 +7,11 @@ class TestView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Test View'),
-      ),
-
-      body: LzListView(
-        children: [
-          Text('Hello world!', style: Gfont.color('09f'.hex).bold)
-        ],
-      )
-    );
+        appBar: AppBar(
+          title: const Text('Test View'),
+        ),
+        body: LzListView(
+          children: [Text('Hello world!', style: Gfont.color('09f'.hex).bold)],
+        ));
   }
 }

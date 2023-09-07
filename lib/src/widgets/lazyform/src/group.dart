@@ -55,8 +55,8 @@ class LzFormGroup extends StatelessWidget {
     double configRadius = LazyUi.radius;
 
     return Column(
-                      crossAxisAlignment: Caa.start,
-                      mainAxisSize: Mas.min,
+      crossAxisAlignment: Caa.start,
+      mainAxisSize: Mas.min,
       children: [
         // Label
         if (label != null)
@@ -96,8 +96,8 @@ class LzFormGroup extends StatelessWidget {
           child: ClipRRect(
             borderRadius: Br.radius(configRadius),
             child: Column(
-                      crossAxisAlignment: Caa.start,
-                      mainAxisSize: Mas.min,
+              crossAxisAlignment: Caa.start,
+              mainAxisSize: Mas.min,
               children: List.generate(children.length, (i) {
                 Widget child = children[i];
 

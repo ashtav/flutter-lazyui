@@ -49,11 +49,16 @@ class Textr extends StatelessWidget {
         padding: padding,
         margin: margin,
         width: width,
-        decoration: BoxDecoration(border: border, borderRadius: radius, color: color),
+        decoration:
+            BoxDecoration(border: border, borderRadius: radius, color: color),
         child: child);
 
-    Widget textWidget =
-        Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines);
+    Widget textWidget = Text(text,
+        style: style,
+        textAlign: textAlign,
+        overflow: overflow,
+        softWrap: softwrap,
+        maxLines: maxLines);
 
     if (icon != null) {
       double iconSize = iconStyle?.size ?? style?.fontSize ?? 15;
@@ -64,7 +69,9 @@ class Textr extends StatelessWidget {
           icon!,
           color: iconStyle?.color ?? style?.color,
           size: iconSize + 4,
-          margin: asSuffix ? Ei.only(l: iconStyle?.space ?? 10) : Ei.only(r: iconStyle?.space ?? 10),
+          margin: asSuffix
+              ? Ei.only(l: iconStyle?.space ?? 10)
+              : Ei.only(r: iconStyle?.space ?? 10),
         ),
         Flexible(child: textWidget),
       ];
@@ -79,7 +86,12 @@ class Textr extends StatelessWidget {
     }
 
     return wrapper(
-      Text(text, style: style, textAlign: textAlign, overflow: overflow, softWrap: softwrap, maxLines: maxLines),
+      Text(text,
+          style: style,
+          textAlign: textAlign,
+          overflow: overflow,
+          softWrap: softwrap,
+          maxLines: maxLines),
     );
   }
 }
@@ -90,5 +102,10 @@ class IconStyle {
   final CrossAxisAlignment position;
   final bool asSuffix;
 
-  const IconStyle({this.size, this.space, this.color, this.position = Caa.start, this.asSuffix = false});
+  const IconStyle(
+      {this.size,
+      this.space,
+      this.color,
+      this.position = Caa.start,
+      this.asSuffix = false});
 }

@@ -53,12 +53,15 @@ extension LzIntExtension on int {
 }
 
 extension LzIntNulllableExtension on int? {
-  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
-    return (this == null ? '0' : toString())
-        .currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String currency(
+      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+    return (this == null ? '0' : toString()).currency(
+        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
-  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String idr(
+      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(
+        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 }

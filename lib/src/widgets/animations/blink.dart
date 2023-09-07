@@ -17,7 +17,8 @@ class BlinkAnimate extends StatelessWidget {
   final Widget child;
   final bool animate;
   final Duration? duration;
-  const BlinkAnimate({super.key, required this.child, this.animate = true, this.duration});
+  const BlinkAnimate(
+      {super.key, required this.child, this.animate = true, this.duration});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,9 @@ class BlinkAnimate extends StatelessWidget {
       builder: (context, anim, f) {
         double opacity = double.parse('${anim.value}');
         return AnimatedOpacity(
-            duration: duration ?? const Duration(milliseconds: 300), opacity: opacity >= 150 ? 1 : 0, child: child);
+            duration: duration ?? const Duration(milliseconds: 300),
+            opacity: opacity >= 150 ? 1 : 0,
+            child: child);
       },
     );
   }

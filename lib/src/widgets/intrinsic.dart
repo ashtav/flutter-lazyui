@@ -27,7 +27,11 @@ class Intrinsic extends StatelessWidget {
   Widget build(BuildContext context) => IntrinsicHeight(
         key: key,
         child: axis == Axis.horizontal
-            ? Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children)
-            : Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children),
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: children)
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: children),
       );
 }

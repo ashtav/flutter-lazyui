@@ -22,7 +22,8 @@ class CenterDialog extends StatelessWidget {
           child: Material(
               color: Colors.transparent,
               child: Container(
-                  margin: EdgeInsets.all(margin), child: ClipRRect(borderRadius: borderRadius, child: child))),
+                  margin: EdgeInsets.all(margin),
+                  child: ClipRRect(borderRadius: borderRadius, child: child))),
         )
       ],
     );

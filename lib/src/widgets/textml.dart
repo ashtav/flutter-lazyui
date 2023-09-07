@@ -15,7 +15,9 @@ class Textml extends StatelessWidget {
   final TextDirection? textDirection;
   final TextOverflow? overflow;
 
-  const Textml(this.text, {Key? key, this.style, this.textAlign, this.textDirection, this.overflow}) : super(key: key);
+  const Textml(this.text,
+      {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,8 @@ class Textml extends StatelessWidget {
   }
 
   List<TextSpan> parseText(String text, {TextStyle? style}) {
-    final regex = RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|([^<]+)');
+    final regex =
+        RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|([^<]+)');
     final matches = regex.allMatches(text);
 
     final textSpans = <TextSpan>[];
@@ -48,7 +51,8 @@ class Textml extends StatelessWidget {
       } else if (type == 'i') {
         updatedStyle = updatedStyle.copyWith(fontStyle: FontStyle.italic);
       } else if (type == 'u') {
-        updatedStyle = updatedStyle.copyWith(decoration: TextDecoration.underline);
+        updatedStyle =
+            updatedStyle.copyWith(decoration: TextDecoration.underline);
       }
 
       if (color != null) {

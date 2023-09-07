@@ -36,16 +36,22 @@ class CaretPainter extends CustomPainter {
 
       // Draw the border based on the 'side' parameter
       if (side == 1 || side > 3) {
-        canvas.drawLine(Offset(0, size.height), Offset(size.width / skew, 0), borderPaint);
+        canvas.drawLine(
+            Offset(0, size.height), Offset(size.width / skew, 0), borderPaint);
       }
       if (side == 2 || side > 3) {
-        canvas.drawLine(Offset(size.width / skew, 0), Offset(size.width, size.height), borderPaint);
-        canvas.drawLine(Offset(0, size.height), Offset(size.width / skew, 0), borderPaint);
+        canvas.drawLine(Offset(size.width / skew, 0),
+            Offset(size.width, size.height), borderPaint);
+        canvas.drawLine(
+            Offset(0, size.height), Offset(size.width / skew, 0), borderPaint);
       }
       if (side == 3) {
-        canvas.drawLine(Offset(0, size.height), Offset(size.width, size.height), borderPaint);
-        canvas.drawLine(Offset(size.width / skew, 0), Offset(size.width, size.height), borderPaint);
-        canvas.drawLine(Offset(0, size.height), Offset(size.width / skew, 0), borderPaint);
+        canvas.drawLine(Offset(0, size.height), Offset(size.width, size.height),
+            borderPaint);
+        canvas.drawLine(Offset(size.width / skew, 0),
+            Offset(size.width, size.height), borderPaint);
+        canvas.drawLine(
+            Offset(0, size.height), Offset(size.width / skew, 0), borderPaint);
       }
     }
   }

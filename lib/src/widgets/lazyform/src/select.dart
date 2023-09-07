@@ -191,8 +191,8 @@ class Select extends StatelessWidget {
               child: Stack(
                 children: [
                   Column(
-                      crossAxisAlignment: Caa.start,
-                      mainAxisSize: Mas.min,
+                    crossAxisAlignment: Caa.start,
+                    mainAxisSize: Mas.min,
                     children: [
                       LzTextField(
                         hint: hint,
@@ -232,8 +232,8 @@ class Select extends StatelessWidget {
 
     return (isTopAligned
             ? Column(
-                      crossAxisAlignment: Caa.start,
-                      mainAxisSize: Mas.min,
+                crossAxisAlignment: Caa.start,
+                mainAxisSize: Mas.min,
                 children: [
                   if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
                   field

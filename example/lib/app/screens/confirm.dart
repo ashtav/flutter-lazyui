@@ -41,7 +41,8 @@ class ConfirmView extends StatelessWidget {
                   ).show(context);
                 },
                 radius: Br.radius(7),
-                padding: Ei.all(20), margin: Ei.only(t: 20),
+                padding: Ei.all(20),
+                margin: Ei.only(t: 20),
                 child: const Text('Bottom Sheet Confirm'),
               )
             ],

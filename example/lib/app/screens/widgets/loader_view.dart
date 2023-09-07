@@ -10,7 +10,6 @@ class LoaderView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Loader'),
       ),
-
       body: LzLoader.bar(message: 'Loading...'),
     );
   }

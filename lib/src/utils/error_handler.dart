@@ -11,7 +11,12 @@ class ErrorInfo {
   final String error;
   final NetworkError? networkError;
 
-  ErrorInfo({this.device, this.botToken, this.chatId, required this.error, this.networkError});
+  ErrorInfo(
+      {this.device,
+      this.botToken,
+      this.chatId,
+      required this.error,
+      this.networkError});
 }
 
 class NetworkError {
@@ -43,12 +48,19 @@ class Errors {
   /// ```
   /// `useList` = `true`, will show the list of function that related to the error
 
-  static check(e, StackTrace s, {bool? useList, bool disabledBot = false, NetworkError? networkError}) async {
+  static check(e, StackTrace s,
+      {bool? useList,
+      bool disabledBot = false,
+      NetworkError? networkError}) async {
     try {
       // ---------------------------------------------------------------------
       // Check Errors Caused by Internet Connection
 
-      List<String> failsNetwork = ['SocketException', 'Failed host lookup', 'NetworkException'];
+      List<String> failsNetwork = [
+        'SocketException',
+        'Failed host lookup',
+        'NetworkException'
+      ];
       String errorMessage = '-';
 
       if (failsNetwork.any((n) => e.toString().contains(n))) {
@@ -60,7 +72,10 @@ class Errors {
         final frames = Trace.from(s).terse.frames;
 
         if (useList ?? _errorConfig['use_list']) {
-          List<String> members = frames.take(4).map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})').toList();
+          List<String> members = frames
+              .take(4)
+              .map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})')
+              .toList();
           String member = members.join(', ');
 
           String message = '''$e
@@ -71,7 +86,8 @@ Try to check [$member]''';
         } else {
           for (Frame f in frames.take(1)) {
             int? line = f.line, col = f.column;
-            String location = f.uri.toString().replaceAll('package:', ''), member = f.member ?? 'Unknown';
+            String location = f.uri.toString().replaceAll('package:', ''),
+                member = f.member ?? 'Unknown';
 
             String message = '''Error on $member ($line:$col), $e 
                               File location: $location''';
@@ -103,7 +119,10 @@ Try to check [$member]''';
         String chatId = _errorConfig['bot']['chat_id'] ?? '';
         bool isUseBot = _errorConfig['bot']['active'] ?? false;
 
-        if (isUseBot && botToken.isNotEmpty && chatId.isNotEmpty && !disabledBot) {
+        if (isUseBot &&
+            botToken.isNotEmpty &&
+            chatId.isNotEmpty &&
+            !disabledBot) {
           DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
           String? brand, model, system, sdk;
 
@@ -142,7 +161,8 @@ Try to check [$member]''';
           String message = messages.join('\n');
 
           if (_errorConfig['error_info'] != null) {
-            void Function(ErrorInfo info) errorBuilder = _errorConfig['error_info'];
+            void Function(ErrorInfo info) errorBuilder =
+                _errorConfig['error_info'];
             ErrorInfo info = ErrorInfo(
                 device: device,
                 error: errorMessage.toString(),

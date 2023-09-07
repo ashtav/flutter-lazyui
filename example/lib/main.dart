@@ -6,8 +6,7 @@ import 'app/theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-
-  LazyUi.init();
+  LazyUi.config();
 
   runApp(const MyApp());
 }
@@ -22,14 +21,9 @@ class MyApp extends StatelessWidget {
       theme: appTheme,
       home: const AppIntro(),
       builder: (BuildContext context, Widget? widget) {
-        double fontDeviceSize = MediaQuery.of(context).textScaleFactor;
-
-        // prevent user from scaling font size
-        return MediaQuery(
-            data: MediaQuery.of(context).copyWith(
-              textScaleFactor: fontDeviceSize > 1.1 ? 1.1 : 1.0,
-            ),
-            child: LzToastOverlay(child: widget));
+        // use LazyUi.builder to wrap your widget
+        // so that you can use LzToast, setting maxScalingFontSize
+        return LazyUi.builder(context, widget, maxScalingFontSize: 1.1);
       },
     );
   }

@@ -21,7 +21,6 @@ class CupertinoDatePickerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     DateTime init = initialDate ?? DateTime.now();
     DateTime first = minDate ?? DateTime.now();
     DateTime last = maxDate ?? DateTime(DateTime.now().year + 10, 12, 31);

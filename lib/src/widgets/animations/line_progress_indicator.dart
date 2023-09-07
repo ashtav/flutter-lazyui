@@ -25,7 +25,8 @@ class LineProgressIndicator extends StatefulWidget {
   State<LineProgressIndicator> createState() => _LineProgressIndicatorState();
 }
 
-class _LineProgressIndicatorState extends State<LineProgressIndicator> with SingleTickerProviderStateMixin {
+class _LineProgressIndicatorState extends State<LineProgressIndicator>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
   void listenStatus(AnimationStatus status) {
@@ -85,7 +86,8 @@ class _LineProgressIndicatorState extends State<LineProgressIndicator> with Sing
         builder: (context, child) {
           return LinearProgressIndicator(
             backgroundColor: widget.backgroundColor ?? Colors.grey[300],
-            valueColor: AlwaysStoppedAnimation<Color>(widget.progressColor ?? LzColors.orange),
+            valueColor: AlwaysStoppedAnimation<Color>(
+                widget.progressColor ?? LzColors.orange),
             value: _animationController.value,
           );
         },

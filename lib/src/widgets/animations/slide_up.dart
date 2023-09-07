@@ -6,7 +6,13 @@ class SlideUp extends StatefulWidget {
   final double speed;
   final bool animate;
 
-  const SlideUp({Key? key, required this.child, this.delay, this.speed = 0.50, this.animate = true}) : super(key: key);
+  const SlideUp(
+      {Key? key,
+      required this.child,
+      this.delay,
+      this.speed = 0.50,
+      this.animate = true})
+      : super(key: key);
 
   @override
   State<SlideUp> createState() => _SlideUpState();
@@ -18,10 +24,14 @@ class _SlideUpState extends State<SlideUp> with TickerProviderStateMixin {
   Timer? timer;
 
   void init() {
-    _animController = AnimationController(vsync: this, duration: const Duration(milliseconds: 300));
+    _animController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 300));
 
-    final curve = CurvedAnimation(curve: Curves.decelerate, parent: _animController!);
-    _animOffset = Tween<Offset>(begin: Offset(0.0, widget.speed), end: Offset.zero).animate(curve);
+    final curve =
+        CurvedAnimation(curve: Curves.decelerate, parent: _animController!);
+    _animOffset =
+        Tween<Offset>(begin: Offset(0.0, widget.speed), end: Offset.zero)
+            .animate(curve);
 
     widget.delay == null
         ? _animController?.forward()
