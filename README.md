@@ -139,24 +139,18 @@ LazyUi's Custom Widgets are pre-built components designed to simplify your UI de
 
 LazyUi.config(
     radius: 5, // default radius for LazyUi custom widgets
-    primaryColor: LzColors.dark,
-    theme: AppTheme.light,
-    widgets: () {
-        // If you want to use LzConfirm widget
-        LzConfirm.config(cancel: 'Cancel', confirm: 'Yes');
-        
-        // If you want to use Telegram Bot for error handling
-        Errors.config(
-            botToken: '<bot_token>',
-            chatId: '<chat_id>',
-            useBot: true, // if false, error will be printed in console only
-            errorBuilder: (ErrorInfo info) {
-                // Here you can customize your error message
+    theme: AppTheme.light
+);
 
-                String message = 'This is custom error message: ${info.error}, ${info.device}';
-                Bot.sendMessage(message, info.botToken!, info.chatId!);
-            }
-        );
+Errors.config(
+    botToken: '<bot_token>',
+    chatId: '<chat_id>',
+    useBot: true, // if false, error will be printed in console only
+    errorBuilder: (ErrorInfo info) {
+        // Here you can customize your error message
+
+        String message = 'This is custom error message: ${info.error}, ${info.device}';
+        Bot.sendMessage(message, info.botToken!, info.chatId!);
     }
 );
 ```

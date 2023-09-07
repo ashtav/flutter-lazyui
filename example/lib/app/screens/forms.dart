@@ -23,7 +23,7 @@ class FormsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Form View'),
       ),
-      body: LzFormList(
+      body: LzFormList( 
         cleanOnType: true,
         style: LzFormStyle(
             activeColor: LzColors.dark,

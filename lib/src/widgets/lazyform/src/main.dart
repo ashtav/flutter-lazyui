@@ -510,6 +510,9 @@ class LzFormList extends StatelessWidget {
       RenderBox box = context.findRenderObject() as RenderBox;
       double height = (box.size.height * 3);
       controller.sink.add(height);
+
+      // close the stream
+      controller.close();
     });
 
     return StreamBuilder<double>(
