@@ -29,8 +29,7 @@ class Faker {
   }
 
   // generate random price based on length
-  static String price(
-      {int length = 5, String locale = 'id_ID', String prefix = ''}) {
+  static String price({int length = 5, String locale = 'id_ID', String prefix = ''}) {
     int randomInt = math.Random().nextInt(math.pow(10, length) as int);
     String price = randomInt.toString();
 
@@ -55,8 +54,7 @@ class Faker {
     String result = name().toLowerCase().replaceAll(' ', '');
 
     if (addNumber) {
-      result +=
-          '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
+      result += '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
     } else {
       result += '@$domain';
     }
@@ -79,6 +77,11 @@ class Faker {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat(format).format(now);
     return formattedDate;
+  }
+
+  // generate random gender
+  static String gender([List<String> data = const ['Male', 'Female']]) {
+    return data[math.Random().nextInt(data.length)];
   }
 
   // generate random time

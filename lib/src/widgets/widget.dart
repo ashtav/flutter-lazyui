@@ -17,6 +17,7 @@ part 'animations/blink.dart';
 part 'animations/line_progress_indicator.dart';
 part 'animations/resized_switched.dart';
 part 'animations/ripple.dart';
+part 'animations/scale_switched.dart';
 part 'animations/slide_down.dart';
 part 'animations/slide_left.dart';
 part 'animations/slide_right.dart';

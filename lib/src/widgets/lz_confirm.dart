@@ -43,7 +43,7 @@ class LzConfirm extends StatelessWidget {
     List<String> titles = title.split(' ');
 
     if (titles.length > 1 && this.message == null) {
-      message = 'Are you sure you want to ${titles[1].toLowerCase()}?';
+      message = 'Are you sure want to ${titles[0].toLowerCase()} this ${titles[1].toLowerCase()}?';
     }
 
     Widget dialogCotnent = CenterDialog(
