@@ -35,7 +35,7 @@ class Radio extends StatelessWidget {
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
     bool isFirst = false;
-    bool isTopAligned = false;
+    bool isTopAligned = parent?.type == FormType.topAligned;
 
     // get first children of parent
     if (isGrouping && (parent?.children ?? []).isNotEmpty) {

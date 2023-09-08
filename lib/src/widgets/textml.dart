@@ -1,18 +1,31 @@
 part of widget;
 
-/// Textml is a Flutter widget for rendering rich text with custom formatting. It allows you to define text styles, alignment, and text directions, and supports basic HTML-like formatting tags such as b, i, u, and color.
+/// `Textml` is a Flutter widget for rendering rich text with custom formatting. It allows you to define text styles, alignment, text direction, and supports basic HTML-like formatting tags such as `b`, `i`, `u`, and `color`.
 ///
+/// Example usage:
 /// ```dart
 /// Textml(
-///   'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <color="FF5733">custom color</color>.'
+///   'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <color="FF5733">custom color</color>.',
+///   style: TextStyle(fontSize: 16, color: Colors.black),
+///   textAlign: TextAlign.center,
+///   textDirection: TextDirection.ltr,
+///   overflow: TextOverflow.ellipsis,
 /// )
 /// ```
-
 class Textml extends StatelessWidget {
+  /// The text to be displayed with custom formatting.
   final String text;
+
+  /// Optional text style for the rendered text.
   final TextStyle? style;
+
+  /// Optional alignment for the text within its parent container.
   final TextAlign? textAlign;
+
+  /// Optional text direction for the text.
   final TextDirection? textDirection;
+
+  /// Optional text overflow behavior.
   final TextOverflow? overflow;
 
   const Textml(this.text,

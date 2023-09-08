@@ -1,28 +1,72 @@
 part of widget;
 
-/// `LzButton` is a customizable Flutter widget for creating buttons with various options such as text, icons, and appearance.
+/// A customizable button widget that supports various styles and configurations.
 ///
+/// The `LzButton` widget allows you to create customizable buttons with different
+/// styles and configurations. You can set text, icons, colors, and more to tailor
+/// the button's appearance and behavior to your needs.
+///
+/// Example usage:
 /// ```dart
 /// LzButton(
 ///   text: 'Click Me',
 ///   onTap: (state) {
-///     // Action to be performed when the button is pressed
+///     // Handle button tap here
 ///   },
+///   type: ButtonType.primary, // Specify the button style (optional)
+///   color: Colors.blue, // Set the button's background color (optional)
+///   textColor: Colors.white, // Set the text color (optional)
+///   icon: Icons.arrow_forward, // Add an icon (optional)
+///   iconAlign: IconAlign.right, // Specify the icon alignment (optional)
+///   radius: 8.0, // Set the button's border radius (optional)
+///   padding: EdgeInsets.all(16.0), // Set padding (optional)
+///   outline: false, // Use an outline style (optional)
+///   gradient: true, // Apply a gradient background (optional)
 /// )
 /// ```
-
 class LzButton extends StatelessWidget {
+  /// The text displayed on the button.
   final String? text;
+
+  /// The icon displayed on the button (optional).
   final IconData? icon;
+
+  /// The alignment of the icon relative to the text.
   final IconAlign iconAlign;
+
+  /// A callback function that handles button taps.
   final Function(LzButtonControl state)? onTap;
+
+  /// The border radius of the button (optional).
   final double? radius;
+
+  /// Padding around the button's content.
   final EdgeInsetsGeometry? padding;
+
+  /// Custom border radius configuration for each corner of the button (optional).
   final CustomRadius? customRadius;
+
+  /// The type or style of the button (e.g., primary, secondary, etc.).
   final ButtonType type;
-  final Color? color, textColor, borderColor;
+
+  /// The background color of the button (optional).
+  final Color? color;
+
+  /// The text color of the button's text (optional).
+  final Color? textColor;
+
+  /// The border color of the button (optional).
+  final Color? borderColor;
+
+  /// The alignment of the button's text (e.g., center, left, right).
   final TextAlign textAlign;
-  final bool gradient, outline;
+
+  /// Indicates whether to apply a gradient background to the button (optional).
+  final bool gradient;
+
+  /// Indicates whether to use an outline style for the button (optional).
+  final bool outline;
+
   const LzButton(
       {super.key,
       this.text,

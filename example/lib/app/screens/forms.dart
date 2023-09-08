@@ -23,7 +23,7 @@ class FormsView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Form View'),
       ),
-      body: LzFormList( 
+      body: LzFormList(
         cleanOnType: true,
         style: LzFormStyle(
             activeColor: LzColors.dark,
@@ -72,8 +72,8 @@ class FormsView extends StatelessWidget {
                       disabled: i == 1)),
               model: forms['hobby']),
           LzFormGroup(
-            label: 'Account',
-            prefixIcon: La.lock,
+            label: 'Account *',
+            labelStyle: Gfont.fs14,
             children: [
               LzForm.input(
                   label: 'Email *',

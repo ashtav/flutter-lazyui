@@ -11,3 +11,7 @@ enum SlideDirection { up, down }
 enum Position { left, right, top, bottom, center }
 
 enum DatePickerType { all, dateTime, dateMonth, monthYear, year }
+
+enum LzConfirmType { dialog, bottomSheet }
+
+enum RefrehtorType { curve, bar, arrow }

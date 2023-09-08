@@ -1,19 +1,71 @@
 part of widget;
 
-String? _cancelText, _confirmText;
-LzConfirmType _confirmType = LzConfirmType.dialog;
-
-enum LzConfirmType { dialog, bottomSheet }
-
+/// A customizable confirmation dialog widget.
+///
+/// The `LzConfirm` widget allows you to create customizable confirmation dialogs
+/// with options to display an icon, title, message, and buttons for confirmation
+/// and cancellation.
+///
+/// Example usage:
+/// ```dart
+/// LzConfirm(
+///   icon: Icons.warning,
+///   title: 'Are you sure?',
+///   message: 'This action cannot be undone.',
+///   onCancel: () {
+///     // Handle cancel action here
+///   },
+///   onConfirm: () {
+///     // Handle confirmation action here
+///   },
+///   cancelText: 'Cancel', // Set custom cancel button text (optional)
+///   confirmText: 'Confirm', // Set custom confirm button text (optional)
+///   radius: BorderRadius.circular(10.0), // Set border radius (optional)
+///   type: LzConfirmType.warning, // Specify the dialog type (optional)
+///   dimissOnTap: true, // Close the dialog when tapping outside (optional)
+/// )
+/// ```
 class LzConfirm extends StatelessWidget {
+  /// The icon displayed in the confirmation dialog (optional).
   final IconData? icon;
-  final double titleSize, iconSize;
-  final Color? iconColor, confirmColor;
+
+  /// The size of the title text.
+  final double titleSize;
+
+  /// The size of the icon (if provided).
+  final double iconSize;
+
+  /// The color of the icon (optional).
+  final Color? iconColor;
+
+  /// The color of the confirmation button.
+  final Color? confirmColor;
+
+  /// The title text of the confirmation dialog.
   final String title;
-  final String? message, cancelText, confirmText;
-  final Function()? onCancel, onConfirm;
+
+  /// The message text displayed below the title (optional).
+  final String? message;
+
+  /// The text for the cancel button (optional).
+  final String? cancelText;
+
+  /// The text for the confirmation button (optional).
+  final String? confirmText;
+
+  /// A callback function called when the cancel button is tapped (optional).
+  final Function()? onCancel;
+
+  /// A callback function called when the confirmation button is tapped (optional).
+  final Function()? onConfirm;
+
+  /// The border radius for the confirmation dialog (optional).
   final BorderRadius? radius;
+
+  /// The type or style of the confirmation dialog (optional).
   final LzConfirmType? type;
+
+  /// Indicates whether the dialog should be dismissed when tapping outside (optional).
   final bool dimissOnTap;
 
   const LzConfirm(
@@ -190,3 +242,6 @@ class LzConfirm extends StatelessWidget {
     _confirmType = type ?? _confirmType;
   }
 }
+
+String? _cancelText, _confirmText;
+LzConfirmType _confirmType = LzConfirmType.dialog;

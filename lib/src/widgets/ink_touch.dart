@@ -1,23 +1,86 @@
 part of widget;
 
-/*
-  InkTouch is a widget that simplifies the use of InkWell in Flutter. 
-  This widget provides several parameters that can be used to configure 
-  the appearance and behavior of InkWell more easily.
-*/
+/// A widget that simplifies the use of InkWell in Flutter with customizable options.
+///
+/// The `InkTouch` widget simplifies the usage of InkWell by providing parameters
+/// to configure its appearance and behavior easily. It allows you to define onTap,
+/// onTapDown, onTapUp, onLongPress, onDoubleTap, and onTapCancel actions, as well
+/// as customize the widget's padding, margin, color, splash effect, elevation, and more.
+///
+/// Example usage:
+/// ```dart
+/// InkTouch(
+///   onTap: () {
+///     // Action to perform on tap
+///   },
+///   onLongPress: () {
+///     // Action to perform on long press
+///   },
+///   color: Colors.blue, // Background color (optional)
+///   splash: Colors.yellow, // Splash color (optional)
+///   borderRadius: BorderRadius.circular(10), // Border radius (optional)
+///   elevation: 4, // Elevation (optional)
+///   padding: EdgeInsets.all(16), // Padding (optional)
+///   child: Text('Tap Me'), // Child widget
+/// )
+/// ```
 
 class InkTouch extends StatelessWidget {
+  /// The child widget contained within InkWell.
   final Widget? child;
+
+  /// The callback function when onTapDown event occurs.
   final Function(TapDownDetails? details)? onTapDown;
+
+  /// The callback function when onTapUp event occurs.
   final Function(TapUpDetails? details)? onTapUp;
-  final Function()? onTap, onLongPress, onDoubleTap, onTapCancel;
-  final EdgeInsetsGeometry? padding, margin;
-  final Color? color, splash, highlightColor;
+
+  /// The callback function when onTap event occurs.
+  final Function()? onTap;
+
+  /// The callback function when onLongPress event occurs.
+  final Function()? onLongPress;
+
+  /// The callback function when onDoubleTap event occurs.
+  final Function()? onDoubleTap;
+
+  /// The callback function when onTapCancel event occurs.
+  final Function()? onTapCancel;
+
+  /// The padding around the InkWell.
+  final EdgeInsetsGeometry? padding;
+
+  /// The margin around the InkWell.
+  final EdgeInsetsGeometry? margin;
+
+  /// The background color of InkWell.
+  final Color? color;
+
+  /// The splash color when tapping InkWell.
+  final Color? splash;
+
+  /// The highlight color when tapping InkWell.
+  final Color? highlightColor;
+
+  /// The border radius of the InkWell.
   final BorderRadius? radius;
+
+  /// The border around the InkWell.
   final BoxBorder? border;
+
+  /// The elevation of the Material widget containing InkWell.
   final double elevation;
+
+  /// The shape of the Material widget containing InkWell.
   final ShapeBorder? shape;
-  final bool enableSplash, splashByBaseColor;
+
+  /// Determines if the splash effect is enabled.
+  final bool enableSplash;
+
+  /// Determines if the splash color should be based on the base color.
+  final bool splashByBaseColor;
+
+  /// The opacity of the InkWell.
   final double opacity;
 
   const InkTouch(

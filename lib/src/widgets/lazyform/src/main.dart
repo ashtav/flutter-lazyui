@@ -484,6 +484,7 @@ class LzFormList extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final ScrollPhysics? physics;
   final LzFormStyle? style;
+  final ScrollController? controller;
 
   /// If true, the form will be cleared from errors messages when typing
   final bool cleanOnType;
@@ -494,6 +495,7 @@ class LzFormList extends StatelessWidget {
       this.padding,
       this.physics,
       this.style,
+      this.controller,
       this.cleanOnType = false});
 
   @override
@@ -504,20 +506,21 @@ class LzFormList extends StatelessWidget {
       LzFormTheme.setActiveColor(style!.activeColor!);
     }
 
-    final controller = StreamController<double>();
+    final streamController = StreamController<double>();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       RenderBox box = context.findRenderObject() as RenderBox;
       double height = (box.size.height * 3);
-      controller.sink.add(height);
+      streamController.sink.add(height);
 
       // close the stream
-      controller.close();
+      streamController.close();
     });
 
     return StreamBuilder<double>(
-        stream: controller.stream,
+        stream: streamController.stream,
         builder: (BuildContext context, snap) => ListView(
+              controller: controller,
               physics: physics ?? BounceScroll(),
               cacheExtent: snap.data,
               padding: padding ?? Ei.all(20),

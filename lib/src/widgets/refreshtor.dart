@@ -1,30 +1,101 @@
 part of widget;
 
-enum RefrehtorType { curve, bar, arrow }
-
+/// `Refreshtor` is a Flutter widget that provides a pull-to-refresh functionality for scrollable content. It allows users to refresh the content by pulling down the widget, and you can customize the appearance and behavior of the refresh indicator.
+///
+/// Example usage:
+/// ```dart
+/// Refreshtor(
+///   onRefresh: () async {
+///     // Handle the refresh operation here.
+///   },
+///   child: ListView.builder(
+///     itemCount: itemCount,
+///     itemBuilder: (context, index) {
+///       return ListTile(title: Text('Item $index'));
+///     },
+///   ),
+///   text: 'Pull to refresh', // Text displayed when not yet armed.
+///   releaseText: 'Release to refresh', // Text displayed when armed.
+///   indicatorColor: Colors.blue, // Color of the refresh indicator.
+///   textColor: Colors.black, // Text color.
+///   releaseTextColor: Colors.black, // Text color when armed.
+///   backgroundColor: Colors.white, // Background color.
+///   type: RefrehtorType.bar, // Type of refresh indicator (bar or circular).
+///   offsetToArmed: 80, // Offset required to arm the refresh.
+///   height: 60, // Height of the refresh indicator.
+/// )
+/// ```
 class Refreshtor extends StatelessWidget {
+  /// Function to execute when a refresh is triggered.
   final Future<void> Function() onRefresh;
+
+  /// Child widget to display the scrollable content.
   final Widget child;
-  final String? text, releaseText;
-  final Color? indicatorColor, textColor, releaseTextColor, backgroundColor;
+
+  /// Text displayed when not yet armed for refresh.
+  final String? text;
+
+  /// Text displayed when armed for refresh.
+  final String? releaseText;
+
+  /// Color of the refresh indicator.
+  final Color? indicatorColor;
+
+  /// Text color.
+  final Color? textColor;
+
+  /// Text color when armed for refresh.
+  final Color? releaseTextColor;
+
+  /// Background color of the widget.
+  final Color? backgroundColor;
+
+  /// Type of refresh indicator (bar or circular).
   final RefrehtorType type;
+
+  /// Offset required to arm the refresh.
   final double offsetToArmed;
+
+  /// Height of the refresh indicator.
   final double? height;
 
-  const Refreshtor(
-      {Key? key,
-      required this.onRefresh,
-      required this.child,
-      this.text,
-      this.releaseText,
-      this.indicatorColor,
-      this.textColor,
-      this.releaseTextColor,
-      this.backgroundColor,
-      this.type = RefrehtorType.bar,
-      this.offsetToArmed = 80,
-      this.height})
-      : super(key: key);
+  /// Creates a `Refreshtor` widget with customizable properties.
+  ///
+  /// The [onRefresh] parameter is a function to execute when a refresh is triggered.
+  ///
+  /// The [child] parameter is the child widget that displays the scrollable content.
+  ///
+  /// The [text] parameter is the text displayed when not yet armed for refresh.
+  ///
+  /// The [releaseText] parameter is the text displayed when armed for refresh.
+  ///
+  /// The [indicatorColor] parameter is the color of the refresh indicator.
+  ///
+  /// The [textColor] parameter is the text color.
+  ///
+  /// The [releaseTextColor] parameter is the text color when armed for refresh.
+  ///
+  /// The [backgroundColor] parameter is the background color of the widget.
+  ///
+  /// The [type] parameter is the type of refresh indicator (bar or circular).
+  ///
+  /// The [offsetToArmed] parameter is the offset required to arm the refresh.
+  ///
+  /// The [height] parameter is the height of the refresh indicator.
+  const Refreshtor({
+    Key? key,
+    required this.onRefresh,
+    required this.child,
+    this.text,
+    this.releaseText,
+    this.indicatorColor,
+    this.textColor,
+    this.releaseTextColor,
+    this.backgroundColor,
+    this.type = RefrehtorType.bar,
+    this.offsetToArmed = 80,
+    this.height,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,21 @@
 part of widget;
 
-/*
-  Textr is a versatile text widget in Flutter that supports custom styling, text alignment, 
-  and optional icon placement. It simplifies the creation of text with icons while providing 
-  extensive customization options.
-*/
+/// `Textr` is a versatile text widget in Flutter that supports custom styling, text alignment, and optional icon placement. It simplifies the creation of text with icons while providing extensive customization options.
+///
+/// Example usage:
+/// ```dart
+/// Textr(
+///   text: 'Hello, Textr!',
+///   style: TextStyle(fontSize: 16, color: Colors.black),
+///   textAlign: TextAlign.center,
+///   textDecoration: TextDirection.ltr,
+///   overflow: TextOverflow.ellipsis,
+///   icon: Icons.star,
+///   iconStyle: IconStyle.leading,
+///   padding: EdgeInsets.all(8),
+///   color: Colors.blue,
+/// )
+/// ```
 
 class Textr extends StatelessWidget {
   final String text;

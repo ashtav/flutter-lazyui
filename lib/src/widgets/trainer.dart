@@ -5,6 +5,31 @@ class AppTrainerController {
       ({keys = const [], orderByKey = false}) {};
 }
 
+/// `AppTrainer` is a Flutter widget that helps guide users through your app by highlighting specific UI elements and providing step-by-step instructions.
+///
+/// Example usage:
+/// ```dart
+/// AppTrainer(
+///   child: MyApp(),
+///   targets: [
+///     Target(
+///       key: 'buttonKey',
+///       targetRect: Rect.fromCircle(center: Offset(100, 100), radius: 20),
+///       title: 'Welcome to My App!',
+///       description: 'Tap this button to get started.',
+///     ),
+///     // Add more targets here
+///   ],
+///   onInit: (controller) {
+///     // Initialize the controller and start the tutorial.
+///     controller.start();
+///   },
+///   onFinish: () {
+///     // Handle when the user completes the tutorial.
+///   },
+/// )
+/// ```
+
 class AppTrainer extends StatefulWidget {
   final Widget child;
   final List<Target> targets;

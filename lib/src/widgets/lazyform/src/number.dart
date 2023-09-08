@@ -36,7 +36,7 @@ class Number extends StatelessWidget {
     Type parentName = parent.runtimeType;
     bool isGrouping = parentName == LzFormGroup;
     bool isFirst = false;
-    bool isTopAligned = false;
+    bool isTopAligned = parent?.type == FormType.topAligned;
 
     // get first children of parent
     if (isGrouping && (parent?.children ?? []).isNotEmpty) {
@@ -168,9 +168,13 @@ class Number extends StatelessWidget {
     }
 
     Widget suffixWidget = showControl
-        ? notifier.watch((_) => Row(
+        ? notifier.watch((state) => Row(
               mainAxisAlignment: Maa.end,
               children: List.generate(2, (i) {
+                int value = state.controller.text.getNumeric;
+                bool isMin = value <= min;
+                bool isMax = value >= max;
+
                 return IgnorePointer(
                   ignoring: (notifier.disabled ?? disabled),
                   child: GestureDetector(
@@ -186,7 +190,9 @@ class Number extends StatelessWidget {
                           : (LazyUi.iconType == IconType.lineAwesome
                               ? La.plus
                               : Ti.plus),
-                      color: Colors.black45,
+                      color: i == 0 && isMin || i == 1 && isMax
+                          ? Colors.black12
+                          : Colors.black45,
                       padding: Ei.only(h: 15, v: 15),
                       border: Br.only(['l'],
                           color: (formListAncestor?.style?.inputBorderColor ??

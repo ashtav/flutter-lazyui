@@ -1,18 +1,45 @@
 part of widget;
 
+/// A widget that animates the sliding effect from the left to the right of its child widget.
+///
+/// The `SlideRight` widget is used to create smooth sliding animations for its child widget.
+/// It animates the child widget's position from the left to its original position.
+///
+/// Example usage:
+/// ```dart
+/// SlideRight(
+///   delay: 500, // Delay before animation starts in milliseconds (optional)
+///   speed: 0.5, // Animation speed (default is 0.50)
+///   animate: true, // Whether to animate (default is true)
+///   child: Text('Slide right animation'), // The child widget to be animated
+/// )
+/// ```
 class SlideRight extends StatefulWidget {
+  /// The child widget to be animated.
   final Widget child;
+
+  /// Delay before the animation starts in milliseconds (optional).
   final int? delay;
+
+  /// Animation speed (default is 0.50).
   final double speed;
+
+  /// Whether to animate (default is true).
   final bool animate;
 
-  const SlideRight(
-      {Key? key,
-      required this.child,
-      this.delay,
-      this.speed = 0.50,
-      this.animate = true})
-      : super(key: key);
+  /// Creates a `SlideRight` widget.
+  ///
+  /// The [child] is the widget to be animated with a sliding right animation.
+  /// The [delay] specifies the delay before the animation starts in milliseconds (optional).
+  /// The [speed] defines the animation speed (default is 0.50).
+  /// The [animate] flag determines whether to animate the child widget (default is true).
+  const SlideRight({
+    Key? key,
+    required this.child,
+    this.delay,
+    this.speed = 0.50,
+    this.animate = true,
+  }) : super(key: key);
 
   @override
   State<SlideRight> createState() => _SlideRightState();

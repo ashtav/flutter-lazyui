@@ -1,15 +1,52 @@
 part of widget;
 
-Widget? _defaultErrorWidget;
-double? _defaultRadius;
-
+/// A versatile image widget that supports various data types and customizations.
+///
+/// The `LzImage` widget provides flexibility in displaying images by supporting
+/// different data types such as `String`, `File`, `Uint8List`, and more. It allows
+/// you to customize the image's appearance, including its fit, size, radius, color,
+/// and placeholders for loading and error states.
+///
+/// Example usage:
+/// ```dart
+/// LzImage(
+///   image: 'https://example.com/image.jpg',
+///   fit: BoxFit.cover,
+///   width: 200,
+///   height: 150,
+///   radius: 10,
+///   color: Colors.blue,
+///   placeholder: CircularProgressIndicator(), // Custom loading placeholder
+///   errorWidget: Icon(Icons.error), // Custom error widget
+/// )
+/// ```
 class LzImage<T> extends StatelessWidget {
+  /// The image data to be displayed. Supports various data types.
   final T image;
+
+  /// The BoxFit property determines how the image is fitted into its container.
   final BoxFit fit;
+
+  /// The color overlay applied to the image (optional).
   final Color? color;
-  final double? width, height, size;
+
+  /// The width of the image (optional).
+  final double? width;
+
+  /// The height of the image (optional).
+  final double? height;
+
+  /// The size of the image (optional). If provided, it sets both width and height.
+  final double? size;
+
+  /// The border radius applied to the image (optional).
   final double? radius;
-  final Widget? placeholder, errorWidget;
+
+  /// The widget displayed while the image is loading (optional).
+  final Widget? placeholder;
+
+  /// The widget displayed when an error occurs while loading the image (optional).
+  final Widget? errorWidget;
 
   const LzImage(this.image,
       {super.key,
@@ -193,3 +230,6 @@ class LzImage<T> extends StatelessWidget {
     _defaultRadius = radius;
   }
 }
+
+Widget? _defaultErrorWidget;
+double? _defaultRadius;

@@ -1,7 +1,10 @@
 part of widget;
 
-/// LzListView is a customizable Flutter widget that simplifies the creation of scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.
+// `LzListView` is a versatile Flutter widget that simplifies the creation of scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.
 ///
+/// It allows you to quickly create scrollable lists of child widgets and provides options for customizing the scrolling behavior and appearance.
+///
+/// Example usage:
 /// ```dart
 /// LzListView(
 ///   controller: myScrollController, // Optional custom ScrollController.
@@ -16,16 +19,31 @@ part of widget;
 ///   autoCache: true, // Whether to automatically cache the list height.
 /// )
 /// ```
-
 class LzListView extends StatefulWidget {
+  /// Optional scroll limits to restrict scrolling within a range.
   final List<double>? scrollLimit;
+
+  /// Optional custom ScrollController.
   final ScrollController? controller;
+
+  /// List of child widgets.
   final List<Widget> children;
+
+  /// Optional padding around the list.
   final EdgeInsetsGeometry? padding;
+
+  /// Whether the list should shrink-wrap its children.
   final bool shrinkWrap;
+
+  /// Custom scroll physics, defaults to BounceScroll.
   final ScrollPhysics? physics;
+
+  /// Callback when the list is scrolled.
   final Function(ScrollController controller)? onScroll;
+
+  /// Whether to automatically cache the list height.
   final bool autoCache;
+
   const LzListView(
       {super.key,
       this.controller,

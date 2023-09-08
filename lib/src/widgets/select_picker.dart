@@ -1,11 +1,37 @@
 part of widget;
 
+/// `SelectPicker` is a Flutter widget that provides a picker for selecting an option from a list of choices. It allows users to choose from a list of options and provides a callback function to handle the selected option.
+///
+/// Example usage:
+/// ```dart
+/// SelectPicker(
+///   options: myOptions, // List of available options.
+///   onSelect: (selectedOption) {
+///     // Handle the selected option here.
+///   },
+///   initialValue: selectedOption, // Initial selected option (optional).
+///   textConfirm: 'Confirm', // Text for the confirmation button (optional).
+///   fullScreen: false, // Whether to display the picker in full screen (optional).
+///   maxLines: 3, // Maximum number of lines for option text (optional).
+/// )
+/// ```
 class SelectPicker extends StatelessWidget {
+  /// List of available options to choose from.
   final List<Option> options;
+
+  /// Callback function to handle the selected option.
   final Function(Option)? onSelect;
+
+  /// Initial selected option (optional).
   final Option? initialValue;
+
+  /// Text for the confirmation button (optional).
   final String? textConfirm;
+
+  /// Whether to display the picker in full screen (optional).
   final bool fullScreen;
+
+  /// Maximum number of lines for option text (optional).
   final int? maxLines;
 
   const SelectPicker(

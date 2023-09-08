@@ -7,7 +7,10 @@ class LzFormGroup extends StatelessWidget {
   final IconData? prefixIcon;
   final List<Widget> children;
   final double? labelSize, bottomSpace;
+  final TextStyle? labelStyle;
   final SublabelStyle sublabelStyle;
+  final FormType type;
+
   const LzFormGroup(
       {super.key,
       this.label,
@@ -16,7 +19,9 @@ class LzFormGroup extends StatelessWidget {
       this.children = const [],
       this.labelSize,
       this.bottomSpace,
-      this.sublabelStyle = SublabelStyle.text});
+      this.labelStyle,
+      this.sublabelStyle = SublabelStyle.text,
+      this.type = FormType.grouped});
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +67,8 @@ class LzFormGroup extends StatelessWidget {
         if (label != null)
           Textr(
             label!,
-            style: style?.copyWith(fontWeight: Fw.bold, fontSize: labelSize),
+            style: labelStyle ??
+                style?.copyWith(fontWeight: Fw.bold, fontSize: labelSize),
             icon: prefixIcon,
             margin: Ei.only(b: 8),
           ),

@@ -158,9 +158,9 @@ Errors.config(
 ##### Custom Widgets
 
 ```dart
-Iconr, Textr, Wrapper, BounceScroll, Col, CenterDialog, Intrinsic, InkTouch, Touch,
-None, NoScrollGlow, LzNoData, Poslign, LzBox, LzPadder, LzBadge, LzSlidebar, 
-LzTextDivider, LzLoader, LzListView, Textml, IntrinsicButton, LzTextField, LzPopover
+Iconr, Textr, Wrapper, BounceScroll, Columnize, CenterDialog, Intrinsic, InkTouch, Touch,
+None, Unglow, LzNoData, Poslign, LzSlideIndicator, LzAccordion, LzButton, LzConfirm, LzImage,
+LzListView, LzTextDivider, LzTextField, LzLoader, Textml, AppTrainer
 ```
 
 
