@@ -1,6 +1,13 @@
 part of extension;
 
-extension LzWidgetExtension on Widget {
+extension LzExtension on Widget {
+  LzModifiers get lz => LzModifiers(this);
+}
+
+class LzModifiers {
+  final Widget widget;
+  LzModifiers(this.widget);
+
   /// ``` dart
   /// YourWidget().clip() // Only works on widget with no clip property
   /// ```
@@ -20,14 +27,14 @@ extension LzWidgetExtension on Widget {
                 topRight: Radius.circular(tr ?? tlr ?? 0),
                 bottomLeft: Radius.circular(bl ?? blr ?? 0),
                 bottomRight: Radius.circular(br ?? blr ?? 0)),
-        child: this,
+        child: widget,
       );
 
   /// ``` dart
   /// YourWidget().flexible()
   /// ```
   Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) =>
-      Flexible(flex: flex, fit: fit, child: this);
+      Flexible(flex: flex, fit: fit, child: widget);
 
   /// ``` dart
   /// Container().rotate(90); // the value is in degree between 0 - 360
@@ -37,7 +44,7 @@ extension LzWidgetExtension on Widget {
     return Transform.rotate(
         angle: (value % 360) * (3.1415926535897932 / 180),
         alignment: alignment,
-        child: this);
+        child: widget);
   }
 
   /// ``` dart
@@ -47,8 +54,8 @@ extension LzWidgetExtension on Widget {
   Widget opacity(double value, {bool animated = false, Duration? duration}) {
     return animated
         ? AnimatedOpacity(
-            opacity: value, duration: duration ?? 250.ms, child: this)
-        : Opacity(opacity: value, child: this);
+            opacity: value, duration: duration ?? 250.ms, child: widget)
+        : Opacity(opacity: value, child: widget);
   }
 
   /// ``` dart
@@ -58,13 +65,95 @@ extension LzWidgetExtension on Widget {
     if (shouldBlink) {
       return BlinkAnimate(
         duration: duration ?? 300.ms,
-        child: this,
+        child: widget,
       );
     } else {
-      return this;
+      return widget;
     }
   }
 
+  /// ``` dart
+  /// YourWidget().onTap(() {})
+  /// ```
+  Touch onTap(Function() onTap) => Touch(onTap: onTap, child: widget);
+
+  /// ``` dart
+  /// YourWidget().border(Br.all(), width: 1, color: Colors.black)
+  /// ```
+  Widget border(BoxBorder border,
+      {BorderRadiusGeometry? radius, Color? color}) {
+    if (this is Container) {
+      final container = this as Container;
+      BoxDecoration? decoration = container.decoration as BoxDecoration?;
+
+      if (decoration == null) {
+        decoration =
+            BoxDecoration(borderRadius: radius, color: color, border: border);
+      } else {
+        decoration = decoration.copyWith(
+            borderRadius: radius, color: color, border: border);
+      }
+
+      return Container(
+        decoration: decoration,
+        child: widget,
+      );
+    }
+
+    return Container(
+      decoration:
+          BoxDecoration(borderRadius: radius, color: color, border: border),
+      child: widget,
+    );
+  }
+
+  /// ``` dart
+  /// YourWidget().ignore()
+  /// ```
+  IgnorePointer ignore([bool ignoring = true]) =>
+      IgnorePointer(ignoring: ignoring, child: widget);
+
+  /// ``` dart
+  /// YourWidget().hide()
+  /// ```
+  Visibility hide([bool value = true]) =>
+      Visibility(visible: !value, child: widget);
+
+  /// ``` dart
+  /// YourWidget().blur(); // default sigmaX = 5, sigmaY = 5, duration = 300ms, show = true
+  /// ```
+  Widget blur(BuildContext context,
+      {double sigmaX = 5,
+      double sigmaY = 5,
+      Duration? duration,
+      bool show = true}) {
+    return Stack(
+      children: [
+        widget,
+        AnimatedOpacity(
+          duration: duration ?? 300.ms,
+          opacity: show ? 1 : 0,
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
+            child: SizedBox(
+              width: context.width,
+              height: context.height,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  /// ``` dart
+  /// ListView().onRefresh(() async => print('refreshed'));
+  /// ```
+  Refreshtor onRefresh(Future<void> Function() onRefresh) {
+    return Refreshtor(onRefresh: onRefresh, child: widget);
+  }
+}
+
+extension LzWidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().margin() // Only works on widget with no margin property
   /// ```
@@ -110,86 +199,6 @@ extension LzWidgetExtension on Widget {
                 right: h ?? r ?? others),
         child: this,
       );
-
-  /// ``` dart
-  /// YourWidget().onTap(() {})
-  /// ```
-  Touch onTap(Function() onTap) => Touch(onTap: onTap, child: this);
-
-  /// ``` dart
-  /// YourWidget().border(Br.all(), width: 1, color: Colors.black)
-  /// ```
-  Widget border(BoxBorder border,
-      {BorderRadiusGeometry? radius, Color? color}) {
-    if (this is Container) {
-      final container = this as Container;
-      BoxDecoration? decoration = container.decoration as BoxDecoration?;
-
-      if (decoration == null) {
-        decoration =
-            BoxDecoration(borderRadius: radius, color: color, border: border);
-      } else {
-        decoration = decoration.copyWith(
-            borderRadius: radius, color: color, border: border);
-      }
-
-      return Container(
-        decoration: decoration,
-        child: this,
-      );
-    }
-
-    return Container(
-      decoration:
-          BoxDecoration(borderRadius: radius, color: color, border: border),
-      child: this,
-    );
-  }
-
-  /// ``` dart
-  /// YourWidget().ignore()
-  /// ```
-  IgnorePointer ignore([bool ignoring = true]) =>
-      IgnorePointer(ignoring: ignoring, child: this);
-
-  /// ``` dart
-  /// YourWidget().hide()
-  /// ```
-  Visibility hide([bool value = true]) =>
-      Visibility(visible: !value, child: this);
-
-  /// ``` dart
-  /// YourWidget().blur(); // default sigmaX = 5, sigmaY = 5, duration = 300ms, show = true
-  /// ```
-  Widget blur(BuildContext context,
-      {double sigmaX = 5,
-      double sigmaY = 5,
-      Duration? duration,
-      bool show = true}) {
-    return Stack(
-      children: [
-        this,
-        AnimatedOpacity(
-          duration: duration ?? 300.ms,
-          opacity: show ? 1 : 0,
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: sigmaX, sigmaY: sigmaY),
-            child: SizedBox(
-              width: context.width,
-              height: context.height,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  /// ``` dart
-  /// ListView().onRefresh(() async => print('refreshed'));
-  /// ```
-  Refreshtor onRefresh(Future<void> Function() onRefresh) {
-    return Refreshtor(onRefresh: onRefresh, child: this);
-  }
 }
 
 extension CustomIconExtension on Icon {

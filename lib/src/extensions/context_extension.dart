@@ -23,13 +23,13 @@ extension LzContextExtension on BuildContext {
   /// Requests focus for a given [FocusNode]. If no [FocusNode] is given, a new one is created and focused.
   ///
   /// @param [node] The [FocusNode] to request focus for. Optional.
-  void focus([FocusNode? node]) =>
+  void lzFocus([FocusNode? node]) =>
       FocusScope.of(this).requestFocus(node ?? FocusNode());
 
   /// Pops the current route off the navigation stack and returns a result.
   ///
   /// @param [result] The result to return to the previous route. Optional.
-  void pop([dynamic result]) => Navigator.pop(this, result);
+  void lzPop([dynamic result]) => Navigator.pop(this, result);
 
   /// Navigate to a new screen and push the given [page] onto the navigation stack.
   ///
@@ -41,7 +41,7 @@ extension LzContextExtension on BuildContext {
   ///   await Navigator.push(context, MaterialPageRoute(builder: (_) => ProfilePage()));
   /// }
   /// ```
-  Future<T?> push<T extends Object?>(Widget page) =>
+  Future<T?> lzPush<T extends Object?>(Widget page) =>
       Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
 
   /// Navigate to a new screen and replace the current screen with the given [page].
@@ -54,7 +54,7 @@ extension LzContextExtension on BuildContext {
   ///   await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomePage()), (_) => false);
   /// }
   /// ```
-  Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
+  Future<T?> lzPushAndRemoveUntil<T extends Object?>(Widget page) =>
       Navigator.pushAndRemoveUntil<T>(
           this, MaterialPageRoute(builder: (_) => page), (_) => false);
 
@@ -69,7 +69,7 @@ extension LzContextExtension on BuildContext {
   ///   await Navigator.pushNamed(context, '/details', arguments: {'id': 1});
   /// }
   /// ```
-  Future<T?> pushNamed<T extends Object?>(String routeName,
+  Future<T?> lzPushNamed<T extends Object?>(String routeName,
           {Object? arguments}) =>
       Navigator.pushNamed<T>(this, routeName, arguments: arguments);
 
@@ -84,7 +84,7 @@ extension LzContextExtension on BuildContext {
   ///   await Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
   /// }
   /// ```
-  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName,
+  Future<T?> lzPushNamedAndRemoveUntil<T extends Object?>(String routeName,
           {Object? arguments}) =>
       Navigator.pushNamedAndRemoveUntil<T>(this, routeName, (_) => false,
           arguments: arguments);

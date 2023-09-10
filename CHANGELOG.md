@@ -16,3 +16,9 @@
 * LzForm improvement
 * Add more documentation
 * improvement and fix some bugs
+
+## 1.0.7
+
+* refactor widget extension
+* Add more documentation
+* improvement and fix some bugs

@@ -61,55 +61,55 @@ class Actions {
   static on(BuildContext context, String label) {
     switch (label) {
       case 'app intro':
-        context.push(const AppIntro());
+        context.lzPush(const AppIntro());
         break;
 
       case 'app trainer':
-        context.push(const AppTrainerView());
+        context.lzPush(const AppTrainerView());
         break;
 
       case 'date & time picker':
-        context.push(const DateTimePicker());
+        context.lzPush(const DateTimePicker());
         break;
 
       case 'accordion':
-        context.push(const AccordionView());
+        context.lzPush(const AccordionView());
         break;
 
       case 'button':
-        context.push(const ButtonView());
+        context.lzPush(const ButtonView());
         break;
 
       case 'confirm':
-        context.push(const ConfirmView());
+        context.lzPush(const ConfirmView());
         break;
 
       case 'dropdown':
-        context.push(const DropdownView());
+        context.lzPush(const DropdownView());
         break;
 
       case 'forms':
-        context.push(const FormsView());
+        context.lzPush(const FormsView());
         break;
 
       case 'select option':
-        context.push(const SelectOptionView());
+        context.lzPush(const SelectOptionView());
         break;
 
       case 'refreshtor':
-        context.push(const RefreshtorView());
+        context.lzPush(const RefreshtorView());
         break;
 
       case 'skeleton':
-        context.push(const SkeletonView());
+        context.lzPush(const SkeletonView());
         break;
 
       case 'toast':
-        context.push(const ToastView());
+        context.lzPush(const ToastView());
         break;
 
       default:
-        context.push(const CustomWidgetView());
+        context.lzPush(const CustomWidgetView());
     }
   }
 }

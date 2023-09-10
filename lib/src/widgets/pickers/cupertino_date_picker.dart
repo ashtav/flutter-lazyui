@@ -304,7 +304,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
                         ),
                       ),
                       Touch(
-                        onTap: () => context.pop(),
+                        onTap: () => context.lzPop(),
                         child: SlideUp(
                           delay: 400,
                           child: Iconr(

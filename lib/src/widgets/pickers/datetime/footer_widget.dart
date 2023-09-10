@@ -62,7 +62,7 @@ class PickerFooterWidget extends StatelessWidget {
                   return notifier.toggleTimeMode();
                 }
 
-                context.pop();
+                context.lzPop();
               },
               child: SlideUp(
                 delay: 400,

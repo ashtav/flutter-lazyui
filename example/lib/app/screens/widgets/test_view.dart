@@ -10,8 +10,8 @@ class TestView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Test View'),
         ),
-        body: LzListView(
-          children: [Text('Hello world!', style: Gfont.color('09f'.hex).bold)],
+        body: Center(
+          child: const Text('hello').lz.clip(),
         ));
   }
 }

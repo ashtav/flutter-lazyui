@@ -191,7 +191,7 @@ class LzInputicon extends StatelessWidget {
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
       border: Br.only(['l'], color: (borderColor ?? Colors.black12)),
-    ).onTap(() => onTap?.call());
+    ).lz.onTap(() => onTap?.call());
   }
 }
 

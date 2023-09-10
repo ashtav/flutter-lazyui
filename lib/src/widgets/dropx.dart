@@ -264,7 +264,7 @@ class _DropXWidget extends StatelessWidget {
                                               !item.pop) {
                                             // close stream
                                             controller.close();
-                                            context.pop();
+                                            context.lzPop();
                                           }
 
                                           if (subOptions.isNotEmpty) {
@@ -297,9 +297,10 @@ class _DropXWidget extends StatelessWidget {
                                                   ? Colors.redAccent
                                                   : LzColors.black),
                                               icon: icon)
+                                          .lz
                                           .flexible(),
                                     ],
-                                  ).opacity(disabled ? 0.5 : 1),
+                                  ).lz.opacity(disabled ? 0.5 : 1),
                                 ),
                               );
                             }),

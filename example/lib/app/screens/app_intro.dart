@@ -188,7 +188,7 @@ class AppIntro2 extends StatelessWidget {
                       text: 'Get Started',
                       icon: La.arrowRight,
                       onTap: (_) {
-                        context.push(const MainPageView());
+                        context.lzPush(const MainPageView());
                       })
                 ],
               ),

@@ -6,6 +6,9 @@ import 'app/theme.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // call LazyUi.config() before runApp()
+  // to set your own default values, such as: theme, font, spacing, etc.
   LazyUi.config();
 
   runApp(const MyApp());

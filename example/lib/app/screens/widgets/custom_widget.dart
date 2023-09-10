@@ -41,14 +41,14 @@ class Actions {
   static on(BuildContext context, String label) {
     switch (label) {
       case 'loader':
-        context.push(const LoaderView());
+        context.lzPush(const LoaderView());
         break;
 
       case 'no data':
-        context.push(const NoDataView());
+        context.lzPush(const NoDataView());
         break;
       default:
-        context.push(const TestView());
+        context.lzPush(const TestView());
         break;
     }
   }

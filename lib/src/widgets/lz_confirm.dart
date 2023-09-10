@@ -139,7 +139,7 @@ class LzConfirm extends StatelessWidget {
               return Expanded(
                 child: InkTouch(
                   onTap: () {
-                    if (dimissOnTap) context.pop();
+                    if (dimissOnTap) context.lzPop();
 
                     if (i == 1) {
                       onConfirm?.call();
@@ -204,7 +204,7 @@ class LzConfirm extends StatelessWidget {
             ),
             InkTouch(
               onTap: () {
-                if (dimissOnTap) context.pop();
+                if (dimissOnTap) context.lzPop();
                 onConfirm?.call();
               },
               color: confirmColor ?? Colors.redAccent.lighten(0.8),
@@ -215,7 +215,7 @@ class LzConfirm extends StatelessWidget {
             ),
             GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () => context.pop(),
+                onTap: () => context.lzPop(),
                 child: Textr(cancelText, padding: Ei.sym(v: 20, h: 20))),
           ]),
         )

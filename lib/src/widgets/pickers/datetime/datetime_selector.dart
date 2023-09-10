@@ -103,7 +103,7 @@ class DateTimeSelector extends StatelessWidget {
                         return notifier.toggleTimeMode();
                       }
 
-                      context.pop(notifier.selectedDate);
+                      context.lzPop(notifier.selectedDate);
                     },
                   ),
 

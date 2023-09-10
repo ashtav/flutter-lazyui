@@ -222,7 +222,7 @@ class LzImage<T> extends StatelessWidget {
       width: width,
       height: height,
       child: result,
-    ).clip(all: radius);
+    ).lz.clip(all: radius);
   }
 
   static config({Widget? errorWidget, double? radius}) {
