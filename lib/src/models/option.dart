@@ -1,14 +1,51 @@
 import 'package:flutter/material.dart';
 
+/// The `Option` class represents an option or choice in a selection menu or list.
+///
+/// An `Option` can have various properties, including the display text (`option`),
+/// a corresponding value (`value`), whether it's disabled (`disabled`), whether it
+/// indicates danger or critical action (`danger`), its position index (`index`), an
+/// optional icon (`icon`), sub-options (`options`), whether it triggers a pop action
+/// (`pop`), and an optional style (`style`).
+///
+/// Example:
+/// ```dart
+/// // Creating an Option
+/// Option myOption = Option(
+///   option: "Option 1",
+///   value: "value1",
+///   danger: true,
+///   icon: Icons.warning,
+///   style: OptionStyle(bold: true, color: Colors.red),
+/// );
+/// ```
+
 class Option {
+  /// The display text of the option.
   final String option;
+
+  /// The corresponding value of the option.
   final dynamic value;
+
+  /// Indicates if the option is disabled.
   final bool disabled;
+
+  /// Indicates if the option represents a danger or critical action.
   final bool danger;
+
+  /// The position index of the option.
   final int index;
+
+  /// An optional icon associated with the option.
   final IconData? icon;
+
+  /// Sub-options associated with this option.
   final List<Option>? options;
+
+  /// Indicates if selecting this option triggers a pop action.
   final bool pop;
+
+  /// An optional style for customizing the appearance of the option.
   final OptionStyle? style;
 
   const Option(
@@ -49,6 +86,17 @@ class Option {
     };
   }
 }
+
+/// The `OptionStyle` class represents the visual style properties for an `Option`.
+///
+/// It allows you to customize the appearance of an option, such as making the text
+/// bold (`bold`) and specifying a custom text color (`color`).
+///
+/// Example:
+/// ```dart
+/// // Creating an OptionStyle
+/// OptionStyle myOptionStyle = OptionStyle(bold: true, color: Colors.blue);
+/// ```
 
 class OptionStyle {
   final bool bold;

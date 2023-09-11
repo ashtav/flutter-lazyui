@@ -16,7 +16,9 @@ double _defaultRadius = 7.0;
 // lazy ui
 class LazyUi {
   // get default text style
-  static TextStyle get font => _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
+  static TextStyle get font =>
+      _defaultTextStyle ??
+      GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
 
   // get default icon type
   static IconType get iconType => _defaultIconType;
@@ -68,7 +70,8 @@ class LazyUi {
     }
 
     if (alwaysPortrait) {
-      Utils.orientation([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      Utils.orientation(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
     // set default text style
@@ -126,8 +129,9 @@ class LazyUi {
   /// - The [useLazyToast] parameter allows you to toggle the use of lazy toast overlay, which may
   ///   affect the visual presentation of the widget.
 
-  static Widget builder(BuildContext context, Widget? widget, {double? maxScalingFontSize, bool useLazyToast = true}) {
-    // ignore: deprecated_member_use
+  static Widget builder(BuildContext context, Widget? child,
+      {double? maxScalingFontSize, bool useLazyToast = true}) {
+    // ignore: deprecated_member_uselzf
     double maxScalingFactor = MediaQuery.of(context).textScaleFactor;
 
     //   data: MediaQuery.of(context).copyWith(
@@ -139,10 +143,13 @@ class LazyUi {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         // ignore: deprecated_member_use
-        textScaleFactor:
-            maxScalingFontSize == null ? maxScalingFactor : maxScalingFactor.clamp(1.0, maxScalingFontSize),
+        textScaleFactor: maxScalingFontSize == null
+            ? maxScalingFactor
+            : maxScalingFactor.clamp(1.0, maxScalingFontSize),
       ),
-      child: useLazyToast ? LzToastOverlay(child: widget) : widget ?? const SizedBox.shrink(),
+      child: useLazyToast
+          ? LzToastOverlay(child: child)
+          : child ?? const SizedBox.shrink(),
     );
   }
 }

@@ -6,7 +6,7 @@ class LzFormGroup extends StatelessWidget {
   final String? label, sublabel;
   final IconData? prefixIcon;
   final List<Widget> children;
-  final double? labelSize, bottomSpace;
+  final double? bottomSpace;
   final TextStyle? labelStyle;
   final SublabelStyle sublabelStyle;
   final FormType type;
@@ -17,7 +17,6 @@ class LzFormGroup extends StatelessWidget {
       this.sublabel,
       this.prefixIcon,
       this.children = const [],
-      this.labelSize,
       this.bottomSpace,
       this.labelStyle,
       this.sublabelStyle = SublabelStyle.text,
@@ -67,8 +66,7 @@ class LzFormGroup extends StatelessWidget {
         if (label != null)
           Textr(
             label!,
-            style: labelStyle ??
-                style?.copyWith(fontWeight: Fw.bold, fontSize: labelSize),
+            style: labelStyle ?? style?.copyWith(fontSize: 14),
             icon: prefixIcon,
             margin: Ei.only(b: 8),
           ),

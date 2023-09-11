@@ -28,7 +28,7 @@ class CupertinoDatePickerWidget extends StatelessWidget {
     init = init.isAfter(last) ? last : init;
     init = init.isBefore(first) ? first : init;
 
-    List<String> months = DummyData.months
+    List<String> months = ExampleData.months
         .map((e) => useShortMonths ? e.substring(0, 3) : e)
         .toList();
 

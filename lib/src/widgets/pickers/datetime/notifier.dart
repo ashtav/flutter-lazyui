@@ -29,7 +29,7 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
   };
 
   List iterations(String key, {bool useShortMonths = false}) {
-    List<String> months = DummyData.months
+    List<String> months = ExampleData.months
         .map((e) => useShortMonths ? e.substring(0, 3) : e)
         .toList();
     final years = yearRanges.iterate().reversed.toList();
@@ -103,7 +103,7 @@ class DateTimePickerNotifier extends ValueNotifier<Map<String, dynamic>> {
           break;
 
         case 'month':
-          final month = DummyData.months.indexOf('$value') + 1;
+          final month = ExampleData.months.indexOf('$value') + 1;
           selectedDate = selectedDate.copyWith(month: month);
           dates[1] = month;
           break;

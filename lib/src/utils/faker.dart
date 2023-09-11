@@ -1,5 +1,7 @@
 part of utils;
 
+/// The `Faker` class provides methods for generating random text content.
+
 class Faker {
   // generate random words based on length
   static String words([int length = 3, int? paragraph]) {
@@ -47,7 +49,7 @@ class Faker {
 
   // generate random name
   static String name() {
-    return DummyData.names[math.Random().nextInt(DummyData.names.length)];
+    return ExampleData.names[math.Random().nextInt(ExampleData.names.length)];
   }
 
   // generate random email
@@ -71,7 +73,8 @@ class Faker {
 
   // generate random address
   static String address() {
-    return DummyData.address[math.Random().nextInt(DummyData.address.length)];
+    return ExampleData
+        .address[math.Random().nextInt(ExampleData.address.length)];
   }
 
   // generate random date

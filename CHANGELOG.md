@@ -22,3 +22,8 @@
 * refactor widget extension
 * Add more documentation
 * improvement and fix some bugs
+
+## 1.0.8
+
+* Add more documentation
+* improvement and fix some bugs

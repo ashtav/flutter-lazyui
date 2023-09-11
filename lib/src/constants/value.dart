@@ -1,4 +1,4 @@
-class DummyData {
+class ExampleData {
   static List<String> names = [
     "Dutch Van Der Linde",
     "Hosea Mathews",
