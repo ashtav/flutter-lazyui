@@ -23,9 +23,13 @@ class LzTextField extends StatelessWidget {
   final int maxLength;
   final int? maxLines;
   final List<TextInputFormatter> formatters;
-  final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? padding;
   final TextStyle? textStyle, hintStyle;
   final TextSelectionControls? selectionControls;
+  final Widget? prefixIcon;
+  final Color? prefixIconColor;
+  final BoxBorder? border;
+  final BorderRadiusGeometry? borderRadius;
 
   const LzTextField(
       {Key? key,
@@ -43,15 +47,21 @@ class LzTextField extends StatelessWidget {
       this.enabled = true,
       this.maxLength = 255,
       this.formatters = const [],
-      this.contentPadding,
+      this.padding,
       this.maxLines,
       this.textStyle,
       this.hintStyle,
-      this.selectionControls})
+      this.selectionControls,
+      this.prefixIcon,
+      this.prefixIconColor,
+      this.border,
+      this.borderRadius})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    double radius = LazyUi.radius;
+
     TextField textField = TextField(
       style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
       keyboardType: keyboard,
@@ -72,8 +82,10 @@ class LzTextField extends StatelessWidget {
       ],
       selectionControls: selectionControls,
       decoration: InputDecoration(
+        prefixIcon: prefixIcon,
+        prefixIconColor: prefixIconColor ?? Colors.black38,
         isDense: true,
-        contentPadding: contentPadding ?? Ei.sym(v: 13.5),
+        contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
         hintText: hint,
         hintStyle: hintStyle ??
             Theme.of(context)
@@ -88,6 +100,13 @@ class LzTextField extends StatelessWidget {
       ),
     );
 
-    return textField;
+    return border == null
+        ? textField
+        : Container(
+            decoration: BoxDecoration(
+                border: border,
+                borderRadius: borderRadius ?? BorderRadius.circular(radius)),
+            child: textField,
+          );
   }
 }

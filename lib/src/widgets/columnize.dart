@@ -29,6 +29,9 @@ class Columnize extends StatelessWidget {
   /// The list of children widgets to be arranged in a column.
   final List<Widget> children;
 
+  /// The alignment of the children within the column (default is CrossAxisAlignment.start).
+  final CrossAxisAlignment crossAxisAlignment;
+
   /// The alignment of the children within the column (default is MainAxisAlignment.start).
   final MainAxisAlignment mainAxisAlignment;
 
@@ -56,6 +59,7 @@ class Columnize extends StatelessWidget {
   const Columnize({
     Key? key,
     this.children = const <Widget>[],
+    this.crossAxisAlignment = CrossAxisAlignment.start,
     this.mainAxisAlignment = MainAxisAlignment.start,
     this.mainAxisSize = MainAxisSize.min,
     this.margin,
@@ -66,7 +70,53 @@ class Columnize extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget child = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      mainAxisAlignment: mainAxisAlignment,
+      children: children,
+    );
+
+    return margin != null || padding != null || decoration != null
+        ? Container(
+            margin: margin,
+            padding: padding,
+            decoration: decoration,
+            child: child,
+          )
+        : child;
+  }
+}
+
+// Widget below just for testing purpose
+
+/// Shortcut of Column with `crossAxisAlignment: CrossAxisAlignment.start` by default.
+///
+/// Combination of Column and Container with optional customization.
+
+class Colr extends StatelessWidget {
+  final List<Widget> children;
+  final CrossAxisAlignment crossAxisAlignment;
+  final MainAxisAlignment mainAxisAlignment;
+  final MainAxisSize mainAxisSize;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final Decoration? decoration;
+
+  const Colr({
+    Key? key,
+    this.children = const <Widget>[],
+    this.crossAxisAlignment = CrossAxisAlignment.start,
+    this.mainAxisAlignment = MainAxisAlignment.start,
+    this.mainAxisSize = MainAxisSize.min,
+    this.margin,
+    this.padding,
+    this.decoration,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child = Column(
+      crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
       mainAxisAlignment: mainAxisAlignment,
       children: children,

@@ -27,3 +27,8 @@
 
 * Add more documentation
 * improvement and fix some bugs
+
+## 1.0.9
+
+* Add more documentation
+* improvement and fix some bugs

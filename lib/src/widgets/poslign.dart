@@ -36,4 +36,49 @@ class Poslign extends StatelessWidget {
       ),
     ));
   }
+
+  static Widget center(
+      {Widget? child, EdgeInsetsGeometry? margin, bool ignoring = false}) {
+    return Poslign(
+        alignment: Alignment.center,
+        margin: margin,
+        ignoring: ignoring,
+        child: child);
+  }
+
+  static Widget top(
+      {Widget? child, EdgeInsetsGeometry? margin, bool ignoring = false}) {
+    return Poslign(
+        alignment: Alignment.bottomCenter,
+        margin: margin,
+        ignoring: ignoring,
+        child: child);
+  }
+
+  static Widget bottom(
+      {Widget? child, EdgeInsetsGeometry? margin, bool ignoring = false}) {
+    return Poslign(
+        alignment: Alignment.topCenter,
+        margin: margin,
+        ignoring: ignoring,
+        child: child);
+  }
+
+  static Widget left(
+      {Widget? child, EdgeInsetsGeometry? margin, bool ignoring = false}) {
+    return Poslign(
+        alignment: Alignment.centerLeft,
+        margin: margin,
+        ignoring: ignoring,
+        child: child);
+  }
+
+  static Widget right(
+      {Widget? child, EdgeInsetsGeometry? margin, bool ignoring = false}) {
+    return Poslign(
+        alignment: Alignment.centerRight,
+        margin: margin,
+        ignoring: ignoring,
+        child: child);
+  }
 }

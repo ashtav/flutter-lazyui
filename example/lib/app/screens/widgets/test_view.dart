@@ -11,7 +11,17 @@ class TestView extends StatelessWidget {
           title: const Text('Test View'),
         ),
         body: Center(
-          child: const Text('hello').lz.clip(),
+          child: Colr(
+            children: [
+              LzButton(
+                onTap: (s) {
+                  s.submit(abortOn: 2.s);
+                },
+                text: 'Test Button',
+                icon: Ti.album,
+              ).lz.blink(),
+            ],
+          ),
         ));
   }
 }

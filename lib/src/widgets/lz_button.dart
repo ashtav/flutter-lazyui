@@ -126,9 +126,9 @@ class LzButton extends StatelessWidget {
           Color buttonColor = color ?? (buttonColors[type] ?? Colors.white);
 
           double iconTextSpace = isSubmit
-              ? 15
+              ? 10
               : icon != null
-                  ? 15
+                  ? 10
                   : 0;
 
           List<Widget> buttonContent = [

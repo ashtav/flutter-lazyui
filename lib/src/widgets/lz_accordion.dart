@@ -202,6 +202,7 @@ class _LzAccordionState extends State<LzAccordion>
   @override
   Widget build(BuildContext context) {
     double radius = LazyUi.radius;
+    bool isTi = LazyUi.iconType == IconType.tablerIcon;
 
     return Container(
       decoration: BoxDecoration(
@@ -214,6 +215,9 @@ class _LzAccordionState extends State<LzAccordion>
           mainAxisSize: Mas.min,
           children: List.generate(length, (i) {
             String title = widget.children[i].title;
+            Widget child = widget.children[i].child;
+            Widget? suffix = widget.children[i].suffix;
+
             final controller = controllers[i];
 
             final gkey = GlobalKey();
@@ -254,10 +258,14 @@ class _LzAccordionState extends State<LzAccordion>
                                     ? Tof.ellipsis
                                     : Tof.visible,
                               )),
-                              RotationTransition(
-                                  turns: turnsTween.animate(controller),
-                                  child: const Icon(La.angleRight,
-                                      color: Colors.black38))
+                              suffix ??
+                                  RotationTransition(
+                                      turns: turnsTween.animate(controller),
+                                      child: Icon(
+                                          isTi
+                                              ? Ti.chevronRight
+                                              : La.angleRight,
+                                          color: Colors.black38))
                             ],
                           ))),
                   SizeTransition(
@@ -265,7 +273,7 @@ class _LzAccordionState extends State<LzAccordion>
                       sizeFactor: animations[i],
                       child: Container(
                         padding: widget.padding ?? Ei.all(20),
-                        child: widget.children[i].child,
+                        child: child,
                       )),
                 ],
               ),
@@ -280,6 +288,8 @@ class _LzAccordionState extends State<LzAccordion>
 class LzAccordionContent {
   final String title;
   final Widget child;
+  final Widget? suffix;
 
-  const LzAccordionContent({required this.title, required this.child});
+  const LzAccordionContent(
+      {required this.title, required this.child, this.suffix});
 }

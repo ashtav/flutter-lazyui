@@ -13,29 +13,70 @@ part of widget;
 /// );
 /// ```
 
-class BlinkAnimate extends StatelessWidget {
+class BlinkAnimate extends StatefulWidget {
   final Widget child;
   final bool animate;
   final Duration? duration;
-  const BlinkAnimate(
-      {super.key, required this.child, this.animate = true, this.duration});
+
+  const BlinkAnimate({
+    Key? key,
+    required this.child,
+    this.animate = true,
+    this.duration,
+  }) : super(key: key);
+
+  @override
+  State<BlinkAnimate> createState() => _BlinkAnimateState();
+}
+
+class _BlinkAnimateState extends State<BlinkAnimate>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.animate) {
+      _controller = AnimationController(
+        vsync: this,
+        duration: widget.duration ?? const Duration(milliseconds: 300),
+      )..repeat(reverse: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(BlinkAnimate oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.duration != oldWidget.duration) {
+      _controller.dispose();
+      _controller = AnimationController(
+        vsync: this,
+        duration: widget.duration ?? const Duration(milliseconds: 300),
+      )..repeat(reverse: true);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (!animate) {
-      return child;
+    if (!widget.animate) {
+      return widget.child;
     }
 
-    return Animator(
-      tween: Tween<double>(begin: 0, end: 300),
-      cycles: 0,
-      builder: (context, anim, f) {
-        double opacity = double.parse('${anim.value}');
-        return AnimatedOpacity(
-            duration: duration ?? const Duration(milliseconds: 300),
-            opacity: opacity >= 150 ? 1 : 0,
-            child: child);
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Opacity(
+          opacity: _controller.value,
+          child: child,
+        );
       },
+      child: widget.child,
     );
   }
 }

@@ -268,7 +268,7 @@ class Input extends StatelessWidget {
                           formatters: formatters,
                           onChange: onChange,
                           onSubmit: onSubmit,
-                          contentPadding: Ei.only(
+                          padding: Ei.only(
                               t: noLabel || isTopAligned ? 14 : 40,
                               b: isValid ? 14 : 5,
                               l: 15,
