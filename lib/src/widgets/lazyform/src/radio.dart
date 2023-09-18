@@ -4,7 +4,7 @@ part of lazyform;
 | Radio Widget
 | */
 
-class Radio extends StatelessWidget {
+class Radio extends StatelessWidget with FormWidgetMixin {
   final String? label;
   final List<Option> options;
   final Option? initValue;
@@ -27,34 +27,16 @@ class Radio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // get parent widget name
-    final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor =
-        context.findAncestorWidgetOfExactType<LzFormList>();
+    final attr = getAttribute<Radio>(context, (e) => e.label == label);
 
-    Type parentName = parent.runtimeType;
-    bool isGrouping = parentName == LzFormGroup;
-    bool isFirst = false;
-    bool isTopAligned = parent?.type == FormType.topAligned;
-
-    // get first children of parent
-    if (isGrouping && (parent?.children ?? []).isNotEmpty) {
-      if (parent!.children[0] is Radio) {
-        Radio firstChild = parent.children[0] as Radio;
-        isFirst = firstChild.label == label;
-      }
-    }
-
-    if (formListAncestor != null &&
-        formListAncestor.style?.type == FormType.topAligned) {
-      isTopAligned = true;
-    }
+    bool isGrouping = attr.isGrouping;
+    bool isFirst = attr.isFirst;
 
     final notifier = model?.notifier ?? FormNotifier();
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
+    bool isTopAlignedAndGrouped = attr.isTypeTopAligned && isGrouping;
 
     // set controller
     if (model?.controller != null) {
@@ -85,8 +67,7 @@ class Radio extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ?? attr.formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -98,34 +79,32 @@ class Radio extends StatelessWidget {
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
+      borderRadius: Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
               : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
 
           return Container(
               width: context.width,
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: isGrouping
-                    ? Br.only(['t'], except: isFirst)
-                    : Br.all(color: borderColor),
-                borderRadius: isGrouping ? null : Br.radius(configRadius),
+                color: attr.isTypeUnderlined ? Colors.transparent : Colors.white,
+                border: attr.isTypeUnderlined && !isGrouping
+                    ? Br.only(['b'], color: borderColor)
+                    : isGrouping 
+                      ? Br.only(['t'], except: isFirst, color: borderColor)
+                        : Br.all(color: borderColor),
+                borderRadius: attr.isTypeUnderlined || isGrouping ? null : Br.radius(configRadius),
               ),
               child: Stack(
                 children: [
                   Container(
-                    padding: Ei.only(
-                        t: noLabel || isTopAligned ? 14 : 43,
-                        b: isValid ? 5 : 0,
-                        l: 15,
-                        r: 15),
+                    padding: Ei.only(t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 43, b: isValid ? 5 : 0, l: attr.isTypeUnderlined ? 0 : 15, r: attr.isTypeUnderlined ? 0 : 15),
                     child: Column(
                       crossAxisAlignment: Caa.start,
                       mainAxisSize: Mas.min,
@@ -138,9 +117,7 @@ class Radio extends StatelessWidget {
                             bool disabled = this.disabled || option.disabled;
                             bool selected = notifier.option?.option == label;
 
-                            Color radioColor = selected
-                                ? (activeColor ?? LzFormTheme.activeColor)
-                                : Colors.black38;
+                            Color radioColor = selected ? (activeColor ?? LzFormTheme.activeColor) : Colors.black38;
 
                             return Opacity(
                               opacity: !disabled ? 1 : .4,
@@ -151,9 +128,7 @@ class Radio extends StatelessWidget {
                                         notifier.setOption(options[i]);
                                         onChange?.call(options[i]);
 
-                                        if ((formListAncestor?.cleanOnType ??
-                                                false) &&
-                                            !notifier.data['valid']) {
+                                        if ((attr.formListAncestor?.cleanOnFilled ?? false) && !notifier.data['valid']) {
                                           notifier.clear();
                                         }
                                       },
@@ -162,16 +137,13 @@ class Radio extends StatelessWidget {
                                   mainAxisSize: Mas.min,
                                   children: [
                                     AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 150),
+                                      duration: const Duration(milliseconds: 150),
                                       width: 18,
                                       height: 18,
                                       margin: Ei.only(r: 10),
                                       decoration: BoxDecoration(
                                           shape: BoxShape.circle,
-                                          border: Br.all(
-                                              color: radioColor,
-                                              width: selected ? 5 : 1),
+                                          border: Br.all(color: radioColor, width: selected ? 5 : 1),
                                           color: Colors.white),
                                     ),
                                     Textr(
@@ -197,10 +169,10 @@ class Radio extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (!isTopAligned)
+                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) && !isGrouping)
                     Poslign(
                         alignment: Alignment.topLeft,
-                        margin: Ei.only(h: 15, t: 13),
+                        margin: Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
                         child: labelWidget),
                 ],
               ));
@@ -208,14 +180,14 @@ class Radio extends StatelessWidget {
       ),
     );
 
-    return (isTopAligned
+    // show final config
+    // logg('- Radio: $label -> type: ${attr.type}, isTypeUnderlined: ${attr.isTypeUnderlined}, isGrouping: $isGrouping, isFirst: $isFirst');
+
+    return (attr.isTypeTopAligned
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
-                children: [
-                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
-                  field
-                ],
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

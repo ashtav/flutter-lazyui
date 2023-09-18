@@ -4,7 +4,7 @@ part of lazyform;
 | Select Widget
 | */
 
-class Select extends StatelessWidget {
+class Select extends StatelessWidget with FormWidgetMixin {
   final String? label, hint;
   final List<Option> options;
   final Option? initValue;
@@ -33,28 +33,10 @@ class Select extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // get parent widget name
-    final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor =
-        context.findAncestorWidgetOfExactType<LzFormList>();
+    final attr = getAttribute<Select>(context, (e) => e.label == label);
 
-    Type parentName = parent.runtimeType;
-    bool isGrouping = parentName == LzFormGroup;
-    bool isFirst = false;
-    bool isTopAligned = parent?.type == FormType.topAligned;
-
-    // get first children of parent
-    if (isGrouping && (parent?.children ?? []).isNotEmpty) {
-      if (parent!.children[0] is Select) {
-        Select firstChild = parent.children[0] as Select;
-        isFirst = firstChild.label == label;
-      }
-    }
-
-    if (formListAncestor != null &&
-        formListAncestor.style?.type == FormType.topAligned) {
-      isTopAligned = true;
-    }
+    bool isGrouping = attr.isGrouping;
+    bool isFirst = attr.isFirst;
 
     final notifier = model?.notifier ?? FormNotifier();
 
@@ -74,7 +56,7 @@ class Select extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
+    bool isTopAlignedAndGrouped = attr.isTypeTopAligned && isGrouping;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -94,7 +76,7 @@ class Select extends StatelessWidget {
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
                   fontWeight: labelStyle?.fontWeight ??
-                      formListAncestor?.style?.inputLabelFontWeight,
+                      attr.formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -113,7 +95,7 @@ class Select extends StatelessWidget {
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
       border: Br.only(['l'],
-          color: (formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+          color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
     );
 
     SelectController selectController = SelectController(
@@ -132,7 +114,7 @@ class Select extends StatelessWidget {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
               : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
           Color disabledColor = Utils.hex('#f3f4f6');
@@ -174,7 +156,7 @@ class Select extends StatelessWidget {
                                   notifier.setOption(option);
                                   onSelect?.call(selectController);
 
-                                  if ((formListAncestor?.cleanOnType ??
+                                  if ((attr.formListAncestor?.cleanOnFilled ??
                                           false) &&
                                       !notifier.data['valid']) {
                                     notifier.clear();
@@ -183,7 +165,7 @@ class Select extends StatelessWidget {
                             backgroundColor: Colors.transparent);
                       }
                     },
-              color: enabled ? Colors.white : disabledColor,
+              color: attr.isTypeTopAligned || isGrouping ? Colors.transparent : enabled ? Colors.white : disabledColor,
               border: isGrouping
                   ? Br.only(['t'], except: isFirst, color: borderColor)
                   : Br.all(color: borderColor),
@@ -200,10 +182,10 @@ class Select extends StatelessWidget {
                         enabled: false,
                         onChange: onChange,
                         padding: Ei.only(
-                            t: noLabel || isTopAligned ? 14 : 40,
+                            t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 40,
                             b: isValid ? 14 : 5,
-                            l: 15,
-                            r: 65),
+                            l: attr.isTypeUnderlined ? 0 : 15,
+                            r: attr.isTypeUnderlined ? 0 : 65),
                         maxLines: expandValue ? 50 : null,
                       ),
 
@@ -218,7 +200,7 @@ class Select extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (!isTopAligned)
+                  if (!attr.isTypeTopAligned && !isGrouping)
                     Poslign(
                         alignment: Alignment.topLeft,
                         margin: Ei.only(h: 15, t: 13),
@@ -230,7 +212,7 @@ class Select extends StatelessWidget {
       ),
     );
 
-    return (isTopAligned
+    return (attr.isTypeTopAligned
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,

@@ -4,7 +4,7 @@ part of lazyform;
 | Checkbox Widget
 | */
 
-class Checkbox extends StatelessWidget {
+class Checkbox extends StatelessWidget with FormWidgetMixin {
   final String? label;
   final List<Option> options, initValue;
   final FormModel? model;
@@ -26,28 +26,15 @@ class Checkbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // get parent widget name
-    final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor =
-        context.findAncestorWidgetOfExactType<LzFormList>();
+    final attr = getAttribute<Checkbox>(context, (e) => e.label == label);
 
-    Type parentName = parent.runtimeType;
-    bool isGrouping = parentName == LzFormGroup;
-    bool isFirst = false;
-    bool isTopAligned = false;
+    bool isFirst = attr.isFirst;
+    bool isTopAligned = attr.isTypeTopAligned;
+    bool isGrouping = attr.isGrouping;
 
-    // get first children of parent
-    if (isGrouping && (parent?.children ?? []).isNotEmpty) {
-      if (parent!.children[0] is Checkbox) {
-        Checkbox firstChild = parent.children[0] as Checkbox;
-        isFirst = firstChild.label == label;
-      }
-    }
-
-    if (formListAncestor != null &&
-        formListAncestor.style?.type == FormType.topAligned) {
-      isTopAligned = true;
-    }
+    // if (attr.formListAncestor != null && attr.formListAncestor!.style?.type == FormType.topAligned) {
+    //   isTopAligned = true;
+    // }
 
     final notifier = model?.notifier ?? FormNotifier();
 
@@ -84,8 +71,7 @@ class Checkbox extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ?? attr.formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -97,34 +83,32 @@ class Checkbox extends StatelessWidget {
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
+      borderRadius: Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
               : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
 
           return Container(
               width: context.width,
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: isGrouping
-                    ? Br.only(['t'], except: isFirst)
-                    : Br.all(color: borderColor),
-                borderRadius: isGrouping ? null : Br.radius(configRadius),
+                color: attr.isTypeUnderlined ? Colors.transparent : Colors.white,
+              border: attr.isTypeUnderlined && !isGrouping
+                    ? Br.only(['b'], color: borderColor)
+                    : isGrouping
+                      ? Br.only(['t'], except: isFirst, color: borderColor)
+                        : Br.all(color: borderColor),
+                borderRadius: attr.isTypeUnderlined || isGrouping ? null : Br.radius(configRadius),
               ),
               child: Stack(
                 children: [
                   Container(
-                    padding: Ei.only(
-                        t: noLabel || isTopAligned ? 14 : 43,
-                        b: isValid ? 5 : 0,
-                        l: 15,
-                        r: 15),
+                    padding: Ei.only(t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 43, b: isValid ? 5 : 0, l: attr.isTypeUnderlined ? 0 : 15, r: attr.isTypeUnderlined ? 0 : 15),
                     child: Column(
                       crossAxisAlignment: Caa.start,
                       mainAxisSize: Mas.min,
@@ -135,12 +119,9 @@ class Checkbox extends StatelessWidget {
 
                             String label = option.option;
                             bool disabled = this.disabled || option.disabled;
-                            bool selected =
-                                notifier.checked.any((e) => e.option == label);
+                            bool selected = notifier.checked.any((e) => e.option == label);
 
-                            Color radioColor = selected
-                                ? (activeColor ?? LzFormTheme.activeColor)
-                                : Colors.black38;
+                            Color radioColor = selected ? (activeColor ?? LzFormTheme.activeColor) : Colors.black38;
 
                             return Opacity(
                               opacity: !disabled ? 1 : .4,
@@ -151,9 +132,7 @@ class Checkbox extends StatelessWidget {
                                         notifier.setChecked(options[i]);
                                         onChange?.call(options[i]);
 
-                                        if ((formListAncestor?.cleanOnType ??
-                                                false) &&
-                                            !notifier.data['valid']) {
+                                        if ((attr.formListAncestor?.cleanOnFilled ?? false) && !notifier.data['valid']) {
                                           notifier.clear();
                                         }
                                       },
@@ -162,23 +141,17 @@ class Checkbox extends StatelessWidget {
                                   mainAxisSize: Mas.min,
                                   children: [
                                     AnimatedContainer(
-                                      duration:
-                                          const Duration(milliseconds: 150),
+                                      duration: const Duration(milliseconds: 150),
                                       width: 18,
                                       height: 18,
                                       margin: Ei.only(r: 10),
                                       decoration: BoxDecoration(
                                           borderRadius: Br.radius(3),
                                           border: Br.all(color: radioColor),
-                                          color: selected
-                                              ? radioColor
-                                              : Colors.white),
+                                          color: selected ? radioColor : Colors.white),
                                       child: AnimatedSwitcher(
-                                          duration:
-                                              const Duration(milliseconds: 150),
-                                          transitionBuilder: (Widget child,
-                                                  Animation<double>
-                                                      animation) =>
+                                          duration: const Duration(milliseconds: 150),
+                                          transitionBuilder: (Widget child, Animation<double> animation) =>
                                               ScaleTransition(
                                                 scale: animation,
                                                 child: child,
@@ -214,11 +187,8 @@ class Checkbox extends StatelessWidget {
                       ],
                     ),
                   ),
-                  if (!isTopAligned)
-                    Poslign(
-                        alignment: Alignment.topLeft,
-                        margin: Ei.only(h: 15, t: 13),
-                        child: labelWidget),
+                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) && !isGrouping)
+                    Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13), child: labelWidget),
                 ],
               ));
         },
@@ -229,10 +199,7 @@ class Checkbox extends StatelessWidget {
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
-                children: [
-                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
-                  field
-                ],
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

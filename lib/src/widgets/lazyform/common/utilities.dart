@@ -66,11 +66,24 @@ class FormMessages {
   }
 }
 
-/* ---------------------------------------------------------------
-| Form Validate Notifier
+/* --------------------------------------------------------------------
+| LzFormStyle
+| ---------------------------------------------------------------------
+| Set the style of the form, such as active color for radio, switch,
+| checkbox and the border color of the input fields, etc.
 | */
 
-enum LzFormNotifier { none, toast, text }
+class LzFormStyle {
+  final FormType type;
+  final Color? activeColor, inputBorderColor;
+  final FontWeight? inputLabelFontWeight;
+
+  const LzFormStyle(
+      {this.type = FormType.grouped,
+      this.activeColor,
+      this.inputBorderColor,
+      this.inputLabelFontWeight});
+}
 
 /* ---------------------------------------------------------------
 | Form Error Info
@@ -121,32 +134,6 @@ class FeedbackMessage extends StatelessWidget {
         ),
       ),
     );
-
-    // return AnimatedSwitcher(
-    //   duration: const Duration(milliseconds: 150),
-    //   transitionBuilder: (Widget child, Animation<double> animation) {
-    //     final tween = Tween<Offset>(begin: const Offset(0, 1), end: Offset.zero);
-    //     return SlideTransition(position: tween.animate(animation), child: child);
-    //   },
-    //   child: isValid
-    //       ? const None()
-    //       : SizedBox(
-    //           key: ValueKey(errorMessage),
-    //           width: context.width,
-    //           child: Textr(
-    //             errorMessage,
-    //             style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
-    //             margin: Ei.only(
-    //                 l: leftLess ? 0 : 15,
-    //                 b: 13,
-    //                 r: leftLess
-    //                     ? 0
-    //                     : isSuffix
-    //                         ? (padRight ?? 65)
-    //                         : 15),
-    //           ),
-    //         ),
-    // );
   }
 }
 
@@ -191,7 +178,7 @@ class LzInputicon extends StatelessWidget {
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
       border: Br.only(['l'], color: (borderColor ?? Colors.black12)),
-    ).lz.onTap(() => onTap?.call());
+    ).onTap(() => onTap?.call());
   }
 }
 

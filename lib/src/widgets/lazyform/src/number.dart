@@ -1,6 +1,6 @@
 part of lazyform;
 
-class Number extends StatelessWidget {
+class Number extends StatelessWidget with FormWidgetMixin {
   final String? label, hint;
   final FormModel? model;
   final int initialValue, min, max;
@@ -28,28 +28,10 @@ class Number extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // get parent widget name
-    final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor =
-        context.findAncestorWidgetOfExactType<LzFormList>();
+    final attr = getAttribute<Number>(context, (e) => e.label == label);
 
-    Type parentName = parent.runtimeType;
-    bool isGrouping = parentName == LzFormGroup;
-    bool isFirst = false;
-    bool isTopAligned = parent?.type == FormType.topAligned;
-
-    // get first children of parent
-    if (isGrouping && (parent?.children ?? []).isNotEmpty) {
-      if (parent!.children[0] is Number) {
-        Number firstChild = parent.children[0] as Number;
-        isFirst = firstChild.label == label;
-      }
-    }
-
-    if (formListAncestor != null &&
-        formListAncestor.style?.type == FormType.topAligned) {
-      isTopAligned = true;
-    }
+    bool isGrouping = attr.isGrouping;
+    bool isFirst = attr.isFirst;
 
     final notifier = model?.notifier ?? FormNotifier();
     List<TextInputFormatter> formatters = [InputFormat.allowRegex("[0-9-]")];
@@ -81,7 +63,7 @@ class Number extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
+    bool isTopAlignedAndGrouped = attr.isTypeTopAligned && isGrouping;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -100,8 +82,7 @@ class Number extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ?? attr.formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -122,16 +103,12 @@ class Number extends StatelessWidget {
 
       int number([int a = 0, int index = 0]) {
         final controller = notifier.controller;
-        int value =
-            (controller.text.trim().isEmpty ? '0' : controller.text.trim())
-                .getNumeric;
+        int value = (controller.text.trim().isEmpty ? '0' : controller.text.trim()).getNumeric;
 
         int decrease = value - a;
         int increase = value + a;
 
-        return index == 0
-            ? (decrease < min ? min : decrease)
-            : (increase > max ? max : increase);
+        return index == 0 ? (decrease < min ? min : decrease) : (increase > max ? max : increase);
       }
 
       timer?.cancel();
@@ -184,19 +161,11 @@ class Number extends StatelessWidget {
                     behavior: HitTestBehavior.translucent,
                     child: Iconr(
                       i == 0
-                          ? (LazyUi.iconType == IconType.lineAwesome
-                              ? La.minus
-                              : Ti.minus)
-                          : (LazyUi.iconType == IconType.lineAwesome
-                              ? La.plus
-                              : Ti.plus),
-                      color: i == 0 && isMin || i == 1 && isMax
-                          ? Colors.black12
-                          : Colors.black45,
+                          ? (LazyUi.iconType == IconType.lineAwesome ? La.minus : Ti.minus)
+                          : (LazyUi.iconType == IconType.lineAwesome ? La.plus : Ti.plus),
+                      color: i == 0 && isMin || i == 1 && isMax ? Colors.black12 : Colors.black45,
                       padding: Ei.only(h: 15, v: 15),
-                      border: Br.only(['l'],
-                          color: (formListAncestor?.style?.inputBorderColor ??
-                              Colors.black12)),
+                      border: Br.only(['l'], color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
                     ),
                   ),
                 );
@@ -206,14 +175,14 @@ class Number extends StatelessWidget {
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
+      borderRadius: Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
               : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
@@ -226,19 +195,23 @@ class Number extends StatelessWidget {
           bool enabled = (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
 
           // update formatters (length, on index 0)
-          int ioLengthLimiting = formatters
-              .indexWhere((e) => e is LengthLimitingTextInputFormatter);
+          int ioLengthLimiting = formatters.indexWhere((e) => e is LengthLimitingTextInputFormatter);
           if (ioLengthLimiting > -1) {
-            formatters[ioLengthLimiting] =
-                LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
+            formatters[ioLengthLimiting] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
 
           return InkTouch(
-              color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
-              border: isGrouping
-                  ? Br.only(['t'], except: isFirst, color: borderColor)
-                  : Br.all(color: borderColor),
-              radius: isGrouping ? null : Br.radius(configRadius),
+              color: attr.isTypeUnderlined
+                  ? Colors.transparent
+                  : (isDisabled ?? !disabled)
+                      ? Colors.white
+                      : disabledColor,
+              border: attr.isTypeUnderlined && !isGrouping
+                  ? Br.only(['b'], color: borderColor)
+                  : isGrouping
+                      ? Br.only(['t'], except: isFirst, color: borderColor)
+                      : Br.all(color: borderColor),
+              radius: isGrouping || attr.isTypeUnderlined ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
                   Column(
@@ -258,8 +231,7 @@ class Number extends StatelessWidget {
                               // check min
                               if (text.getNumeric < min) {
                                 notifier.controller.text = min.toString();
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
+                                Utils.setCursorToLastPosition(notifier.controller);
                               }
                             }
                           },
@@ -281,34 +253,28 @@ class Number extends StatelessWidget {
 
                               if (value.split('-').length > 2) {
                                 notifier.controller.text = '-';
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
+                                Utils.setCursorToLastPosition(notifier.controller);
                                 return;
                               }
 
                               // check if there are minuses after number
                               if (value.indexOf('-') > 0) {
-                                notifier.controller.text =
-                                    value.replaceAll('-', '');
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
+                                notifier.controller.text = value.replaceAll('-', '');
+                                Utils.setCursorToLastPosition(notifier.controller);
                                 return;
                               }
 
                               // don't allow there is 0 at the beginning
                               if (value.startsWith('0') && value.length > 1) {
                                 notifier.controller.text = value.substring(1);
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
+                                Utils.setCursorToLastPosition(notifier.controller);
                                 return;
                               }
 
                               // don't allow there is 0 after -
                               if (value.startsWith('-0') && value.length > 2) {
-                                notifier.controller.text =
-                                    value.substring(0, 1) + value.substring(2);
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
+                                notifier.controller.text = value.substring(0, 1) + value.substring(2);
+                                Utils.setCursorToLastPosition(notifier.controller);
                                 return;
                               }
 
@@ -317,16 +283,15 @@ class Number extends StatelessWidget {
 
                               if (number > max) {
                                 notifier.controller.text = max.toString();
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
+                                Utils.setCursorToLastPosition(notifier.controller);
                               }
                             },
                             onSubmit: onSubmit,
                             padding: Ei.only(
-                                t: noLabel || isTopAligned ? 14 : 40,
+                              t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 40,
                                 b: isValid ? 14 : 5,
-                                l: 15,
-                                r: showControl ? 65 : 15),
+                                l: attr.isTypeUnderlined ? 0 : 15,
+                                r: showControl ? 65 : attr.isTypeUnderlined ? 0 : 15),
                           ),
                         ),
                       ),
@@ -343,11 +308,8 @@ class Number extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (!isTopAligned)
-                    Poslign(
-                        alignment: Alignment.topLeft,
-                        margin: Ei.only(h: 15, t: 13),
-                        child: labelWidget),
+                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) && !isGrouping)
+                    Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13), child: labelWidget),
                   Poslign(alignment: Alignment.centerRight, child: suffixWidget)
                 ],
               ));
@@ -355,14 +317,11 @@ class Number extends StatelessWidget {
       ),
     );
 
-    return (isTopAligned
+    return (attr.isTypeTopAligned
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
-                children: [
-                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
-                  field
-                ],
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

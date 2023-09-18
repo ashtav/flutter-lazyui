@@ -73,11 +73,6 @@ class LzModifiers {
   }
 
   /// ``` dart
-  /// YourWidget().onTap(() {})
-  /// ```
-  Touch onTap(Function() onTap) => Touch(onTap: onTap, child: widget);
-
-  /// ``` dart
   /// YourWidget().border(Br.all(), width: 1, color: Colors.black)
   /// ```
   Widget border(BoxBorder border,
@@ -154,6 +149,11 @@ class LzModifiers {
 }
 
 extension LzWidgetExtension on Widget {
+  /// ``` dart
+  /// YourWidget().onTap(() {})
+  /// ```
+  Touch onTap(Function() onTap) => Touch(onTap: onTap, child: this);
+
   /// ``` dart
   /// YourWidget().margin() // Only works on widget with no margin property
   /// ```

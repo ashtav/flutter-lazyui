@@ -1,7 +1,5 @@
 part of lazyform;
 
-enum SublabelStyle { text, card, cardWarning }
-
 class LzFormGroup extends StatelessWidget {
   final String? label, sublabel;
   final IconData? prefixIcon;
@@ -9,7 +7,7 @@ class LzFormGroup extends StatelessWidget {
   final double? bottomSpace;
   final TextStyle? labelStyle;
   final SublabelStyle sublabelStyle;
-  final FormType type;
+  final FormType? type;
 
   const LzFormGroup(
       {super.key,
@@ -20,14 +18,12 @@ class LzFormGroup extends StatelessWidget {
       this.bottomSpace,
       this.labelStyle,
       this.sublabelStyle = SublabelStyle.text,
-      this.type = FormType.grouped});
+      this.type});
 
   @override
   Widget build(BuildContext context) {
-    final formListAncestor =
-        context.findAncestorWidgetOfExactType<LzFormList>();
-    Color borderColor =
-        (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
+    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
+    Color borderColor = (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
 
     // allowed widget
     List allowed = [Input, Select, Radio, Checkbox, Number, Switches];
@@ -42,19 +38,18 @@ class LzFormGroup extends StatelessWidget {
     }
 
     // count not allowed widget
-    int count =
-        this.children.where((e) => !allowed.contains(e.runtimeType)).length;
+    int count = this.children.where((e) => !allowed.contains(e.runtimeType)).length;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
 
     // sublabel style
     bool isCardWarning = sublabelStyle == SublabelStyle.cardWarning;
-    Color sublabelBorderColor =
-        isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
-    Color sublabelColor =
-        isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
+    Color sublabelBorderColor = isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
+    Color sublabelColor = isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
     Color sublabelTextColor = isCardWarning ? Colors.orange : Colors.black;
+
+    bool isTypeUnderlined = formListAncestor?.style?.type == FormType.underlined || type == FormType.underlined;
 
     double configRadius = LazyUi.radius;
 
@@ -68,7 +63,7 @@ class LzFormGroup extends StatelessWidget {
             label!,
             style: labelStyle ?? style?.copyWith(fontSize: 14),
             icon: prefixIcon,
-            margin: Ei.only(b: 8),
+            margin: Ei.only(b: 8, l: 0, t: 10),
           ),
 
         // Sublabel
@@ -77,13 +72,12 @@ class LzFormGroup extends StatelessWidget {
               ? Textr(
                   sublabel!,
                   style: style?.copyWith(fontSize: 14),
-                  margin: Ei.only(b: 15),
+                  margin: Ei.only(b: 15, l: 0),
                 )
               : Textr(
                   sublabel!,
-                  style:
-                      style?.copyWith(fontSize: 14, color: sublabelTextColor),
-                  margin: Ei.only(b: 15),
+                  style: style?.copyWith(fontSize: 14, color: sublabelTextColor),
+                  margin: Ei.only(b: 15, l: 0),
                   border: Br.all(color: sublabelBorderColor),
                   padding: Ei.sym(v: 13, h: 15),
                   radius: Br.radius(5),
@@ -94,11 +88,10 @@ class LzFormGroup extends StatelessWidget {
         Container(
           margin: Ei.only(b: bottomSpace ?? 20),
           decoration: BoxDecoration(
-              border: Br.all(color: borderColor),
-              color: Colors.white,
-              borderRadius: Br.radius(configRadius)),
+              border: isTypeUnderlined ? Br.only(['b'], color: borderColor) :
+               Br.all(color: borderColor), color: isTypeUnderlined ? Colors.transparent : Colors.white, borderRadius: isTypeUnderlined ? null : Br.radius(configRadius)),
           child: ClipRRect(
-            borderRadius: Br.radius(configRadius),
+            borderRadius: Br.radius(isTypeUnderlined ? 0 : configRadius),
             child: Column(
               crossAxisAlignment: Caa.start,
               mainAxisSize: Mas.min,

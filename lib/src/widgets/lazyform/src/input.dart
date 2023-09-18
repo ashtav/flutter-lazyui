@@ -1,6 +1,6 @@
 part of lazyform;
 
-class Input extends StatelessWidget {
+class Input extends StatelessWidget with FormWidgetMixin {
   final String? label, hint;
   final FormModel? model;
   final int maxLength;
@@ -47,37 +47,30 @@ class Input extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // get parent widget name
-    final parent = context.findAncestorWidgetOfExactType<LzFormGroup>();
-    final formListAncestor =
-        context.findAncestorWidgetOfExactType<LzFormList>();
+    final attr = getAttribute<Input>(context, (e) => e.label == label);
 
-    Type parentName = parent.runtimeType;
-    bool isGrouping = parentName == LzFormGroup;
-    bool isFirst = false;
-    bool isTopAligned = parent?.type == FormType.topAligned;
+    bool isFirst = attr.isFirst;
+    bool isGrouping = attr.isGrouping;
 
-    // get first children of parent
-    if (isGrouping && (parent?.children ?? []).isNotEmpty) {
-      if (parent!.children[0] is Input) {
-        Input firstChild = parent.children[0] as Input;
-        isFirst = firstChild.label == label;
-      }
-    }
+    // FormType type = formGroupAncestor?.type ?? formListAncestor?.style?.type ?? FormType.grouped;
 
-    if (formListAncestor != null &&
-        formListAncestor.style?.type == FormType.topAligned) {
-      isTopAligned = true;
-    }
+    // get first children of formGroupAncestor
+    // if (isGrouping && (formGroupAncestor?.children ?? []).isNotEmpty) {
+    //   if (formGroupAncestor!.children[0] is Input) {
+    //     Input firstChild = formGroupAncestor.children[0] as Input;
+    //     isFirst = firstChild.label == label;
+    //   }
+    // }
+
+    // if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
+    //   isTopAligned = true;
+    // }
 
     final notifier = model?.notifier ?? FormNotifier();
     List<TextInputFormatter> formatters = [];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      formatters = [
-        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
-        ...this.formatters
-      ];
+      formatters = [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...this.formatters];
       notifier.setMaxLength(maxLength < 1 ? 1 : maxLength);
 
       // setting input formatter
@@ -105,9 +98,11 @@ class Input extends StatelessWidget {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isSuffix =
-        obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
-    bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
+    bool isSuffix = obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
+    // bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
+
+    // is type of input or form is underlined
+    bool isTypeUnderlined = attr.isTypeUnderlined;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -126,8 +121,7 @@ class Input extends StatelessWidget {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ?? attr.formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -150,6 +144,11 @@ class Input extends StatelessWidget {
     | Obsecure Toggle Widget
     | */
 
+    // This section of code defines the icons to be used when toggling between obscured (hidden) and visible states.
+    // In a typical use case, this might be for password visibility toggling in a UI.
+    // if the obsecureIcons is empty, then the default icons will be used.
+    // if the obsecureIcons has only one icon, then the same icon will be used for both states.
+
     IconData obsShowIcon = obsecureIcons.isNotEmpty
         ? obsecureIcons[0]
         : LazyUi.iconType == IconType.lineAwesome
@@ -161,14 +160,13 @@ class Input extends StatelessWidget {
             ? La.eyeSlash
             : Ti.eyeOff;
 
+    // obsecure toggle widget
     Widget obsecureToggleWidget(bool obsecure) => Touch(
           onTap: () => notifier.setObsecure(!obsecure),
           child: Iconr(
             obsecure ? obsShowIcon : obsHideIcon,
             padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l'],
-                color: (formListAncestor?.style?.inputBorderColor ??
-                    Colors.black12)),
+            border: Br.only(['l'], color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
           ),
         );
 
@@ -182,8 +180,7 @@ class Input extends StatelessWidget {
     if (suffix != null) {
       adjustSuffix = LzInputicon(
         icon: suffix!.icon,
-        borderColor: suffix!.borderColor ??
-            (formListAncestor?.style?.inputBorderColor ?? Colors.black12),
+        borderColor: suffix!.borderColor ?? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12),
         onTap: suffix!.onTap,
       );
     }
@@ -191,28 +188,23 @@ class Input extends StatelessWidget {
     Widget suffixWidget = isSuffix
         ? adjustSuffix ??
             Iconr(
-              suffixIcon ??
-                  (LazyUi.iconType == IconType.lineAwesome
-                      ? La.angleDown
-                      : Ti.chevronDown),
+              suffixIcon ?? (LazyUi.iconType == IconType.lineAwesome ? La.angleDown : Ti.chevronDown),
               color: Colors.black45,
               padding: Ei.only(h: 15, v: 15),
-              border: Br.only(['l'],
-                  color: (formListAncestor?.style?.inputBorderColor ??
-                      Colors.black12)),
+              border: Br.only(['l'], color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
             )
         : const None();
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
+      borderRadius: Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
               : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
@@ -222,25 +214,30 @@ class Input extends StatelessWidget {
           bool? isDisabled = notifier.disabled;
           bool? isReadonly = notifier.readonly;
 
-          bool enabled = onTap == null &&
-              (isDisabled ?? !disabled) &&
-              (isReadonly ?? !readonly);
+          bool enabled = onTap == null && (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
 
           // update formatters (length, on index 0)
-          int ioLengthLimiting = formatters
-              .indexWhere((e) => e is LengthLimitingTextInputFormatter);
+          int ioLengthLimiting = formatters.indexWhere((e) => e is LengthLimitingTextInputFormatter);
           if (ioLengthLimiting > -1) {
-            formatters[ioLengthLimiting] =
-                LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
+            formatters[ioLengthLimiting] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
+
+          // set condition for radius
+          bool radiusNull = isTypeUnderlined || isGrouping;
 
           return InkTouch(
               onTap: onTap != null ? () => onTap!(notifier.controller) : null,
-              color: (isDisabled ?? !disabled) ? Colors.white : disabledColor,
-              border: isGrouping
-                  ? Br.only(['t'], except: isFirst, color: borderColor)
-                  : Br.all(color: borderColor),
-              radius: isGrouping ? null : Br.radius(configRadius),
+              color: isTypeUnderlined
+                  ? Colors.transparent
+                  : (isDisabled ?? !disabled)
+                      ? Colors.white
+                      : disabledColor,
+              border: isTypeUnderlined && !isGrouping
+                  ? Br.only(['b'], color: borderColor)
+                  : isGrouping
+                      ? Br.only(['t'], except: isFirst, color: borderColor)
+                      : Br.all(color: borderColor),
+              radius: radiusNull ? null : Br.radius(configRadius),
               child: Stack(
                 children: [
                   Column(
@@ -249,8 +246,7 @@ class Input extends StatelessWidget {
                     children: [
                       FocusScope(
                         onFocusChange: (value) {
-                          if (!value &&
-                              notifier.controller.text.trim().isNotEmpty) {
+                          if (!value && notifier.controller.text.trim().isNotEmpty) {
                             notifier.clear();
                           }
                         },
@@ -262,17 +258,20 @@ class Input extends StatelessWidget {
                           node: focusNode,
                           enabled: enabled,
                           autofocus: autofocus,
-                          obsecure:
-                              obsecureToggle ? notifier.obsecure : obsecure,
+                          obsecure: obsecureToggle ? notifier.obsecure : obsecure,
                           keyboard: keyboard,
                           formatters: formatters,
                           onChange: onChange,
                           onSubmit: onSubmit,
                           padding: Ei.only(
-                              t: noLabel || isTopAligned ? 14 : 40,
+                              t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 40,
                               b: isValid ? 14 : 5,
-                              l: 15,
-                              r: isSuffix ? 65 : 15),
+                              l: attr.isTypeUnderlined ? 0 : 15,
+                              r: isSuffix
+                                  ? 65
+                                  : attr.isTypeUnderlined
+                                      ? 0
+                                      : 15),
                         ),
                       ),
 
@@ -287,30 +286,28 @@ class Input extends StatelessWidget {
                       ),
                     ],
                   ),
-                  if (!isTopAligned)
+                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) && !isGrouping)
                     Poslign(
                         alignment: Alignment.topLeft,
-                        margin: Ei.only(h: 15, t: 13),
+                        margin: Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
                         child: labelWidget),
                   Poslign(
                       alignment: Alignment.centerRight,
-                      child: obsecureToggle
-                          ? obsecureToggleWidget(notifier.obsecure)
-                          : suffixWidget)
+                      child: obsecureToggle ? obsecureToggleWidget(notifier.obsecure) : suffixWidget)
                 ],
               ));
         },
       ),
     );
 
-    return (isTopAligned
+    // show final config
+    // logg('- Input: $label -> type: ${attr.type}, isTypeUnderlined: $isTypeUnderlined, isGrouping: $isGrouping, isFirst: $isFirst');
+
+    return (attr.isTypeTopAligned
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
-                children: [
-                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
-                  field
-                ],
+                children: [if (attr.isTypeTopAligned && !isGrouping) labelWidget.margin(b: 10), field],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

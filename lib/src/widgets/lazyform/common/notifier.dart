@@ -30,7 +30,7 @@ class FormNotifier extends ChangeNotifier {
   bool? disabled, readonly;
 
   FormNotifier setMessage(String value, bool valid) {
-    data['error'] = value;
+    data['error'] = value.ucfirst;
     data['valid'] = valid;
     notifyListeners();
     return this;
@@ -43,8 +43,12 @@ class FormNotifier extends ChangeNotifier {
   }
 
   /// set text to text input (controller / model)
-  FormNotifier setText(String value) {
+  FormNotifier setText(String value, {bool notify = true}) {
     controller.text = value;
+
+    if (notify) {
+      notifyListeners();
+    }
     return this;
   }
 
