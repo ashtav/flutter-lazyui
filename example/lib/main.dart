@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       home: const AppIntro(),
       builder: (BuildContext context, Widget? widget) {
         // use LazyUi.builder to wrap your widget
-        // so that you can use LzToast, setting maxScalingFontSize
+        // so that you can use LzToast and setting maxScalingFontSize
         return LazyUi.builder(context, widget, maxScalingFontSize: 1.1);
       },
     );
