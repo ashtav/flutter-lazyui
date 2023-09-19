@@ -107,16 +107,31 @@ class Textr extends StatelessWidget {
   }
 }
 
+/// Represents a set of style properties for an icon.
 class IconStyle {
-  final double? size, space;
+  /// The size of the icon. Can be `null` for no specific size.
+  final double? size;
+
+  /// The amount of space around the icon. Can be `null`.
+  final double? space;
+
+  /// The color of the icon. Can be `null` for the default color.
   final Color? color;
+
+  /// The alignment or position of the icon within its container.
+  /// Default value is `CrossAxisAlignment.start`.
   final CrossAxisAlignment position;
+
+  /// Determines whether the icon should be used as a suffix.
+  /// Default value is `false`.
   final bool asSuffix;
 
-  const IconStyle(
-      {this.size,
-      this.space,
-      this.color,
-      this.position = Caa.start,
-      this.asSuffix = false});
+  /// Creates an instance of [IconStyle] with the specified style properties.
+  const IconStyle({
+    this.size,
+    this.space,
+    this.color,
+    this.position = CrossAxisAlignment.start,
+    this.asSuffix = false,
+  });
 }

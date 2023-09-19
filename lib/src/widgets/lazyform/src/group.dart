@@ -22,11 +22,21 @@ class LzFormGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final formListAncestor = context.findAncestorWidgetOfExactType<LzFormList>();
-    Color borderColor = (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
+    final formListAncestor =
+        context.findAncestorWidgetOfExactType<LzFormList>();
+    Color borderColor =
+        (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
 
     // allowed widget
-    List allowed = [Input, Select, Radio, Checkbox, Number, Switches];
+    List allowed = [
+      Input,
+      Select,
+      Radio,
+      Checkbox,
+      Number,
+      Switches,
+      SliderWidget
+    ];
 
     // remove all children that not allowed
     List<Widget> children = [...this.children];
@@ -38,18 +48,23 @@ class LzFormGroup extends StatelessWidget {
     }
 
     // count not allowed widget
-    int count = this.children.where((e) => !allowed.contains(e.runtimeType)).length;
+    int count =
+        this.children.where((e) => !allowed.contains(e.runtimeType)).length;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
 
     // sublabel style
     bool isCardWarning = sublabelStyle == SublabelStyle.cardWarning;
-    Color sublabelBorderColor = isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
-    Color sublabelColor = isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
+    Color sublabelBorderColor =
+        isCardWarning ? Colors.orange.withOpacity(.5) : Colors.black12;
+    Color sublabelColor =
+        isCardWarning ? Colors.orange.withOpacity(.09) : Colors.white;
     Color sublabelTextColor = isCardWarning ? Colors.orange : Colors.black;
 
-    bool isTypeUnderlined = formListAncestor?.style?.type == FormType.underlined || type == FormType.underlined;
+    bool isTypeUnderlined =
+        formListAncestor?.style?.type == FormType.underlined ||
+            type == FormType.underlined;
 
     double configRadius = LazyUi.radius;
 
@@ -76,7 +91,8 @@ class LzFormGroup extends StatelessWidget {
                 )
               : Textr(
                   sublabel!,
-                  style: style?.copyWith(fontSize: 14, color: sublabelTextColor),
+                  style:
+                      style?.copyWith(fontSize: 14, color: sublabelTextColor),
                   margin: Ei.only(b: 15, l: 0),
                   border: Br.all(color: sublabelBorderColor),
                   padding: Ei.sym(v: 13, h: 15),
@@ -88,8 +104,11 @@ class LzFormGroup extends StatelessWidget {
         Container(
           margin: Ei.only(b: bottomSpace ?? 20),
           decoration: BoxDecoration(
-              border: isTypeUnderlined ? Br.only(['b'], color: borderColor) :
-               Br.all(color: borderColor), color: isTypeUnderlined ? Colors.transparent : Colors.white, borderRadius: isTypeUnderlined ? null : Br.radius(configRadius)),
+              border: isTypeUnderlined
+                  ? Br.only(['b'], color: borderColor)
+                  : Br.all(color: borderColor),
+              color: isTypeUnderlined ? Colors.transparent : Colors.white,
+              borderRadius: isTypeUnderlined ? null : Br.radius(configRadius)),
           child: ClipRRect(
             borderRadius: Br.radius(isTypeUnderlined ? 0 : configRadius),
             child: Column(

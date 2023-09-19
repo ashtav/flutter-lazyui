@@ -32,3 +32,9 @@
 
 * Add more documentation
 * improvement and fix some bugs
+
+## 1.0.10
+
+* Add LzInput.slider()
+* Add more documentation
+* improvement and fix some bugs

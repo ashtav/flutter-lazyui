@@ -5,7 +5,7 @@ part of widget;
 /// Example usage:
 /// ```dart
 /// Textml(
-///   'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <color="FF5733">custom color</color>.',
+///   'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
 ///   style: TextStyle(fontSize: 16, color: Colors.black),
 ///   textAlign: TextAlign.center,
 ///   textDirection: TextDirection.ltr,
@@ -46,6 +46,27 @@ class Textml extends StatelessWidget {
       ),
     );
   }
+
+  /// Parses a given text containing custom markup and returns a list of [TextSpan] objects
+  /// that represent styled text based on the markup tags.
+  ///
+  /// The function takes a [text] input string and an optional [style] parameter to apply
+  /// default text styling to the entire text if not specified otherwise within the markup.
+  ///
+  /// The supported markup tags include:
+  /// - `<b>`: Bolds the enclosed text.
+  /// - `<i>`: Italicizes the enclosed text.
+  /// - `<u>`: Underlines the enclosed text.
+  /// - `<p color="#RRGGBB">`: Sets the text color using a hexadecimal color code.
+  ///
+  /// Example usage:
+  ///
+  /// ```dart
+  /// final textWithMarkup = 'This is <b>bold</b> and <p color="#FF5733">colored</p> text.';
+  /// final textSpans = parseText(textWithMarkup);
+  /// ```
+  ///
+  /// Returns a list of [TextSpan] objects representing the stylized text.
 
   List<TextSpan> parseText(String text, {TextStyle? style}) {
     final regex =

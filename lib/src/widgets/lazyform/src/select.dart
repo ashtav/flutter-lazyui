@@ -33,7 +33,8 @@ class Select extends StatelessWidget with FormWidgetMixin {
 
   @override
   Widget build(BuildContext context) {
-    final attr = getAttribute<Select>(context, (e) => e.label == label);
+    final attr = getAttribute<Select>(
+        context, (e) => label == null ? e.hint == hint : e.label == label);
 
     bool isGrouping = attr.isGrouping;
     bool isFirst = attr.isFirst;
@@ -95,7 +96,8 @@ class Select extends StatelessWidget with FormWidgetMixin {
       color: Colors.black45,
       padding: Ei.only(h: 15, v: 15),
       border: Br.only(['l'],
-          color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+          color: (attr.formListAncestor?.style?.inputBorderColor ??
+              Colors.black12)),
     );
 
     SelectController selectController = SelectController(
@@ -114,7 +116,8 @@ class Select extends StatelessWidget with FormWidgetMixin {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ??
+                  Colors.black12)
               : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
           Color disabledColor = Utils.hex('#f3f4f6');
@@ -165,7 +168,11 @@ class Select extends StatelessWidget with FormWidgetMixin {
                             backgroundColor: Colors.transparent);
                       }
                     },
-              color: attr.isTypeTopAligned || isGrouping ? Colors.transparent : enabled ? Colors.white : disabledColor,
+              color: attr.isTypeTopAligned || isGrouping
+                  ? Colors.transparent
+                  : enabled
+                      ? Colors.white
+                      : disabledColor,
               border: isGrouping
                   ? Br.only(['t'], except: isFirst, color: borderColor)
                   : Br.all(color: borderColor),
@@ -182,7 +189,9 @@ class Select extends StatelessWidget with FormWidgetMixin {
                         enabled: false,
                         onChange: onChange,
                         padding: Ei.only(
-                            t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 40,
+                            t: noLabel || attr.isTypeTopAligned || isGrouping
+                                ? 14
+                                : 40,
                             b: isValid ? 14 : 5,
                             l: attr.isTypeUnderlined ? 0 : 15,
                             r: attr.isTypeUnderlined ? 0 : 65),

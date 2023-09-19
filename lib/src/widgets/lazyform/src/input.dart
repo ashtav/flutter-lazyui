@@ -47,7 +47,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
 
   @override
   Widget build(BuildContext context) {
-    final attr = getAttribute<Input>(context, (e) => e.label == label);
+    final attr = getAttribute<Input>(
+        context, (e) => label == null ? e.hint == hint : e.label == label);
 
     bool isFirst = attr.isFirst;
     bool isGrouping = attr.isGrouping;
@@ -70,7 +71,10 @@ class Input extends StatelessWidget with FormWidgetMixin {
     List<TextInputFormatter> formatters = [];
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      formatters = [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...this.formatters];
+      formatters = [
+        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
+        ...this.formatters
+      ];
       notifier.setMaxLength(maxLength < 1 ? 1 : maxLength);
 
       // setting input formatter
@@ -98,7 +102,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isSuffix = obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
+    bool isSuffix =
+        obsecureToggle || onTap != null || suffixIcon != null || suffix != null;
     // bool isTopAlignedAndGrouped = isTopAligned && isGrouping;
 
     // is type of input or form is underlined
@@ -121,7 +126,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
               label ?? '',
               style: style?.copyWith(
                   fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ?? attr.formListAncestor?.style?.inputLabelFontWeight,
+                  fontWeight: labelStyle?.fontWeight ??
+                      attr.formListAncestor?.style?.inputLabelFontWeight,
                   color: labelStyle?.color,
                   letterSpacing: labelStyle?.letterSpacing),
               overflow: Tof.ellipsis,
@@ -166,7 +172,9 @@ class Input extends StatelessWidget with FormWidgetMixin {
           child: Iconr(
             obsecure ? obsShowIcon : obsHideIcon,
             padding: Ei.only(h: 15, v: 15),
-            border: Br.only(['l'], color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+            border: Br.only(['l'],
+                color: (attr.formListAncestor?.style?.inputBorderColor ??
+                    Colors.black12)),
           ),
         );
 
@@ -180,7 +188,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
     if (suffix != null) {
       adjustSuffix = LzInputicon(
         icon: suffix!.icon,
-        borderColor: suffix!.borderColor ?? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12),
+        borderColor: suffix!.borderColor ??
+            (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12),
         onTap: suffix!.onTap,
       );
     }
@@ -188,23 +197,30 @@ class Input extends StatelessWidget with FormWidgetMixin {
     Widget suffixWidget = isSuffix
         ? adjustSuffix ??
             Iconr(
-              suffixIcon ?? (LazyUi.iconType == IconType.lineAwesome ? La.angleDown : Ti.chevronDown),
+              suffixIcon ??
+                  (LazyUi.iconType == IconType.lineAwesome
+                      ? La.angleDown
+                      : Ti.chevronDown),
               color: Colors.black45,
               padding: Ei.only(h: 15, v: 15),
-              border: Br.only(['l'], color: (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)),
+              border: Br.only(['l'],
+                  color: (attr.formListAncestor?.style?.inputBorderColor ??
+                      Colors.black12)),
             )
         : const None();
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
+      borderRadius:
+          Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ??
+                  Colors.black12)
               : Colors.redAccent;
           Color disabledColor = Utils.hex('#f3f4f6');
           String errorMessage = notifier.errorMessage;
@@ -214,12 +230,16 @@ class Input extends StatelessWidget with FormWidgetMixin {
           bool? isDisabled = notifier.disabled;
           bool? isReadonly = notifier.readonly;
 
-          bool enabled = onTap == null && (isDisabled ?? !disabled) && (isReadonly ?? !readonly);
+          bool enabled = onTap == null &&
+              (isDisabled ?? !disabled) &&
+              (isReadonly ?? !readonly);
 
           // update formatters (length, on index 0)
-          int ioLengthLimiting = formatters.indexWhere((e) => e is LengthLimitingTextInputFormatter);
+          int ioLengthLimiting = formatters
+              .indexWhere((e) => e is LengthLimitingTextInputFormatter);
           if (ioLengthLimiting > -1) {
-            formatters[ioLengthLimiting] = LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
+            formatters[ioLengthLimiting] =
+                LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
 
           // set condition for radius
@@ -246,7 +266,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
                     children: [
                       FocusScope(
                         onFocusChange: (value) {
-                          if (!value && notifier.controller.text.trim().isNotEmpty) {
+                          if (!value &&
+                              notifier.controller.text.trim().isNotEmpty) {
                             notifier.clear();
                           }
                         },
@@ -258,13 +279,16 @@ class Input extends StatelessWidget with FormWidgetMixin {
                           node: focusNode,
                           enabled: enabled,
                           autofocus: autofocus,
-                          obsecure: obsecureToggle ? notifier.obsecure : obsecure,
+                          obsecure:
+                              obsecureToggle ? notifier.obsecure : obsecure,
                           keyboard: keyboard,
                           formatters: formatters,
                           onChange: onChange,
                           onSubmit: onSubmit,
                           padding: Ei.only(
-                              t: noLabel || attr.isTypeTopAligned || isGrouping ? 14 : 40,
+                              t: noLabel || attr.isTypeTopAligned || isGrouping
+                                  ? 14
+                                  : 40,
                               b: isValid ? 14 : 5,
                               l: attr.isTypeUnderlined ? 0 : 15,
                               r: isSuffix
@@ -286,14 +310,18 @@ class Input extends StatelessWidget with FormWidgetMixin {
                       ),
                     ],
                   ),
-                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) && !isGrouping)
+                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
+                      !isGrouping)
                     Poslign(
                         alignment: Alignment.topLeft,
-                        margin: Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
+                        margin:
+                            Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
                         child: labelWidget),
                   Poslign(
                       alignment: Alignment.centerRight,
-                      child: obsecureToggle ? obsecureToggleWidget(notifier.obsecure) : suffixWidget)
+                      child: obsecureToggle
+                          ? obsecureToggleWidget(notifier.obsecure)
+                          : suffixWidget)
                 ],
               ));
         },
@@ -307,7 +335,11 @@ class Input extends StatelessWidget with FormWidgetMixin {
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
-                children: [if (attr.isTypeTopAligned && !isGrouping) labelWidget.margin(b: 10), field],
+                children: [
+                  if (attr.isTypeTopAligned && !isGrouping)
+                    labelWidget.margin(b: 10),
+                  field
+                ],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);
