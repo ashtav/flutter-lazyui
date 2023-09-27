@@ -1,6 +1,6 @@
 part of lazyform;
 
-class LzFormGroup extends StatelessWidget {
+class LzFormGroup extends StatelessWidget with FormWidgetMixin {
   final String? label, sublabel;
   final IconData? prefixIcon;
   final List<Widget> children;
@@ -22,8 +22,11 @@ class LzFormGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final attr = getAttribute<Input>(context, (e) => false);
+
     final formListAncestor =
         context.findAncestorWidgetOfExactType<LzFormList>();
+
     Color borderColor =
         (formListAncestor?.style?.inputBorderColor ?? Colors.black12);
 
@@ -107,7 +110,10 @@ class LzFormGroup extends StatelessWidget {
               border: isTypeUnderlined
                   ? Br.only(['b'], color: borderColor)
                   : Br.all(color: borderColor),
-              color: isTypeUnderlined ? Colors.transparent : Colors.white,
+              color: formListAncestor?.style?.backgroundColor ??
+                  (isTypeUnderlined || attr.isTopInner
+                      ? Colors.transparent
+                      : Colors.white),
               borderRadius: isTypeUnderlined ? null : Br.radius(configRadius)),
           child: ClipRRect(
             borderRadius: Br.radius(isTypeUnderlined ? 0 : configRadius),

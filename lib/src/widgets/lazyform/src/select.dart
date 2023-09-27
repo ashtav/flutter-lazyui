@@ -57,7 +57,7 @@ class Select extends StatelessWidget with FormWidgetMixin {
 
     // constructor data
     bool noLabel = label == null || label!.isEmpty;
-    bool isTopAlignedAndGrouped = attr.isTypeTopAligned && isGrouping;
+    // bool isTopAlignedAndGrouped = attr.isTypeTopAligned && isGrouping;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -67,22 +67,41 @@ class Select extends StatelessWidget with FormWidgetMixin {
     | Label Widget
     | */
 
+    Widget justLabel = Textr(
+      label ?? '',
+      style: style?.copyWith(
+          fontSize: labelStyle?.fontSize ?? 14,
+          fontWeight: labelStyle?.fontWeight ??
+              attr.formListAncestor?.style?.inputLabelFontWeight,
+          color: labelStyle?.color,
+          letterSpacing: labelStyle?.letterSpacing),
+      overflow: Tof.ellipsis,
+    );
+
+    // i and l need less space than other letters
+    // so we need to adjust
+
+    int countI = (label ?? '').replaceAll(RegExp('[^il]'), '').length;
+
     Widget labelWidget = IgnorePointer(
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
         children: [
           Flexible(
-            child: Textr(
-              label ?? '',
-              style: style?.copyWith(
-                  fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      attr.formListAncestor?.style?.inputLabelFontWeight,
-                  color: labelStyle?.color,
-                  letterSpacing: labelStyle?.letterSpacing),
-              overflow: Tof.ellipsis,
-            ),
-          ),
+              child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              if (attr.isTopInner)
+                Container(
+                  height: 2,
+                  width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
+                  color: attr.formListAncestor?.style?.backgroundColor ??
+                      (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
+                  margin: Ei.only(t: 2),
+                ),
+              justLabel.margin(l: attr.isTopInner ? 5 : 0)
+            ],
+          )),
         ],
       ),
     );
@@ -109,7 +128,8 @@ class Select extends StatelessWidget with FormWidgetMixin {
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius: Br.radius(isGrouping ? 0 : configRadius),
+      borderRadius:
+          Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
@@ -125,98 +145,124 @@ class Select extends StatelessWidget with FormWidgetMixin {
           bool? isDisabled = notifier.disabled;
           bool enabled = (isDisabled ?? !disabled);
 
-          return InkTouch(
-              onTap: !enabled
-                  ? null
-                  : () async {
-                      // execute onTap callback
-                      dynamic callback = await onTap?.call(selectController);
+          // set condition for radius
+          bool radiusNull = attr.isTypeUnderlined || isGrouping;
 
-                      // as default, options can be shown except when the callback is false
-                      bool ok = true;
-                      if (callback is bool) ok = callback;
+          return Stack(
+            children: [
+              InkTouch(
+                  onTap: !enabled
+                      ? null
+                      : () async {
+                          // execute onTap callback
+                          dynamic callback =
+                              await onTap?.call(selectController);
 
-                      // get options
-                      List<Option> options =
-                          selectController.options ?? notifier.options;
+                          // as default, options can be shown except when the callback is false
+                          bool ok = true;
+                          if (callback is bool) ok = callback;
 
-                      // if (selectController.option != null) {
-                      //   notifier.setOption(selectController.option);
-                      // }
+                          // get options
+                          List<Option> options =
+                              selectController.options ?? notifier.options;
 
-                      if (ok && options.isNotEmpty && context.mounted) {
-                        FocusScope.of(context).unfocus();
+                          // if (selectController.option != null) {
+                          //   notifier.setOption(selectController.option);
+                          // }
 
-                        // show options
-                        context.bottomSheet(
-                            SelectPicker(
-                                initialValue: notifier.option ?? initValue,
-                                options: options,
-                                maxLines: maxLines,
-                                onSelect: (option) {
-                                  selectController.option = option;
+                          if (ok && options.isNotEmpty && context.mounted) {
+                            FocusScope.of(context).unfocus();
 
-                                  notifier.setOption(option);
-                                  onSelect?.call(selectController);
+                            // show options
+                            context.bottomSheet(
+                                SelectPicker(
+                                    initialValue: notifier.option ?? initValue,
+                                    options: options,
+                                    maxLines: maxLines,
+                                    onSelect: (option) {
+                                      selectController.option = option;
 
-                                  if ((attr.formListAncestor?.cleanOnFilled ??
-                                          false) &&
-                                      !notifier.data['valid']) {
-                                    notifier.clear();
-                                  }
-                                }),
-                            backgroundColor: Colors.transparent);
-                      }
-                    },
-              color: attr.isTypeTopAligned || isGrouping
-                  ? Colors.transparent
-                  : enabled
-                      ? Colors.white
-                      : disabledColor,
-              border: isGrouping
-                  ? Br.only(['t'], except: isFirst, color: borderColor)
-                  : Br.all(color: borderColor),
-              radius: isGrouping ? null : Br.radius(configRadius),
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: Caa.start,
-                    mainAxisSize: Mas.min,
+                                      notifier.setOption(option);
+                                      onSelect?.call(selectController);
+
+                                      if ((attr.formListAncestor
+                                                  ?.cleanOnFilled ??
+                                              false) &&
+                                          !notifier.data['valid']) {
+                                        notifier.clear();
+                                      }
+                                    }),
+                                backgroundColor: Colors.transparent);
+                          }
+                        },
+                  color: attr.formListAncestor?.style?.backgroundColor ??
+                      (attr.isTopInner || attr.isTypeUnderlined
+                          ? Colors.transparent
+                          : (isDisabled ?? !disabled)
+                              ? Colors.white
+                              : disabledColor),
+                  border: attr.isTypeUnderlined && !isGrouping
+                      ? Br.only(['b'], color: borderColor)
+                      : isGrouping
+                          ? Br.only(['t'], except: isFirst, color: borderColor)
+                          : Br.all(color: borderColor),
+                  radius: radiusNull ? null : Br.radius(configRadius),
+                  margin: Ei.only(t: attr.isTopInner && !isGrouping ? 10 : 0),
+                  child: Stack(
                     children: [
-                      LzTextField(
-                        hint: hint,
-                        controller: model?.controller,
-                        enabled: false,
-                        onChange: onChange,
-                        padding: Ei.only(
-                            t: noLabel || attr.isTypeTopAligned || isGrouping
-                                ? 14
-                                : 40,
-                            b: isValid ? 14 : 5,
-                            l: attr.isTypeUnderlined ? 0 : 15,
-                            r: attr.isTypeUnderlined ? 0 : 65),
-                        maxLines: expandValue ? 50 : null,
-                      ),
+                      Column(
+                        crossAxisAlignment: Caa.start,
+                        mainAxisSize: Mas.min,
+                        children: [
+                          LzTextField(
+                            hint: hint,
+                            controller: model?.controller,
+                            enabled: false,
+                            onChange: onChange,
+                            padding: Ei.only(
+                                t: noLabel ||
+                                        attr.isTypeTopAligned ||
+                                        isGrouping ||
+                                        attr.isTopInner
+                                    ? 14
+                                    : 40,
+                                b: isValid ? 14 : 5,
+                                l: attr.isTypeUnderlined ? 0 : 15,
+                                r: attr.isTypeUnderlined ? 0 : 65),
+                            maxLines: expandValue ? 50 : null,
+                          ),
 
-                      /* ----------------------------------------------------
-                      | Feedback Message
-                      | */
+                          /* ----------------------------------------------------
+                          | Feedback Message
+                          | */
 
-                      FeedbackMessage(
-                        isValid: isValid,
-                        errorMessage: errorMessage,
-                        isSuffix: true,
+                          FeedbackMessage(
+                            isValid: isValid,
+                            errorMessage: errorMessage,
+                            isSuffix: true,
+                          ),
+                        ],
                       ),
+                      if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
+                          !isGrouping)
+                        Poslign(
+                            alignment: Alignment.topLeft,
+                            margin: Ei.only(
+                                h: attr.isTypeUnderlined ? 0 : 15, t: 13),
+                            child: labelWidget),
+                      Poslign(
+                          alignment: Alignment.centerRight, child: suffixWidget)
                     ],
-                  ),
-                  if (!attr.isTypeTopAligned && !isGrouping)
-                    Poslign(
-                        alignment: Alignment.topLeft,
-                        margin: Ei.only(h: 15, t: 13),
-                        child: labelWidget),
-                  Poslign(alignment: Alignment.centerRight, child: suffixWidget)
-                ],
-              ));
+                  )),
+
+              // top inner label
+              if (attr.isTopInner && !isGrouping)
+                Poslign(
+                    alignment: Alignment.topLeft,
+                    margin: Ei.only(h: 10),
+                    child: labelWidget),
+            ],
+          );
         },
       ),
     );
@@ -226,7 +272,8 @@ class Select extends StatelessWidget with FormWidgetMixin {
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
                 children: [
-                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
+                  if (attr.isTypeTopAligned && !isGrouping)
+                    labelWidget.margin(b: 10),
                   field
                 ],
               )

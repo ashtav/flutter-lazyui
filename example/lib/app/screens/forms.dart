@@ -16,7 +16,11 @@ class FormsView extends StatelessWidget {
       'province',
       'city',
       'number'
-    ]).fill({'email': 'ashtaaav@gmail.com'});
+    ]).fill({
+      'email': 'ashtaaav@gmail.com',
+      'fruit': 'Apple',
+      'hobby': 'Swimming, Coding'
+    });
 
     return Wrapper(
         child: Scaffold(
@@ -26,9 +30,11 @@ class FormsView extends StatelessWidget {
       body: LzFormList(
         cleanOnFilled: true,
         style: LzFormStyle(
-            activeColor: LzColors.dark,
-            inputBorderColor: Colors.black26,
-            type: FormType.topAligned),
+          activeColor: LzColors.dark,
+          inputBorderColor: Colors.black26,
+          type: FormType.topInner,
+          // backgroundColor: Colors.white
+        ),
         children: [
           LzForm.input(
               label: 'Your Name *',
@@ -86,6 +92,11 @@ class FormsView extends StatelessWidget {
                   obsecureToggle: true),
             ],
           ),
+          LzForm.select(
+              label: 'Country *',
+              options: ['Indonesia', 'China', 'Thailand', 'Vietnam', 'Japan']
+                  .options(),
+              hint: 'Please select your country'),
           LzFormGroup(
             label: 'Address',
             sublabel:

@@ -75,13 +75,14 @@ class FormMessages {
 
 class LzFormStyle {
   final FormType type;
-  final Color? activeColor, inputBorderColor;
+  final Color? activeColor, inputBorderColor, backgroundColor;
   final FontWeight? inputLabelFontWeight;
 
   const LzFormStyle(
       {this.type = FormType.grouped,
       this.activeColor,
       this.inputBorderColor,
+      this.backgroundColor,
       this.inputLabelFontWeight});
 }
 

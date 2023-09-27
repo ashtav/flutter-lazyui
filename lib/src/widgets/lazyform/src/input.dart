@@ -117,29 +117,68 @@ class Input extends StatelessWidget with FormWidgetMixin {
     | Label Widget
     | */
 
+    Widget justLabel = Textr(
+      label ?? '',
+      style: style?.copyWith(
+          fontSize: labelStyle?.fontSize ?? 14,
+          fontWeight: labelStyle?.fontWeight ??
+              attr.formListAncestor?.style?.inputLabelFontWeight,
+          color: labelStyle?.color,
+          letterSpacing: labelStyle?.letterSpacing),
+      overflow: Tof.ellipsis,
+    );
+
+    // i and l need less space than other letters
+    // so we need to adjust
+
+    int countI = (label ?? '').replaceAll(RegExp('[^il]'), '').length;
+
     Widget labelWidget = IgnorePointer(
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
         children: [
           Flexible(
-            child: Textr(
-              label ?? '',
-              style: style?.copyWith(
-                  fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      attr.formListAncestor?.style?.inputLabelFontWeight,
-                  color: labelStyle?.color,
-                  letterSpacing: labelStyle?.letterSpacing),
-              overflow: Tof.ellipsis,
-            ),
-          ),
+              child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              if (attr.isTopInner)
+                Container(
+                  height: 2,
+                  width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
+                  color: attr.formListAncestor?.style?.backgroundColor ??
+                      (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
+                  margin: Ei.only(t: 2),
+                ),
+              justLabel.margin(l: attr.isTopInner ? 5 : 0)
+            ],
+          )),
 
           // Text Length
           indicator
-              ? notifier.watch((_) => Textr(
-                    '${notifier.textLength}/${notifier.maxLength}',
-                    style: style?.copyWith(fontSize: 14, color: Colors.black45),
-                    margin: Ei.only(r: isSuffix ? 50 : 0, l: 15),
+              ? notifier.watch((_) => Stack(
+                    alignment: Alignment.centerRight,
+                    children: [
+                      if (attr.isTopInner)
+                        Container(
+                          height: 1,
+                          width: '${notifier.textLength}/${notifier.maxLength}'
+                                  .length *
+                              (10).toDouble(),
+                          color:
+                              attr.formListAncestor?.style?.backgroundColor ??
+                                  (attr.isTopInner
+                                      ? 'fafafa'.hex
+                                      : Colors.transparent),
+                          margin: Ei.only(t: 2, l: 5),
+                        ),
+                      Textr(
+                        '${notifier.textLength}/${notifier.maxLength}',
+                        style: style?.copyWith(
+                            fontSize: 14, color: Colors.black45),
+                        margin: Ei.only(
+                            r: isSuffix ? 50 : 0, h: attr.isTopInner ? 5 : 0),
+                      ),
+                    ],
                   ))
               : const None().margin(r: 50),
         ],
@@ -245,85 +284,106 @@ class Input extends StatelessWidget with FormWidgetMixin {
           // set condition for radius
           bool radiusNull = isTypeUnderlined || isGrouping;
 
-          return InkTouch(
-              onTap: onTap != null ? () => onTap!(notifier.controller) : null,
-              color: isTypeUnderlined
-                  ? Colors.transparent
-                  : (isDisabled ?? !disabled)
-                      ? Colors.white
-                      : disabledColor,
-              border: isTypeUnderlined && !isGrouping
-                  ? Br.only(['b'], color: borderColor)
-                  : isGrouping
-                      ? Br.only(['t'], except: isFirst, color: borderColor)
-                      : Br.all(color: borderColor),
-              radius: radiusNull ? null : Br.radius(configRadius),
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: Caa.start,
-                    mainAxisSize: Mas.min,
+          return Stack(
+            children: [
+              InkTouch(
+                  onTap:
+                      onTap != null ? () => onTap!(notifier.controller) : null,
+                  color: attr.formListAncestor?.style?.backgroundColor ??
+                      (attr.isTopInner || attr.isTypeUnderlined
+                          ? Colors.transparent
+                          : (isDisabled ?? !disabled)
+                              ? Colors.white
+                              : disabledColor),
+                  border: isTypeUnderlined && !isGrouping
+                      ? Br.only(['b'], color: borderColor)
+                      : isGrouping
+                          ? Br.only(['t'], except: isFirst, color: borderColor)
+                          : Br.all(color: borderColor),
+                  radius: radiusNull ? null : Br.radius(configRadius),
+                  margin: Ei.only(t: attr.isTopInner && !isGrouping ? 10 : 0),
+                  child: Stack(
                     children: [
-                      FocusScope(
-                        onFocusChange: (value) {
-                          if (!value &&
-                              notifier.controller.text.trim().isNotEmpty) {
-                            notifier.clear();
-                          }
-                        },
-                        child: LzTextField(
-                          hint: hint,
-                          controller: model?.controller,
-                          maxLength: maxLength,
-                          maxLines: maxLines,
-                          node: focusNode,
-                          enabled: enabled,
-                          autofocus: autofocus,
-                          obsecure:
-                              obsecureToggle ? notifier.obsecure : obsecure,
-                          keyboard: keyboard,
-                          formatters: formatters,
-                          onChange: onChange,
-                          onSubmit: onSubmit,
-                          padding: Ei.only(
-                              t: noLabel || attr.isTypeTopAligned || isGrouping
-                                  ? 14
-                                  : 40,
-                              b: isValid ? 14 : 5,
-                              l: attr.isTypeUnderlined ? 0 : 15,
-                              r: isSuffix
-                                  ? 65
-                                  : attr.isTypeUnderlined
-                                      ? 0
-                                      : 15),
-                        ),
+                      Column(
+                        crossAxisAlignment: Caa.start,
+                        mainAxisSize: Mas.min,
+                        children: [
+                          FocusScope(
+                            onFocusChange: (value) {
+                              if (!value &&
+                                  notifier.controller.text.trim().isNotEmpty) {
+                                notifier.clear();
+                              }
+                            },
+                            child: LzTextField(
+                              hint: hint,
+                              controller: model?.controller,
+                              maxLength: maxLength,
+                              maxLines: maxLines,
+                              node: focusNode,
+                              enabled: enabled,
+                              autofocus: autofocus,
+                              obsecure:
+                                  obsecureToggle ? notifier.obsecure : obsecure,
+                              keyboard: keyboard,
+                              formatters: formatters,
+                              onChange: onChange,
+                              onSubmit: onSubmit,
+                              padding: Ei.only(
+                                  t: noLabel ||
+                                          attr.isTypeTopAligned ||
+                                          isGrouping ||
+                                          attr.isTopInner
+                                      ? 14
+                                      : 40,
+                                  b: isValid ? 14 : 5,
+                                  l: attr.isTypeUnderlined ? 0 : 15,
+                                  r: isSuffix
+                                      ? 65
+                                      : attr.isTypeUnderlined
+                                          ? 0
+                                          : 15),
+                            ),
+                          ),
+
+                          /* ----------------------------------------------------
+                          | Feedback Message
+                          | */
+
+                          FeedbackMessage(
+                            isValid: isValid,
+                            errorMessage: errorMessage,
+                            isSuffix: isSuffix,
+                          ),
+                        ],
                       ),
 
-                      /* ----------------------------------------------------
-                      | Feedback Message
-                      | */
+                      // top inner form type
+                      // Positioned(left: 20, top: 0, child: labelWidget),
 
-                      FeedbackMessage(
-                        isValid: isValid,
-                        errorMessage: errorMessage,
-                        isSuffix: isSuffix,
-                      ),
+                      if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
+                          !isGrouping)
+                        Poslign(
+                            alignment: Alignment.topLeft,
+                            margin: Ei.only(
+                                h: attr.isTypeUnderlined ? 0 : 15, t: 13),
+                            child: labelWidget),
+                      Poslign(
+                          alignment: Alignment.centerRight,
+                          child: obsecureToggle
+                              ? obsecureToggleWidget(notifier.obsecure)
+                              : suffixWidget)
                     ],
-                  ),
-                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                      !isGrouping)
-                    Poslign(
-                        alignment: Alignment.topLeft,
-                        margin:
-                            Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
-                        child: labelWidget),
-                  Poslign(
-                      alignment: Alignment.centerRight,
-                      child: obsecureToggle
-                          ? obsecureToggleWidget(notifier.obsecure)
-                          : suffixWidget)
-                ],
-              ));
+                  )),
+
+              // top inner label
+              if (attr.isTopInner && !isGrouping)
+                Poslign(
+                    alignment: Alignment.topLeft,
+                    margin: Ei.only(h: 10),
+                    child: labelWidget),
+            ],
+          );
         },
       ),
     );

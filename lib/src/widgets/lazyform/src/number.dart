@@ -74,22 +74,41 @@ class Number extends StatelessWidget with FormWidgetMixin {
     | Label Widget
     | */
 
+    Widget justLabel = Textr(
+      label ?? '',
+      style: style?.copyWith(
+          fontSize: labelStyle?.fontSize ?? 14,
+          fontWeight: labelStyle?.fontWeight ??
+              attr.formListAncestor?.style?.inputLabelFontWeight,
+          color: labelStyle?.color,
+          letterSpacing: labelStyle?.letterSpacing),
+      overflow: Tof.ellipsis,
+    );
+
+    // i and l need less space than other letters
+    // so we need to adjust
+
+    int countI = (label ?? '').replaceAll(RegExp('[^il]'), '').length;
+
     Widget labelWidget = IgnorePointer(
       child: Row(
         mainAxisAlignment: Maa.spaceBetween,
         children: [
           Flexible(
-            child: Textr(
-              label ?? '',
-              style: style?.copyWith(
-                  fontSize: labelStyle?.fontSize ?? 14,
-                  fontWeight: labelStyle?.fontWeight ??
-                      attr.formListAncestor?.style?.inputLabelFontWeight,
-                  color: labelStyle?.color,
-                  letterSpacing: labelStyle?.letterSpacing),
-              overflow: Tof.ellipsis,
-            ),
-          )
+              child: Stack(
+            alignment: Alignment.centerLeft,
+            children: [
+              if (attr.isTopInner)
+                Container(
+                  height: 2,
+                  width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
+                  color: attr.formListAncestor?.style?.backgroundColor ??
+                      (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
+                  margin: Ei.only(t: 2),
+                ),
+              justLabel.margin(l: attr.isTopInner ? 5 : 0)
+            ],
+          )),
         ],
       ),
     );
@@ -219,142 +238,161 @@ class Number extends StatelessWidget with FormWidgetMixin {
                 LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength);
           }
 
-          return InkTouch(
-              color: attr.isTypeUnderlined
-                  ? Colors.transparent
-                  : (isDisabled ?? !disabled)
-                      ? Colors.white
-                      : disabledColor,
-              border: attr.isTypeUnderlined && !isGrouping
-                  ? Br.only(['b'], color: borderColor)
-                  : isGrouping
-                      ? Br.only(['t'], except: isFirst, color: borderColor)
-                      : Br.all(color: borderColor),
-              radius: isGrouping || attr.isTypeUnderlined
-                  ? null
-                  : Br.radius(configRadius),
-              child: Stack(
-                children: [
-                  Column(
-                    crossAxisAlignment: Caa.start,
-                    mainAxisSize: Mas.min,
+          return Stack(
+            children: [
+              InkTouch(
+                  color: attr.formListAncestor?.style?.backgroundColor ??
+                      (attr.isTopInner || attr.isTypeUnderlined
+                          ? Colors.transparent
+                          : (isDisabled ?? !disabled)
+                              ? Colors.white
+                              : disabledColor),
+                  border: attr.isTypeUnderlined && !isGrouping
+                      ? Br.only(['b'], color: borderColor)
+                      : isGrouping
+                          ? Br.only(['t'], except: isFirst, color: borderColor)
+                          : Br.all(color: borderColor),
+                  radius: isGrouping || attr.isTypeUnderlined
+                      ? null
+                      : Br.radius(configRadius),
+                  margin: Ei.only(t: attr.isTopInner && !isGrouping ? 10 : 0),
+                  child: Stack(
                     children: [
-                      FocusScope(
-                        child: Focus(
-                          onFocusChange: (value) {
-                            if (!value) {
-                              final text = notifier.controller.text.trim();
+                      Column(
+                        crossAxisAlignment: Caa.start,
+                        mainAxisSize: Mas.min,
+                        children: [
+                          FocusScope(
+                            child: Focus(
+                              onFocusChange: (value) {
+                                if (!value) {
+                                  final text = notifier.controller.text.trim();
 
-                              if (text.isEmpty || text == '-') {
-                                notifier.controller.text = '0';
-                              }
+                                  if (text.isEmpty || text == '-') {
+                                    notifier.controller.text = '0';
+                                  }
 
-                              // check min
-                              if (text.getNumeric < min) {
-                                notifier.controller.text = min.toString();
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
-                              }
-                            }
-                          },
-                          child: LzTextField(
-                            hint: hint,
-                            controller: model?.controller,
-                            maxLength: maxLength,
-                            node: focusNode,
-                            enabled: enabled,
-                            autofocus: autofocus,
-                            keyboard: Tit.number,
-                            formatters: formatters,
-                            onChange: (String value) {
-                              onChange?.call(value);
+                                  // check min
+                                  if (text.getNumeric < min) {
+                                    notifier.controller.text = min.toString();
+                                    Utils.setCursorToLastPosition(
+                                        notifier.controller);
+                                  }
+                                }
+                              },
+                              child: LzTextField(
+                                hint: hint,
+                                controller: model?.controller,
+                                maxLength: maxLength,
+                                node: focusNode,
+                                enabled: enabled,
+                                autofocus: autofocus,
+                                keyboard: Tit.number,
+                                formatters: formatters,
+                                onChange: (String value) {
+                                  onChange?.call(value);
 
-                              if (value == '-') {
-                                return;
-                              }
+                                  if (value == '-') {
+                                    return;
+                                  }
 
-                              if (value.split('-').length > 2) {
-                                notifier.controller.text = '-';
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
-                                return;
-                              }
+                                  if (value.split('-').length > 2) {
+                                    notifier.controller.text = '-';
+                                    Utils.setCursorToLastPosition(
+                                        notifier.controller);
+                                    return;
+                                  }
 
-                              // check if there are minuses after number
-                              if (value.indexOf('-') > 0) {
-                                notifier.controller.text =
-                                    value.replaceAll('-', '');
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
-                                return;
-                              }
+                                  // check if there are minuses after number
+                                  if (value.indexOf('-') > 0) {
+                                    notifier.controller.text =
+                                        value.replaceAll('-', '');
+                                    Utils.setCursorToLastPosition(
+                                        notifier.controller);
+                                    return;
+                                  }
 
-                              // don't allow there is 0 at the beginning
-                              if (value.startsWith('0') && value.length > 1) {
-                                notifier.controller.text = value.substring(1);
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
-                                return;
-                              }
+                                  // don't allow there is 0 at the beginning
+                                  if (value.startsWith('0') &&
+                                      value.length > 1) {
+                                    notifier.controller.text =
+                                        value.substring(1);
+                                    Utils.setCursorToLastPosition(
+                                        notifier.controller);
+                                    return;
+                                  }
 
-                              // don't allow there is 0 after -
-                              if (value.startsWith('-0') && value.length > 2) {
-                                notifier.controller.text =
-                                    value.substring(0, 1) + value.substring(2);
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
-                                return;
-                              }
+                                  // don't allow there is 0 after -
+                                  if (value.startsWith('-0') &&
+                                      value.length > 2) {
+                                    notifier.controller.text =
+                                        value.substring(0, 1) +
+                                            value.substring(2);
+                                    Utils.setCursorToLastPosition(
+                                        notifier.controller);
+                                    return;
+                                  }
 
-                              // check min and max
-                              int number = value.getNumeric;
+                                  // check min and max
+                                  int number = value.getNumeric;
 
-                              if (number > max) {
-                                notifier.controller.text = max.toString();
-                                Utils.setCursorToLastPosition(
-                                    notifier.controller);
-                              }
-                            },
-                            onSubmit: onSubmit,
-                            padding: Ei.only(
-                                t: noLabel ||
-                                        attr.isTypeTopAligned ||
-                                        isGrouping
-                                    ? 14
-                                    : 40,
-                                b: isValid ? 14 : 5,
-                                l: attr.isTypeUnderlined ? 0 : 15,
-                                r: showControl
-                                    ? 65
-                                    : attr.isTypeUnderlined
-                                        ? 0
-                                        : 15),
+                                  if (number > max) {
+                                    notifier.controller.text = max.toString();
+                                    Utils.setCursorToLastPosition(
+                                        notifier.controller);
+                                  }
+                                },
+                                onSubmit: onSubmit,
+                                padding: Ei.only(
+                                    t: noLabel ||
+                                            attr.isTypeTopAligned ||
+                                            isGrouping ||
+                                            attr.isTopInner
+                                        ? 14
+                                        : 40,
+                                    b: isValid ? 14 : 5,
+                                    l: attr.isTypeUnderlined ? 0 : 15,
+                                    r: showControl
+                                        ? 65
+                                        : attr.isTypeUnderlined
+                                            ? 0
+                                            : 15),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
 
-                      /* ----------------------------------------------------
-                      | Feedback Message
-                      | */
+                          /* ----------------------------------------------------
+                          | Feedback Message
+                          | */
 
-                      FeedbackMessage(
-                        isValid: isValid,
-                        errorMessage: errorMessage,
-                        isSuffix: true,
-                        padRight: 115,
+                          FeedbackMessage(
+                            isValid: isValid,
+                            errorMessage: errorMessage,
+                            isSuffix: true,
+                            padRight: 115,
+                          ),
+                        ],
                       ),
+                      if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
+                          !isGrouping)
+                        Poslign(
+                            alignment: Alignment.topLeft,
+                            margin: Ei.only(
+                                h: attr.isTypeUnderlined ? 0 : 15, t: 13),
+                            child: labelWidget),
+                      Poslign(
+                          alignment: Alignment.centerRight, child: suffixWidget)
                     ],
-                  ),
-                  if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                      !isGrouping)
-                    Poslign(
-                        alignment: Alignment.topLeft,
-                        margin:
-                            Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
-                        child: labelWidget),
-                  Poslign(alignment: Alignment.centerRight, child: suffixWidget)
-                ],
-              ));
+                  )),
+
+              // top inner label
+              if (attr.isTopInner && !isGrouping)
+                Poslign(
+                    alignment: Alignment.topLeft,
+                    margin: Ei.only(h: 10),
+                    child: labelWidget),
+            ],
+          );
         },
       ),
     );

@@ -38,3 +38,8 @@
 * Add LzInput.slider()
 * Add more documentation
 * improvement and fix some bugs
+
+## 1.0.11
+
+* Add FormType.topInner
+* improvement and fix some bugs

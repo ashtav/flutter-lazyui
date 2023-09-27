@@ -5,6 +5,7 @@ class Attribute {
   final bool isGrouping,
       isTypeGrouped,
       isTypeTopAligned,
+      isTopInner,
       isTypeUnderlined,
       isFirst;
   final LzFormGroup? formGroupAncestor;
@@ -16,6 +17,7 @@ class Attribute {
     this.isTypeGrouped = true,
     this.isTypeTopAligned = false,
     this.isTypeUnderlined = false,
+    this.isTopInner = false,
     this.isFirst = false,
     this.formGroupAncestor,
     this.formListAncestor,
@@ -42,6 +44,7 @@ mixin FormWidgetMixin {
     bool isTypeUnderlined = type == FormType.underlined;
     bool isTypeTopAligned = type == FormType.topAligned;
     bool isTypeGrouped = type == FormType.grouped;
+    bool isTopInner = type == FormType.topInner;
 
     // check first children of formGroupAncestor
     bool isFirst = false;
@@ -57,6 +60,7 @@ mixin FormWidgetMixin {
     return Attribute(
       isGrouping: isGrouping,
       isTypeGrouped: isTypeGrouped,
+      isTopInner: isTopInner,
       isTypeTopAligned: isTypeTopAligned,
       isTypeUnderlined: isTypeUnderlined,
       formGroupAncestor: formGroupAncestor,
