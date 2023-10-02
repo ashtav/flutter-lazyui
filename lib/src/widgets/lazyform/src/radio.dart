@@ -4,15 +4,40 @@ part of lazyform;
 | Radio Widget
 | */
 
+/// A [Radio] widget for creating radio button input elements.
+///
+/// This widget extends [StatelessWidget] and includes [FormWidgetMixin].
+/// It provides the ability to create radio button input elements with various
+/// options and customizations.
 class Radio extends StatelessWidget with FormWidgetMixin {
+  /// The label displayed alongside the radio buttons.
   final String? label;
+
+  /// A list of [Option] objects representing the available radio button options.
   final List<Option> options;
+
+  /// The initially selected option.
   final Option? initValue;
+
+  /// An optional [FormModel] for form management.
   final FormModel? model;
+
+  /// A boolean indicating whether the radio buttons should be disabled.
   final bool disabled;
+
+  /// The color to use for the selected radio buttons.
   final Color? activeColor;
+
+  /// A callback function triggered when the selected radio button changes.
   final Function(Option)? onChange;
+
+  /// An optional style to customize the appearance of the label.
   final LzFormLabelStyle? labelStyle;
+
+  /// Creates a [Radio] widget.
+  ///
+  /// The [label], [options], [initValue], and [onChange] parameters can be
+  /// customized to create radio button input elements with desired properties.
 
   const Radio(
       {super.key,
@@ -87,7 +112,7 @@ class Radio extends StatelessWidget with FormWidgetMixin {
             children: [
               if (attr.isTopInner)
                 Container(
-                  height: 2,
+                  height: 3,
                   width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
                   color: attr.formListAncestor?.style?.backgroundColor ??
                       (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
@@ -139,11 +164,13 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                     children: [
                       Container(
                         padding: Ei.only(
-                            t: noLabel || attr.isTypeTopAligned || isGrouping
-                                ? 14
-                                : attr.isTopInner
-                                    ? 17
-                                    : 43,
+                            t: (attr.keepLabelOnGrouped && attr.isTypeGrouped)
+                                ? 43
+                                : noLabel || attr.isTypeTopAligned || isGrouping
+                                    ? 14
+                                    : attr.isTopInner
+                                        ? 17
+                                        : 43,
                             b: isValid ? 5 : 0,
                             l: attr.isTypeUnderlined ? 0 : 15,
                             r: attr.isTypeUnderlined ? 0 : 15),
@@ -222,7 +249,8 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                         ),
                       ),
                       if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                          !isGrouping)
+                              !isGrouping ||
+                          (attr.keepLabelOnGrouped && attr.isTypeGrouped))
                         Poslign(
                             alignment: Alignment.topLeft,
                             margin: Ei.only(

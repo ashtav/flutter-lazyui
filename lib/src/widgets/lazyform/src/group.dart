@@ -1,13 +1,65 @@
 part of lazyform;
 
+/// A [LzFormGroup] widget to display form sections.
+///
+/// A form group widget that extends [StatelessWidget] and
+/// mixes in [FormWidgetMixin]. This widget can be used to display
+/// a label, optional sublabel, prefix icon and a list of child widgets
+/// that represent the form fields.
+
 class LzFormGroup extends StatelessWidget with FormWidgetMixin {
-  final String? label, sublabel;
+  /// The label that describes the form section.
+  ///
+  /// If set, this label will appear above the form fields.
+  final String? label;
+
+  /// The sublabel that provides additional information.
+  ///
+  /// This text will appear below the [label] and above the form fields,
+  /// offering additional context or instructions.
+  final String? sublabel;
+
+  /// The icon to be displayed next to the [label].
+  ///
+  /// If set, this icon will appear at the beginning of the label.
   final IconData? prefixIcon;
+
+  /// A list of child widgets to display within the form section.
+  ///
+  /// These widgets commonly include form fields, buttons, etc.
   final List<Widget> children;
+
+  /// The space that separates the last child from the bottom of the form section.
+  ///
+  /// If set, this space is added below the last child.
   final double? bottomSpace;
+
+  /// The style to apply to the [label].
+  ///
+  /// If set, this text style will be applied to the label.
   final TextStyle? labelStyle;
+
+  /// The style to apply to the [sublabel].
+  ///
+  /// Default is [SublabelStyle.text].
   final SublabelStyle sublabelStyle;
+
+  /// Determines the type of form.
+  ///
+  /// If set, this will determine how the form behaves.
+  /// Only works if the type is 'grouped'.
   final FormType? type;
+
+  /// Determines whether the [label] should be kept or not.
+  ///
+  /// Defaults to `false`. Only works if [type] is 'grouped'.
+  final bool keepLabel;
+
+  /// Creates a [LzFormGroup] widget.
+  ///
+  /// The [children] parameter defaults to an empty list.
+  /// The [sublabelStyle] parameter defaults to [SublabelStyle.text].
+  /// The [keepLabel] parameter defaults to `false`.
 
   const LzFormGroup(
       {super.key,
@@ -18,7 +70,10 @@ class LzFormGroup extends StatelessWidget with FormWidgetMixin {
       this.bottomSpace,
       this.labelStyle,
       this.sublabelStyle = SublabelStyle.text,
-      this.type});
+      this.type,
+
+      /// only work if type is grouped
+      this.keepLabel = false});
 
   @override
   Widget build(BuildContext context) {

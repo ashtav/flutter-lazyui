@@ -1,14 +1,58 @@
 part of lazyform;
 
+/// A [Number] widget for creating numeric input elements.
+///
+/// This widget extends [StatelessWidget] and includes [FormWidgetMixin].
+/// It provides the ability to create numeric input elements with various
+/// options and customizations.
 class Number extends StatelessWidget with FormWidgetMixin {
-  final String? label, hint;
+  /// The label displayed alongside the numeric input.
+  final String? label;
+
+  /// The hint text displayed in the numeric input when it's empty.
+  final String? hint;
+
+  /// An optional [FormModel] for form management.
   final FormModel? model;
-  final int initialValue, min, max;
+
+  /// The initial value of the numeric input.
+  final int initialValue;
+
+  /// The minimum allowed value for the numeric input.
+  final int min;
+
+  /// The maximum allowed value for the numeric input.
+  final int max;
+
+  /// An optional [FocusNode] for controlling the input's focus.
   final FocusNode? node;
-  final bool disabled, readonly, autofocus, showControl;
-  final Function(String)? onChange, onSubmit;
+
+  /// A boolean indicating whether the numeric input should be disabled.
+  final bool disabled;
+
+  /// A boolean indicating whether the numeric input should be read-only.
+  final bool readonly;
+
+  /// A boolean indicating whether the numeric input should autofocus.
+  final bool autofocus;
+
+  /// A boolean indicating whether to show control buttons for value adjustment.
+  final bool showControl;
+
+  /// A callback function triggered when the numeric input value changes.
+  final Function(String)? onChange;
+
+  /// A callback function triggered when the numeric input submits.
+  final Function(String)? onSubmit;
+
+  /// An optional style to customize the appearance of the label.
   final LzFormLabelStyle? labelStyle;
 
+  /// Creates a [Number] widget.
+  ///
+  /// The [label], [hint], [initialValue], [min], [max], [node], [disabled],
+  /// [readonly], [autofocus], [showControl], [onChange], and [onSubmit] parameters
+  /// can be customized to create numeric input elements with desired properties.
   const Number(
       {super.key,
       this.label,
@@ -100,7 +144,7 @@ class Number extends StatelessWidget with FormWidgetMixin {
             children: [
               if (attr.isTopInner)
                 Container(
-                  height: 2,
+                  height: 3,
                   width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
                   color: attr.formListAncestor?.style?.backgroundColor ??
                       (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
@@ -344,12 +388,15 @@ class Number extends StatelessWidget with FormWidgetMixin {
                                 },
                                 onSubmit: onSubmit,
                                 padding: Ei.only(
-                                    t: noLabel ||
-                                            attr.isTypeTopAligned ||
-                                            isGrouping ||
-                                            attr.isTopInner
-                                        ? 14
-                                        : 40,
+                                    t: (attr.keepLabelOnGrouped &&
+                                            attr.isTypeGrouped)
+                                        ? 40
+                                        : noLabel ||
+                                                attr.isTypeTopAligned ||
+                                                isGrouping ||
+                                                attr.isTopInner
+                                            ? 14
+                                            : 40,
                                     b: isValid ? 14 : 5,
                                     l: attr.isTypeUnderlined ? 0 : 15,
                                     r: showControl
@@ -374,7 +421,8 @@ class Number extends StatelessWidget with FormWidgetMixin {
                         ],
                       ),
                       if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                          !isGrouping)
+                              !isGrouping ||
+                          (attr.keepLabelOnGrouped && attr.isTypeGrouped))
                         Poslign(
                             alignment: Alignment.topLeft,
                             margin: Ei.only(

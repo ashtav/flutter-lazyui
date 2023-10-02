@@ -1,26 +1,81 @@
 part of lazyform;
 
+/// An [Input] widget for creating text input elements.
+///
+/// This widget extends [StatelessWidget] and includes [FormWidgetMixin].
+/// It provides the ability to create text input elements with various
+/// options and customizations.
+///
 class Input extends StatelessWidget with FormWidgetMixin {
-  final String? label, hint;
-  final FormModel? model;
-  final int maxLength;
-  final int? maxLines;
-  final FocusNode? node;
-  final bool disabled, readonly, autofocus, obsecure, obsecureToggle, indicator;
-  final TextInputType? keyboard;
-  final List<TextInputFormatter> formatters;
-  final Function(String)? onChange, onSubmit;
-  final Function(TextEditingController)? onTap;
-  final IconData? suffixIcon;
-  final LzInputicon? suffix;
-  final LzFormLabelStyle? labelStyle;
+  /// The label displayed alongside the input.
+  final String? label;
 
-  /// The length of the list must be 2, the first is the visible icon, the second is the hidden icon
-  /// ``` dart
-  /// obsecureIcons: [La.lock, La.unlock]
-  /// ```
+  /// The hint text displayed in the input when it's empty.
+  final String? hint;
+
+  /// An optional [FormModel] for form management.
+  final FormModel? model;
+
+  /// The maximum allowed length for the input.
+  final int maxLength;
+
+  /// The maximum number of lines for the input (for multiline inputs).
+  final int? maxLines;
+
+  /// An optional [FocusNode] for controlling the input's focus.
+  final FocusNode? node;
+
+  /// A boolean indicating whether the input should be disabled.
+  final bool disabled;
+
+  /// A boolean indicating whether the input should be read-only.
+  final bool readonly;
+
+  /// A boolean indicating whether the input should autofocus.
+  final bool autofocus;
+
+  /// A boolean indicating whether the input should be obscured (password input).
+  final bool obsecure;
+
+  /// A boolean indicating whether a toggle button for password visibility should be displayed.
+  final bool obsecureToggle;
+
+  /// A boolean indicating whether an input validation indicator should be displayed.
+  final bool indicator;
+
+  /// The keyboard type for the input.
+  final TextInputType? keyboard;
+
+  /// A list of text input formatters to apply to the input.
+  final List<TextInputFormatter> formatters;
+
+  /// A callback function triggered when the input value changes.
+  final Function(String)? onChange;
+
+  /// A callback function triggered when the input submits.
+  final Function(String)? onSubmit;
+
+  /// A callback function triggered when the input is tapped.
+  final Function(TextEditingController)? onTap;
+
+  /// An optional suffix icon displayed at the end of the input.
+  final IconData? suffixIcon;
+
+  /// An optional custom suffix widget displayed at the end of the input.
+  final LzInputicon? suffix;
+
+  /// A list of two icons for toggling password visibility (visible and hidden).
   final List<IconData> obsecureIcons;
 
+  /// An optional style to customize the appearance of the label.
+  final LzFormLabelStyle? labelStyle;
+
+  /// Creates an [Input] widget.
+  ///
+  /// The [label], [hint], [maxLength], [maxLines], [node], [disabled], [readonly],
+  /// [autofocus], [obsecure], [keyboard], [formatters], [obsecureToggle], [indicator],
+  /// [onChange], [onSubmit], [onTap], [suffixIcon], [suffix], [obsecureIcons], and [labelStyle]
+  /// parameters can be customized to create text input elements with desired properties.
   const Input(
       {super.key,
       this.label,
@@ -143,7 +198,7 @@ class Input extends StatelessWidget with FormWidgetMixin {
             children: [
               if (attr.isTopInner)
                 Container(
-                  height: 2,
+                  height: 3,
                   width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
                   color: attr.formListAncestor?.style?.backgroundColor ??
                       (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
@@ -330,12 +385,15 @@ class Input extends StatelessWidget with FormWidgetMixin {
                               onChange: onChange,
                               onSubmit: onSubmit,
                               padding: Ei.only(
-                                  t: noLabel ||
-                                          attr.isTypeTopAligned ||
-                                          isGrouping ||
-                                          attr.isTopInner
-                                      ? 14
-                                      : 40,
+                                  t: (attr.keepLabelOnGrouped &&
+                                          attr.isTypeGrouped)
+                                      ? 40
+                                      : noLabel ||
+                                              attr.isTypeTopAligned ||
+                                              isGrouping ||
+                                              attr.isTopInner
+                                          ? 14
+                                          : 40,
                                   b: isValid ? 14 : 5,
                                   l: attr.isTypeUnderlined ? 0 : 15,
                                   r: isSuffix
@@ -362,7 +420,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
                       // Positioned(left: 20, top: 0, child: labelWidget),
 
                       if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                          !isGrouping)
+                              !isGrouping ||
+                          (attr.keepLabelOnGrouped && attr.isTypeGrouped))
                         Poslign(
                             alignment: Alignment.topLeft,
                             margin: Ei.only(

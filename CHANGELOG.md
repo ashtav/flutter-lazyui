@@ -43,3 +43,8 @@
 
 * Add FormType.topInner
 * improvement and fix some bugs
+
+## 1.0.12
+
+* Add more documentation
+* improvement and fix some bugs

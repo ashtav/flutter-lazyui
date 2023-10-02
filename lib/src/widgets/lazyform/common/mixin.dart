@@ -7,22 +7,23 @@ class Attribute {
       isTypeTopAligned,
       isTopInner,
       isTypeUnderlined,
-      isFirst;
+      isFirst,
+      keepLabelOnGrouped;
   final LzFormGroup? formGroupAncestor;
   final LzFormList? formListAncestor;
   final FormType type;
 
-  const Attribute({
-    this.isGrouping = false,
-    this.isTypeGrouped = true,
-    this.isTypeTopAligned = false,
-    this.isTypeUnderlined = false,
-    this.isTopInner = false,
-    this.isFirst = false,
-    this.formGroupAncestor,
-    this.formListAncestor,
-    this.type = FormType.grouped,
-  });
+  const Attribute(
+      {this.isGrouping = false,
+      this.isTypeGrouped = true,
+      this.isTypeTopAligned = false,
+      this.isTypeUnderlined = false,
+      this.isTopInner = false,
+      this.isFirst = false,
+      this.formGroupAncestor,
+      this.formListAncestor,
+      this.type = FormType.grouped,
+      this.keepLabelOnGrouped = false});
 }
 
 mixin FormWidgetMixin {
@@ -58,15 +59,15 @@ mixin FormWidgetMixin {
     }
 
     return Attribute(
-      isGrouping: isGrouping,
-      isTypeGrouped: isTypeGrouped,
-      isTopInner: isTopInner,
-      isTypeTopAligned: isTypeTopAligned,
-      isTypeUnderlined: isTypeUnderlined,
-      formGroupAncestor: formGroupAncestor,
-      formListAncestor: formListAncestor,
-      isFirst: isFirst,
-      type: type,
-    );
+        isGrouping: isGrouping,
+        isTypeGrouped: isTypeGrouped,
+        isTopInner: isTopInner,
+        isTypeTopAligned: isTypeTopAligned,
+        isTypeUnderlined: isTypeUnderlined,
+        formGroupAncestor: formGroupAncestor,
+        formListAncestor: formListAncestor,
+        isFirst: isFirst,
+        type: type,
+        keepLabelOnGrouped: formGroupAncestor?.keepLabel ?? false);
   }
 }

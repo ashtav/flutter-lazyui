@@ -4,17 +4,53 @@ part of lazyform;
 | Select Widget
 | */
 
+/// A [Select] widget for creating dropdown select input elements.
+///
+/// This widget extends [StatelessWidget] and includes [FormWidgetMixin].
+/// It provides the ability to create dropdown select input elements with various
+/// options and customizations.
+
 class Select extends StatelessWidget with FormWidgetMixin {
-  final String? label, hint;
+  /// The label displayed alongside the select input.
+  final String? label;
+
+  /// The hint text displayed in the select input when it's empty.
+  final String? hint;
+
+  /// A list of [Option] objects representing the available select options.
   final List<Option> options;
+
+  /// The initially selected option.
   final Option? initValue;
+
+  /// An optional [FormModel] for form management.
   final FormModel? model;
-  final bool disabled, expandValue;
+
+  /// A boolean indicating whether the select input should be disabled.
+  final bool disabled;
+
+  /// A boolean indicating whether the select input should expand to its max height.
+  final bool expandValue;
+
+  /// A callback function triggered when the selected value changes.
   final Function(String)? onChange;
+
+  /// A callback function triggered when the select input is tapped.
   final Future? Function(SelectController controller)? onTap;
+
+  /// A callback function triggered when an option is selected.
   final Function(SelectController controller)? onSelect;
+
+  /// An optional style to customize the appearance of the label.
   final LzFormLabelStyle? labelStyle;
+
+  /// The maximum number of lines to display in the select input.
   final int? maxLines;
+
+  /// Creates a [Select] widget.
+  ///
+  /// The [label], [hint], [options], [initValue], and [onChange] parameters can be
+  /// customized to create dropdown select input elements with desired properties.
 
   const Select(
       {super.key,
@@ -93,7 +129,7 @@ class Select extends StatelessWidget with FormWidgetMixin {
             children: [
               if (attr.isTopInner)
                 Container(
-                  height: 2,
+                  height: 3,
                   width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
                   color: attr.formListAncestor?.style?.backgroundColor ??
                       (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
@@ -220,12 +256,15 @@ class Select extends StatelessWidget with FormWidgetMixin {
                             enabled: false,
                             onChange: onChange,
                             padding: Ei.only(
-                                t: noLabel ||
-                                        attr.isTypeTopAligned ||
-                                        isGrouping ||
-                                        attr.isTopInner
-                                    ? 14
-                                    : 40,
+                                t: (attr.keepLabelOnGrouped &&
+                                        attr.isTypeGrouped)
+                                    ? 40
+                                    : noLabel ||
+                                            attr.isTypeTopAligned ||
+                                            isGrouping ||
+                                            attr.isTopInner
+                                        ? 14
+                                        : 40,
                                 b: isValid ? 14 : 5,
                                 l: attr.isTypeUnderlined ? 0 : 15,
                                 r: attr.isTypeUnderlined ? 0 : 65),
@@ -244,7 +283,8 @@ class Select extends StatelessWidget with FormWidgetMixin {
                         ],
                       ),
                       if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                          !isGrouping)
+                              !isGrouping ||
+                          (attr.keepLabelOnGrouped && attr.isTypeGrouped))
                         Poslign(
                             alignment: Alignment.topLeft,
                             margin: Ei.only(

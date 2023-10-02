@@ -4,13 +4,34 @@ part of lazyform;
 | Switches
 | */
 
+/// A [Switches] widget for creating switch input elements.
+///
+/// This widget extends [StatelessWidget].
+/// It provides the ability to create switch input elements with various
+/// options and customizations.
 class Switches extends StatelessWidget {
-  final String? label, id;
+  /// The label displayed alongside the switch.
+  final String? label;
+
+  /// An optional identifier for the switch.
+  final String? id;
+
+  /// The initial value of the switch.
   final bool initValue;
+
+  /// A callback function triggered when the switch state changes.
   final Function(bool)? onChange;
+
+  /// The color to use for the active state of the switch.
   final Color? activeColor;
+
+  /// An optional style to customize the appearance of the label.
   final LzFormLabelStyle? labelStyle;
 
+  /// Creates a [Switches] widget.
+  ///
+  /// The [label], [id], [initValue], and [onChange] parameters can be
+  /// customized to create switch input elements with desired properties.
   const Switches(
       {super.key,
       this.label,

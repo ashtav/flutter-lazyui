@@ -1,14 +1,45 @@
 part of lazyform;
 
+/// A [SliderWidget] for creating slider input elements.
+///
+/// This widget extends [StatelessWidget] and includes [FormWidgetMixin].
+/// It provides the ability to create slider input elements with various
+/// options and customizations.
 class SliderWidget extends StatelessWidget with FormWidgetMixin {
+  /// The label displayed alongside the slider.
   final String? label;
-  final double min, max;
+
+  /// The minimum value for the slider.
+  final double min;
+
+  /// The maximum value for the slider.
+  final double max;
+
+  /// The number of divisions or steps for the slider.
   final int? divisions;
+
+  /// An optional [FormModel] for form management.
   final FormModel? model;
-  final Color? activeColor, inactiveColor;
+
+  /// The color to use for the active portion of the slider.
+  final Color? activeColor;
+
+  /// The color to use for the inactive portion of the slider.
+  final Color? inactiveColor;
+
+  /// An optional style to customize the appearance of the label.
   final LzFormLabelStyle? labelStyle;
+
+  /// A boolean indicating whether the slider should be disabled.
   final bool disabled;
+
+  /// A callback function triggered when the slider value changes.
   final Function(double value)? onChange;
+
+  /// Creates a [SliderWidget] widget.
+  ///
+  /// The [label], [min], [max], [divisions], and [onChange] parameters can be
+  /// customized to create slider input elements with desired properties.
 
   const SliderWidget(
       {super.key,
