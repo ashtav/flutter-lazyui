@@ -48,3 +48,8 @@
 
 * Add more documentation
 * improvement and fix some bugs
+
+## 1.0.13
+
+* Add model to LzInput.switches()
+* improvement and fix some bugs

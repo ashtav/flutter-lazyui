@@ -230,13 +230,13 @@ class LzForm {
           {Key? key,
           String? label,
           String? id,
-          bool initValue = false,
+          FormModel? model,
           Function(bool)? onChange,
           Color? activeColor}) =>
       Switches(
           label: label,
           id: id,
-          initValue: initValue,
+          model: model,
           onChange: onChange,
           activeColor: activeColor);
 
