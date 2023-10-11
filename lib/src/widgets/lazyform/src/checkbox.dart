@@ -78,16 +78,8 @@ class Checkbox extends StatelessWidget with FormWidgetMixin {
       notifier.checked = checkeds.map((e) => Option(option: e)).toList();
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      // init value
-      if (initValue.isNotEmpty) {
-        notifier.setCheckedAll(initValue);
-      }
-    });
-
-    // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
-    double configRadius = LazyUi.radius;
+    final lkey = GlobalKey();
 
     /* ----------------------------------------------------
     | Label Widget
@@ -102,12 +94,23 @@ class Checkbox extends StatelessWidget with FormWidgetMixin {
           color: labelStyle?.color,
           letterSpacing: labelStyle?.letterSpacing),
       overflow: Tof.ellipsis,
+      key: lkey,
     );
 
-    // i and l need less space than other letters
-    // so we need to adjust
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // init value
+      if (initValue.isNotEmpty) {
+        notifier.setCheckedAll(initValue);
+      }
 
-    int countI = (label ?? '').replaceAll(RegExp('[^il]'), '').length;
+      // count width of label
+      final box = lkey.context?.findRenderObject() as RenderBox?;
+      double lwidth = box?.size.width ?? 0;
+      notifier.labelWidth = lwidth + 10;
+      notifier.setState();
+    });
+
+    double configRadius = LazyUi.radius;
 
     Widget labelWidget = IgnorePointer(
       child: Row(
@@ -118,13 +121,13 @@ class Checkbox extends StatelessWidget with FormWidgetMixin {
             alignment: Alignment.centerLeft,
             children: [
               if (attr.isTopInner)
-                Container(
-                  height: 3,
-                  width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
-                  color: attr.formListAncestor?.style?.backgroundColor ??
-                      (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
-                  margin: Ei.only(t: 2),
-                ),
+                notifier.watch((state) => Container(
+                      height: 3,
+                      width: state.labelWidth,
+                      color: attr.formListAncestor?.style?.backgroundColor ??
+                          (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
+                      margin: Ei.only(t: 2),
+                    )),
               justLabel.margin(l: attr.isTopInner ? 5 : 0)
             ],
           )),

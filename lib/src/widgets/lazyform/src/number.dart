@@ -81,6 +81,25 @@ class Number extends StatelessWidget with FormWidgetMixin {
     final notifier = model?.notifier ?? FormNotifier();
     List<TextInputFormatter> formatters = [InputFormat.allowRegex("[0-9-]")];
 
+    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    final lkey = GlobalKey();
+
+    /* ----------------------------------------------------
+    | Label Widget
+    | */
+
+    Widget justLabel = Textr(
+      label ?? '',
+      style: style?.copyWith(
+          fontSize: labelStyle?.fontSize ?? 14,
+          fontWeight: labelStyle?.fontWeight ??
+              attr.formListAncestor?.style?.inputLabelFontWeight,
+          color: labelStyle?.color,
+          letterSpacing: labelStyle?.letterSpacing),
+      overflow: Tof.ellipsis,
+      key: lkey,
+    );
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       formatters = [...formatters, LengthLimitingTextInputFormatter(11)];
       notifier.setMaxLength('$max'.length);
@@ -104,6 +123,11 @@ class Number extends StatelessWidget with FormWidgetMixin {
           notifier.setTextLength(notifier.controller.text.length);
         });
       }
+
+      // count width of label
+      final box = lkey.context?.findRenderObject() as RenderBox?;
+      double lwidth = box?.size.width ?? 0;
+      notifier.labelWidth = lwidth + 10;
     });
 
     // constructor data
@@ -111,28 +135,7 @@ class Number extends StatelessWidget with FormWidgetMixin {
     bool isTopAlignedAndGrouped = attr.isTypeTopAligned && isGrouping;
 
     // get text style
-    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
     double configRadius = LazyUi.radius;
-
-    /* ----------------------------------------------------
-    | Label Widget
-    | */
-
-    Widget justLabel = Textr(
-      label ?? '',
-      style: style?.copyWith(
-          fontSize: labelStyle?.fontSize ?? 14,
-          fontWeight: labelStyle?.fontWeight ??
-              attr.formListAncestor?.style?.inputLabelFontWeight,
-          color: labelStyle?.color,
-          letterSpacing: labelStyle?.letterSpacing),
-      overflow: Tof.ellipsis,
-    );
-
-    // i and l need less space than other letters
-    // so we need to adjust
-
-    int countI = (label ?? '').replaceAll(RegExp('[^il]'), '').length;
 
     Widget labelWidget = IgnorePointer(
       child: Row(
@@ -143,13 +146,13 @@ class Number extends StatelessWidget with FormWidgetMixin {
             alignment: Alignment.centerLeft,
             children: [
               if (attr.isTopInner)
-                Container(
-                  height: 3,
-                  width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
-                  color: attr.formListAncestor?.style?.backgroundColor ??
-                      (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
-                  margin: Ei.only(t: 2),
-                ),
+                notifier.watch((state) => Container(
+                      height: 3,
+                      width: state.labelWidth,
+                      color: attr.formListAncestor?.style?.backgroundColor ??
+                          (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
+                      margin: Ei.only(t: 2),
+                    )),
               justLabel.margin(l: attr.isTopInner ? 5 : 0)
             ],
           )),

@@ -134,4 +134,9 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
     return this;
   }
+
+  double labelWidth = 0;
+  void setState() {
+    notifyListeners();
+  }
 }

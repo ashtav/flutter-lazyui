@@ -108,22 +108,27 @@ class Input extends StatelessWidget with FormWidgetMixin {
     bool isFirst = attr.isFirst;
     bool isGrouping = attr.isGrouping;
 
-    // FormType type = formGroupAncestor?.type ?? formListAncestor?.style?.type ?? FormType.grouped;
-
-    // get first children of formGroupAncestor
-    // if (isGrouping && (formGroupAncestor?.children ?? []).isNotEmpty) {
-    //   if (formGroupAncestor!.children[0] is Input) {
-    //     Input firstChild = formGroupAncestor.children[0] as Input;
-    //     isFirst = firstChild.label == label;
-    //   }
-    // }
-
-    // if (formListAncestor != null && formListAncestor.style?.type == FormType.topAligned) {
-    //   isTopAligned = true;
-    // }
-
     final notifier = model?.notifier ?? FormNotifier();
     List<TextInputFormatter> formatters = [];
+
+    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    final lkey = GlobalKey();
+
+    /* ----------------------------------------------------
+    | Label Widget
+    | */
+
+    Widget justLabel = Textr(
+      label ?? '',
+      style: style?.copyWith(
+          fontSize: labelStyle?.fontSize ?? 14,
+          fontWeight: labelStyle?.fontWeight ??
+              attr.formListAncestor?.style?.inputLabelFontWeight,
+          color: labelStyle?.color,
+          letterSpacing: labelStyle?.letterSpacing),
+      overflow: Tof.ellipsis,
+      key: lkey,
+    );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       formatters = [
@@ -153,6 +158,11 @@ class Input extends StatelessWidget with FormWidgetMixin {
           }
         });
       }
+
+      // count width of label
+      final box = lkey.context?.findRenderObject() as RenderBox?;
+      double lwidth = box?.size.width ?? 0;
+      notifier.labelWidth = lwidth + 10;
     });
 
     // constructor data
@@ -163,30 +173,7 @@ class Input extends StatelessWidget with FormWidgetMixin {
 
     // is type of input or form is underlined
     bool isTypeUnderlined = attr.isTypeUnderlined;
-
-    // get text style
-    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
     double configRadius = LazyUi.radius;
-
-    /* ----------------------------------------------------
-    | Label Widget
-    | */
-
-    Widget justLabel = Textr(
-      label ?? '',
-      style: style?.copyWith(
-          fontSize: labelStyle?.fontSize ?? 14,
-          fontWeight: labelStyle?.fontWeight ??
-              attr.formListAncestor?.style?.inputLabelFontWeight,
-          color: labelStyle?.color,
-          letterSpacing: labelStyle?.letterSpacing),
-      overflow: Tof.ellipsis,
-    );
-
-    // i and l need less space than other letters
-    // so we need to adjust
-
-    int countI = (label ?? '').replaceAll(RegExp('[^il]'), '').length;
 
     Widget labelWidget = IgnorePointer(
       child: Row(
@@ -197,13 +184,13 @@ class Input extends StatelessWidget with FormWidgetMixin {
             alignment: Alignment.centerLeft,
             children: [
               if (attr.isTopInner)
-                Container(
-                  height: 3,
-                  width: (label ?? '').length * (8 - (countI * .7)).toDouble(),
-                  color: attr.formListAncestor?.style?.backgroundColor ??
-                      (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
-                  margin: Ei.only(t: 2),
-                ),
+                notifier.watch((state) => Container(
+                      height: 3,
+                      width: state.labelWidth,
+                      color: attr.formListAncestor?.style?.backgroundColor ??
+                          (attr.isTopInner ? 'fafafa'.hex : Colors.transparent),
+                      margin: Ei.only(t: 2),
+                    )),
               justLabel.margin(l: attr.isTopInner ? 5 : 0)
             ],
           )),

@@ -32,18 +32,27 @@ class Switches extends StatelessWidget {
   ///
   /// The [label], [id], [initValue], and [onChange] parameters can be
   /// customized to create switch input elements with desired properties.
-  const Switches({super.key, this.label, this.id, this.model, this.onChange, this.activeColor, this.labelStyle});
+  const Switches(
+      {super.key,
+      this.label,
+      this.id,
+      this.model,
+      this.onChange,
+      this.activeColor,
+      this.labelStyle});
 
   @override
   Widget build(BuildContext context) {
     final notifier = SwitchesNotifier();
-    notifier.switched.value = model?.controller.text == '1' || model?.controller.text == 'true';
+    notifier.switched.value =
+        model?.controller.text == '1' || model?.controller.text == 'true';
     model?.controller.text = notifier.switched.value ? '1' : '0';
 
     if (id != null) switchesNotifier[id!] = notifier;
 
     List<String> labels = (this.label ?? '').split('|');
-    String label = labels[0], secondLabel = labels.length > 1 ? labels[1] : label;
+    String label = labels[0],
+        secondLabel = labels.length > 1 ? labels[1] : label;
     Color activeColor = this.activeColor ?? LzFormTheme.activeColor;
 
     void onSwitch(bool value) {
@@ -70,7 +79,10 @@ class Switches extends StatelessWidget {
                 Transform.scale(
                   scale: 0.7,
                   alignment: Alignment.centerLeft,
-                  child: CupertinoSwitch(value: switched, activeColor: activeColor, onChanged: onSwitch),
+                  child: CupertinoSwitch(
+                      value: switched,
+                      activeColor: activeColor,
+                      onChanged: onSwitch),
                 ),
                 Textr(switched ? label : secondLabel,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
