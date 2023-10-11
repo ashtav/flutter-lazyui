@@ -135,6 +135,20 @@ class FormNotifier extends ChangeNotifier {
     return this;
   }
 
+  // for input number
+  int min = 0, max = 0;
+
+  void setMin(int value) {
+    min = value;
+    logg('setmin: $min');
+    notifyListeners();
+  }
+
+  void setMax(int value) {
+    max = value;
+    notifyListeners();
+  }
+
   double labelWidth = 0;
   void setState() {
     notifyListeners();

@@ -84,6 +84,12 @@ class Number extends StatelessWidget with FormWidgetMixin {
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
     final lkey = GlobalKey();
 
+    notifier.min = this.min;
+    notifier.max = this.max;
+
+    int min = notifier.min;
+    int max = notifier.max;
+
     /* ----------------------------------------------------
     | Label Widget
     | */
@@ -179,8 +185,8 @@ class Number extends StatelessWidget with FormWidgetMixin {
         int increase = value + a;
 
         return index == 0
-            ? (decrease < min ? min : decrease)
-            : (increase > max ? max : increase);
+            ? (decrease < notifier.min ? notifier.min : decrease)
+            : (increase > notifier.max ? notifier.max : increase);
       }
 
       timer?.cancel();
@@ -189,7 +195,7 @@ class Number extends StatelessWidget with FormWidgetMixin {
         if (isLongPress) {
           timer = Timer.periodic(100.ms, (_) {
             int value = number();
-            if (value > min) value--;
+            if (value > notifier.min) value--;
             controller.text = value.toString();
           });
         } else {
@@ -199,7 +205,7 @@ class Number extends StatelessWidget with FormWidgetMixin {
         if (isLongPress) {
           timer = Timer.periodic(100.ms, (_) {
             int value = number(0, 1);
-            if (value < max) value++;
+            if (value < notifier.max) value++;
 
             controller.text = value.toString();
           });
@@ -221,8 +227,8 @@ class Number extends StatelessWidget with FormWidgetMixin {
               mainAxisAlignment: Maa.end,
               children: List.generate(2, (i) {
                 int value = state.controller.text.getNumeric;
-                bool isMin = value <= min;
-                bool isMax = value >= max;
+                bool isMin = value <= state.min;
+                bool isMax = value >= state.max;
 
                 return IgnorePointer(
                   ignoring: (notifier.disabled ?? disabled),
