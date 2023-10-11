@@ -11,3 +11,7 @@
 ## 1.0.16
 
 * improvement and fix some bugs
+
+## 1.0.17
+
+* improvement and fix some bugs

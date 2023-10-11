@@ -266,4 +266,20 @@ extension FormModelExtension on Map<String, FormModel> {
 
     return value;
   }
+
+  /// ``` dart
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  /// forms.toMap(except: ['password']); // {name: '', email: ''}
+  /// ```
+  Map<String, dynamic> toMap({List<String> except = const []}) {
+    final data = <String, dynamic>{};
+
+    for (var e in keys) {
+      if (!except.contains(e)) {
+        data[e] = this[e]!.controller.text;
+      }
+    }
+
+    return data;
+  }
 }
