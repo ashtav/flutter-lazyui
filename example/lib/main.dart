@@ -4,7 +4,7 @@ import 'package:lazyui/lazyui.dart';
 
 import 'app/theme.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // call LazyUi.config() before runApp()
@@ -12,6 +12,9 @@ void main() {
   LazyUi.config();
 
   runApp(const MyApp());
+}
+
+initializeDateFormatting(String s) {
 }
 
 class MyApp extends StatelessWidget {

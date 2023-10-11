@@ -34,7 +34,7 @@ class FormsView extends StatelessWidget {
       ),
       body: LzFormList(
         cleanOnFilled: true,
-        style: LzFormStyle.topInner(Colors.black26),
+        style: LzFormStyle.topAligned(Colors.black26),
         children: [
           LzForm.input(
               label: 'Your Name *',

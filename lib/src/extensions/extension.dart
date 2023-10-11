@@ -5,7 +5,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_custom.dart';
 import 'package:lazyui/lazyui.dart';
 
 part 'bool_extension.dart';
