@@ -254,6 +254,7 @@ class SelectPicker extends StatelessWidget {
       int maxLines = 1}) {
     context.bottomSheet(
         SelectPicker(
+            initialValue: initialValue,
             options: options,
             fullScreen: fullScreen,
             onSelect: onSelect,

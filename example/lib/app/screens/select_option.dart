@@ -19,13 +19,14 @@ class SelectOptionView extends StatelessWidget {
               onTap: (_) {
                 SelectPicker.show(context,
                     fullScreen: true,
+                    initialValue: const Option(option: 'Meeting', value: 3),
                     options: [
                       'Seminar',
                       'Workshop',
                       'Training',
                       'Meeting',
                       'Playing'
-                    ].options(), onSelect: (o) {
+                    ].options(values: [0, 1, 2, 3, 4]), onSelect: (o) {
                   logg(o.toMap());
                 });
               }),
