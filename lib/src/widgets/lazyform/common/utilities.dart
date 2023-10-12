@@ -9,7 +9,12 @@ class SelectController {
   /// This function is used to set extra value to the controller
   void Function(dynamic value) setExtra;
 
-  SelectController({this.label, this.options, this.controller, this.option, required this.setExtra});
+  SelectController(
+      {this.label,
+      this.options,
+      this.controller,
+      this.option,
+      required this.setExtra});
 }
 
 /* ---------------------------------------------------------------
@@ -21,7 +26,8 @@ class LzFormLabelStyle {
   final FontWeight? fontWeight;
   final Color? color;
 
-  const LzFormLabelStyle({this.fontSize, this.letterSpacing, this.fontWeight, this.color});
+  const LzFormLabelStyle(
+      {this.fontSize, this.letterSpacing, this.fontWeight, this.color});
 }
 
 /* ---------------------------------------------------------------
@@ -80,7 +86,8 @@ class LzFormStyle {
       this.inputLabelFontWeight});
 
   static topAligned([Color? borderColor]) {
-    return LzFormStyle(type: FormType.topAligned, inputBorderColor: borderColor);
+    return LzFormStyle(
+        type: FormType.topAligned, inputBorderColor: borderColor);
   }
 
   static topInner([Color? borderColor]) {
@@ -171,7 +178,8 @@ class LzInputicon extends StatelessWidget {
   final IconData icon;
   final Function()? onTap;
   final Color? borderColor;
-  const LzInputicon({super.key, required this.icon, this.onTap, this.borderColor});
+  const LzInputicon(
+      {super.key, required this.icon, this.onTap, this.borderColor});
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +197,8 @@ extension FormModelExtension on Map<String, FormModel> {
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```
-  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const [], bool when = true}) {
+  Map<String, FormModel> fill(Map<String, dynamic> data,
+      {List<String> except = const [], bool when = true}) {
     if (when) {
       for (var e in data.keys) {
         if (containsKey(e) && !except.contains(e)) {
@@ -201,7 +210,8 @@ extension FormModelExtension on Map<String, FormModel> {
     return this;
   }
 
-  Map<String, FormModel> reset({List<String> except = const [], List<String> only = const []}) {
+  Map<String, FormModel> reset(
+      {List<String> except = const [], List<String> only = const []}) {
     for (var e in keys) {
       if (!except.contains(e) && (only.isEmpty || only.contains(e))) {
         this[e]!.controller.text = '';

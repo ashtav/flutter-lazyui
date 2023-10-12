@@ -14,8 +14,7 @@ void main() async {
   runApp(const MyApp());
 }
 
-initializeDateFormatting(String s) {
-}
+initializeDateFormatting(String s) {}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

@@ -125,6 +125,7 @@ extension LzListStringExtension on List<String> {
       List<int> disableds = const [],
       List<int> dangers = const [],
       List<int> pops = const [],
+      List<int> separator = const [],
       Map<int, List<Option>> options = const {},
       Map<int, OptionStyle> Function(int index)? styles}) {
     List<Option> localOptions = [];
@@ -147,6 +148,7 @@ extension LzListStringExtension on List<String> {
           icon: icons.length > i ? icons[i] : null,
           disabled: disabled,
           danger: danger,
+          separator: separator.contains(i),
           pop: pops.contains(i),
           options: options.containsKey(i) ? options[i] : null,
           style: style));

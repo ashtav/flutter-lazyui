@@ -451,7 +451,8 @@ class LzForm {
         }
 
         if (notifierType == LzFormNotifier.toast) {
-          LzToast.show(errorMessage, position: toastPosition ?? LzToast.getConfig.position);
+          LzToast.show(errorMessage,
+              position: toastPosition ?? LzToast.getConfig.position);
         } else if (notifierType == LzFormNotifier.text) {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);

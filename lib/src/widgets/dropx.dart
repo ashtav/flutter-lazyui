@@ -25,6 +25,7 @@ class DropX {
       touchBased,
       bool useCaret = true,
       bool dismissOnTap = true,
+      bool useBorder = true,
       int? duration,
       Function(Option)? onSelect}) async {
     if ([BuildContext, GlobalKey].contains(key.runtimeType)) {
@@ -47,6 +48,7 @@ class DropX {
               touchBased: touchBased,
               isContext: key is BuildContext,
               useCaret: useCaret,
+              useBorder: useBorder,
               dismissOnTap: dismissOnTap,
               duration: duration ?? 50,
               onSelect: onSelect,
@@ -66,7 +68,7 @@ class _DropXWidget extends StatelessWidget {
   final BuildContext context;
   final List<Option> options;
   final Offset? offset, touchBased;
-  final bool isContext, useCaret, dismissOnTap;
+  final bool isContext, useCaret, dismissOnTap, useBorder;
   final int duration;
   final Function(Option)? onSelect;
   const _DropXWidget(
@@ -76,6 +78,7 @@ class _DropXWidget extends StatelessWidget {
       this.touchBased,
       this.isContext = false,
       this.useCaret = false,
+      this.useBorder = true,
       this.dismissOnTap = true,
       this.duration = 50,
       this.onSelect});
@@ -245,6 +248,7 @@ class _DropXWidget extends StatelessWidget {
                             children: state.options.generate((item, i) {
                               bool disabled = item.disabled;
                               bool danger = item.danger;
+                              bool separator = item.separator;
 
                               // get icon data
                               IconData? icon = item.icon;
@@ -289,7 +293,16 @@ class _DropXWidget extends StatelessWidget {
                                           onSelect?.call(item);
                                         },
                                   padding: Ei.sym(v: 15, h: 20),
-                                  border: Br.only(['t'], except: i == 0),
+                                  border: Br.only(['t'],
+                                      except: i == 0,
+                                      width: separator
+                                          ? 2
+                                          : useBorder
+                                              ? .5
+                                              : 0,
+                                      color: separator || useBorder
+                                          ? Colors.black12
+                                          : Colors.transparent),
                                   child: Row(
                                     children: [
                                       Textr(item.option,

@@ -33,6 +33,9 @@ class Option {
   /// Indicates if the option represents a danger or critical action.
   final bool danger;
 
+  /// Indicates if the option is a separator.
+  final bool separator;
+
   /// The position index of the option.
   final int index;
 
@@ -53,6 +56,7 @@ class Option {
       this.value,
       this.disabled = false,
       this.danger = false,
+      this.separator = false,
       this.index = 0,
       this.icon,
       this.options,

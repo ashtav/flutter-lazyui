@@ -15,3 +15,8 @@
 ## 1.0.17
 
 * improvement and fix some bugs
+
+## 1.0.18
+
+* add separator in DropX
+* improvement and fix some bugs

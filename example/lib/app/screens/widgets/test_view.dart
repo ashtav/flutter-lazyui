@@ -6,7 +6,6 @@ class TestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     DateTime date = DateTime.parse('2023-10-11T04:34:19.000000Z');
     logg(date.format('dd/MM/yyyy hh:mm', true));
 

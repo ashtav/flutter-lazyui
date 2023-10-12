@@ -34,7 +34,7 @@ class DropdownView extends StatelessWidget {
                   'Uncheck All',
                   'Sort',
                   'Share'
-                ].options(icons: icons);
+                ].options(icons: icons, separator: [2]);
                 DropX.show(key, options: options);
               },
               icon: const Icon(La.bars))
