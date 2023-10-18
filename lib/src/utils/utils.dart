@@ -17,6 +17,7 @@ import 'package:teledart/telegram.dart';
 
 import '../constants/value.dart';
 import '../extensions/extension.dart';
+import '../models/device.dart';
 
 part 'bot.dart';
 part 'error_handler.dart';

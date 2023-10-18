@@ -20,3 +20,8 @@
 
 * add separator in DropX
 * improvement and fix some bugs
+
+## 1.0.19
+
+* add get device utilities
+* improvement and fix some bugs

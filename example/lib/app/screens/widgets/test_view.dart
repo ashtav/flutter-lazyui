@@ -18,6 +18,9 @@ class TestView extends StatelessWidget {
           'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
           style: TextStyle(fontSize: 16, color: Colors.black),
           textAlign: TextAlign.center,
-        )));
+        )).onTap(() async {
+          final device = await Utils.getDevice();
+          logg(device.value);
+        }));
   }
 }

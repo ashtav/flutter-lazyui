@@ -20,7 +20,7 @@ class FormsView extends StatelessWidget {
     ]).fill({
       'email': 'ashtaaav@gmail.com',
       'fruit': 'Apple',
-      'hobby': 'Swimming, Coding',
+      // 'hobby': 'Swimming, Coding',
       'is_active': '1'
     });
 
