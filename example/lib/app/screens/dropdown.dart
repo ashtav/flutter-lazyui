@@ -108,7 +108,9 @@ class DropdownView extends StatelessWidget {
                     'Sort',
                     'Share'
                   ].options();
-                  DropX.show(bottomKey, options: options);
+                  DropX.show(bottomKey, options: options, onSelect: (value) {
+                    logg(value.index);
+                  });
                 })
               ],
             ),

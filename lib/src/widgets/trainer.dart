@@ -218,6 +218,7 @@ class _AppTrainerState extends State<AppTrainer> {
         isActive = false;
         widget.onSkip?.call();
         widget.onFinishOrSkip?.call();
+        return false;
       },
       onFinish: () {
         isActive = false;

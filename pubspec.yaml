@@ -22,7 +22,7 @@ dependencies:
   path_provider: ^2.1.1
   stack_trace: ^1.11.0
   teledart: ^0.6.1
-  tutorial_coach_mark: ^1.2.9
+  tutorial_coach_mark: ^1.2.11
 
 dev_dependencies:
   flutter_lints: ^2.0.0

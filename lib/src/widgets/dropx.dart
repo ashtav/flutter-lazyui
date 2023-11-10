@@ -290,7 +290,7 @@ class _DropXWidget extends StatelessWidget {
                                             return;
                                           }
 
-                                          onSelect?.call(item);
+                                          onSelect?.call(item.copyWith(index: i));
                                         },
                                   padding: Ei.sym(v: 15, h: 20),
                                   border: Br.only(['t'],

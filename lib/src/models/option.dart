@@ -89,6 +89,33 @@ class Option {
       'style': style
     };
   }
+
+  // copy with
+  Option copyWith({
+    String? option,
+    dynamic value,
+    bool? disabled,
+    bool? danger,
+    bool? separator,
+    int? index,
+    IconData? icon,
+    List<Option>? options,
+    bool? pop,
+    OptionStyle? style,
+  }) {
+    return Option(
+      option: option ?? this.option,
+      value: value ?? this.value,
+      disabled: disabled ?? this.disabled,
+      danger: danger ?? this.danger,
+      separator: separator ?? this.separator,
+      index: index ?? this.index,
+      icon: icon ?? this.icon,
+      options: options ?? this.options,
+      pop: pop ?? this.pop,
+      style: style ?? this.style,
+    );
+  }
 }
 
 /// The `OptionStyle` class represents the visual style properties for an `Option`.
