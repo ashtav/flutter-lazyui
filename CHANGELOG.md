@@ -29,3 +29,7 @@
 ## 1.0.20
 
 * improvement and fix some bugs
+
+## 1.0.21
+
+* improvement and fix some bugs
