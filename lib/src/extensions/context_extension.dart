@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extends the functionality of the [BuildContext] class with additional methods and properties.
 extension LzContextExtension on BuildContext {
   /// Gets the height of the current screen.
   double get height => MediaQuery.of(this).size.height;

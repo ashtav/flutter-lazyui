@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extends the functionality of the [String] class with additional methods.
 extension LzStringExtension on String {
   /// ``` dart
   /// print('john doe'.ucwords); // John Doe

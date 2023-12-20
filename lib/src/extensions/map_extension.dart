@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extends the functionality of a map containing [TextEditingController] objects.
 extension LzMapTextEditingControllerExtension
     on Map<String, TextEditingController> {
   /// ``` dart
@@ -16,6 +17,7 @@ extension LzMapTextEditingControllerExtension
   }
 }
 
+/// Extends the functionality of a map with keys of type [String] and values of type [dynamic].
 extension MapStringExtension on Map<String, dynamic> {
   /// ``` dart
   /// Map<String, dynamic> data = {'name': 'John'}.add({'id': 1}); // {'name': 'John', 'id': 1}

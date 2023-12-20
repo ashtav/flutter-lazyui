@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extends the functionality of the [List<T>] class with additional methods and properties.
 extension LzListExtension<T> on List<T> {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
@@ -36,6 +37,7 @@ extension LzListExtension<T> on List<T> {
   }
 }
 
+/// Extends the functionality of the [List<num>] class with additional methods and properties.
 extension ListNumExtension on List<num> {
   /// ```dart
   /// [10, 50].numInRange() // 30.5
@@ -48,6 +50,7 @@ extension ListNumExtension on List<num> {
   }
 }
 
+/// Extends the functionality of the [List<Map>] class with additional methods and properties.
 extension LzListMapExtension on List<Map> {
   /// ``` dart
   /// List<Map> group = data.groupBy('gender', wrapWith: (data){
@@ -104,6 +107,7 @@ extension LzListMapExtension on List<Map> {
 | List<String> Extension
 | */
 
+/// Extends the functionality of the [List<String>] class with additional methods and properties.
 extension LzListStringExtension on List<String> {
   /// Creates a list of [Option] objects.
   ///
@@ -188,6 +192,7 @@ extension LzListStringExtension on List<String> {
   }
 }
 
+/// Extends the functionality of the [List<int>] class with additional methods.
 extension LzRangeIteration on List<int> {
   /// ```dart
   /// [1, 5].iterate() // [1, 2, 3, 4, 5]

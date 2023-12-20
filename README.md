@@ -4,38 +4,18 @@ LazyUi is a collection of widgets and utilities designed to simplify and speed u
 
 To use this plugin, add `lazyui` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
 
+### Features
 
-### Example
+- [Shortcut](#shortcut)
+- [Icons](#icons)
+- [Custom Extension](#custom-extension)
+- [Custom Widget](#custom-widget)
+- [Form](#lzform)
+
+
+### Shortcut
 
 ```dart 
-
-// without LazyUi
-
-Container(
-    margin: EdgeInsets.all(15),
-    padding: EdgeInsets.symmetric(vertical: 15),
-    decoration: BoxDecoration(
-        border: Border(top: BorderSide(color: Colors.white)),
-        borderRadius: BorderRadius.all(Radius.circular(5)),
-    ),
-    child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-            Container(
-                padding: EdgeInsets.all(15),
-                child: Text('Hello!', textAlign: TextAlign.center)
-            ),
-
-            Container(
-                margin: EdgeInsets.only(right: 15),
-                child: Icon(Icons.search)
-            )
-        ]
-    )
-)
-
-// with LazyUi
 
 Container(
     margin: Ei.all(15),
@@ -56,13 +36,26 @@ Container(
 
 ```
 
+``` dart
+CrossAxisAlignment.end // Caa.end
+EdgeInsets.all(15) // Ei.all(15)
+FontWeight.bold // Fw.bold
+MainAxisSize.min // Mas.min
+MainAxisAlignment.start // Maa.start
+TextAlign.justify // Ta.justify
+TextOverflow.ellipsis // To.ellipsis
+TextInputType.number // Tit.number
+WrapCrossAlignment.center // Wca.center
+WrapAlignment.spaceAround // Wa.spaceAround
+```
+
 ### Icons
 
 We use two types of icons such as LineAwesome and TablerIcon. You can use them like this:
 
 ```dart
 Icon(La.user) // for LineAwesome
-Icon(Ti.user) // for TablerIcon
+Icon(Ti.user) // for TablerIcon (v2.36.0)
 ```
 
 ### Custom Extension
@@ -168,21 +161,6 @@ LzListView, LzTextDivider, LzTextField, LzLoader, Textml, AppTrainer
 
 ```dart
 Text('hello', style: Gfont.orange.bold.fs(20))
-```
-
-##### Shortcuts
-
-```dart
-CrossAxisAlignment.end // Caa.end
-EdgeInsets.all(15) // Ei.all(15)
-FontWeight.bold // Fw.bold
-MainAxisSize.min // Mas.min
-MainAxisAlignment.start // Maa.start
-TextAlign.justify // Ta.justify
-TextOverflow.ellipsis // To.ellipsis
-TextInputType.number // Tit.number
-WrapCrossAlignment.center // Wca.center
-WrapAlignment.spaceAround // Wa.spaceAround
 ```
 
 ### LzForm

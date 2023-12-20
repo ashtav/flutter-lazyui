@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extends the functionality of the [int] class with additional methods.
 extension LzIntExtension on int {
   /// ``` dart
   /// Timer(3.s, () => print('3 seconds later')); // 3 seconds later

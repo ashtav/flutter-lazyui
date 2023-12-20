@@ -1,11 +1,37 @@
 part of utils;
 
+/// Error Configuration
+///
+/// The variable [_errorConfig] is used to configure error handling.
+/// It contains several key elements:
+///
+/// - `'bot'`: This key has a value of a `Map` object with several properties, including `'token'`, `'chat_id'`, and `'active'`.
+///   This is used for configuring error message bots.
+///   - `'token'`: Represents the bot token used to send error messages (can be filled with a Telegram bot token, for example).
+///   - `'chat_id'`: Represents the chat ID where error messages will be sent (e.g., Telegram chat ID).
+///   - `'active'`: Indicates whether the sending of error messages by the bot is currently active (can be `true` or `false`).
+///
+/// - `'use_list'`: This is a boolean key that indicates whether a list should be used in error handling (`true` if yes, `false` if not).
+///
+/// - `'error_info'`: This is a key that can contain additional error information in the form of an object, but is initially set to `null`.
+///
 Map<String, dynamic> _errorConfig = {
   'bot': {'token': '', 'chat_id': '', 'active': true},
   'use_list': false,
   'error_info': null
 };
 
+/// ErrorInfo Class
+///
+/// [ErrorInfo] is a class used to represent information about the error that occurred.
+/// It has several properties:
+///
+/// - `device`: An optional String that represents the device associated with the error.
+/// - `botToken`: An optional String that represents the bot token used to send error messages.
+/// - `chatId`: An optional String that represents the chat ID where error messages will be sent.
+/// - `error`: A String that is the message or description of the error that occurred.
+/// - `networkError`: An object of [NetworkError] used to store additional information about network errors (optional).
+///
 class ErrorInfo {
   final String? device, botToken, chatId;
   final String error;
@@ -19,6 +45,15 @@ class ErrorInfo {
       this.networkError});
 }
 
+/// NetworkError Class
+///
+/// [NetworkError] is a class used to represent errors related to the network.
+/// It has several properties:
+///
+/// - `baseUrl`: An optional String representing the base URL associated with the network error.
+/// - `path`: An optional String representing the path or URL endpoint that caused the network error.
+/// - `error`: A String that is the message or description of the network error that occurred.
+///
 class NetworkError {
   final String? baseUrl, path, error;
   NetworkError({this.baseUrl, this.path, this.error});
