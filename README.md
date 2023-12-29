@@ -43,7 +43,7 @@ FontWeight.bold // Fw.bold
 MainAxisSize.min // Mas.min
 MainAxisAlignment.start // Maa.start
 TextAlign.justify // Ta.justify
-TextOverflow.ellipsis // To.ellipsis
+TextOverflow.ellipsis // Tof.ellipsis
 TextInputType.number // Tit.number
 WrapCrossAlignment.center // Wca.center
 WrapAlignment.spaceAround // Wa.spaceAround
@@ -151,9 +151,10 @@ Errors.config(
 ##### Custom Widgets
 
 ```dart
-Iconr, Textr, Wrapper, BounceScroll, Columnize, CenterDialog, Intrinsic, InkTouch, Touch,
-None, Unglow, LzNoData, Poslign, LzSlideIndicator, LzAccordion, LzButton, LzConfirm, LzImage,
-LzListView, LzTextDivider, LzTextField, LzLoader, Textml, AppTrainer
+Iconr, Textr, Wrapper, BounceScroll, Columnize, CenterDialog, Intrinsic, InkTouch,
+Touch, None, Unglow, LzNoData, Poslign, LzSlideIndicator, LzAccordion, LzButton, 
+LzConfirm, LzImage, LzListView, LzTextDivider, LzTextField, LzLoader, Textml, 
+AppTrainer
 ```
 
 
