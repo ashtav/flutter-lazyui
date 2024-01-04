@@ -85,7 +85,12 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
 
   double radius = LazyUi.radius;
   BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: 0, tr: 0);
-  double magnification = 1, diameterRatio = 1, squeeze = 1, itemExtent = 40, height = 300, maxLines = 1;
+  double magnification = 1,
+      diameterRatio = 1,
+      squeeze = 1,
+      itemExtent = 40,
+      height = 300,
+      maxLines = 1;
 
   double toDecimal(double value) {
     return value >= 1000 ? .4 : value / pow(10, value.ceil().toString().length);
@@ -94,7 +99,8 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
   void onInitials() {
     borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
-    int i = widget.options.indexWhere((e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
+    int i = widget.options.indexWhere(
+        (e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
     i = (i == -1 ? 0 : i);
 
     // set initial index
@@ -172,7 +178,8 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
               child: notifier.watch((state) => AnimatedContainer(
                     duration: 150.ms,
                     height: state.height,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
+                    decoration: BoxDecoration(
+                        color: Colors.white, borderRadius: borderRadius),
                     child: SafeArea(
                       top: false,
                       child: Column(
@@ -188,7 +195,8 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                                 scrollController: notifier.scroll,
                                 selectionOverlay: Container(
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(border: Br.only(['b', 't'])),
+                                  decoration: BoxDecoration(
+                                      border: Br.only(['b', 't'])),
                                 ),
 
                                 // This is called when selected item is changed.
@@ -200,23 +208,32 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                                     if (notifier.values.isNotEmpty) {
                                       notifier.result = {
                                         'option': notifier.options[i],
-                                        'value': notifier.values.length < i ? null : notifier.values[i]
+                                        'value': notifier.values.length < i
+                                            ? null
+                                            : notifier.values[i]
                                       };
                                     } else {
-                                      notifier.result = {'option': notifier.options[i]};
+                                      notifier.result = {
+                                        'option': notifier.options[i]
+                                      };
                                     }
                                   }
                                 },
-                                children: List<Widget>.generate(notifier.options.length, (int index) {
+                                children: List<Widget>.generate(
+                                    notifier.options.length, (int index) {
                                   return Center(
                                     child: Container(
-                                      constraints: BoxConstraints(maxWidth: context.width * .75),
+                                      constraints: BoxConstraints(
+                                          maxWidth: context.width * .75),
                                       child: Text(
                                         notifier.options[index],
                                         overflow: Tof.ellipsis,
                                         textAlign: Ta.center,
                                         maxLines: maxLines.toInt(),
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontSize: 16),
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(fontSize: 16),
                                       ),
                                     ),
                                   );
@@ -255,22 +272,29 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                                 return InkTouch(
                                     onTap: () {
                                       if (widget.onSelect != null) {
-                                        widget.onSelect?.call(Option.fromMap(notifier.result));
-                                        // Navigator.pop(context);
+                                        widget.onSelect?.call(
+                                            Option.fromMap(notifier.result));
+                                        Navigator.pop(context);
                                       }
                                     },
-                                    padding: Ei.sym(v: 13, h: confirm.length > 25 ? 25 : 45),
+                                    padding: Ei.sym(
+                                        v: 13,
+                                        h: confirm.length > 25 ? 25 : 45),
                                     radius: Br.radius(25),
                                     color: Utils.hex('fff'),
                                     border: Br.all(),
                                     child: Container(
-                                      constraints: BoxConstraints(maxWidth: context.width * .4),
+                                      constraints: BoxConstraints(
+                                          maxWidth: context.width * .4),
                                       child: Text(
                                         confirm,
                                         textAlign: Ta.center,
                                         maxLines: 1,
                                         overflow: Tof.ellipsis,
-                                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
                                               fontWeight: Fw.bold,
                                               color: LzColors.black,
                                             ),
@@ -314,8 +338,9 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                       flipX: true,
                     ),
                   )),
-                  notifier.watch((state) =>
-                      state.found == 0 ? const None() : Textr(state.found.toString(), margin: Ei.only(r: 15)))
+                  notifier.watch((state) => state.found == 0
+                      ? const None()
+                      : Textr(state.found.toString(), margin: Ei.only(r: 15)))
                 ],
               ).margin(all: 5),
             )
@@ -330,7 +355,8 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
 class SelectPickerNotifier extends ChangeNotifier {
   double height = 300;
   TextEditingController keyword = TextEditingController();
-  FixedExtentScrollController scroll = FixedExtentScrollController(initialItem: 0);
+  FixedExtentScrollController scroll =
+      FixedExtentScrollController(initialItem: 0);
 
   List<String> options = [], originalOptions = [];
   List values = [], originalValues = [];
@@ -364,11 +390,17 @@ class SelectPickerNotifier extends ChangeNotifier {
       //     : {'option': options.isEmpty ? null : options[index], 'value': values.isEmpty ? null : values[index]};
 
       // more efficient is to use this
-      found = value.trim().isEmpty ? 0 : options.where((e) => e.toLowerCase().contains(value.toLowerCase())).length;
-      index = options.indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
+      found = value.trim().isEmpty
+          ? 0
+          : options
+              .where((e) => e.toLowerCase().contains(value.toLowerCase()))
+              .length;
+      index = options
+          .indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
       scroll.animateToItem(index, duration: 250.ms, curve: Curves.easeInOut);
 
-      logg('o: ${options.length}, oo: ${originalOptions.length}, index: $index');
+      logg(
+          'o: ${options.length}, oo: ${originalOptions.length}, index: $index');
       notifyListeners();
     } catch (e, s) {
       Utils.errorCatcher(e, s);

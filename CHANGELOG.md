@@ -1,8 +1,4 @@
-## 2.0.0
-
-* improvement and fix some bugs
-
-## 2.0.1
+## 2.0.2
 
 * documentation
 * improvement and fix some bugs

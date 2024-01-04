@@ -71,7 +71,7 @@ class LzTextField extends StatelessWidget {
     //   if (onFocus != null) onFocus!(localNode.hasFocus);
     // });
 
-    if(listenKeyboard != null){
+    if (listenKeyboard != null) {
       listenKeyboard!(MediaQuery.of(context).viewInsets.bottom > 0);
     }
 
@@ -89,7 +89,10 @@ class LzTextField extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       minLines: 1,
-      inputFormatters: [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...formatters],
+      inputFormatters: [
+        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
+        ...formatters
+      ],
       selectionControls: selectionControls,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
@@ -97,7 +100,11 @@ class LzTextField extends StatelessWidget {
         isDense: true,
         contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
         hintText: hint,
-        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black38),
+        hintStyle: hintStyle ??
+            Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: Colors.black38),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
@@ -109,7 +116,9 @@ class LzTextField extends StatelessWidget {
     return border == null
         ? textField
         : Container(
-            decoration: BoxDecoration(border: border, borderRadius: borderRadius ?? BorderRadius.circular(radius)),
+            decoration: BoxDecoration(
+                border: border,
+                borderRadius: borderRadius ?? BorderRadius.circular(radius)),
             child: textField,
           );
   }
