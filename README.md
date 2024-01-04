@@ -157,6 +157,31 @@ LzConfirm, LzImage, LzListView, LzTextDivider, LzTextField, LzLoader, Textml,
 AppTrainer
 ```
 
+##### SelectPicker
+```dart
+GestureDetector(
+    onTap: (){
+        SelectPicker.show(context,
+            maxLines: 2,
+            withSearch: true,
+            height: context.height / 2,
+            options: 10.generate((item) => Faker.address()).options(),
+            onSelect: (o) { }
+        );
+    },
+)
+```
+
+##### Iconr
+```dart
+Iconr(La.search, flipX: true, margin: Ei.only(l: 10))
+```
+
+##### Textr
+```dart
+Textr('John Dore', icon: Ti.user)
+```
+
 
 ##### Text Style
 

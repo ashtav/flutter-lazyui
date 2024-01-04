@@ -213,7 +213,7 @@ class Select extends StatelessWidget with FormWidgetMixin {
 
                             // show options
                             context.bottomSheet(
-                                SelectPicker(
+                                SelectPickerWidget(
                                     initialValue: notifier.option ?? initValue,
                                     options: options,
                                     maxLines: maxLines,

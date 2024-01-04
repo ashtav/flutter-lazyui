@@ -36,6 +36,8 @@ class SelectOptionView extends StatelessWidget {
               onTap: (_) {
                 SelectPicker.show(context,
                     maxLines: 2,
+                    withSearch: true,
+                    height: context.height / 2,
                     options: 10.generate((item) => Faker.address()).options(),
                     onSelect: (o) {
                   logg(o.toMap());

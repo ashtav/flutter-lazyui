@@ -16,6 +16,7 @@ class LzTextField extends StatelessWidget {
   final TextInputType? keyboard;
   final TextInputAction? inputAction;
   final Function(String)? onSubmit, onChange;
+  final Function(bool value)? onFocus;
   final bool autofocus, enabled, obsecure, showMaxLength;
   final FocusNode? node;
   final TextEditingController? controller;
@@ -30,6 +31,7 @@ class LzTextField extends StatelessWidget {
   final Color? prefixIconColor;
   final BoxBorder? border;
   final BorderRadiusGeometry? borderRadius;
+  final Function(bool value)? listenKeyboard;
 
   const LzTextField(
       {Key? key,
@@ -39,6 +41,7 @@ class LzTextField extends StatelessWidget {
       this.onSubmit,
       this.obsecure = false,
       this.onChange,
+      this.onFocus,
       this.autofocus = false,
       this.showMaxLength = false,
       this.node,
@@ -55,12 +58,22 @@ class LzTextField extends StatelessWidget {
       this.prefixIcon,
       this.prefixIconColor,
       this.border,
-      this.borderRadius})
+      this.borderRadius,
+      this.listenKeyboard})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double radius = LazyUi.radius;
+    FocusNode localNode = node ?? FocusNode();
+
+    // localNode.addListener(() {
+    //   if (onFocus != null) onFocus!(localNode.hasFocus);
+    // });
+
+    if(listenKeyboard != null){
+      listenKeyboard!(MediaQuery.of(context).viewInsets.bottom > 0);
+    }
 
     TextField textField = TextField(
       style: textStyle ?? Theme.of(context).textTheme.bodyMedium,
@@ -69,17 +82,14 @@ class LzTextField extends StatelessWidget {
       onSubmitted: onSubmit,
       onChanged: onChange,
       autofocus: autofocus,
-      focusNode: node,
+      focusNode: localNode,
       obscureText: obsecure,
       enabled: enabled,
       textAlign: textAlign ?? TextAlign.start,
       controller: controller,
       maxLines: maxLines ?? 1,
       minLines: 1,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
-        ...formatters
-      ],
+      inputFormatters: [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...formatters],
       selectionControls: selectionControls,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
@@ -87,11 +97,7 @@ class LzTextField extends StatelessWidget {
         isDense: true,
         contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
         hintText: hint,
-        hintStyle: hintStyle ??
-            Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.black38),
+        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black38),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
@@ -103,9 +109,7 @@ class LzTextField extends StatelessWidget {
     return border == null
         ? textField
         : Container(
-            decoration: BoxDecoration(
-                border: border,
-                borderRadius: borderRadius ?? BorderRadius.circular(radius)),
+            decoration: BoxDecoration(border: border, borderRadius: borderRadius ?? BorderRadius.circular(radius)),
             child: textField,
           );
   }
