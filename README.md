@@ -154,7 +154,7 @@ Errors.config(
 Iconr, Textr, Wrapper, BounceScroll, Columnize, CenterDialog, Intrinsic, InkTouch,
 Touch, None, Unglow, LzNoData, Poslign, LzSlideIndicator, LzAccordion, LzButton, 
 LzConfirm, LzImage, LzListView, LzTextDivider, LzTextField, LzLoader, Textml, 
-AppTrainer
+AppTrainer, LzOtp
 ```
 
 ##### SelectPicker
@@ -196,7 +196,7 @@ LzForm is a widget designed to streamline and simplify form creation in Flutter 
 ##### LzForm Widget
 
 ```dart
-final forms = LzForm.make(['name', 'date']);
+final forms = LzForm.make(['name', 'date', 'gender']);
 
 ListView(
     children: [
@@ -210,6 +210,18 @@ ListView(
 
             // Or you can use your favorite datepicker
         }),
+
+        LzForm.radio(
+            label: 'Select Gender *',
+            options: ['Male', 'Female'].options(),
+            model: forms['gender']),
+
+        LzForm.select(
+            label: 'City *',
+            hint: 'Please select city',
+            model: forms['city'],
+            options: ['A', 'B', 'C', 'D', 'E', 'F'].options(),
+        )
 
         // You can explore other methods in LzForm, such as .radio, .select, and so on.
     ]

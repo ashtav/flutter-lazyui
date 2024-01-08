@@ -64,6 +64,9 @@ class Input extends StatelessWidget with FormWidgetMixin {
   /// An optional custom suffix widget displayed at the end of the input.
   final LzInputicon? suffix;
 
+  /// An optional prefix icon displayed at the start of the input.
+  final IconData? prefixIcon;
+
   /// A list of two icons for toggling password visibility (visible and hidden).
   final List<IconData> obsecureIcons;
 
@@ -74,7 +77,7 @@ class Input extends StatelessWidget with FormWidgetMixin {
   ///
   /// The [label], [hint], [maxLength], [maxLines], [node], [disabled], [readonly],
   /// [autofocus], [obsecure], [keyboard], [formatters], [obsecureToggle], [indicator],
-  /// [onChange], [onSubmit], [onTap], [suffixIcon], [suffix], [obsecureIcons], and [labelStyle]
+  /// [onChange], [onSubmit], [onTap], [suffixIcon], [suffix], [prefixIcon], [obsecureIcons], and [labelStyle]
   /// parameters can be customized to create text input elements with desired properties.
   const Input(
       {super.key,
@@ -97,6 +100,7 @@ class Input extends StatelessWidget with FormWidgetMixin {
       this.onTap,
       this.suffixIcon,
       this.suffix,
+      this.prefixIcon,
       this.obsecureIcons = const [],
       this.labelStyle});
 
@@ -369,6 +373,8 @@ class Input extends StatelessWidget with FormWidgetMixin {
                                   obsecureToggle ? notifier.obsecure : obsecure,
                               keyboard: keyboard,
                               formatters: formatters,
+                              prefixIcon:
+                                  prefixIcon == null ? null : Icon(prefixIcon),
                               onChange: onChange,
                               onSubmit: onSubmit,
                               padding: Ei.only(

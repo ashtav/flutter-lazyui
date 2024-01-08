@@ -110,6 +110,7 @@ class LzForm {
           Function(String value)? onSubmit,
           Function(TextEditingController model)? onTap,
           IconData? suffixIcon,
+          IconData? prefixIcon,
           LzInputicon? suffix,
           List<IconData> obsecureIcons = const [],
           LzFormLabelStyle? labelStyle}) =>
@@ -131,6 +132,7 @@ class LzForm {
           onChange: onChange,
           onSubmit: onSubmit,
           onTap: onTap,
+          prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
           suffix: suffix,
           obsecureIcons: obsecureIcons,
