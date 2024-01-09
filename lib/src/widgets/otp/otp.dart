@@ -33,7 +33,7 @@ class LzOtp {
       Widget? header,
       int length = 6,
       Duration? expired,
-      OtpType type = OtpType.borderRounded,
+      OtpType type = OtpType.bottomLine,
       OtpStyle? style,
       void Function(OtpController otp)? onCompleted}) {
     context.bottomSheet(OtpWidget(
@@ -75,7 +75,7 @@ class OtpWidget extends StatefulWidget {
       this.header,
       this.length = 6,
       this.expired,
-      this.type = OtpType.borderRounded,
+      this.type = OtpType.bottomLine,
       this.style,
       this.onCompleted});
 
@@ -90,26 +90,14 @@ class _OtpWidgetState extends State<OtpWidget> {
   final notifier = OtpNotifier();
   late OtpController otpController;
 
-  List<String> keyboards = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '',
-    '0',
-    '<'
-  ];
+  List<String> keyboards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<'];
   Timer? timer;
 
   void initExpired() {
     if (widget.expired != null) {
       timer = notifier.startTimer(widget.expired!, onTimeout: () {
         timer?.cancel();
+        Navigator.of(context).pop();
       });
     }
 
@@ -149,8 +137,7 @@ class _OtpWidgetState extends State<OtpWidget> {
     Widget header = widget.header ??
         Column(
           children: [
-            Text(widget.title ?? 'Please enter your OTP code',
-                style: Gfont.bold),
+            Text(widget.title ?? 'Please enter your OTP code', style: Gfont.bold),
 
             // subtitle
             if (widget.subtitle != null)
@@ -195,41 +182,32 @@ class _OtpWidgetState extends State<OtpWidget> {
                             borderRadius: Br.radius(4),
                             border: widget.type == OtpType.bottomLine
                                 ? null
-                                : Br.all(
-                                    color: isFilled
-                                        ? Colors.black87
-                                        : Colors.black12),
+                                : Br.all(color: isFilled ? Colors.black87 : Colors.black12),
                             color: Colors.white),
                         padding: Ei.sym(v: 0, h: 5),
                         margin: Ei.sym(h: 3),
                         child: Stack(
                           children: [
                             Center(
-                              child: value.isEmpty
-                                  ? const None()
-                                  : SlideUp(
-                                      child:
-                                          Text(value, style: Gfont.fs20.bold)),
+                              child: value.isEmpty ? const None() : SlideUp(child: Text(value, style: Gfont.fs20.bold)),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              child: AnimatedContainer(
-                                duration: 150.ms,
-                                decoration: BoxDecoration(
-                                  color: inFocus
-                                      ? style?.bottomInline?.focusColor ??
-                                          Colors.orange
-                                      : isFilled
-                                          ? style?.bottomInline?.filledColor ??
-                                              Colors.green
-                                          : style?.bottomInline?.unfillColor ??
-                                              Colors.black12,
-                                  borderRadius: Br.radius(4),
-                                ),
-                                width: (context.width - 160) / notifier.length,
-                                height: 2,
-                              ).lz.blink(inFocus, 300.ms),
-                            )
+                            if (widget.type == OtpType.bottomLine)
+                              Positioned(
+                                bottom: 0,
+                                child: AnimatedContainer(
+                                  duration: 150.ms,
+                                  decoration: BoxDecoration(
+                                    color: inFocus
+                                        ? style?.bottomInline?.focusColor ?? Colors.orange
+                                        : isFilled
+                                            ? style?.bottomInline?.filledColor ?? Colors.green
+                                            : style?.bottomInline?.unfillColor ?? Colors.black12,
+                                    borderRadius: Br.radius(4),
+                                  ),
+                                  width: (context.width - 160) / notifier.length,
+                                  height: 2,
+                                ).lz.blink(inFocus, 300.ms),
+                              )
                           ],
                         ),
                       );
@@ -239,8 +217,7 @@ class _OtpWidgetState extends State<OtpWidget> {
               // otp expired timer
               if (widget.expired != null)
                 notifier.watch((state) {
-                  return Textr('Expired in ${state.expired} seconds',
-                          style: Gfont.red, margin: Ei.only(t: 25))
+                  return Textr('Expired in ${state.expired} seconds', style: Gfont.red, margin: Ei.only(t: 25))
                       .lz
                       .blink(!state.isPaused, 500.ms);
                 }),

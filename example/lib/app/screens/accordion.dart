@@ -10,7 +10,6 @@ class AccordionView extends StatelessWidget {
         appBar: AppBar(title: const Text('Expandable List')),
         body: LzListView(
           children: [
-            
             LzAccordion(
               children: [
                 LzAccordionContent(
