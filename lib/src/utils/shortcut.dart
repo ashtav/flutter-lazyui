@@ -1,17 +1,32 @@
 part of utils;
 
+// Br Configuration
+
+Color _borderColor = Colors.black12;
+double _borderWidth = .7;
+
 class Br {
+  /// This method is used to set the default border color and width for the entire application.
+  ///
+  /// ``` dart
+  /// Br.config(color: Colors.black12)
+  /// ```
+  static void config({Color? color, double? width}) {
+    _borderColor = color ?? _borderColor;
+    _borderWidth = width ?? _borderWidth;
+  }
+
   /// ``` dart
   /// border: Br.all(color: Colors.black12)
   /// ```
   static BoxBorder all(
           {Color? color,
-          double width = .7,
+          double? width,
           BorderStyle style = BorderStyle.solid,
           double strokeAlign = BorderSide.strokeAlignInside}) =>
       Border.all(
-          color: color ?? Colors.black12,
-          width: width,
+          color: color ?? _borderColor,
+          width: width ?? _borderWidth,
           style: style,
           strokeAlign: strokeAlign);
 
@@ -19,51 +34,57 @@ class Br {
   /// border: Br.only(['t'])
   /// ```
   static BoxBorder only(List<String> only,
-          {Color color = Colors.black12,
-          double width = .7,
-          bool except = false,
-          BorderStyle style = BorderStyle.solid}) =>
-      Border(
-          top: !only.contains('t') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          bottom: !only.contains('b') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          left: !only.contains('l') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          right: !only.contains('r') || except
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style));
+      {Color? color,
+      double? width,
+      bool except = false,
+      BorderStyle style = BorderStyle.solid}) {
+    Color bcolor = color ?? _borderColor;
+    double bwidth = width ?? _borderWidth;
+
+    return Border(
+        top: !only.contains('t') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        bottom: !only.contains('b') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        left: !only.contains('l') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        right: !only.contains('r') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style));
+  }
 
   /// ``` dart
   /// border: Br.except(['t'])
   /// ```
   static BoxBorder except(List<String> except,
-          {Color color = Colors.black12,
-          double width = .7,
-          BorderStyle style = BorderStyle.solid}) =>
-      Border(
-          top: except.contains('t')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          bottom: except.contains('b')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          left: except.contains('l')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style),
-          right: except.contains('r')
-              ? BorderSide.none
-              : Br.side(color, width: width, style: style));
+      {Color? color, double? width, BorderStyle style = BorderStyle.solid}) {
+    Color bcolor = color ?? _borderColor;
+    double bwidth = width ?? _borderWidth;
+
+    return Border(
+        top: except.contains('t')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        bottom: except.contains('b')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        left: except.contains('l')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        right: except.contains('r')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style));
+  }
 
   /// ``` dart
   /// Border(left: Br.side(C.black1))
   /// ```
   static BorderSide side(Color color,
-          {double width = .7, BorderStyle style = BorderStyle.solid}) =>
-      BorderSide(color: color, width: width, style: style);
+          {double? width, BorderStyle style = BorderStyle.solid}) =>
+      BorderSide(color: color, width: width ?? _borderWidth, style: style);
 
   /// ``` dart
   /// borderRadius: Br.radius(15)
@@ -157,6 +178,12 @@ class Ei {
   /// padding: Ei.sym(v: 15)
   /// ```
   static EdgeInsets sym({double v = 0, double h = 0}) =>
+      EdgeInsets.symmetric(vertical: v, horizontal: h);
+
+  /// ``` dart
+  /// padding: Ei.syms(15, 20) // vertical, horizontal
+  /// ```
+  static EdgeInsets syms(double v, double h) =>
       EdgeInsets.symmetric(vertical: v, horizontal: h);
 
   /// ``` dart

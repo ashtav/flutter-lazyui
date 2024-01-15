@@ -21,8 +21,7 @@ class Utils {
 
     // if color code length is 3, make complete color code
     if (color.length == 3) {
-      color =
-          '${color[0]}${color[0]}${color[1]}${color[1]}${color[2]}${color[2]}';
+      color = '${color[0]}${color[0]}${color[1]}${color[1]}${color[2]}${color[2]}';
     }
 
     return Color(int.tryParse('0xff$color') ?? 0xff000000);
@@ -48,10 +47,7 @@ class Utils {
       final frames = Trace.from(s).terse.frames;
 
       // Extracting relevant information from stack frames
-      List<String> members = frames
-          .take(5)
-          .map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})')
-          .toList();
+      List<String> members = frames.take(5).map((e) => '${e.member ?? 'Unknown'} (${e.line}:${e.column})').toList();
       String member = members.join(', ');
 
       // Constructing the error message with trace information
@@ -64,8 +60,7 @@ Try to check [$member]''';
     }
 
     // Extracting relevant frames for error location
-    List frames = Trace.current().frames,
-        terseFrames = Trace.from(s).terse.frames;
+    List frames = Trace.current().frames, terseFrames = Trace.from(s).terse.frames;
     Frame frame = Trace.current().frames[frames.length > 1 ? 1 : 0],
         trace = Trace.from(s).terse.frames[terseFrames.length > 1 ? 1 : 0];
 
@@ -120,8 +115,7 @@ Try to check [$member]''';
   /// ```
 
   static void statusBar([bool show = true]) =>
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-          overlays: show ? SystemUiOverlay.values : []);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: show ? SystemUiOverlay.values : []);
 
   /// Copy the specified [text] to the clipboard.
   ///
@@ -149,8 +143,7 @@ Try to check [$member]''';
   /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
   /// ```
 
-  static Timer timer(void Function() then, [Duration? duration]) =>
-      Timer(duration ?? 100.ms, then);
+  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
 
   /// Set the cursor to the last position in the text field associated with the given [controller].
   ///
@@ -163,8 +156,7 @@ Try to check [$member]''';
   /// Utils.setCursorToLastPosition(name);
   /// ```
 
-  static setCursorToLastPosition(TextEditingController controller,
-      [int time = 0]) {
+  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
     Timer(
       Duration(milliseconds: time),
       () => controller.selection = TextSelection.fromPosition(
@@ -186,18 +178,14 @@ Try to check [$member]''';
   /// Utils.scrollTo(controller, duration: 500, delay: 100, to: AxisDirection.down);
   /// ```
   static scrollTo(ScrollController scrollController,
-      {int duration = 300,
-      int delay = 50,
-      AxisDirection to = AxisDirection.up}) {
+      {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down
-                ? scrollController.position.maxScrollExtent
-                : 0,
+            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -210,19 +198,25 @@ Try to check [$member]''';
     }
   }
 
-  /// Check if the scroll position of the given [scrollController] has reached the maximum position.
+  /// Checks if the scroll position of the given [scrollController] has reached a specified maximum position.
   ///
-  /// The [scrollController] parameter is the scroll controller to be checked.
-  /// The [max] parameter defines the maximum scroll position. It can be either a single value or a list of two values [top, bottom].
+  /// This method determines whether the current scroll position is at or beyond a defined maximum threshold.
+  /// The [scrollController] parameter is the `ScrollController` to be checked.
+  /// The [max] parameter defines the maximum scroll position thresholds. It can be either a single value
+  /// representing a uniform threshold for both ends of the scroll view, or a list of two values
+  /// specifying separate thresholds for the top and bottom of the scroll view.
   ///
   /// Example usage:
   /// ```dart
   /// ScrollController controller = ScrollController();
   /// bool hasMaxPosition = Utils.scrollHasMax(controller, [20, 50]);
   /// if (hasMaxPosition) {
-  ///   // Do something when the scroll position reaches the maximum position
+  ///   // Actions to perform when the scroll position reaches the maximum position
   /// }
   /// ```
+  ///
+  /// The method interprets a single value as the threshold for both ends, and a list of two values
+  /// as individual thresholds for the top (first value) and bottom (second value) of the scroll view.
   static bool scrollHasMax(ScrollController scrollController, dynamic max) {
     bool isMaxList = max is List;
 
@@ -252,10 +246,7 @@ Try to check [$member]''';
   /// ```dart
   /// Utils.orientation([DeviceOrientation.landscapeLeft, DeviceOrientation.landscapeRight]);
   /// ```
-  static void orientation(
-      [List<DeviceOrientation> orientations = const [
-        DeviceOrientation.portraitUp
-      ]]) {
+  static void orientation([List<DeviceOrientation> orientations = const [DeviceOrientation.portraitUp]]) {
     SystemChrome.setPreferredOrientations(orientations);
   }
 
@@ -287,9 +278,8 @@ Try to check [$member]''';
   /// ```
   static Future uint8ListToFile(Uint8List value, {String? filename}) async {
     final Directory tempDir = await getTemporaryDirectory();
-    File file = await File(
-            '${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png')
-        .create();
+    File file =
+        await File('${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png').create();
     file.writeAsBytesSync(value);
 
     return file;
@@ -340,8 +330,7 @@ Try to check [$member]''';
   static Future<File> urlToFile(String url, {String format = 'png'}) async {
     Directory tempDir = await getTemporaryDirectory();
     String tempPath = tempDir.path;
-    File file =
-        File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
+    File file = File('$tempPath${DateTime.now().millisecondsSinceEpoch}.$format');
     http.Response response = await http.get(Uri.parse(url));
     await file.writeAsBytes(response.bodyBytes);
     return file;
@@ -362,8 +351,7 @@ Try to check [$member]''';
     ByteData bytes = await rootBundle.load('assets/$path');
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/$fileName.png');
-    return await file.writeAsBytes(
-        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    return await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
   }
 
   /// Convert an HTML string to plain text.
@@ -449,8 +437,7 @@ Try to check [$member]''';
   /// If there are missing keys or wrong types, it logs the corresponding error messages.
   /// If the JSON data matches the model structure, it logs a success message indicating that the model is valid.
   /// The method returns a boolean value indicating whether the model is valid or not.
-  static Future<bool> checkModel(String path, Map<String, dynamic> jsonData,
-      {bool ignoreNull = false}) async {
+  static Future<bool> checkModel(String path, Map<String, dynamic> jsonData, {bool ignoreNull = false}) async {
     bool isOk = true;
 
     try {
@@ -482,8 +469,7 @@ Try to check [$member]''';
         }).join(', ');
 
         String wrong = wrongType.map((e) {
-          String modelType = colorize(
-              model[e.keys.first].runtimeType.toString(), LogColor.yellow);
+          String modelType = colorize(model[e.keys.first].runtimeType.toString(), LogColor.yellow);
           String resType = colorize(e.values.first.toString(), LogColor.yellow);
           return '${colorize(e.keys.first, LogColor.yellow)} property of your model must be $resType not $modelType';
         }).join(', ');
@@ -499,8 +485,7 @@ Try to check [$member]''';
           isOk = false;
 
           if (message.isNotEmpty) message += '\n\n';
-          message +=
-              'You have ${wrongType.length} wrong type of data :\n$wrong';
+          message += 'You have ${wrongType.length} wrong type of data :\n$wrong';
         }
 
         if (message.isNotEmpty) {
@@ -508,7 +493,9 @@ Try to check [$member]''';
         } else {
           logg('Your model ($path) is valid. ✓', color: LogColor.green);
         }
-      }).catchError((err) => logg(err));
+      }).catchError((err) {
+        logg(err);
+      });
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }
@@ -531,8 +518,7 @@ Try to check [$member]''';
   /// ```dart
   /// scrollToWidget(myKey, myController, MediaQuery.of(context).size.width);
   /// ```
-  static void scrollToWidget(
-      GlobalKey key, ScrollController controller, double screenWidth) {
+  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 

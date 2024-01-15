@@ -1,17 +1,32 @@
 part of widget;
 
-/// `Skeleton` is a Flutter widget that provides a skeleton loading effect to indicate that content is loading or placeholders are being displayed. It can be used to create a visually appealing loading animation for various UI elements.
+/// `Skeleton` is a Flutter widget that provides a skeleton loading effect, 
+/// often used as a placeholder for content that is loading. This effect is useful 
+/// for enhancing the user experience by indicating that content is in the process 
+/// of being loaded.
+///
+/// The widget can be customized in various ways, including color, shape, and size.
 ///
 /// Example usage:
 /// ```dart
 /// Skeleton(
 ///   color: Colors.grey[300], // Base color of the skeleton.
-///   darkColor: Colors.grey[200], // Optional darker shade for a more realistic effect.
-///   radius: 8.0, // Border radius for the skeleton (optional).
-///   margin: EdgeInsets.symmetric(vertical: 10.0), // Optional margin around the skeleton.
-///   brightness: 1.0, // Brightness of the skeleton (optional).
+///   darkColor: Colors.grey[200], // Darker shade for a gradient effect.
+///   radius: 8.0, // Border radius.
+///   margin: EdgeInsets.symmetric(vertical: 10.0), // Margin around the skeleton.
+///   brightness: 1.0, // Brightness of the skeleton.
+///   size: [50, 15], // Fixed width and height.
+///   // OR
+///   size: [[15, 50], 15], // Width ranges from 15 to 50, fixed height of 15.
+///   // OR
+///   size: [[15, 50], [5, 15]], // Width ranges from 15 to 50, height ranges from 5 to 15.
 /// )
 /// ```
+/// The `size` parameter can be specified in different formats:
+/// - A single value (e.g., `15`), which sets both width and height to that value.
+/// - A list of two values (e.g., `[50, 15]`), which sets width to the first and height to the second value.
+/// - A list of two lists (e.g., `[[15, 50], [5, 15]]`), where each list contains two values representing the minimum and maximum sizes for width and height, respectively.
+
 class Skeleton extends StatelessWidget {
   /// Base color of the skeleton.
   final Color color;

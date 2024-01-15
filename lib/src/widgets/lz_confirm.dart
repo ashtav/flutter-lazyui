@@ -233,7 +233,7 @@ class LzConfirm extends StatelessWidget {
     }
 
     context.bottomSheet(this,
-        backgroundColor: Colors.transparent, enableDrag: true);
+        backgroundColor: Colors.transparent, draggable: true);
   }
 
   static config({String? cancel, String? confirm, LzConfirmType? type}) {

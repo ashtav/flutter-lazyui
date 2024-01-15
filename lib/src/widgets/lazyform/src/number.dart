@@ -1,4 +1,11 @@
-part of lazyform;
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:lazyui/lazyui.dart';
+
+import '../common/mixin.dart';
+import '../common/notifier.dart';
 
 /// A [Number] widget for creating numeric input elements.
 ///

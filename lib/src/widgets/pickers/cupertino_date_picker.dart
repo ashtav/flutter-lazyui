@@ -1,13 +1,41 @@
 part of pickers;
 
+/// `CupertinoDatePickerWidget` is a StatelessWidget that provides a Cupertino style
+/// date picker interface. It allows users to select a date within a specified range.
+
 class CupertinoDatePickerWidget extends StatelessWidget {
+  /// The date that is initially selected when the picker is displayed.
+  /// If null, the current date is used as the default.
   final DateTime? initialDate;
+
+  /// The earliest allowable date that a user can select.
+  /// If null, there is no lower bound on the date selection.
   final DateTime? minDate;
+
+  /// The latest allowable date that a user can select.
+  /// If null, there is no upper bound on the date selection.
   final DateTime? maxDate;
-  final String? title, confirmLabel;
+
+  /// The title text displayed at the top of the date picker.
+  /// If null, no title is displayed.
+  final String? title;
+
+  /// The label for the confirmation button in the date picker.
+  /// If null, a default label is used.
+  final String? confirmLabel;
+
+  /// Determines whether the picker uses abbreviated month names.
+  /// If `true`, the picker displays abbreviated month names.
+  /// If `false`, full month names are used.
   final bool useShortMonths;
+
+  /// The type of date picker to display. This can be date, time, or date and time.
   final DatePickerType type;
+
+  /// Alignment of the date picker widget within its parent.
+  /// If null, the widget is centered.
   final AlignmentGeometry? alignment;
+
   const CupertinoDatePickerWidget(
       {super.key,
       this.initialDate,
@@ -89,53 +117,92 @@ class CupertinoDatePickerWidget extends StatelessWidget {
       };
     }
 
+    /// Updates the date and month ranges in a date picker based on provided properties.
+    ///
+    /// This method adjusts the selectable date and month ranges within the date picker
+    /// to align with minimum and maximum date constraints. It also ensures that the
+    /// selectable days are updated to reflect the correct number of days in the selected
+    /// month and year.
+
     void setDateMonthRange() {
+      // Retrieves date properties which may include min/max dates and flags.
       Map prop = dateProperties();
 
-      // set month range
+      // Sets the selectable month range.
+      // If the current year is the maximum year, limits the end month.
+      // If the current year is the minimum year, limits the start month.
+      // Otherwise, allows selection of any month.
       notifier.monthRanges = prop['is_max_year']
           ? [0, prop['max_month']]
           : prop['is_min_year']
               ? [prop['min_month'], 11]
               : [0, 11];
 
-      // set date range based on month
+      // Sets the default selectable date range for the entire month.
       notifier.dateRanges = [0, prop['days_in_month']];
 
-      // set date range based on min date
+      // Adjusts the selectable date range if the current month and year
+      // are the minimum allowed.
       if (prop['is_min_year'] && prop['is_min_month']) {
         notifier.dateRanges = [prop['min_day'], prop['days_in_month']];
       }
 
-      // set date range base on max date
+      // Adjusts the selectable date range if the current month and year
+      // are the maximum allowed.
       else if (prop['is_max_year'] && prop['is_max_month']) {
         notifier.dateRanges = [0, prop['max_day']];
       }
     }
 
+    /// Sets the focus on a specific date in the date picker based on certain conditions.
+    ///
+    /// This method determines which date should be focused or highlighted when the
+    /// date picker is first displayed or when the date needs to be adjusted due to
+    /// changes in selection or constraints. It utilizes `dateProperties` to understand
+    /// the current context and constraints and then updates the focus accordingly.
+
     void setDateFocus() {
+      // Retrieves date properties to determine the current context and constraints.
       Map prop = dateProperties();
 
+      // Checks if the current context is after the maximum date and sets the focus
+      // on the maximum day if true.
       if (prop['is_max_year'] && prop['is_max_month'] && prop['is_after']) {
         notifier.scrollTo('date', prop['max_day']);
-      } else if (prop['is_min_day_r']) {
+      }
+      // Checks if the minimum day is in range and sets the focus on the minimum day.
+      else if (prop['is_min_day_r']) {
         notifier.scrollTo('date', prop['min_day']);
-      } else if (prop['is_max_day']) {
+      }
+      // Checks if the maximum day is in range and sets the focus on the last day of the month.
+      else if (prop['is_max_day']) {
         notifier.scrollTo('date', prop['days_in_month']);
       }
 
+      // Updates the date and month ranges based on the current selection and constraints.
       setDateMonthRange();
     }
 
+    /// Sets the focus on a specific month in the date picker based on current constraints.
+    ///
+    /// This method is responsible for determining which month should be initially focused or highlighted
+    /// in the date picker. It uses `dateProperties` to understand the constraints and conditions
+    /// (like minimum or maximum allowable dates) and then scrolls to the appropriate month.
+
     void setMonthFocus() {
+      // Retrieves date properties to understand the constraints and current context.
       Map prop = dateProperties();
 
+      // If the current date is after the maximum date constraint, it scrolls to the maximum month.
       if (prop['is_after']) {
         notifier.scrollTo('month', prop['max_month']);
-      } else if (prop['is_min_month_r']) {
+      }
+      // If the minimum month is in range, it scrolls to the minimum month.
+      else if (prop['is_min_month_r']) {
         notifier.scrollTo('month', prop['min_month']);
       }
 
+      // Calls setDateFocus to set the focus on the appropriate date within the selected month.
       setDateFocus();
     }
 
@@ -350,13 +417,34 @@ class CupertinoDatePickerWidget extends StatelessWidget {
   }
 }
 
+/// `CupertinoPickerWidget` is a StatelessWidget that provides a custom picker
+/// interface using the Cupertino style. It is designed to allow users to
+/// select from a list of items.
+///
 class CupertinioPickerWidget extends StatelessWidget {
+  /// A controller for managing the item positions in the picker.
   final FixedExtentScrollController controller;
+
+  /// A callback function that is called when the selected item in the picker changes.
+  /// It provides the index of the newly selected item.
   final void Function(int)? onChange;
+
+  /// A list of strings that represents the items available for selection in the picker.
   final List<String> items;
+
+  /// A notifier used to react to changes or actions within the picker.
   final PickerNotifier notifier;
+
+  /// Specifies the type of widget this picker is, which might influence its behavior
+  /// or appearance.
   final String widgetType;
+
+  /// The alignment of the picker widget within its parent.
+  /// If null, the widget defaults to center alignment.
   final AlignmentGeometry? alignment;
+
+  /// Specifies the type of date picker, influencing its appearance and functionality.
+  /// This can be date, time, or date and time.
   final DatePickerType type;
 
   const CupertinioPickerWidget(

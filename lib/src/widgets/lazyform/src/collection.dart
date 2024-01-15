@@ -1,4 +1,17 @@
-part of lazyform;
+import 'dart:async';
+
+import 'package:flutter/material.dart' hide Checkbox, Radio;
+import 'package:flutter/services.dart';
+import 'package:lazyui/lazyui.dart';
+
+import '../common/notifier.dart';
+import 'checkbox.dart';
+import 'input.dart';
+import 'number.dart';
+import 'radio.dart';
+import 'select.dart';
+import 'slider.dart';
+import 'switches.dart';
 
 /* ---------------------------------------------------------------
 | LzForm

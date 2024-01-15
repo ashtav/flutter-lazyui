@@ -79,7 +79,7 @@ class Textr extends StatelessWidget {
         Iconr(
           icon!,
           color: iconStyle?.color ?? style?.color,
-          size: iconSize + 4,
+          size: iconSize + 3,
           margin: asSuffix
               ? Ei.only(l: iconStyle?.space ?? 10)
               : Ei.only(r: iconStyle?.space ?? 10),

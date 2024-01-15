@@ -1,12 +1,30 @@
 part of widget;
 
+/// `CaretPainter` is a CustomPainter that provides a customizable caret (cursor)
+/// for text fields or similar widgets. It allows for a high degree of customization
+/// including color, stroke width, and skew.
+
 class CaretPainter extends CustomPainter {
+  /// The color used for the main stroke of the caret.
   final Color strokeColor;
+
+  /// The painting style to be used for the caret. This can be fill, stroke, etc.
   final PaintingStyle paintingStyle;
+
+  /// The width of the stroke used to paint the caret.
   final double strokeWidth;
+
+  /// The skew factor for the caret, allowing it to be slanted or skewed.
   final int skew;
+
+  /// An optional color for the border of the caret. If null, no border is drawn.
   final Color? borderColor;
+
+  /// The width of the border around the caret. Relevant only if a borderColor is provided.
   final double borderWidth;
+
+  /// An integer representing the side of the caret. This could be used to determine
+  /// its orientation or position relative to other elements.
   final int side;
 
   CaretPainter({

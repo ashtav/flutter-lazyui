@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:example/app/screens/mainpage.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+
+import 'mainpage.dart';
 
 class AppIntroNotifier extends ChangeNotifier {
   int index = 0;

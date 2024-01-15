@@ -1,4 +1,9 @@
-part of lazyform;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:lazyui/lazyui.dart';
+
+import '../common/mixin.dart';
+import '../common/notifier.dart';
 
 /// An [Input] widget for creating text input elements.
 ///

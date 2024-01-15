@@ -37,7 +37,7 @@ String colorize(String value, LogColor color) =>
 /// ```dart
 /// logg('lorem ipsum', color: LogColor.red, limit: 3000);
 /// ```
-logg(dynamic value,
+void logg(dynamic value,
     {LogColor color = LogColor.yellow,
     int limit = 500,
     String? name,
@@ -76,9 +76,27 @@ logg(dynamic value,
 /// ```dart
 /// logs(['message1', 'message2', 'message3'], color: LogColor.red, limit: 1000);
 /// ```
-logs(List values,
+void logs(List values,
     {LogColor color = LogColor.yellow, int limit = 500, String? name}) {
   for (var value in values) {
     logg(value, color: color, limit: limit, name: name);
   }
+}
+
+/// Custom print function for development use only.
+/// Uses `assert` to ensure the print statement only executes in debug mode.
+/// In release mode, this function does nothing.
+void printt(dynamic value) {
+  assert(() {
+    ansiColorDisabled = false;
+    AnsiPen pen = AnsiPen()..yellow();
+
+    // ignore: avoid_print
+    print(pen('$value'));
+    return true;
+  }());
+}
+
+void main() {
+  printt('ok');
 }

@@ -12,6 +12,12 @@ class TestView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('Test View'),
+          actions: [
+            const Icon(Ti.arrowUp).onPressed(() {
+              // context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
+              context.dialog(const MyWidget(), backBlur: true);
+            })
+          ],
         ),
         body: const Center(
             child: Textml(
@@ -20,7 +26,28 @@ class TestView extends StatelessWidget {
           textAlign: TextAlign.center,
         )).onTap(() async {
           final device = await Utils.getDevice();
-          logg(device.value);
+
+          // ignore: avoid_print
+          print(device);
+          printt(device.value);
         }));
+  }
+}
+
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CenterDialog(
+      child: Container(
+        width: context.width,
+        color: Colors.white,
+        padding: Ei.all(20),
+        child: Column(
+          children: [Text(Faker.words()), const SizedBox(height: 150)],
+        ).min,
+      ).lz.clip(all: 8),
+    );
   }
 }

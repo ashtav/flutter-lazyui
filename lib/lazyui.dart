@@ -1,3 +1,9 @@
+/// The `lazyui` library.
+///
+/// This library provides a collection of commonly used widgets, utilities, and extensions
+/// for Flutter app development. Its goal is to accelerate the development process by
+/// offering ready-to-use solutions for common tasks.
+
 library lazyui;
 
 export 'package:cached_network_image/cached_network_image.dart';

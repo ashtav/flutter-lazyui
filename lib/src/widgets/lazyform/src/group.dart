@@ -1,4 +1,13 @@
-part of lazyform;
+import 'package:flutter/material.dart' hide Checkbox;
+import 'package:lazyui/lazyui.dart';
+
+import '../common/mixin.dart';
+import 'checkbox.dart';
+import 'input.dart';
+import 'number.dart';
+import 'select.dart';
+import 'slider.dart';
+import 'switches.dart';
 
 /// A [LzFormGroup] widget to display form sections.
 ///

@@ -35,7 +35,7 @@ class SelectPicker {
             maxLines: maxLines,
             height: height),
         backgroundColor: Colors.transparent,
-        useSafeArea: !fullScreen);
+        safeArea: !fullScreen);
   }
 }
 

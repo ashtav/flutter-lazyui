@@ -14,8 +14,7 @@ class ButtonView extends StatelessWidget {
         children: [
           LzButton(
             text: 'Default Button',
-            onTap: (state) {
-            },
+            onTap: (state) {},
           ).margin(b: 5),
           LzButton(text: 'Warning Button', onTap: (state) {})
               .warning()

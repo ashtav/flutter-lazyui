@@ -18,5 +18,6 @@ part 'list_extension.dart';
 part 'listenable_extension.dart';
 part 'map_extension.dart';
 part 'string_extension.dart';
-part 'widget_extension.dart';
 part 'widgets/column_extension.dart';
+part 'widgets/row_extension.dart';
+part 'widgets/widget_extension.dart';

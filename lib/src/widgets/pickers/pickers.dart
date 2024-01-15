@@ -41,8 +41,8 @@ class LzPicker {
             alignment: alignment,
             title: title,
             confirmLabel: confirmLabel),
-        enableDrag: true,
-        useSafeArea: false,
+        draggable: true,
+        safeArea: false,
         isScrollControlled: true);
 
     return result;
@@ -72,8 +72,8 @@ class LzPicker {
             maxDate: maxDate,
             title: title,
             confirmLabel: confirmLabel),
-        enableDrag: true,
-        useSafeArea: false,
+        draggable: true,
+        safeArea: false,
         isScrollControlled: true);
 
     return result;
@@ -103,8 +103,8 @@ class LzPicker {
             maxDate: maxDate,
             title: title,
             confirmLabel: confirmLabel),
-        enableDrag: true,
-        useSafeArea: false,
+        draggable: true,
+        safeArea: false,
         isScrollControlled: true);
 
     return result;

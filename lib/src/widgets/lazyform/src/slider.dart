@@ -1,4 +1,9 @@
-part of lazyform;
+import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
+
+import '../common/mixin.dart';
+import '../common/notifier.dart';
+import 'input.dart';
 
 /// A [SliderWidget] for creating slider input elements.
 ///
