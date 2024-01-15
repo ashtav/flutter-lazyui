@@ -14,23 +14,34 @@ class TestView extends StatelessWidget {
           title: const Text('Test View'),
           actions: [
             const Icon(Ti.arrowUp).onPressed(() {
-              // context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
-              context.dialog(const MyWidget(), backBlur: true);
+              context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
+              // context.dialog(const MyWidget(), backBlur: true);
             })
           ],
         ),
-        body: const Center(
-            child: Textml(
-          'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
-          style: TextStyle(fontSize: 16, color: Colors.black),
-          textAlign: TextAlign.center,
+        body: Center(
+            child: Column(
+          mainAxisAlignment: Maa.center,
+          children: [
+            const CircleAvatar(
+              child: Icon(Ti.user),
+            ).lz.sized(70).margin(b: 25),
+
+            const Textml(
+              'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
+              style: TextStyle(fontSize: 16, color: Colors.black),
+              textAlign: TextAlign.center,
+            ),
+
+            const LzBadge('Verified', icon: Ti.checks, color: Colors.orange, softColor: true,).margin(v: 15),
+          ],
         )).onTap(() async {
           final device = await Utils.getDevice();
 
           // ignore: avoid_print
           print(device);
           printt(device.value);
-        }));
+        }).padding(all: 20));
   }
 }
 
@@ -39,15 +50,13 @@ class MyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CenterDialog(
-      child: Container(
-        width: context.width,
-        color: Colors.white,
-        padding: Ei.all(20),
-        child: Column(
-          children: [Text(Faker.words()), const SizedBox(height: 150)],
-        ).min,
-      ).lz.clip(all: 8),
-    );
+    return Container(
+      width: context.width,
+      color: Colors.white,
+      padding: Ei.all(20),
+      child: Column(
+        children: [Text(Faker.words(25)), const SizedBox(height: 150)],
+      ).start.min,
+    ).lz.clip(tlr: 8);
   }
 }

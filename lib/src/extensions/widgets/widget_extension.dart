@@ -9,6 +9,12 @@ class LzModifiers {
   LzModifiers(this.widget);
 
   /// ``` dart
+  /// YourWidget().sized(100, 100)
+  /// ```
+  Widget sized([double width = 0, double? height]) =>
+      SizedBox(width: width, height: height ?? width, child: widget);
+
+  /// ``` dart
   /// YourWidget().clip() // Only works on widget with no clip property
   /// ```
   Widget clip(

@@ -19,5 +19,6 @@ part 'listenable_extension.dart';
 part 'map_extension.dart';
 part 'string_extension.dart';
 part 'widgets/column_extension.dart';
+part 'widgets/inktouch_extension.dart';
 part 'widgets/row_extension.dart';
 part 'widgets/widget_extension.dart';

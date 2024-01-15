@@ -171,9 +171,9 @@ class AppIntro2 extends StatelessWidget {
           padding: Ei.all(25),
           child: Columnize(
             children: [
-              Text('Get Organized', style: Gfont.fs20.bold),
+              Text('Welcome To LazyUI', style: Gfont.fs20.bold),
               Text(
-                Faker.words(15),
+                'LazyUI is a Flutter UI Kit that helps you to build your app faster and easier. It contains lots of ready-to-use utilities and widgets.',
                 style: Gfont.muted,
               ).margin(t: 10, b: 35),
               Row(
