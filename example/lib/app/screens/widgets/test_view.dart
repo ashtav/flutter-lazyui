@@ -9,12 +9,15 @@ class TestView extends StatelessWidget {
     DateTime date = DateTime.parse('2023-10-11T04:34:19.000000Z');
     logg(date.format('dd/MM/yyyy hh:mm', true));
 
+    final notifier = TestNotifier();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Test View'),
           actions: [
             const Icon(Ti.arrowUp).onPressed(() {
-              context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
+              context.bottomSheet(const MyWidget(),
+                  draggable: true, safeArea: false, backBlur: true);
               // context.dialog(const MyWidget(), backBlur: true);
             })
           ],
@@ -26,14 +29,15 @@ class TestView extends StatelessWidget {
             const CircleAvatar(
               child: Icon(Ti.user),
             ).lz.sized(70).margin(b: 25),
-
             const Textml(
               'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
               style: TextStyle(fontSize: 16, color: Colors.black),
               textAlign: TextAlign.center,
             ),
-
-            const LzBadge('Verified', icon: Ti.checks, color: Colors.orange, softColor: true,).margin(v: 15),
+            LzTextField(
+              hint: 'Type your name',
+              controller: notifier.forms['name'],
+            )
           ],
         )).onTap(() async {
           final device = await Utils.getDevice();
@@ -41,6 +45,13 @@ class TestView extends StatelessWidget {
           // ignore: avoid_print
           print(device);
           printt(device.value);
+
+          logg(notifier.forms.value);
+
+          final form = notifier.forms.validate(required: ['*']);
+          if (!form.ok) {
+            LzToast.warning(form.error);
+          }
         }).padding(all: 20));
   }
 }
@@ -59,4 +70,9 @@ class MyWidget extends StatelessWidget {
       ).start.min,
     ).lz.clip(tlr: 8);
   }
+}
+
+class TestNotifier extends ChangeNotifier {
+  final name = 'John'.tec;
+  final forms = TEC.make(['name']);
 }

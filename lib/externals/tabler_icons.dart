@@ -9,21 +9,24 @@ import 'package:flutter/widgets.dart';
 /// [TablerIconData] is a base class for all Tabler Icons. It is used to
 /// generate the TablerIcons class.
 class TablerIconData extends IconData {
-  /// const constructor for TablerIconData by requiring a codePoint
-  /// and a fontFamily. The fontPackage is set to [tablerIcons] by default.
+  /// Creates a const [TablerIconData] by requiring a [codePoint]
+  /// and using a default [fontFamily].
+  ///
+  /// The [codePoint] is the Unicode point of the icon. For example, the
+  /// [codePoint] for a specific Tabler icon might be 0xe800.
+  ///
+  /// The [fontFamily] for Tabler icons is predefined as 'TablerIcons' and is
+  /// bundled within the 'lazyui' package.
+  ///
+  /// Note: If you are using these icons in your application, ensure that the
+  /// 'TablerIcons' font is included in your pubspec.yaml and properly bundled.
   const TablerIconData(int codePoint)
       : super(
-          /// The codePoint is the hex value of the icon. For example, the
-          /// codePoint for the [TablerIcons.x1] icon is 0xe800.
           codePoint,
-
-          /// The fontFamily is set to [TablerIcons] by default.
-          /// This is the name of the font that will be used to display the icon.
           fontFamily: 'packages/lazyui/TablerIcons',
-
-          /// The fontPackage is set to [tablerIcons] by default.
-          /// This is the name of the package that contains the font.
-          // fontPackage: 'tablerIcons',
+          // The fontPackage can be uncommented and set appropriately if the icons are
+          // included as part of a separate Dart package.
+          // fontPackage: 'your_package_name',
         );
 }
 
@@ -1840,8 +1843,7 @@ class Ti {
   static const IconData deviceIpadHorizontalCog = TablerIconData(0xf892);
   static const IconData deviceIpadHorizontalDollar = TablerIconData(0xf893);
   static const IconData deviceIpadHorizontalDown = TablerIconData(0xf894);
-  static const IconData deviceIpadHorizontalExclamation =
-      TablerIconData(0xf895);
+  static const IconData deviceIpadHorizontalExclamation = TablerIconData(0xf895);
   static const IconData deviceIpadHorizontalHeart = TablerIconData(0xf896);
   static const IconData deviceIpadHorizontalMinus = TablerIconData(0xf897);
   static const IconData deviceIpadHorizontalOff = TablerIconData(0xf898);
@@ -2832,14 +2834,12 @@ class Ti {
   static const IconData layoutRows = TablerIconData(0xead8);
   static const IconData layoutSidebar = TablerIconData(0xeada);
   static const IconData layoutSidebarLeftCollapse = TablerIconData(0xf004);
-  static const IconData layoutSidebarLeftCollapseFilled =
-      TablerIconData(0xfc3b);
+  static const IconData layoutSidebarLeftCollapseFilled = TablerIconData(0xfc3b);
   static const IconData layoutSidebarLeftExpand = TablerIconData(0xf005);
   static const IconData layoutSidebarLeftExpandFilled = TablerIconData(0xfc3c);
   static const IconData layoutSidebarRight = TablerIconData(0xead9);
   static const IconData layoutSidebarRightCollapse = TablerIconData(0xf006);
-  static const IconData layoutSidebarRightCollapseFilled =
-      TablerIconData(0xfc3d);
+  static const IconData layoutSidebarRightCollapseFilled = TablerIconData(0xfc3d);
   static const IconData layoutSidebarRightExpand = TablerIconData(0xf007);
   static const IconData layoutSidebarRightExpandFilled = TablerIconData(0xfc3e);
   static const IconData leaf = TablerIconData(0xed4f);
@@ -4202,19 +4202,15 @@ class Ti {
   static const IconData squareRoundedChevronLeft = TablerIconData(0xf62c);
   static const IconData squareRoundedChevronLeftFilled = TablerIconData(0xf6e1);
   static const IconData squareRoundedChevronRight = TablerIconData(0xf62d);
-  static const IconData squareRoundedChevronRightFilled =
-      TablerIconData(0xf6e2);
+  static const IconData squareRoundedChevronRightFilled = TablerIconData(0xf6e2);
   static const IconData squareRoundedChevronUp = TablerIconData(0xf62e);
   static const IconData squareRoundedChevronUpFilled = TablerIconData(0xf6e3);
   static const IconData squareRoundedChevronsDown = TablerIconData(0xf64f);
-  static const IconData squareRoundedChevronsDownFilled =
-      TablerIconData(0xf6e4);
+  static const IconData squareRoundedChevronsDownFilled = TablerIconData(0xf6e4);
   static const IconData squareRoundedChevronsLeft = TablerIconData(0xf650);
-  static const IconData squareRoundedChevronsLeftFilled =
-      TablerIconData(0xf6e5);
+  static const IconData squareRoundedChevronsLeftFilled = TablerIconData(0xf6e5);
   static const IconData squareRoundedChevronsRight = TablerIconData(0xf651);
-  static const IconData squareRoundedChevronsRightFilled =
-      TablerIconData(0xf6e6);
+  static const IconData squareRoundedChevronsRightFilled = TablerIconData(0xf6e6);
   static const IconData squareRoundedChevronsUp = TablerIconData(0xf652);
   static const IconData squareRoundedChevronsUpFilled = TablerIconData(0xf6e7);
   static const IconData squareRoundedFilled = TablerIconData(0xf6a5);

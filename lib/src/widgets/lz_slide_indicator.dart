@@ -30,7 +30,17 @@ class LzSlideIndicator extends StatelessWidget {
 
   final int length;
 
-  /// size = [width, height]
+  /// Function to customize the size of each indicator.
+  ///
+  /// The function receives an `index` representing the position of the indicator
+  /// and returns a List of two doubles representing the width and height of the indicator.
+  ///
+  /// For example, if you want to set a fixed size for all indicators:
+  /// ```dart
+  /// (index) => [10, 10] // Sets both width and height to 10 for all indicators.
+  /// ```
+  ///
+  /// If the function returns an empty list or a list with only one element, default values are used.
   final List<double> Function(int index)? size;
   final int active;
   final Color? activeColor, color;
@@ -58,9 +68,7 @@ class LzSlideIndicator extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: active == i
-                ? (activeColor ?? Theme.of(context).primaryColor)
-                : (color ?? Colors.grey),
+            color: active == i ? (activeColor ?? Theme.of(context).primaryColor) : (color ?? Colors.grey),
             borderRadius: BorderRadius.circular(radius),
           ),
         );

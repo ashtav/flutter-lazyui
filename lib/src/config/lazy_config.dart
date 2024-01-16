@@ -7,48 +7,49 @@ import '../constants/color.dart';
 import '../utils/utils.dart';
 import '../widgets/lazytoast/lazytoast.dart';
 
-// variables
 TextStyle? _defaultTextStyle;
 IconType _defaultIconType = IconType.tablerIcon;
 double _defaultSpace = 20.0;
 double _defaultRadius = 7.0;
 
-// lazy ui
+/// `LazyUi` is a utility class in the LazyUI framework providing a set of configurable
+/// defaults and utilities for Flutter UI development.
+///
+/// This class allows for easy configuration and standardization of styles such as
+/// text, icons, spacing, and corner radii across the app.
+///
+/// Example usage:
+/// ```dart
+/// LazyUi.config(
+///   theme: AppTheme.dark,
+///   icon: IconType.materialIcon,
+///   font: GoogleFonts.roboto(fontSize: 16.0, color: Colors.black),
+///   space: 15.0,
+///   radius: 10.0,
+///   alwaysPortrait: true
+/// );
+/// ```
 class LazyUi {
-  // get default text style
-  static TextStyle get font =>
-      _defaultTextStyle ??
-      GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
+  /// Returns the default text style for the app. If not set, it defaults to Nunito Sans font style.
+  static TextStyle get font => _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
 
-  // get default icon type
+  /// Returns the default icon type set for the app. The default is [IconType.tablerIcon].
   static IconType get iconType => _defaultIconType;
 
-  // get default spacing
+  /// Returns the default spacing value used throughout the app. The default is 20.0.
   static double get space => _defaultSpace;
 
-  // get default radius
+  /// Returns the default radius for rounded corners in the app. The default is 7.0.
   static double get radius => _defaultRadius;
 
-  /// Initialize configurations for the application.
+  /// Configures the global settings for the app, including theme, icon type, font style, spacing, and radius.
   ///
-  /// This function allows you to configure various aspects of the application, including
-  /// the theme, icon type, default font style, spacing, radius, and orientation behavior.
-  ///
-  /// - [theme]: The application theme to set. It can be [AppTheme.light] or [AppTheme.dark].
-  ///   Setting the theme will also adjust the system UI elements accordingly.
-  ///
-  /// - [icon]: The default icon type to use throughout the application. You can specify
-  ///   [IconType.tablerIcon] or another appropriate value.
-  ///
-  /// - [font]: An optional TextStyle to set as the default text style for the application.
-  ///
-  /// - [space]: An optional value to set as the default spacing between elements.
-  ///
-  /// - [radius]: An optional value to set as the default border radius for elements.
-  ///
-  /// - [alwaysPortrait]: A flag to determine whether the application should always be in portrait
-  ///   orientation. If set to true, the application will lock into portrait mode.
-
+  /// [theme]: The overall theme of the application (dark or light).
+  /// [icon]: The default icon style for the app.
+  /// [font]: The default text style for the app.
+  /// [space]: The default spacing value.
+  /// [radius]: The default radius for rounded corners.
+  /// [alwaysPortrait]: Forces the app to always display in portrait mode if set to true.
   static void config(
       {AppTheme theme = AppTheme.light,
       IconType icon = IconType.tablerIcon,
@@ -70,67 +71,27 @@ class LazyUi {
     }
 
     if (alwaysPortrait) {
-      Utils.orientation(
-          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      Utils.orientation([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
-    // set default text style
     _defaultTextStyle = font;
 
-    // set default icon type
     _defaultIconType = icon;
 
-    // set default spacing
     _defaultSpace = space ?? _defaultSpace;
 
-    // set default radius
     _defaultRadius = radius ?? _defaultRadius;
   }
 
-  /// A utility function to build a widget with text scaling and optional toast overlay.
+  /// A builder function that wraps the provided [child] widget with a `MediaQuery` and optionally with `LzToastOverlay`.
   ///
-  /// This function takes a [BuildContext] [context], a [Widget] [widget], an optional
-  /// [maxScalingFontSize], and an optional [useLazyToast] flag to customize the behavior
-  /// of the widget.
+  /// This function allows for fine control over the text scaling factor and the usage of the LazyToast feature.
   ///
-  /// - [context]: The build context for the widget.
-  /// - [widget]: The widget to wrap or modify. If not provided, it defaults to [SizedBox.shrink()].
-  /// - [maxScalingFontSize]: The maximum font size for text scaling within the widget.
-  ///   If not provided, text scaling is disabled.
-  /// - [useLazyToast]: A flag to determine whether to use lazy toast overlay. If set to true,
-  ///   a [LzToastOverlay] is applied to the widget. The default value is true.
-  ///
-  /// Returns a [MediaQuery] widget with the specified configurations and the provided
-  /// child widget (or [SizedBox.shrink()] if no child widget is provided).
-  ///
-  /// Example Usage:
-  ///
-  /// ```dart
-  /// return MaterialApp(
-  ///    builder: (BuildContext context, Widget? widget) {
-  ///      // use LazyUi.builder to wrap your widget
-  ///      // so that you can use LzToast, setting maxScalingFontSize
-  ///      return LazyUi.builder(context, widget, maxScalingFontSize: 1.1);
-  ///    },
-  /// );
-  /// ```
-  ///
-  /// In this example, the [builder] function is used to create a widget with custom text scaling
-  /// and without lazy toast overlay.
-  ///
-  /// Notes:
-  ///
-  /// - The [builder] function is typically used to customize the behavior of a widget based
-  ///   on the provided parameters, such as controlling text scaling or adding a toast overlay.
-  ///
-  /// - You can adjust the [maxScalingFontSize] parameter to control the maximum font size for text
-  ///   within the widget when text scaling is enabled.
-  ///
-  /// - The [useLazyToast] parameter allows you to toggle the use of lazy toast overlay, which may
-  ///   affect the visual presentation of the widget.
-
-  static Widget builder(BuildContext context, Widget? child,
-      {double? maxScalingFontSize, bool useLazyToast = true}) {
+  /// [context]: The build context.
+  /// [child]: The widget to be wrapped and displayed.
+  /// [maxScalingFontSize]: The maximum font size scaling factor. If provided, scales text up to this maximum value.
+  /// [useLazyToast]: If true, wraps the [child] with `LzToastOverlay` for toast notifications.
+  static Widget builder(BuildContext context, Widget? child, {double? maxScalingFontSize, bool useLazyToast = true}) {
     // ignore: deprecated_member_uselzf
     double maxScalingFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -143,13 +104,10 @@ class LazyUi {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         // ignore: deprecated_member_use
-        textScaleFactor: maxScalingFontSize == null
-            ? maxScalingFactor
-            : maxScalingFactor.clamp(1.0, maxScalingFontSize),
+        textScaleFactor:
+            maxScalingFontSize == null ? maxScalingFactor : maxScalingFactor.clamp(1.0, maxScalingFontSize),
       ),
-      child: useLazyToast
-          ? LzToastOverlay(child: child)
-          : child ?? const SizedBox.shrink(),
+      child: useLazyToast ? LzToastOverlay(child: child) : child ?? const SizedBox.shrink(),
     );
   }
 }

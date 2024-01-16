@@ -20,6 +20,7 @@ import '../constants/value.dart';
 import '../extensions/extension.dart';
 import '../models/device.dart';
 
+part 'binding.dart';
 part 'bot.dart';
 part 'error_handler.dart';
 part 'faker.dart';
@@ -27,4 +28,5 @@ part 'formatter.dart';
 part 'lipsum.dart';
 part 'log.dart';
 part 'shortcut.dart';
+part 'text_editing_controller.dart';
 part 'utilities.dart';

@@ -27,8 +27,8 @@ class LzTextField extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
   final TextStyle? textStyle, hintStyle;
   final TextSelectionControls? selectionControls;
-  final Widget? prefixIcon;
-  final Color? prefixIconColor;
+  final Widget? prefixIcon, suffixIcon;
+  final Color? prefixIconColor, suffixIconColor, backgroundColor;
   final BoxBorder? border;
   final BorderRadiusGeometry? borderRadius;
   final Function(bool value)? listenKeyboard;
@@ -57,6 +57,9 @@ class LzTextField extends StatelessWidget {
       this.selectionControls,
       this.prefixIcon,
       this.prefixIconColor,
+      this.suffixIcon,
+      this.suffixIconColor,
+      this.backgroundColor,
       this.border,
       this.borderRadius,
       this.listenKeyboard})
@@ -97,6 +100,8 @@ class LzTextField extends StatelessWidget {
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         prefixIconColor: prefixIconColor ?? Colors.black38,
+        suffixIcon: suffixIcon,
+        suffixIconColor: suffixIconColor ?? Colors.black38,
         isDense: true,
         contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
         hintText: hint,
@@ -113,11 +118,12 @@ class LzTextField extends StatelessWidget {
       ),
     );
 
-    return border == null
+    return border == null && backgroundColor == null
         ? textField
         : Container(
             decoration: BoxDecoration(
                 border: border,
+                color: backgroundColor,
                 borderRadius: borderRadius ?? BorderRadius.circular(radius)),
             child: textField,
           );

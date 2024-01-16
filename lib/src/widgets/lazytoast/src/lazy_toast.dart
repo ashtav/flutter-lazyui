@@ -4,6 +4,7 @@ final _toastNotifier = ToastNotifier(), _overlayNotifier = OverlayNotifier();
 
 Position _defaultPosition = Position.bottom;
 Duration _defaultDuration = 2.s;
+double _defaultRadius = 5;
 
 class LzToastConfig {
   Position? position;
@@ -47,9 +48,10 @@ class LzToast {
 
   /// Set default loading style
 
-  static void config({Position? position, Duration? duration}) {
+  static void config({Position? position, Duration? duration, double? radius}) {
     _defaultPosition = position ?? _defaultPosition;
     _defaultDuration = duration ?? _defaultDuration;
+    _defaultRadius = radius ?? _defaultRadius;
   }
 
   // Get default config
@@ -76,12 +78,44 @@ class LzToast {
       bool dismissOnTap = false,
       Duration? duration,
       Position? position,
-      int? maxLength}) {
+      int? maxLength,
+      Color? backgroundColor,
+      Color? textColor}) {
     _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration ?? _defaultDuration,
         position: position ?? _defaultPosition,
-        maxLength: maxLength);
+        maxLength: maxLength,
+        backgroundColor: backgroundColor,
+        textColor: textColor);
+  }
+
+  static void error(String message,
+      {IconData? icon,
+      bool dismissOnTap = false,
+      Duration? duration,
+      Position? position,
+      int? maxLength}) {
+    _toastNotifier.toggle(message,
+        icon: icon,
+        duration: duration ?? _defaultDuration,
+        position: position ?? _defaultPosition,
+        maxLength: maxLength,
+        backgroundColor: Colors.red.withOpacity(.8));
+  }
+
+  static void warning(String message,
+      {IconData? icon,
+      bool dismissOnTap = false,
+      Duration? duration,
+      Position? position,
+      int? maxLength}) {
+    _toastNotifier.toggle(message,
+        icon: icon,
+        duration: duration ?? _defaultDuration,
+        position: position ?? _defaultPosition,
+        maxLength: maxLength,
+        backgroundColor: Colors.orange.withOpacity(.8));
   }
 
   static overlay(
@@ -104,12 +138,16 @@ class ToastNotifier extends ChangeNotifier {
   IconData? icon;
   Position? position = Position.bottom;
   int? maxLength;
+  Color? backgroundColor;
+  Color? textColor;
 
   void toggle(String message,
       {IconData? icon,
       Duration? duration,
       Position? position,
-      int? maxLength}) {
+      int? maxLength,
+      Color? backgroundColor,
+      Color? textColor}) {
     timer?.cancel();
     show = true;
 
@@ -117,6 +155,8 @@ class ToastNotifier extends ChangeNotifier {
     this.position = position ?? _defaultPosition;
     this.message = message;
     this.maxLength = maxLength;
+    this.backgroundColor = backgroundColor;
+    this.textColor = textColor;
 
     notifyListeners();
 
@@ -235,8 +275,9 @@ class LzToastWidget extends StatelessWidget {
                                 others: 50),
                             padding: Ei.sym(v: 13, h: 20),
                             decoration: BoxDecoration(
-                                borderRadius: Br.radius(5),
-                                color: Colors.black.withOpacity(.8)),
+                                borderRadius: Br.radius(_defaultRadius),
+                                color: t.backgroundColor ??
+                                    Colors.black.withOpacity(.8)),
                             child: AnimatedSwitcher(
                                 duration: 350.ms,
                                 transitionBuilder: (Widget child,
@@ -251,7 +292,8 @@ class LzToastWidget extends StatelessWidget {
                                           t.message.length > t.maxLength!
                                       ? '${t.message.substring(0, t.maxLength!)}...'
                                       : t.message,
-                                  style: style?.copyWith(color: Colors.white),
+                                  style: style?.copyWith(
+                                      color: t.textColor ?? Colors.white),
                                   textAlign:
                                       t.icon == null ? Ta.center : Ta.start,
                                   icon: t.icon,

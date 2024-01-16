@@ -48,8 +48,10 @@ class LzBadge extends StatelessWidget {
           borderRadius: radius ?? Br.radius(5),
           border: Br.all(color: color)),
       child: Textr(text,
-          style:
-              Gfont.color(textColor ?? (softColor ? color : (LzColors.isDark(color) ? Colors.white : Colors.black87))),
+          style: Gfont.color(textColor ??
+              (softColor
+                  ? color
+                  : (LzColors.isDark(color) ? Colors.white : Colors.black87))),
           icon: icon,
           iconStyle: iconStyle),
     );

@@ -1,8 +1,8 @@
 part of widget;
 
-/// `Skeleton` is a Flutter widget that provides a skeleton loading effect, 
-/// often used as a placeholder for content that is loading. This effect is useful 
-/// for enhancing the user experience by indicating that content is in the process 
+/// `Skeleton` is a Flutter widget that provides a skeleton loading effect,
+/// often used as a placeholder for content that is loading. This effect is useful
+/// for enhancing the user experience by indicating that content is in the process
 /// of being loaded.
 ///
 /// The widget can be customized in various ways, including color, shape, and size.
@@ -46,7 +46,10 @@ class Skeleton extends StatelessWidget {
   /// Brightness of the skeleton (optional).
   final double brightness;
 
-  /// [width, height], or [width:[min, max], height:[min, max]]
+  /// The `size` parameter can be specified in different formats:
+  /// - A single value (e.g., `15`), which sets both width and height to that value.
+  /// - A list of two values (e.g., `[50, 15]`), which sets width to the first and height to the second value.
+  /// - A list of two lists (e.g., `[[15, 50], [5, 15]]`), where each list contains two values representing the range for width and height respectively.
   final dynamic size;
 
   /// ``` dart
@@ -101,8 +104,7 @@ class Skeleton extends StatelessWidget {
         maxH = sizes[1];
       }
     } else {
-      minW = maxW = minH =
-          maxH = (size is int) ? (size as int).toDouble() : size as double;
+      minW = maxW = minH = maxH = (size is int) ? (size as int).toDouble() : size as double;
     }
 
     // prevent brightness out of range
@@ -123,21 +125,15 @@ class Skeleton extends StatelessWidget {
     return Container(
       margin: margin,
       child: Shimmer.fromColors(
-        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!))
-            .withOpacity(bsOpacity),
-        highlightColor:
-            (darkColor == null ? color : LzColors.inverse(darkColor!))
-                .withOpacity(brightness),
+        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(bsOpacity),
+        highlightColor: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(brightness),
         child: Container(
           width: [minW, maxW].numInRange(),
           height: [minH, maxH].numInRange(),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: BoxDecoration(
-              color: (darkColor == null ? color : LzColors.inverse(darkColor!))
-                  .withOpacity(brightness),
-              borderRadius: radiusOnly != null
-                  ? CustomRadius.getRadius(radiusOnly!)
-                  : BorderRadius.circular(radius)),
+              color: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(brightness),
+              borderRadius: radiusOnly != null ? CustomRadius.getRadius(radiusOnly!) : BorderRadius.circular(radius)),
         ),
       ),
     );
@@ -145,10 +141,7 @@ class Skeleton extends StatelessWidget {
 }
 
 extension SkeletonExtension on Skeleton {
-  Widget iterate(int value,
-      {CrossAxisAlignment alignment = CrossAxisAlignment.start}) {
-    return Column(
-        crossAxisAlignment: alignment,
-        children: List.generate(value, (i) => this));
+  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start}) {
+    return Column(crossAxisAlignment: alignment, children: List.generate(value, (i) => this));
   }
 }

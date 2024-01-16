@@ -108,6 +108,18 @@ class LzButton extends StatelessWidget {
             ? buttonColors[type]!
             : (type == ButtonType.white ? Utils.hex('#1e293b') : Colors.white));
 
+    Color buttonColor = color ?? (buttonColors[type] ?? Colors.white);
+    Color? borderColor = this.borderColor;
+
+    // adjust text color based on button color
+    if (!outline) {
+      buttonTextColor =
+          LzColors.isDark(buttonColor) ? Colors.white : Utils.hex('#1e293b');
+    } else if (outline && color != null) {
+      buttonTextColor = textColor ?? Utils.hex('#1e293b');
+      buttonTextColor = color ?? Utils.hex('#1e293b');
+    }
+
     Widget buttonWidget = AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
@@ -122,8 +134,6 @@ class LzButton extends StatelessWidget {
                 );
               },
               child: child);
-
-          Color buttonColor = color ?? (buttonColors[type] ?? Colors.white);
 
           double iconTextSpace = isSubmit
               ? 10

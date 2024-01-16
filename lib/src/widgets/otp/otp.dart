@@ -337,8 +337,8 @@ class OtpController {
 
   /// Creates an [OtpController].
   ///
-  /// The [context] is the BuildContext from the widget that creates the controller.
-  /// The [notifier] is the OtpNotifier that this controller manipulates.
+  /// The [_context] is the BuildContext from the widget that creates the controller.
+  /// The [_notifier] is the OtpNotifier that this controller manipulates.
   /// The [timer] is an optional Timer that can be passed to resume countdown from a specific duration.
   /// The [value] is the initial value of the OTP input, defaulting to an empty string.
   OtpController(this._context, this._notifier, {this.timer, this.value = ''});
