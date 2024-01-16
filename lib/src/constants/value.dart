@@ -25,6 +25,45 @@ class ExampleData {
     "Sadie Adler"
   ];
 
+  static List<String> categories = [
+    "Food",
+    "Drink",
+    "Health",
+    "Clothes",
+    "Transportation",
+    "Technology",
+    "Gaming",
+    "Sports",
+    "Music",
+    "Movies",
+    "Books",
+    "Gardening",
+    "Art",
+    "Photography",
+    "Travel",
+    "Education",
+    "Pets",
+    "Beauty",
+    "Finance",
+    "Real Estate",
+    "Cooking",
+    "DIY",
+    "Fitness",
+    "Yoga",
+    "Meditation",
+    "Science",
+    "History",
+    "Languages",
+    "Culture",
+    "Nature",
+    "Astronomy",
+    "Psychology",
+    "Philosophy",
+    "Politics",
+    "Environment",
+    "Crafts"
+  ];
+
   static List<String> address = [
     'Jl. Raya Kuta, Gang Cempaka, No. 17, Kuta, Bali',
     'Jl. Gunung Payung, Block F, No. 11, Nusa Dua, Bali',

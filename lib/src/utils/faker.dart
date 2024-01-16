@@ -31,8 +31,7 @@ class Faker {
   }
 
   // generate random price based on length
-  static String price(
-      {int length = 5, String locale = 'id_ID', String prefix = ''}) {
+  static String price({int length = 5, String locale = 'id_ID', String prefix = ''}) {
     int randomInt = math.Random().nextInt(math.pow(10, length) as int);
     String price = randomInt.toString();
 
@@ -52,13 +51,17 @@ class Faker {
     return ExampleData.names[math.Random().nextInt(ExampleData.names.length)];
   }
 
+  // generate random category
+  static String category() {
+    return ExampleData.categories[math.Random().nextInt(ExampleData.categories.length)];
+  }
+
   // generate random email
   static String email({String domain = 'gmail.com', bool addNumber = false}) {
     String result = name().toLowerCase().replaceAll(' ', '');
 
     if (addNumber) {
-      result +=
-          '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
+      result += '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
     } else {
       result += '@$domain';
     }
@@ -73,8 +76,7 @@ class Faker {
 
   // generate random address
   static String address() {
-    return ExampleData
-        .address[math.Random().nextInt(ExampleData.address.length)];
+    return ExampleData.address[math.Random().nextInt(ExampleData.address.length)];
   }
 
   // generate random date
