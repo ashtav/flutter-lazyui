@@ -83,6 +83,9 @@ class InkTouch extends StatelessWidget {
   /// The opacity of the InkWell.
   final double opacity;
 
+  /// The duration of the splash animation.
+  final Duration? animationDuration;
+
   const InkTouch(
       {Key? key,
       this.child,
@@ -103,11 +106,31 @@ class InkTouch extends StatelessWidget {
       this.enableSplash = true,
       this.splashByBaseColor = false,
       this.border,
-      this.opacity = 1})
+      this.opacity = 1,
+      this.animationDuration})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool useAnimation = animationDuration != null;
+
+    Widget widget = useAnimation
+        ? AnimatedContainer(
+            duration: animationDuration ?? 150.ms,
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              border: border,
+            ),
+            padding: padding ?? Ei.all(0),
+            child: child)
+        : Container(
+            decoration: BoxDecoration(
+              borderRadius: radius,
+              border: border,
+            ),
+            padding: padding ?? Ei.all(0),
+            child: child);
+
     return Container(
       margin: margin ?? Ei.all(0),
       child: Material(
@@ -137,13 +160,7 @@ class InkTouch extends StatelessWidget {
                           : color?.withOpacity(.1)),
               onTap: onTap,
               borderRadius: radius,
-              child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: radius,
-                    border: border,
-                  ),
-                  padding: padding ?? Ei.all(0),
-                  child: child)),
+              child: widget),
         ),
       ),
     );
