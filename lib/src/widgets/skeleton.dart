@@ -104,7 +104,8 @@ class Skeleton extends StatelessWidget {
         maxH = sizes[1];
       }
     } else {
-      minW = maxW = minH = maxH = (size is int) ? (size as int).toDouble() : size as double;
+      minW = maxW = minH =
+          maxH = (size is int) ? (size as int).toDouble() : size as double;
     }
 
     // prevent brightness out of range
@@ -125,15 +126,21 @@ class Skeleton extends StatelessWidget {
     return Container(
       margin: margin,
       child: Shimmer.fromColors(
-        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(bsOpacity),
-        highlightColor: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(brightness),
+        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!))
+            .withOpacity(bsOpacity),
+        highlightColor:
+            (darkColor == null ? color : LzColors.inverse(darkColor!))
+                .withOpacity(brightness),
         child: Container(
           width: [minW, maxW].numInRange(),
           height: [minH, maxH].numInRange(),
           padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
           decoration: BoxDecoration(
-              color: (darkColor == null ? color : LzColors.inverse(darkColor!)).withOpacity(brightness),
-              borderRadius: radiusOnly != null ? CustomRadius.getRadius(radiusOnly!) : BorderRadius.circular(radius)),
+              color: (darkColor == null ? color : LzColors.inverse(darkColor!))
+                  .withOpacity(brightness),
+              borderRadius: radiusOnly != null
+                  ? CustomRadius.getRadius(radiusOnly!)
+                  : BorderRadius.circular(radius)),
         ),
       ),
     );
@@ -141,7 +148,10 @@ class Skeleton extends StatelessWidget {
 }
 
 extension SkeletonExtension on Skeleton {
-  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start}) {
-    return Column(crossAxisAlignment: alignment, children: List.generate(value, (i) => this));
+  Widget iterate(int value,
+      {CrossAxisAlignment alignment = CrossAxisAlignment.start}) {
+    return Column(
+        crossAxisAlignment: alignment,
+        children: List.generate(value, (i) => this));
   }
 }

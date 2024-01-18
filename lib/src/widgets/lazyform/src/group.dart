@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart' hide Checkbox;
+import 'package:flutter/material.dart' hide Checkbox, Radio;
 import 'package:lazyui/lazyui.dart';
 
 import '../common/mixin.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'number.dart';
+import 'radio.dart';
 import 'select.dart';
 import 'slider.dart';
 import 'switches.dart';
@@ -107,6 +108,11 @@ class LzFormGroup extends StatelessWidget with FormWidgetMixin {
 
     // remove all children that not allowed
     List<Widget> children = [...this.children];
+    List<String> unallowed = this
+        .children
+        .where((e) => !allowed.contains(e.runtimeType))
+        .map((e) => e.runtimeType.toString())
+        .toList();
     children.removeWhere((e) => !allowed.contains(e.runtimeType));
 
     // put warning if there is not allowed widget
@@ -115,8 +121,8 @@ class LzFormGroup extends StatelessWidget with FormWidgetMixin {
     }
 
     // count not allowed widget
-    int count =
-        this.children.where((e) => !allowed.contains(e.runtimeType)).length;
+    // int count =
+    //     this.children.where((e) => !allowed.contains(e.runtimeType)).length;
 
     // get text style
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -191,11 +197,13 @@ class LzFormGroup extends StatelessWidget with FormWidgetMixin {
                   return child;
                 }
 
+                String unallowedWidget = unallowed.toSet().join(', ');
+
                 return Textr(
-                  'Found $count not allowed widget(s)',
+                  '$unallowedWidget ${unallowed.length > 1 ? 'are' : 'is'} not allowed in LzFormGroup.',
                   style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
-                  border: Br.all(color: Colors.redAccent),
-                  padding: Ei.sym(v: 10, h: 15),
+                  // border: Br.all(color: Colors.redAccent),
+                  // padding: Ei.sym(v: 10, h: 15),
                   margin: Ei.sym(h: 15, v: 15),
                   radius: Br.radius(5),
                 );

@@ -44,7 +44,8 @@ class TecValidation {
 ///       - `TecValidation`: An instance representing the outcome of the validation.
 ///         It contains a boolean indicating if the validation passed and an error message
 ///         if it failed.
-extension MapTextEditingControllerExtension on Map<String, TextEditingController> {
+extension MapTextEditingControllerExtension
+    on Map<String, TextEditingController> {
   Map<String, String> get value {
     return entries.fold({}, (Map<String, String> previousValue, element) {
       previousValue[element.key] = element.value.text;
@@ -64,19 +65,28 @@ extension MapTextEditingControllerExtension on Map<String, TextEditingController
         required = value.keys.toList();
       } else if (isRequiredAllExcept) {
         required.remove('*');
-        required = value.keys.toList()..removeWhere((e) => required.contains(e));
+        required = value.keys.toList()
+          ..removeWhere((e) => required.contains(e));
       }
 
       final formKeys = value.keys.toList();
 
       for (String key in formKeys) {
         // Required
-        if (value[key] != null && value[key]!.trim().isEmpty && required.contains(key)) {
-          errors.add({'key': key, 'type': 'required', 'message': 'Field $key is required'});
+        if (value[key] != null &&
+            value[key]!.trim().isEmpty &&
+            required.contains(key)) {
+          errors.add({
+            'key': key,
+            'type': 'required',
+            'message': 'Field $key is required'
+          });
         }
       }
 
-      return TecValidation(error: errors.isEmpty ? '' : errors.first['message'], ok: errors.isEmpty);
+      return TecValidation(
+          error: errors.isEmpty ? '' : errors.first['message'],
+          ok: errors.isEmpty);
     } catch (e, s) {
       Utils.errorCatcher(e, s);
       return TecValidation(error: 'Error validating form', ok: false);
@@ -138,7 +148,8 @@ extension TextEditingControllerExtension on String {
 /// where the fields are not known beforehand or change frequently.
 class TEC {
   static Map<String, TextEditingController> make(List<String> keys) {
-    return keys.fold({}, (Map<String, TextEditingController> previousValue, key) {
+    return keys.fold({},
+        (Map<String, TextEditingController> previousValue, key) {
       previousValue[key] = TextEditingController();
       return previousValue;
     });

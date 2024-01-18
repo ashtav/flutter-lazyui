@@ -68,7 +68,9 @@ class LzSlideIndicator extends StatelessWidget {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: active == i ? (activeColor ?? Theme.of(context).primaryColor) : (color ?? Colors.grey),
+            color: active == i
+                ? (activeColor ?? Theme.of(context).primaryColor)
+                : (color ?? Colors.grey),
             borderRadius: BorderRadius.circular(radius),
           ),
         );

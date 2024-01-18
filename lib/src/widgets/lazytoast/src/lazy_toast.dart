@@ -90,13 +90,13 @@ class LzToast {
         textColor: textColor);
   }
 
-  static void error(String message,
+  static void error(String? message,
       {IconData? icon,
       bool dismissOnTap = false,
       Duration? duration,
       Position? position,
       int? maxLength}) {
-    _toastNotifier.toggle(message,
+    _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration ?? _defaultDuration,
         position: position ?? _defaultPosition,
@@ -104,18 +104,32 @@ class LzToast {
         backgroundColor: Colors.red.withOpacity(.8));
   }
 
-  static void warning(String message,
+  static void warning(String? message,
       {IconData? icon,
       bool dismissOnTap = false,
       Duration? duration,
       Position? position,
       int? maxLength}) {
-    _toastNotifier.toggle(message,
+    _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration ?? _defaultDuration,
         position: position ?? _defaultPosition,
         maxLength: maxLength,
         backgroundColor: Colors.orange.withOpacity(.8));
+  }
+
+  static void success(String? message,
+      {IconData? icon,
+      bool dismissOnTap = false,
+      Duration? duration,
+      Position? position,
+      int? maxLength}) {
+    _toastNotifier.toggle(message.toString(),
+        icon: icon,
+        duration: duration ?? _defaultDuration,
+        position: position ?? _defaultPosition,
+        maxLength: maxLength,
+        backgroundColor: Colors.green.withOpacity(.8));
   }
 
   static overlay(
