@@ -24,4 +24,4 @@ enum SublabelStyle { text, card, cardWarning }
 /// - `topInner`: Fields are aligned at the top but within an inner container or section.
 /// - `grouped`: Fields are grouped together, typically in sections.
 /// - `underlined`: Each form field is underlined, creating a clear division between fields.
-enum FormType { topAligned, topInner, grouped, underlined }
+// enum FormType { topAligned, topInner, grouped, underlined }

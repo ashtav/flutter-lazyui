@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+
+import '../../lxform/lxform.dart';
+import '../lazyform.dart';
 
 class Attribute {
   final bool isGrouping,

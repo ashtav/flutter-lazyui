@@ -193,7 +193,7 @@ class LzInputicon extends StatelessWidget {
 }
 
 extension FormModelExtension on Map<String, FormModel> {
-  /// ``` dart
+  /// ``` dart 
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```

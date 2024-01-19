@@ -1,5 +1,6 @@
 import 'package:example/app/screens/app_intro.dart';
 import 'package:example/app/screens/app_trainer.dart';
+import 'package:example/app/screens/forms2.dart';
 import 'package:example/app/screens/widgets/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -29,6 +30,7 @@ class MainPageView extends StatelessWidget {
       'Confirm',
       'Dropdown',
       'Forms',
+      'Forms 2',
       'Select Option',
       'Refreshtor',
       'Skeleton',
@@ -46,10 +48,7 @@ class MainPageView extends StatelessWidget {
           border: Br.only(['t'], except: i == 0),
           child: Row(
             mainAxisAlignment: Maa.spaceBetween,
-            children: [
-              Text(item),
-              const Icon(Ti.chevronRight, color: Colors.black45)
-            ],
+            children: [Text(item), const Icon(Ti.chevronRight, color: Colors.black45)],
           ),
         );
       })),
@@ -90,6 +89,10 @@ class Actions {
 
       case 'forms':
         context.lzPush(const FormsView());
+        break;
+
+      case 'forms 2':
+        context.lzPush(const Forms2());
         break;
 
       case 'select option':

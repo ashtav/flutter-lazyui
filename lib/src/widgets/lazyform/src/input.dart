@@ -4,6 +4,7 @@ import 'package:lazyui/lazyui.dart';
 
 import '../common/mixin.dart';
 import '../common/notifier.dart';
+import '../lazyform.dart';
 
 /// An [Input] widget for creating text input elements.
 ///

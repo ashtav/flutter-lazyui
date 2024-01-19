@@ -1,0 +1,271 @@
+part of forms;
+
+class Input2 extends StatelessWidget with Lx {
+  final String? label, hint;
+  final FormType? type;
+  final FormStyle? style;
+  final bool indicator;
+  final bool obsecure;
+  final bool obsecureToggle;
+  final bool disabled;
+  final bool readonly;
+  final bool autofocus;
+  final TextInputType? keyboard;
+  final List<TextInputFormatter> formatters;
+  final Function(TextEditingController control)? onTap;
+  final Function(String value)? onChange;
+  final Function(String value)? onSubmit;
+  final FormModelx? model;
+  final FocusNode? node;
+  final int maxLength;
+  final int? maxLines;
+
+  const Input2(
+      {super.key,
+      this.label,
+      this.hint,
+      this.type,
+      this.style,
+      this.indicator = false,
+      this.obsecure = false,
+      this.obsecureToggle = false,
+      this.disabled = false,
+      this.readonly = false,
+      this.autofocus = false,
+      this.keyboard,
+      this.formatters = const [],
+      this.onTap,
+      this.onChange,
+      this.onSubmit,
+      this.model,
+      this.node,
+      this.maxLength = 255,
+      this.maxLines});
+
+  @override
+  Widget build(BuildContext context) {
+    final attr = getAttribute(context);
+    FormStyle? style = attr.style ?? this.style;
+
+    // form notifier
+    final notifier = model?.notifier ?? FormNotifier();
+    notifier.controller = model?.controller ?? TextEditingController();
+
+    FocusNode focusNode = node ?? notifier.node;
+
+    Bindings.onRendered(() {
+      // set obsecure
+      if (onTap == null) {
+        notifier.setObsecure(obsecureToggle ? true : obsecure);
+      }
+
+      // listen to controller
+      if (indicator) {
+        notifier.controller.addListener(() {
+          String text = notifier.controller.text;
+          notifier.setLength(text.length);
+        });
+      }
+    });
+
+    // get form type
+    FormType formType = attr.type ?? (type ?? FormType.topAligned);
+    bool isGrouped = formType == FormType.grouped;
+    bool isTopAligned = formType == FormType.topAligned;
+    bool isUnderlined = formType == FormType.underlined;
+    bool isTopInner = formType == FormType.topInner;
+
+    // get icon (tabler or line awesome)
+    bool isTabler = LazyUi.iconType == IconType.tablerIcon;
+
+    // get radius
+    double radius = style?.radius ?? LazyUi.radius;
+
+    // get background color
+    Color backgroundColor = style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+
+    // get border color
+    Color borderColor = style?.borderColor ?? Colors.black12;
+
+    // check if label is available
+    bool hasLabel = label != null && !attr.isGrouped;
+    bool hasOnTap = onTap != null;
+
+    // create label widget
+    Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14) : const None();
+
+    // create indicator widget
+    Widget indicatorWidget =
+        indicator ? notifier.watch((state) => Text('${state.textLength}/$maxLength', style: Gfont.fs14)) : const None();
+
+    // create grouped label widget
+    Widget groupedLabelWidget = Positioned(
+        top: 12,
+        child: Container(
+          padding: Ei.sym(h: 16),
+          width: context.width,
+          child: Row(
+            children: [
+              labelWidget,
+              if (indicator) indicatorWidget.margin(r: 39),
+            ],
+          ).between,
+        ));
+
+    // create top inner label widget
+    Widget topInnerLabelWidget = Positioned(
+        left: 12,
+        top: 0,
+        child: Stack(
+          children: [
+            _TopInnerLineLabel(color: 'fafafa'.hex),
+            labelWidget.padding(h: 5),
+          ],
+        ));
+
+    // create top inner indicator
+    Widget topInnerIndicatorWidget = Positioned(
+        right: 12,
+        top: 0,
+        child: Stack(
+          children: [
+            _TopInnerLineLabel(color: 'fafafa'.hex),
+            indicatorWidget.padding(h: 5),
+          ],
+        ));
+
+    // create has label and grouped padding
+    final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
+
+    // create prefix icon widget
+    Widget? prefixIconWidget =
+        hasOnTap || style?.prefixIcon == null ? null : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+    Widget? suffixIconWidget =
+        hasOnTap || style?.suffixIcon == null ? null : Icon(style?.suffixIcon, color: style?.suffixIconColor);
+
+    // ink touch & input field
+    Widget textFieldWidget = InkTouch(
+      onTap: readonly || disabled || !hasOnTap
+          ? null
+          : () {
+              onTap?.call(notifier.controller);
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+      border: attr.isGrouped
+          ? null
+          : isUnderlined
+              ? Br.only(['b'], color: borderColor)
+              : Br.all(color: borderColor),
+      radius: isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
+      color: backgroundColor,
+      child: Stack(
+        children: [
+          // if grouped, add label and indicator
+          if (isGrouped || isUnderlined) groupedLabelWidget,
+
+          // input field
+          notifier.watch((state) => LzTextField(
+                hint: hint,
+                enabled: !readonly && !disabled && !hasOnTap,
+                prefixIcon: isGrouped || isUnderlined ? prefixIconWidget?.margin(t: 22) : prefixIconWidget,
+                suffixIcon: obsecureToggle
+                    ? null
+                    : isGrouped || isUnderlined
+                        ? suffixIconWidget?.margin(t: 22)
+                        : suffixIconWidget,
+                padding: hasLabel && (isGrouped || isUnderlined)
+                    ? labelAndGroupedPadding
+                    : Ei.only(l: 16, r: obsecureToggle ? 45 : 16, v: 14),
+                controller: notifier.controller,
+                maxLength: maxLength,
+                obsecure: state.obsecure,
+                onChange: onChange,
+                onSubmit: onSubmit,
+                autofocus: autofocus,
+                keyboard: keyboard,
+                formatters: formatters,
+                maxLines: maxLines,
+                node: focusNode,
+              )),
+
+          // if onTap is not null, add icon
+          if (hasOnTap)
+            Poslign(
+              alignment: Alignment.centerRight,
+              child: Icon(
+                style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
+                color: style?.suffixIconColor ?? Colors.black38,
+                size: 18,
+              ).padding(r: 15, b: 1.5),
+            ),
+
+          // obsecure toggle
+          if (obsecureToggle && !hasOnTap)
+            Poslign(
+              alignment: Alignment.centerRight,
+              child: notifier
+                  .watch((state) {
+                    IconData iconView = isTabler ? Ti.eye : La.eye;
+                    IconData iconHide = isTabler ? Ti.eyeOff : La.eyeSlash;
+
+                    return Iconr(
+                      notifier.obsecure ? iconView : iconHide,
+                      color: Colors.black38,
+                      padding: Ei.all(15),
+                      size: 18,
+                    );
+                  })
+                  .padding(b: 1.5, t: isGrouped || isUnderlined ? 22 : 0)
+                  .onTap(() => notifier.setObsecure()),
+            ),
+        ],
+      ),
+    );
+
+    return Column(
+      key: model?.key,
+      children: [
+        // input label
+        if (isTopAligned)
+          Row(
+            children: [
+              labelWidget,
+              if (indicator) indicatorWidget,
+            ],
+          ).between.margin(b: hasLabel ? 8 : 0),
+
+        // input field
+        if (isTopInner && hasLabel)
+          Stack(
+            children: [
+              textFieldWidget.margin(t: 10),
+              topInnerLabelWidget,
+              if (indicator) topInnerIndicatorWidget,
+            ],
+          )
+        else
+          textFieldWidget,
+
+        notifier.watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage))
+      ],
+    ).start.margin(b: attr.isGrouped ? 0 : 16);
+  }
+}
+
+class _TopInnerLineLabel extends StatelessWidget {
+  final Color? color;
+  const _TopInnerLineLabel({this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Poslign(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        height: 3,
+        color: color ?? 'fafafa'.hex,
+        width: context.width,
+        margin: Ei.only(t: 1.5),
+      ),
+    );
+  }
+}

@@ -6,6 +6,7 @@ import 'package:lazyui/lazyui.dart';
 
 import '../common/mixin.dart';
 import '../common/notifier.dart';
+import '../lazyform.dart';
 
 /// A [Number] widget for creating numeric input elements.
 ///

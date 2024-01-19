@@ -26,7 +26,7 @@ part of widget;
 /// ```
 class Iconr extends StatelessWidget {
   /// The icon to be displayed.
-  final IconData icon;
+  final IconData? icon;
 
   /// Margin around the icon (optional).
   final EdgeInsetsGeometry? margin;

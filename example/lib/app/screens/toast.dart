@@ -6,7 +6,7 @@ class ToastView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['message']);
+    // final forms = LzForm.make(['message']);
 
     return Scaffold(
       appBar: AppBar(
@@ -35,19 +35,19 @@ class ToastView extends StatelessWidget {
               }, 3.s);
             },
           ).margin(v: 5),
-          LzForm.input(
-            label: 'Message',
-            hint: 'Enter message here',
-            maxLength: 300,
-            model: forms['message'],
-          ),
-          LzButton(
-            text: 'Show Toast with Message',
-            onTap: (_) {
-              LzToast.show(forms['message']!.controller.text,
-                  duration: 3.s, icon: La.comment);
-            },
-          )
+          // LzForm.input(
+          //   label: 'Message',
+          //   hint: 'Enter message here',
+          //   maxLength: 300,
+          //   model: forms['message'],
+          // ),
+          // LzButton(
+          //   text: 'Show Toast with Message',
+          //   onTap: (_) {
+          //     LzToast.show(forms['message']!.controller.text,
+          //         duration: 3.s, icon: La.comment);
+          //   },
+          // )
         ],
       ),
     );

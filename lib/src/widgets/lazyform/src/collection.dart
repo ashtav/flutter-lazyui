@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../common/notifier.dart';
+import '../lazyform.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'number.dart';

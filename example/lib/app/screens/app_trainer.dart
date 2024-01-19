@@ -9,7 +9,7 @@ class AppTrainerView extends StatelessWidget {
     final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey();
     AppTrainerController controller = AppTrainerController();
 
-    final forms = LzForm.make(['name']);
+    // final forms = LzForm.make(['name']);
 
     return AppTrainer(
       controller: controller,
@@ -39,12 +39,12 @@ class AppTrainerView extends StatelessWidget {
             title: 'Floating Action Button',
             description: Faker.words(15),
             align: ContentAlign.top),
-        Target(
-            key: forms['name']!.key,
-            title: 'Widget Square',
-            description: Faker.words(15),
-            align: ContentAlign.bottom,
-            shape: ShapeLightFocus.RRect),
+        // Target(
+        //     key: forms['name']!.key,
+        //     title: 'Widget Square',
+        //     description: Faker.words(15),
+        //     align: ContentAlign.bottom,
+        //     shape: ShapeLightFocus.RRect),
       ],
       showSectionLabel: true,
       child: Scaffold(
@@ -55,11 +55,11 @@ class AppTrainerView extends StatelessWidget {
                     .onPressed(() => {}))),
         body: LzListView(
           children: [
-            LzForm.input(
-              label: 'Name',
-              hint: 'Enter your name',
-              model: forms['name'],
-            ),
+            // LzForm.input(
+            //   label: 'Name',
+            //   hint: 'Enter your name',
+            //   model: forms['name'],
+            // ),
           ],
         ),
         floatingActionButton: FloatingActionButton(

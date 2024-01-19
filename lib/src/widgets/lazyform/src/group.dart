@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide Checkbox, Radio;
 import 'package:lazyui/lazyui.dart';
 
 import '../common/mixin.dart';
+import '../lazyform.dart';
 import 'checkbox.dart';
 import 'input.dart';
 import 'number.dart';
