@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/widgets/lxform/src/models/radio_model.dart';
 
 class FormNotifier extends ChangeNotifier {
   TextEditingController controller = TextEditingController();
@@ -7,11 +8,10 @@ class FormNotifier extends ChangeNotifier {
 
   int textLength = 0;
   String errorMessage = '';
-  bool isValid = true, obsecure = false;
-  Option? option;
+  bool isValid = true, obsecure = false, disabled = false;
   dynamic extra;
 
-  void setLength(int value){
+  void setLength(int value) {
     textLength = value;
     notifyListeners();
   }
@@ -24,16 +24,31 @@ class FormNotifier extends ChangeNotifier {
     return this;
   }
 
-  void setObsecure([bool? value]) {
+  FormNotifier setObsecure([bool? value]) {
     obsecure = value ?? !obsecure;
     notifyListeners();
+    return this;
+  }
+
+  FormNotifier setDisabled([bool? value]) {
+    disabled = value ?? !disabled;
+    notifyListeners();
+    return this;
   }
 
   void setState() => notifyListeners();
 
-  // @override
-  // void dispose() {
-  //   controller.dispose();
-  //   super.dispose();
-  // }
+  // radio button
+  RadioModel? option;
+
+  void setOption(RadioModel value) {
+    option = value;
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 }

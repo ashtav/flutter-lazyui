@@ -3,22 +3,20 @@ part of utils;
 /// The `InputFormat` class provides a set of predefined input formatters for text input fields.
 ///
 /// You can use these formatters to restrict and format the input entered by users.
-class InputFormat {
+class Formatter {
   /// Returns a text input formatter that allows only strict numeric input (0-9).
-  static TextInputFormatter get strictNumeric =>
-      FilteringTextInputFormatter.allow(RegExp("[0-9]"));
+  static TextInputFormatter get strictNumeric => FilteringTextInputFormatter.allow(RegExp("[0-9]"));
 
   /// Returns a text input formatter that allows numeric input (0-9), including commas and periods.
-  static TextInputFormatter get numeric =>
-      FilteringTextInputFormatter.allow(RegExp("[0-9,.]"));
+  static TextInputFormatter get numeric => FilteringTextInputFormatter.allow(RegExp("[0-9,.]"));
 
   /// Returns a text input formatter that allows only alphabetic characters (a-zA-Z) and spaces.
-  static TextInputFormatter get alpha =>
-      FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"));
+  static TextInputFormatter get alpha => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"));
+
+  static TextInputFormatter get email => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9@._-]"));
 
   /// Returns a text input formatter that allows alphanumeric characters (a-zA-Z0-9) and spaces.
-  static TextInputFormatter get alphanumeric =>
-      FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]"));
+  static TextInputFormatter get alphaNumeric => FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9 ]"));
 
   /// Returns a text input formatter that converts input to lowercase.
   static TextInputFormatter get lowercase => _LowerCaseTextFormatter();
@@ -43,8 +41,7 @@ class InputFormat {
   ///   inputFormatters: [InputFormat.currency()],
   /// )
   /// ```
-  static TextInputFormatter currency([String separator = ',']) =>
-      _ThousandFormatter(separator: separator);
+  static TextInputFormatter currency([String separator = ',']) => _ThousandFormatter(separator: separator);
 
   /// Returns a text input formatter that allows input based on a custom regular expression pattern.
   ///
@@ -57,14 +54,12 @@ class InputFormat {
   ///   inputFormatters: [InputFormat.allowRegex('[a-zA-Z]')],
   /// )
   /// ```
-  static TextInputFormatter allowRegex(String pattern) =>
-      FilteringTextInputFormatter.allow(RegExp(pattern));
+  static TextInputFormatter allowRegex(String pattern) => FilteringTextInputFormatter.allow(RegExp(pattern));
 }
 
 class _LowerCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text.toLowerCase(),
       selection: newValue.selection,
@@ -74,8 +69,7 @@ class _LowerCaseTextFormatter extends TextInputFormatter {
 
 class _UpperCaseTextFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     return TextEditingValue(
       text: newValue.text.toUpperCase(),
       selection: newValue.selection,
@@ -86,13 +80,11 @@ class _UpperCaseTextFormatter extends TextInputFormatter {
 // UCWORDS FORMATTER
 class _UcwordsFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     } else if (newValue.text.compareTo(oldValue.text) != 0) {
-      int selectionIndexFromTheRight =
-          newValue.text.length - newValue.selection.extentOffset;
+      int selectionIndexFromTheRight = newValue.text.length - newValue.selection.extentOffset;
       String newString = newValue.text.ucwords;
 
       return TextEditingValue(
@@ -110,13 +102,11 @@ class _UcwordsFormatter extends TextInputFormatter {
 // UCFIRST FORMATTER
 class _UcfirstFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     } else if (newValue.text.compareTo(oldValue.text) != 0) {
-      int selectionIndexFromTheRight =
-          newValue.text.length - newValue.selection.extentOffset;
+      int selectionIndexFromTheRight = newValue.text.length - newValue.selection.extentOffset;
       String newString = newValue.text.ucfirst;
 
       return TextEditingValue(
@@ -137,32 +127,25 @@ class _ThousandFormatter extends TextInputFormatter {
   _ThousandFormatter({this.separator = ','});
 
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     if (newValue.text.isEmpty) {
       return newValue.copyWith(text: '');
     } else if (newValue.text.compareTo(oldValue.text) != 0) {
       int max = 19;
       bool isMax = newValue.text.length >= max;
 
-      int selectionIndexFromTheRight =
-          newValue.text.length - newValue.selection.extentOffset;
+      int selectionIndexFromTheRight = newValue.text.length - newValue.selection.extentOffset;
 
       String convert(String value) {
-        return NumberFormat.currency(
-                locale: 'id_ID', decimalDigits: 0, symbol: '')
-            .format(value.getNumeric);
+        return NumberFormat.currency(locale: 'id_ID', decimalDigits: 0, symbol: '').format(value.getNumeric);
       }
 
-      String newString =
-          convert(isMax ? newValue.text.substring(0, max) : newValue.text);
+      String newString = convert(isMax ? newValue.text.substring(0, max) : newValue.text);
 
       return TextEditingValue(
         text: newString.replaceAll('.', separator.isEmpty ? ',' : separator),
         selection: TextSelection.collapsed(
-          offset: isMax
-              ? newString.length
-              : newString.length - selectionIndexFromTheRight,
+          offset: isMax ? newString.length : newString.length - selectionIndexFromTheRight,
         ),
       );
     } else {

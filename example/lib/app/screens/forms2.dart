@@ -17,12 +17,12 @@ class Forms2 extends StatelessWidget {
     //   forms.fill({'name': 'John Doe'});
     // });
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Form X'),
-      ),
-      body: Wrapper(
-        child: LzListView(
+    return Wrapper(
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Form X'),
+        ),
+        body: LzListView(
           children: [
             LxForm.input(
                 label: 'Full Name',
@@ -34,7 +34,16 @@ class Forms2 extends StatelessWidget {
                 ),
                 model: forms['name'],
                 type: FormType.topAligned,
+                formatters: [Formatter.email],
+                onChange: (value) {
+                  forms.enable('email', value.length > 3).setText(['email', 'phone'], value);
+                },
                 indicator: true),
+
+            LxForm.radio(
+                label: 'Hobbies', options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing']),
+            // .config(disabled: [0, 1], active: 1)
+            // Option.list([], value: [0, 1, 2, 3, 4, 5]),
 
             LxForm.input(
                 label: 'Email Address',
@@ -42,6 +51,7 @@ class Forms2 extends StatelessWidget {
                 style: FormStyle(radius: 8, borderColor: Colors.black38),
                 type: FormType.grouped,
                 model: forms['email'],
+                disabled: true,
                 indicator: true),
 
             LxForm.input(
@@ -50,18 +60,17 @@ class Forms2 extends StatelessWidget {
                 style: FormStyle(radius: 8, borderColor: Colors.black38),
                 type: FormType.underlined,
                 model: forms['address'],
+                disabled: true,
                 indicator: true),
 
             LxForm.input(
-                label: 'Top Inner',
-                hint: 'This is top-inner input',
-                style: FormStyle(
-                  radius: 8,
-                  borderColor: Colors.black38,
-                ),
+                label: 'Phone Number',
+                hint: 'Input your phone number',
+                style: FormStyle(radius: 8, borderColor: Colors.orange, textColor: Colors.orange),
                 type: FormType.topInner,
                 model: forms['phone'],
-                keyboard: Tit.number,
+                keyboard: Tit.phone,
+                maxLength: 15,
                 indicator: true),
 
             LxForm.input(
@@ -105,14 +114,14 @@ class Forms2 extends StatelessWidget {
             )
           ],
         ),
+        bottomNavigationBar: LzButton(
+            text: 'Submit',
+            onTap: (_) {
+              final form = forms.validate(required: ['*'], alert: FormAlert.text);
+              logg(form.ok);
+              logg(form.error?.message);
+            }).theme1(),
       ),
-      bottomNavigationBar: LzButton(
-          text: 'Submit',
-          onTap: (_) {
-            final form = forms.validate(required: ['*'], alert: FormAlert.text);
-            logg(form.ok);
-            logg(form.error?.message);
-          }).theme1(),
     );
   }
 }

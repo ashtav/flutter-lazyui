@@ -85,4 +85,22 @@ extension CustomRowExtension on Row {
         textBaseline: textBaseline,
         children: children,
       );
+
+  /// ``` dart
+  /// // This extension is used to set the main axis size of a Row to min.
+  /// // This means that the Row will take up the minimum amount of space
+  ///
+  /// Row(
+  ///  children: [ Text('Hello'), Text('World') ]
+  /// ).min,
+
+  Row get min => Row(
+        crossAxisAlignment: crossAxisAlignment,
+        mainAxisAlignment: mainAxisAlignment,
+        mainAxisSize: MainAxisSize.min,
+        textDirection: textDirection,
+        verticalDirection: verticalDirection,
+        textBaseline: textBaseline,
+        children: children,
+      );
 }

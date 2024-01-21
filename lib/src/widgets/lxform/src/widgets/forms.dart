@@ -1,5 +1,7 @@
 library forms;
 
+import 'dart:math';
+
 import 'package:flutter/material.dart' hide Radio, Checkbox, Switch;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -7,10 +9,12 @@ import 'package:lazyui/src/widgets/lxform/src/utils/attribute_extractor.dart';
 
 import '../models/form_error.dart';
 import '../models/form_message.dart';
+import '../models/radio_model.dart';
 import '../notifiers/form_notifier.dart';
 import 'form_feedback.dart';
 
 part 'form_controls/input.dart';
+part 'form_controls/radio.dart';
 
 class LxForm {
   final bool ok;
@@ -282,7 +286,7 @@ class LxForm {
     return LxForm(ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.controller)).toMap());
   }
 
-  // form-controls
+  // input form-controls
   static Input2 input(
           {String? label,
           String? hint,
@@ -292,7 +296,6 @@ class LxForm {
           bool obsecure = false,
           bool obsecureToggle = false,
           bool disabled = false,
-          bool readonly = false,
           bool autofocus = false,
           TextInputType? keyboard,
           List<TextInputFormatter> formatters = const [],
@@ -312,7 +315,6 @@ class LxForm {
         obsecure: obsecure,
         obsecureToggle: obsecureToggle,
         disabled: disabled,
-        readonly: readonly,
         autofocus: autofocus,
         keyboard: keyboard,
         formatters: formatters,
@@ -323,5 +325,20 @@ class LxForm {
         node: node,
         maxLength: maxLength,
         maxLines: maxLines,
+      );
+
+  // radio form-controls
+  static Radio2 radio({
+    String? label,
+    FormType? type,
+    FormStyle? style,
+    bool disabled = false,
+    required List<String> options,
+    Function(String value)? onChange,
+    FormModelx? model,
+  }) =>
+      Radio2(
+        label: label,
+        options: options,
       );
 }
