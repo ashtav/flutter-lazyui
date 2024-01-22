@@ -1,24 +1,71 @@
 part of forms;
 
-class Radio2 extends StatelessWidget {
+class Radio2 extends StatelessWidget with LxFormMixin {
   final String? label;
   final List<String> options;
-  const Radio2({super.key, this.label, required this.options});
+  final List<dynamic> values;
+  final FormModelx? model;
+  final List<dynamic> disabled;
+  final FormType? type;
+  final RadioStyle? style;
+
+  const Radio2(
+      {super.key,
+      this.label,
+      required this.options,
+      this.values = const [],
+      this.model,
+      this.disabled = const [],
+      this.type,
+      this.style});
 
   @override
   Widget build(BuildContext context) {
-    final notifier = FormNotifier();
+    final attr = getAttribute(context);
+    RadioStyle? style = attr.radioStyle ?? this.style;
 
-    Widget labelWidget = Text(label ?? '');
+    final notifier = FormNotifier();
+    notifier.controller = model?.controller ?? TextEditingController();
+
+    Widget labelWidget = Text(label ?? '', style: Gfont.fs14);
 
     // generate options
     List<RadioModel> options = this.options.generate((item, i) {
-      return RadioModel(item, value: i);
+      bool isListInt = this.disabled.every((e) => e is int);
+      bool isListString = this.disabled.every((e) => e is String);
+
+      bool disabled = isListInt
+          ? this.disabled.contains(i)
+          : isListString
+              ? this.disabled.contains(item)
+              : false;
+
+      final value = values.length <= i ? null : values[i];
+
+      // return radio model
+      return RadioModel(item, value: value, disabled: disabled);
     });
+
+    notifier.radioList = options;
+
+    // if values length is not equal to options length, show warning
+    if (values.isNotEmpty && values.length != options.length) {
+      logg('Warning: Radio values length is not equal to options length', name: 'LxForm');
+    }
+
+    // get radius
+    double radius = style?.radius ?? LazyUi.radius;
+
+    // get border color
+    Color borderColor = style?.borderColor ?? Colors.black12;
+
+    // get background color
+    Color backgroundColor = style?.background ?? Colors.white;
 
     return Container(
       margin: Ei.only(b: 16),
-      decoration: BoxDecoration(color: Colors.white, border: Br.all(), borderRadius: Br.radius(8)),
+      decoration:
+          BoxDecoration(color: backgroundColor, border: Br.all(color: borderColor), borderRadius: Br.radius(radius)),
       padding: Ei.sym(h: 16, v: 10),
       child: Column(
         children: [
@@ -26,13 +73,16 @@ class Radio2 extends StatelessWidget {
 
           // options
           notifier.watch((state) {
+            final radioList = state.radioList;
+
             return Wrap(
               alignment: Wa.start,
-              children: options.generate((item, i) {
-                bool active = state.option?.toMap().toString() == item.toMap().toString();
-                return _Bullet(item.label, active, () {
+              children: radioList.generate((item, i) {
+                bool active = state.selectedRadio?.toMap().toString() == item.toMap().toString();
+
+                return _Bullet(item.label, active, item.disabled, () {
                   state.setOption(item);
-                });
+                }, style: style);
               }),
             );
           })
@@ -44,9 +94,10 @@ class Radio2 extends StatelessWidget {
 
 class _Bullet extends StatelessWidget {
   final String label;
-  final bool active;
+  final bool active, disabled;
   final Function() onTap;
-  const _Bullet(this.label, this.active, this.onTap);
+  final RadioStyle? style;
+  const _Bullet(this.label, this.active, this.disabled, this.onTap, {this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +109,13 @@ class _Bullet extends StatelessWidget {
             height: 20,
             margin: Ei.only(r: 10),
             decoration: BoxDecoration(
-                border: Br.all(color: active ? Colors.blueAccent : Colors.black38, width: active ? 5 : 2),
+                border: Br.all(
+                    color:
+                        active ? (style?.activeColor ?? Colors.blueAccent) : (style?.inactiveColor ?? Colors.black38),
+                    width: active ? 5 : 2),
                 borderRadius: BorderRadius.circular(50))),
-        Text(label)
+        Text(label, style: Gfont.color(style?.textColor ?? Colors.black87))
       ],
-    ).min.margin(r: 15, b: 5).onTap(() => onTap());
+    ).min.margin(r: 15, b: 5).onTap(() => onTap()).lz.disabled(disabled);
   }
 }

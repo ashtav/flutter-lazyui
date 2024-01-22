@@ -39,10 +39,14 @@ class FormNotifier extends ChangeNotifier {
   void setState() => notifyListeners();
 
   // radio button
-  RadioModel? option;
+  RadioModel? selectedRadio;
+  List<RadioModel> radioList = [];
 
   void setOption(RadioModel value) {
-    option = value;
+    selectedRadio = value;
+
+    // if value is not set, use label instead
+    controller.text = (value.value ?? value.label).toString();
     notifyListeners();
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormController {
-  final forms = LxForm.make(['name', 'email', 'address', 'phone']);
+  final forms = LxForm.make(['name', 'hobby', 'province', 'city', 'email', 'address', 'phone']);
 }
 
 class Forms2 extends StatelessWidget {
@@ -41,7 +41,14 @@ class Forms2 extends StatelessWidget {
                 indicator: true),
 
             LxForm.radio(
-                label: 'Hobbies', options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing']),
+                label: 'Select Hobby',
+                options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
+                disabled: [0,1],
+                style: RadioStyle(
+                  borderColor: Colors.black38,
+                  activeColor: Colors.orange
+                ),
+                model: forms['hobby']),
             // .config(disabled: [0, 1], active: 1)
             // Option.list([], value: [0, 1, 2, 3, 4, 5]),
 
@@ -118,8 +125,7 @@ class Forms2 extends StatelessWidget {
             text: 'Submit',
             onTap: (_) {
               final form = forms.validate(required: ['*'], alert: FormAlert.text);
-              logg(form.ok);
-              logg(form.error?.message);
+              logg(form.value);
             }).theme1(),
       ),
     );

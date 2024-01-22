@@ -1,9 +1,9 @@
 class RadioModel {
   final String label;
   final dynamic value;
-  final List<Object> disabled;
+  final bool disabled;
 
-  RadioModel(this.label, {this.value, this.disabled = const []});
+  RadioModel(this.label, {this.value, this.disabled = false});
 
   Map<String, dynamic> toMap() {
     return {

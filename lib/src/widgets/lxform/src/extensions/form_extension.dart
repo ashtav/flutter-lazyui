@@ -1,4 +1,5 @@
 import 'package:lazyui/lazyui.dart';
+
 import '../models/form_message.dart';
 
 extension LxFormExtension on Map<String, FormModelx> {
@@ -30,7 +31,7 @@ extension LxFormExtension on Map<String, FormModelx> {
 
         notifier.controller.text = '';
         notifier.extra = null;
-        notifier.option = null;
+        notifier.selectedRadio = null;
         notifier.textLength = 0;
       }
     }
@@ -48,7 +49,7 @@ extension LxFormExtension on Map<String, FormModelx> {
       if (containsKey(e)) {
         this[e]!.controller.text = '';
         this[e]!.notifier.extra = null;
-        this[e]!.notifier.option = null;
+        this[e]!.notifier.selectedRadio = null;
       }
     }
   }

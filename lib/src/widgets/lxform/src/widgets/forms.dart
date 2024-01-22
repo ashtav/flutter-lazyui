@@ -1,7 +1,5 @@
 library forms;
 
-import 'dart:math';
-
 import 'package:flutter/material.dart' hide Radio, Checkbox, Switch;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -268,11 +266,14 @@ class LxForm {
           }
         }
 
-        // scroll to the error field
-        GlobalKey? key = globalKeys[errorKey];
-        if (key != null && key.currentContext != null) {
-          Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
-        }
+        Utils.timer((){
+          // scroll to the error field
+          GlobalKey? key = globalKeys[errorKey];
+          logg('key: $key, currentContext: ${key?.currentContext}, $errorKey');
+          if (key != null && key.currentContext != null) {
+            Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+          }
+        }, 1.s);
 
         return LxForm(
             ok: false,
@@ -330,15 +331,21 @@ class LxForm {
   // radio form-controls
   static Radio2 radio({
     String? label,
-    FormType? type,
-    FormStyle? style,
-    bool disabled = false,
     required List<String> options,
+    List<dynamic>? values,
     Function(String value)? onChange,
     FormModelx? model,
+    List<dynamic> disabled = const [],
+    FormType? type,
+    RadioStyle? style,
   }) =>
       Radio2(
         label: label,
         options: options,
+        values: values ?? [],
+        model: model,
+        disabled: disabled,
+        type: type,
+        style: style,
       );
 }
