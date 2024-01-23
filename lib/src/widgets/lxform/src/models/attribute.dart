@@ -7,7 +7,7 @@ class Attribute {
   final FormType? type;
   final FormStyle? style;
   final RadioStyle? radioStyle;
-  final bool isGrouped;
+  final bool isWrapped, isGrouped;
 
-  const Attribute({this.type, this.style, this.isGrouped = false, this.radioStyle});
+  const Attribute({this.type, this.style, this.isWrapped = false, this.isGrouped = false, this.radioStyle});
 }

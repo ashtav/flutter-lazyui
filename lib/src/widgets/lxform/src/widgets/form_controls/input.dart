@@ -74,6 +74,11 @@ class Input2 extends StatelessWidget with LxFormMixin {
         notifier.controller.addListener(() {
           String text = notifier.controller.text;
           notifier.setLength(text.length);
+
+          // hide error message when user typing
+          if(!notifier.isValid && text.trim().isNotEmpty){
+            notifier.setMessage('', true);
+          }
         });
       }
     });
@@ -105,7 +110,7 @@ class Input2 extends StatelessWidget with LxFormMixin {
     Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
 
     // create indicator widget
-    Widget indicatorWidget = indicator
+    Widget indicatorWidget = indicator && !attr.isGrouped
         ? notifier.watch((state) => Text('${state.textLength}/$maxLength', style: Gfont.fs14.fcolor(textColor)))
         : const None();
 
@@ -129,7 +134,7 @@ class Input2 extends StatelessWidget with LxFormMixin {
         top: 0,
         child: Stack(
           children: [
-            _TopInnerLineLabel(color: 'fafafa'.hex),
+            getTopInnerLineLabel(color: 'fafafa'.hex),
             labelWidget.padding(h: 5),
           ],
         ));
@@ -140,7 +145,7 @@ class Input2 extends StatelessWidget with LxFormMixin {
         top: 0,
         child: Stack(
           children: [
-            _TopInnerLineLabel(color: 'fafafa'.hex),
+            getTopInnerLineLabel(color: 'fafafa'.hex),
             indicatorWidget.padding(h: 5),
           ],
         ));
@@ -266,26 +271,8 @@ class Input2 extends StatelessWidget with LxFormMixin {
         else
           isUnderlined && notifier.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget,
 
-        notifier.watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage))
+        notifier.watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
       ],
     ).start.margin(b: attr.isGrouped ? 0 : 16);
-  }
-}
-
-class _TopInnerLineLabel extends StatelessWidget {
-  final Color? color;
-  const _TopInnerLineLabel({this.color});
-
-  @override
-  Widget build(BuildContext context) {
-    return Poslign(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        height: 3,
-        color: color ?? 'fafafa'.hex,
-        width: context.width,
-        margin: Ei.only(t: 1.5),
-      ),
-    );
   }
 }

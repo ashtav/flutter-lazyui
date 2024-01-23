@@ -8,6 +8,7 @@ import 'package:lazyui/src/widgets/lxform/src/utils/attribute_extractor.dart';
 import '../models/form_error.dart';
 import '../models/form_message.dart';
 import '../models/radio_model.dart';
+import '../models/radio_value.dart';
 import '../notifiers/form_notifier.dart';
 import 'form_feedback.dart';
 
@@ -266,14 +267,14 @@ class LxForm {
           }
         }
 
-        Utils.timer((){
-          // scroll to the error field
-          GlobalKey? key = globalKeys[errorKey];
-          logg('key: $key, currentContext: ${key?.currentContext}, $errorKey');
-          if (key != null && key.currentContext != null) {
-            Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
-          }
-        }, 1.s);
+        // Utils.timer((){
+        //   // scroll to the error field
+        //   GlobalKey? key = globalKeys[errorKey];
+        //   logg('key: $key, currentContext: ${key?.currentContext}, $errorKey');
+        //   if (key != null && key.currentContext != null) {
+        //     Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+        //   }
+        // }, 1.s);
 
         return LxForm(
             ok: false,
@@ -333,19 +334,22 @@ class LxForm {
     String? label,
     required List<String> options,
     List<dynamic>? values,
-    Function(String value)? onChange,
+    dynamic initValue,
     FormModelx? model,
     List<dynamic> disabled = const [],
     FormType? type,
     RadioStyle? style,
+    Function(RadioValue value)? onChange,
   }) =>
       Radio2(
         label: label,
         options: options,
         values: values ?? [],
+        initValue: initValue,
         model: model,
         disabled: disabled,
         type: type,
         style: style,
+        onChange: onChange,
       );
 }

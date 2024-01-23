@@ -29,12 +29,12 @@ class LxFormTheme extends StatelessWidget {
           ).lz.clip(all: radius),
         );
 
-    return label == null && description == null ? childrenWidget : Column(
+    return (label == null && description == null ? childrenWidget : Column(
       children: [
-        if(label != null) label!,
+        if(label != null) label!.margin(b: description == null ? 8 : 0),
         if(description != null) Textml(description!, style: Gfont.fs14).margin(b: 15, t: 5),
         childrenWidget,
       ],
-    ).start;
+    ).start).margin(b: 16);
   }
 }

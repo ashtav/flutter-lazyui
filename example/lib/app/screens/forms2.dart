@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormController {
-  final forms = LxForm.make(['name', 'hobby', 'province', 'city', 'email', 'address', 'phone']);
+  final forms = LxForm.make(['name', 'gender', 'hobby', 'province', 'city', 'email', 'address', 'phone']);
 }
 
 class Forms2 extends StatelessWidget {
@@ -24,33 +24,35 @@ class Forms2 extends StatelessWidget {
         ),
         body: LzListView(
           children: [
-            LxForm.input(
-                label: 'Full Name',
-                hint: 'What is your name?',
-                style: FormStyle(
-                  radius: 8,
-                  borderColor: Colors.black38,
-                  suffixIcon: Ti.user,
-                ),
-                model: forms['name'],
-                type: FormType.topAligned,
-                formatters: [Formatter.email],
-                onChange: (value) {
-                  forms.enable('email', value.length > 3).setText(['email', 'phone'], value);
-                },
-                indicator: true),
+            LxFormTheme(
+              grouping: true,
+              label: Text('Name & Gender', style: Gfont.bold),
+              description: 'Please input your full name and gender.',
+              style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
+              children: [
+                LxForm.input(
+                    label: 'Full Name',
+                    hint: 'What is your name?',
+                    model: forms['name'],
+                    onChange: (value) {
+                      // forms.enable('email', value.length > 3).setText(['email', 'phone'], value);
+                      // forms.setText('hobby', 'Writing');
+                    },
+                    indicator: true),
+                LxForm.radio(
+                    label: 'Select Gender', options: ['Male', 'Female'], model: forms['gender']),
+              ],
+            ),
 
             LxForm.radio(
                 label: 'Select Hobby',
                 options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
-                disabled: [0,1],
-                style: RadioStyle(
-                  borderColor: Colors.black38,
-                  activeColor: Colors.orange
-                ),
+                initValue: 'Swimming',
+                disabled: [0, 1],
+                onChange: (value) {
+                  forms.enable('email', value.label == 'Coding');
+                },
                 model: forms['hobby']),
-            // .config(disabled: [0, 1], active: 1)
-            // Option.list([], value: [0, 1, 2, 3, 4, 5]),
 
             LxForm.input(
                 label: 'Email Address',
@@ -67,7 +69,6 @@ class Forms2 extends StatelessWidget {
                 style: FormStyle(radius: 8, borderColor: Colors.black38),
                 type: FormType.underlined,
                 model: forms['address'],
-                disabled: true,
                 indicator: true),
 
             LxForm.input(
@@ -124,7 +125,11 @@ class Forms2 extends StatelessWidget {
         bottomNavigationBar: LzButton(
             text: 'Submit',
             onTap: (_) {
-              final form = forms.validate(required: ['*'], alert: FormAlert.text);
+              final form = forms.validate(required: ['*'], alert: FormAlert.text, messages: FormMessage(
+                required: {
+                  'name': 'I am sory, we need to know your name, so please provide your valid information.'
+                }
+              ));
               logg(form.value);
             }).theme1(),
       ),

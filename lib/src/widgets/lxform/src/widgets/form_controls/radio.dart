@@ -4,30 +4,32 @@ class Radio2 extends StatelessWidget with LxFormMixin {
   final String? label;
   final List<String> options;
   final List<dynamic> values;
+  final dynamic initValue;
   final FormModelx? model;
   final List<dynamic> disabled;
   final FormType? type;
   final RadioStyle? style;
+  final Function(RadioValue value)? onChange;
 
   const Radio2(
       {super.key,
       this.label,
       required this.options,
       this.values = const [],
+      this.initValue,
       this.model,
       this.disabled = const [],
       this.type,
-      this.style});
+      this.style,
+      this.onChange});
 
   @override
   Widget build(BuildContext context) {
     final attr = getAttribute(context);
-    RadioStyle? style = attr.radioStyle ?? this.style;
+    RadioStyle? style = (attr.isWrapped ? attr.style?.radio : attr.radioStyle) ?? this.style;
 
-    final notifier = FormNotifier();
+    final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
-
-    Widget labelWidget = Text(label ?? '', style: Gfont.fs14);
 
     // generate options
     List<RadioModel> options = this.options.generate((item, i) {
@@ -48,10 +50,28 @@ class Radio2 extends StatelessWidget with LxFormMixin {
 
     notifier.radioList = options;
 
+    if (model != null) {
+      notifier.isRadio = true;
+      notifier.setOptionFindBy(initValue);
+    }
+
     // if values length is not equal to options length, show warning
     if (values.isNotEmpty && values.length != options.length) {
       logg('Warning: Radio values length is not equal to options length', name: 'LxForm');
     }
+
+    // check if label is available
+    bool hasLabel = label != null && !attr.isGrouped;
+
+    // get form type
+    FormType formType = attr.type ?? (type ?? FormType.topAligned);
+    bool isGrouped = formType == FormType.grouped;
+    bool isTopAligned = formType == FormType.topAligned;
+    bool isUnderlined = formType == FormType.underlined;
+    bool isTopInner = formType == FormType.topInner;
+
+    // get text color
+    Color textColor = style?.textColor ?? Colors.black87;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
@@ -60,16 +80,38 @@ class Radio2 extends StatelessWidget with LxFormMixin {
     Color borderColor = style?.borderColor ?? Colors.black12;
 
     // get background color
-    Color backgroundColor = style?.background ?? Colors.white;
+    Color backgroundColor = style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
 
-    return Container(
-      margin: Ei.only(b: 16),
-      decoration:
-          BoxDecoration(color: backgroundColor, border: Br.all(color: borderColor), borderRadius: Br.radius(radius)),
+    // create label widget
+    Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
+
+    // create top inner label widget
+    Widget topInnerLabelWidget = Positioned(
+        left: 12,
+        top: 0,
+        child: Stack(
+          children: [
+            getTopInnerLineLabel(color: 'fafafa'.hex),
+            labelWidget.padding(h: 5),
+          ],
+        ));
+
+    Widget radioWidget = Container(
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        border: attr.isGrouped
+            ? null
+            : isUnderlined
+                ? Br.only(['b'], color: borderColor)
+                : Br.all(color: borderColor),
+        borderRadius: isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
+      ),
       padding: Ei.sym(h: 16, v: 10),
+      width: context.width,
       child: Column(
         children: [
-          if (label != null) labelWidget.margin(b: 8),
+          if ((isGrouped || isUnderlined) && !attr.isGrouped) labelWidget.margin(b: 8),
+          if ((!hasLabel || !isGrouped || !isUnderlined)) const SizedBox(height: 5),
 
           // options
           notifier.watch((state) {
@@ -81,7 +123,13 @@ class Radio2 extends StatelessWidget with LxFormMixin {
                 bool active = state.selectedRadio?.toMap().toString() == item.toMap().toString();
 
                 return _Bullet(item.label, active, item.disabled, () {
+                  // hide error message when user select radio
+                  if (!notifier.isValid) {
+                    notifier.setMessage('', true);
+                  }
+
                   state.setOption(item);
+                  onChange?.call(RadioValue(item.label, value: item.value));
                 }, style: style);
               }),
             );
@@ -89,6 +137,33 @@ class Radio2 extends StatelessWidget with LxFormMixin {
         ],
       ).start,
     );
+
+    return Column(
+      key: model?.key,
+      children: [
+        // input label
+        if (isTopAligned)
+          Row(
+            children: [
+              labelWidget,
+            ],
+          ).between.margin(b: hasLabel ? 8 : 0),
+
+        // input field
+        if (isTopInner && hasLabel)
+          Stack(
+            children: [
+              radioWidget.margin(t: 10),
+              topInnerLabelWidget,
+            ],
+          )
+        else
+          isUnderlined && notifier.disabled ? radioWidget.lz.clip(all: radius) : radioWidget,
+
+        notifier
+            .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+      ],
+    ).start.margin(b: attr.isGrouped ? 0 : 16);
   }
 }
 

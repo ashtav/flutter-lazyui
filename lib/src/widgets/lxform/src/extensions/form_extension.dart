@@ -146,15 +146,32 @@ extension LxFormExtension on Map<String, FormModelx> {
     return this;
   }
 
-  Map<String, FormModelx> setText(Object key, String value) {
+  Map<String, FormModelx> setText(Object key, dynamic value) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {
       if (containsKey(e) && this[e] != null) {
-        this[e]!.notifier.controller.text = value;
+        final notifier = this[e]!.notifier;
+        notifier.controller.text = value.toString();
+
+        if (notifier.isRadio) {
+          notifier.setOptionFindBy(value);
+        }
       }
     }
 
     return this;
   }
+
+  // Map<String, FormModelx> setText(Object key, String value) {
+  //   List<String> keys = key is List<String> ? key : [key.toString()];
+
+  //   for (var e in keys) {
+  //     if (containsKey(e) && this[e] != null) {
+  //       this[e]!.notifier.controller.text = value;
+  //     }
+  //   }
+
+  //   return this;
+  // }
 }

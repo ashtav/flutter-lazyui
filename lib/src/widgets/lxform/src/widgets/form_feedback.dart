@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import '../models/attribute.dart';
+
 class FormFeedbackMessage extends StatelessWidget {
   final bool show;
   final String message;
-  const FormFeedbackMessage({super.key, this.show = true, this.message = ''});
+  final Attribute? attribute;
+  const FormFeedbackMessage({super.key, this.show = true, this.message = '', this.attribute});
 
   @override
   Widget build(BuildContext context) {
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    bool isGrouped = attribute?.isGrouped ?? false;
 
     return ResizedSwitched(
       show: show,
@@ -18,7 +22,7 @@ class FormFeedbackMessage extends StatelessWidget {
         child: Textr(
           message,
           style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
-          margin: Ei.only(t: 5),
+          padding: Ei.only(v: 5, l: isGrouped ? 16 : 0),
         ),
       ),
     );

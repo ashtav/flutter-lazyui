@@ -41,13 +41,24 @@ class FormNotifier extends ChangeNotifier {
   // radio button
   RadioModel? selectedRadio;
   List<RadioModel> radioList = [];
+  bool isRadio = false;
 
   void setOption(RadioModel value) {
+    if (value.label == '') return;
     selectedRadio = value;
 
     // if value is not set, use label instead
     controller.text = (value.value ?? value.label).toString();
     notifyListeners();
+  }
+
+  void setOptionFindBy(dynamic value) {
+    if (value == null) return;
+
+    final radio = radioList.firstWhere((e) => e.value == null ? e.label == value.toString() : e.value == value,
+        orElse: () => RadioModel(''));
+
+    setOption(radio);
   }
 
   @override
