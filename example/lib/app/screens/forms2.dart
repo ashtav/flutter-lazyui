@@ -40,18 +40,20 @@ class Forms2 extends StatelessWidget {
                     },
                     indicator: true),
                 LxForm.radio(
-                    label: 'Select Gender', options: ['Male', 'Female'], model: forms['gender']),
+                  label: 'Select Gender',
+                  options: ['Male', 'Female'],
+                  model: forms['gender'],
+                  onChange: (value) {
+                    forms.enable('email', value.label == 'Male');
+                  },
+                ),
               ],
             ),
 
-            LxForm.radio(
+            LxForm.checkbox(
                 label: 'Select Hobby',
                 options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
-                initValue: 'Swimming',
                 disabled: [0, 1],
-                onChange: (value) {
-                  forms.enable('email', value.label == 'Coding');
-                },
                 model: forms['hobby']),
 
             LxForm.input(
@@ -125,11 +127,12 @@ class Forms2 extends StatelessWidget {
         bottomNavigationBar: LzButton(
             text: 'Submit',
             onTap: (_) {
-              final form = forms.validate(required: ['*'], alert: FormAlert.text, messages: FormMessage(
-                required: {
-                  'name': 'I am sory, we need to know your name, so please provide your valid information.'
-                }
-              ));
+              final form = forms.validate(
+                  required: ['*'],
+                  alert: FormAlert.text,
+                  messages: FormMessage(required: {
+                    'name': 'I am sory, we need to know your name, so please provide your valid information.'
+                  }));
               logg(form.value);
             }).theme1(),
       ),

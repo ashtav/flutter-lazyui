@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/widgets/lxform/src/models/radio_model.dart';
 
+import '../models/checkbox_model.dart';
+
 class FormNotifier extends ChangeNotifier {
   TextEditingController controller = TextEditingController();
   FocusNode node = FocusNode();
@@ -59,6 +61,25 @@ class FormNotifier extends ChangeNotifier {
         orElse: () => RadioModel(''));
 
     setOption(radio);
+  }
+
+  // checkbox
+  List<CheckboxModel> checkboxList = [];
+  List<CheckboxModel> selectedCheckbox = [];
+  bool isCheckbox = false;
+
+  void setCheckbox(CheckboxModel value) {
+    if (value.label == '') return;
+
+    if (!selectedCheckbox.contains(value)) {
+      selectedCheckbox.add(value);
+    } else {
+      selectedCheckbox.removeWhere((e) => e == value);
+    }
+
+    // if value is not set, use label instead
+    controller.text = selectedCheckbox.map((e) => e.value ?? e.label).join(',');
+    notifyListeners();
   }
 
   @override

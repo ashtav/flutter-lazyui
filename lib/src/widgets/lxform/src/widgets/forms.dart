@@ -3,6 +3,7 @@ library forms;
 import 'package:flutter/material.dart' hide Radio, Checkbox, Switch;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/widgets/lxform/src/models/checkbox_model.dart';
 import 'package:lazyui/src/widgets/lxform/src/utils/attribute_extractor.dart';
 
 import '../models/form_error.dart';
@@ -14,6 +15,7 @@ import 'form_feedback.dart';
 
 part 'form_controls/input.dart';
 part 'form_controls/radio.dart';
+part 'form_controls/checkbox.dart';
 
 class LxForm {
   final bool ok;
@@ -342,6 +344,30 @@ class LxForm {
     Function(RadioValue value)? onChange,
   }) =>
       Radio2(
+        label: label,
+        options: options,
+        values: values ?? [],
+        initValue: initValue,
+        model: model,
+        disabled: disabled,
+        type: type,
+        style: style,
+        onChange: onChange,
+      );
+
+  // checkbox form-controls
+  static Checkbox2 checkbox({
+    String? label,
+    required List<String> options,
+    List<dynamic>? values,
+    dynamic initValue,
+    FormModelx? model,
+    List<dynamic> disabled = const [],
+    FormType? type,
+    RadioStyle? style,
+    Function(RadioValue value)? onChange,
+  }) =>
+      Checkbox2(
         label: label,
         options: options,
         values: values ?? [],
