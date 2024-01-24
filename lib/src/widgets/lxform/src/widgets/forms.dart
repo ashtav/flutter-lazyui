@@ -6,16 +6,15 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/widgets/lxform/src/models/checkbox_model.dart';
 import 'package:lazyui/src/widgets/lxform/src/utils/attribute_extractor.dart';
 
+import '../models/checkbox_value.dart';
 import '../models/form_error.dart';
-import '../models/form_message.dart';
 import '../models/radio_model.dart';
-import '../models/radio_value.dart';
 import '../notifiers/form_notifier.dart';
 import 'form_feedback.dart';
 
+part 'form_controls/checkbox.dart';
 part 'form_controls/input.dart';
 part 'form_controls/radio.dart';
-part 'form_controls/checkbox.dart';
 
 class LxForm {
   final bool ok;
@@ -360,12 +359,12 @@ class LxForm {
     String? label,
     required List<String> options,
     List<dynamic>? values,
-    dynamic initValue,
+    List<dynamic> initValue = const [],
     FormModelx? model,
     List<dynamic> disabled = const [],
     FormType? type,
     RadioStyle? style,
-    Function(RadioValue value)? onChange,
+    Function(List<CheckboxValue> value)? onChange,
   }) =>
       Checkbox2(
         label: label,

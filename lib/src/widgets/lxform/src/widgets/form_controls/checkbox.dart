@@ -9,7 +9,7 @@ class Checkbox2 extends StatelessWidget with LxFormMixin {
   final List<dynamic> disabled;
   final FormType? type;
   final RadioStyle? style;
-  final Function(RadioValue value)? onChange;
+  final Function(List<CheckboxValue> value)? onChange;
 
   const Checkbox2(
       {super.key,
@@ -52,12 +52,12 @@ class Checkbox2 extends StatelessWidget with LxFormMixin {
 
     if (model != null) {
       notifier.isCheckbox = true;
-      // notifier.setOptionFindBy(initValue);
+      notifier.setCheckboxFindBy(initValue);
     }
 
     // if values length is not equal to options length, show warning
     if (values.isNotEmpty && values.length != options.length) {
-      logg('Warning: Radio values length is not equal to options length', name: 'LxForm');
+      logg('Warning: Checkbox values length is not equal to options length', name: 'LxForm');
     }
 
     // check if label is available
@@ -129,7 +129,7 @@ class Checkbox2 extends StatelessWidget with LxFormMixin {
                   }
 
                   state.setCheckbox(item);
-                  // onChange?.call(RadioValue(item.label, value: item.value));
+                  onChange?.call(notifier.selectedCheckbox.map((e) => CheckboxValue(e.label, value: e.value)).toList());
                 }, style: style);
               }),
             );

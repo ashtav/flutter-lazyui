@@ -25,7 +25,8 @@ class LzPicker {
       String confirmLabel = 'Confirm',
       bool useShortMonths = false,
       DatePickerType type = DatePickerType.all,
-      AlignmentGeometry? alignment}) async {
+      AlignmentGeometry? alignment,
+      Function(DateTime value)? onSelect}) async {
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       logg('First date must be smaller than last date', name: 'Pickers');
       return null;
@@ -45,6 +46,7 @@ class LzPicker {
         safeArea: false,
         isScrollControlled: true);
 
+    if (result != null && onSelect != null) onSelect(result);
     return result;
   }
 
@@ -52,14 +54,13 @@ class LzPicker {
   | TIME PICKER
   ------------------------------------ */
 
-  static Future<DateTime?> timePicker(
-    BuildContext context, {
-    DateTime? initialDate,
-    DateTime? minDate,
-    DateTime? maxDate,
-    String? title,
-    String confirmLabel = 'Confirm',
-  }) async {
+  static Future<DateTime?> timePicker(BuildContext context,
+      {DateTime? initialDate,
+      DateTime? minDate,
+      DateTime? maxDate,
+      String? title,
+      String confirmLabel = 'Confirm',
+      Function(DateTime value)? onSelect}) async {
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       logg('First date must be smaller than last date', name: 'Pickers');
       return null;
@@ -67,15 +68,12 @@ class LzPicker {
 
     DateTime? result = await context.bottomSheet(
         CupertinoTimePickerWidget(
-            initialDate: initialDate,
-            minDate: minDate,
-            maxDate: maxDate,
-            title: title,
-            confirmLabel: confirmLabel),
+            initialDate: initialDate, minDate: minDate, maxDate: maxDate, title: title, confirmLabel: confirmLabel),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);
 
+    if (result != null && onSelect != null) onSelect(result);
     return result;
   }
 
@@ -90,6 +88,7 @@ class LzPicker {
     DateTime? maxDate,
     String? title,
     String confirmLabel = 'Confirm',
+    Function(DateTime value)? onSelect,
   }) async {
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       logg('First date must be smaller than last date', name: 'Pickers');
@@ -98,15 +97,12 @@ class LzPicker {
 
     DateTime? result = await context.bottomSheet(
         DateTimeSelector(
-            initialDate: initialDate,
-            minDate: minDate,
-            maxDate: maxDate,
-            title: title,
-            confirmLabel: confirmLabel),
+            initialDate: initialDate, minDate: minDate, maxDate: maxDate, title: title, confirmLabel: confirmLabel),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);
 
+    if (result != null && onSelect != null) onSelect(result);
     return result;
   }
 }

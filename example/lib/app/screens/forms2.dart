@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormController {
-  final forms = LxForm.make(['name', 'gender', 'hobby', 'province', 'city', 'email', 'address', 'phone']);
+  final forms = LxForm.make(['name', 'gender', 'birthdate', 'hobby', 'province', 'city', 'email', 'address', 'phone']);
 }
 
 class Forms2 extends StatelessWidget {
@@ -45,16 +45,28 @@ class Forms2 extends StatelessWidget {
                   model: forms['gender'],
                   onChange: (value) {
                     forms.enable('email', value.label == 'Male');
+                    forms.setValue('hobby', ['Coding', 'Reading']);
                   },
                 ),
               ],
             ),
 
-            LxForm.checkbox(
-                label: 'Select Hobby',
-                options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
-                disabled: [0, 1],
-                model: forms['hobby']),
+            LxFormTheme(grouping: true, children: [
+              LxForm.input(
+                hint: 'Please input your date of birth',
+                model: forms['birthdate'],
+                style: FormStyle(suffixIcon: Ti.calendarEvent),
+                onTap: (control) {
+                  LzPicker.datePicker(context, initialDate: control.text.toDate(), onSelect: (value) {
+                    control.text = value.format('dd/MM/yyyy');
+                  });
+                },
+              ),
+              LxForm.checkbox(
+                  options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
+                  disabled: [0, 1],
+                  model: forms['hobby']),
+            ]),
 
             LxForm.input(
                 label: 'Email Address',

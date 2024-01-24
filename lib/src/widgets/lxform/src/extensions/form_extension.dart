@@ -1,7 +1,5 @@
 import 'package:lazyui/lazyui.dart';
 
-import '../models/form_message.dart';
-
 extension LxFormExtension on Map<String, FormModelx> {
   /// ``` dart
   /// final forms = LzForm.make(['name', 'email', 'password']]);
@@ -146,32 +144,33 @@ extension LxFormExtension on Map<String, FormModelx> {
     return this;
   }
 
-  Map<String, FormModelx> setText(Object key, dynamic value) {
+  Map<String, FormModelx> setValue(Object key, dynamic value) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {
       if (containsKey(e) && this[e] != null) {
         final notifier = this[e]!.notifier;
-        notifier.controller.text = value.toString();
+
+        // check if value is List<String>
+        bool isListString = value is List && value.every((e) => e is String);
+
+        // if value is List<String>, join the values with comma
+        notifier.controller.text = isListString ? value.join(', ') : value.toString();
 
         if (notifier.isRadio) {
           notifier.setOptionFindBy(value);
+        }
+
+        else if(notifier.isCheckbox) {
+          if(value is List) {
+            notifier.setCheckboxFindBy(value);
+          } else {
+            logg('Invalid value type for checkbox, expected List', name: 'LxForm');
+          }
         }
       }
     }
 
     return this;
   }
-
-  // Map<String, FormModelx> setText(Object key, String value) {
-  //   List<String> keys = key is List<String> ? key : [key.toString()];
-
-  //   for (var e in keys) {
-  //     if (containsKey(e) && this[e] != null) {
-  //       this[e]!.notifier.controller.text = value;
-  //     }
-  //   }
-
-  //   return this;
-  // }
 }

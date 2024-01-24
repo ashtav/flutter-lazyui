@@ -69,7 +69,7 @@ class FormNotifier extends ChangeNotifier {
   bool isCheckbox = false;
 
   void setCheckbox(CheckboxModel value) {
-    if (value.label == '') return;
+    if (value.label.trim().isEmpty) return;
 
     if (!selectedCheckbox.contains(value)) {
       selectedCheckbox.add(value);
@@ -78,7 +78,26 @@ class FormNotifier extends ChangeNotifier {
     }
 
     // if value is not set, use label instead
-    controller.text = selectedCheckbox.map((e) => e.value ?? e.label).join(',');
+    controller.text = selectedCheckbox.map((e) => e.value ?? e.label).join(', ');
+    notifyListeners();
+  }
+
+  void setCheckboxFindBy(List value) {
+    selectedCheckbox = [];
+
+    for (var f in value) {
+
+      // find checkbox by checkbox value if available, otherwise find by label
+      final checkbox = checkboxList.firstWhere((e) => e.value == null ? e.label == f.toString() : e.value == f,
+          orElse: () => CheckboxModel(''));
+
+      if (checkbox.label.trim().isNotEmpty) {
+        selectedCheckbox.add(checkbox);
+      }
+    }
+
+    // set text editing controller
+    controller.text = selectedCheckbox.map((e) => e.value ?? e.label).join(', ');
     notifyListeners();
   }
 

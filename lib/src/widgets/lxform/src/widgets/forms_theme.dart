@@ -8,7 +8,8 @@ class LxFormTheme extends StatelessWidget {
   final FormType? type;
   final FormStyle? style;
   final bool grouping;
-  const LxFormTheme({super.key, this.label, this.description, this.children = const [], this.type, this.style, this.grouping = false});
+  final double? spacing;
+  const LxFormTheme({super.key, this.label, this.description, this.children = const [], this.type, this.style, this.grouping = false, this.spacing});
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,6 @@ class LxFormTheme extends StatelessWidget {
         if(description != null) Textml(description!, style: Gfont.fs14).margin(b: 15, t: 5),
         childrenWidget,
       ],
-    ).start).margin(b: 16);
+    ).start).margin(b: spacing ?? 16);
   }
 }

@@ -182,6 +182,7 @@ extension LzNullableStringExtension on String? {
         symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
+  /// Support yyyy-MM-dd, dd-MM-yyyy format, with - or / separator
   /// ``` dart
   /// // to convert it to local, the date format must be like this: 2023-07-13T07:05:30.000000Z
   /// // and you have to import 'package:intl/date_symbol_data_local.dart'; in your main.dart
@@ -190,7 +191,6 @@ extension LzNullableStringExtension on String? {
   /// // to convert it to DateTime only, use like this:
   /// "2023-02-10 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
   /// "10-02-2023 00:00:00".toDate(); // DateTime(2023, 2, 10, 0, 0, 0)
-  /// // Support yyyy-MM-dd, dd-MM-yyyy format, with - or / separator
   /// ```
   DateTime toDate({bool toLocal = false}) {
     try {
