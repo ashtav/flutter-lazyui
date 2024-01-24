@@ -9,12 +9,15 @@ import 'package:lazyui/src/widgets/lxform/src/utils/attribute_extractor.dart';
 import '../models/checkbox_value.dart';
 import '../models/form_error.dart';
 import '../models/radio_model.dart';
+import '../models/select_value.dart';
 import '../notifiers/form_notifier.dart';
+import 'form_controls/switches.dart';
 import 'form_feedback.dart';
 
 part 'form_controls/checkbox.dart';
 part 'form_controls/input.dart';
 part 'form_controls/radio.dart';
+part 'form_controls/select.dart';
 
 class LxForm {
   final bool ok;
@@ -363,7 +366,7 @@ class LxForm {
     FormModelx? model,
     List<dynamic> disabled = const [],
     FormType? type,
-    RadioStyle? style,
+    CheckboxStyle? style,
     Function(List<CheckboxValue> value)? onChange,
   }) =>
       Checkbox2(
@@ -376,5 +379,38 @@ class LxForm {
         type: type,
         style: style,
         onChange: onChange,
+      );
+
+  // switch form-controls
+  static Switches switches(
+          {String? label,
+          SwitchStyle? style,
+          dynamic Function(bool)? onChange,
+          bool initValue = false,
+          bool reversed = false}) =>
+      Switches(label: label, style: style, onChange: onChange, initValue: initValue, reversed: reversed);
+
+  // select form-controls
+  static Select2 select({
+    String? label,
+    String? hint,
+    List<CRSOption> options = const [],
+    FormType? type,
+    FormStyle? style,
+    bool disabled = false,
+    Function(TextEditingController control)? onTap,
+    Function(SelectValue value)? onChange,
+    FormModelx? model,
+  }) =>
+      Select2(
+        label: label,
+        hint: hint,
+        options: options,
+        type: type,
+        style: style,
+        disabled: disabled,
+        onTap: onTap,
+        onChange: onChange,
+        model: model,
       );
 }

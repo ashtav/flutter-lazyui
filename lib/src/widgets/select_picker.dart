@@ -85,12 +85,7 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
 
   double radius = LazyUi.radius;
   BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: 0, tr: 0);
-  double magnification = 1,
-      diameterRatio = 1,
-      squeeze = 1,
-      itemExtent = 40,
-      height = 300,
-      maxLines = 1;
+  double magnification = 1, diameterRatio = 1, squeeze = 1, itemExtent = 40, height = 300, maxLines = 1;
 
   double toDecimal(double value) {
     return value >= 1000 ? .4 : value / pow(10, value.ceil().toString().length);
@@ -99,8 +94,7 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
   void onInitials() {
     borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
-    int i = widget.options.indexWhere(
-        (e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
+    int i = widget.options.indexWhere((e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
     i = (i == -1 ? 0 : i);
 
     // set initial index
@@ -136,24 +130,32 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
     squeeze = 1.2;
     itemExtent = 40 * maxLines;
 
-    height = widget.fullScreen ? context.height : 300;
+    double defaultH = (context.height / 2) - 100;
+
+    height = widget.fullScreen ? context.height : defaultH;
 
     if (maxLines > 2) {
       height += (20 * maxLines);
     }
 
     if (widget.height != null && !widget.fullScreen) {
-      height = widget.height! < 300 ? 300 : widget.height!;
+      height = widget.height! < defaultH ? defaultH : widget.height!;
     }
 
     notifier.setHeight(height);
+
+    // get current option and check disabled
+    final option = widget.options[i];
+    notifier.setDisabled(option.disabled);
   }
 
   @override
   void initState() {
     super.initState();
 
-    onInitials();
+    Bindings.onRendered(() {
+      onInitials();
+    });
   }
 
   @override
@@ -178,8 +180,7 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
               child: notifier.watch((state) => AnimatedContainer(
                     duration: 150.ms,
                     height: state.height,
-                    decoration: BoxDecoration(
-                        color: Colors.white, borderRadius: borderRadius),
+                    decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
                     child: SafeArea(
                       top: false,
                       child: Column(
@@ -195,8 +196,7 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                                 scrollController: notifier.scroll,
                                 selectionOverlay: Container(
                                   alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                      border: Br.only(['b', 't'])),
+                                  decoration: BoxDecoration(border: Br.only(['b', 't'])),
                                 ),
 
                                 // This is called when selected item is changed.
@@ -208,32 +208,30 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                                     if (notifier.values.isNotEmpty) {
                                       notifier.result = {
                                         'option': notifier.options[i],
-                                        'value': notifier.values.length < i
-                                            ? null
-                                            : notifier.values[i]
+                                        'value': notifier.values.length < i ? null : notifier.values[i]
                                       };
                                     } else {
-                                      notifier.result = {
-                                        'option': notifier.options[i]
-                                      };
+                                      notifier.result = {'option': notifier.options[i]};
                                     }
                                   }
+
+                                  notifier.setDisabled(widget.options[selectedItem].disabled);
                                 },
-                                children: List<Widget>.generate(
-                                    notifier.options.length, (int index) {
+                                children: notifier.options.generate((item, i) {
+                                  final option = widget.options[i];
+                                  bool disabled = option.disabled;
+
                                   return Center(
                                     child: Container(
-                                      constraints: BoxConstraints(
-                                          maxWidth: context.width * .75),
+                                      constraints: BoxConstraints(maxWidth: context.width * .75),
                                       child: Text(
-                                        notifier.options[index],
+                                        item,
                                         overflow: Tof.ellipsis,
                                         textAlign: Ta.center,
                                         maxLines: maxLines.toInt(),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(fontSize: 16),
+                                        style: LazyUi.font.copyWith(
+                                          color: disabled ? Colors.black12 : Colors.black87,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -244,103 +242,83 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                     ),
                   )),
             ),
-            Positioned.fill(
-                child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        mainAxisAlignment: Maa.center,
-                        children: [
-                          const SizedBox(width: 60),
-                          SlideUp(
-                            delay: 300,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Utils.hex('fafafa'),
-                                    spreadRadius: 15,
-                                    blurRadius: 25,
-                                    offset: const Offset(0, -5),
-                                  ),
-                                ],
-                              ),
-                              child: Builder(builder: (context) {
-                                String confirm = widget.textConfirm ?? 'Select';
 
-                                return InkTouch(
-                                    onTap: () {
-                                      if (widget.onSelect != null) {
-                                        widget.onSelect?.call(
-                                            Option.fromMap(notifier.result));
-                                        Navigator.pop(context);
-                                      }
-                                    },
-                                    padding: Ei.sym(
-                                        v: 13,
-                                        h: confirm.length > 25 ? 25 : 45),
-                                    radius: Br.radius(25),
-                                    color: Utils.hex('fff'),
-                                    border: Br.all(),
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                          maxWidth: context.width * .4),
-                                      child: Text(
-                                        confirm,
-                                        textAlign: Ta.center,
-                                        maxLines: 1,
-                                        overflow: Tof.ellipsis,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyMedium
-                                            ?.copyWith(
-                                              fontWeight: Fw.bold,
-                                              color: LzColors.black,
-                                            ),
-                                      ),
-                                    ));
-                              }),
-                            ),
-                          ),
-                          Touch(
-                            onTap: () => context.lzPop(),
-                            child: SlideUp(
-                              delay: 400,
-                              child: Iconr(
-                                La.times,
-                                padding: Ei.all(20),
+            // confirm button
+            Poslign(
+                alignment: Alignment.bottomCenter,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      const SizedBox(width: 60),
+                      SlideUp(
+                        delay: 300,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                color: Utils.hex('fafafa'),
+                                spreadRadius: 15,
+                                blurRadius: 25,
+                                offset: const Offset(0, -5),
                               ),
-                            ),
-                          )
-                        ],
-                      ).margin(b: 15, l: 0),
-                    ))),
+                            ],
+                          ),
+                          child: Builder(builder: (context) {
+                            return notifier.watch((state) => ConfirmButton(
+                                  widget.textConfirm ?? 'Select',
+                                  disabled: state.disabled,
+                                  onTap: state.disabled
+                                      ? null
+                                      : () {
+                                          if (widget.onSelect != null) {
+                                            widget.onSelect?.call(Option.fromMap(notifier.result));
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                ));
+                          }),
+                        ),
+                      ),
+                      Touch(
+                        onTap: () => context.lzPop(),
+                        child: SlideUp(
+                          delay: 400,
+                          child: Iconr(
+                            La.times,
+                            padding: Ei.all(20),
+                          ),
+                        ),
+                      )
+                    ],
+                  ).margin(b: 15, l: 0),
+                )),
 
             // search bar
             Poslign(
               alignment: Alignment.topLeft,
               child: Row(
                 children: [
-                  Expanded(
-                      child: LzTextField(
-                    hint: 'Type to search',
-                    controller: notifier.keyword,
-                    listenKeyboard: (active) {
-                      double newHeight = active ? (context.height) : height;
-                      notifier.setHeight(newHeight);
-                    },
-                    onChange: (keyword) {
-                      notifier.onSearch(keyword);
-                    },
-                    prefixIcon: const Iconr(
-                      La.search,
-                      flipX: true,
-                    ),
-                  )),
-                  notifier.watch((state) => state.found == 0
-                      ? const None()
-                      : Textr(state.found.toString(), margin: Ei.only(r: 15)))
+                  if (widget.withSearch)
+                    Expanded(
+                        child: LzTextField(
+                      hint: 'Type to search',
+                      controller: notifier.keyword,
+                      listenKeyboard: (active) {
+                        double newHeight = active ? (context.height) : height;
+                        notifier.setHeight(newHeight);
+                      },
+                      onChange: (keyword) {
+                        notifier.onSearch(keyword);
+                      },
+                      prefixIcon: const Iconr(
+                        La.search,
+                        flipX: true,
+                      ),
+                    )),
+                  notifier.watch((state) =>
+                      state.found == 0 ? const None() : Textr(state.found.toString(), margin: Ei.only(r: 15)))
                 ],
               ).margin(all: 5),
             )
@@ -351,12 +329,39 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
   }
 }
 
+class ConfirmButton extends StatelessWidget {
+  final String text;
+  final Function()? onTap;
+  final bool disabled;
+
+  const ConfirmButton(this.text, {super.key, this.onTap, this.disabled = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkTouch(
+        onTap: onTap,
+        padding: Ei.sym(v: 13, h: text.length > 25 ? 25 : 45),
+        radius: Br.radius(50),
+        color: disabled ? 'f5f5f5'.hex : Colors.white,
+        border: Br.all(),
+        child: Container(
+          constraints: BoxConstraints(maxWidth: context.width * .4),
+          child: Text(
+            text,
+            textAlign: Ta.center,
+            maxLines: 1,
+            overflow: Tof.ellipsis,
+            style: LazyUi.font.copyWith(fontWeight: Fw.bold, color: disabled ? 'ccc'.hex : Colors.black87),
+          ),
+        ));
+  }
+}
+
 // select picker notifier
 class SelectPickerNotifier extends ChangeNotifier {
   double height = 300;
   TextEditingController keyword = TextEditingController();
-  FixedExtentScrollController scroll =
-      FixedExtentScrollController(initialItem: 0);
+  FixedExtentScrollController scroll = FixedExtentScrollController(initialItem: 0);
 
   List<String> options = [], originalOptions = [];
   List values = [], originalValues = [];
@@ -364,6 +369,15 @@ class SelectPickerNotifier extends ChangeNotifier {
   int index = 0;
   int found = 0;
 
+  // this is used to disabled item in select picker
+  bool disabled = false;
+
+  void setDisabled(bool value) {
+    disabled = value;
+    notifyListeners();
+  }
+
+  // set height
   void setHeight(double value) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       height = value;
@@ -390,35 +404,14 @@ class SelectPickerNotifier extends ChangeNotifier {
       //     : {'option': options.isEmpty ? null : options[index], 'value': values.isEmpty ? null : values[index]};
 
       // more efficient is to use this
-      found = value.trim().isEmpty
-          ? 0
-          : options
-              .where((e) => e.toLowerCase().contains(value.toLowerCase()))
-              .length;
-      index = options
-          .indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
+      found = value.trim().isEmpty ? 0 : options.where((e) => e.toLowerCase().contains(value.toLowerCase())).length;
+      index = options.indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
       scroll.animateToItem(index, duration: 250.ms, curve: Curves.easeInOut);
 
-      logg(
-          'o: ${options.length}, oo: ${originalOptions.length}, index: $index');
+      logg('o: ${options.length}, oo: ${originalOptions.length}, index: $index');
       notifyListeners();
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }
-  }
-}
-
-// select picker seacrh widget
-
-class SelectPickerSearchWidget extends StatelessWidget {
-  const SelectPickerSearchWidget({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Select Option'),
-      ),
-    );
   }
 }

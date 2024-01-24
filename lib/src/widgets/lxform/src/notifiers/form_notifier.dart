@@ -101,9 +101,22 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  // switches
+  bool isSwitches = false;
+  bool switchesValue = false;
+
+  // select
+  bool isSelect = false;
+  List<CRSOption> selectList = [];
+  CRSOption? selectedSelect;
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
+  }
+
+  FormNotifier(){
+    // logg('FormNotifier created', name: 'LxForm');
   }
 }

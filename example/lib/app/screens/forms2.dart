@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormController {
-  final forms = LxForm.make(['name', 'gender', 'birthdate', 'hobby', 'province', 'city', 'email', 'address', 'phone']);
+  final forms =
+      LxForm.make(['name', 'gender', 'birthdate', 'hobby', 'product', 'province', 'city', 'email', 'address', 'phone']);
 }
 
 class Forms2 extends StatelessWidget {
@@ -16,6 +17,24 @@ class Forms2 extends StatelessWidget {
     // Bindings.onRendered(() {
     //   forms.fill({'name': 'John Doe'});
     // });
+
+    List<String> products = [
+      'Spaghetti',
+      'Cappuccino',
+      'Cheesecake',
+      'Hamburger',
+      'Lasagna',
+      'Espresso',
+      'Croissant',
+      'Milkshake',
+      'Macaroni',
+      'Sandwich',
+      'Chocolate',
+      'Cocktail',
+      'Pancakes',
+      'Smoothie',
+      'Lemonade'
+    ];
 
     return Wrapper(
       child: Scaffold(
@@ -67,6 +86,24 @@ class Forms2 extends StatelessWidget {
                   disabled: [0, 1],
                   model: forms['hobby']),
             ]),
+
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Text('Product Section', style: Gfont.bold),
+                    Text('Select product you want to achieved.', style: Gfont.fs14)
+                  ],
+                ).start,
+                LxForm.switches(label: 'On|Off', reversed: true),
+              ],
+            ).between.margin(b: 16),
+
+            LxForm.select(
+                label: 'Select Product',
+                hint: 'Please select product',
+                options: products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
+                model: forms['product']),
 
             LxForm.input(
                 label: 'Email Address',

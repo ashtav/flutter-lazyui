@@ -153,7 +153,7 @@ class Input2 extends StatelessWidget with LxFormMixin {
     // create has label and grouped padding
     final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
 
-    // create prefix icon widget
+    // create prefix & suffix icon widget
     Widget? prefixIconWidget =
         hasOnTap || style?.prefixIcon == null ? null : Icon(style?.prefixIcon, color: style?.prefixIconColor);
     Widget? suffixIconWidget =

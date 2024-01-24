@@ -8,7 +8,7 @@ class Checkbox2 extends StatelessWidget with LxFormMixin {
   final FormModelx? model;
   final List<dynamic> disabled;
   final FormType? type;
-  final RadioStyle? style;
+  final CheckboxStyle? style;
   final Function(List<CheckboxValue> value)? onChange;
 
   const Checkbox2(
@@ -26,7 +26,7 @@ class Checkbox2 extends StatelessWidget with LxFormMixin {
   @override
   Widget build(BuildContext context) {
     final attr = getAttribute(context);
-    RadioStyle? style = (attr.isWrapped ? attr.style?.radio : attr.radioStyle) ?? this.style;
+    CheckboxStyle? style = (attr.isWrapped ? attr.style?.checkbox : attr.checkboxStyle) ?? this.style;
 
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
@@ -171,7 +171,7 @@ class _Square extends StatelessWidget {
   final String label;
   final bool active, disabled;
   final Function() onTap;
-  final RadioStyle? style;
+  final CheckboxStyle? style;
   const _Square(this.label, this.active, this.disabled, this.onTap, {this.style});
 
   @override

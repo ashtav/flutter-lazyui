@@ -7,6 +7,7 @@ class FormStyle {
   final IconData? prefixIcon, suffixIcon;
   final Color? prefixIconColor, suffixIconColor, textColor;
   final RadioStyle? radio;
+  final CheckboxStyle? checkbox;
   // final bool allInStyle;
 
   FormStyle(
@@ -19,6 +20,7 @@ class FormStyle {
       this.suffixIconColor,
       this.textColor,
       this.radio,
+      this.checkbox,
       // this.allInStyle = false
       });
 }
