@@ -101,7 +101,7 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
     notifier.index = i;
     notifier.scroll = FixedExtentScrollController(initialItem: i);
 
-    notifier.options = widget.options.map((e) => e.option).toList();
+    notifier.options = widget.options.map((e) => e.label).toList();
     notifier.values = widget.options.map((e) => e.value).toList();
 
     // set original data
@@ -109,12 +109,18 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
     notifier.originalValues = notifier.values;
 
     notifier.result = notifier.values.isEmpty
-        ? {'option': notifier.options.isEmpty ? null : notifier.options[i]}
+        ? {'label': notifier.options.isEmpty ? null : notifier.options[i]}
         : {
-            'option': notifier.options.isEmpty ? null : notifier.options[i],
+            'label': notifier.options.isEmpty ? null : notifier.options[i],
             'value': notifier.values.isEmpty ? null : notifier.values[i]
           };
 
+    // get current option and check disabled
+    final option = widget.options[i];
+    notifier.setDisabled(option.disabled);
+  }
+
+  void setHeight() {
     maxLines = (widget.maxLines ?? 1).toDouble();
 
     if (maxLines >= 4) {
@@ -143,18 +149,15 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
     }
 
     notifier.setHeight(height);
-
-    // get current option and check disabled
-    final option = widget.options[i];
-    notifier.setDisabled(option.disabled);
   }
 
   @override
   void initState() {
     super.initState();
+    onInitials();
 
     Bindings.onRendered(() {
-      onInitials();
+      setHeight();
     });
   }
 
@@ -207,11 +210,11 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
 
                                     if (notifier.values.isNotEmpty) {
                                       notifier.result = {
-                                        'option': notifier.options[i],
+                                        'label': notifier.options[i],
                                         'value': notifier.values.length < i ? null : notifier.values[i]
                                       };
                                     } else {
-                                      notifier.result = {'option': notifier.options[i]};
+                                      notifier.result = {'label': notifier.options[i]};
                                     }
                                   }
 
@@ -408,7 +411,7 @@ class SelectPickerNotifier extends ChangeNotifier {
       index = options.indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
       scroll.animateToItem(index, duration: 250.ms, curve: Curves.easeInOut);
 
-      logg('o: ${options.length}, oo: ${originalOptions.length}, index: $index');
+      // logg('o: ${options.length}, oo: ${originalOptions.length}, index: $index');
       notifyListeners();
     } catch (e, s) {
       Utils.errorCatcher(e, s);

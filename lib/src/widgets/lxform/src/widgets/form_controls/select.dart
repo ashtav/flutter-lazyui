@@ -96,24 +96,20 @@ class Select2 extends StatelessWidget with LxFormMixin {
       notifier.selectList = options;
 
       return InkTouch(
-        onTap: disabled
+        onTap: state.disabled
             ? null
             : () {
                 final selected = notifier.selectedSelect;
-                logg(selected?.toMap());
 
                 // create options
-                List<Option> options =
-                    state.selectList.map((e) => Option(option: e.label, value: e.value, disabled: e.disabled)).toList();
-
-                final initialValue = Option(option: selected?.label ?? '', value: selected?.value, disabled: selected?.disabled ?? false);
-                logg(initialValue.toMap());
+                List<Option> options = state.selectList.map((e) => Option.fromMap(e.toMap())).toList();
+                Option initialValue = Option.fromMap(selected?.toMap() ?? {});
 
                 SelectPicker.show(context, initialValue: initialValue, options: options, onSelect: (value) {
-                  notifier.controller.text = (value.value ?? value.option).toString();
-                  notifier.selectedSelect = CRSOption(value.option, value: value.value, disabled: value.disabled);
+                  notifier.controller.text = (value.value ?? value.label).toString();
+                  notifier.selectedSelect = CRSOption.fromMap(value.toMap());
 
-                  onChange?.call(SelectValue(value.option, value: value.value));
+                  onChange?.call(SelectValue(value.label, value: value.value));
                 });
               },
         border: attr.isGrouped
@@ -175,7 +171,8 @@ class Select2 extends StatelessWidget with LxFormMixin {
             ],
           )
         else
-          isUnderlined && notifier.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget,
+          notifier.watch(
+              (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
 
         notifier
             .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))

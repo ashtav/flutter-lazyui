@@ -73,7 +73,7 @@ class Radio extends StatelessWidget with FormWidgetMixin {
       notifier.controller = model!.controller;
 
       // init value
-      notifier.option = Option(option: model!.controller.text);
+      notifier.option = Option(label: model!.controller.text);
     }
 
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
@@ -87,8 +87,7 @@ class Radio extends StatelessWidget with FormWidgetMixin {
       label ?? '',
       style: style?.copyWith(
           fontSize: labelStyle?.fontSize ?? 14,
-          fontWeight: labelStyle?.fontWeight ??
-              attr.formListAncestor?.style?.inputLabelFontWeight,
+          fontWeight: labelStyle?.fontWeight ?? attr.formListAncestor?.style?.inputLabelFontWeight,
           color: labelStyle?.color,
           letterSpacing: labelStyle?.letterSpacing),
       overflow: Tof.ellipsis,
@@ -135,16 +134,14 @@ class Radio extends StatelessWidget with FormWidgetMixin {
 
     Widget field = ClipRRect(
       key: model?.key,
-      borderRadius:
-          Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
+      borderRadius: Br.radius(isGrouping || attr.isTypeUnderlined ? 0 : configRadius),
       child: AnimatedBuilder(
         animation: notifier,
         builder: (context, _) {
           // notifier data
           bool isValid = notifier.isValid;
           Color borderColor = isValid || isGrouping
-              ? (attr.formListAncestor?.style?.inputBorderColor ??
-                  Colors.black12)
+              ? (attr.formListAncestor?.style?.inputBorderColor ?? Colors.black12)
               : Colors.redAccent;
           String errorMessage = notifier.errorMessage;
 
@@ -154,18 +151,13 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                   width: context.width,
                   decoration: BoxDecoration(
                     color: attr.formListAncestor?.style?.backgroundColor ??
-                        (attr.isTypeUnderlined || attr.isTopInner
-                            ? Colors.transparent
-                            : Colors.white),
+                        (attr.isTypeUnderlined || attr.isTopInner ? Colors.transparent : Colors.white),
                     border: attr.isTypeUnderlined && !isGrouping
                         ? Br.only(['b'], color: borderColor)
                         : isGrouping
-                            ? Br.only(['t'],
-                                except: isFirst, color: borderColor)
+                            ? Br.only(['t'], except: isFirst, color: borderColor)
                             : Br.all(color: borderColor),
-                    borderRadius: attr.isTypeUnderlined || isGrouping
-                        ? null
-                        : Br.radius(configRadius),
+                    borderRadius: attr.isTypeUnderlined || isGrouping ? null : Br.radius(configRadius),
                   ),
                   margin: Ei.only(t: attr.isTopInner && !isGrouping ? 10 : 0),
                   child: Stack(
@@ -190,15 +182,11 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                               children: List.generate(options.length, (i) {
                                 Option option = options[i];
 
-                                String label = option.option;
-                                bool disabled =
-                                    this.disabled || option.disabled;
-                                bool selected =
-                                    notifier.option?.option == label;
+                                String label = option.label;
+                                bool disabled = this.disabled || option.disabled;
+                                bool selected = notifier.option?.label == label;
 
-                                Color radioColor = selected
-                                    ? (activeColor ?? LzFormTheme.activeColor)
-                                    : Colors.black38;
+                                Color radioColor = selected ? (activeColor ?? LzFormTheme.activeColor) : Colors.black38;
 
                                 return Opacity(
                                   opacity: !disabled ? 1 : .4,
@@ -209,9 +197,7 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                                             notifier.setOption(options[i]);
                                             onChange?.call(options[i]);
 
-                                            if ((attr.formListAncestor
-                                                        ?.cleanOnFilled ??
-                                                    false) &&
+                                            if ((attr.formListAncestor?.cleanOnFilled ?? false) &&
                                                 !notifier.data['valid']) {
                                               notifier.clear();
                                             }
@@ -221,16 +207,13 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                                       mainAxisSize: Mas.min,
                                       children: [
                                         AnimatedContainer(
-                                          duration:
-                                              const Duration(milliseconds: 150),
+                                          duration: const Duration(milliseconds: 150),
                                           width: 18,
                                           height: 18,
                                           margin: Ei.only(r: 10),
                                           decoration: BoxDecoration(
                                               shape: BoxShape.circle,
-                                              border: Br.all(
-                                                  color: radioColor,
-                                                  width: selected ? 5 : 1),
+                                              border: Br.all(color: radioColor, width: selected ? 5 : 1),
                                               color: Colors.white),
                                         ),
                                         Textr(
@@ -256,23 +239,18 @@ class Radio extends StatelessWidget with FormWidgetMixin {
                           ],
                         ),
                       ),
-                      if ((attr.isTypeGrouped || attr.isTypeUnderlined) &&
-                              !isGrouping ||
+                      if ((attr.isTypeGrouped || attr.isTypeUnderlined) && !isGrouping ||
                           (attr.keepLabelOnGrouped && attr.isTypeGrouped))
                         Poslign(
                             alignment: Alignment.topLeft,
-                            margin: Ei.only(
-                                h: attr.isTypeUnderlined ? 0 : 15, t: 13),
+                            margin: Ei.only(h: attr.isTypeUnderlined ? 0 : 15, t: 13),
                             child: labelWidget),
                     ],
                   )),
 
               // top inner label
               if (attr.isTopInner && !isGrouping)
-                Poslign(
-                    alignment: Alignment.topLeft,
-                    margin: Ei.only(h: 10),
-                    child: labelWidget),
+                Poslign(alignment: Alignment.topLeft, margin: Ei.only(h: 10), child: labelWidget),
             ],
           );
         },
@@ -286,10 +264,7 @@ class Radio extends StatelessWidget with FormWidgetMixin {
             ? Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
-                children: [
-                  if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10),
-                  field
-                ],
+                children: [if (!isTopAlignedAndGrouped) labelWidget.margin(b: 10), field],
               )
             : field)
         .margin(b: isGrouping ? 0 : 20);

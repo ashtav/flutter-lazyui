@@ -22,7 +22,7 @@ import 'package:flutter/material.dart';
 
 class Option {
   /// The display text of the option.
-  final String option;
+  final String label;
 
   /// The corresponding value of the option.
   final dynamic value;
@@ -52,7 +52,7 @@ class Option {
   final OptionStyle? style;
 
   const Option(
-      {required this.option,
+      {required this.label,
       this.value,
       this.disabled = false,
       this.danger = false,
@@ -65,7 +65,7 @@ class Option {
 
   factory Option.fromMap(Map<String, dynamic> map) {
     return Option(
-        option: map['option'],
+        label: map['label'] ?? '',
         value: map['value'],
         disabled: map['disabled'] ?? false,
         danger: map['danger'] ?? false,
@@ -78,7 +78,7 @@ class Option {
 
   Map<String, dynamic> toMap() {
     return {
-      'option': option,
+      'label': label,
       'value': value,
       'disabled': disabled,
       'danger': danger,
@@ -92,7 +92,7 @@ class Option {
 
   // copy with
   Option copyWith({
-    String? option,
+    String? label,
     dynamic value,
     bool? disabled,
     bool? danger,
@@ -104,7 +104,7 @@ class Option {
     OptionStyle? style,
   }) {
     return Option(
-      option: option ?? this.option,
+      label: label ?? this.label,
       value: value ?? this.value,
       disabled: disabled ?? this.disabled,
       danger: danger ?? this.danger,

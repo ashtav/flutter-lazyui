@@ -72,7 +72,7 @@ class FormNotifier extends ChangeNotifier {
 
   FormNotifier setOption([Option? value]) {
     option = value;
-    controller.text = value?.option == null ? '' : (value?.option).toString();
+    controller.text = value?.label == null ? '' : (value?.label).toString();
     notifyListeners();
     return this;
   }
@@ -93,7 +93,7 @@ class FormNotifier extends ChangeNotifier {
       checked.add(value);
     }
 
-    controller.text = checked.map((e) => e.option).join(', ').trim();
+    controller.text = checked.map((e) => e.label).join(', ').trim();
     notifyListeners();
     return this;
   }

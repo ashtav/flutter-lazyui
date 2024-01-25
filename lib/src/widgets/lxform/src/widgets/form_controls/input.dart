@@ -76,7 +76,7 @@ class Input2 extends StatelessWidget with LxFormMixin {
           notifier.setLength(text.length);
 
           // hide error message when user typing
-          if(!notifier.isValid && text.trim().isNotEmpty){
+          if (!notifier.isValid && text.trim().isNotEmpty) {
             notifier.setMessage('', true);
           }
         });
@@ -269,9 +269,11 @@ class Input2 extends StatelessWidget with LxFormMixin {
             ],
           )
         else
-          isUnderlined && notifier.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget,
+          notifier.watch(
+              (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
 
-        notifier.watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+        notifier
+            .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
       ],
     ).start.margin(b: attr.isGrouped ? 0 : 16);
   }

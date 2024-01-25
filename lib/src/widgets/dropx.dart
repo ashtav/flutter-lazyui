@@ -32,8 +32,7 @@ class DropX {
       return logg('Context is invalid!');
     }
 
-    BuildContext context =
-        key is GlobalKey ? key.currentContext! : key as BuildContext;
+    BuildContext context = key is GlobalKey ? key.currentContext! : key as BuildContext;
 
     if (options.isEmpty) {
       return logg('Options can not be empty');
@@ -169,8 +168,7 @@ class _DropXWidget extends StatelessWidget {
 
       // adjust caret position -----------------------------------------------------------------------------------------
 
-      double cx = (touchBased?.dx ?? o?.dx) ?? 0,
-          cy = isOutOfScreen ? (dy + ddHeight - 1) : dy - 9;
+      double cx = (touchBased?.dx ?? o?.dx) ?? 0, cy = isOutOfScreen ? (dy + ddHeight - 1) : dy - 9;
       cx += 20;
 
       if ((cx + 40) >= screenW) {
@@ -235,11 +233,8 @@ class _DropXWidget extends StatelessWidget {
                 left: x,
                 child: Container(
                   key: dropdownKey,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: Br.radius(LazyUi.radius)),
-                  constraints: BoxConstraints(
-                      maxHeight: context.height * 0.7, maxWidth: 240),
+                  decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(LazyUi.radius)),
+                  constraints: BoxConstraints(maxHeight: context.height * 0.7, maxWidth: 240),
                   child: SingleChildScrollView(
                       physics: BounceScroll(),
                       child: notifier.watch((state) => Column(
@@ -260,12 +255,9 @@ class _DropXWidget extends StatelessWidget {
                                   onTap: disabled
                                       ? null
                                       : () {
-                                          List<Option> subOptions =
-                                              item.options ?? [];
+                                          List<Option> subOptions = item.options ?? [];
 
-                                          if (dismissOnTap &&
-                                              subOptions.isEmpty &&
-                                              !item.pop) {
+                                          if (dismissOnTap && subOptions.isEmpty && !item.pop) {
                                             // close stream
                                             controller.close();
                                             context.lzPop();
@@ -290,8 +282,7 @@ class _DropXWidget extends StatelessWidget {
                                             return;
                                           }
 
-                                          onSelect
-                                              ?.call(item.copyWith(index: i));
+                                          onSelect?.call(item.copyWith(index: i));
                                         },
                                   padding: Ei.sym(v: 15, h: 20),
                                   border: Br.only(['t'],
@@ -301,15 +292,11 @@ class _DropXWidget extends StatelessWidget {
                                           : useBorder
                                               ? .5
                                               : 0,
-                                      color: separator || useBorder
-                                          ? Colors.black12
-                                          : Colors.transparent),
+                                      color: separator || useBorder ? Colors.black12 : Colors.transparent),
                                   child: Row(
                                     children: [
-                                      Textr(item.option,
-                                              style: Gfont.color(danger
-                                                  ? Colors.redAccent
-                                                  : LzColors.black),
+                                      Textr(item.label,
+                                              style: Gfont.color(danger ? Colors.redAccent : LzColors.black),
                                               icon: icon)
                                           .lz
                                           .flexible(),

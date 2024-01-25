@@ -16,6 +16,14 @@ class CRSOption {
       'disabled': disabled,
     };
   }
+
+  static CRSOption fromMap(Map<String, dynamic> map) {
+    return CRSOption(
+      map['label'] ?? '',
+      value: map['value'],
+      disabled: map['disabled'] ?? false,
+    );
+  }
 }
 
 extension CRSOptionExtension on List<String> {

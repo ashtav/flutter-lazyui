@@ -18,6 +18,7 @@ part 'form_controls/checkbox.dart';
 part 'form_controls/input.dart';
 part 'form_controls/radio.dart';
 part 'form_controls/select.dart';
+part 'form_controls/number.dart';
 
 class LxForm {
   final bool ok;
@@ -412,5 +413,36 @@ class LxForm {
         onTap: onTap,
         onChange: onChange,
         model: model,
+      );
+
+  // number form-controls
+  static Number number(
+          {String? label,
+          String? hint,
+          FormType? type,
+          FormStyle? style,
+          bool disabled = false,
+          bool autofocus = false,
+          Function(String)? onChange,
+          FormModelx? model,
+          FocusNode? node,
+          int min = 0,
+          int max = 100,
+          bool controls = true,
+          List<IconData>? iconControls}) =>
+      Number(
+        label: label,
+        hint: hint,
+        type: type,
+        style: style,
+        disabled: disabled,
+        autofocus: autofocus,
+        onChange: onChange,
+        model: model,
+        node: node,
+        min: min,
+        max: max,
+        controls: controls,
+        iconControls: iconControls,
       );
 }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormController {
-  final forms =
-      LxForm.make(['name', 'gender', 'birthdate', 'hobby', 'product', 'province', 'city', 'email', 'address', 'phone']);
+  final forms = LxForm.make(
+      ['name', 'gender', 'birthdate', 'hobby', 'product', 'qty', 'province', 'city', 'email', 'address', 'phone']);
 }
 
 class Forms2 extends StatelessWidget {
@@ -95,15 +95,32 @@ class Forms2 extends StatelessWidget {
                     Text('Select product you want to achieved.', style: Gfont.fs14)
                   ],
                 ).start,
-                LxForm.switches(label: 'On|Off', reversed: true),
+                LxForm.switches(
+                    label: 'On|Off',
+                    reversed: true,
+                    onChange: (value) {
+                      forms.enable('product', value);
+                    }),
               ],
             ).between.margin(b: 16),
 
-            LxForm.select(
-                label: 'Select Product',
-                hint: 'Please select product',
-                options: products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
-                model: forms['product']),
+            LxFormTheme(
+              grouping: true,
+              children: [
+                LxForm.select(
+                  hint: 'Please select product',
+                  options: products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
+                  disabled: true,
+                  model: forms['product'],
+                ),
+                LxForm.number(
+                  hint: 'Input quantity',
+                  style: FormStyle(radius: 8, borderColor: Colors.black38),
+                  model: forms['qty'],
+                  // iconControls: [Ti.arrowDown, Ti.arrowUp]
+                ),
+              ],
+            ),
 
             LxForm.input(
                 label: 'Email Address',

@@ -86,7 +86,6 @@ class FormNotifier extends ChangeNotifier {
     selectedCheckbox = [];
 
     for (var f in value) {
-
       // find checkbox by checkbox value if available, otherwise find by label
       final checkbox = checkboxList.firstWhere((e) => e.value == null ? e.label == f.toString() : e.value == f,
           orElse: () => CheckboxModel(''));
@@ -110,13 +109,41 @@ class FormNotifier extends ChangeNotifier {
   List<CRSOption> selectList = [];
   CRSOption? selectedSelect;
 
+  void setSelect(CRSOption value) {
+    if (value.label.trim().isEmpty) return;
+    selectedSelect = value;
+
+    // if value is not set, use label instead
+    controller.text = (value.value ?? value.label).toString();
+    notifyListeners();
+  }
+
+  // number
+  int get getNumber => int.parse(controller.text.trim().isEmpty ? '0' : controller.text);
+  int min = 0, max = 100;
+
+  void setNumber(int index, {bool longPress = false}) {
+    int value = getNumber;
+
+    if (index == 0) {
+      if (value <= min) return;
+      value--;
+    } else {
+      if (value >= max) return;
+      value++;
+    }
+
+    controller.text = value.toString();
+    notifyListeners();
+  }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
 
-  FormNotifier(){
+  FormNotifier() {
     // logg('FormNotifier created', name: 'LxForm');
   }
 }
