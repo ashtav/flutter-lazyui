@@ -1,6 +1,7 @@
 library forms;
 
-import 'package:flutter/material.dart' hide Radio, Checkbox, Switch;
+import 'package:flutter/material.dart' as m;
+import 'package:flutter/material.dart' hide Radio, Checkbox, Switch, Slider;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/widgets/lxform/src/models/checkbox_model.dart';
@@ -16,9 +17,10 @@ import 'form_feedback.dart';
 
 part 'form_controls/checkbox.dart';
 part 'form_controls/input.dart';
+part 'form_controls/number.dart';
 part 'form_controls/radio.dart';
 part 'form_controls/select.dart';
-part 'form_controls/number.dart';
+part 'form_controls/slider.dart';
 
 class LxForm {
   final bool ok;
@@ -298,7 +300,7 @@ class LxForm {
           {String? label,
           String? hint,
           FormType? type,
-          FormStyle? style,
+          InputStyle? style,
           bool indicator = false,
           bool obsecure = false,
           bool obsecureToggle = false,
@@ -428,6 +430,7 @@ class LxForm {
           FocusNode? node,
           int min = 0,
           int max = 100,
+          int step = 1,
           bool controls = true,
           List<IconData>? iconControls}) =>
       Number(
@@ -442,7 +445,34 @@ class LxForm {
         node: node,
         min: min,
         max: max,
+        step: step,
         controls: controls,
         iconControls: iconControls,
+      );
+
+  // slider form-controls
+  static Slider slider({
+    String? label,
+    double? initValue,
+    double min = 0,
+    double max = 100,
+    int? divisions,
+    bool disabled = false,
+    FormModelx? model,
+    Function(double value)? onChange,
+    SlideStyle? style,
+    Widget Function(double value)? indicator,
+  }) =>
+      Slider(
+        label: label,
+        initValue: initValue,
+        min: min,
+        max: max,
+        divisions: divisions,
+        disabled: disabled,
+        model: model,
+        onChange: onChange,
+        style: style,
+        indicator: indicator,
       );
 }

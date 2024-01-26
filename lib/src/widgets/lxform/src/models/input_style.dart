@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
 
-class FormStyle {
+class InputStyle {
   final Color? background, borderColor;
   final double? radius;
   final IconData? prefixIcon, suffixIcon;
   final Color? prefixIconColor, suffixIconColor, textColor;
   final Widget? prefix;
-  final RadioStyle? radio;
-  final CheckboxStyle? checkbox;
-  final SlideStyle? slide;
-  // final bool allInStyle;
 
-  FormStyle(
+  InputStyle(
       {this.background,
       this.borderColor,
       this.radius,
@@ -21,10 +16,5 @@ class FormStyle {
       this.prefixIconColor,
       this.suffixIconColor,
       this.prefix,
-      this.textColor,
-      this.radio,
-      this.checkbox,
-      this.slide,
-      // this.allInStyle = false
-      });
+      this.textColor});
 }

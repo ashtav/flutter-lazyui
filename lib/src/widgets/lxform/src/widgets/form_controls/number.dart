@@ -9,7 +9,7 @@ class Number extends StatelessWidget with LxFormMixin {
   final Function(String value)? onChange;
   final FormModelx? model;
   final FocusNode? node;
-  final int min, max;
+  final int min, max, step;
   final bool controls;
   final List<IconData>? iconControls;
 
@@ -26,6 +26,7 @@ class Number extends StatelessWidget with LxFormMixin {
       this.node,
       this.min = 0,
       this.max = 100,
+      this.step = 1,
       this.controls = true,
       this.iconControls});
 
@@ -44,6 +45,8 @@ class Number extends StatelessWidget with LxFormMixin {
     notifier.disabled = disabled;
     notifier.min = min;
     notifier.max = max;
+    notifier.step = step;
+    notifier.onChange = onChange;
 
     // get form type
     FormType formType = attr.type ?? (type ?? FormType.topAligned);
@@ -137,7 +140,6 @@ class Number extends StatelessWidget with LxFormMixin {
                   : Ei.only(l: 16, r: controls ? (45 * 2) : 16, v: 14),
               controller: notifier.controller,
               maxLength: 50,
-              obsecure: state.obsecure,
               onChange: onChangeControl,
               autofocus: autofocus,
               keyboard: Tit.number,
@@ -163,11 +165,16 @@ class Number extends StatelessWidget with LxFormMixin {
 
                       return Row(
                           children: [iconMin, iconPlus].generate((icon, i) {
-                        return InkTouch(
-                          onTap: () => notifier.setNumber(i),
-                          onLongPress: () => notifier.setNumber(i, longPress: true),
-                          padding: Ei.all(15),
-                          child: Icon(icon, color: Colors.black38, size: 18),
+                        bool disabled = (i == 0 && state.getNumber <= min) || (i == 1 && state.getNumber >= max);
+
+                        return GestureDetector(
+                          onLongPress: disabled ? null : () => notifier.setNumber(i, longPress: true),
+                          onLongPressUp: disabled ? null : () => notifier.setNumber(-1),
+                          child: InkTouch(
+                            onTap: disabled ? null : () => notifier.setNumber(i),
+                            padding: Ei.all(15),
+                            child: Icon(icon, color: disabled ? Colors.black12 : Colors.black38, size: 18),
+                          ),
                         );
                       })).min;
                     })

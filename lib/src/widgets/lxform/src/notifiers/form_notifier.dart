@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/widgets/lxform/src/models/radio_model.dart';
@@ -120,26 +122,62 @@ class FormNotifier extends ChangeNotifier {
 
   // number
   int get getNumber => int.parse(controller.text.trim().isEmpty ? '0' : controller.text);
-  int min = 0, max = 100;
+  int min = 0, max = 100, step = 1;
+  Timer? timer;
+  Function(String value)? onChange;
 
   void setNumber(int index, {bool longPress = false}) {
-    int value = getNumber;
-
-    if (index == 0) {
-      if (value <= min) return;
-      value--;
-    } else {
-      if (value >= max) return;
-      value++;
+    if (index == -1) {
+      timer?.cancel();
+      return;
     }
 
+    int value = getNumber;
+
+    void doChange(int index) {
+      if (index == 0) {
+        if (value <= min) return;
+        value = value - step;
+      } else {
+        if (value >= max) return;
+        value = value + step;
+      }
+
+      controller.text = value.toString();
+      notifyListeners();
+
+      // verify text editing controller
+      if (getNumber < min) {
+        controller.text = min.toString();
+      } else if (getNumber > max) {
+        controller.text = max.toString();
+      }
+
+      onChange?.call(controller.text);
+    }
+
+    doChange(index);
+
+    if (longPress) {
+      timer?.cancel();
+      timer = Timer.periodic(100.ms, (t) {
+        doChange(index);
+      });
+    }
+  }
+
+  // slider
+  void setSlider(double value) {
     controller.text = value.toString();
     notifyListeners();
   }
 
+
   @override
   void dispose() {
     controller.dispose();
+    node.dispose();
+    timer?.cancel();
     super.dispose();
   }
 

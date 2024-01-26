@@ -2,8 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormController {
-  final forms = LxForm.make(
-      ['name', 'gender', 'birthdate', 'hobby', 'product', 'qty', 'province', 'city', 'email', 'address', 'phone']);
+  final forms = LxForm.make([
+    'name',
+    'gender',
+    'birthdate',
+    'hobby',
+    'product',
+    'qty',
+    'price',
+    'province',
+    'city',
+    'email',
+    'address',
+    'phone'
+  ]);
 }
 
 class Forms2 extends StatelessWidget {
@@ -69,12 +81,11 @@ class Forms2 extends StatelessWidget {
                 ),
               ],
             ),
-
             LxFormTheme(grouping: true, children: [
               LxForm.input(
                 hint: 'Please input your date of birth',
                 model: forms['birthdate'],
-                style: FormStyle(suffixIcon: Ti.calendarEvent),
+                style: InputStyle(suffixIcon: Ti.calendarEvent),
                 onTap: (control) {
                   LzPicker.datePicker(context, initialDate: control.text.toDate(), onSelect: (value) {
                     control.text = value.format('dd/MM/yyyy');
@@ -86,7 +97,6 @@ class Forms2 extends StatelessWidget {
                   disabled: [0, 1],
                   model: forms['hobby']),
             ]),
-
             Row(
               children: [
                 Column(
@@ -103,7 +113,6 @@ class Forms2 extends StatelessWidget {
                     }),
               ],
             ).between.margin(b: 16),
-
             LxFormTheme(
               grouping: true,
               children: [
@@ -114,76 +123,43 @@ class Forms2 extends StatelessWidget {
                   model: forms['product'],
                 ),
                 LxForm.number(
-                  hint: 'Input quantity',
-                  style: FormStyle(radius: 8, borderColor: Colors.black38),
-                  model: forms['qty'],
-                  // iconControls: [Ti.arrowDown, Ti.arrowUp]
-                ),
+                    hint: 'Input quantity',
+                    style: FormStyle(radius: 8, borderColor: Colors.black38),
+                    model: forms['qty'],
+                    max: 10),
               ],
             ),
-
-            LxForm.input(
-                label: 'Email Address',
-                hint: 'Input your email address',
-                style: FormStyle(radius: 8, borderColor: Colors.black38),
-                type: FormType.grouped,
-                model: forms['email'],
-                disabled: true,
-                indicator: true),
-
-            LxForm.input(
-                label: 'Underlined',
-                hint: 'This is underlined input',
-                style: FormStyle(radius: 8, borderColor: Colors.black38),
-                type: FormType.underlined,
-                model: forms['address'],
-                indicator: true),
-
-            LxForm.input(
+            LxFormTheme(grouping: true, children: [
+              LxForm.input(
                 label: 'Phone Number',
-                hint: 'Input your phone number',
-                style: FormStyle(radius: 8, borderColor: Colors.orange, textColor: Colors.orange),
+                hint: 'Type your phone number',
+                style: InputStyle(radius: 8, borderColor: Colors.black38, prefix: const Textr('+62')),
                 type: FormType.topInner,
+                keyboard: Tit.number,
                 model: forms['phone'],
-                keyboard: Tit.phone,
-                maxLength: 15,
-                indicator: true),
-
-            LxForm.input(
-                label: 'Birthdate',
-                hint: 'Input your birthdate',
-                style: FormStyle(
-                  radius: 8,
-                  borderColor: Colors.black38,
-                  suffixIcon: Ti.calendarEvent,
-                ),
-                type: FormType.topInner,
-                onTap: (control) {
-                  LzPicker.datePicker(context).then((value) {
-                    control.text = value.format();
-                  });
-                }),
-
-            // grouping
-
+              ),
+              LxForm.slider(
+                label: 'Range Salary',
+                divisions: 7,
+                indicator: (double value) => Text('\$${value.toInt()}'),
+              ),
+            ]),
             LxFormTheme(
               type: FormType.topInner,
               grouping: true,
               style: FormStyle(
                 borderColor: Colors.black38,
               ),
-              label: Text('Username & Password', style: Gfont.bold),
+              label: Text('Account', style: Gfont.bold),
               description: Faker.words(15),
               children: [
                 LxForm.input(
-                  // label: 'Username',
-                  hint: 'Enter your username',
+                  hint: 'Enter your email',
                 ),
                 LxForm.input(
-                    // label: 'Password',
                     hint: 'Enter your password',
                     obsecureToggle: true,
-                    style: FormStyle(
+                    style: InputStyle(
                       suffixIcon: Ti.lock,
                     )),
               ],
