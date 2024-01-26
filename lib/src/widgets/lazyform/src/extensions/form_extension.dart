@@ -1,11 +1,11 @@
 import 'package:lazyui/lazyui.dart';
 
-extension LxFormExtension on Map<String, FormModelx> {
+extension LzFormExtension on Map<String, FormModel> {
   /// ``` dart
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```
-  Map<String, FormModelx> fill(Map<String, dynamic> data, {List<String> except = const [], bool when = true}) {
+  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const [], bool when = true}) {
     if (when) {
       for (var e in data.keys) {
         if (containsKey(e) && !except.contains(e)) {
@@ -22,7 +22,7 @@ extension LxFormExtension on Map<String, FormModelx> {
     return this;
   }
 
-  Map<String, FormModelx> reset({List<String> except = const [], List<String> only = const []}) {
+  Map<String, FormModel> reset({List<String> except = const [], List<String> only = const []}) {
     for (var e in keys) {
       if (!except.contains(e) && (only.isEmpty || only.contains(e))) {
         final notifier = this[e]!.notifier;
@@ -48,11 +48,12 @@ extension LxFormExtension on Map<String, FormModelx> {
         this[e]!.controller.text = '';
         this[e]!.notifier.extra = null;
         this[e]!.notifier.selectedRadio = null;
+        this[e]!.notifier.selectedCheckbox = [];
       }
     }
   }
 
-  LxForm validate(
+  LzForm validate(
       {List<String> required = const [],
       List<String> min = const [],
       List<String> max = const [],
@@ -61,7 +62,7 @@ extension LxFormExtension on Map<String, FormModelx> {
       FormAlert alert = FormAlert.toast,
       Position? toastPosition,
       bool singleNotifier = true}) {
-    return LxForm.validate(this,
+    return LzForm.validate(this,
         required: required,
         min: min,
         max: max,
@@ -132,7 +133,7 @@ extension LxFormExtension on Map<String, FormModelx> {
   ///
   /// Returns:
   ///   - Returns the current object, allowing for method chaining.
-  Map<String, FormModelx> enable(Object key, [bool value = true]) {
+  Map<String, FormModel> enable(Object key, [bool value = true]) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {
@@ -144,7 +145,7 @@ extension LxFormExtension on Map<String, FormModelx> {
     return this;
   }
 
-  Map<String, FormModelx> setValue(Object key, dynamic value) {
+  Map<String, FormModel> setValue(Object key, dynamic value) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {
@@ -159,14 +160,48 @@ extension LxFormExtension on Map<String, FormModelx> {
 
         if (notifier.isRadio) {
           notifier.setOptionFindBy(value);
-        }
-
-        else if(notifier.isCheckbox) {
-          if(value is List) {
+        } else if (notifier.isCheckbox) {
+          if (value is List) {
             notifier.setCheckboxFindBy(value);
           } else {
-            logg('Invalid value type for checkbox, expected List', name: 'LxForm');
+            logg('Invalid value type for checkbox, expected List', name: 'LzForm');
           }
+        }
+      }
+    }
+
+    return this;
+  }
+
+  Map<String, FormModel> setSelectOption(Object key, List<Option> options, {bool andShow = false}) {
+    List<String> keys = key is List<String> ? key : [key.toString()];
+
+    for (var e in keys) {
+      if (containsKey(e) && this[e] != null) {
+        final notifier = this[e]!.notifier;
+
+        if (notifier.isSelect) {
+          notifier.setSelectOption(options);
+
+          if (andShow && !notifier.disabled && !notifier.isSelectShow) {
+            notifier.onTapSelect?.call();
+          }
+        }
+      }
+    }
+
+    return this;
+  }
+
+  Map<String, FormModel> showSelectPicker(Object key) {
+    List<String> keys = key is List<String> ? key : [key.toString()];
+
+    for (var e in keys) {
+      if (containsKey(e) && this[e] != null) {
+        final notifier = this[e]!.notifier;
+
+        if (notifier.isSelect && !notifier.disabled && !notifier.isSelectShow) {
+          notifier.onTapSelect?.call();
         }
       }
     }

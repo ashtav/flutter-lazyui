@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../notifiers/form_notifier.dart';
 
-class FormModelx {
+class FormModel {
   final TextEditingController controller;
   final FormNotifier notifier;
   final GlobalKey key;
 
-  FormModelx(this.controller, this.notifier, this.key);
+  FormModel(this.controller, this.notifier, this.key);
 }

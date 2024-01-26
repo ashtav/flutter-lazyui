@@ -1,10 +1,8 @@
-library lxform;
-
 export 'src/constants/form_alert.dart';
 export 'src/constants/form_type.dart';
 export 'src/extensions/form_extension.dart';
 export 'src/models/checkbox_style.dart';
-export 'src/models/crs_model.dart';
+export 'src/models/option.dart';
 export 'src/models/form_message.dart';
 export 'src/models/form_model.dart';
 export 'src/models/form_style.dart';

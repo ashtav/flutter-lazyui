@@ -1,17 +1,17 @@
 part of forms;
 
-class Radio2 extends StatelessWidget with LxFormMixin {
+class Radio extends StatelessWidget with LzFormMixin {
   final String? label;
   final List<String> options;
   final List<dynamic> values;
   final dynamic initValue;
-  final FormModelx? model;
+  final FormModel? model;
   final List<dynamic> disabled;
   final FormType? type;
   final RadioStyle? style;
   final Function(RadioValue value)? onChange;
 
-  const Radio2(
+  const Radio(
       {super.key,
       this.label,
       required this.options,
@@ -57,7 +57,7 @@ class Radio2 extends StatelessWidget with LxFormMixin {
 
     // if values length is not equal to options length, show warning
     if (values.isNotEmpty && values.length != options.length) {
-      logg('Warning: Radio values length is not equal to options length', name: 'LxForm');
+      logg('Warning: Radio values length is not equal to options length', name: 'LzForm');
     }
 
     // check if label is available

@@ -25,6 +25,10 @@ class SelectPicker {
       bool withSearch = false,
       double? height,
       int maxLines = 1}) {
+    if (options.isEmpty) {
+      return;
+    }
+
     context.bottomSheet(
         SelectPickerWidget(
             initialValue: initialValue,
@@ -116,8 +120,10 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
           };
 
     // get current option and check disabled
-    final option = widget.options[i];
-    notifier.setDisabled(option.disabled);
+    if (widget.options.isNotEmpty) {
+      final option = widget.options[i];
+      notifier.setDisabled(option.disabled);
+    }
   }
 
   void setHeight() {

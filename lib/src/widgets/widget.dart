@@ -26,7 +26,7 @@ part 'animations/zoom_in.dart';
 part 'bounce_scroll.dart';
 part 'center_dialog.dart';
 part 'columnize.dart';
-part 'dropx.dart';
+// part 'dropx.dart';
 part 'iconr.dart';
 part 'ink_touch.dart';
 part 'intrinsic.dart';

@@ -3,10 +3,10 @@ import 'package:lazyui/lazyui.dart';
 
 import '../models/attribute.dart';
 
-mixin LxFormMixin {
+mixin LzFormMixin {
   Attribute getAttribute<T>(BuildContext context) {
     // get ancestor widget name
-    final fa = context.findAncestorWidgetOfExactType<LxFormTheme>();
+    final fa = context.findAncestorWidgetOfExactType<LzFormTheme>();
     return Attribute(style: fa?.style, isWrapped: fa != null, isGrouped: fa?.grouping ?? false, type: fa?.type);
   }
 

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/widgets/lxform/src/models/radio_model.dart';
 
 import '../models/checkbox_model.dart';
+import '../models/radio_model.dart';
 
 class FormNotifier extends ChangeNotifier {
   TextEditingController controller = TextEditingController();
@@ -107,16 +107,24 @@ class FormNotifier extends ChangeNotifier {
   bool switchesValue = false;
 
   // select
-  bool isSelect = false;
-  List<CRSOption> selectList = [];
-  CRSOption? selectedSelect;
+  bool isSelect = false, isSelectShow = false;
+  List<Option> selectList = [];
+  Option? selectedSelect;
+  dynamic Function()? onTapSelect;
 
-  void setSelect(CRSOption value) {
+  void setSelect(Option value) {
     if (value.label.trim().isEmpty) return;
     selectedSelect = value;
 
     // if value is not set, use label instead
     controller.text = (value.value ?? value.label).toString();
+    notifyListeners();
+  }
+
+  void setSelectOption(List<Option> value) {
+    selectList = value;
+    selectedSelect = null;
+    controller.clear();
     notifyListeners();
   }
 
@@ -172,7 +180,6 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-
   @override
   void dispose() {
     controller.dispose();
@@ -182,6 +189,6 @@ class FormNotifier extends ChangeNotifier {
   }
 
   FormNotifier() {
-    // logg('FormNotifier created', name: 'LxForm');
+    // logg('FormNotifier created', name: 'LzForm');
   }
 }

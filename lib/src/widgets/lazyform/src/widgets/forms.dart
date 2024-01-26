@@ -4,14 +4,14 @@ import 'package:flutter/material.dart' as m;
 import 'package:flutter/material.dart' hide Radio, Checkbox, Switch, Slider;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/widgets/lxform/src/models/checkbox_model.dart';
-import 'package:lazyui/src/widgets/lxform/src/utils/attribute_extractor.dart';
 
+import '../models/checkbox_model.dart';
 import '../models/checkbox_value.dart';
 import '../models/form_error.dart';
 import '../models/radio_model.dart';
 import '../models/select_value.dart';
 import '../notifiers/form_notifier.dart';
+import '../utils/attribute_extractor.dart';
 import 'form_controls/switches.dart';
 import 'form_feedback.dart';
 
@@ -22,39 +22,39 @@ part 'form_controls/radio.dart';
 part 'form_controls/select.dart';
 part 'form_controls/slider.dart';
 
-class LxForm {
+class LzForm {
   final bool ok;
   final FormError? error;
   final Map<String, dynamic> value;
   final Map<String, dynamic> extra;
 
-  LxForm({this.ok = false, this.error, this.value = const {}, this.extra = const {}});
+  LzForm({this.ok = false, this.error, this.value = const {}, this.extra = const {}});
 
-  /// Creates a mapping of form keys to `FormModelx` instances.
+  /// Creates a mapping of form keys to `FormModel` instances.
   ///
   /// This function takes a list of strings (`keys`) and generates a map where
-  /// each key is associated with a `FormModelx` instance. For each key in the
+  /// each key is associated with a `FormModel` instance. For each key in the
   /// provided list, a new `TextEditingController` and `FormNotifier` are created.
-  /// These are then used to construct `FormModelx` instances.
+  /// These are then used to construct `FormModel` instances.
   ///
-  /// The function returns a `Map<String, FormModelx>`, where each key from the
-  /// input list is mapped to a corresponding `FormModelx` object. This map is
+  /// The function returns a `Map<String, FormModel>`, where each key from the
+  /// input list is mapped to a corresponding `FormModel` object. This map is
   /// useful for managing multiple forms or form fields in a dynamic way, such as
   /// in a form builder context.
   ///
-  /// The `FormModelx` objects are initialized with the newly created
+  /// The `FormModel` objects are initialized with the newly created
   /// `TextEditingController`, `FormNotifier`, and a unique `GlobalKey`.
   ///
   /// Example:
   /// ```dart
   /// var formKeys = ['name', 'email', 'password'];
-  /// var formMap = FormModelx.make(formKeys);
+  /// var formMap = FormModel.make(formKeys);
   /// ```
   ///
   /// [keys] List of strings representing the keys for the form fields.
-  /// Returns a Map of string keys to `FormModelx` instances.
+  /// Returns a Map of string keys to `FormModel` instances.
 
-  static Map<String, FormModelx> make(List<String> keys) {
+  static Map<String, FormModel> make(List<String> keys) {
     Map<String, TextEditingController> forms = {};
     Map<String, FormNotifier> notifiers = {};
 
@@ -64,12 +64,12 @@ class LxForm {
     }
 
     return Map.fromIterables(
-        keys, List.generate(keys.length, (i) => FormModelx(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
+        keys, List.generate(keys.length, (i) => FormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
   }
 
   /// Fills the provided form models with data.
   ///
-  /// This static function takes a map of `FormModelx` objects and a data map, then
+  /// This static function takes a map of `FormModel` objects and a data map, then
   /// populates the `TextEditingController` of each form model with the corresponding
   /// value from the data map. If a key in the data map matches a key in the form
   /// models map, and is not listed in the `except` list, its value will be used to
@@ -78,25 +78,25 @@ class LxForm {
   /// This is useful for pre-filling form fields with existing data, such as when
   /// editing information that was previously saved.
   ///
-  /// The function returns the updated map of `FormModelx` objects with their
+  /// The function returns the updated map of `FormModel` objects with their
   /// controllers' text set according to the provided data.
   ///
   /// Example:
   /// ```dart
   /// var formModels = {
-  ///   'name': FormModelx(...),
-  ///   'email': FormModelx(...),
+  ///   'name': FormModel(...),
+  ///   'email': FormModel(...),
   /// };
   /// var data = {'name': 'John Doe', 'email': 'johndoe@example.com'};
-  /// formModels = FormModelx.fill(formModels, data);
+  /// formModels = FormModel.fill(formModels, data);
   /// ```
   ///
-  /// [forms] Map of `FormModelx` objects, keyed by string.
+  /// [forms] Map of `FormModel` objects, keyed by string.
   /// [data] Map of data used to fill the form models, keyed by string.
   /// [except] Optional list of string keys to exclude from filling.
-  /// Returns the updated map of `FormModelx` objects.
+  /// Returns the updated map of `FormModel` objects.
 
-  static Map<String, FormModelx> fill(Map<String, FormModelx> forms, Map<String, dynamic> data,
+  static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data,
       {List<String> except = const []}) {
     for (var e in data.keys) {
       if (forms.containsKey(e) && !except.contains(e)) {
@@ -139,7 +139,7 @@ class LxForm {
   /// [only] Optional list of string keys to exclusively reset.
   /// [except] Optional list of string keys to exclude from resetting.
 
-  static void reset(Map<String, FormModelx> forms, {List<String> only = const [], List<String> except = const []}) {
+  static void reset(Map<String, FormModel> forms, {List<String> only = const [], List<String> except = const []}) {
     for (var e in forms.keys) {
       if (only.isNotEmpty && only.contains(e)) {
         forms[e]!.controller.text = '';
@@ -151,7 +151,7 @@ class LxForm {
     }
   }
 
-  static LxForm validate(Map<String, FormModelx> forms,
+  static LzForm validate(Map<String, FormModel> forms,
       {List<String> required = const [],
       List<String> min = const [],
       List<String> max = const [],
@@ -283,7 +283,7 @@ class LxForm {
         //   }
         // }, 1.s);
 
-        return LxForm(
+        return LzForm(
             ok: false,
             error: FormError(key: errorKey, type: errorType, message: errorMessage),
             value: controllers.toMap());
@@ -292,11 +292,11 @@ class LxForm {
       Utils.errorCatcher(e, s);
     }
 
-    return LxForm(ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.controller)).toMap());
+    return LzForm(ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.controller)).toMap());
   }
 
   // input form-controls
-  static Input2 input(
+  static Input input(
           {String? label,
           String? hint,
           FormType? type,
@@ -311,11 +311,11 @@ class LxForm {
           Function(TextEditingController control)? onTap,
           Function(String)? onChange,
           Function(String)? onSubmit,
-          FormModelx? model,
+          FormModel? model,
           FocusNode? node,
           int maxLength = 255,
           int? maxLines}) =>
-      Input2(
+      Input(
         label: label,
         hint: hint,
         type: type,
@@ -337,18 +337,18 @@ class LxForm {
       );
 
   // radio form-controls
-  static Radio2 radio({
+  static Radio radio({
     String? label,
     required List<String> options,
     List<dynamic>? values,
     dynamic initValue,
-    FormModelx? model,
+    FormModel? model,
     List<dynamic> disabled = const [],
     FormType? type,
     RadioStyle? style,
     Function(RadioValue value)? onChange,
   }) =>
-      Radio2(
+      Radio(
         label: label,
         options: options,
         values: values ?? [],
@@ -361,18 +361,18 @@ class LxForm {
       );
 
   // checkbox form-controls
-  static Checkbox2 checkbox({
+  static Checkbox checkbox({
     String? label,
     required List<String> options,
     List<dynamic>? values,
     List<dynamic> initValue = const [],
-    FormModelx? model,
+    FormModel? model,
     List<dynamic> disabled = const [],
     FormType? type,
     CheckboxStyle? style,
     Function(List<CheckboxValue> value)? onChange,
   }) =>
-      Checkbox2(
+      Checkbox(
         label: label,
         options: options,
         values: values ?? [],
@@ -394,18 +394,18 @@ class LxForm {
       Switches(label: label, style: style, onChange: onChange, initValue: initValue, reversed: reversed);
 
   // select form-controls
-  static Select2 select({
+  static Select select({
     String? label,
     String? hint,
-    List<CRSOption> options = const [],
+    List<Option> options = const [],
     FormType? type,
     FormStyle? style,
     bool disabled = false,
     Function(TextEditingController control)? onTap,
     Function(SelectValue value)? onChange,
-    FormModelx? model,
+    FormModel? model,
   }) =>
-      Select2(
+      Select(
         label: label,
         hint: hint,
         options: options,
@@ -426,7 +426,7 @@ class LxForm {
           bool disabled = false,
           bool autofocus = false,
           Function(String)? onChange,
-          FormModelx? model,
+          FormModel? model,
           FocusNode? node,
           int min = 0,
           int max = 100,
@@ -458,7 +458,7 @@ class LxForm {
     double max = 100,
     int? divisions,
     bool disabled = false,
-    FormModelx? model,
+    FormModel? model,
     Function(double value)? onChange,
     SlideStyle? style,
     Widget Function(double value)? indicator,

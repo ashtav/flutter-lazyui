@@ -1,13 +1,13 @@
 part of forms;
 
-class Slider extends StatelessWidget with LxFormMixin {
+class Slider extends StatelessWidget with LzFormMixin {
   final String? label;
   final double? initValue;
   final double min;
   final double max;
   final int? divisions;
   final bool disabled;
-  final FormModelx? model;
+  final FormModel? model;
   final Function(double value)? onChange;
   final SlideStyle? style;
   final Widget Function(double value)? indicator;
@@ -62,39 +62,39 @@ class Slider extends StatelessWidget with LxFormMixin {
               ],
             ),
           Container(
-              padding:
-                  Ei.sym(h: attr.isGrouped ? 16 : 0),
+              padding: Ei.sym(h: attr.isGrouped ? 16 : 0),
+              color: attr.isGrouped ? Colors.white : Colors.transparent,
               child: Stack(
-            children: [
-              // additional widget for slider
-              _SlideLiner('l', activeColor, 4),
-              _SlideLiner('r', inactiveColor, 4),
+                children: [
+                  // additional widget for slider
+                  _SlideLiner('l', activeColor, 4),
+                  _SlideLiner('r', inactiveColor, 4),
 
-              // slider
-              SliderTheme(
-                data: SliderThemeData(
-                  trackShape: CustomTrackShape(),
-                  activeTrackColor: activeColor,
-                  inactiveTrackColor: inactiveColor,
-                  thumbColor: style?.thumbColor,
-                  activeTickMarkColor: style?.activeTickMarkColor,
-                  inactiveTickMarkColor: style?.inactiveTickMarkColor,
-                  // valueIndicatorColor: Colors.transparent,
-                  // valueIndicatorTextStyle: Gfont.black
-                ),
-                child: m.Slider(
-                  value: value,
-                  max: max,
-                  divisions: divisions,
-                  label: value.round().toString(),
-                  onChanged: (double value) {
-                    notifier.setSlider(getValue(value));
-                    onChange?.call(getValue(value));
-                  },
-                ),
-              ),
-            ],
-          ).lz.opacity(disabled ? .5 : 1).lz.ignore(disabled)),
+                  // slider
+                  SliderTheme(
+                    data: SliderThemeData(
+                      trackShape: CustomTrackShape(),
+                      activeTrackColor: activeColor,
+                      inactiveTrackColor: inactiveColor,
+                      thumbColor: style?.thumbColor,
+                      activeTickMarkColor: style?.activeTickMarkColor,
+                      inactiveTickMarkColor: style?.inactiveTickMarkColor,
+                      // valueIndicatorColor: Colors.transparent,
+                      // valueIndicatorTextStyle: Gfont.black
+                    ),
+                    child: m.Slider(
+                      value: value,
+                      max: max,
+                      divisions: divisions,
+                      label: value.round().toString(),
+                      onChanged: (double value) {
+                        notifier.setSlider(getValue(value));
+                        onChange?.call(getValue(value));
+                      },
+                    ),
+                  ),
+                ],
+              ).lz.opacity(disabled ? .5 : 1).lz.ignore(disabled)),
         ],
       );
     });
@@ -117,7 +117,6 @@ class CustomTrackShape extends RectangularSliderTrackShape {
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
-
 
 class _SlideLiner extends StatelessWidget {
   final String alignment;

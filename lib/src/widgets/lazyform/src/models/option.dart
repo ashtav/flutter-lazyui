@@ -1,13 +1,11 @@
-// CRSModel means Checkbox, Radio, Select Model
-
 import 'package:lazyui/lazyui.dart';
 
-class CRSOption {
+class Option {
   final String label;
   final dynamic value;
   final bool disabled;
 
-  CRSOption(this.label, {this.value, this.disabled = false});
+  Option(this.label, {this.value, this.disabled = false});
 
   Map<String, dynamic> toMap() {
     return {
@@ -17,8 +15,8 @@ class CRSOption {
     };
   }
 
-  static CRSOption fromMap(Map<String, dynamic> map) {
-    return CRSOption(
+  static Option fromMap(Map<String, dynamic> map) {
+    return Option(
       map['label'] ?? '',
       value: map['value'],
       disabled: map['disabled'] ?? false,
@@ -26,8 +24,8 @@ class CRSOption {
   }
 }
 
-extension CRSOptionExtension on List<String> {
-  List<CRSOption> option({List<dynamic> values = const [], List<dynamic> disabled = const []}) {
+extension OptionExtension on List<String> {
+  List<Option> option({List<dynamic> values = const [], List<dynamic> disabled = const []}) {
     return generate((item, i) {
       bool dis = values.isEmpty
           ? disabled.contains(item)
@@ -35,7 +33,7 @@ extension CRSOptionExtension on List<String> {
               ? disabled.contains(values[i])
               : false;
 
-      return CRSOption(item, value: values.length <= i ? null : values[i], disabled: dis);
+      return Option(item, value: values.length <= i ? null : values[i], disabled: dis);
     });
   }
 }

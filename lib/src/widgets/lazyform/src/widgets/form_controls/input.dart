@@ -1,6 +1,6 @@
 part of forms;
 
-class Input2 extends StatelessWidget with LxFormMixin {
+class Input extends StatelessWidget with LzFormMixin {
   final String? label, hint;
   final FormType? type;
   final InputStyle? style;
@@ -14,12 +14,12 @@ class Input2 extends StatelessWidget with LxFormMixin {
   final Function(TextEditingController control)? onTap;
   final Function(String value)? onChange;
   final Function(String value)? onSubmit;
-  final FormModelx? model;
+  final FormModel? model;
   final FocusNode? node;
   final int maxLength;
   final int? maxLines;
 
-  const Input2(
+  const Input(
       {super.key,
       this.label,
       this.hint,

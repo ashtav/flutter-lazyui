@@ -1,17 +1,17 @@
 part of forms;
 
-class Checkbox2 extends StatelessWidget with LxFormMixin {
+class Checkbox extends StatelessWidget with LzFormMixin {
   final String? label;
   final List<String> options;
   final List<dynamic> values;
   final List<dynamic> initValue;
-  final FormModelx? model;
+  final FormModel? model;
   final List<dynamic> disabled;
   final FormType? type;
   final CheckboxStyle? style;
   final Function(List<CheckboxValue> value)? onChange;
 
-  const Checkbox2(
+  const Checkbox(
       {super.key,
       this.label,
       required this.options,
@@ -57,7 +57,7 @@ class Checkbox2 extends StatelessWidget with LxFormMixin {
 
     // if values length is not equal to options length, show warning
     if (values.isNotEmpty && values.length != options.length) {
-      logg('Warning: Checkbox values length is not equal to options length', name: 'LxForm');
+      logg('Warning: Checkbox values length is not equal to options length', name: 'LzForm');
     }
 
     // check if label is available

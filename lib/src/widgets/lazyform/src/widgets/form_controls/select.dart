@@ -1,34 +1,27 @@
 part of forms;
 
-class Number extends StatelessWidget with LxFormMixin {
+class Select extends StatelessWidget with LzFormMixin {
   final String? label, hint;
+  final List<Option> options;
   final FormType? type;
   final FormStyle? style;
   final bool disabled;
-  final bool autofocus;
-  final Function(String value)? onChange;
-  final FormModelx? model;
-  final FocusNode? node;
-  final int min, max, step;
-  final bool controls;
-  final List<IconData>? iconControls;
+  final Function(TextEditingController control)? onTap;
+  final Function(SelectValue value)? onChange;
+  final FormModel? model;
 
-  const Number(
-      {super.key,
-      this.label,
-      this.hint,
-      this.type,
-      this.style,
-      this.disabled = false,
-      this.autofocus = false,
-      this.onChange,
-      this.model,
-      this.node,
-      this.min = 0,
-      this.max = 100,
-      this.step = 1,
-      this.controls = true,
-      this.iconControls});
+  const Select({
+    super.key,
+    this.label,
+    this.hint,
+    this.options = const [],
+    this.type,
+    this.style,
+    this.disabled = false,
+    this.onTap,
+    this.onChange,
+    this.model,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -38,15 +31,10 @@ class Number extends StatelessWidget with LxFormMixin {
     // form notifier
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
-
-    FocusNode focusNode = node ?? notifier.node;
+    notifier.isSelect = true;
 
     // set enabled or disabled
     notifier.disabled = disabled;
-    notifier.min = min;
-    notifier.max = max;
-    notifier.step = step;
-    notifier.onChange = onChange;
 
     // get form type
     FormType formType = attr.type ?? (type ?? FormType.topAligned);
@@ -69,6 +57,7 @@ class Number extends StatelessWidget with LxFormMixin {
 
     // check if label is available
     bool hasLabel = label != null && !attr.isGrouped;
+    bool hasOnTap = onTap != null;
 
     // create label widget
     Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
@@ -93,20 +82,12 @@ class Number extends StatelessWidget with LxFormMixin {
 
     // create prefix & suffix icon widget
     Widget? prefixIconWidget =
-        style?.prefixIcon == null ? null : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+        hasOnTap || style?.prefixIcon == null ? null : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+    Widget? suffixIconWidget =
+        Icon(style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown), color: style?.suffixIconColor);
 
-    void onChangeControl(String value) {
-      try {
-        int number = int.parse(value.trim().isEmpty ? '0' : value.trim());
-        if (number < min) number = min;
-        if (number > max) number = max;
-
-        notifier.controller.text = number.toString();
-        onChange?.call(number.toString());
-      } catch (e, s) {
-        Utils.errorCatcher(e, s);
-      }
-    }
+    // init select list
+    notifier.selectList = options;
 
     // ink touch & input field
     Widget textFieldWidget = notifier.watch((state) {
@@ -115,16 +96,35 @@ class Number extends StatelessWidget with LxFormMixin {
           ? const Color.fromARGB(31, 204, 204, 204)
           : style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
 
-      return Container(
-        decoration: BoxDecoration(
-          color: backgroundColor,
-          border: attr.isGrouped
-              ? null
-              : isUnderlined
-                  ? Br.only(['b'], color: borderColor)
-                  : Br.all(color: borderColor),
-          borderRadius: isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
-        ),
+      // onTap action
+      void onTapSelect() {
+        final selected = notifier.selectedSelect;
+
+        // create options
+        List<Option> options = state.selectList.map((e) => Option.fromMap(e.toMap())).toList();
+        Option initialValue = Option.fromMap(selected?.toMap() ?? {});
+
+        notifier.isSelectShow = true;
+        SelectPicker.show(context, initialValue: initialValue, options: options, onSelect: (value) {
+          notifier.controller.text = (value.value ?? value.label).toString();
+          notifier.selectedSelect = Option.fromMap(value.toMap());
+
+          onChange?.call(SelectValue(value.label, value: value.value));
+          notifier.isSelectShow = false;
+        });
+      }
+
+      notifier.onTapSelect = onTapSelect;
+
+      return InkTouch(
+        onTap: state.disabled ? null : () => onTapSelect(),
+        border: attr.isGrouped
+            ? null
+            : isUnderlined
+                ? Br.only(['b'], color: borderColor)
+                : Br.all(color: borderColor),
+        radius: isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
+        color: backgroundColor,
         child: Stack(
           children: [
             // if grouped, add label and indicator
@@ -133,53 +133,24 @@ class Number extends StatelessWidget with LxFormMixin {
             // input field
             LzTextField(
               hint: hint,
-              enabled: !state.disabled,
+              enabled: false,
               prefixIcon: isGrouped || isUnderlined ? prefixIconWidget?.margin(t: 22) : prefixIconWidget,
-              padding: hasLabel && (isGrouped || isUnderlined)
-                  ? labelAndGroupedPadding
-                  : Ei.only(l: 16, r: controls ? (45 * 2) : 16, v: 14),
+              suffixIcon: isGrouped || isUnderlined ? suffixIconWidget.margin(t: 22) : suffixIconWidget,
+              padding: hasLabel && (isGrouped || isUnderlined) ? labelAndGroupedPadding : Ei.only(l: 16, r: 16, v: 14),
               controller: notifier.controller,
-              maxLength: 50,
-              onChange: onChangeControl,
-              autofocus: autofocus,
-              keyboard: Tit.number,
-              formatters: [LengthLimitingTextInputFormatter(max < 1 ? 1 : max), Formatter.numeric],
-              node: focusNode,
               hintStyle: Gfont.color(textColor.withOpacity(.4)),
               textStyle: Gfont.color(textColor),
             ),
 
-            // input number control
-            if (controls)
+            // if onTap is not null, add icon
+            if (hasOnTap)
               Poslign(
                 alignment: Alignment.centerRight,
-                child: notifier
-                    .watch((state) {
-                      IconData iconPlus = isTabler ? Ti.plus : La.plus;
-                      IconData iconMin = isTabler ? Ti.minus : La.minus;
-
-                      if (iconControls != null && iconControls!.length == 2) {
-                        iconMin = iconControls![0];
-                        iconPlus = iconControls![1];
-                      }
-
-                      return Row(
-                          children: [iconMin, iconPlus].generate((icon, i) {
-                        bool disabled = (i == 0 && state.getNumber <= min) || (i == 1 && state.getNumber >= max);
-
-                        return GestureDetector(
-                          onLongPress: disabled ? null : () => notifier.setNumber(i, longPress: true),
-                          onLongPressUp: disabled ? null : () => notifier.setNumber(-1),
-                          child: InkTouch(
-                            onTap: disabled ? null : () => notifier.setNumber(i),
-                            padding: Ei.all(15),
-                            child: Icon(icon, color: disabled ? Colors.black12 : Colors.black38, size: 18),
-                          ),
-                        );
-                      })).min;
-                    })
-                    .padding(t: isGrouped || isUnderlined ? 22 : 0)
-                    .onTap(() => notifier.setObsecure()),
+                child: Icon(
+                  style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
+                  color: style?.suffixIconColor ?? Colors.black38,
+                  size: 18,
+                ).padding(r: 15, b: 1.5),
               ),
           ],
         ),

@@ -119,43 +119,43 @@ extension LzListStringExtension on List<String> {
   ///
   /// The [styles] function is used to specify the styles of the options.
 
-  List<Option> options(
-      {List values = const [],
-      List<IconData> icons = const [],
-      List<int> disableds = const [],
-      List<int> dangers = const [],
-      List<int> pops = const [],
-      List<int> separator = const [],
-      Map<int, List<Option>> options = const {},
-      Map<int, OptionStyle> Function(int index)? styles}) {
-    List<Option> localOptions = [];
+  // List<Option> options(
+  //     {List values = const [],
+  //     List<IconData> icons = const [],
+  //     List<int> disableds = const [],
+  //     List<int> dangers = const [],
+  //     List<int> pops = const [],
+  //     List<int> separator = const [],
+  //     Map<int, List<Option>> options = const {},
+  //     Map<int, OptionStyle> Function(int index)? styles}) {
+  //   List<Option> localOptions = [];
 
-    for (int i = 0; i < length; i++) {
-      bool disabled = disableds.contains(i);
-      bool danger = dangers.contains(i);
+  //   for (int i = 0; i < length; i++) {
+  //     bool disabled = disableds.contains(i);
+  //     bool danger = dangers.contains(i);
 
-      OptionStyle? style = styles?.call(i)[i];
+  //     OptionStyle? style = styles?.call(i)[i];
 
-      if (dangers.contains(i)) {
-        style = const OptionStyle(
-          color: Colors.redAccent,
-        );
-      }
+  //     if (dangers.contains(i)) {
+  //       style = const OptionStyle(
+  //         color: Colors.redAccent,
+  //       );
+  //     }
 
-      localOptions.add(Option(
-          label: this[i],
-          value: values.length > i ? values[i] : null,
-          icon: icons.length > i ? icons[i] : null,
-          disabled: disabled,
-          danger: danger,
-          separator: separator.contains(i),
-          pop: pops.contains(i),
-          options: options.containsKey(i) ? options[i] : null,
-          style: style));
-    }
+  //     localOptions.add(Option(
+  //         label: this[i],
+  //         value: values.length > i ? values[i] : null,
+  //         icon: icons.length > i ? icons[i] : null,
+  //         disabled: disabled,
+  //         danger: danger,
+  //         separator: separator.contains(i),
+  //         pop: pops.contains(i),
+  //         options: options.containsKey(i) ? options[i] : null,
+  //         style: style));
+  //   }
 
-    return localOptions;
-  }
+  //   return localOptions;
+  // }
 
   /// Formats a date range with time.
   ///

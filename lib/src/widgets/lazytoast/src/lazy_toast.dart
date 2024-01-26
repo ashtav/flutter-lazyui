@@ -57,8 +57,7 @@ class LzToast {
   // Get default config
 
   static LzToastConfig get getConfig {
-    return LzToastConfig(
-        position: _defaultPosition, duration: _defaultDuration);
+    return LzToastConfig(position: _defaultPosition, duration: _defaultDuration);
   }
 
   /* ----------------------------------------------------------
@@ -91,11 +90,7 @@ class LzToast {
   }
 
   static void error(String? message,
-      {IconData? icon,
-      bool dismissOnTap = false,
-      Duration? duration,
-      Position? position,
-      int? maxLength}) {
+      {IconData? icon, bool dismissOnTap = false, Duration? duration, Position? position, int? maxLength}) {
     _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration ?? _defaultDuration,
@@ -105,11 +100,7 @@ class LzToast {
   }
 
   static void warning(String? message,
-      {IconData? icon,
-      bool dismissOnTap = false,
-      Duration? duration,
-      Position? position,
-      int? maxLength}) {
+      {IconData? icon, bool dismissOnTap = false, Duration? duration, Position? position, int? maxLength}) {
     _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration ?? _defaultDuration,
@@ -119,11 +110,7 @@ class LzToast {
   }
 
   static void success(String? message,
-      {IconData? icon,
-      bool dismissOnTap = false,
-      Duration? duration,
-      Position? position,
-      int? maxLength}) {
+      {IconData? icon, bool dismissOnTap = false, Duration? duration, Position? position, int? maxLength}) {
     _toastNotifier.toggle(message.toString(),
         icon: icon,
         duration: duration ?? _defaultDuration,
@@ -132,16 +119,31 @@ class LzToast {
         backgroundColor: Colors.green.withOpacity(.8));
   }
 
-  static overlay(
+  static Future overlay(
     String message, {
     Widget? indicator,
     bool dismissOnTap = false,
-  }) {
+    Duration? duration,
+  }) async {
+    if (duration != null) {
+      _overlayNotifier.toggle(message, dismissOnTap: dismissOnTap);
+      return await Future.delayed(duration, () {
+        _overlayNotifier.dismiss();
+      });
+    }
+
     _overlayNotifier.toggle(message, dismissOnTap: dismissOnTap);
   }
 
   /// dismiss loading
   static void dismiss() => _overlayNotifier.dismiss();
+
+  /// delay dismiss loading
+  static Future delayDismiss(Duration duration) async {
+    await Future.delayed(duration, () {
+      _overlayNotifier.dismiss();
+    });
+  }
 }
 
 // Toast Notifier
@@ -231,21 +233,15 @@ class LzToastWidget extends StatelessWidget {
           children: [
             AnimatedSwitcher(
                 duration: 130.ms,
-                transitionBuilder:
-                    (Widget child, Animation<double> animation) =>
-                        FadeTransition(
-                          opacity: animation,
-                          child: child,
-                        ),
+                transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
+                      opacity: animation,
+                      child: child,
+                    ),
                 child: o.show
                     ? Container(
-                        margin: Ei.only(
-                            b: MediaQuery.of(context).viewInsets.bottom + 50,
-                            others: 50),
+                        margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
                         padding: Ei.sym(v: 20, h: 20),
-                        decoration: BoxDecoration(
-                            borderRadius: Br.radius(5),
-                            color: Colors.black.withOpacity(.8)),
+                        decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
                         child: Column(
                           mainAxisSize: Mas.min,
                           mainAxisAlignment: Maa.center,
@@ -273,43 +269,33 @@ class LzToastWidget extends StatelessWidget {
                   switchInCurve: Curves.linearToEaseOut,
                   switchOutCurve: Curves.easeOutBack,
                   duration: 350.ms,
-                  transitionBuilder:
-                      (Widget child, Animation<double> animation) =>
-                          ScaleTransition(
-                            scale: animation,
-                            child: child,
-                          ),
+                  transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
+                        scale: animation,
+                        child: child,
+                      ),
                   child: t.show
                       ? IgnorePointer(
                           key: ValueKey(t.message),
                           child: Container(
-                            margin: Ei.only(
-                                b: MediaQuery.of(context).viewInsets.bottom +
-                                    50,
-                                others: 50),
+                            margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
                             padding: Ei.sym(v: 13, h: 20),
                             decoration: BoxDecoration(
                                 borderRadius: Br.radius(_defaultRadius),
-                                color: t.backgroundColor ??
-                                    Colors.black.withOpacity(.8)),
+                                color: t.backgroundColor ?? Colors.black.withOpacity(.8)),
                             child: AnimatedSwitcher(
                                 duration: 350.ms,
-                                transitionBuilder: (Widget child,
-                                    Animation<double> animation) {
+                                transitionBuilder: (Widget child, Animation<double> animation) {
                                   return FadeTransition(
                                     opacity: animation,
                                     child: child,
                                   );
                                 },
                                 child: Textr(
-                                  t.maxLength != null &&
-                                          t.message.length > t.maxLength!
+                                  t.maxLength != null && t.message.length > t.maxLength!
                                       ? '${t.message.substring(0, t.maxLength!)}...'
                                       : t.message,
-                                  style: style?.copyWith(
-                                      color: t.textColor ?? Colors.white),
-                                  textAlign:
-                                      t.icon == null ? Ta.center : Ta.start,
+                                  style: style?.copyWith(color: t.textColor ?? Colors.white),
+                                  textAlign: t.icon == null ? Ta.center : Ta.start,
                                   icon: t.icon,
                                   key: UniqueKey(),
                                 )),
