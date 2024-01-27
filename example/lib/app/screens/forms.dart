@@ -57,7 +57,7 @@ class FormsView extends StatelessWidget {
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Form X'),
+          title: const Text('Form'),
         ),
         body: LzListView(
           autoCache: true,
