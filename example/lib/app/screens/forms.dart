@@ -1,277 +1,248 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+class FormController {
+  final forms = LzForm.make([
+    'name',
+    'gender',
+    'birthdate',
+    'hobby',
+    'product',
+    'qty',
+    'province',
+    'city',
+    'phone',
+    'distance',
+    'email',
+    'password',
+  ]);
+}
+
 class FormsView extends StatelessWidget {
   const FormsView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final forms = LzForm.make([
-    //   'name',
-    //   'birthday',
-    //   'fruit',
-    //   'hobby',
-    //   'email',
-    //   'password',
-    //   'province',
-    //   'city',
-    //   'number',
-    //   'is_active'
-    // ]).fill({
-    //   'email': 'ashtaaav@gmail.com',
-    //   'fruit': 'Apple',
-    //   // 'hobby': 'Swimming, Coding',
-    //   'is_active': '1'
-    // });
+    final controller = FormController();
+    final forms = controller.forms;
 
-    // reset form
-    // forms.reset(except: ['hobby']).fill({'email': 'johndoe@gmail.com'});
+    Bindings.onRendered(() {
+      forms.fill({'name': 'John Doe', 'distance': 29});
+    });
+
+    List<String> products = [
+      'Spaghetti',
+      'Cappuccino',
+      'Cheesecake',
+      'Hamburger',
+      'Lasagna',
+      'Espresso',
+      'Croissant',
+      'Milkshake',
+      'Macaroni',
+      'Sandwich',
+      'Chocolate',
+      'Cocktail',
+      'Pancakes',
+      'Smoothie',
+      'Lemonade'
+    ];
+
+    List<Option> provinces = ['Bali', 'Jakarta', 'Yogyakarta'].option(values: [1, 2, 3]);
+    Map<int, List<Option>> cities = {
+      1: ['Denpasar', 'Badung', 'Tabanan', 'Gianyar', 'Bangli', 'Karangasem', 'Buleleng'].option(),
+      2: ['Jakarta Barat', 'Jakarta Pusat', 'Jakarta Selatan', 'Jakarta Timur', 'Jakarta Utara'].option(),
+    };
 
     return Wrapper(
-        child: Scaffold(
-      appBar: AppBar(
-        title: const Text('Form View'),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Form X'),
+        ),
+        body: LzListView(
+          autoCache: true,
+          children: [
+            LzFormTheme(
+              grouping: true,
+              label: Textr(
+                'Biodata',
+                style: Gfont.bold,
+                icon: Ti.user,
+              ),
+              description: 'Please input your full name and gender.',
+              style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
+              children: [
+                LzForm.input(label: 'Full Name', hint: 'Enter your full name', model: forms['name'], indicator: true),
+                LzForm.radio(
+                  label: 'Select Gender',
+                  options: ['Male', 'Female'],
+                  model: forms['gender'],
+                  onChange: (value) {
+                    forms.setValue('hobby', ['Coding', 'Reading']);
+                  },
+                ),
+              ],
+            ),
+            LzFormTheme(grouping: true, children: [
+              LzForm.input(
+                hint: 'Please input your birthdate',
+                model: forms['birthdate'],
+                style: InputStyle(suffixIcon: Ti.calendarEvent),
+                onTap: (text) {
+                  LzPicker.datePicker(context, initialDate: text.toDate(), onSelect: (value) {
+                    forms.setValue('birthdate', value.format('dd/MM/yyyy'));
+                  });
+                },
+              ),
+              LzForm.checkbox(
+                  options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
+                  disabled: [0, 1],
+                  model: forms['hobby']),
+            ]),
+
+            // example of using switch, selecta and number
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Textr(
+                      'Get a Gift',
+                      style: Gfont.bold,
+                      icon: Ti.gift,
+                      margin: Ei.only(b: 5),
+                    ),
+                    Text('Select product you want to achieved.', style: Gfont.fs14)
+                  ],
+                ).start,
+                LzForm.switches(
+                    label: 'On|Off',
+                    reversed: true,
+                    onChange: (value) async {
+                      forms.enable('product', value);
+
+                      if (value) {
+                        LzToast.overlay('Getting products...', duration: 1.s).then((_) {
+                          forms.setSelectOption(
+                              'product', products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
+                              andShow: true);
+
+                          // open select picker automatically
+                          // forms.showSelectPicker('product');
+                        });
+                      }
+                    }),
+              ],
+            ).between.margin(b: 16, t: 25),
+            LzFormTheme(
+              grouping: true,
+              children: [
+                LzForm.select(
+                  hint: 'Please select product',
+                  // The options will be added when the switch is on, so it can be dynamically changed.
+                  // options: products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
+                  disabled: true,
+                  model: forms['product'],
+                ),
+                LzForm.number(
+                    hint: 'Input quantity',
+                    style: FormStyle(radius: 8, borderColor: Colors.black38),
+                    model: forms['qty'],
+                    max: 50),
+              ],
+            ),
+
+            LzFormTheme(
+                label: Textr('Address', style: Gfont.bold, icon: Ti.map2),
+                description: 'Example of using a select input with dynamic options.',
+                grouping: true,
+                children: [
+                  LzForm.select(
+                      hint: 'Select province',
+                      model: forms['province'],
+                      onTap: () {
+                        return LzToast.overlay('Getting province...', duration: 1.s).then((_) {
+                          // if data we get from server is null, empty or error
+                          // we can prevent the select to show by returning false
+
+                          // LzToast.show('There is no data to show.', position: Position.center);
+                          // return false;
+
+                          forms.setSelectOption('province', provinces,
+                              disabled: [3], onSelected: (_) => forms.enable('city'));
+
+                          // forms.onSelected('province', (f) => f.enable('city'));
+                        });
+                      }),
+                  LzForm.select(
+                      hint: 'Select city',
+                      model: forms['city'],
+                      disabled: true,
+                      onTap: () {
+                        return LzToast.overlay('Getting city...', duration: 500.ms).then((_) {
+                          final id = forms.getSelect('province');
+                          forms.setSelectOption('city', cities[id] ?? []);
+                        });
+                      }),
+                ]).margin(t: 25),
+
+            // Example of using an input field with a prefix widget and slider.
+            LzFormTheme(
+                label: Textr('Contact & Distance', style: Gfont.bold, icon: Ti.gift),
+                description: 'Example of using an input field with a prefix widget and input slider.',
+                grouping: true,
+                spacing: 5,
+                children: [
+                  LzForm.input(
+                    hint: 'Type your phone number',
+                    style: InputStyle(radius: 8, borderColor: Colors.black38, prefix: const Textr('+62')),
+                    keyboard: Tit.number,
+                    model: forms['phone'],
+                  ),
+                  LzForm.slider(
+                      divisions: 7,
+                      indicator: (double value) => Text('\$${value.toInt()}'),
+                      model: forms['distance'],
+                      onChange: (value) {
+                        LzState.set('#distance', value);
+                      }),
+                ]).margin(t: 25, b: 0),
+
+            LzState.watch(
+                '#distance',
+                29.0,
+                (value) => Row(
+                      children: [
+                        Text('Your distance is $value Km', style: Gfont.fs14.muted),
+                      ],
+                    ).end),
+
+            // example of using input (obsecureToggle)
+            LzFormTheme(
+              grouping: true,
+              style: FormStyle(
+                borderColor: Colors.black38,
+              ),
+              label: Textr('Account', style: Gfont.bold, icon: Ti.lock),
+              description: 'Example of using an input field with an obscure toggle, show or hide password value.',
+              children: [
+                LzForm.input(hint: 'Enter your email', model: forms['email'], keyboard: Tit.emailAddress),
+                LzForm.input(hint: 'Enter your password', model: forms['password'], obsecureToggle: true),
+              ],
+            ).margin(t: 25, b: 16), // end of account
+          ],
+        ),
+        bottomNavigationBar: LzButton(
+            text: 'Submit',
+            onTap: (_) {
+              final form = forms.validate(
+                  required: ['*'],
+                  alert: FormAlert.text,
+                  messages: FormMessage(required: {
+                    'name': 'I am sory, we need to know your name, so please provide your valid information.'
+                  }));
+              logg(form.value);
+            }).theme1(),
       ),
-      // body: LzFormList(
-      //   cleanOnFilled: true,
-      //   style: LzFormStyle.topInner(Colors.black26),
-      //   children: [
-      //     LzForm.input(
-      //         label: 'Your Name *',
-      //         hint: 'Input your name',
-      //         indicator: true,
-      //         model: forms['name']),
-      //     LzForm.input(
-      //         label: 'Birthday *',
-      //         hint: 'Input your birthday',
-      //         model: forms['birthday'],
-      //         suffixIcon: La.calendar,
-      //         onTap: (model) {
-      //           // open date picker, then set value to the model
-      //           model.text = '2021-01-01';
-      //         }),
-      //     LzForm.radio(
-      //         label: 'Radio Input *',
-      //         options: [
-      //           'Mango',
-      //           'Banana',
-      //           'Apple',
-      //           'Orange',
-      //           'Durian',
-      //           'Melon',
-      //           'Watermelon'
-      //         ].generate((data, i) =>
-      //             Option(option: data, disabled: [0, 1, 3].contains(i))),
-      //         model: forms['fruit']),
-      //     LzForm.checkbox(
-      //         label: 'Checkbox *',
-      //         options: List.generate(
-      //             5,
-      //             (i) => Option(
-      //                 option: [
-      //                   'Swimming',
-      //                   'Reading',
-      //                   'Coding',
-      //                   'Cooking',
-      //                   'Playing Music'
-      //                 ][i],
-      //                 disabled: i == 1)),
-      //         model: forms['hobby']),
-      //     LzFormGroup(
-      //       label: 'Account *',
-      //       labelStyle: Gfont.fs14,
-      //       children: [
-      //         LzForm.input(
-      //             label: 'Email *',
-      //             hint: 'Input your email address',
-      //             model: forms['email']),
-      //         LzForm.input(
-      //             label: 'Password *',
-      //             hint: 'Input your password',
-      //             model: forms['password'],
-      //             obsecureToggle: true),
-      //       ],
-      //     ),
-      //     LzForm.select(
-      //         label: 'Country *',
-      //         options: ['Indonesia', 'China', 'Thailand', 'Vietnam', 'Japan']
-      //             .options(),
-      //         hint: 'Please select your country'),
-      //     LzFormGroup(
-      //       label: 'Address',
-      //       sublabel:
-      //           'Please select your province, city and district. Let me know if you have a problem.',
-      //       prefixIcon: La.mapMarked,
-      //       children: [
-      //         // set options based on data from server
-      //         LzForm.select(
-      //             label: 'Province *',
-      //             hint: 'Please select province',
-      //             model: forms['province'],
-      //             // initValue: const Option(option: 'DKI Jakarta', value: 2),
-      //             onTap: (selector) async {
-      //               // get data from server
-      //               LzToast.overlay('Loading...');
-
-      //               final data = await MyController.getProvince();
-      //               LzToast.dismiss();
-
-      //               // set options
-      //               selector.options = data
-      //                   .map((e) => Option(option: e['name'], value: e['id']))
-      //                   .toList();
-      //               // selector.option = const Option(option: 'Jakarta', value: 2);
-
-      //               // logg(selector.option?.toMap());
-      //             },
-      //             onSelect: (selector) {
-      //               // You can set value (Option, String (option), or dynamic (value)
-      //               selector.setExtra(selector.option?.value); // set extra data
-
-      //               // clear city value
-      //               forms.unfill(['city']);
-      //             }),
-
-      //         // set options from parameter
-      //         LzForm.select(
-      //             label: 'City *',
-      //             hint: 'Please select city',
-      //             model: forms['city'],
-      //             onTap: (selector) async {
-      //               final provinceId = forms.get('province', extra: true);
-      //               if (provinceId == null) {
-      //                 LzToast.show('Please select province first');
-      //                 return false;
-      //               }
-
-      //               // get data from server
-      //               LzToast.overlay('Loading...');
-
-      //               final data = await MyController.getCity(provinceId);
-      //               LzToast.dismiss();
-
-      //               selector.options = data
-      //                   .map((e) => Option(option: e['name'], value: e['id']))
-      //                   .toList();
-      //             },
-      //             options: const [
-      //               Option(option: 'Denpasar', value: 1),
-      //               Option(option: 'Tabanan', value: 2)
-      //             ]),
-
-      //         LzForm.select(
-      //             label: 'District *',
-      //             hint: 'Please select district',
-      //             maxLines: 2,
-      //             options: [
-      //               Faker.words(5),
-      //               Faker.words(55),
-      //               Faker.words(20),
-      //               Faker.words(20)
-      //             ].options()),
-      //       ],
-      //     ),
-      //     LzFormGroup(
-      //       label: 'Bank Account',
-      //       prefixIcon: La.idCard,
-      //       children: [
-      //         LzForm.select(
-      //             label: 'Bank Account *',
-      //             labelStyle: const LzFormLabelStyle(fontWeight: Fw.bold),
-      //             options: ['BCA', 'BNI', 'BRI', 'Mandiri']
-      //                 .options(values: [10, 10, 15, 13]),
-      //             hint: 'Please select your bank account'),
-      //         LzForm.input(
-      //             label: 'Bank Account Number *',
-      //             hint: 'Input your bank account number')
-      //       ],
-      //     ),
-      //     LzForm.number(
-      //         label: 'Number *',
-      //         hint: 'Input your number',
-      //         model: forms['number'],
-      //         min: 25,
-      //         max: 100,
-      //         readonly: false),
-      //     LzForm.input(
-      //         label: 'Salary *',
-      //         hint: 'Input your salary',
-      //         keyboard: Tit.number,
-      //         formatters: [InputFormat.currency()]),
-      //     LzForm.input(
-      //         label: 'Input with Suffix',
-      //         hint: 'You can type or tap suffix',
-      //         suffix: LzInputicon(
-      //           icon: La.mapMarked,
-      //           onTap: () {
-      //             LzToast.show('Open address', icon: La.mapMarked);
-      //           },
-      //         )),
-      //     LzForm.switches(label: 'Active|Inactive', model: forms['is_active']),
-      //     const SizedBox(
-      //       height: 50,
-      //     )
-      //   ],
-      // ),
-      // bottomNavigationBar: LzButton(
-      //     text: 'Submit',
-      //     onTap: (control) {
-      //       LzForm form = LzForm.validate(forms,
-      //           required: ['*'],
-      //           email: ['email'],
-      //           min: ['password:6', 'name:5'],
-      //           messages: FormMessages(required: {
-      //             'name': 'Please input your name',
-      //             'fruit':
-      //                 'Please select one of your favorite fruit, this is an example of required with custom message.',
-      //             'email': 'Please input your email address',
-      //             'password': 'Please input your password',
-      //           }, email: {
-      //             'email': 'Please input valid email address',
-      //           }, min: {
-      //             'name': 'Name must be at least 5 characters',
-      //             'password': 'Password must be at least 6 characters'
-      //           }),
-      //           notifierType: LzFormNotifier.text,
-      //           singleNotifier: false);
-
-      //       if (form.ok) {
-      //         LzToast.show('Form is valid');
-      //       }
-
-      //       logg(form.value); // get value from form
-      //       logg(forms['province']
-      //           ?.notifier
-      //           .extra); // get extra data from select
-      //     }).style(LzButtonStyle.shadow, spacing: 20),
-    ));
-  }
-}
-
-class MyController {
-  static Future<List<Map<String, dynamic>>> getProvince() async {
-    await Future.delayed(250.ms);
-    return [
-      {'id': 1, 'name': 'Bali'},
-      {'id': 2, 'name': 'DKI Jakarta'},
-      {'id': 3, 'name': 'Bandung'},
-      {'id': 4, 'name': 'Surabaya'},
-      {'id': 5, 'name': 'Yogyakarta'},
-    ];
-  }
-
-  static Future<List<Map<String, dynamic>>> getCity(int provinceId) async {
-    await Future.delayed(500.ms);
-    return [
-      {'id': 1, 'name': 'Denpasar', 'province_id': 1},
-      {'id': 2, 'name': 'Tabanan', 'province_id': 1},
-      {'id': 3, 'name': 'Badung', 'province_id': 1},
-      {'id': 4, 'name': 'Gianyar', 'province_id': 1},
-      {'id': 5, 'name': 'Bangli', 'province_id': 1},
-      {'id': 6, 'name': 'Singaraja', 'province_id': 1},
-      {'id': 7, 'name': 'Jakarta Barat', 'province_id': 2},
-      {'id': 8, 'name': 'Jakarta Pusat', 'province_id': 2},
-      {'id': 9, 'name': 'Jakarta Selatan', 'province_id': 2},
-    ].where((e) => e['province_id'] == provinceId).toList();
+    );
   }
 }

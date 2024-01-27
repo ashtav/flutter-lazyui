@@ -6,7 +6,7 @@ class Select extends StatelessWidget with LzFormMixin {
   final FormType? type;
   final FormStyle? style;
   final bool disabled;
-  final Function(TextEditingController control)? onTap;
+  final Future Function()? onTap;
   final Function(SelectValue value)? onChange;
   final FormModel? model;
 
@@ -106,18 +106,31 @@ class Select extends StatelessWidget with LzFormMixin {
 
         notifier.isSelectShow = true;
         SelectPicker.show(context, initialValue: initialValue, options: options, onSelect: (value) {
-          notifier.controller.text = (value.value ?? value.label).toString();
+          notifier.controller.text = value.label;
           notifier.selectedSelect = Option.fromMap(value.toMap());
 
           onChange?.call(SelectValue(value.label, value: value.value));
           notifier.isSelectShow = false;
+          notifier.onSelected?.call(notifier.selectedSelect);
+
+          // hide error message
+          if (!notifier.isValid) {
+            notifier.setMessage('', true);
+          }
         });
       }
 
       notifier.onTapSelect = onTapSelect;
 
       return InkTouch(
-        onTap: state.disabled ? null : () => onTapSelect(),
+        onTap: state.disabled
+            ? null
+            : () async {
+                bool ok = await onTap?.call() ?? true;
+                if (!ok) return;
+
+                onTapSelect();
+              },
         border: attr.isGrouped
             ? null
             : isUnderlined
@@ -157,32 +170,35 @@ class Select extends StatelessWidget with LzFormMixin {
       );
     });
 
-    return Column(
+    return Container(
       key: model?.key,
-      children: [
-        // input label
-        if (isTopAligned)
-          Row(
-            children: [
-              labelWidget,
-            ],
-          ).between.margin(b: hasLabel ? 8 : 0),
+      margin: Ei.only(b: attr.isGrouped ? 0 : 16),
+      child: Column(
+        children: [
+          // input label
+          if (isTopAligned)
+            Row(
+              children: [
+                labelWidget,
+              ],
+            ).between.margin(b: hasLabel ? 8 : 0),
 
-        // input field
-        if (isTopInner && hasLabel)
-          Stack(
-            children: [
-              textFieldWidget.margin(t: 10),
-              topInnerLabelWidget,
-            ],
-          )
-        else
-          notifier.watch(
-              (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
+          // input field
+          if (isTopInner && hasLabel)
+            Stack(
+              children: [
+                textFieldWidget.margin(t: 10),
+                topInnerLabelWidget,
+              ],
+            )
+          else
+            notifier.watch(
+                (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
 
-        notifier
-            .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
-      ],
-    ).start.margin(b: attr.isGrouped ? 0 : 16);
+          notifier
+              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+        ],
+      ).start,
+    );
   }
 }

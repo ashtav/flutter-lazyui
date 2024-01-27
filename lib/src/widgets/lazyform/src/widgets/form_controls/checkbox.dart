@@ -123,7 +123,7 @@ class Checkbox extends StatelessWidget with LzFormMixin {
                 bool active = state.selectedCheckbox.contains(item);
 
                 return _Square(item.label, active, item.disabled, () {
-                  // hide error message when user select radio
+                  // hide error message when user select checkbox
                   if (!notifier.isValid) {
                     notifier.setMessage('', true);
                   }
@@ -138,32 +138,35 @@ class Checkbox extends StatelessWidget with LzFormMixin {
       ).start,
     );
 
-    return Column(
+    return Container(
       key: model?.key,
-      children: [
-        // input label
-        if (isTopAligned)
-          Row(
-            children: [
-              labelWidget,
-            ],
-          ).between.margin(b: hasLabel ? 8 : 0),
+      margin: Ei.only(b: attr.isGrouped ? 0 : 16),
+      child: Column(
+        children: [
+          // input label
+          if (isTopAligned)
+            Row(
+              children: [
+                labelWidget,
+              ],
+            ).between.margin(b: hasLabel ? 8 : 0),
 
-        // input field
-        if (isTopInner && hasLabel)
-          Stack(
-            children: [
-              radioWidget.margin(t: 10),
-              topInnerLabelWidget,
-            ],
-          )
-        else
-          isUnderlined && notifier.disabled ? radioWidget.lz.clip(all: radius) : radioWidget,
+          // input field
+          if (isTopInner && hasLabel)
+            Stack(
+              children: [
+                radioWidget.margin(t: 10),
+                topInnerLabelWidget,
+              ],
+            )
+          else
+            isUnderlined && notifier.disabled ? radioWidget.lz.clip(all: radius) : radioWidget,
 
-        notifier
-            .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
-      ],
-    ).start.margin(b: attr.isGrouped ? 0 : 16);
+          notifier
+              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+        ],
+      ).start,
+    );
   }
 }
 
@@ -176,6 +179,8 @@ class _Square extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color activeColor = style?.activeColor ?? Colors.blueAccent;
+
     return Row(
       children: [
         AnimatedContainer(
@@ -183,8 +188,10 @@ class _Square extends StatelessWidget {
           width: 20,
           height: 20,
           margin: Ei.only(r: 10),
-          decoration:
-              BoxDecoration(border: Br.all(color: Colors.black38, width: 1), borderRadius: BorderRadius.circular(3)),
+          decoration: BoxDecoration(
+              color: active ? activeColor : Colors.white,
+              border: Br.all(color: Colors.black38, width: active ? 0 : 1.3),
+              borderRadius: BorderRadius.circular(3)),
           child: Center(
               child: AnimatedOpacity(
             duration: 100.ms,
@@ -192,6 +199,7 @@ class _Square extends StatelessWidget {
             child: const Icon(
               Ti.check,
               size: 17,
+              color: Colors.white,
             ),
           )),
         ),

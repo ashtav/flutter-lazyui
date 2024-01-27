@@ -138,32 +138,35 @@ class Radio extends StatelessWidget with LzFormMixin {
       ).start,
     );
 
-    return Column(
+    return Container(
       key: model?.key,
-      children: [
-        // input label
-        if (isTopAligned)
-          Row(
-            children: [
-              labelWidget,
-            ],
-          ).between.margin(b: hasLabel ? 8 : 0),
+      margin: Ei.only(b: attr.isGrouped ? 0 : 16),
+      child: Column(
+        children: [
+          // input label
+          if (isTopAligned)
+            Row(
+              children: [
+                labelWidget,
+              ],
+            ).between.margin(b: hasLabel ? 8 : 0),
 
-        // input field
-        if (isTopInner && hasLabel)
-          Stack(
-            children: [
-              radioWidget.margin(t: 10),
-              topInnerLabelWidget,
-            ],
-          )
-        else
-          isUnderlined && notifier.disabled ? radioWidget.lz.clip(all: radius) : radioWidget,
+          // input field
+          if (isTopInner && hasLabel)
+            Stack(
+              children: [
+                radioWidget.margin(t: 10),
+                topInnerLabelWidget,
+              ],
+            )
+          else
+            isUnderlined && notifier.disabled ? radioWidget.lz.clip(all: radius) : radioWidget,
 
-        notifier
-            .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
-      ],
-    ).start.margin(b: attr.isGrouped ? 0 : 16);
+          notifier
+              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+        ],
+      ).start,
+    );
   }
 }
 
@@ -187,7 +190,7 @@ class _Bullet extends StatelessWidget {
                 border: Br.all(
                     color:
                         active ? (style?.activeColor ?? Colors.blueAccent) : (style?.inactiveColor ?? Colors.black38),
-                    width: active ? 5 : 2),
+                    width: active ? 5 : 1.3),
                 borderRadius: BorderRadius.circular(50))),
         Text(label, style: Gfont.color(style?.textColor ?? Colors.black87))
       ],

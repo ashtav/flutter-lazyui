@@ -125,6 +125,8 @@ class LzToast {
     bool dismissOnTap = false,
     Duration? duration,
   }) async {
+    _toastNotifier.dismiss();
+
     if (duration != null) {
       _overlayNotifier.toggle(message, dismissOnTap: dismissOnTap);
       return await Future.delayed(duration, () {
@@ -181,6 +183,12 @@ class ToastNotifier extends ChangeNotifier {
       timer?.cancel();
       notifyListeners();
     });
+  }
+
+  void dismiss() {
+    timer?.cancel();
+    show = false;
+    notifyListeners();
   }
 }
 

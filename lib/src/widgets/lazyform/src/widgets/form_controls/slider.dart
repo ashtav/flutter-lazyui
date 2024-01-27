@@ -31,6 +31,7 @@ class Slider extends StatelessWidget with LzFormMixin {
     SlideStyle? style = (attr.isWrapped ? attr.style?.slide : attr.slideStyle) ?? this.style;
 
     final notifier = model?.notifier ?? FormNotifier();
+    notifier.controller = model?.controller ?? TextEditingController();
 
     bool hasLabel = label != null;
     bool hasIndicator = indicator != null;

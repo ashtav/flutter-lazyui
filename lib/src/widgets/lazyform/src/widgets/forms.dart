@@ -274,14 +274,11 @@ class LzForm {
           }
         }
 
-        // Utils.timer((){
-        //   // scroll to the error field
-        //   GlobalKey? key = globalKeys[errorKey];
-        //   logg('key: $key, currentContext: ${key?.currentContext}, $errorKey');
-        //   if (key != null && key.currentContext != null) {
-        //     Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
-        //   }
-        // }, 1.s);
+        // scroll to the error field
+        GlobalKey? key = globalKeys[errorKey];
+        if (key != null && key.currentContext != null) {
+          Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+        }
 
         return LzForm(
             ok: false,
@@ -308,7 +305,7 @@ class LzForm {
           bool autofocus = false,
           TextInputType? keyboard,
           List<TextInputFormatter> formatters = const [],
-          Function(TextEditingController control)? onTap,
+          Function(String text)? onTap,
           Function(String)? onChange,
           Function(String)? onSubmit,
           FormModel? model,
@@ -401,7 +398,7 @@ class LzForm {
     FormType? type,
     FormStyle? style,
     bool disabled = false,
-    Function(TextEditingController control)? onTap,
+    Future Function()? onTap,
     Function(SelectValue value)? onChange,
     FormModel? model,
   }) =>

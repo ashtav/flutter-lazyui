@@ -87,6 +87,9 @@ class _LzListViewState extends State<LzListView> {
   Future onInitials() async {
     controller = widget.controller ?? ScrollController();
     controller.addListener(listenToScroll);
+
+    // render and cache list height
+    render();
   }
 
   Future render() async {

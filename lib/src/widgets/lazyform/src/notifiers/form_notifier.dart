@@ -112,12 +112,16 @@ class FormNotifier extends ChangeNotifier {
   Option? selectedSelect;
   dynamic Function()? onTapSelect;
 
+  // this method is called when select value is selected
+  dynamic Function(Option? value)? onSelected;
+
+  // get select value
+  dynamic get getSelect => selectedSelect?.value ?? selectedSelect?.label;
+
   void setSelect(Option value) {
     if (value.label.trim().isEmpty) return;
     selectedSelect = value;
-
-    // if value is not set, use label instead
-    controller.text = (value.value ?? value.label).toString();
+    controller.text = value.label;
     notifyListeners();
   }
 
@@ -171,6 +175,11 @@ class FormNotifier extends ChangeNotifier {
       timer = Timer.periodic(100.ms, (t) {
         doChange(index);
       });
+    }
+
+    // hide error message
+    if (!isValid) {
+      setMessage('', true);
     }
   }
 

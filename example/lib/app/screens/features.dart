@@ -1,21 +1,9 @@
-import 'package:example/app/screens/app_intro.dart';
-import 'package:example/app/screens/app_trainer.dart';
-import 'package:example/app/screens/forms2.dart';
+import 'package:example/app/screens/forms.dart';
 import 'package:example/app/screens/widgets/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../models/feature.dart';
-import 'accordion.dart';
-import 'button.dart';
-import 'confirm.dart';
-import 'date_time_picker.dart';
-import 'dropdown.dart';
-import 'forms.dart';
-import 'refreshtor.dart';
-import 'select_option.dart';
-import 'skeleton.dart';
-import 'toast.dart';
 
 class FeaturesView extends StatelessWidget {
   const FeaturesView({super.key});
@@ -76,61 +64,10 @@ class FeaturesView extends StatelessWidget {
 
 class Actions {
   static on(BuildContext context, String label) {
-    switch (label) {
-      case 'app intro':
-        context.lzPush(const AppIntro());
-        break;
+    Map<String, dynamic> routes = {
+      'LzForm': const FormsView(),
+    };
 
-      case 'app trainer':
-        context.lzPush(const AppTrainerView());
-        break;
-
-      case 'date & time picker':
-        context.lzPush(const DateTimePicker());
-        break;
-
-      case 'accordion':
-        context.lzPush(const AccordionView());
-        break;
-
-      case 'button':
-        context.lzPush(const ButtonView());
-        break;
-
-      case 'confirm':
-        context.lzPush(const ConfirmView());
-        break;
-
-      case 'dropdown':
-        // context.lzPush(const DropdownView());
-        break;
-
-      case 'forms':
-        context.lzPush(const FormsView());
-        break;
-
-      case 'LzForm':
-        context.lzPush(const Forms2());
-        break;
-
-      case 'select option':
-        context.lzPush(const SelectOptionView());
-        break;
-
-      case 'refreshtor':
-        context.lzPush(const RefreshtorView());
-        break;
-
-      case 'skeleton':
-        context.lzPush(const SkeletonView());
-        break;
-
-      case 'toast':
-        context.lzPush(const ToastView());
-        break;
-
-      default:
-        context.lzPush(const CustomWidgetView());
-    }
+    context.lzPush(routes[label] ?? const CustomWidgetView());
   }
 }

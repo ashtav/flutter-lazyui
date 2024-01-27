@@ -158,6 +158,11 @@ extension LzFormExtension on Map<String, FormModel> {
         // if value is List<String>, join the values with comma
         notifier.controller.text = isListString ? value.join(', ') : value.toString();
 
+        // hide error message
+        if (!notifier.isValid) {
+          notifier.setMessage('', true);
+        }
+
         if (notifier.isRadio) {
           notifier.setOptionFindBy(value);
         } else if (notifier.isCheckbox) {
@@ -173,7 +178,22 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
-  Map<String, FormModel> setSelectOption(Object key, List<Option> options, {bool andShow = false}) {
+  dynamic getSelect(String key) {
+    dynamic result;
+
+    if (containsKey(key) && this[key] != null) {
+      final notifier = this[key]!.notifier;
+
+      if (notifier.isSelect) {
+        result = notifier.getSelect;
+      }
+    }
+
+    return result;
+  }
+
+  Map<String, FormModel> setSelectOption(Object key, List<Option> options,
+      {bool andShow = false, List<dynamic> disabled = const [], Function(Option? value)? onSelected}) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {
@@ -181,10 +201,30 @@ extension LzFormExtension on Map<String, FormModel> {
         final notifier = this[e]!.notifier;
 
         if (notifier.isSelect) {
-          notifier.setSelectOption(options);
+          // set disabled options if any
+          final reArangeOptions = disabled.isEmpty
+              ? options
+              : options.map((e) {
+                  final map = e.toMap();
 
+                  if (disabled.contains(e.value ?? e.label)) {
+                    map['disabled'] = true;
+                  }
+
+                  return Option.fromMap(map);
+                }).toList();
+
+          // set options
+          notifier.setSelectOption(reArangeOptions);
+
+          // show select picker
           if (andShow && !notifier.disabled && !notifier.isSelectShow) {
             notifier.onTapSelect?.call();
+          }
+
+          // set on selected
+          if (onSelected != null) {
+            notifier.onSelected = onSelected;
           }
         }
       }
