@@ -20,8 +20,13 @@ class DropdownView extends StatelessWidget {
       LzDrop.show(key,
           options: DropOption.list(['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
               disabled: [3], subOptions: subOptions),
-          style: DropStyle(icons: icons, separators: ['Filters'], criticals: [1], alignment: DropAlignment.right),
-          onSelect: (value) {
+          style: DropStyle(
+              icons: icons,
+              separators: ['Filters'],
+              criticals: [1],
+              alignment: DropAlignment.right,
+              background: '#444'.hex,
+              barrierColor: Colors.black26), onSelect: (value) {
         logg(value.toMap());
       });
     }
@@ -77,7 +82,7 @@ class DropdownView extends StatelessWidget {
                         item,
                         style: Gfont.bold,
                       ),
-                      Textr(Faker.words(15), margin: Ei.only(t: 5))
+                      Textr(Faker.words(12), margin: Ei.only(t: 5))
                     ],
                   ).start,
                 );

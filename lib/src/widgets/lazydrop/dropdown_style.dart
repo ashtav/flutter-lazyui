@@ -7,6 +7,7 @@ class DropStyle {
   final Color? background;
   final Color? separatorColor;
   final Color? textColor;
+  final Color? barrierColor;
   final List<dynamic> separators;
   final List<IconData?> icons;
   final List<dynamic> criticals;
@@ -18,6 +19,7 @@ class DropStyle {
       this.background,
       this.separatorColor,
       this.textColor,
+      this.barrierColor,
       this.separators = const [],
       this.icons = const [],
       this.criticals = const [],

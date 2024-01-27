@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -27,7 +28,8 @@ class LzDrop {
       Offset target = o ?? Offset.zero;
 
       // show dropdown
-      context.dialog(Dropdown(target: target, box: box, options: options, style: style, onSelect: onSelect));
+      context.dialog(Dropdown(target: target, box: box, options: options, style: style, onSelect: onSelect),
+          barrierColor: style?.barrierColor);
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }

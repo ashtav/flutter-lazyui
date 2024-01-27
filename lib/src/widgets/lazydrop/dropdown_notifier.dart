@@ -71,9 +71,11 @@ class DropdownNotifier extends ChangeNotifier {
       double dropXPosition = dx + dropWidth; // current drop x position
       double dropYPosition = dy + dropHeight; // current drop y position
 
+      // adjust drop x position based on alignment
       if (alignment == DropAlignment.right) {
-        dx = dx - (dropWidth - targetWidth);
         dropXPosition = dx;
+        dx = dx - (dropWidth - targetWidth);
+        dx = dx + dropWidth + margin > screenWidth ? (screenWidth - dropWidth) - margin : dx;
       }
 
       dx = dropXPosition > screenWidth ? (screenWidth - dropWidth) - margin : dx;

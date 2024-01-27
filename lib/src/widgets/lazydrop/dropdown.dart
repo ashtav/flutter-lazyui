@@ -91,7 +91,7 @@ class Dropdown extends StatelessWidget {
                             width: isSeparator ? 5 : .5,
                             color:
                                 style?.separatorColor ?? (backgroundColor.isDark() ? Colors.white10 : Colors.black12)),
-                        color: isSubOption ? 'f5f5f5'.hex : backgroundColor,
+                        color: isSubOption ? backgroundColor.darken(.15) : backgroundColor,
                         child: Column(
                           children: [
                             Row(

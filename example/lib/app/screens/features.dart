@@ -5,6 +5,7 @@ import 'package:lazyui/lazyui.dart';
 
 import '../models/feature.dart';
 import 'dropdown.dart';
+import 'picker.dart';
 
 class FeaturesView extends StatelessWidget {
   const FeaturesView({super.key});
@@ -68,6 +69,7 @@ class Actions {
     Map<String, dynamic> routes = {
       'LzForm': const FormsView(),
       'LzDrop': const DropdownView(),
+      'LzPicker': const PickerView(),
     };
 
     context.lzPush(routes[label] ?? const CustomWidgetView());
