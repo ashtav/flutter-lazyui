@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'dropdown_notifier.dart';
+import 'dropdown_value.dart';
+
 class Dropdown extends StatelessWidget {
   final Offset target;
   final RenderBox? box;
   final List<DropOption> options;
   final DropStyle? style;
+  final Function(DropValue value)? onSelect;
 
-  const Dropdown({super.key, required this.target, this.box, this.options = const [], this.style});
+  const Dropdown({super.key, required this.target, this.box, this.options = const [], this.style, this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -15,120 +19,132 @@ class Dropdown extends StatelessWidget {
 
     final notifier = DropdownNotifier();
     notifier.options = options;
+    notifier.alignment = style?.alignment ?? DropAlignment.left;
+
+    // check if any option has sub options
+    notifier.checkSubOptions(options);
 
     Color backgroundColor = style?.background ?? Colors.white;
     Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
     List separators = style?.separators ?? [];
-    List<IconData> icons = style?.icons ?? [];
+    List<IconData?> icons = style?.icons ?? [];
     List criticals = style?.criticals ?? [];
 
     // get dropdown width size
-    double width = style?.width ?? 230;
+    double width = (style?.width ?? 230) > context.width ? context.width - 20 : (style?.width ?? 230);
 
+    // set dropdown position
     notifier.setPosition(target, box, context, width, dkey);
+
+    // generate globalkey based on option length
+    List<GlobalKey> keys = options.generate((item, i) => GlobalKey());
 
     return Stack(
       children: [
         notifier.watch((state) => AnimatedPositioned(
-              duration: 150.ms,
+              duration: state.offset == Offset.zero || style?.transition == false ? 0.ms : 150.ms,
               left: state.offset.dx,
               top: state.offset.dy,
               child: Container(
                 key: dkey,
                 decoration: BoxDecoration(color: backgroundColor),
                 constraints: BoxConstraints(maxHeight: 300, maxWidth: width),
-                child: Column(children: options.generate((item, i) {
-                  IconData? icon = icons.length > i ? icons[i] : null;
+                child: SingleChildScrollView(
+                  physics: BounceScroll(),
+                  controller: notifier.scroller,
+                  child: Column(children: options.generate((item, i) {
+                    GlobalKey ikey = keys[i];
+                    IconData? icon = icons.length > i ? icons[i] : null;
 
-                  bool hasIcon = icon != null;
-                  bool isSeparator = separators.contains(i) || separators.contains(item.label);
-                  bool isDisabled = item.disabled;
-                  bool isCritical = criticals.contains(i) || criticals.contains(item.label);
+                    bool isSeparator = separators.contains(i) || separators.contains(item.label);
+                    bool isDisabled = item.disabled;
+                    bool isCritical = criticals.contains(i) || criticals.contains(item.label);
 
-                  return SlideUp(
-                    delay: (i + 1) * 100,
-                    child: InkTouch(
-                      onTap: isDisabled ? null : () {},
-                      padding: Ei.sym(h: 16, v: 12),
-                      border: Br.only(['t'],
-                          except: i == 0,
-                          width: isSeparator ? 5 : .5,
-                          color: style?.separatorColor ?? (backgroundColor.isDark() ? Colors.white10 : Colors.black12)),
-                      child: Row(
+                    List<DropOption> subOptions = item.subOptions ?? [];
+                    bool hasSubOptions = subOptions.isNotEmpty;
+
+                    Widget itemWidget(int i, String label,
+                        {IconData? icon,
+                        bool isDisabled = false,
+                        bool isCritical = false,
+                        bool isSeparator = false,
+                        bool isSubOption = false,
+                        bool hasSubOptions = false,
+                        GlobalKey? key,
+                        Function()? onTap}) {
+                      bool hasIcon = icon != null;
+
+                      Icon iconWidget(IconData icon) => Icon(
+                            icon,
+                            color: isCritical ? Colors.redAccent : textColor.lighten(.6),
+                            size: 18,
+                          );
+
+                      bool hasExpanded = hasSubOptions && state.subOptionsToggle[item.label] == true;
+
+                      return InkTouch(
+                        key: key,
+                        onTap: isDisabled ? null : () => onTap?.call(),
+                        padding: isSubOption ? Ei.only(v: 12, r: 16, l: 30) : Ei.only(r: 16, v: 12, l: 16),
+                        border: Br.only(['t'],
+                            except: i == 0 && !isSubOption,
+                            width: isSeparator ? 5 : .5,
+                            color:
+                                style?.separatorColor ?? (backgroundColor.isDark() ? Colors.white10 : Colors.black12)),
+                        color: isSubOption ? 'f5f5f5'.hex : backgroundColor,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text(label, style: Gfont.color(isCritical ? Colors.redAccent : textColor)),
+                                if (hasIcon) iconWidget(icon),
+                                if (hasSubOptions && !hasIcon)
+                                  Rotator(degree: hasExpanded ? 90 : 0, child: iconWidget(Ti.chevronRight))
+                              ],
+                            ).between.lz.opacity(isDisabled ? .4 : 1),
+                          ],
+                        ).start,
+                      );
+                    }
+
+                    return SlideUp(
+                      delay: (i + 1) * 100,
+                      child: Column(
                         children: [
-                          Text(item.label, style: Gfont.color(isCritical ? Colors.redAccent : textColor)),
-                          if (hasIcon)
-                            Icon(
-                              icon,
-                              color: isCritical ? Colors.redAccent : textColor.lighten(.6),
-                              size: 18,
-                            )
+                          itemWidget(i, item.label,
+                              icon: icon,
+                              key: ikey,
+                              isDisabled: isDisabled,
+                              isCritical: isCritical,
+                              isSeparator: isSeparator,
+                              hasSubOptions: hasSubOptions, onTap: () {
+                            if (hasSubOptions) {
+                              notifier.toggleSubOptions(item.label, ikey);
+                            } else {
+                              context.lzPop();
+                              onSelect?.call(DropValue(item.label, item.value));
+                            }
+                          }),
+                          ResizedSwitched(
+                            show: state.subOptionsToggle[item.label] ?? false,
+                            child: Column(
+                              children: subOptions.generate((item, j) {
+                                return itemWidget(j, item.label, isDisabled: item.disabled, isSubOption: true,
+                                    onTap: () {
+                                  context.lzPop();
+                                  onSelect?.call(DropValue(item.label, item.value));
+                                });
+                              }),
+                            ),
+                          )
                         ],
-                      ).between.lz.opacity(isDisabled ? .4 : 1),
-                    ),
-                  );
-                })).min.start,
+                      ).start,
+                    );
+                  })).min.start,
+                ),
               ).lz.clip(all: 5),
             )),
       ],
     );
-  }
-}
-
-Offset _latestOffset = Offset.zero;
-
-class DropdownNotifier extends ChangeNotifier {
-  Offset offset = _latestOffset;
-  List<DropOption> options = [];
-
-  void setPosition(Offset target, RenderBox? box, BuildContext context, double dropWidth, GlobalKey dropdownKey) {
-    Bindings.onRendered(() {
-      // render box of the dropdown
-      final dropBox = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
-      final dropSize = dropBox?.size;
-      final dropHeight = dropSize?.height ?? 0;
-
-      double bar = context.windowPadding.top;
-      bool isOutOfScreen = false;
-
-      double margin = 20.0; // margin from screen
-
-      // get size of screen
-      double screenWidth = context.width;
-      double screenHeight = context.height;
-
-      // get size of the target
-      final size = box?.size;
-      double tHeight = size?.height ?? 0;
-      double tWidth = size?.width ?? 0;
-
-      // set offset based on default calculation
-      double dx = target.dx;
-      double dy = target.dy;
-
-      // adjust drop position if it's out of screen
-      double dropXPosition = dx + dropWidth; // current drop x position
-      double dropYPosition = dy + dropHeight; // current drop y position
-
-      dx = dropXPosition > screenWidth ? (screenWidth - dropWidth) - margin : dx;
-      dx = dx < margin ? margin : dx;
-
-      dy = dy < bar ? (bar + margin) : dy;
-      dy = dy - bar;
-      dy = dy + tHeight; // put drop below the target
-      dy = dropYPosition + (bar + tHeight) > screenHeight ? (screenHeight - dropHeight) - (margin + bar) : dy;
-
-      final result = Offset(dx, dy);
-
-      logg('''
-dx: $dx, dy: $dy, bar: $bar, isOutOfScreen: $isOutOfScreen, dropWidth: $dropWidth, 
-result: $result, target: $target, size: $size, screenWidth: $screenWidth, 
-screenHeight: $screenHeight, tHeight: $tHeight, tWidth: $tWidth, 
-dropXPosition: $dropXPosition, dropYPosition: $dropYPosition''');
-
-      offset = result;
-      _latestOffset = result;
-      notifyListeners();
-    });
   }
 }

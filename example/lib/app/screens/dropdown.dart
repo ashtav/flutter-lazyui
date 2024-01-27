@@ -6,16 +6,24 @@ class DropdownView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final key = GlobalKey();
+    final key = GlobalKey(), key2 = GlobalKey();
 
     List<String> tabs = 10.generate((i) => Faker.category());
 
     void showDropdown(GlobalKey key) {
-      final icons = [Ti.pencil, Ti.trash, Ti.share, Ti.map2, Ti.filter];
+      final icons = [Ti.pencil, Ti.trash, null, Ti.map2, Ti.filter];
+      final subOptions = {
+        'Share to': DropOption.list(['Facebook', 'Instagram', 'Tiktok']),
+        'Filters': DropOption.list(['Price', 'Rating', 'Distance', 'Category', 'Open now', 'Sort by'])
+      };
 
       LzDrop.show(key,
-          options: DropOption.list(['Edit', 'Delete', 'Share', 'Location', 'Filters'], disabled: [3]),
-          style: DropStyle(icons: icons, separators: ['Filters'], criticals: [1]));
+          options: DropOption.list(['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
+              disabled: [3], subOptions: subOptions),
+          style: DropStyle(icons: icons, separators: ['Filters'], criticals: [1], alignment: DropAlignment.right),
+          onSelect: (value) {
+        logg(value.toMap());
+      });
     }
 
     return Scaffold(
@@ -77,6 +85,21 @@ class DropdownView extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(color: Colors.white, border: Br.only(['t', 'b'])),
+        padding: Ei.sym(h: 20),
+        child: Row(
+          children: [
+            Iconr(
+              Ti.menu2,
+              key: key2,
+              padding: Ei.sym(v: 15),
+            ).onTap(() {
+              showDropdown(key2);
+            })
+          ],
+        ),
       ),
     );
   }

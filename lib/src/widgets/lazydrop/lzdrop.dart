@@ -4,9 +4,11 @@ import 'package:lazyui/lazyui.dart';
 import 'dropdown.dart';
 export 'dropdown_option.dart';
 export 'dropdown_style.dart';
+export 'dropdown_value.dart';
 
 class LzDrop {
-  static void show(GlobalKey key, {List<DropOption> options = const [], DropStyle? style}) {
+  static void show(GlobalKey key,
+      {List<DropOption> options = const [], DropStyle? style, void Function(DropValue value)? onSelect}) {
     try {
       // only accept GlobalKey or BuildContext
       if ([BuildContext, GlobalKey].contains(key.runtimeType)) {
@@ -25,7 +27,7 @@ class LzDrop {
       Offset target = o ?? Offset.zero;
 
       // show dropdown
-      context.dialog(Dropdown(target: target, box: box, options: options, style: style));
+      context.dialog(Dropdown(target: target, box: box, options: options, style: style, onSelect: onSelect));
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }

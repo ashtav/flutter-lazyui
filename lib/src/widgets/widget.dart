@@ -23,6 +23,7 @@ part 'animations/slide_right.dart';
 part 'animations/slide_switched.dart';
 part 'animations/slide_up.dart';
 part 'animations/zoom_in.dart';
+part 'animations/rotator.dart';
 part 'bounce_scroll.dart';
 part 'center_dialog.dart';
 part 'columnize.dart';
