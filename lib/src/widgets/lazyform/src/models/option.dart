@@ -22,6 +22,10 @@ class Option {
       disabled: map['disabled'] ?? false,
     );
   }
+
+  static List<Option> list(List<String> options, {List<dynamic> values = const [], List<dynamic> disabled = const []}) {
+    return options.option(values: values, disabled: disabled);
+  }
 }
 
 extension OptionExtension on List<String> {

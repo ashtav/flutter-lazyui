@@ -7,6 +7,7 @@ class PickerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> categories = 10.generate((i) => Faker.category());
+    final forms = LzForm.make(['category']);
 
     return Scaffold(
       appBar: AppBar(
@@ -16,48 +17,45 @@ class PickerView extends StatelessWidget {
         children: [
           LzFormTheme(
             grouping: true,
-            description: 'Example of using a LzPicker',
+            label: Text(
+              'Select Option',
+              style: Gfont.bold,
+            ),
+            description: 'Example of using a LzPicker, we can use picker with search bar, disabled items, etc.',
             children: [
               LzForm.input(
-                  hint: 'Tap to show picker',
+                  hint: 'Show picker',
+                  model: forms['category'],
                   onTap: (text) {
-                    // LzPicker.option(context, options: categories.option());
-                    SelectPicker.show(context,
-                        options: categories.option(disabled: ['Yoga', 'Finance', 'Sports', 'Art']));
+                    final disabled = ['Books', 'Art', 'Sports', 'Nature', 'Yoga'];
+                    LzPicker.option(context, options: Option.list(categories, disabled: disabled), onSelect: (value) {
+                      forms.setValue('category', value.label);
+                    }, style: const PickerStyle(withSearch: true));
                   }),
-              LzForm.input(hint: 'Tap to show full screen picker', onTap: (text) {})
+              LzForm.input(
+                  hint: 'Show picker with long content',
+                  onTap: (text) {
+                    List<String> words = 10.generate((item) => Faker.words(10));
+                    LzPicker.option(context, options: Option.list(words), style: const PickerStyle(maxLines: 2));
+                  })
             ],
           ),
-          // LzForm.input(
-          //     label: 'Full Screen Select Option',
-          //     hint: 'Tap to show option',
-          //     onTap: (_) {
-          //       // SelectPicker.show(context,
-          //       //     fullScreen: true,
-          //       //     initialValue: const Option(option: 'Meeting', value: 3),
-          //       //     options: [
-          //       //       'Seminar',
-          //       //       'Workshop',
-          //       //       'Training',
-          //       //       'Meeting',
-          //       //       'Playing'
-          //       //     ].options(values: [0, 1, 2, 3, 4]), onSelect: (o) {
-          //       //   logg(o.toMap());
-          //       // });
-          //     }),
-          // LzForm.input(
-          //     label: 'Long Content Select Option',
-          //     hint: 'Tap to show option',
-          //     onTap: (_) {
-          //       // SelectPicker.show(context,
-          //       //     maxLines: 2,
-          //       //     withSearch: true,
-          //       //     height: context.height / 2,
-          //       //     options: 10.generate((item) => Faker.address()).options(),
-          //       //     onSelect: (o) {
-          //       //   logg(o.toMap());
-          //       // });
-          //     }),
+          LzFormTheme(
+            grouping: true,
+            label: Text(
+              'Date Picker',
+              style: Gfont.bold,
+            ),
+            description: 'Example of using a LzPicker in date, time and date time mode.',
+            children: [
+              LzForm.input(
+                  hint: 'Show date picker',
+                  onTap: (text) {
+                    LzPicker.date(context);
+                  }),
+              LzForm.input(hint: 'Show time picker', onTap: (text) {})
+            ],
+          ),
         ],
       ),
     );

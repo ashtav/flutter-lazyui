@@ -89,9 +89,9 @@ class FormsView extends StatelessWidget {
                 model: forms['birthdate'],
                 style: InputStyle(suffixIcon: Ti.calendarEvent),
                 onTap: (text) {
-                  LzPicker.datePicker(context, initialDate: text.toDate(), onSelect: (value) {
-                    forms.setValue('birthdate', value.format('dd/MM/yyyy'));
-                  });
+                  // LzPicker.datePicker(context, initialDate: text.toDate(), onSelect: (value) {
+                  //   forms.setValue('birthdate', value.format('dd/MM/yyyy'));
+                  // });
                 },
               ),
               LzForm.checkbox(

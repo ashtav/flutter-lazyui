@@ -50,7 +50,7 @@ enum Position { left, right, top, bottom, center }
 /// - `dateMonth`: Date and month picker.
 /// - `monthYear`: Month and year picker.
 /// - `year`: Year picker.
-enum DatePickerType { all, dateTime, dateMonth, monthYear, year }
+// enum DatePickerType { all, dateTime, dateMonth, monthYear, year }
 
 /// Enum representing types of confirmation dialogs or modals in the application.
 ///
