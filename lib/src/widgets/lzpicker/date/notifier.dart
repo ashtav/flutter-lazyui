@@ -1,31 +1,142 @@
+import 'package:day/day.dart';
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
-class DatePickerNotifier extends ValueNotifier {
-  DatePickerNotifier(super.value);
+class DatePickerNotifier extends ChangeNotifier {
+  Map<String, FixedExtentScrollController> controller = {};
+  Map<String, int> values = {'d': 1, 'm': 1, 'y': 2021, 'h': 0, 'i': 0};
 
-  void toggle(Map data) => value = data;
-  bool hasInit = false, isTimeMode = false;
+  late DateTime initDate, minDate, maxDate;
+  DateTime get value =>
+      DateTime(values['y'] ?? 0, values['m'] ?? 0, values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
-  Map<String, FixedExtentScrollController> map = {
-    'date': FixedExtentScrollController(initialItem: 0),
-    'month': FixedExtentScrollController(initialItem: 0),
-    'year': FixedExtentScrollController(initialItem: 0),
-    'hour': FixedExtentScrollController(initialItem: 0),
-    'minute': FixedExtentScrollController(initialItem: 0),
-  };
+  void onInitialized(List<String> formats, {DateTime? initDate, DateTime? minDate, DateTime? maxDate}) {
+    final now = DateTime.now();
 
-  void jumpToItem(String type, int index) {
-    map[type]?.jumpToItem(index);
+    this.initDate = initDate ?? DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
+    this.minDate = minDate ?? DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
+    this.maxDate = maxDate ?? DateTime(now.year + 10, 12, 31, 23, 59, 59);
+
+    values['d'] = this.initDate.day;
+    values['m'] = this.initDate.month;
+    values['y'] = this.initDate.year;
+    values['h'] = this.initDate.hour;
+    values['i'] = this.initDate.minute;
+
+    formats.generate((f, i) {
+      List<String> items = generateDate(f, true);
+      int index = 0;
+
+      f = ['mm', 'mmm'].contains(f) ? 'm' : f;
+
+      if (f == 'd') {
+        index = items.indexOf(this.initDate.day.toString().padLeft(2, '0'));
+      } else if (f == 'm') {
+        index = items.indexOf(this.initDate.month.toString().padLeft(2, '0'));
+      } else {
+        index = items.indexOf(this.initDate.year.toString());
+      }
+
+      controller[f] = FixedExtentScrollController(initialItem: index);
+    });
   }
 
-  void scrollTo(String type, int index, {int duration = 100}) {
-    map[type]?.animateToItem(index, duration: Duration(milliseconds: duration), curve: Curves.easeInOut);
+  List<String> generateDate(String type, [bool useNumericFormat = false]) {
+    final now = DateTime.now();
+    final day = Day();
+
+    switch (type) {
+      case 'd':
+        int days = now.daysInMonth;
+        return days.generate((i) => (i + 1).toString().padLeft(2, '0'));
+
+      case 'm':
+      case 'mm':
+      case 'mmm':
+        Map<String, String> format = {'m': 'MMMM', 'mm': 'MM', 'mmm': 'MMM'};
+
+        int months = 12;
+        return useNumericFormat
+            ? months.generate((i) => (i + 1).toString().padLeft(2, '0'))
+            : months.generate((i) => (day.month(i + 1) as Day).format(format[type] ?? 'MMMM'));
+
+      case 'y':
+        return [minDate.year, maxDate.year].iterate().generate((year, i) => year.toString());
+
+      case 'h':
+        return 24.generate((i) => i.toString().padLeft(2, '0'));
+
+      case 'i':
+        return 60.generate((i) => i.toString().padLeft(2, '0'));
+      default:
+        return [];
+    }
   }
 
-  List dateRanges = [0, 30], monthRanges = [0, 11], hourRanges = [0, 23], minuteRanges = [0, 59];
+  void onChange(int index, String type) {
+    try {
+      int value = int.parse(generateDate(type, true)[index]);
+      values[type] = value;
 
-  void toggleTimeMode() {
-    isTimeMode = !isTimeMode;
+      int day = values['d']!;
+      int month = values['m']!;
+      int year = values['y']!;
+
+      DateTime dateTime = DateTime(year, month, day);
+      int daysInMonth = DateTime(year, month + 1, 0).daysInMonth;
+
+      bool isDayMoreThanDaysInMonth = day > daysInMonth;
+      bool isLessThanMinDate = dateTime.isBefore(minDate);
+      bool isMoreThanMaxDate = dateTime.isAfter(maxDate);
+
+      if (isDayMoreThanDaysInMonth) {
+        scrollTo('d', daysInMonth - 1);
+      }
+
+      // check if value is less than minDate
+      if (isLessThanMinDate) {
+        if (month < minDate.month) {
+          scrollTo('m', minDate.month - 1);
+        }
+
+        if (day < minDate.day) {
+          scrollTo('d', minDate.day - 1);
+        }
+      }
+
+      // check if value is more than maxDate
+      else if (isMoreThanMaxDate) {
+        if (month > maxDate.month) {
+          scrollTo('m', maxDate.month - 1);
+        }
+
+        if (day > maxDate.day) {
+          scrollTo('d', maxDate.day - 1);
+        }
+      }
+    } catch (e, s) {
+      Utils.errorCatcher(e, s);
+    }
+  }
+
+  void scrollTo(String type, int index, {Duration? duration}) {
+    controller[type]?.animateToItem(index, duration: duration ?? 100.ms, curve: Curves.easeInOut);
+  }
+
+  // time picker
+  bool openTimePicker = false;
+
+  void toggleTimePicker(){
+    openTimePicker = !openTimePicker;
+
+    if(openTimePicker){
+      int hourIndex = generateDate('h', true).indexOf(values['h']!.toString());
+      int minuteIndex = generateDate('i', true).indexOf(values['i']!.toString());
+
+      controller['h'] = FixedExtentScrollController(initialItem: hourIndex);
+      controller['i'] = FixedExtentScrollController(initialItem: minuteIndex);
+    }
+
     notifyListeners();
   }
 }

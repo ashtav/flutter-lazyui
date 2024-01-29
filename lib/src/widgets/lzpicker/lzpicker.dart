@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/widgets/lzpicker/date/date_picker_style.dart';
 
-import 'date/enum.dart';
-import 'date/picker_date.dart';
+import 'date/date_picker.dart';
 import 'option/picker_option.dart';
+
 export 'option/picker_style.dart';
 
 class LzPicker {
@@ -25,30 +26,35 @@ class LzPicker {
   }
 
   static Future<DateTime?> date(BuildContext context,
-      {DateTime? initialDate,
+      {DateTime? initDate,
       DateTime? minDate,
       DateTime? maxDate,
-      String? title,
-      String confirmLabel = 'Confirm',
-      bool useShortMonths = false,
-      DatePickerType type = DatePickerType.all,
-      AlignmentGeometry? alignment,
+      DatePickerStyle? style,
+      String? format,
+      bool withTime = false,
       Function(DateTime value)? onSelect}) async {
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
-      logg('First date must be smaller than last date', name: 'Pickers');
+      logg('First date must be smaller than last date.', name: 'LzPicker');
       return null;
     }
 
+    format = format ?? 'd/m/y';
+
+    // check valid format
+    List<String> validFormat = ['d', 'm', 'mm', 'mmm', 'y'];
+    List<String> formatList = format.split('/').toSet().toList();
+
+    // if format is not contain d or m or y then return null
+    if (!formatList.every((element) => validFormat.contains(element))) {
+      logg('Invalid format, please use d/m/y', name: 'LzPicker');
+      return null;
+    }
+
+    format = formatList.join('/');
+
     DateTime? result = await context.bottomSheet(
         LzDatePicker(
-            initialDate: initialDate,
-            minDate: minDate,
-            maxDate: maxDate,
-            useShortMonths: useShortMonths,
-            type: type,
-            alignment: alignment,
-            title: title,
-            confirmLabel: confirmLabel),
+            initDate: initDate, minDate: minDate, maxDate: maxDate, style: style, format: format, withTime: withTime),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);

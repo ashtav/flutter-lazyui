@@ -1,1 +1,1 @@
-enum DatePickerType { all, dateTime, dateMonth, monthYear, year }
+enum DatePickerType { all, date, dateMonth, monthYear, year }

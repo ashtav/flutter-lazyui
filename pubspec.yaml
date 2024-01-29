@@ -12,6 +12,7 @@ dependencies:
   ansicolor: ^2.0.2
   cached_network_image: ^3.2.3
   custom_refresh_indicator: ^2.2.1
+  day: ^0.8.0
   device_info_plus: ^9.0.3
   flutter:
     sdk: flutter

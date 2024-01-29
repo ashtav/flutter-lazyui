@@ -46,12 +46,13 @@ class PickerView extends StatelessWidget {
               'Date Picker',
               style: Gfont.bold,
             ),
-            description: 'Example of using a LzPicker in date, time and date time mode.',
+            description: 'Example of using a LzPicker in date, time and date-time mode.',
             children: [
               LzForm.input(
                   hint: 'Show date picker',
                   onTap: (text) {
-                    LzPicker.date(context);
+                    LzPicker.date(context, minDate: '2023-12-25'.toDate(), maxDate: '2025-06-15'.toDate());
+                    // LzPicker.date(context, format: 'd/m/y');
                   }),
               LzForm.input(hint: 'Show time picker', onTap: (text) {})
             ],
