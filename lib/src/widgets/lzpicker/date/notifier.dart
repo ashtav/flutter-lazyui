@@ -126,12 +126,12 @@ class DatePickerNotifier extends ChangeNotifier {
   // time picker
   bool openTimePicker = false;
 
-  void toggleTimePicker(){
+  void toggleTimePicker() {
     openTimePicker = !openTimePicker;
 
-    if(openTimePicker){
-      int hourIndex = generateDate('h', true).indexOf(values['h']!.toString());
-      int minuteIndex = generateDate('i', true).indexOf(values['i']!.toString());
+    if (openTimePicker) {
+      int hourIndex = generateDate('h', true).indexOf(values['h']!.toString().padLeft(2, '0'));
+      int minuteIndex = generateDate('i', true).indexOf(values['i']!.toString().padLeft(2, '0'));
 
       controller['h'] = FixedExtentScrollController(initialItem: hourIndex);
       controller['i'] = FixedExtentScrollController(initialItem: minuteIndex);

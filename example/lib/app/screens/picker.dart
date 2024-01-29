@@ -7,7 +7,7 @@ class PickerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> categories = 10.generate((i) => Faker.category());
-    final forms = LzForm.make(['category']);
+    final forms = LzForm.make(['category', 'date', 'time']);
 
     return Scaffold(
       appBar: AppBar(
@@ -43,18 +43,34 @@ class PickerView extends StatelessWidget {
           LzFormTheme(
             grouping: true,
             label: Text(
-              'Date Picker',
+              'Date & Time Picker',
               style: Gfont.bold,
             ),
             description: 'Example of using a LzPicker in date, time and date-time mode.',
             children: [
               LzForm.input(
                   hint: 'Show date picker',
+                  model: forms['date'],
+                  style: InputStyle(suffixIcon: Ti.calendarEvent),
                   onTap: (text) {
-                    LzPicker.date(context, minDate: '2023-12-25'.toDate(), maxDate: '2025-06-15'.toDate());
-                    // LzPicker.date(context, format: 'd/m/y');
+                    LzPicker.date(context,
+                        initDate: text.toDate(),
+                        minDate: '2023-12-25'.toDate(),
+                        maxDate: '2025-06-15'.toDate(),
+                        // style: DatePickerStyle(darkMode: true),
+                        withTime: true, onSelect: (value) {
+                      forms.setValue('date', value.format('yyyy-MM-dd HH:mm'));
+                    });
                   }),
-              LzForm.input(hint: 'Show time picker', onTap: (text) {})
+              LzForm.input(
+                  hint: 'Show time picker',
+                  model: forms['time'],
+                  style: InputStyle(suffixIcon: Ti.clock),
+                  onTap: (text) {
+                    LzPicker.time(context, onSelect: (time) {
+                      forms.setValue('time', time.value);
+                    });
+                  })
             ],
           ),
         ],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DatePickerStyle {
+class TimePickerStyle {
   final String? confirmText;
   final bool darkMode;
   final Color? buttonColor;
@@ -8,6 +8,6 @@ class DatePickerStyle {
   final Color? textColor;
   final double? radius;
 
-  const DatePickerStyle(
+  const TimePickerStyle(
       {this.confirmText, this.darkMode = false, this.buttonColor, this.confirmTextColor, this.textColor, this.radius});
 }

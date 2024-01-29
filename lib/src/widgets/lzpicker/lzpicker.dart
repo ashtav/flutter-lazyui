@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/widgets/lzpicker/date/date_picker_style.dart';
+import 'package:lazyui/src/widgets/lzpicker/time/time_model.dart';
 
 import 'date/date_picker.dart';
 import 'option/picker_option.dart';
+import 'time/time_picker.dart';
 
 export 'option/picker_style.dart';
+export 'date/date_picker_style.dart';
+export 'time/time_picker_style.dart';
 
 class LzPicker {
-  static option(BuildContext context,
+  static void option(BuildContext context,
       {List<Option> options = const [], Option? initialValue, Function(Option)? onSelect, PickerStyle? style}) {
     if (options.isEmpty) {
       return logg('The options list is empty, please provide a list of options.', name: 'LzPicker');
@@ -25,7 +28,7 @@ class LzPicker {
         safeArea: !(style?.fullScreen ?? false));
   }
 
-  static Future<DateTime?> date(BuildContext context,
+  static void date(BuildContext context,
       {DateTime? initDate,
       DateTime? minDate,
       DateTime? maxDate,
@@ -60,6 +63,16 @@ class LzPicker {
         isScrollControlled: true);
 
     if (result != null && onSelect != null) onSelect(result);
-    return result;
+  }
+
+  static void time(BuildContext context,
+      {Time? initTime, Time? minTime, Time? maxTime, TimePickerStyle? style, Function(Time value)? onSelect}) async {
+    Time? result = await context.bottomSheet(
+        LzTimePicker(initTime: initTime, minTime: minTime, maxTime: maxTime, style: style),
+        draggable: true,
+        safeArea: false,
+        isScrollControlled: true);
+
+    if (result != null && onSelect != null) onSelect(result);
   }
 }
