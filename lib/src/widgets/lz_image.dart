@@ -120,15 +120,6 @@ class LzImage<T> extends StatelessWidget {
       }
 
       /* --------------------------------------------------------------------------------------
-      | SVG
-      | */
-
-      else if (isSvg) {
-        result = SvgPicture.asset('assets/images/$image',
-            width: width, height: height);
-      }
-
-      /* --------------------------------------------------------------------------------------
       | IMAGE URL
       | */
 
@@ -170,6 +161,15 @@ class LzImage<T> extends StatelessWidget {
               _defaultErrorWidget ??
               const Center(child: Icon(La.exclamationCircle)),
         );
+      }
+
+      /* --------------------------------------------------------------------------------------
+      | SVG
+      | */
+
+      else if (isSvg) {
+        result = SvgPicture.asset('assets/images/$image',
+            width: width, height: height);
       }
 
       /* --------------------------------------------------------------------------------------
