@@ -1,4 +1,10 @@
-part of lazytoast;
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
+
+import 'indicator.dart';
+import 'overlay_entry.dart';
 
 final _toastNotifier = ToastNotifier(), _overlayNotifier = OverlayNotifier();
 
@@ -21,7 +27,7 @@ class LzToast {
   Color? backgroundColor;
 
   /// overlay entry
-  LazyLoadingOverlayEntry? overlayEntry;
+  LzToastOverlayEntry? overlayEntry;
 
   factory LzToast() => _instance;
   static final LzToast _instance = LzToast._internal();

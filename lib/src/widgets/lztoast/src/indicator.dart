@@ -1,4 +1,5 @@
-part of lazytoast;
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class ToastIndicator extends StatefulWidget {
   const ToastIndicator({
@@ -10,21 +11,10 @@ class ToastIndicator extends StatefulWidget {
 }
 
 class _ToastIndicatorState extends State<ToastIndicator> {
-  final double _size = 40;
-
-  /// indicator color of loading
-  final Color _indicatorColor = Colors.white;
   late Widget _indicator;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  final double _size = 40;
+  final Color _indicatorColor = Colors.white;
 
   @override
   Widget build(BuildContext context) {

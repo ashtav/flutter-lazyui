@@ -1,4 +1,7 @@
-part of lazytoast;
+import 'package:flutter/material.dart';
+
+import 'lztoast_widget.dart';
+import 'overlay_entry.dart';
 
 class LzToastOverlay extends StatefulWidget {
   final Widget? child;
@@ -14,12 +17,12 @@ class LzToastOverlay extends StatefulWidget {
 }
 
 class _LzToastOverlayState extends State<LzToastOverlay> {
-  late LazyLoadingOverlayEntry overlayEntry;
+  late LzToastOverlayEntry overlayEntry;
 
   @override
   void initState() {
     super.initState();
-    overlayEntry = LazyLoadingOverlayEntry(
+    overlayEntry = LzToastOverlayEntry(
       overlayBuilder: (BuildContext context) => const LzToastWidget(),
     );
     LzToast.instance.overlayEntry = overlayEntry;
@@ -30,15 +33,7 @@ class _LzToastOverlayState extends State<LzToastOverlay> {
     return Material(
       child: Overlay(
         initialEntries: [
-          LazyLoadingOverlayEntry(
-            overlayBuilder: (BuildContext context) {
-              if (widget.child != null) {
-                return widget.child!;
-              }
-
-              return Container();
-            },
-          ),
+          LzToastOverlayEntry(overlayBuilder: (BuildContext context) => widget.child ?? const SizedBox()),
           overlayEntry,
         ],
       ),
