@@ -1,0 +1,15 @@
+com.example.example.app-jetified-window-1.0.0-beta04-0 C:\Users\ashta\.gradle\caches\transforms-3\25cee5f028ac2a6b79fd6278ff5b59e2\transformed\jetified-window-1.0.0-beta04\res
+com.example.example.app-jetified-annotation-experimental-1.1.0-1 C:\Users\ashta\.gradle\caches\transforms-3\6c0c163cc77ae6c91f9f7dfcd179c29c\transformed\jetified-annotation-experimental-1.1.0\res
+com.example.example.app-core-1.6.0-2 C:\Users\ashta\.gradle\caches\transforms-3\7e9df2ac2213a6bd3cef0f2f27870d79\transformed\core-1.6.0\res
+com.example.example.app-jetified-window-java-1.0.0-beta04-3 C:\Users\ashta\.gradle\caches\transforms-3\ae81e06d24c799147c26814497a2a305\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.example.app-debug-4 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\debug\res
+com.example.example.app-main-5 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\res
+com.example.example.app-pngs-6 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\app\generated\res\pngs\debug
+com.example.example.app-resValues-7 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\app\generated\res\resValues\debug
+com.example.example.app-rs-8 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\app\generated\res\rs\debug
+com.example.example.app-mergeDebugResources-9 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.example.app-mergeDebugResources-10 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.example.app-merged_res-11 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\app\intermediates\merged_res\debug
+com.example.example.app-packaged_res-12 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\device_info_plus\intermediates\packaged_res\debug
+com.example.example.app-packaged_res-13 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\path_provider_android\intermediates\packaged_res\debug
+com.example.example.app-packaged_res-14 D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\build\sqflite\intermediates\packaged_res\debug

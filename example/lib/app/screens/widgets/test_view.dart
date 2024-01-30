@@ -37,7 +37,9 @@ class TestView extends StatelessWidget {
             LzTextField(
               hint: 'Type your name',
               controller: notifier.forms['name'],
-            )
+            ),
+
+            LzImage('https://reseller.saddannusantara.com/images/icons/013-study.svg', size: 100,)
           ],
         )).onTap(() async {
           final device = await Utils.getDevice();
