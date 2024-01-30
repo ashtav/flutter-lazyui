@@ -16,6 +16,7 @@ class LzButton extends StatelessWidget {
     bool hasText = text != null;
     bool hasIcon = icon != null;
     bool hasSize = style?.width != null;
+    bool hasShadow = style?.shadow ?? false;
     bool isOutline = style?.outline ?? false;
 
     double radius = style?.radius ?? LazyUi.radius;
@@ -61,7 +62,7 @@ class LzButton extends StatelessWidget {
                   : !hasIcon
                       ? 0
                       : 8),
-          child: Textr(state.text, style: LazyUi.font.copyWith(color: textColor)));
+          child: Textr(state.text, style: style?.textStyle ?? LazyUi.font.copyWith(color: textColor)));
 
       return InkTouch(
         onTap: state.disabled ? null : () => onTap?.call(ButtonState(notifier)),
@@ -89,7 +90,18 @@ class LzButton extends StatelessWidget {
       ).lz.disabled(state.disabled);
     });
 
-    return hasSize ? SizedBox(width: width, child: button) : button;
+    button = hasSize ? SizedBox(width: width, child: button) : button;
+    return hasShadow
+        ? Container(
+            decoration: BoxDecoration(boxShadow: [
+              BoxShadow(
+                  color: style?.shadowColor ?? 'fafafa'.hex,
+                  spreadRadius: 30,
+                  blurRadius: 25,
+                  offset: const Offset(0, 0))
+            ]),
+            child: button)
+        : button;
   }
 }
 

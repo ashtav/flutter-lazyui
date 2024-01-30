@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'button.dart';
-import 'button_style.dart';
+import 'package:lazyui/lazyui.dart';
 
 extension LzButtonExtension on LzButton {
   LzButton copyWith({LzButtonStyle? style}) {
@@ -11,10 +9,13 @@ extension LzButtonExtension on LzButton {
         style: LzButtonStyle(
           backgroundColor: style?.backgroundColor,
           textColor: style?.textColor,
+          textStyle: style?.textStyle,
           radius: style?.radius,
           width: style?.width,
           outline: style?.outline,
           padding: style?.padding,
+          shadow: style?.shadow,
+          shadowColor: style?.shadowColor,
         ),
         onTap: onTap);
   }
@@ -23,28 +24,52 @@ extension LzButtonExtension on LzButton {
           style: LzButtonStyle(
         backgroundColor: backgroundColor,
         textColor: style?.textColor,
+        textStyle: style?.textStyle,
         radius: style?.radius,
         width: style?.width,
         outline: outline,
         padding: style?.padding,
+        shadow: style?.shadow,
+        shadowColor: style?.shadowColor,
       ));
 
   LzButton styled(
           {Color? backgroundColor,
           Color? textColor,
+          TextStyle? textStyle,
           double? radius,
           double? width,
           bool outline = false,
-          EdgeInsetsGeometry? padding}) =>
+          EdgeInsetsGeometry? padding,
+          bool? shadow,
+          Color? shadowColor}) =>
       copyWith(
           style: LzButtonStyle(
-        backgroundColor: backgroundColor,
-        textColor: textColor,
-        radius: radius,
-        width: width,
+        backgroundColor: backgroundColor ?? style?.backgroundColor,
+        textColor: textColor ?? style?.textColor,
+        textStyle: textStyle ?? style?.textStyle,
+        radius: radius ?? style?.radius,
+        width: width ?? style?.width,
         outline: outline,
-        padding: padding,
+        padding: padding ?? style?.padding,
+        shadow: shadow ?? style?.shadow,
+        shadowColor: shadowColor ?? style?.shadowColor,
       ));
 
-  LzButton sized(double width) => copyWith(style: style?.copyWith(width: width));
+  LzButton sized(double width) {
+    return copyWith(
+        style: LzButtonStyle(
+      backgroundColor: style?.backgroundColor,
+      textColor: style?.textColor,
+      textStyle: style?.textStyle,
+      radius: style?.radius,
+      width: width,
+      outline: style?.outline,
+      padding: style?.padding,
+      shadow: style?.shadow,
+      shadowColor: style?.shadowColor,
+    ));
+  }
+
+  LzButton shadowed([Color? color]) => copyWith(style: style?.copyWith(shadow: true, shadowColor: color));
 }

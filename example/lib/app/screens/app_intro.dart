@@ -184,20 +184,13 @@ class AppIntro2 extends StatelessWidget {
                     activeColor: LzColors.orange,
                     size: (i) => [i == 0 ? 13 : 7, 7],
                   ),
-                  InkTouch(
-                    onTap: (){
-                      context.lzPush(const FeaturesView());
-                    },
-                    padding: Ei.all(20),
-                    child: Text('Tap'),
-                  )
-                  // LzButton(
-                  //     radius: 100,
-                  //     text: 'Get Started',
-                  //     icon: La.arrowRight,
-                  //     onTap: (_) {
-                  //       context.lzPush(const FeaturesView());
-                  //     })
+                  
+                  LzButton(
+                      text: 'Get Started',
+                      icon: La.arrowRight,
+                      onTap: (_) {
+                        context.lzPush(const FeaturesView());
+                      }).styled(radius: 50, padding: Ei.sym(v: 13, h: 25))
                 ],
               ),
             ],

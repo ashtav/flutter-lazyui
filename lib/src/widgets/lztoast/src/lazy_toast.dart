@@ -286,7 +286,7 @@ class LzToastWidget extends StatelessWidget {
                           key: ValueKey(t.message),
                           child: Container(
                             margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
-                            padding: Ei.sym(v: 13, h: 20),
+                            padding: Ei.sym(v: 10, h: 20),
                             decoration: BoxDecoration(
                                 borderRadius: Br.radius(_defaultRadius),
                                 color: t.backgroundColor ?? Colors.black.withOpacity(.8)),

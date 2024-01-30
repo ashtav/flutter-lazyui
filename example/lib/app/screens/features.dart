@@ -1,4 +1,5 @@
 import 'package:example/app/screens/forms.dart';
+import 'package:example/app/screens/toast.dart';
 import 'package:example/app/screens/widgets/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -22,6 +23,8 @@ class FeaturesView extends StatelessWidget {
           'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
           Ti.alignBoxCenterBottom),
       Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
+      Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
+      Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
       // 'App Intro',
       // 'App Trainer',
       // 'Accordion',
@@ -55,7 +58,7 @@ class FeaturesView extends StatelessWidget {
                       Text(feature.description, style: Gfont.muted).margin(t: 5),
                     ],
                   ).start.lz.flexible(),
-                  const Icon(Ti.chevronRight, color: Colors.black45)
+                  Iconr(Ti.chevronRight, color: Colors.black45, margin: Ei.only(l: 25))
                 ],
               ),
             );
@@ -73,7 +76,21 @@ class Actions {
       'LzDrop': const DropdownView(),
       'LzPicker': const PickerView(),
       'LzButton': const ButtonView(),
+      'LzToast': const ToastView(),
     };
+
+    if (label == 'LzOtp') {
+      LzOtp.show(context,
+          expired: 60.s,
+          type: OtpType.bottomLine,
+          subtitle: 'OTP code sent to +628100000, please enter the code below to reset your password.',
+          onCompleted: (otp) {
+        String value = otp.value;
+        logg('Otp value: $value');
+      });
+
+      return;
+    }
 
     context.lzPush(routes[label] ?? const CustomWidgetView());
   }

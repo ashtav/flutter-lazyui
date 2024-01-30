@@ -12,44 +12,29 @@ class ToastView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Toast'),
       ),
-      body: LzListView(
+      bottomNavigationBar: Column(
         children: [
-          // LzButton(
-          //   text: 'Show Toast',
-          //   onTap: (_) {
-          //     LzToast.show('Hello World', duration: 3.s);
+          const Textml(
+            '<b>LzToast</b> is a widget used to display brief messages that disappear after a few seconds, containing types such as success, warning & error.',
+          ).margin(b: 25),
+          LzButton(
+            text: 'Show Overlay',
+            onTap: (_) {
+              LzToast.overlay('Loading...', duration: 3.s);
+            },
+          ).bg('333'.hex).styled(outline: true, width: context.width),
+          LzButton(
+            text: 'Show Toast',
+            onTap: (_) {
+              LzToast.show('Hey there!', duration: 3.s, position: Position.center);
 
-          //     Utils.timer(() {
-          //       LzToast.show('Hello World', icon: La.checkCircle);
-          //     }, 3.s);
-          //   },
-          // ),
-          // LzButton(
-          //   text: 'Show Toast Overlay',
-          //   onTap: (_) {
-          //     LzToast.overlay('Loading...');
-
-          //     Utils.timer(() {
-          //       LzToast.dismiss();
-          //       LzToast.show('Dismissed');
-          //     }, 3.s);
-          //   },
-          // ).margin(v: 5),
-          // LzForm.input(
-          //   label: 'Message',
-          //   hint: 'Enter message here',
-          //   maxLength: 300,
-          //   model: forms['message'],
-          // ),
-          // LzButton(
-          //   text: 'Show Toast with Message',
-          //   onTap: (_) {
-          //     LzToast.show(forms['message']!.controller.text,
-          //         duration: 3.s, icon: La.comment);
-          //   },
-          // )
+              Utils.timer(() {
+                LzToast.show('Thanks for using LazyUi!', icon: La.checkCircle, position: Position.center);
+              }, 1.s);
+            },
+          ).sized(context.width),
         ],
-      ),
+      ).min.gap(10).margin(blr: 20),
     );
   }
 }
