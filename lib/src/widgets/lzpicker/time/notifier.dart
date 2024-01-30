@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/widgets/lzpicker/time/time_model.dart';
 
 class TimePickerNotifier extends ChangeNotifier {
   Map<String, FixedExtentScrollController> controller = {};
@@ -12,9 +11,9 @@ class TimePickerNotifier extends ChangeNotifier {
   void onInitialized(List<String> formats, {Time? initTime, Time? minTime, Time? maxTime}) {
     final now = DateTime.now();
 
-    this.initTime = initTime ?? Time(now.hour, now.minute, 0);
-    this.minTime = minTime ?? Time(now.hour, now.minute, 0);
-    this.maxTime = maxTime ?? Time(23, 59, 59);
+    this.initTime = initTime ?? Time(now.hour, now.minute);
+    this.minTime = minTime ?? Time(0, 0);
+    this.maxTime = maxTime ?? Time(23, 59);
 
     values['h'] = this.initTime.hour;
     values['i'] = this.initTime.minute;
@@ -53,38 +52,32 @@ class TimePickerNotifier extends ChangeNotifier {
       int hour = values['h']!;
       int minute = values['i']!;
 
-      // DateTime dateTime = DateTime(year, month, day);
-      // int daysInMonth = DateTime(year, month + 1, 0).daysInMonth;
+      
 
-      // bool isDayMoreThanDaysInMonth = day > daysInMonth;
-      // bool isLessThanminTime = dateTime.isBefore(minTime);
-      // bool isMoreThanmaxTime = dateTime.isAfter(maxTime);
+      Time time = Time(hour, minute);
 
-      // if (isDayMoreThanDaysInMonth) {
-      //   scrollTo('d', daysInMonth - 1);
-      // }
+      bool isLessThanMinTime = time.isBefore(minTime);
+      bool isMoreThanMaxTime = time.isAfter(maxTime);
 
-      // // check if value is less than minTime
-      // if (isLessThanminTime) {
-      //   if (month < minTime.month) {
-      //     scrollTo('m', minTime.month - 1);
-      //   }
+      if(isMoreThanMaxTime){
+        if(hour > maxTime.hour){
+          scrollTo('h', maxTime.hour);
+        }
 
-      //   if (day < minTime.day) {
-      //     scrollTo('d', minTime.day - 1);
-      //   }
-      // }
+        if(minute > maxTime.minute){
+          scrollTo('i', maxTime.minute);
+        }
+      }
 
-      // // check if value is more than maxTime
-      // else if (isMoreThanmaxTime) {
-      //   if (month > maxTime.month) {
-      //     scrollTo('m', maxTime.month - 1);
-      //   }
+      else if(isLessThanMinTime){
+        if(hour < minTime.hour){
+          scrollTo('h', minTime.hour);
+        }
 
-      //   if (day > maxTime.day) {
-      //     scrollTo('d', maxTime.day - 1);
-      //   }
-      // }
+        if(minute < minTime.minute){
+          scrollTo('i', minTime.minute);
+        }
+      }
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }

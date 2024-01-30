@@ -71,4 +71,25 @@ extension CustomColumnExtension on Column {
         textBaseline: textBaseline,
         children: children,
       );
+
+  Column gap(double spacing) {
+    List<Widget> newChildren = [];
+
+    for (int i = 0; i < children.length; i++) {
+      newChildren.add(children[i]);
+      if (i != children.length - 1) {
+        newChildren.add(SizedBox(height: spacing));
+      }
+    }
+
+    return Column(
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textDirection: textDirection,
+      verticalDirection: verticalDirection,
+      textBaseline: textBaseline,
+      children: newChildren,
+    );
+  }
 }

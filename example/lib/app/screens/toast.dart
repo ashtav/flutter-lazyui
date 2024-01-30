@@ -14,27 +14,27 @@ class ToastView extends StatelessWidget {
       ),
       body: LzListView(
         children: [
-          LzButton(
-            text: 'Show Toast',
-            onTap: (_) {
-              LzToast.show('Hello World', duration: 3.s);
+          // LzButton(
+          //   text: 'Show Toast',
+          //   onTap: (_) {
+          //     LzToast.show('Hello World', duration: 3.s);
 
-              Utils.timer(() {
-                LzToast.show('Hello World', icon: La.checkCircle);
-              }, 3.s);
-            },
-          ),
-          LzButton(
-            text: 'Show Toast Overlay',
-            onTap: (_) {
-              LzToast.overlay('Loading...');
+          //     Utils.timer(() {
+          //       LzToast.show('Hello World', icon: La.checkCircle);
+          //     }, 3.s);
+          //   },
+          // ),
+          // LzButton(
+          //   text: 'Show Toast Overlay',
+          //   onTap: (_) {
+          //     LzToast.overlay('Loading...');
 
-              Utils.timer(() {
-                LzToast.dismiss();
-                LzToast.show('Dismissed');
-              }, 3.s);
-            },
-          ).margin(v: 5),
+          //     Utils.timer(() {
+          //       LzToast.dismiss();
+          //       LzToast.show('Dismissed');
+          //     }, 3.s);
+          //   },
+          // ).margin(v: 5),
           // LzForm.input(
           //   label: 'Message',
           //   hint: 'Enter message here',

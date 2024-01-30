@@ -231,17 +231,17 @@ class FormsView extends StatelessWidget {
             ).margin(t: 25, b: 16), // end of account
           ],
         ),
-        bottomNavigationBar: LzButton(
-            text: 'Submit',
-            onTap: (_) {
-              final form = forms.validate(
-                  required: ['*'],
-                  alert: FormAlert.text,
-                  messages: FormMessage(required: {
-                    'name': 'I am sory, we need to know your name, so please provide your valid information.'
-                  }));
-              logg(form.value);
-            }).theme1(),
+        // bottomNavigationBar: LzButton(
+        //     text: 'Submit',
+        //     onTap: (_) {
+        //       final form = forms.validate(
+        //           required: ['*'],
+        //           alert: FormAlert.text,
+        //           messages: FormMessage(required: {
+        //             'name': 'I am sory, we need to know your name, so please provide your valid information.'
+        //           }));
+        //       logg(form.value);
+        //     }).theme1(),
       ),
     );
   }

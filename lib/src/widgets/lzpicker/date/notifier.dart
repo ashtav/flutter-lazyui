@@ -14,7 +14,7 @@ class DatePickerNotifier extends ChangeNotifier {
     final now = DateTime.now();
 
     this.initDate = initDate ?? DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
-    this.minDate = minDate ?? DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
+    this.minDate = minDate ?? DateTime(now.year, 1, 1, 0, 0, 0);
     this.maxDate = maxDate ?? DateTime(now.year + 10, 12, 31, 23, 59, 59);
 
     values['d'] = this.initDate.day;

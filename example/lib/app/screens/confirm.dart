@@ -14,20 +14,20 @@ class ConfirmView extends StatelessWidget {
           child: Column(
             mainAxisAlignment: Maa.center,
             children: [
-              LzButton(
-                outline: true,
-                type: ButtonType.dark,
-                text: 'Dialog Confirm',
-                onTap: (_) {
-                  LzConfirm(
-                    title: 'Widget Confirmation',
-                    message: 'Are you sure you want to confirm this widget?',
-                    onConfirm: () {
-                      LzToast.show('Widget confirmed');
-                    },
-                  ).show(context);
-                },
-              ),
+              // LzButton(
+              //   outline: true,
+              //   type: ButtonType.dark,
+              //   text: 'Dialog Confirm',
+              //   onTap: (_) {
+              //     LzConfirm(
+              //       title: 'Widget Confirmation',
+              //       message: 'Are you sure you want to confirm this widget?',
+              //       onConfirm: () {
+              //         LzToast.show('Widget confirmed');
+              //       },
+              //     ).show(context);
+              //   },
+              // ),
               InkTouch(
                 onTap: () {
                   LzConfirm(

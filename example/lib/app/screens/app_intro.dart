@@ -110,13 +110,13 @@ class AppIntro1 extends StatelessWidget {
                 active: s.index,
                 size: (i) => [i == s.index ? 13 : 7, 7],
               ).margin(b: 45)),
-          LzButton(
-              radius: 100,
-              text: 'Get Started',
-              icon: La.arrowRight,
-              onTap: (_) {
-                _.submit(abortOn: 3.s);
-              })
+          // LzButton(
+          //     radius: 100,
+          //     text: 'Get Started',
+          //     icon: La.arrowRight,
+          //     onTap: (_) {
+          //       _.submit(abortOn: 3.s);
+          //     })
         ],
       ),
     ).padding(all: 25);
@@ -184,13 +184,20 @@ class AppIntro2 extends StatelessWidget {
                     activeColor: LzColors.orange,
                     size: (i) => [i == 0 ? 13 : 7, 7],
                   ),
-                  LzButton(
-                      radius: 100,
-                      text: 'Get Started',
-                      icon: La.arrowRight,
-                      onTap: (_) {
-                        context.lzPush(const FeaturesView());
-                      })
+                  InkTouch(
+                    onTap: (){
+                      context.lzPush(const FeaturesView());
+                    },
+                    padding: Ei.all(20),
+                    child: Text('Tap'),
+                  )
+                  // LzButton(
+                  //     radius: 100,
+                  //     text: 'Get Started',
+                  //     icon: La.arrowRight,
+                  //     onTap: (_) {
+                  //       context.lzPush(const FeaturesView());
+                  //     })
                 ],
               ),
             ],

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/widgets/lzpicker/time/time_model.dart';
 
 import 'date/date_picker.dart';
 import 'option/picker_option.dart';
 import 'time/time_picker.dart';
 
-export 'option/picker_style.dart';
 export 'date/date_picker_style.dart';
+export 'option/picker_style.dart';
+export 'time/time_model.dart';
 export 'time/time_picker_style.dart';
 
 class LzPicker {

@@ -59,7 +59,7 @@ class PickerView extends StatelessWidget {
                         maxDate: '2025-06-15'.toDate(),
                         // style: DatePickerStyle(darkMode: true),
                         withTime: true, onSelect: (value) {
-                      forms.setValue('date', value.format('yyyy-MM-dd HH:mm'));
+                      forms.setValue('date', value.format('dd-MM-yyyy HH:mm'));
                     });
                   }),
               LzForm.input(
@@ -67,7 +67,8 @@ class PickerView extends StatelessWidget {
                   model: forms['time'],
                   style: InputStyle(suffixIcon: Ti.clock),
                   onTap: (text) {
-                    LzPicker.time(context, onSelect: (time) {
+                    LzPicker.time(context, initTime: Time.parse(text), minTime: Time(8, 30), maxTime: Time(11, 30),
+                        onSelect: (time) {
                       forms.setValue('time', time.value);
                     });
                   })
