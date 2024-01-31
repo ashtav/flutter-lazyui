@@ -97,7 +97,7 @@ class AppIntro1 extends StatelessWidget {
               items: List.generate(3, (i) {
                 return const LzImage(
                   'https://www.pngarts.com/files/18/Illustration-PNG-HQ-Pic.png',
-                  height: 300,
+                  // height: 300,
                 );
               })),
           Text('Get Organized', style: Gfont.fs20.bold),
@@ -157,7 +157,7 @@ class AppIntro2 extends StatelessWidget {
               items: List.generate(images.length, (i) {
                 return LzImage(
                   images[i],
-                  width: context.width,
+                  // width: context.width,
                   radius: 0,
                 );
               })),
@@ -184,7 +184,6 @@ class AppIntro2 extends StatelessWidget {
                     activeColor: LzColors.orange,
                     size: (i) => [i == 0 ? 13 : 7, 7],
                   ),
-                  
                   LzButton(
                       text: 'Get Started',
                       icon: La.arrowRight,
