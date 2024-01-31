@@ -34,15 +34,6 @@ enum ButtonType { primary, secondary, danger, success, warning, dark, white }
 /// - `down`: Slide or animation moves downward.
 enum SlideDirection { up, down }
 
-/// Enum representing different positions or alignments in the application.
-///
-/// - `left`: Left alignment.
-/// - `right`: Right alignment.
-/// - `top`: Top alignment.
-/// - `bottom`: Bottom alignment.
-/// - `center`: Center alignment.
-enum Position { left, right, top, bottom, center }
-
 /// Enum representing different types of date pickers in the application.
 ///
 /// - `all`: Includes date and time.

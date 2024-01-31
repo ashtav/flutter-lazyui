@@ -158,7 +158,7 @@ class LzForm {
       List<String> email = const [],
       FormMessage? messages,
       FormAlert alert = FormAlert.toast,
-      Position? toastPosition,
+      ToastPlacement? toastPlacement,
       bool singleNotifier = true}) {
     try {
       Map<String, TextEditingController> controllers =
@@ -251,7 +251,7 @@ class LzForm {
         }
 
         if (alert == FormAlert.toast) {
-          LzToast.show(errorMessage, position: toastPosition ?? LzToast.getConfig.position);
+          LzToast.show(errorMessage, placement: toastPlacement ?? LzToast.config.placement);
         } else if (alert == FormAlert.text) {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);

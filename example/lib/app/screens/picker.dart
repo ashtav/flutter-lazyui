@@ -57,6 +57,7 @@ class PickerView extends StatelessWidget {
                         initDate: text.toDate(),
                         minDate: '2023-12-25'.toDate(),
                         maxDate: '2025-06-15'.toDate(),
+                        format: 'd/mmm/y',
                         // style: DatePickerStyle(darkMode: true),
                         withTime: true, onSelect: (value) {
                       forms.setValue('date', value.format('dd-MM-yyyy HH:mm'));

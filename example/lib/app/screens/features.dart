@@ -8,32 +8,48 @@ import '../models/feature.dart';
 import 'button.dart';
 import 'dropdown.dart';
 import 'picker.dart';
+import 'widgets/lz_image.dart';
 
 class FeaturesView extends StatelessWidget {
   const FeaturesView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    List<Feature> features = [
-      Feature(
-          'LzForm', 'Customizable form with validation, error handling and ease full control of your form.', Ti.forms),
-      Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
-      Feature(
-          'LzPicker',
-          'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
-          Ti.alignBoxCenterBottom),
-      Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
-      Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
-      Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
-      // 'App Intro',
-      // 'App Trainer',
-      // 'Accordion',
-      // 'Confirm',
-      // 'Refreshtor',
-      // 'Skeleton',
-      // 'Toast',
-      // 'Widgets'
+    List<Map<String, dynamic>> features = [
+      {
+        'title': 'Tools',
+        'features': [
+          Feature('LzForm', 'Customizable form with validation, error handling and ease full control of your form.',
+              Ti.forms),
+          Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
+          Feature(
+              'LzPicker',
+              'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
+              Ti.alignBoxCenterBottom),
+          Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
+          Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
+          Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
+          // 'App Intro',
+          // 'App Trainer',
+          // 'Accordion',
+          // 'Confirm',
+          // 'Refreshtor',
+          // 'Skeleton',
+          // 'Toast',
+          // 'Widgets'
+        ]
+      },
+      {
+        'title': 'Widgets',
+        'features': [
+          Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
+        ]
+      }
     ];
+
+    for (var featureMap in features) {
+      (featureMap['features'] as List<Feature>).sort((a, b) => a.title.compareTo(b.title));
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -41,29 +57,47 @@ class FeaturesView extends StatelessWidget {
       ),
       body: LzListView(children: [
         Column(
-          children: features.generate((feature, i) {
-            return InkTouch.space(
-              onTap: () => Actions.on(context, feature.title),
-              border: Br.only(['t'], except: i == 0),
-              child: Row(
-                mainAxisAlignment: Maa.spaceBetween,
-                children: [
-                  Column(
+          children: features.generate((item, i) {
+            List<Feature> features = item['features'];
+            String title = item['title'];
+
+            return Column(
+              children: [
+                Container(
+                  margin: Ei.only(t: i == 0 ? 0 : 35, b: 25),
+                  child: Column(
                     children: [
-                      Textr(
-                        feature.title,
-                        style: Gfont.bold,
-                        icon: feature.icon,
-                      ),
-                      Text(feature.description, style: Gfont.muted).margin(t: 5),
+                      Textr(title, style: Gfont.bold, margin: Ei.only(b: 5)),
+                      Text(Faker.words(12), style: Gfont.muted)
                     ],
-                  ).start.lz.flexible(),
-                  Iconr(Ti.chevronRight, color: Colors.black45, margin: Ei.only(l: 25))
-                ],
-              ),
-            );
+                  ).start,
+                ),
+                Column(children: features.generate((feature, i) {
+                  return InkTouch.space(
+                    onTap: () => Actions.on(context, feature.title),
+                    border: Br.only(['t'], except: i == 0),
+                    child: Row(
+                      mainAxisAlignment: Maa.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Textr(
+                              feature.title,
+                              style: Gfont.bold,
+                              icon: feature.icon,
+                            ),
+                            Text(feature.description, style: Gfont.muted).margin(t: 5),
+                          ],
+                        ).start.lz.flexible(),
+                        Iconr(Ti.chevronRight, color: Colors.black45, margin: Ei.only(l: 25))
+                      ],
+                    ),
+                  );
+                })).min.lz.clip(all: 10)
+              ],
+            ).start;
           }),
-        ).min.lz.clip(all: 10)
+        )
       ]),
     );
   }
@@ -77,6 +111,7 @@ class Actions {
       'LzPicker': const PickerView(),
       'LzButton': const ButtonView(),
       'LzToast': const ToastView(),
+      'LzImage': const LzImageView(),
     };
 
     if (label == 'LzOtp') {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'lztoast_widget.dart';
+import 'lztoast.dart';
 import 'overlay_entry.dart';
 
 class LzToastOverlay extends StatefulWidget {

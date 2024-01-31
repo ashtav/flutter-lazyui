@@ -72,6 +72,16 @@ extension CustomColumnExtension on Column {
         children: children,
       );
 
+  Column get center => Column(
+        mainAxisAlignment: Maa.center,
+        mainAxisSize: mainAxisSize,
+        crossAxisAlignment: crossAxisAlignment,
+        textDirection: textDirection,
+        verticalDirection: verticalDirection,
+        textBaseline: textBaseline,
+        children: children,
+      );
+
   Column gap(double spacing) {
     List<Widget> newChildren = [];
 

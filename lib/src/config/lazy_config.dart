@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lazyui/src/constants/enum.dart';
+import 'package:lazyui/src/widgets/lztoast/src/loading.dart';
 
 import '../constants/color.dart';
 import '../utils/utils.dart';
-import '../widgets/lztoast/lztoast.dart';
 
 TextStyle? _defaultTextStyle;
 IconType _defaultIconType = IconType.tablerIcon;
@@ -90,8 +90,8 @@ class LazyUi {
   /// [context]: The build context.
   /// [child]: The widget to be wrapped and displayed.
   /// [maxScalingFontSize]: The maximum font size scaling factor. If provided, scales text up to this maximum value.
-  /// [useLazyToast]: If true, wraps the [child] with `LzToastOverlay` for toast notifications.
-  static Widget builder(BuildContext context, Widget? child, {double? maxScalingFontSize, bool useLazyToast = true}) {
+  /// [useLzToast]: If true, wraps the [child] with `LzToastOverlay` for toast notifications.
+  static Widget builder(BuildContext context, Widget? child, {double? maxScalingFontSize, bool useLzToast = true}) {
     // ignore: deprecated_member_uselzf
     double maxScalingFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -107,7 +107,7 @@ class LazyUi {
         textScaleFactor:
             maxScalingFontSize == null ? maxScalingFactor : maxScalingFactor.clamp(1.0, maxScalingFontSize),
       ),
-      child: useLazyToast ? LzToastOverlay(child: child) : child ?? const SizedBox.shrink(),
+      child: useLzToast ? LzToastOverlay(child: child) : child ?? const SizedBox.shrink(),
     );
   }
 }

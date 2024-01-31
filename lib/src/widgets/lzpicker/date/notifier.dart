@@ -1,6 +1,7 @@
-import 'package:day/day.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+
+import 'constant.dart';
 
 class DatePickerNotifier extends ChangeNotifier {
   Map<String, FixedExtentScrollController> controller = {};
@@ -43,7 +44,6 @@ class DatePickerNotifier extends ChangeNotifier {
 
   List<String> generateDate(String type, [bool useNumericFormat = false]) {
     final now = DateTime.now();
-    final day = Day();
 
     switch (type) {
       case 'd':
@@ -55,10 +55,18 @@ class DatePickerNotifier extends ChangeNotifier {
       case 'mmm':
         Map<String, String> format = {'m': 'MMMM', 'mm': 'MM', 'mmm': 'MMM'};
 
+        String getMonth(int index, String format) {
+          return format == 'MM'
+              ? (index + 1).toString().padLeft(2, '0')
+              : format == 'MMM'
+                  ? Constant.months[index].substring(0, 3)
+                  : Constant.months[index];
+        }
+
         int months = 12;
         return useNumericFormat
             ? months.generate((i) => (i + 1).toString().padLeft(2, '0'))
-            : months.generate((i) => (day.month(i + 1) as Day).format(format[type] ?? 'MMMM'));
+            : months.generate((i) => getMonth(i, format[type] ?? 'MMMM'));
 
       case 'y':
         return [minDate.year, maxDate.year].iterate().generate((year, i) => year.toString());

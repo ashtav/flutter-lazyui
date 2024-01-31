@@ -121,14 +121,14 @@ class FormsView extends StatelessWidget {
                       forms.enable('product', value);
 
                       if (value) {
-                        LzToast.overlay('Getting products...', duration: 1.s).then((_) {
+                        LzToast.overlay('Getting products...', duration: 1.s, then: (() {
                           forms.setSelectOption(
                               'product', products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
                               andShow: true);
 
                           // open select picker automatically
                           // forms.showSelectPicker('product');
-                        });
+                        }));
                       }
                     }),
               ],
@@ -160,7 +160,7 @@ class FormsView extends StatelessWidget {
                       hint: 'Select province',
                       model: forms['province'],
                       onTap: () {
-                        return LzToast.overlay('Getting province...', duration: 1.s).then((_) {
+                        return LzToast.overlay('Getting province...', duration: 1.s, then: (() {
                           // if data we get from server is null, empty or error
                           // we can prevent the select to show by returning false
 
@@ -171,7 +171,7 @@ class FormsView extends StatelessWidget {
                               disabled: [3], onSelected: (_) => forms.enable('city'));
 
                           // forms.onSelected('province', (f) => f.enable('city'));
-                        });
+                        }));
                       }),
                   LzForm.select(
                       hint: 'Select city',

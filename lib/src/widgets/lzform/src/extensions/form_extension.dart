@@ -60,7 +60,7 @@ extension LzFormExtension on Map<String, FormModel> {
       List<String> email = const [],
       FormMessage? messages,
       FormAlert alert = FormAlert.toast,
-      Position? toastPosition,
+      ToastPlacement? toastPlacement,
       bool singleNotifier = true}) {
     return LzForm.validate(this,
         required: required,
@@ -69,7 +69,7 @@ extension LzFormExtension on Map<String, FormModel> {
         email: email,
         messages: messages,
         alert: alert,
-        toastPosition: toastPosition,
+        toastPlacement: toastPlacement,
         singleNotifier: singleNotifier);
   }
 

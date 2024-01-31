@@ -6,7 +6,7 @@ class ToastView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final forms = LzForm.make(['message']);
+    LzToastConfig.set(placement: ToastPlacement.center);
 
     return Scaffold(
       appBar: AppBar(
@@ -20,16 +20,18 @@ class ToastView extends StatelessWidget {
           LzButton(
             text: 'Show Overlay',
             onTap: (_) {
-              LzToast.overlay('Loading...', duration: 3.s);
+              LzToast.overlay('Loading...', duration: 3.s, then: () {
+                LzToast.show('Done!', icon: Ti.checks);
+              });
             },
           ).bg('333'.hex).styled(outline: true, width: context.width),
           LzButton(
             text: 'Show Toast',
             onTap: (_) {
-              LzToast.show('Hey there!', duration: 3.s, position: Position.center);
+              LzToast.show('Hey there!', duration: 3.s);
 
               Utils.timer(() {
-                LzToast.show('Thanks for using LazyUi!', icon: La.checkCircle, position: Position.center);
+                LzToast.show('Thanks for using LazyUi!', icon: La.checkCircle);
               }, 1.s);
             },
           ).sized(context.width),
