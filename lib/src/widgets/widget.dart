@@ -29,6 +29,7 @@ part 'ink_touch.dart';
 part 'intrinsic.dart';
 part 'lz_accordion.dart';
 part 'lz_badge.dart';
+part 'lz_card.dart';
 part 'lz_listview.dart';
 part 'lz_loader.dart';
 part 'lz_no_data.dart';

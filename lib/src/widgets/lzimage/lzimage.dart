@@ -7,14 +7,6 @@ import 'package:lazyui/lazyui.dart';
 import 'lzimage_preview.dart';
 import 'utils.dart';
 
-class Dimen {
-  final double? w;
-  final double? h;
-  const Dimen({this.w, this.h});
-
-  static Dimen all(double? value) => Dimen(w: value, h: value);
-}
-
 class LzImage<T> extends StatelessWidget {
   final T image;
   final Dimen? size;
@@ -47,7 +39,7 @@ class LzImage<T> extends StatelessWidget {
     bool isImage = image is Image;
 
 //     logg('''
-// isString: $isString | isUrl: $isUrl | isSvg: $isSvg | isPath: $isPath | 
+// isString: $isString | isUrl: $isUrl | isSvg: $isSvg | isPath: $isPath |
 // isFile: $isFile | isUint8List: $isUint8List | isImage: $isImage | $image''');
 
     // bool isValidImage = isUrl || isSvg || isPath || isFile || isUint8List || isImage;
@@ -61,7 +53,7 @@ class LzImage<T> extends StatelessWidget {
 
     Widget placeholder = this.placeholder ??
         Skeleton(
-          size: [width ?? 50, height ?? 50],
+          size: Dimen(w: width ?? 50, h: height ?? 50),
           radius: radius ?? 5,
         );
 

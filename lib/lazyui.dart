@@ -25,7 +25,7 @@ export 'src/constants/enum.dart';
 export 'src/constants/font.dart';
 export 'src/extensions/extension.dart';
 export 'src/models/custom_radius.dart';
-export 'src/models/option.dart';
+export 'src/models/dimen.dart';
 export 'src/utils/utils.dart';
 export 'src/widgets/lzbutton/lzbutton.dart';
 export 'src/widgets/lzconfirm/lzconfirm.dart';

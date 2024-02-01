@@ -159,19 +159,19 @@ part of widget;
 // 158
 
 class Skeleton extends StatelessWidget {
-  final dynamic size;
+  final Dimen? size;
   final double radius;
-  const Skeleton({super.key, this.size, this.radius = 0});
+  final Color? color, highlight;
+  const Skeleton({super.key, this.size, this.radius = 0, this.color, this.highlight});
 
   @override
   Widget build(BuildContext context) {
-
-    double width = 50, height = 15;
+    double width = size?.w ?? 50, height = size?.h ?? 15;
     double radius = LazyUi.radius;
 
     return Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,
-      highlightColor: Colors.grey[200]!,
+      baseColor: color ?? Colors.grey[300]!,
+      highlightColor: highlight ?? Colors.grey[200]!,
       child: Container(
         width: width,
         height: height,
@@ -182,5 +182,37 @@ class Skeleton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Skeleton copyWith({Dimen? size, double? radius, Color? color, Color? highlight}) {
+    return Skeleton(
+        size: size ?? this.size,
+        radius: radius ?? this.radius,
+        color: color ?? this.color,
+        highlight: highlight ?? this.highlight);
+  }
+
+  static Skeleton dark({Dimen? size, double? radius}) {
+    return Skeleton(
+        size: size, radius: radius ?? LazyUi.radius, color: '444'.hex, highlight: '444'.hex.withOpacity(.5));
+  }
+}
+
+extension SkeletonExtension on Skeleton {
+  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start, double gap = 0}) {
+    return Column(
+        crossAxisAlignment: alignment,
+        children: List.generate(value, (i) {
+          double remain = (size?.w ?? 50) * [.2, .5].numInRange<double>();
+
+          double width = (size?.w ?? 50) - [remain < 0 ? 50 : remain].numInRange<double>();
+          double height = size?.h ?? 15;
+
+          if (size?.h != null && (size?.h ?? 15) > 20) {
+            height = height + [0, 20].numInRange<double>();
+          }
+
+          return copyWith(size: Dimen(w: width, h: height), color: color, highlight: highlight);
+        })).gap(gap);
   }
 }

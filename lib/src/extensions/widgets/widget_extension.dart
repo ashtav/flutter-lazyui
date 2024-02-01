@@ -248,3 +248,13 @@ extension CustomIconrExtension on Iconr {
     return IconButton(icon: this, tooltip: tooltip, onPressed: onPressed);
   }
 }
+
+extension CustomListWidgetExtension on List<Widget> {
+  List<Widget> skeleton(bool condition, List<Widget> skeletons) {
+    if (condition) {
+      return skeletons;
+    } else {
+      return this;
+    }
+  }
+}
