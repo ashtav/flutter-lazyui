@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/widgets/lzbutton/src/notifier.dart';
+
+import 'notifier.dart';
 
 class LzButton extends StatelessWidget {
   final String? text;
@@ -67,7 +68,7 @@ class LzButton extends StatelessWidget {
       return InkTouch(
         onTap: state.disabled ? null : () => onTap?.call(ButtonState(notifier)),
         padding: style?.padding ?? Ei.only(v: 13, h: 18),
-        border: Br.all(color: isOutline ? (style?.backgroundColor ?? Colors.black12) : backgroundColor.darken(.2)),
+        border: Br.all(color: isOutline ? (style?.backgroundColor ?? Colors.black12) : (style?.borderColor ?? backgroundColor.darken(.2))),
         radius: Br.radius(radius),
         color: backgroundColor,
         child: Row(

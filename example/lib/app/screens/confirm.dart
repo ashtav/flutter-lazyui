@@ -8,45 +8,36 @@ class ConfirmView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('LzConfirm'),
+          title: const Text('Confirm'),
+          elevation: 0, backgroundColor: Colors.transparent,
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: Maa.center,
-            children: [
-              // LzButton(
-              //   outline: true,
-              //   type: ButtonType.dark,
-              //   text: 'Dialog Confirm',
-              //   onTap: (_) {
-              //     LzConfirm(
-              //       title: 'Widget Confirmation',
-              //       message: 'Are you sure you want to confirm this widget?',
-              //       onConfirm: () {
-              //         LzToast.show('Widget confirmed');
-              //       },
-              //     ).show(context);
-              //   },
-              // ),
-              InkTouch(
-                onTap: () {
-                  LzConfirm(
-                    title: 'Widget Confirmation',
-                    message: 'Are you sure you want to confirm this widget?',
-                    type: LzConfirmType.bottomSheet,
-                    confirmText: 'Yes, Delete It!',
-                    onConfirm: () {
-                      LzToast.show('Widget confirmed');
-                    },
-                  ).show(context);
+          child: Column(mainAxisAlignment: Maa.end, children: [
+            const Textml('<b>LzConfirm</b> provide 2 ways to show a confirmation dialog, Dialog and Bottom Sheet.').margin(b: 20),
+            ...2.generate((index) {
+              return LzButton(
+                text: ['Show Confirm Dialog', 'Show Confirm Bottom Sheet'][index],
+                onTap: (state) {
+                  if (index == 0) {
+                    LzConfirm.show(context,
+                        title: 'Confirm Dialog',
+                        message: Faker.words(13),
+                        confirmColor: Colors.redAccent,
+                        darkMode: true, onConfirm: () {
+                      LzToast.show('Your action has been confirmed', icon: Ti.checks);
+                    });
+                  }
+
+                  // bottom sheet
+                  else {
+                    LzConfirm.show(context, title: 'Confirm Sheet', message: Faker.words(13), onConfirm: () {
+                      LzToast.show('Your action has been confirmed', icon: Ti.checks);
+                    }, type: ConfirmType.sheet, margin: 35);
+                  }
                 },
-                radius: Br.radius(7),
-                padding: Ei.all(20),
-                margin: Ei.only(t: 20),
-                child: const Text('Bottom Sheet Confirm'),
-              )
-            ],
-          ),
+              ).sized(context.width).styled(borderColor: Colors.black38);
+            })
+          ]).gap(10).margin(all: 20),
         ));
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class LzButtonStyle {
   final Color? backgroundColor;
   final Color? textColor;
+  final Color? borderColor;
   final TextStyle? textStyle;
   final double? radius;
   final double? width;
@@ -14,6 +15,7 @@ class LzButtonStyle {
   const LzButtonStyle(
       {this.backgroundColor,
       this.textColor,
+      this.borderColor,
       this.textStyle,
       this.radius,
       this.width,
@@ -25,6 +27,7 @@ class LzButtonStyle {
   LzButtonStyle copyWith(
       {Color? backgroundColor,
       Color? textColor,
+      Color? borderColor,
       TextStyle? textStyle,
       double? radius,
       double? width,
@@ -35,6 +38,7 @@ class LzButtonStyle {
     return LzButtonStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
       textColor: textColor ?? this.textColor,
+      borderColor: borderColor ?? this.borderColor,
       textStyle: textStyle ?? this.textStyle,
       radius: radius ?? this.radius,
       width: width ?? this.width,

@@ -180,7 +180,7 @@ class _AppTrainerState extends State<AppTrainer> {
                                       ),
                                       borderRadius: Br.radius(5),
                                       border: Br.all(color: Colors.white)),
-                                  child: Columnize(
+                                  child: Column(
                                     children: [
                                       Iconr(
                                         e.icon ?? La.bookOpen,

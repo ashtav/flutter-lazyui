@@ -37,7 +37,7 @@ class SkeletonView extends StatelessWidget {
             margin: Ei.only(t: 25),
             decoration: BoxDecoration(
                 color: Utils.hex('0b1120'), borderRadius: Br.radius(5)),
-            child: Columnize(
+            child: Column(
               children: [
                 Text(
                   'Use skeleton in the dark mode',

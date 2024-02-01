@@ -140,7 +140,7 @@ class AppIntro2 extends StatelessWidget {
 
     CarouselController carouselController = CarouselController();
 
-    return Columnize(
+    return Column(
       children: [
         Expanded(
           child: CarouselSlider(
@@ -157,7 +157,7 @@ class AppIntro2 extends StatelessWidget {
               items: List.generate(images.length, (i) {
                 return LzImage(
                   images[i],
-                  // width: context.width,
+                  size: Dimen(w: context.width),
                   radius: 0,
                 );
               })),
@@ -169,7 +169,7 @@ class AppIntro2 extends StatelessWidget {
         ),
         Container(
           padding: Ei.all(25),
-          child: Columnize(
+          child: Column(
             children: [
               Text('Welcome To LazyUI', style: Gfont.fs20.bold),
               Text(

@@ -9,6 +9,7 @@ extension LzButtonExtension on LzButton {
         style: LzButtonStyle(
           backgroundColor: style?.backgroundColor,
           textColor: style?.textColor,
+          borderColor: style?.borderColor,
           textStyle: style?.textStyle,
           radius: style?.radius,
           width: style?.width,
@@ -24,6 +25,7 @@ extension LzButtonExtension on LzButton {
           style: LzButtonStyle(
         backgroundColor: backgroundColor,
         textColor: style?.textColor,
+        borderColor: style?.borderColor,
         textStyle: style?.textStyle,
         radius: style?.radius,
         width: style?.width,
@@ -36,6 +38,7 @@ extension LzButtonExtension on LzButton {
   LzButton styled(
           {Color? backgroundColor,
           Color? textColor,
+          Color? borderColor,
           TextStyle? textStyle,
           double? radius,
           double? width,
@@ -47,6 +50,7 @@ extension LzButtonExtension on LzButton {
           style: LzButtonStyle(
         backgroundColor: backgroundColor ?? style?.backgroundColor,
         textColor: textColor ?? style?.textColor,
+        borderColor: borderColor ?? style?.borderColor,
         textStyle: textStyle ?? style?.textStyle,
         radius: radius ?? style?.radius,
         width: width ?? style?.width,
@@ -61,6 +65,7 @@ extension LzButtonExtension on LzButton {
         style: LzButtonStyle(
       backgroundColor: style?.backgroundColor,
       textColor: style?.textColor,
+      borderColor: style?.borderColor,
       textStyle: style?.textStyle,
       radius: style?.radius,
       width: width,

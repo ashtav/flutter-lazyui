@@ -6,6 +6,7 @@ import 'package:lazyui/lazyui.dart';
 
 import '../models/feature.dart';
 import 'button.dart';
+import 'confirm.dart';
 import 'dropdown.dart';
 import 'picker.dart';
 import 'widgets/lz_image.dart';
@@ -21,14 +22,10 @@ class FeaturesView extends StatelessWidget {
         'features': [
           Feature('LzForm', 'Customizable form with validation, error handling and ease full control of your form.',
               Ti.forms),
-          Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
           Feature(
               'LzPicker',
               'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
               Ti.alignBoxCenterBottom),
-          Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
-          Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
-          Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
           // 'App Intro',
           // 'App Trainer',
           // 'Accordion',
@@ -40,11 +37,21 @@ class FeaturesView extends StatelessWidget {
         ]
       },
       {
+        'title': 'Interaction',
+        'features': [
+          Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
+          Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
+          Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
+          Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
+        ]
+      },
+      {
         'title': 'Widgets',
         'features': [
+          Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
           Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
         ]
-      }
+      },
     ];
 
     for (var featureMap in features) {
@@ -111,7 +118,8 @@ class Actions {
       'LzPicker': const PickerView(),
       'LzButton': const ButtonView(),
       'LzToast': const ToastView(),
-      'LzImage': const LzImageView(),
+      'LzImage': const ImageView(),
+      'LzConfirm': const ConfirmView(),
     };
 
     if (label == 'LzOtp') {
