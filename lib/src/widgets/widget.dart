@@ -1,7 +1,6 @@
 library widget;
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';

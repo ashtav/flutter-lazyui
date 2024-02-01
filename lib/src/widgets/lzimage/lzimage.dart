@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'lzimage_preview.dart';
 import 'utils.dart';
 
 class Dimen {
@@ -19,7 +20,19 @@ class LzImage<T> extends StatelessWidget {
   final Dimen? size;
   final BoxFit fit;
   final double? radius;
-  const LzImage(this.image, {super.key, this.size, this.fit = BoxFit.cover, this.radius});
+  final Alignment alignment;
+  final bool interactive;
+  final Widget? placeholder;
+  final Widget? errorWidget;
+  const LzImage(this.image,
+      {super.key,
+      this.size,
+      this.fit = BoxFit.cover,
+      this.radius,
+      this.alignment = Alignment.center,
+      this.interactive = false,
+      this.placeholder,
+      this.errorWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +46,11 @@ class LzImage<T> extends StatelessWidget {
     bool isUint8List = image is Uint8List;
     bool isImage = image is Image;
 
-    bool isValidImage = isUrl || isSvg || isPath || isFile || isUint8List || isImage;
+//     logg('''
+// isString: $isString | isUrl: $isUrl | isSvg: $isSvg | isPath: $isPath | 
+// isFile: $isFile | isUint8List: $isUint8List | isImage: $isImage | $image''');
+
+    // bool isValidImage = isUrl || isSvg || isPath || isFile || isUint8List || isImage;
 
     // get image size
     double? width = size?.w;
@@ -42,30 +59,127 @@ class LzImage<T> extends StatelessWidget {
     Widget imageWidget = Container(
         width: width, height: height, color: Colors.black12, child: const Center(child: Icon(La.exclamationCircle)));
 
-    Widget skeleton = Skeleton(
-      size: [width ?? 50, height ?? 50],
-      radius: radius ?? 5,
-    );
+    Widget placeholder = this.placeholder ??
+        Skeleton(
+          size: [width ?? 50, height ?? 50],
+          radius: radius ?? 5,
+        );
+
+    Widget errorWidget = this.errorWidget ??
+        Container(
+            width: width,
+            height: height,
+            color: Colors.black12,
+            child: const Center(child: Icon(La.exclamationCircle)));
 
     // handle image url
-    if (isUrl) {
-      if (isSvg) {
-        imageWidget = SvgPicture.network(image.toString(),
-            fit: fit, width: width, height: height, placeholderBuilder: (context) => skeleton);
-      } else {
-        imageWidget = CachedNetworkImage(
-          imageUrl: image.toString(),
-          fit: fit,
-          width: width,
-          height: height,
-          progressIndicatorBuilder: (context, url, downloadProgress) => skeleton,
-          errorWidget: (context, url, error) => const Center(child: Icon(La.exclamationCircle)),
-        );
+    if (isString) {
+      String image = this.image as String;
+
+      // Url
+      // This section determines how the image should be loaded based on its url
+      // It can be an svg or an image
+      if (isUrl) {
+        if (isSvg) {
+          imageWidget = SvgPicture.network(image,
+              fit: fit,
+              width: width,
+              height: height,
+              alignment: alignment,
+              placeholderBuilder: (context) => placeholder);
+        } else {
+          imageWidget = CachedNetworkImage(
+            imageUrl: image,
+            fit: fit,
+            width: width,
+            height: height,
+            alignment: alignment,
+            progressIndicatorBuilder: (context, url, downloadProgress) => placeholder,
+            errorWidget: (context, url, error) => errorWidget,
+          );
+        }
+      }
+
+      // Path
+      // This section determines how the image should be loaded based on its path
+      // It can be an asset or a file path
+      else if (isPath) {
+        bool isAsset = image.startsWith('assets/');
+        bool isFileNameOnly = !image.contains('/');
+
+        if (isAsset || isFileNameOnly) {
+          if (isFileNameOnly) {
+            image = 'assets/images/$image';
+          }
+
+          if (isSvg) {
+            imageWidget = SvgPicture.asset(image,
+                fit: fit, width: width, height: height, alignment: alignment, placeholderBuilder: (_) => placeholder);
+          } else {
+            imageWidget = Container(
+              width: width,
+              height: height,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(image), fit: fit, alignment: alignment, onError: (e, s) => errorWidget),
+              ),
+            );
+          }
+        } else {
+          imageWidget = Image.file(File(image),
+              fit: fit,
+              width: width,
+              height: height,
+              alignment: alignment,
+              frameBuilder: (context, _, __, ___) => placeholder,
+              errorBuilder: (_, e, s) => errorWidget);
+        }
       }
     }
 
-    return imageWidget.lz.clip(all: radius ?? LazyUi.radius);
-  }
+    // File
+    // This section determines how the image should be loaded based on its type
+    else if (isFile) {
+      imageWidget = Image.file(image as File,
+          fit: fit,
+          width: width,
+          height: height,
+          alignment: alignment,
+          frameBuilder: (context, _, __, ___) => placeholder,
+          errorBuilder: (_, e, s) => errorWidget);
+    }
 
-  static preview(String image) {}
+    // Uint8List
+    // This section determines how the image should be loaded based on its type
+    else if (isUint8List) {
+      imageWidget = Image.memory(image as Uint8List,
+          fit: fit,
+          width: width,
+          height: height,
+          alignment: alignment,
+          frameBuilder: (context, _, __, ___) => placeholder,
+          errorBuilder: (_, e, s) => errorWidget);
+    }
+
+    // Image
+    else if (isImage) {
+      imageWidget = image as Image;
+    }
+
+    imageWidget = imageWidget.lz.clip(all: radius ?? LazyUi.radius);
+
+    // if interactive, image can be previewed by tapping on it
+    if (interactive) {
+      final tag = DateTime.now().microsecond;
+      return Hero(
+          tag: tag,
+          child: imageWidget.onTap(() {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return LzImageViewer(image, tag: tag);
+            }));
+          }));
+    }
+
+    return imageWidget;
+  }
 }

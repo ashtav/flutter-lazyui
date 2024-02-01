@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'dropdown_notifier.dart';
-import 'dropdown_value.dart';
 
 class Dropdown extends StatelessWidget {
   final Offset target;

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'notifier.dart';
-import 'time_model.dart';
 
 class LzTimePicker extends StatelessWidget {
   final Time? initTime;
