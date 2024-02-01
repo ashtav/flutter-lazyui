@@ -1,4 +1,5 @@
 import 'package:example/app/screens/forms.dart';
+import 'package:example/app/screens/skeleton.dart';
 import 'package:example/app/screens/toast.dart';
 import 'package:example/app/screens/widgets/custom_widget.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +30,8 @@ class FeaturesView extends StatelessWidget {
           // 'App Intro',
           // 'App Trainer',
           // 'Accordion',
-          // 'Confirm',
           // 'Refreshtor',
           // 'Skeleton',
-          // 'Toast',
           // 'Widgets'
         ]
       },
@@ -50,6 +49,7 @@ class FeaturesView extends StatelessWidget {
         'features': [
           Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
           Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
+          Feature('Skeleton', 'Show a skeleton loader with a custom color, animation, etc.', Ti.loader),
         ]
       },
     ];
@@ -120,6 +120,7 @@ class Actions {
       'LzToast': const ToastView(),
       'LzImage': const ImageView(),
       'LzConfirm': const ConfirmView(),
+      'Skeleton': const SkeletonView(),
     };
 
     if (label == 'LzOtp') {

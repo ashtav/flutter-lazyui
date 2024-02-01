@@ -4,7 +4,6 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart' hide TextDirection;
@@ -40,7 +39,6 @@ part 'none.dart';
 part 'painters/caret_painter.dart';
 part 'poslign.dart';
 part 'refreshtor.dart';
-part 'select_picker.dart';
 part 'skeleton.dart';
 part 'textml.dart';
 part 'textr.dart';

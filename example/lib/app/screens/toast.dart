@@ -11,6 +11,8 @@ class ToastView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Toast'),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
       ),
       bottomNavigationBar: Column(
         children: [

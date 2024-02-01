@@ -105,7 +105,7 @@ class Select extends StatelessWidget with LzFormMixin {
         Option initialValue = Option.fromMap(selected?.toMap() ?? {});
 
         notifier.isSelectShow = true;
-        SelectPicker.show(context, initialValue: initialValue, options: options, onSelect: (value) {
+        LzPicker.option(context, initialValue: initialValue, options: options, onSelect: (value) {
           notifier.controller.text = value.label;
           notifier.selectedSelect = Option.fromMap(value.toMap());
 
