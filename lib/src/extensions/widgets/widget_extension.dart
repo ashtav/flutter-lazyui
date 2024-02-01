@@ -137,21 +137,21 @@ class LzModifiers {
   /// ``` dart
   /// Widget().lz.skeleton(true);
   /// ```
-  Widget skeleton(bool value,
-      {dynamic size = const [
-        [50, 100],
-        15
-      ],
-      Color color = Colors.black,
-      Color? darkColor,
-      EdgeInsets? margin,
-      double radius = 5,
-      double brightness = 0.5}) {
-    return value
-        ? Skeleton(
-            size: size, color: color, darkColor: darkColor, margin: margin, radius: radius, brightness: brightness)
-        : widget;
-  }
+  // Widget skeleton(bool value,
+  //     {dynamic size = const [
+  //       [50, 100],
+  //       15
+  //     ],
+  //     Color color = Colors.black,
+  //     Color? darkColor,
+  //     EdgeInsets? margin,
+  //     double radius = 5,
+  //     double brightness = 0.5}) {
+  //   return value
+  //       ? Skeleton(
+  //           size: size, color: color, darkColor: darkColor, margin: margin, radius: radius, brightness: brightness)
+  //       : widget;
+  // }
 }
 
 extension LzWidgetExtension on Widget {
