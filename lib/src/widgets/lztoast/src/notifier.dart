@@ -35,7 +35,7 @@ class ToastNotifier extends ChangeNotifier {
     this.dismissOnTap = dismissOnTap;
     notifyListeners();
 
-    timer = Timer(toastDuration ?? 5.s, () {
+    timer = Timer(toastDuration ?? 2.s, () {
       toast = false;
       timer?.cancel();
       notifyListeners();

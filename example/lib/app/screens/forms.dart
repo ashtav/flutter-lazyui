@@ -168,7 +168,9 @@ class FormsView extends StatelessWidget {
                           // return false;
 
                           forms.setSelectOption('province', provinces,
-                              disabled: [3], onSelected: (_) => forms.enable('city'));
+                              disabled: [3], onSelected: (_) {
+                                forms.enable('city').setValue('city', '');
+                              });
 
                           // forms.onSelected('province', (f) => f.enable('city'));
                         }));

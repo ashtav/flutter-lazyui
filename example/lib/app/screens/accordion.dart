@@ -6,22 +6,32 @@ class AccordionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = AccordionController();
+
     return Scaffold(
-        appBar: AppBar(title: const Text('Expandable List')),
+        appBar: AppBar(title: const Text('Accordion'), actions: [
+          const Icon(Ti.layoutNavbarCollapse).onPressed(() {
+            controller.collapse();
+            LzToast.show('All accordions collapsed!!', placement: ToastPlacement.bottom);
+          })
+        ]),
         body: LzListView(
           children: [
             LzAccordion(
+              border: Br.all(width: 2),
+              initValue: 0,
+              controller: controller,
               children: [
-                LzAccordionContent(
-                  title: 'What is Lorem Ipsum?',
+                const LzAccordionContent(
+                  title: 'What is Accordion?',
                   child: Textml(
-                      '<b>Lorem Ipsum</b> is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500... ${Faker.words(25)}'),
+                      'An <b>Accordion</b> in UI/UX is a collapsible panel for showing and hiding content, ideal for organizing and optimizing space in an interface. It enhances usability by allowing users to expand sections for more details and collapse them to reduce clutter.'),
                 ),
                 LzAccordionContent(
                   suffix: Text('Expand', style: Gfont.muted),
                   title: 'Why do we use it?',
                   child: const Text(
-                      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.'),
+                      'Accordions streamline content presentation, enhancing user engagement by minimizing distractions and focusing on layout readability.'),
                 )
               ],
             ).margin(b: 15),
@@ -35,6 +45,19 @@ class AccordionView extends StatelessWidget {
                   title: 'List 2',
                   child: Text(Faker.words(35)),
                 )
+              ],
+            ).margin(b: 15),
+
+            LzAccordion(
+              backgroundColor: '444'.hex,
+              textColor: Colors.white,
+              border: Br.none,
+              children: [
+                LzAccordionContent(
+                  title: 'Dark Mode',
+                  child: Text(Faker.words(35, 3), style: Gfont.color(Colors.white70)),
+                ),
+                
               ],
             )
           ],

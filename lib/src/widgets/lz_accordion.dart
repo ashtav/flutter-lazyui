@@ -1,114 +1,49 @@
 part of widget;
 
-/// LzAccordion is a customizable Flutter widget that creates an accordion-style UI component with expandable content sections. It allows you to specify a list of sections, each with a title and content.
-///
-/// ```dart
-/// LzAccordion(
-///   children: [
-///     LzAccordionContent(
-///       title: 'Section 1',
-///       child: Text('Content for Section 1'),
-///     ),
-///     LzAccordionContent(
-///       title: 'Section 2',
-///       child: Text('Content for Section 2'),
-///     ),
-///   ]
-/// )
-/// ```
-
-/// A widget that creates an accordion-style layout for organizing and displaying content.
-///
-/// The `LzAccordion` widget allows you to create an accordion-style layout that can expand
-/// or collapse its child content panels. It is commonly used for displaying multiple sections
-/// of content with the option to expand or collapse each section individually.
-///
-/// Example usage:
-/// ```dart
-/// LzAccordion(
-///   children: [
-///     LzAccordionContent(
-///       title: 'Section 1',
-///       content: Text('Content for Section 1'),
-///     ),
-///     LzAccordionContent(
-///       title: 'Section 2',
-///       content: Text('Content for Section 2'),
-///     ),
-///     // Add more LzAccordionContent widgets here
-///   ],
-///   multiple: true, // Allow multiple sections to be expanded at once (optional)
-///   initValue: 1, // Initialize with a specific section open (optional)
-///   radius: 10.0, // Border radius for section panels (optional)
-///   padding: EdgeInsets.all(8.0), // Padding around each section (optional)
-///   border: true, // Add borders around section panels (optional)
-///   titleEllipsis: true, // Enable ellipsis for long section titles (optional)
-///   focusOnExpand: true, // Scroll to expanded section when opened (optional)
-/// )
-/// ```
 class LzAccordion extends StatefulWidget {
-  /// The list of child content panels within the accordion.
   final List<LzAccordionContent> children;
-
-  /// Determines whether multiple sections can be expanded at once.
-  final bool multiple;
-
-  /// Determines whether borders are added around section panels.
-  final bool border;
-
-  /// Determines whether long section titles are truncated with ellipsis.
-  final bool titleEllipsis;
-
-  /// Determines whether the view automatically scrolls to the expanded section when opened.
-  final bool focusOnExpand;
-
-  /// The index of the initially open section when the accordion is first created.
   final int? initValue;
-
-  /// The border radius for section panels.
+  final bool multiple;
+  final bool titleEllipsis;
+  final bool scrollToExpanded;
+  final Curve? curve;
+  final Duration? duration;
+  final BoxBorder? border;
+  final Color? borderColor;
+  final Color? backgroundColor;
+  final Color? textColor;
   final double? radius;
-
-  /// Padding around each section panel.
   final EdgeInsetsGeometry? padding;
+  final AccordionController? controller;
 
-  /// Creates an `LzAccordion` widget.
-  ///
-  /// The [children] parameter is a list of `LzAccordionContent` widgets that represent
-  /// the individual sections within the accordion.
-  ///
-  /// The [multiple] parameter specifies whether multiple sections can be expanded at once.
-  ///
-  /// The [initValue] parameter allows you to specify the index of the initially open section
-  /// when the accordion is first created.
-  ///
-  /// The [radius] parameter determines the border radius for section panels (optional).
-  ///
-  /// The [padding] parameter specifies the padding around each section panel (optional).
-  ///
-  /// The [border] parameter controls whether borders are added around section panels (optional).
-  ///
-  /// The [titleEllipsis] parameter enables or disables truncating long section titles with ellipsis (optional).
-  ///
-  /// The [focusOnExpand] parameter determines whether the view automatically scrolls to the expanded
-  /// section when opened (optional).
   const LzAccordion({
     Key? key,
     this.children = const [],
-    this.multiple = false,
     this.initValue,
+    this.multiple = false,
+    this.titleEllipsis = false,
+    this.scrollToExpanded = true,
+    this.curve,
+    this.duration,
+    this.border,
+    this.borderColor,
+    this.backgroundColor,
+    this.textColor,
     this.radius,
     this.padding,
-    this.border = true,
-    this.titleEllipsis = false,
-    this.focusOnExpand = true,
+    this.controller,
   }) : super(key: key);
 
   @override
   State<LzAccordion> createState() => _LzAccordionState();
 }
 
-class _LzAccordionState extends State<LzAccordion>
-    with TickerProviderStateMixin {
+class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  // Note: AutomaticKeepAliveClientMixin uses this method to keep the state alive
+
   List<AnimationController> controllers = [];
   List<Animation<double>> animations = [];
   List<int> actives = [];
@@ -120,26 +55,28 @@ class _LzAccordionState extends State<LzAccordion>
 
   int length = 0;
 
-  void init() {
+  void onInitialized() async {
     length = widget.children.length;
 
-    controllers = List.generate(
-        length,
-        (i) => AnimationController(
-            vsync: this, duration: const Duration(milliseconds: 300)));
+    controllers = List.generate(length, (i) {
+      bool isExpanded = widget.initValue == i;
+      return AnimationController(vsync: this, duration: widget.duration ?? 300.ms, value: isExpanded ? 1 : 0);
+    });
     animations = List.generate(
         length,
         (i) => CurvedAnimation(
               parent: controllers[i],
-              curve: Curves.fastOutSlowIn,
+              curve: widget.curve ?? Curves.fastOutSlowIn,
             ));
 
-    int? index = widget.initValue;
+    Bindings.onRendered(() {
+      int? index = widget.initValue;
 
-    if (index != null && index > -1 && index < length) {
-      actives.add(index);
-      controllers[index].forward();
-    }
+      if (index != null && index > -1 && index < length) {
+        actives.add(index);
+        controllers[index].forward();
+      }
+    });
   }
 
   void disposeControllers() {
@@ -182,15 +119,40 @@ class _LzAccordionState extends State<LzAccordion>
     }
   }
 
+  void initCallbackController() {
+    // set up the controller callback
+    widget.controller?.collapseAll = () {
+      for (var controller in controllers) {
+        controller.reverse();
+      }
+      setState(() {
+        actives.clear();
+      });
+    };
+  }
+
   @override
   void initState() {
     super.initState();
-    init();
+    onInitialized();
+    initCallbackController();
   }
 
   @override
   void didUpdateWidget(LzAccordion oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    if (widget.children.length != oldWidget.children.length) {
+      // Dispose old controllers to prevent memory leaks
+      disposeControllers();
+
+      // Re-initialize controllers and animations with new children
+      onInitialized();
+    }
+
+    if (widget.controller != oldWidget.controller) {
+      initCallbackController();
+    }
   }
 
   @override
@@ -201,15 +163,20 @@ class _LzAccordionState extends State<LzAccordion>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     double radius = LazyUi.radius;
     bool isTi = LazyUi.iconType == IconType.tablerIcon;
 
+    Color backgroundColor = widget.backgroundColor ?? Colors.white;
+    Color borderColor = widget.borderColor ?? (backgroundColor.isDark() ? backgroundColor.lighten(.7) : Colors.black12);
+
     return Container(
       decoration: BoxDecoration(
-          border: widget.border ? Br.all() : null,
+          border: widget.border ?? Br.all(color: widget.borderColor ?? Colors.black12),
           borderRadius: Br.radius(widget.radius ?? radius)),
       child: ClipRRect(
-        borderRadius: Br.radius(widget.radius ?? radius),
+        borderRadius: Br.radius((widget.radius ?? radius) - 1),
         child: Column(
           crossAxisAlignment: Caa.start,
           mainAxisSize: Mas.min,
@@ -223,7 +190,7 @@ class _LzAccordionState extends State<LzAccordion>
             final gkey = GlobalKey();
 
             return Container(
-              decoration: BoxDecoration(border: Br.only(['t'], except: i == 0)),
+              decoration: BoxDecoration(border: Br.only(['t'], except: i == 0, color: borderColor)),
               child: Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
@@ -236,43 +203,38 @@ class _LzAccordionState extends State<LzAccordion>
                             onTap(i);
 
                             // scroll to this widget
-                            if (gkey.currentContext != null &&
-                                widget.focusOnExpand &&
-                                controller.value <= 0) {
+                            if (gkey.currentContext != null && widget.scrollToExpanded && controller.value <= 0) {
                               await Future.delayed(300.ms);
-                              Scrollable.ensureVisible(gkey.currentContext!,
-                                  duration: 250.ms);
+                              Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
                             }
                           },
                           padding: Ei.all(20),
-                          color: Colors.white,
-                          border: Br.only([controller.value > .01 ? 'b' : '']),
+                          color: widget.backgroundColor ?? Colors.white,
+                          border: Br.only([controller.value > .01 ? 'b' : ''], color: borderColor),
                           child: Row(
                             mainAxisAlignment: Maa.spaceBetween,
                             children: [
                               Flexible(
                                   child: Textr(
                                 title,
+                                style: LazyUi.font.copyWith(color: widget.textColor),
                                 margin: Ei.only(r: 15),
-                                overflow: widget.titleEllipsis
-                                    ? Tof.ellipsis
-                                    : Tof.visible,
+                                overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
                               )),
                               suffix ??
                                   RotationTransition(
                                       turns: turnsTween.animate(controller),
-                                      child: Icon(
-                                          isTi
-                                              ? Ti.chevronRight
-                                              : La.angleRight,
-                                          color: Colors.black38))
+                                      child: Icon(isTi ? Ti.chevronRight : La.angleRight,
+                                          color: widget.textColor ?? Colors.black38))
                             ],
                           ))),
                   SizeTransition(
                       axisAlignment: 1.0,
                       sizeFactor: animations[i],
                       child: Container(
+                        width: context.width,
                         padding: widget.padding ?? Ei.all(20),
+                        color: backgroundColor.darken(backgroundColor.isDark() ? .09 : .03),
                         child: child,
                       )),
                 ],
@@ -290,6 +252,15 @@ class LzAccordionContent {
   final Widget child;
   final Widget? suffix;
 
-  const LzAccordionContent(
-      {required this.title, required this.child, this.suffix});
+  const LzAccordionContent({required this.title, required this.child, this.suffix});
+}
+
+class AccordionController {
+  Function? collapseAll;
+
+  void collapse() {
+    if (collapseAll != null) {
+      collapseAll!();
+    }
+  }
 }

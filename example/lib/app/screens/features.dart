@@ -1,3 +1,4 @@
+import 'package:example/app/screens/accordion.dart';
 import 'package:example/app/screens/forms.dart';
 import 'package:example/app/screens/skeleton.dart';
 import 'package:example/app/screens/toast.dart';
@@ -31,7 +32,6 @@ class FeaturesView extends StatelessWidget {
           // 'App Trainer',
           // 'Accordion',
           // 'Refreshtor',
-          // 'Skeleton',
           // 'Widgets'
         ]
       },
@@ -50,6 +50,7 @@ class FeaturesView extends StatelessWidget {
           Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
           Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
           Feature('Skeleton', 'Show a skeleton loader with a custom color, animation, etc.', Ti.loader),
+          Feature('LzAccordion', 'Expandable widget with a custom header, body, etc.', Ti.layoutNavbarExpand),
         ]
       },
     ];
@@ -121,6 +122,7 @@ class Actions {
       'LzImage': const ImageView(),
       'LzConfirm': const ConfirmView(),
       'Skeleton': const SkeletonView(),
+      'LzAccordion': const AccordionView(),
     };
 
     if (label == 'LzOtp') {
@@ -128,9 +130,12 @@ class Actions {
           expired: 60.s,
           type: OtpType.bottomLine,
           subtitle: 'OTP code sent to +628100000, please enter the code below to reset your password.',
-          onCompleted: (otp) {
-        String value = otp.value;
-        logg('Otp value: $value');
+          onCompleted: (otp) async {
+            otp.pause();
+            LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s, then: (){
+              LzToast.success('Done! You are now logged in.', placement: ToastPlacement.center);
+              context.lzPop();
+            });
       });
 
       return;

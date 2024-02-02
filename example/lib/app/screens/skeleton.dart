@@ -24,6 +24,12 @@ class _SkeletonViewState extends State<SkeletonView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    setLoading();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
@@ -35,17 +41,16 @@ class _SkeletonViewState extends State<SkeletonView> {
               const Textml('Random size of skeleton, <p color="888">Dimen.range(w: [170, 290], h: [15, 50])</p>')
                   .margin(b: 15),
               Skeleton(size: Dimen.range(w: [170, 290], h: [15, 50])),
-              const SizedBox(height: 20),
-              const Textml('Color').margin(b: 15),
+              const SizedBox(height: 45),
+              const Textml('Color & Dark Mode, <p color="888">Skeleton.dark()</p>').margin(b: 15),
               Skeleton(
                   color: Colors.orange,
                   highlight: Colors.orange.withOpacity(.3),
-                  size: Dimen.range(w: [170, context.width])).margin(b: 25),
-              const Textml('Dark Mode, <p color="888">Skeleton.dark()</p>').margin(b: 15),
+                  size: Dimen.range(w: [170, context.width])).margin(b: 5),
               Skeleton.dark(size: Dimen.range(w: [170, context.width])).iterate(2, gap: 5)
             ],
           ).start,
-          const SizedBox(height: 20),
+          const SizedBox(height: 45),
           const Textml('List widget extension, <p color="888">[].skeleton(true, [CustomSkeleton()])</p>').margin(b: 15),
           LzCard(
               onTap: () => setLoading(),
@@ -63,7 +68,7 @@ class _SkeletonViewState extends State<SkeletonView> {
                     Column(
                       children: [
                         Text('Custom Skeleton', style: Gfont.bold),
-                        Text('Try to tap this text to show the skeleton with random size.', style: Gfont.muted),
+                        Text('Tap this text to show the skeleton with random size.', style: Gfont.muted),
                       ],
                     ).start.gap(5).lz.flexible()
                   ],
@@ -81,6 +86,9 @@ class _SkeletonViewState extends State<SkeletonView> {
                   ],
                 )
               ])),
+          const SizedBox(height: 45),
+          const Textml('Widget extension, <p color="888">MyWidget().lz.skeleton(true)</p>').margin(b: 15),
+          Textr(Faker.words(13), icon: Ti.infoCircle).lz.skeleton(isLoading, Skeleton(size: Dimen.range(w: [180, context.width])).iterate(2, gap: 5))
         ]));
   }
 }
