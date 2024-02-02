@@ -1,5 +1,6 @@
 import 'package:example/app/screens/accordion.dart';
 import 'package:example/app/screens/forms.dart';
+import 'package:example/app/screens/refreshtor.dart';
 import 'package:example/app/screens/skeleton.dart';
 import 'package:example/app/screens/toast.dart';
 import 'package:example/app/screens/widgets/custom_widget.dart';
@@ -30,7 +31,6 @@ class FeaturesView extends StatelessWidget {
               Ti.alignBoxCenterBottom),
           // 'App Intro',
           // 'App Trainer',
-          // 'Accordion',
           // 'Refreshtor',
           // 'Widgets'
         ]
@@ -42,6 +42,7 @@ class FeaturesView extends StatelessWidget {
           Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
           Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
           Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
+          Feature('Refreshtor', 'Show a pull to refresh indicator with a custom color, size, etc.', Ti.refresh),
         ]
       },
       {
@@ -123,6 +124,7 @@ class Actions {
       'LzConfirm': const ConfirmView(),
       'Skeleton': const SkeletonView(),
       'LzAccordion': const AccordionView(),
+      'Refreshtor': const RefreshtorView(),
     };
 
     if (label == 'LzOtp') {
@@ -131,11 +133,11 @@ class Actions {
           type: OtpType.bottomLine,
           subtitle: 'OTP code sent to +628100000, please enter the code below to reset your password.',
           onCompleted: (otp) async {
-            otp.pause();
-            LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s, then: (){
-              LzToast.success('Done! You are now logged in.', placement: ToastPlacement.center);
-              context.lzPop();
-            });
+        otp.pause();
+        LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s, then: () {
+          LzToast.success('Done! You are now logged in.', placement: ToastPlacement.center);
+          context.lzPop();
+        });
       });
 
       return;
