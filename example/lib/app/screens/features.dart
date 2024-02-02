@@ -1,8 +1,8 @@
-import 'package:example/app/screens/accordion.dart';
+import 'package:example/app/screens/widgets/accordion.dart';
 import 'package:example/app/screens/forms.dart';
 import 'package:example/app/screens/refreshtor.dart';
-import 'package:example/app/screens/skeleton.dart';
-import 'package:example/app/screens/toast.dart';
+import 'package:example/app/screens/widgets/skeleton.dart';
+import 'package:example/app/screens/widgets/toast.dart';
 import 'package:example/app/screens/widgets/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -13,7 +13,7 @@ import 'confirm.dart';
 import 'dropdown.dart';
 import 'picker.dart';
 import 'trainer.dart';
-import 'widgets/lz_image.dart';
+import 'widgets/image.dart';
 
 class FeaturesView extends StatelessWidget {
   const FeaturesView({super.key});
@@ -23,6 +23,8 @@ class FeaturesView extends StatelessWidget {
     List<Map<String, dynamic>> features = [
       {
         'title': 'Tools',
+        'description':
+            'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
         'features': [
           Feature('LzForm', 'Customizable form with validation, error handling and ease full control of your form.',
               Ti.forms),
@@ -36,6 +38,8 @@ class FeaturesView extends StatelessWidget {
       },
       {
         'title': 'Interaction',
+        'description':
+            'Dynamic elements designed to facilitate user actions, confirmations, and navigation, enhancing overall interactivity.',
         'features': [
           Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
           Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
@@ -47,6 +51,8 @@ class FeaturesView extends StatelessWidget {
       },
       {
         'title': 'Widgets',
+        'description':
+            'A variety of visual components to display content, notifications, placeholders, and collapsible sections for a polished interface.',
         'features': [
           Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
           Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
@@ -69,6 +75,7 @@ class FeaturesView extends StatelessWidget {
           children: features.generate((item, i) {
             List<Feature> features = item['features'];
             String title = item['title'];
+            String description = item['description'];
 
             return Column(
               children: [
@@ -77,7 +84,7 @@ class FeaturesView extends StatelessWidget {
                   child: Column(
                     children: [
                       Textr(title, style: Gfont.bold, margin: Ei.only(b: 5)),
-                      Text(Faker.words(12), style: Gfont.muted)
+                      Text(description, style: Gfont.muted)
                     ],
                   ).start,
                 ),
@@ -102,7 +109,7 @@ class FeaturesView extends StatelessWidget {
                       ],
                     ),
                   );
-                })).min.lz.clip(all: 10)
+                })).min.lz.clip(all: 10).lz.border(Br.all(), radius: Br.radius(10))
               ],
             ).start;
           }),

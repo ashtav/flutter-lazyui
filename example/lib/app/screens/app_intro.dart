@@ -132,66 +132,54 @@ class AppIntro2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> images = [
-      'https://i.pinimg.com/originals/9a/75/4c/9a754c984978d5778ed7086c780dff0b.jpg',
-      'https://craftsonfire.com/wp-content/uploads/2019/10/home-office-1867761_960_720.jpg',
-      'https://miro.medium.com/v2/resize:fit:1200/1*pAJ0dPkq_t6q11WLcZ7alg.jpeg'
-    ];
-
-    CarouselController carouselController = CarouselController();
-
     return Column(
       children: [
         Expanded(
-          child: CarouselSlider(
-              carouselController: carouselController,
-              options: CarouselOptions(
-                  viewportFraction: 1,
-                  initialPage: 0,
-                  autoPlayInterval: 5.s,
-                  enableInfiniteScroll: true,
-                  height: context.height,
-                  autoPlayCurve: Curves.fastOutSlowIn,
-                  onPageChanged: (index, _) {},
-                  scrollPhysics: BounceScroll()),
-              items: List.generate(images.length, (i) {
-                return LzImage(
-                  images[i],
+          child: Stack(
+            children: [
+              Container(
+                color: 'f1f7f0'.hex,
+                padding: Ei.all(20),
+                child: LzImage(
+                  'lazyui.png',
                   size: Dimen(w: context.width),
                   radius: 0,
-                );
-              })),
-        ),
-        LineProgressIndicator(
-          repeat: true,
-          duration: 5.s,
-          onComplete: () {},
+                  fit: BoxFit.contain,
+                ),
+              ),
+              Poslign(
+                alignment: Alignment.bottomLeft,
+                margin: Ei.all(30),
+                child: LzSlideIndicator(
+                  active: 0,
+                  activeColor: LzColors.orange,
+                  size: (i) => [i == 0 ? 13 : 7, 7],
+                ),
+              )
+            ],
+          ),
         ),
         Container(
-          padding: Ei.all(25),
+          padding: Ei.only(h: 30, t: 30, b: 50),
+          decoration: BoxDecoration(color: Colors.white, border: Br.only(['t'], color: Colors.black54)),
           child: Column(
             children: [
-              Text('Welcome To LazyUI', style: Gfont.fs20.bold),
               Text(
                 'LazyUI is a Flutter UI Kit that helps you to build your app faster and easier. It contains lots of ready-to-use utilities and widgets.',
                 style: Gfont.muted,
+                textAlign: Ta.center,
               ).margin(t: 10, b: 35),
-              Row(
-                mainAxisAlignment: Maa.spaceBetween,
-                children: [
-                  LzSlideIndicator(
-                    active: 0,
-                    activeColor: LzColors.orange,
-                    size: (i) => [i == 0 ? 13 : 7, 7],
-                  ),
-                  LzButton(
+              LzButton(
                       text: 'Get Started',
                       icon: La.arrowRight,
                       onTap: (_) {
                         context.lzPush(const FeaturesView());
-                      }).styled(radius: 50, padding: Ei.sym(v: 13, h: 25))
-                ],
-              ),
+                      })
+                  .styled(
+                      radius: LazyUi.radius,
+                      padding: Ei.sym(v: 13, h: 25),
+                      width: context.width - 100,
+                      borderColor: Colors.black54)
             ],
           ),
         )

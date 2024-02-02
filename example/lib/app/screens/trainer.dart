@@ -6,46 +6,57 @@ class TrainerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey();
-    TrainerController controller = TrainerController();
+    final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey(), key4 = GlobalKey();
+    final controller = TrainerController();
 
     return Trainer(
       controller: controller,
-      onClickTarget: (target) {
-        logg(target);
-      },
-      onInit: (control) {
-        Utils.timer(() {
-          // control.show(keys: [forms['name']!.key], orderByKey: true);
-          controller.show();
-        }, 300.ms);
-      },
-
-      targets: [key1].generate((key, i){
-        List<String> titles = ['Search Icon', 'Calendar Icon', 'Floating Action Button'];
-        return Target(key: key, title: titles[i], description: Faker.words(217));
+      targets: [key1, key2, key3, key4].generate((key, i) {
+        List<String> titles = ['Search Icon', 'Calendar Icon', 'Floating Action Button', 'Button'];
+        return Target(
+            key: key,
+            title: titles[i],
+            description: Faker.words(17),
+            shape: i == 3 ? ShapeLightFocus.RRect : null,
+            align: i == 2 ? ContentAlign.top : ContentAlign.bottom);
       }),
+      onInit: (trainer) async {
+        // trainer.show();
+        // controller.show();
 
-      showSectionLabel: true,
+        // await Future.delayed(3.s);
+        // controller.hide();
+      },
       child: Scaffold(
         appBar: AppBar(
-            title: const Text('App Trainer'),
-            actions: [La.search, La.calendar].generate((icon, i) =>
-                Iconr(icon, flipX: true, key: [key1, key2][i])
-                    .onPressed(() => {}))),
+            title: const Text('Trainer'),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            actions: [La.search, La.calendar]
+                .generate((icon, i) => Iconr(icon, flipX: true, key: [key1, key2][i]).onPressed(() => {}))),
         body: LzListView(
           children: [
-            // LzForm.input(
-            //   label: 'Name',
-            //   hint: 'Enter your name',
-            //   model: forms['name'],
-            // ),
+            const Textml(
+                'This trainer is created using the <b>tutorial_coach_mark: ^1.2.11</b> package, which has been customized with unique styles and features to ensure it can be utilized easily and flexibly.'),
+            Column(
+              children: [
+                LzButton(
+                  key: key4,
+                  text: 'Tap to show trainer',
+                  icon: Ti.books,
+                  onTap: (_) {
+                    controller.show();
+                  },
+                )
+              ],
+            ).start.margin(t: 25)
           ],
         ),
         floatingActionButton: FloatingActionButton(
           key: key3,
           onPressed: () => controller.show(),
-          child: const Icon(La.info),
+          backgroundColor: Colors.white,
+          child: const Icon(La.info, color: Colors.black54),
         ),
       ),
     );

@@ -5,18 +5,17 @@ class Target {
   final GlobalKey key;
   final ContentAlign align;
   final List<Widget>? contents;
-  final String? identify;
   final String? title;
   final String? description;
   final IconData? icon;
   final ShapeLightFocus? shape;
   final double? radius;
   final Color? backgroundColor, textColor;
+  final Widget? child;
   final Function(TutorialCoachMarkController control)? onNext;
 
   const Target(
       {required this.key,
-      this.identify,
       this.align = ContentAlign.bottom,
       this.contents,
       this.title,
@@ -26,5 +25,6 @@ class Target {
       this.radius,
       this.backgroundColor,
       this.textColor,
+      this.child,
       this.onNext});
 }
