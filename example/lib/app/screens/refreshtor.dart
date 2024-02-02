@@ -17,15 +17,11 @@ class RefreshtorView extends StatelessWidget {
           title: const Text('Refreshtor'),
         ),
         body: Refreshtor(
-          onRefresh: () async {
-            await getData();
-          },
-          type: RefrehtorType.curve,
+          onRefresh: () async => await getData(),
           child: LzListView(
             children: [
               Textml(
                   '<b>Please pull down to refresh.</b> ${Faker.words(15)}\n'),
-              Text(Faker.words(35, 5))
             ],
           ),
         ));

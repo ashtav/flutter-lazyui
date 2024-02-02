@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-class AppTrainerView extends StatelessWidget {
-  const AppTrainerView({super.key});
+class TrainerView extends StatelessWidget {
+  const TrainerView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey();
-    AppTrainerController controller = AppTrainerController();
+    TrainerController controller = TrainerController();
 
-    // final forms = LzForm.make(['name']);
-
-    return AppTrainer(
+    return Trainer(
       controller: controller,
       onClickTarget: (target) {
         logg(target);
@@ -22,30 +20,12 @@ class AppTrainerView extends StatelessWidget {
           controller.show();
         }, 300.ms);
       },
-      targets: [
-        Target(key: key1, title: 'Search Icon', description: Faker.words(15)),
-        Target(
-          key: key2,
-          identify: 'calendar',
-          title: 'Calendar Icon',
-          onNext: (control) {
-            control.next(); // or control.skip();
-          },
-          description: Faker.words(15),
-        ),
-        Target(
-            key: key3,
-            identify: 'fab',
-            title: 'Floating Action Button',
-            description: Faker.words(15),
-            align: ContentAlign.top),
-        // Target(
-        //     key: forms['name']!.key,
-        //     title: 'Widget Square',
-        //     description: Faker.words(15),
-        //     align: ContentAlign.bottom,
-        //     shape: ShapeLightFocus.RRect),
-      ],
+
+      targets: [key1].generate((key, i){
+        List<String> titles = ['Search Icon', 'Calendar Icon', 'Floating Action Button'];
+        return Target(key: key, title: titles[i], description: Faker.words(217));
+      }),
+
       showSectionLabel: true,
       child: Scaffold(
         appBar: AppBar(

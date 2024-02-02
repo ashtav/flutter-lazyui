@@ -12,6 +12,7 @@ class ToastNotifier extends ChangeNotifier {
   int toastMaxLength = 50;
   ToastPlacement? toastPlacement;
   Timer? timer;
+  double? radius;
 
   void showToast(String? message,
       {IconData? icon,
@@ -20,7 +21,8 @@ class ToastNotifier extends ChangeNotifier {
       Duration? duration,
       int? maxLength,
       ToastPlacement? placement,
-      bool dismissOnTap = false}) {
+      bool dismissOnTap = false,
+      double? radius}) {
     timer?.cancel();
 
     toast = true;
@@ -31,6 +33,7 @@ class ToastNotifier extends ChangeNotifier {
     toastDuration = duration;
     toastMaxLength = maxLength ?? toastMaxLength;
     toastPlacement = placement;
+    this.radius = radius;
 
     this.dismissOnTap = dismissOnTap;
     notifyListeners();

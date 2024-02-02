@@ -11,43 +11,11 @@ enum AppTheme { light, dark, system }
 /// - `tablerIcon`: Icons from the Tabler icon set.
 enum IconType { lineAwesome, tablerIcon }
 
-/// Enum representing the alignment of icons in the application.
-///
-/// - `left`: Icon aligned to the left.
-/// - `right`: Icon aligned to the right.
-enum IconAlign { left, right }
-
-/// Enum representing different button types in the application.
-///
-/// - `primary`: Primary button.
-/// - `secondary`: Secondary button.
-/// - `danger`: Danger button.
-/// - `success`: Success button.
-/// - `warning`: Warning button.
-/// - `dark`: Dark-themed button.
-/// - `white`: White-themed button.
-enum ButtonType { primary, secondary, danger, success, warning, dark, white }
-
 /// Enum representing slide directions for animations in the application.
 ///
 /// - `up`: Slide or animation moves upward.
 /// - `down`: Slide or animation moves downward.
 enum SlideDirection { up, down }
-
-/// Enum representing different types of date pickers in the application.
-///
-/// - `all`: Includes date and time.
-/// - `dateTime`: Date and time picker.
-/// - `dateMonth`: Date and month picker.
-/// - `monthYear`: Month and year picker.
-/// - `year`: Year picker.
-// enum DatePickerType { all, dateTime, dateMonth, monthYear, year }
-
-/// Enum representing types of confirmation dialogs or modals in the application.
-///
-/// - `dialog`: Confirmation as a dialog box.
-/// - `bottomSheet`: Confirmation as a bottom sheet.
-enum LzConfirmType { dialog, bottomSheet }
 
 /// Enum representing different types of refresh indicators in the application.
 ///

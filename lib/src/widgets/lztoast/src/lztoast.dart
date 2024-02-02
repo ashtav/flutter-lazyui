@@ -51,7 +51,8 @@ class LzToast {
       Color? backgroundColor,
       Color? textColor,
       ToastPlacement? placement,
-      bool dismissOnTap = false}) {
+      bool dismissOnTap = false,
+      double? radius}) {
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -59,7 +60,8 @@ class LzToast {
         maxLength: maxLength,
         backgroundColor: backgroundColor,
         textColor: textColor,
-        dismissOnTap: dismissOnTap);
+        dismissOnTap: dismissOnTap,
+        radius: radius);
   }
 
   static void error(String? message,
@@ -143,7 +145,9 @@ class LzToastWidget extends StatelessWidget {
                     ? Container(
                         margin: Ei.only(b: context.viewInsets.bottom + 50, others: 50),
                         padding: Ei.sym(v: 20, h: 20),
-                        decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black.withOpacity(.8)),
+                        decoration: BoxDecoration(
+                            borderRadius: Br.radius(state.radius ?? _defaultRadius),
+                            color: Colors.black.withOpacity(.8)),
                         child: Column(
                           children: [
                             Container(
@@ -165,50 +169,50 @@ class LzToastWidget extends StatelessWidget {
       final position = positions[state.toastPlacement ?? _defaultPlacement]!;
 
       return Stack(
-          alignment: position,
-          children: [
-            AnimatedOpacity(
-              duration: 150.ms,
-              opacity: state.toast ? 1 : 0,
-              child: AnimatedSwitcher(
-                  switchInCurve: Curves.linearToEaseOut,
-                  switchOutCurve: Curves.easeOutBack,
-                  duration: 350.ms,
-                  transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
-                        scale: animation,
-                        child: child,
-                      ),
-                  child: state.toast
-                      ? IgnorePointer(
-                          key: ValueKey(state.toastMessage),
-                          child: Container(
-                            margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
-                            padding: Ei.sym(v: 10, h: 20),
-                            decoration: BoxDecoration(
-                                borderRadius: Br.radius(_defaultRadius),
-                                color: state.toastBackgroundColor ?? Colors.black.withOpacity(.8)),
-                            child: AnimatedSwitcher(
-                                duration: 350.ms,
-                                transitionBuilder: (Widget child, Animation<double> animation) {
-                                  return FadeTransition(
-                                    opacity: animation,
-                                    child: child,
-                                  );
-                                },
-                                child: Textr(
-                                  state.toastMessage.length > state.toastMaxLength
-                                      ? '${state.toastMessage.substring(0, state.toastMaxLength)}...'
-                                      : state.toastMessage,
-                                  style: LazyUi.font.copyWith(color: state.toastTextColor ?? Colors.white),
-                                  textAlign: state.toastIcon == null ? Ta.center : Ta.start,
-                                  icon: state.toastIcon,
-                                  key: UniqueKey(),
-                                )),
-                          ))
-                      : const None()),
-            )
-          ],
-        );
+        alignment: position,
+        children: [
+          AnimatedOpacity(
+            duration: 150.ms,
+            opacity: state.toast ? 1 : 0,
+            child: AnimatedSwitcher(
+                switchInCurve: Curves.linearToEaseOut,
+                switchOutCurve: Curves.easeOutBack,
+                duration: 350.ms,
+                transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
+                      scale: animation,
+                      child: child,
+                    ),
+                child: state.toast
+                    ? IgnorePointer(
+                        key: ValueKey(state.toastMessage),
+                        child: Container(
+                          margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
+                          padding: Ei.sym(v: 10, h: 20),
+                          decoration: BoxDecoration(
+                              borderRadius: Br.radius(state.radius ?? _defaultRadius),
+                              color: state.toastBackgroundColor ?? Colors.black.withOpacity(.8)),
+                          child: AnimatedSwitcher(
+                              duration: 350.ms,
+                              transitionBuilder: (Widget child, Animation<double> animation) {
+                                return FadeTransition(
+                                  opacity: animation,
+                                  child: child,
+                                );
+                              },
+                              child: Textr(
+                                state.toastMessage.length > state.toastMaxLength
+                                    ? '${state.toastMessage.substring(0, state.toastMaxLength)}...'
+                                    : state.toastMessage,
+                                style: LazyUi.font.copyWith(color: state.toastTextColor ?? Colors.white),
+                                textAlign: state.toastIcon == null ? Ta.center : Ta.start,
+                                icon: state.toastIcon,
+                                key: UniqueKey(),
+                              )),
+                        ))
+                    : const None()),
+          )
+        ],
+      );
     });
 
     return Stack(

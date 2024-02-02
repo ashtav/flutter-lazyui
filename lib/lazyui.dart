@@ -35,4 +35,6 @@ export 'src/widgets/lzimage/lzimage.dart';
 export 'src/widgets/lzotp/otp.dart';
 export 'src/widgets/lzpicker/lzpicker.dart';
 export 'src/widgets/lztoast/lztoast.dart';
+export 'src/widgets/refreshtor/refreshtor.dart';
+export 'src/widgets/trainer/trainer.dart';
 export 'src/widgets/widget.dart';

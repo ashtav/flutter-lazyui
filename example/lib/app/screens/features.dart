@@ -12,6 +12,7 @@ import 'button.dart';
 import 'confirm.dart';
 import 'dropdown.dart';
 import 'picker.dart';
+import 'trainer.dart';
 import 'widgets/lz_image.dart';
 
 class FeaturesView extends StatelessWidget {
@@ -30,8 +31,6 @@ class FeaturesView extends StatelessWidget {
               'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
               Ti.alignBoxCenterBottom),
           // 'App Intro',
-          // 'App Trainer',
-          // 'Refreshtor',
           // 'Widgets'
         ]
       },
@@ -43,6 +42,7 @@ class FeaturesView extends StatelessWidget {
           Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
           Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
           Feature('Refreshtor', 'Show a pull to refresh indicator with a custom color, size, etc.', Ti.refresh),
+          Feature('Trainer', 'Show guide to use your app with a custom message, title, etc.', Ti.books),
         ]
       },
       {
@@ -125,6 +125,7 @@ class Actions {
       'Skeleton': const SkeletonView(),
       'LzAccordion': const AccordionView(),
       'Refreshtor': const RefreshtorView(),
+      'Trainer': const TrainerView(),
     };
 
     if (label == 'LzOtp') {
