@@ -89,9 +89,11 @@ class FormsView extends StatelessWidget {
                 model: forms['birthdate'],
                 style: InputStyle(suffixIcon: Ti.calendarEvent),
                 onTap: (text) {
-                  // LzPicker.datePicker(context, initialDate: text.toDate(), onSelect: (value) {
-                  //   forms.setValue('birthdate', value.format('dd/MM/yyyy'));
-                  // });
+                  final now = DateTime.now();
+                  LzPicker.date(context, initDate: text.toDate(), minDate: now.subtract(50.y), maxDate: now,
+                      onSelect: (value) {
+                    forms.setValue('birthdate', value.format('dd/MM/yyyy'));
+                  });
                 },
               ),
               LzForm.checkbox(
@@ -167,10 +169,9 @@ class FormsView extends StatelessWidget {
                           // LzToast.show('There is no data to show.', position: Position.center);
                           // return false;
 
-                          forms.setSelectOption('province', provinces,
-                              disabled: [3], onSelected: (_) {
-                                forms.enable('city').setValue('city', '');
-                              });
+                          forms.setSelectOption('province', provinces, disabled: [3], onSelected: (_) {
+                            forms.enable('city').setValue('city', '');
+                          });
 
                           // forms.onSelected('province', (f) => f.enable('city'));
                         }));
@@ -198,6 +199,7 @@ class FormsView extends StatelessWidget {
                     hint: 'Type your phone number',
                     style: InputStyle(radius: 8, borderColor: Colors.black38, prefix: const Textr('+62')),
                     keyboard: Tit.number,
+                    maxLength: 13,
                     model: forms['phone'],
                   ),
                   LzForm.slider(
@@ -233,17 +235,17 @@ class FormsView extends StatelessWidget {
             ).margin(t: 25, b: 16), // end of account
           ],
         ),
-        // bottomNavigationBar: LzButton(
-        //     text: 'Submit',
-        //     onTap: (_) {
-        //       final form = forms.validate(
-        //           required: ['*'],
-        //           alert: FormAlert.text,
-        //           messages: FormMessage(required: {
-        //             'name': 'I am sory, we need to know your name, so please provide your valid information.'
-        //           }));
-        //       logg(form.value);
-        //     }).theme1(),
+        bottomNavigationBar: LzButton(
+            text: 'Submit',
+            onTap: (_) {
+              final form = forms.validate(
+                  required: ['*'],
+                  alert: FormAlert.text,
+                  messages: FormMessage(required: {
+                    'name': 'I am sory, we need to know your name, so please provide your valid information.'
+                  }));
+              logg(form.value);
+            }).shadowed().padding(blr: 20),
       ),
     );
   }

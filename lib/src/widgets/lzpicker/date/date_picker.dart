@@ -156,6 +156,8 @@ class ConfirmButton extends StatelessWidget {
                     ? Iconr(La.times, padding: Ei.all(15), color: textColor)
                         .onTap(() {
                           if (notifier.openTimePicker) {
+                            notifier.values['h'] = notifier.time.hour;
+                            notifier.values['i'] = notifier.time.minute;
                             notifier.toggleTimePicker();
                             return;
                           }
@@ -177,6 +179,12 @@ class ConfirmButton extends StatelessWidget {
                         ),
                         child: InkTouch(
                           onTap: () {
+                            if (notifier.openTimePicker) {
+                              notifier.time = Time(notifier.values['h']!, notifier.values['i']!);
+                              notifier.toggleTimePicker();
+                              return;
+                            }
+
                             context.lzPop(notifier.value);
                           },
                           padding: Ei.sym(v: 12, h: 45),
@@ -202,7 +210,7 @@ class TimePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     double radius = style?.radius ?? LazyUi.radius;
     bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
+    Color backgroundColor = isDarkMode ? '333'.hex : 'fff'.hex;
     Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     return Poslign(
@@ -210,9 +218,11 @@ class TimePicker extends StatelessWidget {
         margin: Ei.only(t: 20, r: 20),
         child: InkTouch(
             onTap: () {
-              notifier.toggleTimePicker();
+              if (!notifier.openTimePicker) {
+                notifier.toggleTimePicker();
+              }
             },
-            color: backgroundColor.darken(isDarkMode ? .2 : .1),
+            color: backgroundColor,
             border: Br.all(color: backgroundColor.darken(isDarkMode ? .4 : .3)),
             radius: Br.radius(radius),
             child: notifier.watch(

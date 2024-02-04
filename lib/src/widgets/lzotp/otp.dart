@@ -36,15 +36,17 @@ class LzOtp {
       OtpType type = OtpType.bottomLine,
       OtpStyle? style,
       void Function(OtpController otp)? onCompleted}) {
-    context.bottomSheet(OtpWidget(
-        title: title,
-        subtitle: subtitle,
-        header: header,
-        length: length,
-        expired: expired,
-        type: type,
-        style: style,
-        onCompleted: onCompleted));
+    context.bottomSheet(
+        OtpWidget(
+            title: title,
+            subtitle: subtitle,
+            header: header,
+            length: length,
+            expired: expired,
+            type: type,
+            style: style,
+            onCompleted: onCompleted),
+        safeArea: false);
   }
 }
 
@@ -90,20 +92,7 @@ class _OtpWidgetState extends State<OtpWidget> {
   final notifier = OtpNotifier();
   late OtpController otpController;
 
-  List<String> keyboards = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '',
-    '0',
-    '<'
-  ];
+  List<String> keyboards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '<'];
   Timer? timer;
 
   void initExpired() {
@@ -150,8 +139,7 @@ class _OtpWidgetState extends State<OtpWidget> {
     Widget header = widget.header ??
         Column(
           children: [
-            Text(widget.title ?? 'Please enter your OTP code',
-                style: Gfont.bold),
+            Text(widget.title ?? 'Please enter your OTP code', style: Gfont.bold),
 
             // subtitle
             if (widget.subtitle != null)
@@ -170,8 +158,19 @@ class _OtpWidgetState extends State<OtpWidget> {
     final style = widget.style;
 
     return Scaffold(
-      appBar: AppBar(elevation: 0),
-      backgroundColor: Colors.white,
+      appBar: AppBar(
+        elevation: 0,
+        toolbarHeight: 120,
+        leading: IconButton(
+          icon: const Icon(La.times),
+          onPressed: () {
+            timer?.cancel();
+            Navigator.of(context).pop();
+          },
+        ),
+        backgroundColor: Colors.transparent,
+      ),
+      backgroundColor: 'f1f1f1'.hex,
       body: Column(
         children: [
           Expanded(
@@ -193,24 +192,17 @@ class _OtpWidgetState extends State<OtpWidget> {
                         width: (context.width - 100) / notifier.length,
                         height: 55,
                         decoration: BoxDecoration(
-                            borderRadius: Br.radius(4),
-                            border: widget.type == OtpType.bottomLine
-                                ? null
-                                : Br.all(
-                                    color: isFilled
-                                        ? Colors.black87
-                                        : Colors.black12),
-                            color: Colors.white),
+                          borderRadius: Br.radius(4),
+                          border: widget.type == OtpType.bottomLine
+                              ? null
+                              : Br.all(color: isFilled ? Colors.black87 : Colors.black26),
+                        ),
                         padding: Ei.sym(v: 0, h: 5),
                         margin: Ei.sym(h: 3),
                         child: Stack(
                           children: [
                             Center(
-                              child: value.isEmpty
-                                  ? const None()
-                                  : SlideUp(
-                                      child:
-                                          Text(value, style: Gfont.fs20.bold)),
+                              child: value.isEmpty ? const None() : SlideUp(child: Text(value, style: Gfont.fs20.bold)),
                             ),
                             if (widget.type == OtpType.bottomLine)
                               Positioned(
@@ -219,19 +211,13 @@ class _OtpWidgetState extends State<OtpWidget> {
                                   duration: 150.ms,
                                   decoration: BoxDecoration(
                                     color: inFocus
-                                        ? style?.bottomInline?.focusColor ??
-                                            Colors.orange
+                                        ? style?.bottomInline?.focusColor ?? Colors.black12
                                         : isFilled
-                                            ? style?.bottomInline
-                                                    ?.filledColor ??
-                                                Colors.green
-                                            : style?.bottomInline
-                                                    ?.unfillColor ??
-                                                Colors.black12,
+                                            ? style?.bottomInline?.filledColor ?? Colors.black54
+                                            : style?.bottomInline?.unfillColor ?? Colors.black12,
                                     borderRadius: Br.radius(4),
                                   ),
-                                  width:
-                                      (context.width - 160) / notifier.length,
+                                  width: (context.width - 160) / notifier.length,
                                   height: 2,
                                 ).lz.blink(inFocus, 300.ms),
                               )
@@ -244,8 +230,7 @@ class _OtpWidgetState extends State<OtpWidget> {
               // otp expired timer
               if (widget.expired != null)
                 notifier.watch((state) {
-                  return Textr('Expired in ${state.expired} seconds',
-                          style: Gfont.red, margin: Ei.only(t: 25))
+                  return Textr('Expired in ${state.expired} seconds', style: Gfont.red, margin: Ei.only(t: 25))
                       .lz
                       .blink(!state.isPaused, 500.ms);
                 }),
@@ -253,28 +238,32 @@ class _OtpWidgetState extends State<OtpWidget> {
           )),
 
           // custom virtual keyboard
-          Wrap(
-            children: keyboards.generate((item, i) {
-              return InkTouch(
-                onTap: item == ''
-                    ? null
-                    : () {
-                        bool isCompleted = notifier.onInput(item);
-                        if (isCompleted) {
-                          otpController.value = notifier.otp.join();
-                          widget.onCompleted?.call(otpController);
-                        }
-                      },
-                border: Br.only([i < 3 ? '' : 't', i % 3 != 0 ? 'l' : '']),
-                child: Container(
-                    padding: Ei.all(15),
-                    width: (context.width - 2) / 3,
-                    child: Center(
-                        child: item == '<'
-                            ? const Icon(Ti.backspace, color: Colors.black54)
-                            : Text(item, style: Gfont.fs17))),
-              );
-            }),
+          Container(
+            decoration: BoxDecoration(border: Br.only(['t'])),
+            child: Wrap(
+              children: keyboards.generate((item, i) {
+                return InkTouch(
+                  onTap: item == ''
+                      ? null
+                      : () {
+                          bool isCompleted = notifier.onInput(item);
+                          if (isCompleted) {
+                            otpController.value = notifier.otp.join();
+                            widget.onCompleted?.call(otpController);
+                          }
+                        },
+                  border: Br.only([i < 3 ? '' : 't', i % 3 != 0 ? 'l' : '']),
+                  color: Colors.white,
+                  child: Container(
+                      padding: Ei.sym(h: 15, v: item == '<' ? 16.5 : 15),
+                      width: (context.width - 2) / 3,
+                      child: Center(
+                          child: item == '<'
+                              ? const Icon(Ti.backspace, color: Colors.black54)
+                              : Text(item, style: Gfont.fs17))),
+                );
+              }),
+            ),
           )
         ],
       ),

@@ -8,6 +8,8 @@ class DatePickerNotifier extends ChangeNotifier {
   Map<String, int> values = {'d': 1, 'm': 1, 'y': 2021, 'h': 0, 'i': 0};
 
   late DateTime initDate, minDate, maxDate;
+  late Time time;
+
   DateTime get value =>
       DateTime(values['y'] ?? 0, values['m'] ?? 0, values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
@@ -17,6 +19,8 @@ class DatePickerNotifier extends ChangeNotifier {
     this.initDate = initDate ?? DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
     this.minDate = minDate ?? DateTime(now.year, 1, 1, 0, 0, 0);
     this.maxDate = maxDate ?? DateTime(now.year + 10, 12, 31, 23, 59, 59);
+
+    time = Time(this.initDate.hour, this.initDate.minute);
 
     values['d'] = this.initDate.day;
     values['m'] = this.initDate.month;

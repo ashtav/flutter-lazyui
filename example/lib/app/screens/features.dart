@@ -1,9 +1,10 @@
 import 'package:example/app/screens/widgets/accordion.dart';
 import 'package:example/app/screens/forms.dart';
 import 'package:example/app/screens/refreshtor.dart';
+import 'package:example/app/screens/widgets/bagde_n_card.dart';
 import 'package:example/app/screens/widgets/skeleton.dart';
 import 'package:example/app/screens/widgets/toast.dart';
-import 'package:example/app/screens/widgets/custom_widget.dart';
+import 'package:example/app/screens/widgets/customs.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -58,6 +59,28 @@ class FeaturesView extends StatelessWidget {
           Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
           Feature('Skeleton', 'Show a skeleton loader with a custom color, animation, etc.', Ti.loader),
           Feature('LzAccordion', 'Expandable widget with a custom header, body, etc.', Ti.layoutNavbarExpand),
+          Feature('LzBadge & LzCard', 'Show a badge or card with a custom color, size, etc.', Ti.creditCard),
+          Feature(
+              'LzListView',
+              'Scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.',
+              Ti.list),
+        ]
+      },
+      {
+        'title': 'Custom Widgets',
+        'description': 'A collection of custom widgets that can be used to build your own custom UI components.',
+        'features': [
+          Feature('Custom Widgets', 'List of custom widgets that can be used to build your own custom UI components.',
+              Ti.category),
+        ]
+      },
+      {
+        'title': 'Utilities',
+        'description':
+            'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
+        'features': [
+          Feature('Custom Utilities', 'List of custom utilities that can make your app more efficient and streamlined.',
+              Ti.tools),
         ]
       },
     ];
@@ -133,6 +156,8 @@ class Actions {
       'LzAccordion': const AccordionView(),
       'Refreshtor': const RefreshtorView(),
       'Trainer': const TrainerView(),
+      'Custom Widgets': const CustomWidgetView(),
+      'LzBadge & LzCard': const BadgeNCardView()
     };
 
     if (label == 'LzOtp') {

@@ -6,7 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:label="LazyUi 1.0"
+        android:label="LazyUi 3.0"
         android:name="${applicationName}"
         android:icon="@drawable/ic_launcher">
         <activity

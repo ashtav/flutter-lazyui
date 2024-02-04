@@ -76,5 +76,5 @@ extension LzButtonExtension on LzButton {
     ));
   }
 
-  LzButton shadowed([Color? color]) => copyWith(style: style?.copyWith(shadow: true, shadowColor: color));
+  LzButton shadowed([Color? color]) => styled(shadow: true, shadowColor: color ?? 'f1f1f1'.hex);
 }

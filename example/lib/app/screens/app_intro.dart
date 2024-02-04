@@ -138,7 +138,7 @@ class AppIntro2 extends StatelessWidget {
           child: Stack(
             children: [
               Container(
-                color: 'f1f7f0'.hex,
+                color: 'd5d5d5'.hex,
                 padding: Ei.all(20),
                 child: LzImage(
                   'lazyui.png',
@@ -161,25 +161,30 @@ class AppIntro2 extends StatelessWidget {
         ),
         Container(
           padding: Ei.only(h: 30, t: 30, b: 50),
-          decoration: BoxDecoration(color: Colors.white, border: Br.only(['t'], color: Colors.black54)),
+          decoration: BoxDecoration(color: Colors.white, border: Br.only(['t'], color: '011b22'.hex)),
           child: Column(
             children: [
               Text(
                 'LazyUI is a Flutter UI Kit that helps you to build your app faster and easier. It contains lots of ready-to-use utilities and widgets.',
                 style: Gfont.muted,
                 textAlign: Ta.center,
-              ).margin(t: 10, b: 35),
+              ).margin(t: 10, b: 15),
+              Text('©2024, v3.0.0 240215.1', style: Gfont.fs14.muted).margin(b: 35),
               LzButton(
                       text: 'Get Started',
                       icon: La.arrowRight,
-                      onTap: (_) {
-                        context.lzPush(const FeaturesView());
+                      onTap: (state) {
+                        state.submit(
+                            abortOn: 1.s,
+                            then: () {
+                              context.lzPush(const FeaturesView());
+                            });
                       })
                   .styled(
                       radius: LazyUi.radius,
                       padding: Ei.sym(v: 13, h: 25),
-                      width: context.width - 100,
-                      borderColor: Colors.black54)
+                      width: context.width,
+                      borderColor: Colors.black54),
             ],
           ),
         )
