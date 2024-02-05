@@ -1,9 +1,11 @@
-import 'package:example/app/screens/widgets/loader_view.dart';
-import 'package:example/app/screens/widgets/nodata_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'nodata_view.dart';
+import 'slide_indicator.dart';
 import 'test_view.dart';
+import 'textfield.dart';
+import 'widget.dart';
 
 class CustomWidgetView extends StatelessWidget {
   const CustomWidgetView({super.key});
@@ -11,9 +13,11 @@ class CustomWidgetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> features = [
-      'Loader',
-      'No Data',
-      'Test',
+      'LzLoader',
+      'LzNoData',
+      'LzTextField',
+      'LzTextDivider',
+      'LzSlideIndicator',
     ];
 
     // actions
@@ -34,12 +38,13 @@ class CustomWidgetView extends StatelessWidget {
     ];
 
     // behavior
-    List<String> behaviorWidgets = ['Wrapper', 'Intrinsic', 'BounceScroll', 'Unglow'];
+    List<String> behaviorWidgets = ['Wrapper', 'Intrinsic', 'BounceScroll', 'Unglow', 'Center Dialog'];
     List<String> behaviorWidgetsDescription = [
       'Wrapper is a versatile Flutter widget that provides a convenient way to wrap child widgets. It includes features like handling background taps to dismiss the keyboard and controlling the back button press behavior. This widget simplifies common wrapping tasks in Flutter apps.',
       'A simplified version of the Flutter [IntrinsicHeight] widget. The `Intrinsic` widget provides an easier way to create an intrinsic height layout for a list of children. It simplifies the process of ensuring that all children have the same height based on the tallest child in either a horizontal or vertical layout.',
       'BounceScroll is a custom Flutter [ScrollPhysics] class that enhances scroll behavior by providing a bouncing effect when the scroll reaches its limits. It is particularly useful when you want to add a realistic bouncing behavior to your scrollable widgets.',
       'Unglow is a Flutter [ScrollBehavior] that prevents the scroll glow effect typically seen when reaching the scroll limits. It allows you to create a scrollable widget without the built-in overscroll indicator.',
+      'Center Dialog is a custom Flutter [Dialog] that simplifies the process of creating a centered dialog. It provides a convenient way to create a dialog with a custom width, height, and padding.',
     ];
 
     return Scaffold(
@@ -49,7 +54,6 @@ class CustomWidgetView extends StatelessWidget {
       body: LzListView(children: [
         ...actionWidgets.generate((item, i) {
           return InkTouch.space(
-            onTap: () => Actions.on(context, item.toLowerCase()),
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
@@ -64,7 +68,6 @@ class CustomWidgetView extends StatelessWidget {
 
         ...widgets.generate((item, i) {
           return InkTouch.space(
-            onTap: () => Actions.on(context, item.toLowerCase()),
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
@@ -79,7 +82,6 @@ class CustomWidgetView extends StatelessWidget {
 
         ...behaviorWidgets.generate((item, i) {
           return InkTouch.space(
-            onTap: () => Actions.on(context, item.toLowerCase()),
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
@@ -95,7 +97,7 @@ class CustomWidgetView extends StatelessWidget {
         // others
         ...features.generate((item, i) {
           return InkTouch.space(
-            onTap: () => Actions.on(context, item.toLowerCase()),
+            onTap: () => Actions.on(context, item),
             border: Br.only(['t'], except: i == 0),
             child: Row(
               mainAxisAlignment: Maa.spaceBetween,
@@ -110,17 +112,14 @@ class CustomWidgetView extends StatelessWidget {
 
 class Actions {
   static on(BuildContext context, String label) {
-    switch (label) {
-      case 'loader':
-        context.lzPush(const LoaderView());
-        break;
+    Map<String, dynamic> routes = {
+      'LzLoader': LzLoader.bar(message: 'Loading, please wait...'),
+      'LzNoData': const NoDataView(),
+      'LzTextField': const TextFieldView(),
+      'LzTextDivider': const Center(child: LzTextDivider(Text('Hello World!'))),
+      'LzSlideIndicator': const SlideIndicatorView(),
+    };
 
-      case 'no data':
-        context.lzPush(const NoDataView());
-        break;
-      default:
-        context.lzPush(const TestView());
-        break;
-    }
+    context.lzPush(WidgetView(title: label, child: routes[label] ?? const TestView()));
   }
 }

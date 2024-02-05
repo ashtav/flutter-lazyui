@@ -1,10 +1,11 @@
-import 'package:example/app/screens/widgets/accordion.dart';
 import 'package:example/app/screens/forms.dart';
 import 'package:example/app/screens/refreshtor.dart';
+import 'package:example/app/screens/widgets/accordion.dart';
 import 'package:example/app/screens/widgets/bagde_n_card.dart';
-import 'package:example/app/screens/widgets/skeleton.dart';
-import 'package:example/app/screens/widgets/toast.dart';
 import 'package:example/app/screens/widgets/customs.dart';
+import 'package:example/app/screens/widgets/skeleton.dart';
+import 'package:example/app/screens/widgets/test_view.dart';
+import 'package:example/app/screens/widgets/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -15,6 +16,7 @@ import 'dropdown.dart';
 import 'picker.dart';
 import 'trainer.dart';
 import 'widgets/image.dart';
+import 'widgets/listview.dart';
 
 class FeaturesView extends StatelessWidget {
   const FeaturesView({super.key});
@@ -79,13 +81,14 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
         'features': [
-          Feature('Custom Utilities', 'List of custom utilities that can make your app more efficient and streamlined.',
-              Ti.tools),
+          Feature('Custom Utilities',
+              'List of custom utilities that can be used to build your own custom UI components.', Ti.tools),
         ]
       },
     ];
 
     for (var featureMap in features) {
+      if (featureMap['features'] != null) {}
       (featureMap['features'] as List<Feature>).sort((a, b) => a.title.compareTo(b.title));
     }
 
@@ -96,7 +99,7 @@ class FeaturesView extends StatelessWidget {
       body: LzListView(children: [
         Column(
           children: features.generate((item, i) {
-            List<Feature> features = item['features'];
+            List<Feature> features = item['features'] ?? [];
             String title = item['title'];
             String description = item['description'];
 
@@ -157,7 +160,8 @@ class Actions {
       'Refreshtor': const RefreshtorView(),
       'Trainer': const TrainerView(),
       'Custom Widgets': const CustomWidgetView(),
-      'LzBadge & LzCard': const BadgeNCardView()
+      'LzBadge & LzCard': const BadgeNCardView(),
+      'LzListView': const LzListViewExample(),
     };
 
     if (label == 'LzOtp') {
@@ -176,6 +180,6 @@ class Actions {
       return;
     }
 
-    context.lzPush(routes[label] ?? const CustomWidgetView());
+    context.lzPush(routes[label] ?? const TestView());
   }
 }

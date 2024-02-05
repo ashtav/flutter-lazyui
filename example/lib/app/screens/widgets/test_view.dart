@@ -6,9 +6,6 @@ class TestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.parse('2023-10-11T04:34:19.000000Z');
-    logg(date.format('dd/MM/yyyy hh:mm', true));
-
     final notifier = TestNotifier();
 
     return Scaffold(
@@ -16,8 +13,7 @@ class TestView extends StatelessWidget {
           title: const Text('Test View'),
           actions: [
             const Icon(Ti.arrowUp).onPressed(() {
-              context.bottomSheet(const MyWidget(),
-                  draggable: true, safeArea: false, backBlur: true);
+              context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
               // context.dialog(const MyWidget(), backBlur: true);
             })
           ],
@@ -29,11 +25,7 @@ class TestView extends StatelessWidget {
             const CircleAvatar(
               child: Icon(Ti.user),
             ).lz.sized(70).margin(b: 25),
-            const Textml(
-              'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
-              style: TextStyle(fontSize: 16, color: Colors.black),
-              textAlign: TextAlign.center,
-            ),
+           
             LzTextField(
               hint: 'Type your name',
               controller: notifier.forms['name'],

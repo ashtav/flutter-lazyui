@@ -256,7 +256,7 @@ class LzForm {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);
           } else {
-            final group = errorFields.groupBy('key', addKeys: ['key']);
+            final group = errorFields.groupBy('key', groupKey: 'key');
 
             for (Map e in group) {
               Map map = (e[e['key']] as List).first;

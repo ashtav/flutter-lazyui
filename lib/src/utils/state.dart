@@ -15,6 +15,14 @@ class LzNotifier<T> extends ChangeNotifier {
 }
 
 class LzState {
+  static dynamic get(String key) {
+    if (key.trim().isEmpty) return null;
+    if (key[0] != '#') return null;
+
+    final notifier = _notifiers[key];
+    return notifier?.value;
+  }
+
   static void set(String key, dynamic value) {
     if (key.trim().isEmpty) return;
     if (key[0] != '#') return;

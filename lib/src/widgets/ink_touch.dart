@@ -167,7 +167,7 @@ class InkTouch extends StatelessWidget {
   }
 
   static InkTouch space({
-    required VoidCallback onTap,
+    VoidCallback? onTap,
     EdgeInsetsGeometry? padding,
     BoxBorder? border,
     Color? color,

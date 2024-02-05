@@ -8,8 +8,18 @@ class LzCard extends StatelessWidget {
   final BorderRadius? radius;
   final Function()? onTap;
   final double? gap;
+  final bool stacked;
+
   const LzCard(
-      {super.key, this.children = const [], this.padding, this.color, this.border, this.radius, this.onTap, this.gap});
+      {super.key,
+      this.children = const [],
+      this.padding,
+      this.color,
+      this.border,
+      this.radius,
+      this.onTap,
+      this.gap,
+      this.stacked = false});
 
   @override
   Widget build(BuildContext context) {
@@ -17,12 +27,32 @@ class LzCard extends StatelessWidget {
       children: children,
     ).start;
 
-    return InkTouch(
-        onTap: onTap,
-        border: border ?? Br.all(),
-        radius: radius ?? Br.radius(5),
-        padding: padding ?? Ei.all(LazyUi.space),
-        color: color ?? Colors.white,
-        child: gap == null ? child : child.gap(gap!));
+    InkTouch inktouch = InkTouch(
+      onTap: onTap,
+      border: border ?? Br.all(),
+      radius: radius ?? Br.radius(5),
+      padding: padding ?? Ei.all(LazyUi.space),
+      color: color ?? Colors.white,
+      margin: Ei.only(t: stacked ? 5 : 0),
+      child: gap == null ? child : child.gap(gap!),
+    );
+
+    return stacked
+        ? Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Container(
+                width: context.width - 55,
+                height: 20,
+                decoration: BoxDecoration(
+                  color: color ?? Colors.white,
+                  border: border ?? Br.all(),
+                  borderRadius: radius ?? Br.radius(5),
+                ),
+              ),
+              inktouch,
+            ],
+          )
+        : inktouch;
   }
 }

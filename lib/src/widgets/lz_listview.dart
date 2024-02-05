@@ -39,15 +39,15 @@ class LzListView extends StatefulWidget {
   final ScrollPhysics? physics;
 
   /// Callback when the list is scrolled.
-  final Function(ScrollController controller)? onScroll;
+  final Function(ScrollController scroller)? onScroll;
 
   /// Whether to automatically cache the list height.
   final bool autoCache;
 
   /// Optional callback when the list is refreshed.
-  final Future<void> Function()? onRefresh;
+  final void Function()? onRefresh;
 
-  final RefrehtorType type;
+  final RefrehtorType refreshType;
 
   const LzListView(
       {super.key,
@@ -60,7 +60,7 @@ class LzListView extends StatefulWidget {
       this.onScroll,
       this.autoCache = false,
       this.onRefresh,
-      this.type = RefrehtorType.bar});
+      this.refreshType = RefrehtorType.bar});
 
   @override
   State<LzListView> createState() => _LzListViewState();
@@ -74,10 +74,8 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Utils.scrollHasMax(
-          controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
-        controller.animateTo(controller.position.pixels,
-            duration: 250.ms, curve: Curves.easeIn);
+      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+        controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
       }
     }
 
@@ -130,16 +128,11 @@ class _LzListViewState extends State<LzListView> {
 
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
-        : Refreshtor(
-            onRefresh: widget.onRefresh!,
-            type: widget.type,
-            child: listView(cacheExtent));
+        : Refreshtor(onRefresh: () async => widget.onRefresh?.call(), type: widget.refreshType, child: listView(cacheExtent));
 
     return widget.autoCache
         ? StreamBuilder<double>(
-            stream: streamController.stream,
-            builder: (BuildContext context, snap) =>
-                content(cacheExtent: snap.data))
+            stream: streamController.stream, builder: (BuildContext context, snap) => content(cacheExtent: snap.data))
         : content();
   }
 }
