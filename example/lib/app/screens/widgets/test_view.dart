@@ -9,42 +9,29 @@ class TestView extends StatelessWidget {
     final notifier = TestNotifier();
 
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Test View'),
-          actions: [
-            const Icon(Ti.arrowUp).onPressed(() {
-              context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
-              // context.dialog(const MyWidget(), backBlur: true);
-            })
-          ],
-        ),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: Maa.center,
-          children: [
-            const CircleAvatar(
-              child: Icon(Ti.user),
-            ).lz.sized(70).margin(b: 25),
-           
-            LzTextField(
-              hint: 'Type your name',
-              controller: notifier.forms['name'],
-            )
-          ],
-        )).onTap(() async {
-          final device = await Utils.getDevice();
-
-          // ignore: avoid_print
-          print(device);
-          printt(device.value);
-
-          logg(notifier.forms.value);
-
-          final form = notifier.forms.validate(required: ['*']);
-          if (!form.ok) {
-            LzToast.warning(form.error);
-          }
-        }).padding(all: 20));
+      appBar: AppBar(
+        title: const Text('Test View'),
+        actions: [
+          const Icon(Ti.arrowUp).onPressed(() {
+            context.bottomSheet(const MyWidget(), draggable: true, safeArea: false, backBlur: true);
+            // context.dialog(const MyWidget(), backBlur: true);
+          })
+        ],
+      ),
+      body: Center(
+          child: Column(
+        mainAxisAlignment: Maa.center,
+        children: [
+          const CircleAvatar(
+            child: Icon(Ti.user),
+          ).lz.sized(70).margin(b: 25),
+          LzTextField(
+            hint: 'Type your name',
+            controller: notifier.forms['name'],
+          )
+        ],
+      )).padding(all: 20),
+    );
   }
 }
 

@@ -62,23 +62,21 @@ class LzConfirmWidget extends StatelessWidget {
               children: 2.generate((index) {
             List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
 
-            return Expanded(
-              child: InkTouch(
-                onTap: () {
-                  context.lzPop();
+            return InkTouch(
+              onTap: () {
+                context.lzPop();
 
-                  if (index == 1) {
-                    onConfirm?.call();
-                  }
-                },
-                padding: Ei.sym(v: 20, h: 10),
-                border: Br.only(['l'], except: index == 0, color: borderColor),
-                child: Text(
-                  texts[index],
-                  textAlign: Ta.center,
-                  style: Gfont.bold.fcolor(index == 0 ? textColor : confirmColor ?? textColor),
-                  overflow: Tof.ellipsis,
-                ),
+                if (index == 1) {
+                  onConfirm?.call();
+                }
+              },
+              padding: Ei.sym(v: 20, h: 10),
+              border: Br.only(['l'], except: index == 0, color: borderColor),
+              child: Text(
+                texts[index],
+                textAlign: Ta.center,
+                style: Gfont.bold.fcolor(index == 0 ? textColor : confirmColor ?? textColor),
+                overflow: Tof.ellipsis,
               ),
             );
           })).lz.border(Br.only(isDialog ? ['t'] : ['t', 'b'], color: borderColor))

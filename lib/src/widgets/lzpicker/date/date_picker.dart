@@ -39,17 +39,16 @@ class LzDatePicker extends StatelessWidget {
               child: Intrinsic(
                 children: formats.generate((f, i) {
                   final items = notifier.generateDate(f);
-                  return Expanded(
-                      child: Container(
-                          decoration:
-                              BoxDecoration(border: Br.only(['l'], except: i == 0, color: backgroundColor.darken(.2))),
-                          child: CupertinoPickerWidget(
-                            notifier,
-                            type: f,
-                            items: items,
-                            style: style,
-                            overlayColor: backgroundColor.lighten(isDarkMode ? .8 : .1).withOpacity(.4),
-                          )));
+                  return Container(
+                      decoration:
+                          BoxDecoration(border: Br.only(['l'], except: i == 0, color: backgroundColor.darken(.2))),
+                      child: CupertinoPickerWidget(
+                        notifier,
+                        type: f,
+                        items: items,
+                        style: style,
+                        overlayColor: backgroundColor.lighten(isDarkMode ? .8 : .1).withOpacity(.4),
+                      ));
                 }),
               ),
             ),
@@ -242,24 +241,23 @@ class TimePicker extends StatelessWidget {
                                 children: ['h', 'i'].generate((f, i) {
                               final items = notifier.generateDate(f);
 
-                              return Expanded(
-                                  child: Container(
+                              return Container(
                                 decoration: BoxDecoration(
-                                    border: Br.only(['l'],
-                                        except: i == 0, color: backgroundColor.darken(isDarkMode ? .4 : .3))),
+                                border: Br.only(['l'],
+                                    except: i == 0, color: backgroundColor.darken(isDarkMode ? .4 : .3))),
                                 child: CupertinoPickerWidget(
-                                  notifier,
-                                  type: f,
-                                  items: items,
-                                  magnification: 1.9,
-                                  itemExtent: 35,
-                                  squeeze: .9,
-                                  diameterRatio: .9,
-                                  style: style,
-                                  letterSpacing: 1.5,
-                                  overlayColor: backgroundColor.lighten(isDarkMode ? 2.1 : .1).withOpacity(.4),
+                              notifier,
+                              type: f,
+                              items: items,
+                              magnification: 1.9,
+                              itemExtent: 35,
+                              squeeze: .9,
+                              diameterRatio: .9,
+                              style: style,
+                              letterSpacing: 1.5,
+                              overlayColor: backgroundColor.lighten(isDarkMode ? 2.1 : .1).withOpacity(.4),
                                 ),
-                              ));
+                              );
                             })),
                           )
                         : Textr(

@@ -34,20 +34,18 @@ class SlideIndicatorView extends StatelessWidget {
       ),
       bottomNavigationBar: Intrinsic(
         children: [Ti.arrowLeft, Ti.arrowRight].generate((icon, i) {
-          return Expanded(
-            child: InkTouch(
-              onTap: () {
-                int active = LzState.get('#slide') ?? 0;
-                active += i == 0 ? -1 : 1;
-                active = active.clamp(0, names.length - 1);
+          return InkTouch(
+            onTap: () {
+              int active = LzState.get('#slide') ?? 0;
+              active += i == 0 ? -1 : 1;
+              active = active.clamp(0, names.length - 1);
 
-                LzState.set('#slide', active);
-              },
-              padding: Ei.all(20),
-              border: Br.only(['l'], except: i == 0),
-              color: Colors.white,
-              child: Icon(icon, color: Colors.black54),
-            ),
+              LzState.set('#slide', active);
+            },
+            padding: Ei.all(20),
+            border: Br.only(['l'], except: i == 0),
+            color: Colors.white,
+            child: Icon(icon, color: Colors.black54),
           );
         }),
       ),
