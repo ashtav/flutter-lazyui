@@ -49,6 +49,6 @@ class Actions {
   static on(BuildContext context, String label) {
     Map<String, dynamic> routes = {};
 
-    context.lzPush(Utility(title: label, child: routes[label] ?? const None()));
+    context.lz.push(Utility(title: label, child: routes[label] ?? const None()));
   }
 }

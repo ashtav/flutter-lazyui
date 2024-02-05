@@ -177,7 +177,7 @@ class AppIntro2 extends StatelessWidget {
                         state.submit(
                             abortOn: 1.s,
                             then: () {
-                              context.lzPush(const FeaturesView());
+                              context.lz.push(const FeaturesView());
                             });
                       })
                   .styled(

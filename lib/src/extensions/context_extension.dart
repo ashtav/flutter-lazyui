@@ -1,5 +1,30 @@
 part of extension;
 
+extension LzContextModifierExtension on BuildContext {
+  LzContextModifiers get lz => LzContextModifiers(this);
+}
+
+class LzContextModifiers {
+  final BuildContext context;
+  LzContextModifiers(this.context);
+
+  void pop([dynamic result]) => Navigator.pop(context, result);
+
+  Future<T?> push<T extends Object?>(Widget page) =>
+      Navigator.push<T>(context, MaterialPageRoute(builder: (_) => page));
+
+  void focus([FocusNode? node]) => FocusScope.of(context).requestFocus(node ?? FocusNode());
+
+  Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
+      Navigator.pushAndRemoveUntil<T>(context, MaterialPageRoute(builder: (_) => page), (_) => false);
+
+  Future<T?> pushNamed<T extends Object?>(String routeName, {Object? arguments}) =>
+      Navigator.pushNamed<T>(context, routeName, arguments: arguments);
+
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName, {Object? arguments}) =>
+      Navigator.pushNamedAndRemoveUntil<T>(context, routeName, (_) => false, arguments: arguments);
+}
+
 /// Extends the functionality of the [BuildContext] class with additional methods and properties.
 extension LzContextExtension on BuildContext {
   /// Gets the height of the current screen.
@@ -19,69 +44,6 @@ extension LzContextExtension on BuildContext {
 
   /// Gets the padding of the current window.
   EdgeInsets get windowPadding => MediaQueryData.fromView(View.of(this)).padding;
-
-  /// Requests focus for a given [FocusNode]. If no [FocusNode] is given, a new one is created and focused.
-  ///
-  /// @param [node] The [FocusNode] to request focus for. Optional.
-  void lzFocus([FocusNode? node]) => FocusScope.of(this).requestFocus(node ?? FocusNode());
-
-  /// Pops the current route off the navigation stack and returns a result.
-  ///
-  /// @param [result] The result to return to the previous route. Optional.
-  void lzPop([dynamic result]) => Navigator.pop(this, result);
-
-  /// Navigate to a new screen and push the given [page] onto the navigation stack.
-  ///
-  /// The [page] parameter is the widget representing the new screen.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// Future<void> navigateToProfile() async {
-  ///   await Navigator.push(context, MaterialPageRoute(builder: (_) => ProfilePage()));
-  /// }
-  /// ```
-  Future<T?> lzPush<T extends Object?>(Widget page) => Navigator.push<T>(this, MaterialPageRoute(builder: (_) => page));
-
-  /// Navigate to a new screen and replace the current screen with the given [page].
-  ///
-  /// The [page] parameter is the widget representing the new screen.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// Future<void> navigateToHome() async {
-  ///   await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => HomePage()), (_) => false);
-  /// }
-  /// ```
-  Future<T?> lzPushAndRemoveUntil<T extends Object?>(Widget page) =>
-      Navigator.pushAndRemoveUntil<T>(this, MaterialPageRoute(builder: (_) => page), (_) => false);
-
-  /// Navigate to a new screen with the given [routeName].
-  ///
-  /// The [routeName] parameter is the name of the route to navigate to.
-  /// The optional [arguments] parameter is the arguments to pass to the new screen.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// Future<void> navigateToDetails() async {
-  ///   await Navigator.pushNamed(context, '/details', arguments: {'id': 1});
-  /// }
-  /// ```
-  Future<T?> lzPushNamed<T extends Object?>(String routeName, {Object? arguments}) =>
-      Navigator.pushNamed<T>(this, routeName, arguments: arguments);
-
-  /// Navigate to a new screen with the given [routeName] and replace the current screen.
-  ///
-  /// The [routeName] parameter is the name of the route to navigate to.
-  /// The optional [arguments] parameter is the arguments to pass to the new screen.
-  ///
-  /// Example usage:
-  /// ```dart
-  /// Future<void> navigateToLogin() async {
-  ///   await Navigator.pushNamedAndRemoveUntil(context, '/login', (_) => false);
-  /// }
-  /// ```
-  Future<T?> lzPushNamedAndRemoveUntil<T extends Object?>(String routeName, {Object? arguments}) =>
-      Navigator.pushNamedAndRemoveUntil<T>(this, routeName, (_) => false, arguments: arguments);
 
   /// Show a dialog on top of the current screen.
   ///

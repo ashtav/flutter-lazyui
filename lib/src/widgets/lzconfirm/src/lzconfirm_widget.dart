@@ -64,7 +64,7 @@ class LzConfirmWidget extends StatelessWidget {
 
             return InkTouch(
               onTap: () {
-                context.lzPop();
+                context.lz.pop();
 
                 if (index == 1) {
                   onConfirm?.call();

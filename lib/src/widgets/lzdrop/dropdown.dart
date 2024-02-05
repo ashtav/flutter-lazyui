@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+// import 'caret_painter.dart';
 import 'dropdown_notifier.dart';
 
 class Dropdown extends StatelessWidget {
@@ -38,9 +39,16 @@ class Dropdown extends StatelessWidget {
     // generate globalkey based on option length
     List<GlobalKey> keys = options.generate((item, i) => GlobalKey());
 
-    return Stack(
-      children: [
-        notifier.watch((state) => AnimatedPositioned(
+    return notifier.watch((state) => Stack(
+          children: [
+            // Positioned(
+            //   left: notifier.offset.dx,
+            //   top: notifier.offset.dy - 10,
+            //   child: CustomPaint(
+            //           painter: CaretPainter(strokeColor: backgroundColor), child: const SizedBox(width: 30, height: 16))
+            //       .margin(l: 10, b: 10),
+            // ),
+            AnimatedPositioned(
               duration: state.offset == Offset.zero || style?.transition == false ? 0.ms : 150.ms,
               left: state.offset.dx,
               top: state.offset.dy,
@@ -120,7 +128,7 @@ class Dropdown extends StatelessWidget {
                             if (hasSubOptions) {
                               notifier.toggleSubOptions(item.label, ikey);
                             } else {
-                              context.lzPop();
+                              context.lz.pop();
                               onSelect?.call(DropValue(item.label, item.value));
                             }
                           }),
@@ -130,7 +138,7 @@ class Dropdown extends StatelessWidget {
                               children: subOptions.generate((item, j) {
                                 return itemWidget(j, item.label, isDisabled: item.disabled, isSubOption: true,
                                     onTap: () {
-                                  context.lzPop();
+                                  context.lz.pop();
                                   onSelect?.call(DropValue(item.label, item.value));
                                 });
                               }),
@@ -142,8 +150,8 @@ class Dropdown extends StatelessWidget {
                   })).min.start,
                 ),
               ).lz.clip(all: 5),
-            )),
-      ],
-    );
+            ),
+          ],
+        ));
   }
 }

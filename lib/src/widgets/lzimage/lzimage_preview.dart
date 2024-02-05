@@ -105,7 +105,7 @@ class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProvider
                       color: Colors.white,
                       size: 23,
                     )).onTap(
-                  () => context.lzPop(),
+                  () => context.lz.pop(),
                 ))
           ],
         ));

@@ -173,13 +173,13 @@ class Actions {
         otp.pause();
         LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s, then: () {
           LzToast.success('Done! You are now logged in.', placement: ToastPlacement.center);
-          context.lzPop();
+          context.lz.pop();
         });
       });
 
       return;
     }
 
-    context.lzPush(routes[label] ?? const TestView());
+    context.lz.push(routes[label] ?? const TestView());
   }
 }

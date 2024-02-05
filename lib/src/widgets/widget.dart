@@ -36,7 +36,6 @@ part 'lz_slide_indicator.dart';
 part 'lz_text_divider.dart';
 part 'lz_textfield.dart';
 part 'none.dart';
-part 'painters/caret_painter.dart';
 part 'poslign.dart';
 part 'skeleton.dart';
 part 'textml.dart';

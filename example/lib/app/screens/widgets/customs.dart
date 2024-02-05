@@ -120,6 +120,6 @@ class Actions {
       'LzSlideIndicator': const SlideIndicatorView(),
     };
 
-    context.lzPush(WidgetView(title: label, child: routes[label] ?? const TestView()));
+    context.lz.push(WidgetView(title: label, child: routes[label] ?? const TestView()));
   }
 }

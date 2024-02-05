@@ -119,12 +119,15 @@ class _TrainerState extends State<Trainer> {
                             key: UniqueKey(),
                             delay: (i + 1) * 200,
                             child: Container(
-                              padding: Ei.only(v: 15, l: i == 0 ? h : h + 10, r: i == 0 ? h + 10 : h),
-                              decoration: BoxDecoration(border: Br.only(['l'], except: i == 0, color: Colors.white70)),
-                              child: Text(
-                                label,
-                                style: LazyUi.font.copyWith(color: Colors.white, letterSpacing: 2),
-                              ).lz.disabled(disabled, 0).onTap(() {
+                                    padding: Ei.only(v: 15, l: i == 0 ? h : h + 10, r: i == 0 ? h + 10 : h),
+                                    decoration:
+                                        BoxDecoration(border: Br.only(['l'], except: i == 0, color: Colors.white70)),
+                                    child: Text(
+                                      label,
+                                      style: LazyUi.font.copyWith(color: Colors.white, letterSpacing: 2),
+                                    ).lz.disabled(disabled, 0))
+                                .onTap(
+                              () {
                                 if (!disabled) {
                                   if (isSkip) {
                                     for (var _ in targets) {
@@ -139,7 +142,7 @@ class _TrainerState extends State<Trainer> {
                                     controller.next();
                                   }
                                 }
-                              }),
+                              },
                             ),
                           );
                         }),

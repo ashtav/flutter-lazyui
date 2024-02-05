@@ -238,7 +238,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                         child: Iconr(
                           La.times,
                           padding: Ei.all(20),
-                        ).onTap(() => context.lzPop()),
+                        ).onTap(() => context.lz.pop()),
                       )
                     ],
                   ).margin(b: 15, l: 0),

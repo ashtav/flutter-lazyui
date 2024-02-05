@@ -144,7 +144,7 @@ class ConfirmButton extends StatelessWidget {
                 child: i != 1
                     ? Iconr(La.times, padding: Ei.all(15), color: textColor)
                         .onTap(() {
-                          context.lzPop();
+                          context.lz.pop();
                         })
                         .lz
                         .disabled(i == 0, 0)
@@ -161,7 +161,7 @@ class ConfirmButton extends StatelessWidget {
                         ),
                         child: InkTouch(
                           onTap: () {
-                            context.lzPop(notifier.value);
+                            context.lz.pop(notifier.value);
                           },
                           padding: Ei.sym(v: 12, h: 45),
                           margin: Ei.sym(h: 5),

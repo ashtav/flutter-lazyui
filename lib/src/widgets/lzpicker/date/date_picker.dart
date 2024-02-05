@@ -161,7 +161,7 @@ class ConfirmButton extends StatelessWidget {
                             return;
                           }
 
-                          context.lzPop();
+                          context.lz.pop();
                         })
                         .lz
                         .disabled(i == 0, 0)
@@ -184,7 +184,7 @@ class ConfirmButton extends StatelessWidget {
                               return;
                             }
 
-                            context.lzPop(notifier.value);
+                            context.lz.pop(notifier.value);
                           },
                           padding: Ei.sym(v: 12, h: 45),
                           margin: Ei.sym(h: 5),
@@ -243,19 +243,19 @@ class TimePicker extends StatelessWidget {
 
                               return Container(
                                 decoration: BoxDecoration(
-                                border: Br.only(['l'],
-                                    except: i == 0, color: backgroundColor.darken(isDarkMode ? .4 : .3))),
+                                    border: Br.only(['l'],
+                                        except: i == 0, color: backgroundColor.darken(isDarkMode ? .4 : .3))),
                                 child: CupertinoPickerWidget(
-                              notifier,
-                              type: f,
-                              items: items,
-                              magnification: 1.9,
-                              itemExtent: 35,
-                              squeeze: .9,
-                              diameterRatio: .9,
-                              style: style,
-                              letterSpacing: 1.5,
-                              overlayColor: backgroundColor.lighten(isDarkMode ? 2.1 : .1).withOpacity(.4),
+                                  notifier,
+                                  type: f,
+                                  items: items,
+                                  magnification: 1.9,
+                                  itemExtent: 35,
+                                  squeeze: .9,
+                                  diameterRatio: .9,
+                                  style: style,
+                                  letterSpacing: 1.5,
+                                  overlayColor: backgroundColor.lighten(isDarkMode ? 2.1 : .1).withOpacity(.4),
                                 ),
                               );
                             })),
