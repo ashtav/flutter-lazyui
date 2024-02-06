@@ -16,10 +16,10 @@ extension LzListExtension<T> on List<T> {
   /// ``` dart
   /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')
   /// ```
-  void updateWhere(bool Function(T e) condition, Function(List<T> data, int index) onUpdate, {Function()? onFail}) {
+  void updateWhere(bool Function(T e) condition, dynamic data, {Function()? onFail}) {
     int i = indexWhere(condition);
     if (i >= 0) {
-      onUpdate(this, i);
+      this[i] = data;
       return;
     }
     onFail?.call();
@@ -100,58 +100,6 @@ extension LzListMapExtension on List<Map> {
 
 /// Extends the functionality of the [List<String>] class with additional methods and properties.
 extension LzListStringExtension on List<String> {
-  /// Creates a list of [Option] objects.
-  ///
-  /// The [values] parameter is used to specify the values of the options.
-  ///
-  /// The [icons] parameter is used to specify the icons of the options.
-  ///
-  /// The [disableds] parameter is used to specify the indices of the options
-  /// that are disabled.
-  ///
-  /// The [dangers] parameter is used to specify the indices of the options
-  /// that are considered dangerous.
-  ///
-  /// The [styles] function is used to specify the styles of the options.
-
-  // List<Option> options(
-  //     {List values = const [],
-  //     List<IconData> icons = const [],
-  //     List<int> disableds = const [],
-  //     List<int> dangers = const [],
-  //     List<int> pops = const [],
-  //     List<int> separator = const [],
-  //     Map<int, List<Option>> options = const {},
-  //     Map<int, OptionStyle> Function(int index)? styles}) {
-  //   List<Option> localOptions = [];
-
-  //   for (int i = 0; i < length; i++) {
-  //     bool disabled = disableds.contains(i);
-  //     bool danger = dangers.contains(i);
-
-  //     OptionStyle? style = styles?.call(i)[i];
-
-  //     if (dangers.contains(i)) {
-  //       style = const OptionStyle(
-  //         color: Colors.redAccent,
-  //       );
-  //     }
-
-  //     localOptions.add(Option(
-  //         label: this[i],
-  //         value: values.length > i ? values[i] : null,
-  //         icon: icons.length > i ? icons[i] : null,
-  //         disabled: disabled,
-  //         danger: danger,
-  //         separator: separator.contains(i),
-  //         pop: pops.contains(i),
-  //         options: options.containsKey(i) ? options[i] : null,
-  //         style: style));
-  //   }
-
-  //   return localOptions;
-  // }
-
   /// Formats a date range with time.
   ///
   /// The `dateRangeFormat` method can be called on a `String` object representing a date range with time. The date range should consist of two elements separated by a space.

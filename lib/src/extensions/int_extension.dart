@@ -31,19 +31,10 @@ extension LzIntExtension on int {
   /// ``` dart
   /// // This extension is used to convert int to bool
   ///
-  /// 1.toBool; // true
-  /// 0.toBool; // false
+  /// 1.toBool(); // true
+  /// 0.toBool(); // false
   /// ```
-  bool get toBool => this == 1 ? true : false;
-
-  /// ``` dart
-  /// 7.iterate(); // [0, 1, 2, 3, 4, 5, 6, 7]
-  /// ```
-
-  List<int> iterate({bool reversed = false, int? fill}) {
-    final list = List.generate(this, (index) => fill ?? index);
-    return reversed ? list.reversed.toList() : list;
-  }
+  bool toBool() => this == 1;
 
   /// ``` dart
   /// 7.generate((item) => item); // [0, 1, 2, 3, 4, 5, 6, 7]

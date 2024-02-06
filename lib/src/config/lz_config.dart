@@ -5,7 +5,7 @@ import 'package:lazyui/src/constants/enum.dart';
 import 'package:lazyui/src/widgets/lztoast/src/loading.dart';
 
 import '../constants/color.dart';
-import '../utils/utils.dart';
+import '../utils/util.dart';
 
 TextStyle? _defaultTextStyle;
 IconType _defaultIconType = IconType.tablerIcon;
@@ -31,7 +31,7 @@ double _defaultRadius = 7.0;
 /// ```
 class LazyUi {
   /// Returns the default text style for the app. If not set, it defaults to Nunito Sans font style.
-  static TextStyle get font => _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: LzColors.black);
+  static TextStyle get font => _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: Tints.black);
 
   /// Returns the default icon type set for the app. The default is [IconType.tablerIcon].
   static IconType get iconType => _defaultIconType;
@@ -56,7 +56,7 @@ class LazyUi {
       TextStyle? font,
       double? space,
       double? radius,
-      bool alwaysPortrait = false}) {
+      bool alwaysPortrait = true}) {
     // set app theme
     switch (theme) {
       case AppTheme.dark:

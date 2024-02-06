@@ -82,6 +82,13 @@ extension LzStringExtension on String {
       .hasMatch(this);
 
   /// ``` dart
+  /// 'https://google.com'.isURL; // true
+  /// ```
+  bool get isURL => RegExp(
+          r'^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$')
+      .hasMatch(this);
+
+  /// ``` dart
   /// 'ffffff'.hex; // Color(0xffffffff)
   /// ```
 
@@ -95,13 +102,17 @@ extension LzStringExtension on String {
 
     try {
       List<String> char = trim().split(' ');
-      char
-          .take(length)
-          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '';
     }
+  }
+}
+
+extension LzNullableStringExtension on String? {
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Format the given value as [currency] using the [NumberFormat] class.
@@ -118,8 +129,7 @@ extension LzStringExtension on String {
   /// String priceWithDecimal = currency(25000.50, decimalDigits: 2);
   /// print(priceWithDecimal); // $25,000.50
   /// ```
-  String currency(
-      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
     try {
       String num = '0', digits = '';
 
@@ -139,11 +149,10 @@ extension LzStringExtension on String {
           break;
 
         default:
-          return '?';
+          return '${symbol}0';
       }
 
-      bool allowDecimal = runtimeType == int ||
-          (runtimeType == String && !toString().contains(separator));
+      bool allowDecimal = runtimeType == int || (runtimeType == String && !toString().contains(separator));
 
       String result = NumberFormat.currency(
         locale: 'id_ID',
@@ -158,28 +167,8 @@ extension LzStringExtension on String {
               ? result
               : '$result,${digits.split('').take(decimalDigits).join('')}';
     } catch (e) {
-      return 'Rp?';
+      return '${symbol}0';
     }
-  }
-
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return currency(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
-  }
-}
-
-extension LzNullableStringExtension on String? {
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).idr(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
-  }
-
-  String currency(
-      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
-    return (this == null ? '0' : toString()).currency(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Support yyyy-MM-dd, dd-MM-yyyy format, with - or / separator
@@ -214,8 +203,7 @@ extension LzNullableStringExtension on String? {
           RegExp? r = formatRegexMap[format];
 
           if (dateString.contains(' ')) {
-            dateString =
-                dateString.split(' ')[0]; // extract date portion of string
+            dateString = dateString.split(' ')[0]; // extract date portion of string
           } else {
             dateString = dateString;
           }
@@ -242,10 +230,7 @@ extension LzNullableStringExtension on String? {
 
         if (format != null && format == 'd-m-y') {
           RegExp regex = RegExp(r'^(\d{2})-(\d{2})-(\d{4})$');
-          List<String> dateParts =
-              (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ??
-                      [])
-                  .cast();
+          List<String> dateParts = (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ?? []).cast();
           String ymd = '${dateParts[0]}-${dateParts[1]}-${dateParts[2]}';
 
           if (fullDate.length > 1) {

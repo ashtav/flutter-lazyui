@@ -129,7 +129,7 @@ class _LineProgressIndicatorState extends State<LineProgressIndicator>
           return LinearProgressIndicator(
             backgroundColor: widget.backgroundColor ?? Colors.grey[300],
             valueColor: AlwaysStoppedAnimation<Color>(
-                widget.progressColor ?? LzColors.orange),
+                widget.progressColor ?? Tints.orange),
             value: _animationController.value,
           );
         },

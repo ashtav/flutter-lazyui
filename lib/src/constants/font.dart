@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/src/constants/color.dart';
 
-import '../config/lazy_config.dart';
+import '../config/lz_config.dart';
 
 TextStyle gfont = LazyUi.font;
 
@@ -28,13 +28,13 @@ TextStyle gfont = LazyUi.font;
 
 class Gfont {
   // font color
-  static final TextStyle black = gfont.copyWith(color: LzColors.black);
+  static final TextStyle black = gfont.copyWith(color: Tints.black);
   static final TextStyle white = gfont.copyWith(color: Colors.white);
-  static final TextStyle red = gfont.copyWith(color: LzColors.red);
-  static final TextStyle orange = gfont.copyWith(color: LzColors.orange);
-  static final TextStyle blue = gfont.copyWith(color: LzColors.blue);
-  static final TextStyle green = gfont.copyWith(color: LzColors.green);
-  static final TextStyle grey = gfont.copyWith(color: LzColors.grey);
+  static final TextStyle red = gfont.copyWith(color: Tints.red);
+  static final TextStyle orange = gfont.copyWith(color: Tints.orange);
+  static final TextStyle blue = gfont.copyWith(color: Tints.blue);
+  static final TextStyle green = gfont.copyWith(color: Tints.green);
+  static final TextStyle grey = gfont.copyWith(color: Tints.grey);
 
   // font size
   static final TextStyle fs10 = gfont.copyWith(fontSize: 10);
@@ -150,22 +150,22 @@ extension TextStyleExtension on TextStyle {
   TextStyle get white => copyWith(color: Colors.white);
 
   /// Creates a copy of the text style with a black font color.
-  TextStyle get black => copyWith(color: LzColors.black);
+  TextStyle get black => copyWith(color: Tints.black);
 
   /// Creates a copy of the text style with a red font color.
-  TextStyle get red => copyWith(color: LzColors.red);
+  TextStyle get red => copyWith(color: Tints.red);
 
   /// Creates a copy of the text style with an orange font color.
-  TextStyle get orange => copyWith(color: LzColors.orange);
+  TextStyle get orange => copyWith(color: Tints.orange);
 
   /// Creates a copy of the text style with a blue font color.
-  TextStyle get blue => copyWith(color: LzColors.blue);
+  TextStyle get blue => copyWith(color: Tints.blue);
 
   /// Creates a copy of the text style with a green font color.
-  TextStyle get green => copyWith(color: LzColors.green);
+  TextStyle get green => copyWith(color: Tints.green);
 
   /// Creates a copy of the text style with a grey font color.
-  TextStyle get grey => copyWith(color: LzColors.grey);
+  TextStyle get grey => copyWith(color: Tints.grey);
 
   /// Creates a copy of the text style with a custom font size.
   ///

@@ -3,7 +3,7 @@ part of extension;
 extension InkTouchExtension on InkTouch {
   InkTouch instant(String text,
       {double spacing = 10, double? radius, IconData? icon}) {
-    bool isDark = LzColors.isDark(color ?? Colors.white);
+    bool isDark = Tints.isDark(color ?? Colors.white);
 
     return InkTouch(
       onTap: onTap,

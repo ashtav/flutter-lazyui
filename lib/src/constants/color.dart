@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import '../utils/utils.dart';
+import '../utils/util.dart';
 
-class LzColors {
+class Tints {
   static Color get black => Utils.hex('#334155');
   static Color get blue => Utils.hex('#60a5fa');
   static Color get red => Utils.hex('#f87171');
@@ -12,7 +12,7 @@ class LzColors {
   static Color get grey => Utils.hex('#9ca3af');
 
   /// ```dart
-  /// LzColors.lighten(Colors.orange);
+  /// Tints.lighten(Colors.orange);
   /// ```
 
   static Color lighten(Color color, {double mixFactor = .5}) {
@@ -28,7 +28,7 @@ class LzColors {
   }
 
   /// ```dart
-  /// LzColors.darken(Colors.orange);
+  /// Tints.darken(Colors.orange);
   /// ```
 
   static Color darken(Color color, {double mixFactor = .5}) {
@@ -44,7 +44,7 @@ class LzColors {
   }
 
   /// ```dart
-  /// LzColors.inverse(Colors.black); // white
+  /// Tints.inverse(Colors.black); // white
   /// ```
 
   static Color inverse(Color color) {
@@ -53,7 +53,7 @@ class LzColors {
   }
 
   /// ```dart
-  /// LzColors.isDark(Colors.black); // true
+  /// Tints.isDark(Colors.black); // true
   /// ```
 
   static bool isDark(Color color) {
@@ -61,7 +61,7 @@ class LzColors {
   }
 
   /// ```dart
-  /// LzColors.hex('fff'); // white
+  /// Tints.hex('fff'); // white
   /// ```
 
   static Color hex(String code) {

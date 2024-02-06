@@ -5,8 +5,8 @@ extension LzDoubleExtension on bool {
   /// ``` dart
   /// // This extension is used to convert bool to int
   ///
-  /// true.toNumber; // 1
-  /// false.toNumber; // 0
+  /// true.toInt(); // 1
+  /// false.toInt(); // 0
   /// ```
-  int get toInt => this ? 1 : 0;
+  int toInt() => this ? 1 : 0;
 }

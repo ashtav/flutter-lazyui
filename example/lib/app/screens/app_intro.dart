@@ -152,7 +152,7 @@ class AppIntro2 extends StatelessWidget {
                 margin: Ei.all(30),
                 child: LzSlideIndicator(
                   active: 0,
-                  activeColor: LzColors.orange,
+                  activeColor: Tints.orange,
                   size: (i) => [i == 0 ? 13 : 7, 7],
                 ),
               )

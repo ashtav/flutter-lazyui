@@ -23,7 +23,7 @@ class LzBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color color = this.color ?? Colors.black26;
-    Color textColor = softColor ? color : (LzColors.isDark(color) ? Colors.white : Colors.black87);
+    Color textColor = softColor ? color : (Tints.isDark(color) ? Colors.white : Colors.black87);
 
     return Container(
       padding: Ei.syms(spacing, spacing + 8),
