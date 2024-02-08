@@ -318,32 +318,33 @@ class _SelectPickerWidgetState extends State<SelectPickerWidget> {
                     ))),
 
             // search bar
-            Poslign(
-              alignment: Alignment.topLeft,
-              child: Row(
-                children: [
-                  Expanded(
-                      child: LzTextField(
-                    hint: 'Type to search',
-                    controller: notifier.keyword,
-                    listenKeyboard: (active) {
-                      double newHeight = active ? (context.height) : height;
-                      notifier.setHeight(newHeight);
-                    },
-                    onChange: (keyword) {
-                      notifier.onSearch(keyword);
-                    },
-                    prefixIcon: const Iconr(
-                      La.search,
-                      flipX: true,
-                    ),
-                  )),
-                  notifier.watch((state) => state.found == 0
-                      ? const None()
-                      : Textr(state.found.toString(), margin: Ei.only(r: 15)))
-                ],
-              ).margin(all: 5),
-            )
+            if (widget.withSearch)
+              Poslign(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: LzTextField(
+                      hint: 'Type to search',
+                      controller: notifier.keyword,
+                      listenKeyboard: (active) {
+                        double newHeight = active ? (context.height) : height;
+                        notifier.setHeight(newHeight);
+                      },
+                      onChange: (keyword) {
+                        notifier.onSearch(keyword);
+                      },
+                      prefixIcon: const Iconr(
+                        La.search,
+                        flipX: true,
+                      ),
+                    )),
+                    notifier.watch((state) => state.found == 0
+                        ? const None()
+                        : Textr(state.found.toString(), margin: Ei.only(r: 15)))
+                  ],
+                ).margin(all: 5),
+              )
           ],
         ),
       ),

@@ -39,7 +39,7 @@ class TestView extends StatelessWidget {
               controller: notifier.forms['name'],
             ),
 
-            LzImage('https://reseller.saddannusantara.com/images/icons/013-study.svg', size: 100,)
+            const LzImage('https://reseller.saddannusantara.com/images/icons/013-study.svg', size: 100,)
           ],
         )).onTap(() async {
           final device = await Utils.getDevice();
