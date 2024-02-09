@@ -52,12 +52,15 @@ abstract class LzDropView<T> extends StatelessWidget {
 
     double width = (box?.size.width ?? context.width);
 
+    child = Container(color: Colors.white, constraints: BoxConstraints(maxWidth: width), child: child)
+        .lz
+        .clip(tlr: LazyUi.radius, bl: LazyUi.radius);
+
     Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
         barrierDismissible: true,
         barrierColor: Colors.black.withOpacity(0.2),
         pageBuilder: (BuildContext context, _, __) {
-
           // convert dy to 0 - 1
           double dy = target.dy / context.height;
 
@@ -77,14 +80,7 @@ abstract class LzDropView<T> extends StatelessWidget {
                 );
               },
               child: Dropdown(
-                  target: target,
-                  box: box,
-                  options: options,
-                  style: style,
-                  onSelect: onSelect,
-                  child: Container(color: Colors.white, constraints: BoxConstraints(maxWidth: width), child: child)
-                      .lz
-                      .clip(tlr: LazyUi.radius, bl: LazyUi.radius))));
+                  target: target, box: box, options: options, style: style, onSelect: onSelect, child: child)));
         }));
   }
 
@@ -107,7 +103,7 @@ class LzDropItem extends LzDropView {
 
     return Hero(
         tag: tag,
-        transitionOnUserGestures : true,
+        transitionOnUserGestures: true,
         // flightShuttleBuilder: (context, animation, direction, fromContext, toContext) {
         //   final position = Tween<Offset>(begin: const Offset(0, 0), end: const Offset(0, 1)).animate(animation);
 
