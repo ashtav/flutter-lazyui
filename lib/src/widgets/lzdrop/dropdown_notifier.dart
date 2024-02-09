@@ -11,6 +11,7 @@ class DropdownNotifier extends ChangeNotifier {
   List<DropOption> options = [];
 
   late GlobalKey dropdownKey;
+  bool isMounted = false;
   double bar = 0, targetHeight = 0, screenHeight = 0, dropHeight = 0;
 
   void reArangeDropYPosition() {
@@ -35,7 +36,7 @@ class DropdownNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPosition(Offset target, RenderBox? box, BuildContext context, double dropWidth, GlobalKey dropdownKey) {
+  void setPosition(Offset target, RenderBox? box, BuildContext context, double dropWidth, GlobalKey dropdownKey, bool hasChild) {
     Bindings.onRendered(() {
       this.dropdownKey = dropdownKey;
 
@@ -65,7 +66,7 @@ class DropdownNotifier extends ChangeNotifier {
 
       // set offset based on default calculation
       double dx = target.dx;
-      double dy = target.dy;
+      double dy = hasChild ? target.dy - (targetHeight - bar) :  target.dy;
 
       // adjust drop position if it's out of screen
       double dropXPosition = dx + dropWidth; // current drop x position
@@ -99,6 +100,8 @@ class DropdownNotifier extends ChangeNotifier {
 
       offset = result;
       _latestOffset = result;
+
+      isMounted = true;
       notifyListeners();
     });
   }

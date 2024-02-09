@@ -72,6 +72,7 @@ class LzConfirmWidget extends StatelessWidget {
               },
               padding: Ei.sym(v: 20, h: 10),
               border: Br.only(['l'], except: index == 0, color: borderColor),
+              splash: backgroundColor.lighten(.97),
               child: Text(
                 texts[index],
                 textAlign: Ta.center,

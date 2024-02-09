@@ -1,77 +1,51 @@
 part of extension;
 
-/// Extends the functionality of the [int?] class with an additional method.
-extension LzIntOrIfExtension on int? {
-  /// A method to return the value of the [int?] if it's not null and not in specified conditions; otherwise, returns a default value.
+/// Extension method to provide a fallback value if the object is null or meets certain conditions.
+/// This extension can be applied to any data type.
+extension LzDynamicExtension<T extends dynamic> on T {
+  /// Returns a fallback value if the object is null or meets certain conditions.
   ///
-  /// The [defaultValue] parameter sets the value to return if the [int?] object is null or matches any of the conditions specified in [conditions].
-  /// The [conditions] parameter is a list of values that, if equal to the [int?], will trigger the use of [defaultValue].
+  /// The [defaultValue] parameter specifies the value to return if the object is null or meets the conditions.
+  /// The [conditions] parameter is a list of values that the object is compared against.
+  /// If the object matches any of the conditions or is null, the [defaultValue] is returned.
+  /// If the object is not null and does not match any of the conditions, the object itself is returned.
   ///
-  /// Example usage:
+  /// Example:
   /// ```dart
-  /// int? number = 42;
-  /// int result = number.orIf(0, [null, 42]);
-  /// print(result); // 0 (because 42 is in the conditions)
-  ///
-  /// int? anotherNumber = 10;
-  /// int anotherResult = anotherNumber.orIf(0, [null, 42]);
-  /// print(anotherResult); // 10 (because it's not null and not in the conditions)
+  /// String? nullableString = null;
+  /// String result = nullableString.orElse('default'); // result will be 'default'
   /// ```
-  int orIf([int defaultValue = 0, List<dynamic> conditions = const [null]]) {
-    // Implementation details for checking conditions and returning the value.
-    // ...
-    // Return the value based on conditions and defaultValue.
+  T orElse([T? defaultValue, List<dynamic> conditions = const [null, '']]) {
     if (this == null || conditions.contains(this)) {
-      return defaultValue;
+      bool isInt = T.toString().contains('int');
+      bool isDouble = T.toString().contains('double');
+      bool isString = T.toString().contains('String');
+      bool isList = T.toString().contains('List');
+      bool isMap = T.toString().contains('Map');
+      bool isbool = T.toString().contains('bool');
+      bool isWidget = T.toString().contains('Widget');
+
+      if (isInt) {
+        return (defaultValue ?? 0) as T;
+      } else if (isDouble) {
+        return (defaultValue ?? 0.0) as T;
+      } else if (isString) {
+        return (defaultValue ?? '') as T;
+      } else if (isList) {
+        return (defaultValue ?? []) as T;
+      } else if (isMap) {
+        return (defaultValue ?? {}) as T;
+      } else if (isbool) {
+        return (defaultValue ?? false) as T;
+      } else if (isWidget) {
+        return (defaultValue ?? Container()) as T;
+      }
+
+      return defaultValue as T;
     }
     return this!;
   }
-}
 
-extension LzDoubleOrIfExtension on double? {
-  double orIf(
-      [double defaultValue = 0, List<dynamic> conditions = const [null]]) {
-    if (this == null || conditions.contains(this)) {
-      return defaultValue;
-    }
-    return this!;
-  }
-}
-
-extension LzBoolOrIfExtension on bool? {
-  bool orIf(
-      [bool defaultValue = false, List<dynamic> conditions = const [null]]) {
-    if (this == null || conditions.contains(this)) {
-      return defaultValue;
-    }
-    return this!;
-  }
-}
-
-extension LzStringOrIfExtension on String? {
-  /// Instead of
-  /// ```dart
-  /// String? name;
-  /// String displayName = (name == null || name == '') ? '-' : name;
-  /// ```
-  ///
-  /// You can write
-  /// ```dart
-  /// String displayName = name.orIf('-')
-  /// name.orIf('-', [null, '-', 'null']) // to add custom conditions
-  /// ```
-
-  String orIf(
-      [String defaultValue = '-',
-      List<dynamic> conditions = const [null, '']]) {
-    if (this == null || conditions.contains(this)) {
-      return defaultValue;
-    }
-    return this!;
-  }
-}
-
-extension LzDynamicExtension on dynamic {
   // check null or empty
   bool get hasNullOrEmpty => this == null || toString().trim() == '';
 

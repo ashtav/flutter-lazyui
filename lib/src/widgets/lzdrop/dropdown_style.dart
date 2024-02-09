@@ -4,10 +4,10 @@ import 'dropdown_value.dart';
 
 class DropStyle {
   final double? width;
-  final Color? background;
   final Color? separatorColor;
   final Color? textColor;
   final Color? barrierColor;
+  final bool darkMode;
   final List<dynamic> separators;
   final List<IconData?> icons;
   final List<dynamic> criticals;
@@ -16,10 +16,10 @@ class DropStyle {
 
   DropStyle(
       {this.width,
-      this.background,
       this.separatorColor,
       this.textColor,
       this.barrierColor,
+      this.darkMode = false,
       this.separators = const [],
       this.icons = const [],
       this.criticals = const [],

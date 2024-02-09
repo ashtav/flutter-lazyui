@@ -57,10 +57,14 @@ extension LzContextExtension on BuildContext {
   /// }
   /// ```
   Future<T?> dialog<T extends Object?>(Widget widget,
-      {bool dismiss = true, bool backBlur = false, double blur = 7, Color? barrierColor}) {
+      {bool dismiss = true, bool backBlur = false, double blur = 7, Color? barrierColor}) async {
     // If the `backBlur` flag is set, the background of the bottom sheet is blurred.
     Widget blurWrapper(Widget child) =>
         BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+
+    if (backBlur) {
+      await Future.delayed(100.ms);
+    }
 
     // Show the dialog.
     return showDialog<T>(
