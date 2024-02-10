@@ -8,6 +8,7 @@ class DropStyle {
   final Color? textColor;
   final Color? barrierColor;
   final bool darkMode;
+  final bool backBlur;
   final List<dynamic> separators;
   final List<IconData?> icons;
   final List<dynamic> criticals;
@@ -20,6 +21,7 @@ class DropStyle {
       this.textColor,
       this.barrierColor,
       this.darkMode = false,
+      this.backBlur = false,
       this.separators = const [],
       this.icons = const [],
       this.criticals = const [],

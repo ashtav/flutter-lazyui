@@ -56,7 +56,11 @@ class Dropdown extends StatelessWidget {
             //       .margin(l: 10, b: 10),
             // ),
             AnimatedPositioned(
-                duration: state.offset == Offset.zero || style?.transition == false ? 0.ms : 150.ms,
+                duration: hasChild
+                    ? state.duration
+                    : state.offset == Offset.zero || style?.transition == false
+                        ? 0.ms
+                        : 150.ms,
                 left: state.offset.dx,
                 top: state.offset.dy,
                 child: Column(

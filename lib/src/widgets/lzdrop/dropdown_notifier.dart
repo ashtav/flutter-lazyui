@@ -11,8 +11,8 @@ class DropdownNotifier extends ChangeNotifier {
   List<DropOption> options = [];
 
   late GlobalKey dropdownKey;
-  bool isMounted = false;
   double bar = 0, targetHeight = 0, screenHeight = 0, dropHeight = 0;
+  Duration duration = 0.ms;
 
   void reArangeDropYPosition() {
     // render box of the dropdown
@@ -36,8 +36,9 @@ class DropdownNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPosition(Offset target, RenderBox? box, BuildContext context, double dropWidth, GlobalKey dropdownKey, bool hasChild) {
-    Bindings.onRendered(() {
+  void setPosition(
+      Offset target, RenderBox? box, BuildContext context, double dropWidth, GlobalKey dropdownKey, bool hasChild) {
+    Bindings.onRendered(() async {
       this.dropdownKey = dropdownKey;
 
       // render box of the dropdown
@@ -66,7 +67,7 @@ class DropdownNotifier extends ChangeNotifier {
 
       // set offset based on default calculation
       double dx = target.dx;
-      double dy = hasChild ? target.dy - (targetHeight - bar) :  target.dy;
+      double dy = hasChild ? target.dy - (targetHeight - bar) : target.dy;
 
       // adjust drop position if it's out of screen
       double dropXPosition = dx + dropWidth; // current drop x position
@@ -87,8 +88,23 @@ class DropdownNotifier extends ChangeNotifier {
       dy = dy + targetHeight; // put drop below the target
       // dy = dropYPosition + (bar + targetHeight) > screenHeight ? (screenHeight - dropHeight) - (margin + bar) : dy;
 
-      // if drop is out of screen, put it above the target
-      dy = dropYPosition + (bar + targetHeight) > screenHeight ? dy - (dropHeight + targetHeight) : dy;
+      if (!hasChild) {
+        bool isOutOfY = dropYPosition + (bar + targetHeight) > screenHeight;
+
+        // if drop is out of screen, put it above the target
+        dy = isOutOfY ? dy - (dropHeight + targetHeight) : dy;
+      } else {
+        duration = 0.ms;
+        // offset = Offset(_latestOffset.dx, 0);
+
+        bool isOutOfY = dropYPosition + dropHeight > screenHeight + bar;
+        if (isOutOfY) {
+          duration = 150.ms;
+
+          double remains = (dropYPosition + dropHeight) - screenHeight;
+          dy = dy - (remains);
+        }
+      }
 
       final result = Offset(dx, dy);
 
@@ -101,7 +117,6 @@ class DropdownNotifier extends ChangeNotifier {
       offset = result;
       _latestOffset = result;
 
-      isMounted = true;
       notifyListeners();
     });
   }
