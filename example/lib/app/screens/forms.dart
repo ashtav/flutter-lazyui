@@ -79,6 +79,7 @@ class FormsView extends StatelessWidget {
                   model: forms['gender'],
                   onChange: (value) {
                     forms.setValue('hobby', ['Coding', 'Reading']);
+                    // forms['hobby']?.notifier;
                   },
                 ),
               ],

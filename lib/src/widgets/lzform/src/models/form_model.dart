@@ -4,6 +4,8 @@ import '../notifiers/form_notifier.dart';
 
 class FormModel {
   final TextEditingController controller;
+
+  @protected
   final FormNotifier notifier;
   final GlobalKey key;
 

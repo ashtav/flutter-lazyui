@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 part of forms;
 
 class Slider extends StatelessWidget with LzFormMixin {
