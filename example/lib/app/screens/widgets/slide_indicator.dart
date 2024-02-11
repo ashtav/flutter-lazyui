@@ -12,10 +12,13 @@ class SlideIndicatorView extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Textml(
-                    'Make a simple slide indicator with <b>LzSlideIndicator</b> widget. <p color="09f">LzSlideIndicator(length: 5, active: 0, size: (index) => [index == 0 ? 20 : 5, 5])</p>',
-                    textAlign: Ta.center)
-                .margin(all: 20),
+            LzState.watch(
+                '#slide',
+                0,
+                (active) => Textml(
+                        'Make a simple slide indicator with <b>LzSlideIndicator</b> widget. <p color="09f">LzSlideIndicator(length: 5, active: $active, size: (index) => [index == $active ? 20 : 5, 5])</p>',
+                        textAlign: Ta.center)
+                    .margin(all: 20)),
             LzState.watch(
                 '#slide',
                 0,
