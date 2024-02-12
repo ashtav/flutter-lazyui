@@ -27,7 +27,7 @@ class FormsView extends StatelessWidget {
     final forms = controller.forms;
 
     Bindings.onRendered(() {
-      forms.fill({'name': 'John Doe', 'distance': 29});
+      forms.fill({'name': 'John Doe', 'qty': 1, 'distance': 29});
     });
 
     List<String> products = [
@@ -170,8 +170,10 @@ class FormsView extends StatelessWidget {
                           // LzToast.show('There is no data to show.', position: Position.center);
                           // return false;
 
-                          forms.setSelectOption('province', provinces, disabled: [3], onSelected: (_) {
+                          forms.setSelectOption('province', provinces, disabled: [3], onSelected: (option) {
                             forms.enable('city').setValue('city', '');
+                            forms.setExtra(
+                                'province', option?.value); // in case we need to use the value to get the city
                           });
 
                           // forms.onSelected('province', (f) => f.enable('city'));
@@ -182,10 +184,14 @@ class FormsView extends StatelessWidget {
                       model: forms['city'],
                       disabled: true,
                       onTap: () {
-                        return LzToast.overlay('Getting city...', duration: 500.ms).then((_) {
+                        // get the province id from the extra
+                        dynamic provinceId = forms.getExtra('province');
+                        logg('Province ID: $provinceId');
+
+                        return LzToast.overlay('Getting city...', duration: 500.ms, then: (() {
                           final id = forms.getSelect('province');
                           forms.setSelectOption('city', cities[id] ?? []);
-                        });
+                        }));
                       }),
                 ]).margin(t: 25),
 
@@ -245,7 +251,15 @@ class FormsView extends StatelessWidget {
                   messages: FormMessage(required: {
                     'name': 'I am sory, we need to know your name, so please provide your valid information.'
                   }));
+
               logg(form.value);
+              logg(form.extra);
+
+              if (form.ok) {
+                LzToast.overlay('Submitting...', duration: 2.s, then: () {
+                  LzToast.success('Your form submitted successfully!', placement: ToastPlacement.center);
+                });
+              }
             }).shadowed().padding(blr: 20),
       ),
     );

@@ -51,6 +51,7 @@ abstract class LzDropView<T> extends StatelessWidget {
     Offset target = o ?? Offset.zero;
 
     double width = (box?.size.width ?? context.width);
+    bool isLeftAlign = style?.alignment == DropAlignment.left;
 
     Navigator.of(context).push(PageRouteBuilder(
         opaque: false,
@@ -82,7 +83,7 @@ abstract class LzDropView<T> extends StatelessWidget {
               onSelect: onSelect,
               child: Container(color: Colors.white, constraints: BoxConstraints(maxWidth: width), child: child)
                   .lz
-                  .clip(tlr: LazyUi.radius, bl: LazyUi.radius)));
+                  .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)));
         }));
   }
 

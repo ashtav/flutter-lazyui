@@ -167,6 +167,7 @@ class LzForm {
           Map.fromIterables(forms.keys, forms.values.map((e) => e.controller));
       Map<String, FormNotifier> notifiers = Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
       Map<String, GlobalKey> globalKeys = Map.fromIterables(forms.keys, forms.values.map((e) => e.key));
+      Map<String, dynamic> extra = {};
 
       List<Map<String, dynamic>> errorFields = [];
 
@@ -190,6 +191,11 @@ class LzForm {
 
       // check keys (required, min, max, email) if they are in the forms
       for (String key in formKeys) {
+        // set extra
+        if (notifiers[key]?.extra != null) {
+          extra[key] = notifiers[key]?.extra;
+        }
+
         /* ------------------------------------------------------------------------
         | Required
         | */
@@ -285,7 +291,8 @@ class LzForm {
         return LzForm(
             ok: false,
             error: FormError(key: errorKey, type: errorType, message: errorMessage),
-            value: controllers.toMap());
+            value: controllers.toMap(),
+            extra: extra);
       }
     } catch (e, s) {
       Utils.errorCatcher(e, s);

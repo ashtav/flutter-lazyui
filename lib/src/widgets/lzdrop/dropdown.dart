@@ -28,6 +28,7 @@ class Dropdown extends StatelessWidget {
 
     bool hasChild = child != null;
     bool isDarkMode = style?.darkMode ?? false;
+    bool isLeftAlign = style?.alignment == DropAlignment.left;
 
     Color backgroundColor = isDarkMode ? '#222'.hex : Colors.white;
     Color subBackgroundColor = isDarkMode ? '#222'.hex.darken(.2) : '#f5f5f5'.hex;
@@ -65,7 +66,7 @@ class Dropdown extends StatelessWidget {
                 top: state.offset.dy,
                 child: Column(
                   mainAxisSize: Mas.min,
-                  crossAxisAlignment: Caa.end,
+                  crossAxisAlignment: isLeftAlign ? Caa.start : Caa.end,
                   children: [
                     if (child != null) child!,
                     Container(

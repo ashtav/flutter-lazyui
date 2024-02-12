@@ -26,12 +26,12 @@ class LzDatePicker extends StatelessWidget {
     double height = context.height * (context.width > 395 ? .6 : .45);
 
     bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
+    Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
 
     return ScrollConfiguration(
       behavior: Unglow(),
       child: Container(
-        decoration: BoxDecoration(color: backgroundColor),
+        decoration: BoxDecoration(color: backgroundColor.lighten(.95)),
         child: Stack(
           children: [
             SizedBox(
@@ -139,7 +139,7 @@ class ConfirmButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
+    Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
     Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
     Color buttonColor = style?.buttonColor ?? Colors.white;
     Color confirmTextColor = style?.confirmTextColor ?? (buttonColor.isDark() ? Colors.white : Colors.black87);
@@ -169,7 +169,7 @@ class ConfirmButton extends StatelessWidget {
                         decoration: BoxDecoration(
                           boxShadow: [
                             BoxShadow(
-                              color: backgroundColor,
+                              color: backgroundColor.lighten(.95),
                               spreadRadius: 25,
                               blurRadius: 35,
                               offset: const Offset(0, -5),
@@ -209,7 +209,7 @@ class TimePicker extends StatelessWidget {
   Widget build(BuildContext context) {
     double radius = style?.radius ?? LazyUi.radius;
     bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '333'.hex : 'fff'.hex;
+    Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
     Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     return Poslign(
@@ -255,7 +255,8 @@ class TimePicker extends StatelessWidget {
                                   diameterRatio: .9,
                                   style: style,
                                   letterSpacing: 1.5,
-                                  overlayColor: backgroundColor.lighten(isDarkMode ? 2.1 : .1).withOpacity(.4),
+                                  overlayColor: (isDarkMode ? backgroundColor.lighten(.92) : backgroundColor.darken(.1))
+                                      .withOpacity(.4),
                                 ),
                               );
                             })),

@@ -108,7 +108,7 @@ class AppIntro1 extends StatelessWidget {
           ).margin(t: 10, b: 25),
           notifier.watch((s) => LzSlideIndicator(
                 active: s.index,
-                size: (i) => [i == s.index ? 13 : 7, 7],
+                size: (active) => [active ? 13 : 7, 7],
               ).margin(b: 45)),
           // LzButton(
           //     radius: 100,
@@ -153,7 +153,7 @@ class AppIntro2 extends StatelessWidget {
                 child: LzSlideIndicator(
                   active: 0,
                   activeColor: Tints.orange,
-                  size: (i) => [i == 0 ? 13 : 7, 7],
+                  size: (active) => [active ? 13 : 7, 7],
                 ),
               )
             ],

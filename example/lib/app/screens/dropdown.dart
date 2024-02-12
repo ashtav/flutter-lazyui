@@ -85,7 +85,7 @@ class DropdownView extends StatelessWidget {
                           item,
                           style: Gfont.bold,
                         ),
-                        Textr(Faker.words(12), margin: Ei.only(t: 5))
+                        Textr(Faker.words(15), margin: Ei.only(t: 5))
                       ],
                     ).start,
                   ),

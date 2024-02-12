@@ -97,11 +97,13 @@ class DropdownNotifier extends ChangeNotifier {
         duration = 0.ms;
         // offset = Offset(_latestOffset.dx, 0);
 
-        bool isOutOfY = dropYPosition + dropHeight > screenHeight + bar;
+        double targetNDropPosition = target.dy + targetHeight + dropHeight + bar;
+        bool isOutOfY = targetNDropPosition >= screenHeight + bar;
+        
         if (isOutOfY) {
           duration = 150.ms;
 
-          double remains = (dropYPosition + dropHeight) - screenHeight;
+          double remains = targetNDropPosition - screenHeight;
           dy = dy - (remains);
         }
       }

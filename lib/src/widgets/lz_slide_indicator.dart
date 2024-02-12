@@ -41,7 +41,7 @@ class LzSlideIndicator extends StatelessWidget {
   /// ```
   ///
   /// If the function returns an empty list or a list with only one element, default values are used.
-  final List<double> Function(int index)? size;
+  final List<double> Function(bool active)? size;
   final int active;
   final Color? activeColor, color;
   final double radius, spacing;
@@ -57,7 +57,7 @@ class LzSlideIndicator extends StatelessWidget {
       mainAxisSize: Mas.min,
       children: List.generate(length, (i) {
         if (size != null) {
-          List<double> size = this.size!(i);
+          List<double> size = this.size!(active == i);
           width = size.isNotEmpty ? size[0] : 10;
           height = size.length > 1 ? size[1] : 10;
         }

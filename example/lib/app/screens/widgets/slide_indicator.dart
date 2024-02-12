@@ -10,31 +10,27 @@ class SlideIndicatorView extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-        child: Column(
+          child: LzState.watch(
+        '#slide',
+        0,
+        (active) => Column(
           children: [
-            LzState.watch(
-                '#slide',
-                0,
-                (active) => Textml(
-                        'Make a simple slide indicator with <b>LzSlideIndicator</b> widget. <p color="09f">LzSlideIndicator(length: 5, active: $active, size: (index) => [index == $active ? 20 : 5, 5])</p>',
-                        textAlign: Ta.center)
-                    .margin(all: 20)),
-            LzState.watch(
-                '#slide',
-                0,
-                (active) => Column(
-                      children: [
-                        LzTextDivider(Text(names[active])).margin(b: 20),
-                        LzSlideIndicator(
-                          length: names.length,
-                          active: active,
-                          size: (index) => [index == active ? 20 : 5, 5],
-                        ),
-                      ],
-                    ).center),
+            Textml('Make a simple slide indicator with <b>LzSlideIndicator</b> widget. <p color="09f">LzSlideIndicator(length: 5, active: $active, size: (active) => [active ? 20 : 5, 5])</p>',
+                    textAlign: Ta.center)
+                .margin(all: 20),
+            Column(
+              children: [
+                LzTextDivider(Text(names[active])).margin(b: 20),
+                LzSlideIndicator(
+                  length: names.length,
+                  active: active,
+                  size: (active) => [active ? 20 : 5, 5],
+                ),
+              ],
+            ).center,
           ],
         ).center,
-      ),
+      )),
       bottomNavigationBar: Intrinsic(
         children: [Ti.arrowLeft, Ti.arrowRight].generate((icon, i) {
           return InkTouch(

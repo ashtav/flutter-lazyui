@@ -180,6 +180,30 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  Map<String, FormModel> setExtra(Object key, dynamic value) {
+    List<String> keys = key is List<String> ? key : [key.toString()];
+
+    for (var e in keys) {
+      if (containsKey(e) && this[e] != null) {
+        final notifier = this[e]!.notifier;
+        notifier.extra = value;
+      }
+    }
+
+    return this;
+  }
+
+  dynamic getExtra(String key) {
+    dynamic result;
+
+    if (containsKey(key) && this[key] != null) {
+      final notifier = this[key]!.notifier;
+      result = notifier.extra;
+    }
+
+    return result;
+  }
+
   dynamic getSelect(String key) {
     dynamic result;
 
