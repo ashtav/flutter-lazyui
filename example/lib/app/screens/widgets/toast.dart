@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -7,6 +9,8 @@ class ToastView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LzToastConfig.set(placement: ToastPlacement.center);
+    Timer? timer;
+    double progress = 0;
 
     return Scaffold(
       appBar: AppBar(
@@ -19,6 +23,29 @@ class ToastView extends StatelessWidget {
           const Textml(
             '<b>LzToast</b> is a widget used to display brief messages that disappear after a few seconds, containing types such as success, warning & error.',
           ).margin(b: 25),
+          LzButton(
+            text: 'Show Overlay Progress',
+            onTap: (_) {
+              progress = 0;
+              timer?.cancel();
+
+              timer = Timer.periodic(2000.ms, (_) {
+                progress += Utils.getRange(1, 10);
+
+                if (progress > 100) {
+                  timer?.cancel();
+                }
+              });
+
+              LzToast.overlayProgress('Loading...',
+                  handler: () => progress,
+                  percentage: true,
+                  cancelable: true,
+                  then: () {
+                    LzToast.success('Progress Done!', icon: Ti.checks);
+                  });
+            },
+          ).bg('333'.hex).styled(width: context.width),
           LzButton(
             text: 'Show Overlay',
             onTap: (_) {

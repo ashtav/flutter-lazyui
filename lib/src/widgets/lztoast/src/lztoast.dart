@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -6,6 +7,7 @@ import 'package:lazyui/lazyui.dart';
 import 'loading.dart';
 import 'notifier.dart';
 import 'overlay_entry.dart';
+import 'overlay_progress.dart';
 
 ToastPlacement _defaultPlacement = ToastPlacement.bottom;
 Duration _defaultDuration = 2.s;
@@ -108,6 +110,52 @@ class LzToast {
     _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
   }
 
+  static overlayProgress(String message,
+      {Duration? duration,
+      bool dismissOnTap = false,
+      bool percentage = false,
+      bool cancelable = false,
+      double Function()? handler,
+      void Function()? then}) async {
+    _notifier.dismiss();
+
+    // if handler is provided, then duration is ignored
+    if (duration != null && handler == null) {
+      _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
+      return await Future.delayed(duration, () {
+        _notifier.dismiss();
+        then?.call();
+      });
+    }
+
+    if (handler != null) {
+      bool hasChanged = false;
+      _notifier.setProgress(0);
+
+      _notifier.timer?.cancel();
+      _notifier.timer = Timer.periodic(200.ms, (_) {
+        double progress = handler();
+        _notifier.setProgress(progress);
+
+        if (progress >= 100 || (hasChanged && progress == 0)) {
+          _notifier.setProgress(100);
+          _notifier.timer?.cancel();
+
+          _notifier.timer = Utils.timer(() {
+            _notifier.progress = 0;
+            _notifier.dismiss(); // it has include canceling the timer
+            then?.call();
+          }, 200.ms);
+        }
+
+        hasChanged = progress > 0;
+      });
+    }
+
+    _notifier.showOverlay(message,
+        dismissOnTap: dismissOnTap, isProgress: true, showPercentage: percentage, cancelable: cancelable);
+  }
+
   /// dismiss loading
   static void dismiss([Duration? duration]) {
     if (duration != null) {
@@ -142,26 +190,61 @@ class LzToastWidget extends StatelessWidget {
                       child: child,
                     ),
                 child: state.overlay
-                    ? Container(
-                        margin: Ei.only(b: context.viewInsets.bottom + 50, others: 50),
-                        padding: Ei.sym(v: 20, h: 20),
-                        decoration: BoxDecoration(
-                            borderRadius: Br.radius(state.radius ?? _defaultRadius),
-                            color: Colors.black.withOpacity(.8)),
+                    ? Center(
                         child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
-                                constraints: const BoxConstraints(maxWidth: 40),
-                                child: const LzLoader(color: Colors.white, size: 40)),
-                            Textr(
-                              state.overlayMessage,
-                              style: LazyUi.font.copyWith(color: Colors.white),
-                              margin: Ei.only(t: 15),
+                              // margin: Ei.only(b: context.viewInsets.bottom + 50, others: 50),
+                              padding: Ei.sym(v: 20, h: 20),
+                              decoration: BoxDecoration(
+                                  borderRadius: Br.radius(state.radius ?? _defaultRadius),
+                                  color: Colors.black.withOpacity(.8)),
+                              child: Column(
+                                children: [
+                                  state.isProgress
+                                      ? Stack(alignment: AlignmentDirectional.center, children: [
+                                          ...2.generate((index) {
+                                            return CircularSlider(
+                                              value: index == 0 ? state.progress ?? 0 : 100,
+                                              color: [Colors.white, Colors.white12][index],
+                                            );
+                                          }),
+                                          if (state.showPercentage)
+                                            Poslign(
+                                              alignment: Alignment.center,
+                                              child: Text('${state.progress?.toStringAsFixed(0)}%',
+                                                  style: LazyUi.font.copyWith(color: Colors.white, fontSize: 14)),
+                                            )
+                                        ])
+                                      : Container(
+                                          constraints: const BoxConstraints(maxWidth: 40),
+                                          child: const LzLoader(color: Colors.white, size: 40)),
+                                  Textr(
+                                    state.overlayMessage,
+                                    style: LazyUi.font.copyWith(color: Colors.white),
+                                    margin: Ei.only(t: 15),
+                                  ),
+                                ],
+                              ).min.center,
                             ),
                           ],
-                        ).min.center,
-                      )
+                        ),
+                      ).lz.blur(context)
                     : const None()),
+            state.overlay && state.cancelable
+                ? Poslign(
+                    alignment: Alignment.bottomCenter,
+                    child: Textr(
+                      'Cancel',
+                      padding: Ei.sym(v: 15, h: 55),
+                      margin: Ei.only(b: 20),
+                      style: LazyUi.font.copyWith(color: Colors.white),
+                    ).onTap(() {
+                      _notifier.dismiss();
+                    }))
+                : const None()
           ],
         ));
 

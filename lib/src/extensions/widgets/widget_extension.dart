@@ -111,7 +111,6 @@ class LzModifiers {
   Widget blur(BuildContext context, {double sigmaX = 5, double sigmaY = 5, Duration? duration, bool show = true}) {
     return Stack(
       children: [
-        widget,
         AnimatedOpacity(
           duration: duration ?? 300.ms,
           opacity: show ? 1 : 0,
@@ -123,6 +122,7 @@ class LzModifiers {
             ),
           ),
         ),
+        widget,
       ],
     );
   }
