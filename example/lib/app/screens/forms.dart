@@ -72,7 +72,9 @@ class FormsView extends StatelessWidget {
               description: 'Please input your full name and gender.',
               style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
               children: [
-                LzForm.input(label: 'Full Name', hint: 'Enter your full name', model: forms['name'], indicator: true),
+                LzForm.input(label: 'Full Name', hint: 'Enter your full name', model: forms['name'], indicator: true, style: InputStyle(
+                  suffixIcon: Ti.user
+                )),
                 LzForm.radio(
                   label: 'Select Gender',
                   options: ['Male', 'Female'],

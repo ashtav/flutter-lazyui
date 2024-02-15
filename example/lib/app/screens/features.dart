@@ -46,7 +46,7 @@ class FeaturesView extends StatelessWidget {
         'features': [
           Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
           Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
-          Feature('LzOtp', 'Show a otp input with a custom message, input, etc.', Ti.number),
+          Feature('LzPad', 'Show an otp or pin input with a custom message, duration, input, etc.', Ti.number),
           Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
           Feature('Refreshtor', 'Show a pull to refresh indicator with a custom color, size, etc.', Ti.refresh),
           Feature('Trainer', 'Show guide to use your app with a custom message, title, etc.', Ti.books),
@@ -164,10 +164,9 @@ class Actions {
       'LzListView': const LzListViewExample(),
     };
 
-    if (label == 'LzOtp') {
-      LzOtp.show(context,
+    if (label == 'LzPad') {
+      LzPad.show(context,
           expired: 60.s,
-          type: OtpType.bottomLine,
           subtitle: 'OTP code sent to +628100000, please enter the code below to reset your password.',
           onCompleted: (otp) async {
         otp.pause();

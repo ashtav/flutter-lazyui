@@ -7,7 +7,7 @@ class PickerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<String> categories = 10.generate((i) => Faker.category());
-    final forms = LzForm.make(['category', 'date', 'time']);
+    final forms = LzForm.make(['category', 'content', 'date', 'time']);
 
     return Scaffold(
       appBar: AppBar(
@@ -34,9 +34,13 @@ class PickerView extends StatelessWidget {
                   }),
               LzForm.input(
                   hint: 'Show picker with long content',
+                  model: forms['content'],
+                  maxLines: 2,
                   onTap: (text) {
                     List<String> words = 10.generate((item) => Faker.words(10));
-                    LzPicker.option(context, options: Option.list(words), style: const PickerStyle(maxLines: 2));
+                    LzPicker.option(context, options: Option.list(words), style: const PickerStyle(maxLines: 2), onSelect: (value){
+                      forms.setValue('content', value.label);
+                    });
                   })
             ],
           ),

@@ -37,7 +37,9 @@ class CurveIndicator extends StatelessWidget {
                     duration: 300.ms,
                     opacity: value > .4 ? 1 : 0,
                     child: Text(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
-                        style: LazyUi.font.copyWith(fontSize: 12 + (1 * value)).fcolor(isArmed ? releaseTextColor : textColor),
+                        style: LazyUi.font
+                            .copyWith(fontWeight: isArmed ? Fw.bold : Fw.normal, fontSize: 12 + (1 * value))
+                            .fcolor(isArmed ? releaseTextColor : textColor),
                         textAlign: Ta.center)),
               ),
             )),

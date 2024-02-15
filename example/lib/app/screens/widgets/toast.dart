@@ -29,7 +29,7 @@ class ToastView extends StatelessWidget {
               progress = 0;
               timer?.cancel();
 
-              timer = Timer.periodic(2000.ms, (_) {
+              timer = Timer.periodic(400.ms, (_) {
                 progress += Utils.getRange(1, 10);
 
                 if (progress > 100) {
@@ -38,11 +38,13 @@ class ToastView extends StatelessWidget {
               });
 
               LzToast.overlayProgress('Loading...',
-                  handler: () => progress,
+                  progress: () => progress,
                   percentage: true,
-                  cancelable: true,
                   then: () {
-                    LzToast.success('Progress Done!', icon: Ti.checks);
+                    LzToast.success('Progress done!', icon: Ti.checks);
+                  },
+                  onCancel: () {
+                    LzToast.show('Progress cancelled!');
                   });
             },
           ).bg('333'.hex).styled(width: context.width),

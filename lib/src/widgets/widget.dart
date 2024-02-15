@@ -14,7 +14,7 @@ export 'lzconfirm/lzconfirm.dart';
 export 'lzdrop/lzdrop.dart';
 export 'lzform/lzform.dart';
 export 'lzimage/lzimage.dart';
-export 'lzotp/otp.dart';
+export 'lzpad/pad.dart';
 export 'lzpicker/lzpicker.dart';
 export 'lztoast/lztoast.dart';
 export 'refreshtor/refreshtor.dart';

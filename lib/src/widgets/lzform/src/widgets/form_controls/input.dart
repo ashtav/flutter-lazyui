@@ -203,7 +203,7 @@ class Input extends StatelessWidget with LzFormMixin {
                       : suffixIconWidget,
               padding: hasLabel && (isGrouped || isUnderlined)
                   ? labelAndGroupedPadding
-                  : Ei.only(l: 16, r: obsecureToggle ? 45 : 16, v: 14),
+                  : Ei.only(l: 16, r: obsecureToggle || hasOnTap ? 45 : 16, v: 14),
               controller: notifier.controller,
               maxLength: maxLength,
               obsecure: state.obsecure,

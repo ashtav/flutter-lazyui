@@ -24,6 +24,7 @@ class LzPickerOption extends StatefulWidget {
 
 class _LzPickerOptionState extends State<LzPickerOption> {
   final notifier = SelectPickerNotifier();
+  FocusNode focusNode = FocusNode();
 
   double radius = LazyUi.radius;
   BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: 0, tr: 0);
@@ -127,152 +128,158 @@ class _LzPickerOptionState extends State<LzPickerOption> {
     bool isLineAwesome = LazyUi.iconType == IconType.lineAwesome;
     IconData searchIcon = isLineAwesome ? La.search : Ti.search;
 
-    return FractionallySizedBox(
-      widthFactor: isMobile ? 1 : toDecimal(context.width),
-      child: ClipRRect(
-        borderRadius: borderRadius,
-        child: Stack(
-          alignment: AlignmentDirectional.bottomCenter,
-          children: [
-            ScrollConfiguration(
-              behavior: Unglow(),
-              child: notifier.watch((state) => AnimatedContainer(
-                    duration: 150.ms,
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
-                    height: state.height,
-                    padding: Ei.only(b: state.isExpanded ? state.height / 4 : 0),
-                    child: SafeArea(
-                      top: false,
-                      child: CupertinoPicker(
-                          magnification: magnification,
-                          useMagnifier: false,
-                          itemExtent: itemExtent,
-                          offAxisFraction: 0,
-                          diameterRatio: diameterRatio,
-                          squeeze: squeeze,
-                          scrollController: notifier.scroll,
-                          selectionOverlay: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(border: Br.only(['b', 't'])),
-                          ),
-
-                          // This is called when selected item is changed.
-                          onSelectedItemChanged: (int selectedItem) {
-                            if (widget.onSelect != null) {
-                              notifier.index = selectedItem;
-                              int i = notifier.index;
-
-                              if (notifier.values.isNotEmpty) {
-                                notifier.result = {
-                                  'label': notifier.options[i],
-                                  'value': notifier.values.length < i ? null : notifier.values[i]
-                                };
-                              } else {
-                                notifier.result = {'label': notifier.options[i]};
+    return Wrapper(
+      child: FractionallySizedBox(
+        widthFactor: isMobile ? 1 : toDecimal(context.width),
+        child: ClipRRect(
+          borderRadius: borderRadius,
+          child: Stack(
+            alignment: AlignmentDirectional.bottomCenter,
+            children: [
+              ScrollConfiguration(
+                behavior: Unglow(),
+                child: notifier.watch((state) => AnimatedContainer(
+                      duration: 150.ms,
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
+                      height: state.height,
+                      padding: Ei.only(b: state.isExpanded ? state.height / 4 : 0),
+                      child: SafeArea(
+                        top: false,
+                        child: CupertinoPicker(
+                            magnification: magnification,
+                            useMagnifier: false,
+                            itemExtent: itemExtent,
+                            offAxisFraction: 0,
+                            diameterRatio: diameterRatio,
+                            squeeze: squeeze,
+                            scrollController: notifier.scroll,
+                            selectionOverlay: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(border: Br.only(['b', 't'])),
+                            ),
+    
+                            // This is called when selected item is changed.
+                            onSelectedItemChanged: (int selectedItem) {
+                              if (widget.onSelect != null) {
+                                notifier.index = selectedItem;
+                                int i = notifier.index;
+    
+                                if (notifier.values.isNotEmpty) {
+                                  notifier.result = {
+                                    'label': notifier.options[i],
+                                    'value': notifier.values.length < i ? null : notifier.values[i]
+                                  };
+                                } else {
+                                  notifier.result = {'label': notifier.options[i]};
+                                }
                               }
-                            }
-
-                            notifier.setDisabled(widget.options[selectedItem].disabled);
-                          },
-                          children: notifier.options.generate((item, i) {
-                            final option = widget.options[i];
-                            bool disabled = option.disabled;
-
-                            return Center(
-                              child: Container(
-                                constraints: BoxConstraints(maxWidth: context.width * .75),
-                                child: Text(
-                                  item,
-                                  overflow: Tof.ellipsis,
-                                  textAlign: Ta.center,
-                                  maxLines: maxLines.toInt(),
-                                  style: LazyUi.font.copyWith(
-                                    color: disabled ? Colors.black12 : Colors.black87,
+    
+                              notifier.setDisabled(widget.options[selectedItem].disabled);
+                            },
+                            children: notifier.options.generate((item, i) {
+                              final option = widget.options[i];
+                              bool disabled = option.disabled;
+    
+                              return Center(
+                                child: Container(
+                                  constraints: BoxConstraints(maxWidth: context.width * .75),
+                                  child: Text(
+                                    item,
+                                    overflow: Tof.ellipsis,
+                                    textAlign: Ta.center,
+                                    maxLines: maxLines.toInt(),
+                                    style: LazyUi.font.copyWith(
+                                      color: disabled ? Colors.black12 : Colors.black87,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          })),
-                    ),
-                  )),
-            ),
-
-            // confirm button
-            Poslign(
-                alignment: Alignment.bottomCenter,
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: Maa.center,
-                    children: [
-                      const SizedBox(width: 60), // empty space to center the button
-                      SlideUp(
-                        delay: 300,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            boxShadow: [
-                              BoxShadow(
-                                color: 'fafafa'.hex,
-                                spreadRadius: 15,
-                                blurRadius: 25,
-                                offset: const Offset(0, -5),
-                              ),
-                            ],
-                          ),
-                          child: Builder(builder: (context) {
-                            return notifier.watch((state) => ConfirmButton(
-                                  confirmText,
-                                  disabled: state.disabled,
-                                  onTap: state.disabled
-                                      ? null
-                                      : () {
-                                          widget.onSelect?.call(Option.fromMap(notifier.result));
-                                          Navigator.pop(context);
-                                        },
-                                ));
-                          }),
-                        ),
-                      ),
-                      SlideUp(
-                        delay: 400,
-                        child: Iconr(
-                          La.times,
-                          padding: Ei.all(20),
-                        ).onTap(() => context.lz.pop()),
-                      )
-                    ],
-                  ).margin(b: 15, l: 0),
-                )),
-
-            // search bar widget
-            Poslign(
-              alignment: Alignment.topLeft,
-              child: Row(
-                children: [
-                  if (withSearch)
-                    Expanded(
-                        child: LzTextField(
-                      hint: 'Type to search',
-                      controller: notifier.keyword,
-                      listenKeyboard: (active) {
-                        double newHeight = active ? (context.height) : notifier.defaultHeight;
-                        notifier.setHeight(newHeight);
-                      },
-                      onChange: (keyword) {
-                        notifier.onSearch(keyword);
-                      },
-                      prefixIcon: Iconr(
-                        searchIcon,
-                        flipX: isLineAwesome,
-                        size: 16,
+                              );
+                            })),
                       ),
                     )),
-                  notifier.watch((state) =>
-                      state.found == 0 ? const None() : Textr(state.found.toString(), margin: Ei.only(r: 15)))
-                ],
-              ).margin(all: 5),
-            )
-          ],
+              ),
+    
+              // confirm button
+              Poslign(
+                  alignment: Alignment.bottomCenter,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: Maa.center,
+                      children: [
+                        const SizedBox(width: 60), // empty space to center the button
+                        SlideUp(
+                          delay: 300,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: 'fafafa'.hex,
+                                  spreadRadius: 15,
+                                  blurRadius: 25,
+                                  offset: const Offset(0, -5),
+                                ),
+                              ],
+                            ),
+                            child: Builder(builder: (context) {
+                              return notifier.watch((state) => ConfirmButton(
+                                    confirmText,
+                                    disabled: state.disabled,
+                                    onTap: state.disabled
+                                        ? null
+                                        : () {
+                                            widget.onSelect?.call(Option.fromMap(notifier.result));
+                                            Navigator.pop(context);
+                                          },
+                                  ));
+                            }),
+                          ),
+                        ),
+                        SlideUp(
+                          delay: 400,
+                          child: Iconr(
+                            La.times,
+                            padding: Ei.all(20),
+                          ).onTap(() => context.lz.pop()),
+                        )
+                      ],
+                    ).margin(b: 15, l: 0),
+                  )),
+    
+              // search bar widget
+              Poslign(
+                alignment: Alignment.topLeft,
+                child: Row(
+                  children: [
+                    if (withSearch)
+                      Expanded(
+                          child: LzTextField(
+                        hint: 'Type to search',
+                        controller: notifier.keyword,
+                        listenKeyboard: (active) {
+                          double newHeight = active ? (context.height) : notifier.defaultHeight;
+                          notifier.setHeight(newHeight);
+                        },
+                        onChange: (keyword) {
+                          notifier.onSearch(keyword);
+                        },
+                        node: focusNode,
+                        onSubmit: (_){
+                          focusNode.unfocus();
+                        },
+                        prefixIcon: Iconr(
+                          searchIcon,
+                          flipX: isLineAwesome,
+                          size: 16,
+                        ),
+                      )),
+                    notifier.watch((state) =>
+                        state.found == 0 ? const None() : Textr(state.found.toString(), margin: Ei.only(r: 15)))
+                  ],
+                ).margin(all: 5),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -5,7 +5,7 @@ import 'package:lazyui/lazyui.dart';
 
 class ToastNotifier extends ChangeNotifier {
   bool toast = false, overlay = false, dismissOnTap = false, backdrop = false;
-  bool isProgress = false, showPercentage = false, cancelable = false;
+  bool isProgress = false, showPercentage = false;
 
   String toastMessage = '', overlayMessage = '';
   IconData? toastIcon;
@@ -17,6 +17,8 @@ class ToastNotifier extends ChangeNotifier {
   ToastPlacement? toastPlacement;
   Timer? timer;
   double? radius, progress = 0;
+
+  void Function()? onCancel;
 
   void showToast(String? message,
       {IconData? icon,
@@ -50,12 +52,13 @@ class ToastNotifier extends ChangeNotifier {
   }
 
   void showOverlay(String? message,
-      {bool dismissOnTap = false, bool isProgress = false, bool showPercentage = false, bool cancelable = false}) {
+      {bool dismissOnTap = false, bool isProgress = false, bool showPercentage = false, void Function()? onCancel}) {
     overlay = true;
     backdrop = true;
+    this.dismissOnTap = dismissOnTap;
     this.isProgress = isProgress;
     this.showPercentage = showPercentage;
-    this.cancelable = cancelable;
+    this.onCancel = onCancel;
     overlayMessage = message.toString();
     notifyListeners();
   }

@@ -96,48 +96,37 @@ class LzToast {
         backgroundColor: Colors.green.withOpacity(.8));
   }
 
-  static overlay(String message, {Duration? duration, bool dismissOnTap = false, void Function()? then}) async {
+  static overlay(String message,
+      {Duration? duration, bool dismissOnTap = false, void Function()? then, void Function()? onCancel}) async {
     _notifier.dismiss();
 
     if (duration != null) {
-      _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
-      return await Future.delayed(duration, () {
+      _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
+      _notifier.timer = Timer.periodic(duration, (_) {
         _notifier.dismiss();
         then?.call();
       });
+
+      return;
     }
 
     _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
   }
 
   static overlayProgress(String message,
-      {Duration? duration,
-      bool dismissOnTap = false,
-      bool percentage = false,
-      bool cancelable = false,
-      double Function()? handler,
-      void Function()? then}) async {
+      {bool percentage = false, double Function()? progress, void Function()? then, void Function()? onCancel}) async {
     _notifier.dismiss();
 
-    // if handler is provided, then duration is ignored
-    if (duration != null && handler == null) {
-      _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
-      return await Future.delayed(duration, () {
-        _notifier.dismiss();
-        then?.call();
-      });
-    }
-
-    if (handler != null) {
+    if (progress != null) {
       bool hasChanged = false;
       _notifier.setProgress(0);
 
       _notifier.timer?.cancel();
       _notifier.timer = Timer.periodic(200.ms, (_) {
-        double progress = handler();
-        _notifier.setProgress(progress);
+        double value = progress();
+        _notifier.setProgress(value);
 
-        if (progress >= 100 || (hasChanged && progress == 0)) {
+        if (value >= 100 || (hasChanged && value == 0)) {
           _notifier.setProgress(100);
           _notifier.timer?.cancel();
 
@@ -148,12 +137,11 @@ class LzToast {
           }, 200.ms);
         }
 
-        hasChanged = progress > 0;
+        hasChanged = value > 0;
       });
     }
 
-    _notifier.showOverlay(message,
-        dismissOnTap: dismissOnTap, isProgress: true, showPercentage: percentage, cancelable: cancelable);
+    _notifier.showOverlay(message, isProgress: true, showPercentage: percentage, onCancel: onCancel);
   }
 
   /// dismiss loading
@@ -183,6 +171,15 @@ class LzToastWidget extends StatelessWidget {
     Widget overlayContent = _notifier.watch((state) => Stack(
           alignment: AlignmentDirectional.center,
           children: [
+            state.overlay
+                ? BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                    child: SizedBox(
+                      width: context.width,
+                      height: context.height,
+                    ),
+                  )
+                : const None(),
             AnimatedSwitcher(
                 duration: 130.ms,
                 transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
@@ -231,19 +228,28 @@ class LzToastWidget extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ).lz.blur(context)
+                      ).onTap(() {
+                        if (state.dismissOnTap) {
+                          _notifier.dismiss();
+                        }
+                      })
                     : const None()),
-            state.overlay && state.cancelable
+            state.overlay && state.onCancel != null
                 ? Poslign(
                     alignment: Alignment.bottomCenter,
-                    child: Textr(
-                      'Cancel',
-                      padding: Ei.sym(v: 15, h: 55),
+                    child: InkTouch(
+                      onTap: () {
+                        _notifier.dismiss();
+                        state.onCancel?.call();
+                      },
+                      padding: Ei.sym(v: 11, h: 55),
+                      radius: Br.radius(50),
                       margin: Ei.only(b: 20),
-                      style: LazyUi.font.copyWith(color: Colors.white),
-                    ).onTap(() {
-                      _notifier.dismiss();
-                    }))
+                      child: Textr(
+                        'Cancel',
+                        style: LazyUi.font.copyWith(color: Colors.white, fontWeight: Fw.bold, letterSpacing: 2),
+                      ),
+                    ))
                 : const None()
           ],
         ));
