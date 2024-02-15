@@ -165,7 +165,7 @@ class FormsView extends StatelessWidget {
                       hint: 'Select province',
                       model: forms['province'],
                       onTap: () {
-                        return LzToast.overlay('Getting province...', duration: 1.s, then: (() {
+                        return LzToast.overlay('Getting province...', duration: 1.s, then: (() async {
                           // if data we get from server is null, empty or error
                           // we can prevent the select to show by returning false
 
@@ -173,7 +173,9 @@ class FormsView extends StatelessWidget {
                           // return false;
 
                           forms.setSelectOption('province', provinces, disabled: [3], onSelected: (option) {
-                            forms.enable('city').setValue('city', '');
+                            forms.set('city').enable().value('');
+
+                            // forms.enable('city').setValue('city', '');
                             forms.setExtra(
                                 'province', option?.value); // in case we need to use the value to get the city
                           });

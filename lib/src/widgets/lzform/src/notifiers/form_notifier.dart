@@ -7,6 +7,7 @@ import '../models/checkbox_model.dart';
 import '../models/radio_model.dart';
 
 class FormNotifier extends ChangeNotifier {
+  String? label; // used to check notifier is owned by a form field
   TextEditingController controller = TextEditingController();
   FocusNode node = FocusNode();
 

@@ -19,6 +19,7 @@ class Switches extends StatelessWidget {
 
     notifier.isSwitches = true;
     notifier.switchesValue = initValue;
+    notifier.label = label;
 
     void setSwitches(bool value) {
       onChange?.call(value);

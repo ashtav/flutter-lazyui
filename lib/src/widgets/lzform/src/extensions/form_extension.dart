@@ -2,6 +2,8 @@
 
 import 'package:lazyui/lazyui.dart';
 
+import '../utils/form_control.dart';
+
 extension LzFormExtension on Map<String, FormModel> {
   /// ``` dart
   /// final forms = LzForm.make(['name', 'email', 'password']]);
@@ -145,6 +147,11 @@ extension LzFormExtension on Map<String, FormModel> {
     }
 
     return this;
+  }
+
+  FormControl set(String key) {
+    final notifier = this[key]!.notifier;
+    return FormControl(notifier);
   }
 
   Map<String, FormModel> setValue(Object key, dynamic value) {

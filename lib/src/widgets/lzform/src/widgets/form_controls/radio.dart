@@ -32,6 +32,7 @@ class Radio extends StatelessWidget with LzFormMixin {
 
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
+    notifier.label = label;
 
     // generate options
     List<RadioModel> options = this.options.generate((item, i) {

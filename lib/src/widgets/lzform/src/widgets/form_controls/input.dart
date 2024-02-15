@@ -50,6 +50,7 @@ class Input extends StatelessWidget with LzFormMixin {
     // form notifier
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
+    notifier.label = label ?? hint;
 
     FocusNode focusNode = node ?? notifier.node;
     List<TextInputFormatter> formatters = [

@@ -32,6 +32,7 @@ class Checkbox extends StatelessWidget with LzFormMixin {
 
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
+    notifier.label = label;
 
     // generate options
     List<CheckboxModel> options = this.options.generate((item, i) {

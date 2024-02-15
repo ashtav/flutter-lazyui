@@ -33,6 +33,7 @@ class Select extends StatelessWidget with LzFormMixin {
     // form notifier
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
+    notifier.label = label ?? hint;
     notifier.isSelect = true;
 
     // set enabled or disabled

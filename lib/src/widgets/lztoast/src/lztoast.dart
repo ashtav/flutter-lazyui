@@ -102,12 +102,12 @@ class LzToast {
 
     if (duration != null) {
       _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
-      _notifier.timer = Timer.periodic(duration, (_) {
+      _notifier.timer = Timer(duration, () {
         _notifier.dismiss();
         then?.call();
       });
 
-      return;
+      return Future.delayed(duration);
     }
 
     _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
