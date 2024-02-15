@@ -62,9 +62,9 @@ extension LzContextExtension on BuildContext {
     Widget blurWrapper(Widget child) =>
         BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
 
-    if (backBlur) {
-      await Future.delayed(100.ms);
-    }
+    // if (backBlur) {
+    //   await Future.delayed(100.ms);
+    // }
 
     // Show the dialog.
     return showDialog<T>(
