@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -53,38 +51,51 @@ abstract class LzDropView<T> extends StatelessWidget {
     double width = (box?.size.width ?? context.width);
     bool isLeftAlign = style?.alignment == DropAlignment.left;
 
-    Navigator.of(context).push(PageRouteBuilder(
-        opaque: false,
-        barrierDismissible: true,
-        barrierColor: Colors.black.withOpacity(0.2),
-        pageBuilder: (BuildContext context, _, __) {
-          // convert dy to 0 - 1
-          // double dy = target.dy / context.height;
+    // Navigator.of(context).push(PageRouteBuilder(
+    //     opaque: false,
+    //     barrierDismissible: true,
+    //     barrierColor: Colors.black.withOpacity(0.2),
+    //     pageBuilder: (BuildContext context, _, __) {
+    //       // convert dy to 0 - 1
+    //       // double dy = target.dy / context.height;
 
-          Widget blurWrapper(Widget child) =>
-              BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child);
+    //       Widget blurWrapper(Widget child) =>
+    //           BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child);
 
-          // Hero(
-          // tag: tag,
-          // flightShuttleBuilder: (context, animation, direction, fromContext, toContext) {
-          //   final position = Tween<Offset>(begin: Offset(0, dy - .1), end: Offset(0, dy)).animate(animation);
+    //       // Hero(
+    //       // tag: tag,
+    //       // flightShuttleBuilder: (context, animation, direction, fromContext, toContext) {
+    //       //   final position = Tween<Offset>(begin: Offset(0, dy - .1), end: Offset(0, dy)).animate(animation);
 
-          //   return SlideTransition(
-          //     position: position,
-          //     child: child,
-          //   );
-          // })
+    //       //   return SlideTransition(
+    //       //     position: position,
+    //       //     child: child,
+    //       //   );
+    //       // })
 
-          return blurWrapper(Dropdown(
-              target: target,
-              box: box,
-              options: options,
-              style: style,
-              onSelect: onSelect,
-              child: Container(color: Colors.white, constraints: BoxConstraints(maxWidth: width), child: child)
-                  .lz
-                  .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)));
-        }));
+    //       return blurWrapper(Dropdown(
+    //           target: target,
+    //           box: box,
+    //           options: options,
+    //           style: style,
+    //           onSelect: onSelect,
+    //           child: Container(color: Colors.white, constraints: BoxConstraints(maxWidth: width), child: child)
+    //               .lz
+    //               .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)));
+    //     }));
+
+    context.dialog(
+        Dropdown(
+            target: target,
+            box: box,
+            options: options,
+            style: style,
+            onSelect: onSelect,
+            child: Container(color: Colors.white, constraints: BoxConstraints(maxWidth: width), child: child)
+                .lz
+                .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)),
+        backBlur: style?.backBlur ?? false,
+        barrierColor: style?.barrierColor);
   }
 
   @override

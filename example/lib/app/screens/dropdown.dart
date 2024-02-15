@@ -70,7 +70,7 @@ class DropdownView extends StatelessWidget {
                 return LzDropItem(
                   options: DropOption.list(['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
                       disabled: [3], subOptions: subOptions),
-                  style: DropStyle(icons: icons, separators: ['Filters'], criticals: [1]),
+                  style: DropStyle(icons: icons, backBlur: true, separators: ['Filters'], criticals: [1]),
                   onSelect: (value) {
                     logg(value.toMap());
                   },

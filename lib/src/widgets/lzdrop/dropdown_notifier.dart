@@ -67,7 +67,7 @@ class DropdownNotifier extends ChangeNotifier {
 
       // set offset based on default calculation
       double dx = target.dx;
-      double dy = hasChild ? target.dy - (targetHeight - bar) : target.dy;
+      double dy = hasChild ? target.dy - (targetHeight) : target.dy;
 
       // adjust drop position if it's out of screen
       double dropXPosition = dx + dropWidth; // current drop x position
@@ -83,23 +83,24 @@ class DropdownNotifier extends ChangeNotifier {
       dx = dropXPosition > screenWidth ? (screenWidth - dropWidth) - margin : dx;
       dx = dx < margin ? margin : dx;
 
-      dy = dy < bar ? (bar + margin) : dy;
-      dy = dy - bar;
-      dy = dy + targetHeight; // put drop below the target
       // dy = dropYPosition + (bar + targetHeight) > screenHeight ? (screenHeight - dropHeight) - (margin + bar) : dy;
 
       if (!hasChild) {
+        dy = dy < bar ? (bar + margin) : dy;
+        dy = dy - bar;
+        dy = dy + targetHeight; // put drop below the target
+
         bool isOutOfY = dropYPosition + (bar + targetHeight) > screenHeight;
 
         // if drop is out of screen, put it above the target
         dy = isOutOfY ? dy - (dropHeight + targetHeight) : dy;
       } else {
         duration = 0.ms;
-        // offset = Offset(_latestOffset.dx, 0);
+        dy = dy + targetHeight < bar ? (bar) : (dy - bar) + targetHeight;
 
         double targetNDropPosition = target.dy + targetHeight + dropHeight + bar;
         bool isOutOfY = targetNDropPosition >= screenHeight + bar;
-        
+
         if (isOutOfY) {
           duration = 150.ms;
 
