@@ -132,11 +132,19 @@ class LzToast {
         backgroundColor: Colors.green.withOpacity(.8));
   }
 
-  static overlay(
-    String message, {
-    Widget? indicator,
-    bool dismissOnTap = false,
-  }) {
+  static Future overlay(String message,
+      {Widget? indicator,
+      bool dismissOnTap = false,
+      Future<dynamic> Function()? future}) async {
+    if (future != null) {
+      _overlayNotifier.toggle(message, dismissOnTap: dismissOnTap);
+
+      return future().then((value) {
+        _overlayNotifier.dismiss();
+        return value;
+      });
+    }
+
     _overlayNotifier.toggle(message, dismissOnTap: dismissOnTap);
   }
 
