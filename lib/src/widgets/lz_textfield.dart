@@ -70,9 +70,11 @@ class LzTextField extends StatelessWidget {
     double radius = LazyUi.radius;
     FocusNode localNode = node ?? FocusNode();
 
-    // localNode.addListener(() {
-    //   if (onFocus != null) onFocus!(localNode.hasFocus);
-    // });
+    if (onFocus != null) {
+      localNode.addListener(() {
+        onFocus?.call(localNode.hasFocus);
+      });
+    }
 
     if (listenKeyboard != null) {
       listenKeyboard!(MediaQuery.of(context).viewInsets.bottom > 0);
@@ -92,10 +94,7 @@ class LzTextField extends StatelessWidget {
       controller: controller,
       maxLines: maxLines ?? 1,
       minLines: 1,
-      inputFormatters: [
-        LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
-        ...formatters
-      ],
+      inputFormatters: [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...formatters],
       selectionControls: selectionControls,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
@@ -105,11 +104,7 @@ class LzTextField extends StatelessWidget {
         isDense: true,
         contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
         hintText: hint,
-        hintStyle: hintStyle ??
-            Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: Colors.black38),
+        hintStyle: hintStyle ?? Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.black38),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
@@ -118,13 +113,13 @@ class LzTextField extends StatelessWidget {
       ),
     );
 
+    bool isBorderSide = !border.toString().contains('Border.all');
+
     return border == null && backgroundColor == null
         ? textField
         : Container(
             decoration: BoxDecoration(
-                border: border,
-                color: backgroundColor,
-                borderRadius: borderRadius ?? BorderRadius.circular(radius)),
+                border: border, color: backgroundColor, borderRadius: isBorderSide ? null : borderRadius ?? BorderRadius.circular(radius)),
             child: textField,
           );
   }

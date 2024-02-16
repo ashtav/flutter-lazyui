@@ -36,6 +36,8 @@ class LzConfirmWidget extends StatelessWidget {
     Color textColor = darkMode ? 'fff'.hex : '555'.hex;
     Color borderColor = darkMode ? '444'.hex : Colors.black12;
 
+    List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
+
     Widget widget = Container(
       decoration: BoxDecoration(color: backgroundColor),
       constraints: BoxConstraints(maxWidth: 320 - (margin ?? 0)),
@@ -58,10 +60,7 @@ class LzConfirmWidget extends StatelessWidget {
               if (hasMessage) Text(message!, textAlign: Ta.center, style: Gfont.color(textColor.darken(.3))),
             ],
           ).gap(10).padding(b: isDialog ? 25 : 45, others: 25),
-          Intrinsic(
-              children: 2.generate((index) {
-            List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
-
+          Intrinsic(children: texts.generate((label, index) {
             return InkTouch(
               onTap: () {
                 context.lz.pop();
@@ -74,7 +73,7 @@ class LzConfirmWidget extends StatelessWidget {
               border: Br.only(['l'], except: index == 0, color: borderColor),
               splash: backgroundColor.lighten(.97),
               child: Text(
-                texts[index],
+                label,
                 textAlign: Ta.center,
                 style: Gfont.bold.fcolor(index == 0 ? textColor : confirmColor ?? textColor),
                 overflow: Tof.ellipsis,

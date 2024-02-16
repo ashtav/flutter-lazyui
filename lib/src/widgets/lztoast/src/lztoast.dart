@@ -96,11 +96,15 @@ class LzToast {
         backgroundColor: Colors.green.withOpacity(.8));
   }
 
-  static overlay(String message,
-      {Duration? duration, bool dismissOnTap = false, void Function()? then, void Function()? onCancel}) async {
+  static Future<T> overlay<T>(String message,
+      {Duration? duration,
+      bool dismissOnTap = false,
+      void Function()? then,
+      void Function()? onCancel,
+      Future<T> Function()? future}) async {
     _notifier.dismiss();
 
-    if (duration != null) {
+    if (duration != null && future == null) {
       _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
       _notifier.timer = Timer(duration, () {
         _notifier.dismiss();
@@ -110,7 +114,18 @@ class LzToast {
       return Future.delayed(duration);
     }
 
+    if (future != null) {
+      _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
+
+      return future().then((value) {
+        _notifier.dismiss();
+        then?.call();
+        return value;
+      });
+    }
+
     _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
+    return null as T;
   }
 
   static overlayProgress(String message,

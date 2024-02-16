@@ -28,6 +28,7 @@ class LzPad {
       PadType type = PadType.bottomLine,
       PadStyle? style,
       void Function(PadController controller)? onCompleted}) {
+    context.lz.focus(); // hide keyboard
     context.bottomSheet(
         PadWidget(
             title: title,
@@ -148,58 +149,72 @@ class _PadWidgetState extends State<PadWidget> {
               child: Column(
             mainAxisAlignment: Maa.center,
             children: [
-              header,
-              notifier.watch((state) => Row(
-                    mainAxisSize: Mas.min,
-                    children: List.generate(state.length, (i) {
-                      String value = state.values.length > i ? state.values[i] : '';
-                      bool isFilled = value.isNotEmpty;
-                      bool inFocus = state.values.length == i;
+              LzListView(
+                shrinkWrap: true,
+                padding: Ei.sym(v: 35),
+                scrollLimit: const [35, 35],
+                children: [
+                  Column(
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      header,
+                      notifier.watch((state) => Row(
+                            mainAxisSize: Mas.min,
+                            children: List.generate(state.length, (i) {
+                              String value = state.values.length > i ? state.values[i] : '';
+                              bool isFilled = value.isNotEmpty;
+                              bool inFocus = state.values.length == i;
 
-                      return Container(
-                        width: (context.width - 100) / notifier.length,
-                        height: 55,
-                        decoration: BoxDecoration(
-                          borderRadius: Br.radius(4),
-                          border: widget.type == PadType.bottomLine
-                              ? null
-                              : Br.all(color: isFilled ? Colors.black87 : Colors.black26),
-                        ),
-                        padding: Ei.sym(v: 0, h: 5),
-                        margin: Ei.sym(h: 3),
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: value.isEmpty ? const None() : SlideUp(child: Text(value, style: Gfont.fs20.bold)),
-                            ),
-                            if (widget.type == PadType.bottomLine)
-                              Positioned(
-                                bottom: 0,
-                                child: AnimatedContainer(
-                                  duration: 150.ms,
-                                  decoration: BoxDecoration(
-                                    color: inFocus
-                                        ? style?.bottomInline?.focusColor ?? Colors.black12
-                                        : isFilled
-                                            ? style?.bottomInline?.filledColor ?? Colors.black54
-                                            : style?.bottomInline?.unfillColor ?? Colors.black12,
-                                    borderRadius: Br.radius(4),
-                                  ),
-                                  width: (context.width - 160) / notifier.length,
-                                  height: 2,
-                                ).lz.blink(inFocus, 300.ms),
-                              )
-                          ],
-                        ),
-                      );
-                    }),
-                  )),
-              if (widget.expired != null)
-                notifier.watch((state) {
-                  return Textr('Expired in ${state.expired} seconds', style: Gfont.red, margin: Ei.only(t: 25))
-                      .lz
-                      .blink(!state.isPaused, 500.ms);
-                }),
+                              return Container(
+                                width: (context.width - 100) / notifier.length,
+                                height: 55,
+                                decoration: BoxDecoration(
+                                  borderRadius: Br.radius(4),
+                                  border: widget.type == PadType.bottomLine
+                                      ? null
+                                      : Br.all(color: isFilled ? Colors.black87 : Colors.black26),
+                                ),
+                                padding: Ei.sym(v: 0, h: 5),
+                                margin: Ei.sym(h: 3),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: value.isEmpty
+                                          ? const None()
+                                          : SlideUp(child: Text(value, style: Gfont.fs20.bold)),
+                                    ),
+                                    if (widget.type == PadType.bottomLine)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: AnimatedContainer(
+                                          duration: 150.ms,
+                                          decoration: BoxDecoration(
+                                            color: inFocus
+                                                ? style?.bottomInline?.focusColor ?? Colors.black12
+                                                : isFilled
+                                                    ? style?.bottomInline?.filledColor ?? Colors.black54
+                                                    : style?.bottomInline?.unfillColor ?? Colors.black12,
+                                            borderRadius: Br.radius(4),
+                                          ),
+                                          width: (context.width - 160) / notifier.length,
+                                          height: 2,
+                                        ).lz.blink(inFocus, 300.ms),
+                                      )
+                                  ],
+                                ),
+                              );
+                            }),
+                          )),
+                      if (widget.expired != null)
+                        notifier.watch((state) {
+                          return Textr('Expired in ${state.expired} seconds', style: Gfont.red, margin: Ei.only(t: 25))
+                              .lz
+                              .blink(!state.isPaused, 500.ms);
+                        }),
+                    ],
+                  ),
+                ],
+              ),
             ],
           )),
           Container(

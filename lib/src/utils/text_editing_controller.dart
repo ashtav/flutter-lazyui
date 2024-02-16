@@ -13,10 +13,11 @@ part of utils;
 ///     `true` implies successful validation, and `false` implies a failure.
 ///
 class TecValidation {
-  final String error;
+  final String error, key;
   final bool ok;
+  final Map<String, dynamic> value;
 
-  TecValidation({required this.error, required this.ok});
+  TecValidation({required this.error, required this.key, required this.ok, this.value = const {}});
 }
 
 /// Extension `MapTextEditingControllerExtension` on `Map<String, TextEditingController>`
@@ -86,10 +87,12 @@ extension MapTextEditingControllerExtension
 
       return TecValidation(
           error: errors.isEmpty ? '' : errors.first['message'],
+          key: errors.isEmpty ? '' : errors.first['key'],
+          value: value,
           ok: errors.isEmpty);
     } catch (e, s) {
       Utils.errorCatcher(e, s);
-      return TecValidation(error: 'Error validating form', ok: false);
+      return TecValidation(error: 'Error validating form', key: '', ok: false);
     }
   }
 }

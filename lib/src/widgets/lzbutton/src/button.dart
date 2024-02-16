@@ -68,7 +68,10 @@ class LzButton extends StatelessWidget {
       return InkTouch(
         onTap: state.disabled ? null : () => onTap?.call(ButtonState(notifier)),
         padding: style?.padding ?? Ei.only(v: 13, h: 18),
-        border: Br.all(color: isOutline ? (style?.backgroundColor ?? Colors.black12) : (style?.borderColor ?? backgroundColor.darken(.2))),
+        border: Br.all(
+            color: isOutline
+                ? (style?.backgroundColor ?? Colors.black12)
+                : (style?.borderColor ?? backgroundColor.darken(.2))),
         radius: Br.radius(radius),
         color: backgroundColor,
         child: Row(
@@ -110,7 +113,7 @@ class ButtonState {
   final ButtonNotifier _notifier;
   ButtonState(this._notifier);
 
-  void submit({Duration? abortOn, Function()? then}) {
+  Future<T> submit<T>({Duration? abortOn, Function()? then, Future<T> Function()? future}) async {
     _notifier.onSubmit();
 
     if (abortOn != null) {
@@ -119,6 +122,15 @@ class ButtonState {
         then?.call();
       });
     }
+
+    if (future != null) {
+      return await future().then((value) {
+        _notifier.onAbort();
+        return value;
+      });
+    }
+
+    return null as T;
   }
 
   void abort() => _notifier.onAbort();
