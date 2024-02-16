@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -113,7 +115,7 @@ class LazyUi {
             : maxScalingFactor.clamp(1.0, maxScalingFontSize),
       ),
       child: useLazyToast
-          ? LzToastOverlay(child: child)
+          ? LzToastOverlay(child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
           : child ?? const SizedBox.shrink(),
     );
   }
