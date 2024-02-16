@@ -241,10 +241,10 @@ class LzButtonControl extends ChangeNotifier {
   String buttonText = '';
   bool isSubmit = false, enabled = true;
 
-  Future submit(
+  Future<T> submit<T>(
       {Duration? abortOn,
       String? text,
-      Future<dynamic> Function()? future}) async {
+      Future<T> Function()? future}) async {
     if (text != null) {
       buttonText = text;
     }
@@ -265,7 +265,7 @@ class LzButtonControl extends ChangeNotifier {
       });
     }
 
-    return this;
+    return null as T;
   }
 
   LzButtonControl abort() {
