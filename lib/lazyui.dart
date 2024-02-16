@@ -29,6 +29,7 @@ export 'src/models/option.dart';
 export 'src/utils/utils.dart';
 export 'src/widgets/lazyform/lazyform.dart';
 export 'src/widgets/lazytoast/lazytoast.dart';
-export 'src/widgets/otp/otp.dart';
+export 'src/widgets/lzconfirm/lzconfirm.dart';
+export 'src/widgets/lzpad/pad.dart';
 export 'src/widgets/pickers/pickers.dart';
 export 'src/widgets/widget.dart';

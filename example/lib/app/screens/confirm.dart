@@ -19,26 +19,12 @@ class ConfirmView extends StatelessWidget {
                 type: ButtonType.dark,
                 text: 'Dialog Confirm',
                 onTap: (_) {
-                  LzConfirm(
-                    title: 'Widget Confirmation',
-                    message: 'Are you sure you want to confirm this widget?',
-                    onConfirm: () {
-                      LzToast.show('Widget confirmed');
-                    },
-                  ).show(context);
+                  
                 },
               ),
               InkTouch(
                 onTap: () {
-                  LzConfirm(
-                    title: 'Widget Confirmation',
-                    message: 'Are you sure you want to confirm this widget?',
-                    type: LzConfirmType.bottomSheet,
-                    confirmText: 'Yes, Delete It!',
-                    onConfirm: () {
-                      LzToast.show('Widget confirmed');
-                    },
-                  ).show(context);
+                  
                 },
                 radius: Br.radius(7),
                 padding: Ei.all(20),
