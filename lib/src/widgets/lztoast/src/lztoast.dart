@@ -202,52 +202,54 @@ class LzToastWidget extends StatelessWidget {
                       child: child,
                     ),
                 child: state.overlay
-                    ? Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              // margin: Ei.only(b: context.viewInsets.bottom + 50, others: 50),
-                              padding: Ei.sym(v: 20, h: 20),
-                              decoration: BoxDecoration(
-                                  borderRadius: Br.radius(state.radius ?? _defaultRadius),
-                                  color: Colors.black.withOpacity(.8)),
-                              child: Column(
-                                children: [
-                                  state.isProgress
-                                      ? Stack(alignment: AlignmentDirectional.center, children: [
-                                          ...2.generate((index) {
-                                            return CircularSlider(
-                                              value: index == 0 ? state.progress ?? 0 : 100,
-                                              color: [Colors.white, Colors.white12][index],
-                                            );
-                                          }),
-                                          if (state.showPercentage)
-                                            Poslign(
-                                              alignment: Alignment.center,
-                                              child: Text('${state.progress?.toStringAsFixed(0)}%',
-                                                  style: LazyUi.font.copyWith(color: Colors.white, fontSize: 14)),
-                                            )
-                                        ])
-                                      : Container(
-                                          constraints: const BoxConstraints(maxWidth: 40),
-                                          child: const LzLoader(color: Colors.white, size: 40)),
-                                  Textr(
-                                    state.overlayMessage,
-                                    style: LazyUi.font.copyWith(color: Colors.white),
-                                    margin: Ei.only(t: 15),
-                                  ),
-                                ],
-                              ).min.center,
-                            ),
-                          ],
-                        ),
-                      ).onTap(() {
-                        if (state.dismissOnTap) {
-                          _notifier.dismiss();
-                        }
-                      })
+                    ? ZoomIn(
+                      child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                // margin: Ei.only(b: context.viewInsets.bottom + 50, others: 50),
+                                padding: Ei.sym(v: 20, h: 20),
+                                decoration: BoxDecoration(
+                                    borderRadius: Br.radius(state.radius ?? _defaultRadius),
+                                    color: Colors.black.withOpacity(.8)),
+                                child: Column(
+                                  children: [
+                                    state.isProgress
+                                        ? Stack(alignment: AlignmentDirectional.center, children: [
+                                            ...2.generate((index) {
+                                              return CircularSlider(
+                                                value: index == 0 ? state.progress ?? 0 : 100,
+                                                color: [Colors.white, Colors.white12][index],
+                                              );
+                                            }),
+                                            if (state.showPercentage)
+                                              Poslign(
+                                                alignment: Alignment.center,
+                                                child: Text('${state.progress?.toStringAsFixed(0)}%',
+                                                    style: LazyUi.font.copyWith(color: Colors.white, fontSize: 14)),
+                                              )
+                                          ])
+                                        : Container(
+                                            constraints: const BoxConstraints(maxWidth: 40),
+                                            child: const LzLoader(color: Colors.white, size: 40)),
+                                    Textr(
+                                      state.overlayMessage,
+                                      style: LazyUi.font.copyWith(color: Colors.white),
+                                      margin: Ei.only(t: 15),
+                                    ),
+                                  ],
+                                ).min.center,
+                              ),
+                            ],
+                          ),
+                        ).onTap(() {
+                          if (state.dismissOnTap) {
+                            _notifier.dismiss();
+                          }
+                        }),
+                    )
                     : const None()),
             state.overlay && state.onCancel != null
                 ? Poslign(

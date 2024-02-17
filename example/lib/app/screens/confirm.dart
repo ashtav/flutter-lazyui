@@ -6,6 +6,10 @@ class ConfirmView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    // put this in main.dart
+    LzConfirm.config(confirmText: 'Yeah, Sure!', cancelText: 'No');
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Confirm'),
@@ -32,7 +36,7 @@ class ConfirmView extends StatelessWidget {
                   else {
                     LzConfirm.show(context, title: 'Confirm Sheet', message: Faker.words(13), onConfirm: () {
                       LzToast.show('Your action has been confirmed', icon: Ti.checks);
-                    }, type: ConfirmType.sheet, margin: 35);
+                    }, type: ConfirmType.sheet);
                   }
                 },
               ).sized(context.width).styled(borderColor: Colors.black38);

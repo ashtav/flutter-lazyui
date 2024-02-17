@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'dart:async';
+
 import 'package:lazyui/lazyui.dart';
 
 import '../utils/form_control.dart';
@@ -144,6 +146,20 @@ extension LzFormExtension on Map<String, FormModel> {
       if (containsKey(e) && this[e] != null) {
         this[e]!.notifier.setDisabled(!value);
       }
+    }
+
+    return this;
+  }
+
+  Map<String, FormModel> focus(String key, [bool value = true]) {
+    if (containsKey(key) && this[key] != null) {
+      final notifier = this[key]!.notifier;
+      notifier.timer?.cancel();
+
+      notifier.timer = Timer(50.ms, () {
+        notifier.node.requestFocus();
+        notifier.timer?.cancel();
+      });
     }
 
     return this;

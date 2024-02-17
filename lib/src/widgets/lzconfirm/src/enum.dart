@@ -1,0 +1,1 @@
+enum ConfirmType { dialog, sheet }

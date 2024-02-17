@@ -58,6 +58,15 @@ class FormsView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Form'),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  // set focus to specific input
+                  // forms.set('name').enable().focus();
+                  forms.focus('name');
+                },
+                icon: const Icon(Ti.forms))
+          ],
         ),
         body: LzListView(
           autoCache: true,
@@ -72,9 +81,12 @@ class FormsView extends StatelessWidget {
               description: 'Please input your full name and gender.',
               style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
               children: [
-                LzForm.input(label: 'Full Name', hint: 'Enter your full name', model: forms['name'], indicator: true, style: InputStyle(
-                  suffixIcon: Ti.user
-                )),
+                LzForm.input(
+                    label: 'Full Name',
+                    hint: 'Enter your full name',
+                    model: forms['name'],
+                    indicator: true,
+                    style: InputStyle(suffixIcon: Ti.user)),
                 LzForm.radio(
                   label: 'Select Gender',
                   options: ['Male', 'Female'],
