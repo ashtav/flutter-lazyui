@@ -12,7 +12,7 @@ class LzConfirm {
       String? confirmText,
       String? cancelText,
       Color? confirmColor,
-      bool darkMode = false,
+      bool? darkMode,
       bool backBlur = true,
       Function()? onConfirm,
       ConfirmType type = ConfirmType.dialog,
@@ -24,13 +24,13 @@ class LzConfirm {
             title: title,
             message: message,
             icon: icon ?? Ti.questionMark,
-            confirmText: confirmText,
-            cancelText: cancelText,
+            confirmText: confirmText ?? _confirmText,
+            cancelText: cancelText ?? _cancelText,
             confirmColor: confirmColor,
-            darkMode: darkMode,
+            darkMode: darkMode ?? _darkMode ?? false,
             onConfirm: onConfirm,
             type: type,
-            margin: margin,
+            margin: margin ?? _margin,
           ),
           backBlur: backBlur);
     }
@@ -42,15 +42,27 @@ class LzConfirm {
             title: title,
             message: message,
             icon: icon ?? Ti.questionMark,
-            confirmText: confirmText,
-            cancelText: cancelText,
+            confirmText: _confirmText ?? confirmText,
+            cancelText: _cancelText ?? cancelText,
             confirmColor: confirmColor,
-            darkMode: darkMode,
+            darkMode: darkMode ?? _darkMode ?? false,
             onConfirm: onConfirm,
             type: type,
-            margin: margin,
+            margin: margin ?? _margin,
           ),
-          backBlur: backBlur, draggable: true);
+          backBlur: backBlur,
+          draggable: true);
     }
   }
+
+  static void config({String? confirmText, String? cancelText, double? margin, bool? darkMode}) {
+    _confirmText = confirmText;
+    _cancelText = cancelText;
+    _margin = margin;
+    _darkMode = darkMode;
+  }
 }
+
+String? _confirmText, _cancelText;
+double? _margin;
+bool? _darkMode;
