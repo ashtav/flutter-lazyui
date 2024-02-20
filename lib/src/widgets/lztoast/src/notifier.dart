@@ -15,7 +15,7 @@ class ToastNotifier extends ChangeNotifier {
   int toastMaxLength = 50;
 
   ToastPlacement? toastPlacement;
-  Timer? timer;
+  Timer? timer, overlayTimer;
   double? radius, progress = 0;
 
   void Function()? onCancel;
@@ -67,7 +67,7 @@ class ToastNotifier extends ChangeNotifier {
     toast = false;
     overlay = false;
     backdrop = false;
-    timer?.cancel();
+    overlayTimer?.cancel();
     notifyListeners();
   }
 

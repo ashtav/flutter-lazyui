@@ -106,7 +106,7 @@ class LzToast {
 
     if (duration != null && future == null) {
       _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
-      _notifier.timer = Timer(duration, () {
+      _notifier.overlayTimer = Timer(duration, () {
         _notifier.dismiss();
         then?.call();
       });
@@ -136,16 +136,16 @@ class LzToast {
       bool hasChanged = false;
       _notifier.setProgress(0);
 
-      _notifier.timer?.cancel();
-      _notifier.timer = Timer.periodic(200.ms, (_) {
+      _notifier.overlayTimer?.cancel();
+      _notifier.overlayTimer = Timer.periodic(200.ms, (_) {
         double value = progress();
         _notifier.setProgress(value);
 
         if (value >= 100 || (hasChanged && value == 0)) {
           _notifier.setProgress(100);
-          _notifier.timer?.cancel();
+          _notifier.overlayTimer?.cancel();
 
-          _notifier.timer = Utils.timer(() {
+          _notifier.overlayTimer = Utils.timer(() {
             _notifier.progress = 0;
             _notifier.dismiss(); // it has include canceling the timer
             then?.call();

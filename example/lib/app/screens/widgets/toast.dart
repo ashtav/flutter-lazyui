@@ -29,8 +29,8 @@ class ToastView extends StatelessWidget {
               progress = 0;
               timer?.cancel();
 
-              timer = Timer.periodic(400.ms, (_) {
-                progress += Utils.getRange(1, 10);
+              timer = Timer.periodic(150.ms, (_) {
+                progress += Utils.getRange(1, 15);
 
                 if (progress > 100) {
                   timer?.cancel();

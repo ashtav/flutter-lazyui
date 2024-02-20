@@ -34,12 +34,6 @@ class TestView extends StatelessWidget {
             prefixIcon: const Icon(Ti.user),
             controller: form['name'],
           ),
-
-          Touch(
-            onTap: (){
-              logg('ok');
-            }, hoverable: true,
-            child: Textr('Hello world', padding: Ei.all(20),))
         ],
       )).padding(all: 20),
       bottomNavigationBar: LzButton(

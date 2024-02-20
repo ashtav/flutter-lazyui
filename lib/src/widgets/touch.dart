@@ -65,6 +65,7 @@ class __TouchHoverState extends State<_TouchHover> {
       onDoubleTap: widget.onDoubleTap,
       onTapDown: (_) => setState(() => isTapDown = true),
       onTapUp: (_) => setState(() => isTapDown = false),
+      onTapCancel: () => setState(() => isTapDown = false),
       behavior: HitTestBehavior.translucent,
       child: Opacity(opacity: isTapDown ? .5 : 1, child: Container(margin: widget.margin, child: widget.child)),
     );
