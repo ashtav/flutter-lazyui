@@ -57,6 +57,7 @@ class Formatter {
   static TextInputFormatter allowRegex(String pattern) => FilteringTextInputFormatter.allow(RegExp(pattern));
 }
 
+/// A text formatter that converts input text to lowercase.
 class _LowerCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -67,6 +68,7 @@ class _LowerCaseTextFormatter extends TextInputFormatter {
   }
 }
 
+/// A text formatter that converts input text to uppercase.
 class _UpperCaseTextFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -77,7 +79,7 @@ class _UpperCaseTextFormatter extends TextInputFormatter {
   }
 }
 
-// UCWORDS FORMATTER
+/// A text formatter that capitalizes the first letter of each word (title case).
 class _UcwordsFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -99,7 +101,7 @@ class _UcwordsFormatter extends TextInputFormatter {
   }
 }
 
-// UCFIRST FORMATTER
+/// A text formatter that capitalizes the first letter of the input (sentence case).
 class _UcfirstFormatter extends TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
@@ -121,7 +123,7 @@ class _UcfirstFormatter extends TextInputFormatter {
   }
 }
 
-// THOUSAND FORMATTER
+/// A text formatter for formatting currency values.
 class _ThousandFormatter extends TextInputFormatter {
   final String separator;
   _ThousandFormatter({this.separator = ','});

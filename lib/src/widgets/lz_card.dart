@@ -1,14 +1,35 @@
 part of widget;
 
+/// A card widget with customizable content.
 class LzCard extends StatelessWidget {
+  /// The list of children widgets inside the card.
   final List<Widget> children;
+
+  /// The padding around the content of the card.
   final EdgeInsetsGeometry? padding;
+
+  /// The background color of the card.
   final Color? color;
+
+  /// The border of the card.
   final BoxBorder? border;
+
+  /// The border radius of the card.
   final BorderRadius? radius;
+
+  /// The callback function when the card is tapped.
   final Function()? onTap;
+
+  /// The gap between each child widget.
   final double? gap;
+
+  /// Determines if the children widgets should be stacked vertically.
   final bool stacked;
+
+  /// Creates a [LzCard] widget.
+  ///
+  /// The [children] parameter is required and must not be null.
+  /// All other parameters are optional.
 
   const LzCard(
       {super.key,

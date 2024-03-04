@@ -96,7 +96,3 @@ void printt(dynamic value) {
     return true;
   }());
 }
-
-void main() {
-  printt('ok');
-}

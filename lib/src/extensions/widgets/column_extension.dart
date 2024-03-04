@@ -72,6 +72,17 @@ extension CustomColumnExtension on Column {
         children: children,
       );
 
+  /// Returns a [Column] widget with center alignment and specified parameters.
+  ///
+  /// [mainAxisAlignment]: How the children should be placed along the main axis.
+  /// [mainAxisSize]: How much space should be occupied in the main axis.
+  /// [crossAxisAlignment]: How the children should be placed along the cross axis.
+  /// [textDirection]: The reading order of the text.
+  /// [verticalDirection]: The vertical direction in which children should be placed.
+  /// [textBaseline]: A baseline that aligns the children vertically.
+  /// [children]: The widgets to display in the column.
+  ///
+  /// Returns a [Column] widget with the specified parameters.
   Column get center => Column(
         mainAxisAlignment: Maa.center,
         mainAxisSize: mainAxisSize,
@@ -82,6 +93,11 @@ extension CustomColumnExtension on Column {
         children: children,
       );
 
+  /// Adds spacing between children in a [Column] widget.
+  ///
+  /// [spacing]: The height of the space to add between children.
+  ///
+  /// Returns a [Column] widget with spacing added between its children.
   Column gap(double spacing) {
     List<Widget> newChildren = [];
 

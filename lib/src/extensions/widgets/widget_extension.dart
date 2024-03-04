@@ -1,11 +1,21 @@
 part of extension;
 
+/// Extension method on [Widget] to provide access to Lazuli UI modifiers.
 extension LzExtension on Widget {
+  /// Returns an instance of [LzModifiers] for applying Lazuli UI modifiers to the widget.
+  ///
+  /// Returns an instance of [LzModifiers].
   LzModifiers get lz => LzModifiers(this);
 }
 
+/// A class for applying Lazuli UI modifiers to a widget.
 class LzModifiers {
+  /// The widget to apply modifiers to.
   final Widget widget;
+
+  /// Constructs a [LzModifiers] instance with the provided widget.
+  ///
+  /// [widget]: The widget to apply modifiers to.
   LzModifiers(this.widget);
 
   /// ``` dart
@@ -242,7 +252,14 @@ extension CustomIconrExtension on Iconr {
   }
 }
 
+/// Extension method on [List<Widget>] to conditionally replace the list with a skeleton list.
 extension CustomListWidgetExtension on List<Widget> {
+  /// Conditionally replaces the list with a skeleton list based on the given condition.
+  ///
+  /// [condition]: A boolean value indicating whether to replace the list with skeletons.
+  /// [skeletons]: The skeleton list to use if the condition is true.
+  ///
+  /// Returns either the original list or the skeleton list based on the condition.
   List<Widget> skeleton(bool condition, List<Widget> skeletons) {
     if (condition) {
       return skeletons;

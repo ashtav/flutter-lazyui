@@ -1,17 +1,29 @@
 part of widget;
 
+/// A widget displayed when there is no data.
 class LzNoData extends StatelessWidget {
+  /// The optional icon to be displayed.
   final Widget? icon;
 
+  /// The message displayed when there is no data.
   final String? message;
 
+  /// The message displayed when the widget is tapped.
   final String? onTapMessage;
 
+  /// The callback function when the widget is tapped.
   final Function()? onTap;
 
+  /// The padding around the content of the widget.
   final EdgeInsetsGeometry? padding;
 
+  /// The color of the text.
   final Color? textColor;
+
+  /// Creates a [LzNoData] widget.
+  ///
+  /// The [icon] and [message] parameters are optional.
+  /// All other parameters are also optional.
 
   const LzNoData({
     Key? key,

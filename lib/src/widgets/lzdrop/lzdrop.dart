@@ -7,7 +7,15 @@ export 'dropdown_option.dart';
 export 'dropdown_style.dart';
 export 'dropdown_value.dart';
 
+/// A utility class for displaying dropdown menus.
 class LzDrop {
+  /// Displays a dropdown menu.
+  ///
+  /// Parameters:
+  /// - `key`: The global key associated with the dropdown.
+  /// - `options`: A list of options to be displayed in the dropdown menu.
+  /// - `style`: The style configuration for the dropdown menu.
+  /// - `onSelect`: A callback function invoked when an option is selected.
   static void show(GlobalKey key,
       {List<DropOption> options = const [], DropStyle? style, void Function(DropValue value)? onSelect}) {
     try {
@@ -36,9 +44,20 @@ class LzDrop {
   }
 }
 
+/// An abstract class for creating dropdown view widgets.
 abstract class LzDropView<T> extends StatelessWidget {
   const LzDropView({Key? key}) : super(key: key);
 
+  /// Displays a dropdown menu.
+  ///
+  /// Parameters:
+  /// - `context`: The build context.
+  /// - `tag`: A unique identifier for the dropdown.
+  /// - `key`: The global key associated with the dropdown.
+  /// - `child`: The child widget that triggers the dropdown.
+  /// - `options`: A list of options to be displayed in the dropdown menu.
+  /// - `style`: The style configuration for the dropdown menu.
+  /// - `onSelect`: A callback function invoked when an option is selected.
   void showDropdown(BuildContext context, String tag, GlobalKey key, Widget child,
       {List<DropOption> options = const [], DropStyle? style, void Function(DropValue value)? onSelect}) {
     BuildContext context = key.currentContext!;
@@ -102,10 +121,18 @@ abstract class LzDropView<T> extends StatelessWidget {
   Widget build(BuildContext context);
 }
 
+/// A dropdown item widget that displays a list of options when tapped.
 class LzDropItem extends LzDropView {
+  /// The child widget to be displayed as the dropdown item.
   final Widget child;
+
+  /// The list of options to be displayed in the dropdown menu.
   final List<DropOption> options;
+
+  /// The style configuration for the dropdown menu.
   final DropStyle? style;
+
+  /// A callback function invoked when an option is selected.
   final void Function(DropValue value)? onSelect;
 
   const LzDropItem({super.key, required this.child, this.options = const [], this.style, this.onSelect});

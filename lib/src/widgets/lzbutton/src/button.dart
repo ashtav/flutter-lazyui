@@ -3,13 +3,30 @@ import 'package:lazyui/lazyui.dart';
 
 import 'notifier.dart';
 
+/// A customizable button widget with support for text, icons, and various styles.
 class LzButton extends StatelessWidget {
+  /// The text to display on the button.
   final String? text;
+
+  /// The icon to display on the button.
   final IconData? icon;
+
+  /// The style configuration for the button.
   final LzButtonStyle? style;
+
+  /// A flag indicating whether the button is disabled.
   final bool disabled;
+
+  /// A callback function to invoke when the button is tapped.
   final Function(ButtonState state)? onTap;
 
+  /// Constructs a [LzButton] widget with the provided parameters.
+  ///
+  /// [text]: The text to display on the button.
+  /// [icon]: The icon to display on the button.
+  /// [style]: The style configuration for the button.
+  /// [disabled]: A flag indicating whether the button is disabled. Default is false.
+  /// [onTap]: A callback function to invoke when the button is tapped.
   const LzButton({super.key, this.text, this.icon, this.style, this.disabled = false, this.onTap});
 
   @override
@@ -109,10 +126,20 @@ class LzButton extends StatelessWidget {
   }
 }
 
+/// Represents the state of a button and provides methods to interact with it.
 class ButtonState {
+  /// The notifier associated with the button state.
   final ButtonNotifier _notifier;
+
+  /// Constructs a [ButtonState] instance with the specified notifier.
   ButtonState(this._notifier);
 
+  /// Submits an action associated with the button, optionally with a delay for aborting.
+  ///
+  /// [abortOn]: The duration after which the submission should be aborted.
+  /// [then]: A callback function to execute after the submission is aborted.
+  /// [future]: A future function to execute after the submission. If provided, this function will be awaited.
+  /// Returns a future that completes with the result of the submission.
   Future<T> submit<T>({Duration? abortOn, Function()? then, Future<T> Function()? future}) async {
     _notifier.onSubmit();
 
@@ -133,6 +160,11 @@ class ButtonState {
     return null as T;
   }
 
+  /// Aborts the current submission.
   void abort() => _notifier.onAbort();
+
+  /// Sets the text of the button.
+  ///
+  /// [text]: The text to set.
   void setText(String text) => _notifier.onSetText(text);
 }

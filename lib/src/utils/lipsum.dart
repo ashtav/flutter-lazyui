@@ -1,5 +1,6 @@
 part of utils;
 
+/// word list to generate random text
 List<String> words = [
   "lorem",
   "ipsum",
@@ -1189,11 +1190,13 @@ List<String> words = [
   "dictum"
 ];
 
+/// Returns a random integer between [min] and [max] (inclusive).
 _randomInt(int min, int max) {
   math.Random rnd = math.Random();
   return rnd.nextInt((max - min) + 1) + min;
 }
 
+/// A class for generating random text.
 class Lipsum {
   /// Creates [numWords] number of random words.
   static String createWord([int numWords = 1]) {

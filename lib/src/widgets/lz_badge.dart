@@ -1,17 +1,43 @@
 part of widget;
 
+/// A badge widget to display textual or icon-based information.
 class LzBadge extends StatelessWidget {
+  /// The text content of the badge.
   final String text;
+
+  /// The spacing between the text and the icon (if present).
   final double spacing;
+
+  /// The size of the badge.
   final double? size;
+
+  /// The background color of the badge.
   final Color? color;
+
+  /// The border radius of the badge.
   final BorderRadiusGeometry? radius;
+
+  /// The icon to be displayed alongside the text.
   final IconData? icon;
+
+  /// The style of the icon.
   final IconStyle? iconStyle;
+
+  /// Determines if the badge uses a softer color palette.
   final bool softColor;
+
+  /// The text style of the badge.
   final TextStyle? textStyle;
+
+  /// The shape of the badge container.
   final BoxShape? shape;
+
+  /// The shadow of the badge container.
   final BoxShadow? boxShadow;
+
+  /// Creates a [LzBadge] widget.
+  ///
+  /// The [text] parameter is required and must not be null.
 
   const LzBadge(this.text,
       {super.key,

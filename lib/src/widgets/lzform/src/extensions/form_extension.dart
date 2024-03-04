@@ -28,6 +28,13 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// Resets the form by clearing the values of form fields.
+  ///
+  /// The [except] parameter specifies a list of keys for fields that should not be reset.
+  /// The [only] parameter specifies a list of keys for fields that should be reset.
+  /// If both [except] and [only] are provided, [except] takes precedence.
+  ///
+  /// Returns a map of the form model after resetting.
   Map<String, FormModel> reset({List<String> except = const [], List<String> only = const []}) {
     for (var e in keys) {
       if (!except.contains(e) && (only.isEmpty || only.contains(e))) {
@@ -59,6 +66,18 @@ extension LzFormExtension on Map<String, FormModel> {
     }
   }
 
+  /// Validates the form fields based on specified validation rules.
+  ///
+  /// The [required] parameter specifies a list of keys for fields that are required.
+  /// The [min] parameter specifies a list of keys for fields that have a minimum length requirement.
+  /// The [max] parameter specifies a list of keys for fields that have a maximum length requirement.
+  /// The [email] parameter specifies a list of keys for fields that should contain valid email addresses.
+  /// The [messages] parameter allows customizing error messages for different validation rules.
+  /// The [alert] parameter determines how validation errors are displayed.
+  /// The [toastPlacement] parameter specifies the placement of toast notifications if [alert] is set to FormAlert.toast.
+  /// The [singleNotifier] parameter specifies whether to use a single notifier for all fields or individual notifiers.
+  ///
+  /// Returns the LzForm instance after validation.
   LzForm validate(
       {List<String> required = const [],
       List<String> min = const [],
@@ -151,6 +170,12 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// Focuses on the specified form field.
+  ///
+  /// The [key] parameter specifies the key of the form field to focus on.
+  /// The optional [value] parameter determines whether to focus on the field (default is true).
+  ///
+  /// Returns the updated map of form models after focusing on the field.
   Map<String, FormModel> focus(String key, [bool value = true]) {
     if (containsKey(key) && this[key] != null) {
       final notifier = this[key]!.notifier;
@@ -170,6 +195,11 @@ extension LzFormExtension on Map<String, FormModel> {
     return FormControl(notifier);
   }
 
+  /// Sets the form control for the specified key.
+  ///
+  /// The [key] parameter specifies the key of the form field.
+  ///
+  /// Returns the form control for the specified key.
   Map<String, FormModel> setValue(Object key, dynamic value) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
@@ -203,6 +233,12 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// Sets an extra value for the specified form field keys.
+  ///
+  /// The [key] parameter specifies the key or keys of the form field(s).
+  /// The [value] parameter is the extra value to set.
+  ///
+  /// Returns the modified map of form fields.
   Map<String, FormModel> setExtra(Object key, dynamic value) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
@@ -216,6 +252,11 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// Retrieves the extra value associated with the specified form field key.
+  ///
+  /// The [key] parameter specifies the key of the form field.
+  ///
+  /// Returns the extra value associated with the specified form field key, or null if not found.
   dynamic getExtra(String key) {
     dynamic result;
 
@@ -227,6 +268,11 @@ extension LzFormExtension on Map<String, FormModel> {
     return result;
   }
 
+  /// Retrieves the selected value associated with the specified form field key.
+  ///
+  /// The [key] parameter specifies the key of the form field.
+  ///
+  /// Returns the selected value associated with the specified form field key, or null if not found or if the field is not a select field.
   dynamic getSelect(String key) {
     dynamic result;
 
@@ -241,6 +287,15 @@ extension LzFormExtension on Map<String, FormModel> {
     return result;
   }
 
+  /// Sets the options for a select form field and optionally shows the dropdown.
+  ///
+  /// The [key] parameter specifies the key of the form field.
+  /// The [options] parameter specifies the list of options for the select field.
+  /// The optional [andShow] parameter specifies whether to immediately show the dropdown after setting the options (default is false).
+  /// The optional [disabled] parameter specifies a list of values to be disabled in the dropdown (default is an empty list).
+  /// The optional [onSelected] parameter specifies a callback function to be called when an option is selected.
+  ///
+  /// Returns the updated map of form models.
   Map<String, FormModel> setSelectOption(Object key, List<Option> options,
       {bool andShow = false, List<dynamic> disabled = const [], Function(Option? value)? onSelected}) {
     List<String> keys = key is List<String> ? key : [key.toString()];
@@ -282,6 +337,11 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// Shows the select picker for the specified form field.
+  ///
+  /// The [key] parameter specifies the key of the form field.
+  ///
+  /// Returns the updated map of form models.
   Map<String, FormModel> showSelectPicker(Object key) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 

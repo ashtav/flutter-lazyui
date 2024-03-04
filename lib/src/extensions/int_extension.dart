@@ -44,16 +44,28 @@ extension LzIntExtension on int {
   }
 }
 
-extension LzIntNulllableExtension on int? {
-  String currency(
-      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
-    return (this == null ? '0' : toString()).currency(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+/// Extension method on [int?] to format the value as a currency string.
+extension LzIntNullableExtension on int? {
+  /// Formats the value as a currency string.
+  ///
+  /// [symbol]: The currency symbol to use.
+  /// [decimalDigits]: The number of decimal digits to display.
+  /// [separator]: The separator to use for thousands.
+  ///
+  /// Returns the formatted currency string.
+  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+    return (this == null ? '0' : toString())
+        .currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).idr(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  /// Formats the value as Indonesian Rupiah (IDR).
+  ///
+  /// [symbol]: The currency symbol to use.
+  /// [decimalDigits]: The number of decimal digits to display.
+  /// [separator]: The separator to use for thousands.
+  ///
+  /// Returns the formatted IDR string.
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 }

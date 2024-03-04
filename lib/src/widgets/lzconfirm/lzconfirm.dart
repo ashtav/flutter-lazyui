@@ -4,6 +4,7 @@ import 'package:lazyui/src/widgets/lzconfirm/src/lzconfirm_widget.dart';
 
 export 'src/enum.dart';
 
+/// Utility class for displaying confirmation dialogs or sheets.
 class LzConfirm {
   static void show(BuildContext context,
       {String? title,
@@ -55,6 +56,7 @@ class LzConfirm {
     }
   }
 
+  /// Configures global settings for confirmation dialogs or sheets.
   static void config({String? confirmText, String? cancelText, double? margin, bool? darkMode}) {
     _confirmText = confirmText;
     _cancelText = cancelText;

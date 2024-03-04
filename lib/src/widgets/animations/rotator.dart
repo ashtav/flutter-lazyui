@@ -1,11 +1,27 @@
 part of widget;
 
+/// A widget that rotates its child by a specified degree over a given duration.
 class Rotator extends StatefulWidget {
+  /// The child widget to be rotated.
   final Widget child;
+
+  /// The degree by which to rotate the child.
   final int degree;
+
+  /// The duration of the rotation animation.
   final Duration duration;
 
-  const Rotator({super.key, required this.child, this.degree = 0, this.duration = const Duration(milliseconds: 150)});
+  /// Constructs a [Rotator] widget with the provided parameters.
+  ///
+  /// [child]: The child widget to be rotated.
+  /// [degree]: The degree by which to rotate the child. Default is 0.
+  /// [duration]: The duration of the rotation animation. Default is 150 milliseconds.
+  const Rotator({
+    Key? key,
+    required this.child,
+    this.degree = 0,
+    this.duration = const Duration(milliseconds: 150),
+  }) : super(key: key);
 
   @override
   State<Rotator> createState() => _RotatorState();

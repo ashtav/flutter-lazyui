@@ -7,15 +7,38 @@ export 'src/controller.dart';
 export 'src/target.dart';
 export 'src/trainer_style.dart';
 
+/// A widget that provides a guided tour experience by highlighting specific UI elements.
 class Trainer extends StatefulWidget {
+  /// The child widget on which the tour will be displayed.
   final Widget child;
+
+  /// The list of targets to highlight during the tour.
   final List<Target> targets;
+
+  /// The controller for managing the tour flow and state.
   final TrainerController? controller;
+
+  /// A callback function called when the trainer is initialized.
   final Function(TrainerController trainer)? onInit;
+
+  /// A callback function called when a target is clicked.
   final Function(String id)? onClickTarget;
-  final Function()? onFinish, onSkip;
+
+  /// A callback function called when the tour finishes.
+  final Function()? onFinish;
+
+  /// A callback function called when the tour is skipped.
+  final Function()? onSkip;
+
+  /// The style configuration for the trainer.
   final TrainerStyle? style;
+
+  /// The build context used for accessing the context in nested widgets.
   final BuildContext? context;
+
+  /// Creates a [Trainer] widget.
+  ///
+  /// The [child], [targets], and [style] parameters are required.
 
   const Trainer(
       {required this.child,

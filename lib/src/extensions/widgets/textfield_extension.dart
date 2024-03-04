@@ -1,6 +1,13 @@
 part of extension;
 
+/// Extension method on [LzTextField] to create a bordered version of the text field.
 extension LzTextFieldExtension on LzTextField {
+  /// Creates a bordered version of the text field with the provided parameters.
+  ///
+  /// [color]: The color of the border.
+  /// [backgroundColor]: The background color of the text field.
+  ///
+  /// Returns a [LzTextField] widget with borders and specified background color.
   LzTextField bordered({Color? color, Color? backgroundColor}) {
     return LzTextField(
       key: key,

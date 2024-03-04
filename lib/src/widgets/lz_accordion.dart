@@ -1,20 +1,52 @@
 part of widget;
 
+/// A widget that displays a list of collapsible panels, allowing users to expand or collapse content sections.
 class LzAccordion extends StatefulWidget {
+  /// The list of accordion panels.
   final List<LzAccordionContent> children;
+
+  /// The index of the panel to be initially expanded.
   final int? initValue;
+
+  /// Determines if multiple panels can be expanded simultaneously.
   final bool multiple;
+
+  /// Determines if the title text should be truncated with an ellipsis when it overflows.
   final bool titleEllipsis;
+
+  /// Determines if the view should scroll to the expanded panel when it's opened.
   final bool scrollToExpanded;
+
+  /// The curve of the animation when expanding or collapsing panels.
   final Curve? curve;
+
+  /// The duration of the animation when expanding or collapsing panels.
   final Duration? duration;
+
+  /// The border of the accordion.
   final BoxBorder? border;
+
+  /// The color of the accordion border.
   final Color? borderColor;
+
+  /// The background color of the accordion.
   final Color? backgroundColor;
+
+  /// The text color used for titles and content.
   final Color? textColor;
+
+  /// The radius of the accordion corners.
   final double? radius;
+
+  /// The padding around the accordion.
   final EdgeInsetsGeometry? padding;
+
+  /// The controller for managing the state of the accordion.
   final AccordionController? controller;
+
+  /// Creates an [LzAccordion] widget.
+  ///
+  /// The [children] parameter is required and must not be null.
 
   const LzAccordion({
     Key? key,

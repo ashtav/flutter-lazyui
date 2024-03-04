@@ -111,8 +111,16 @@ extension LzStringExtension on String {
 }
 
 extension LzNullableStringExtension on String? {
+  /// Formats the value as Indonesian Rupiah (IDR).
+  ///
+  /// [symbol]: The currency symbol to use. Default is 'Rp'.
+  /// [decimalDigits]: The number of decimal digits to display. Default is 0.
+  /// [separator]: The separator to use for thousands. Default is '.'.
+  ///
+  /// Returns the formatted IDR string.
   String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+    return (this == null ? '0' : toString())
+        .currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Format the given value as [currency] using the [NumberFormat] class.

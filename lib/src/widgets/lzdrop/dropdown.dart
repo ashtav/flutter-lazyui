@@ -4,12 +4,24 @@ import 'package:lazyui/lazyui.dart';
 // import 'caret_painter.dart';
 import 'dropdown_notifier.dart';
 
+/// A customizable dropdown widget that displays a list of options.
 class Dropdown extends StatelessWidget {
+  /// The target offset where the dropdown menu should be positioned.
   final Offset target;
+
+  /// The render box associated with the dropdown menu.
   final RenderBox? box;
+
+  /// The list of options to be displayed in the dropdown menu.
   final List<DropOption> options;
+
+  /// The style configuration for the dropdown menu.
   final DropStyle? style;
+
+  /// A callback function invoked when an option is selected.
   final Function(DropValue value)? onSelect;
+
+  /// An optional widget that can be displayed alongside the dropdown menu.
   final Widget? child;
 
   const Dropdown(

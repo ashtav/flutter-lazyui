@@ -104,6 +104,11 @@ extension CustomRowExtension on Row {
         children: children,
       );
 
+  /// Adds spacing between children in a [Row] widget.
+  ///
+  /// [spacing]: The width of the space to add between children.
+  ///
+  /// Returns a [Row] widget with spacing added between its children.
   Row gap(double spacing) {
     List<Widget> newChildren = [];
 

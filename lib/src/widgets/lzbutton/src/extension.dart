@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Extension providing utility methods for customizing LzButton widgets.
 extension LzButtonExtension on LzButton {
+  /// Creates a copy of the current LzButton with the provided style.
+  ///
+  /// [style]: The style to apply to the copied button.
   LzButton copyWith({LzButtonStyle? style}) {
     return LzButton(
         text: text,
@@ -21,6 +25,10 @@ extension LzButtonExtension on LzButton {
         onTap: onTap);
   }
 
+  /// Creates a copy of the current LzButton with the specified background color.
+  ///
+  /// [backgroundColor]: The background color for the button.
+  /// [outline]: Indicates whether the button should have an outline. Default is false.
   LzButton bg(Color backgroundColor, [bool outline = false]) => copyWith(
           style: LzButtonStyle(
         backgroundColor: backgroundColor,
@@ -35,6 +43,18 @@ extension LzButtonExtension on LzButton {
         shadowColor: style?.shadowColor,
       ));
 
+  /// Creates a copy of the current LzButton with the specified style properties.
+  ///
+  /// [backgroundColor]: The background color for the button.
+  /// [textColor]: The text color for the button.
+  /// [borderColor]: The border color for the button.
+  /// [textStyle]: The text style for the button.
+  /// [radius]: The border radius for the button.
+  /// [width]: The width of the button.
+  /// [outline]: Indicates whether the button should have an outline. Default is false.
+  /// [padding]: The padding for the button.
+  /// [shadow]: Indicates whether the button should have a shadow.
+  /// [shadowColor]: The color of the shadow for the button.
   LzButton styled(
           {Color? backgroundColor,
           Color? textColor,
@@ -60,6 +80,9 @@ extension LzButtonExtension on LzButton {
         shadowColor: shadowColor ?? style?.shadowColor,
       ));
 
+  /// Creates a copy of the current LzButton with the specified width.
+  ///
+  /// [width]: The width of the button.
   LzButton sized(double width) {
     return copyWith(
         style: LzButtonStyle(
@@ -76,5 +99,8 @@ extension LzButtonExtension on LzButton {
     ));
   }
 
+  /// Creates a copy of the current LzButton with a shadow effect.
+  ///
+  /// [color]: The color of the shadow. Default is 'f1f1f1'.
   LzButton shadowed([Color? color]) => styled(shadow: true, shadowColor: color ?? 'f1f1f1'.hex);
 }

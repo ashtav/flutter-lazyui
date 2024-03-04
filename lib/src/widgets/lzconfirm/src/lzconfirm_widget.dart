@@ -1,30 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A widget for displaying confirmation dialogs or sheets.
 class LzConfirmWidget extends StatelessWidget {
+  /// Title of the confirmation dialog.
   final String? title;
+
+  /// Message displayed in the confirmation dialog.
   final String? message;
+
+  /// Icon displayed in the confirmation dialog.
   final IconData icon;
+
+  /// Text for the confirmation button.
   final String? confirmText;
+
+  /// Text for the cancel button.
   final String? cancelText;
+
+  /// Color of the confirmation button.
   final Color? confirmColor;
+
+  /// Indicates whether to use dark mode for the confirmation dialog.
   final bool darkMode;
+
+  /// Callback function triggered when the confirm button is pressed.
   final Function()? onConfirm;
+
+  /// Type of confirmation dialog to display.
   final ConfirmType type;
+
+  /// Margin around the confirmation widget.
   final double? margin;
 
-  const LzConfirmWidget(
-      {super.key,
-      this.title,
-      this.message,
-      this.icon = Ti.questionMark,
-      this.confirmText,
-      this.cancelText,
-      this.confirmColor,
-      this.darkMode = false,
-      this.onConfirm,
-      this.type = ConfirmType.dialog,
-      this.margin});
+  const LzConfirmWidget({
+    Key? key,
+    this.title,
+    this.message,
+    this.icon = Icons.question_mark,
+    this.confirmText,
+    this.cancelText,
+    this.confirmColor,
+    this.darkMode = false,
+    this.onConfirm,
+    this.type = ConfirmType.dialog,
+    this.margin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

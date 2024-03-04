@@ -100,10 +100,6 @@ class Br {
   static const BoxBorder none = Border.fromBorderSide(BorderSide.none);
 }
 
-/* --------------------------------------------------------------------------------
-| EDGE INSETS
-| */
-
 class Ei {
   /// ``` dart
   /// padding: Ei.zero
@@ -148,123 +144,203 @@ class Ei {
       right: !except.contains('r') ? padding : 0);
 }
 
-/* --------------------------------------------------------------------------------
-| MAIN AXIS SIZE
-| */
-
+/// A class providing constants for main axis sizes.
 class Mas {
+  /// A constant representing `MainAxisSize.max`.
   static const MainAxisSize max = MainAxisSize.max;
+
+  /// A constant representing `MainAxisSize.min`.
   static const MainAxisSize min = MainAxisSize.min;
 }
 
-/* --------------------------------------------------------------------------------
-| MAIN AXIS ALIGNMENT
-| */
-
+/// A class providing constants for main axis alignments.
 class Maa {
+  /// A constant representing `MainAxisAlignment.start`.
   static const MainAxisAlignment start = MainAxisAlignment.start;
+
+  /// A constant representing `MainAxisAlignment.center`.
   static const MainAxisAlignment center = MainAxisAlignment.center;
+
+  /// A constant representing `MainAxisAlignment.end`.
   static const MainAxisAlignment end = MainAxisAlignment.end;
+
+  /// A constant representing `MainAxisAlignment.spaceAround`.
   static const MainAxisAlignment spaceAround = MainAxisAlignment.spaceAround;
+
+  /// A constant representing `MainAxisAlignment.spaceBetween`.
   static const MainAxisAlignment spaceBetween = MainAxisAlignment.spaceBetween;
+
+  /// A constant representing `MainAxisAlignment.spaceEvenly`.
   static const MainAxisAlignment spaceEvenly = MainAxisAlignment.spaceEvenly;
 }
 
-/* --------------------------------------------------------------------------------
-| CROSS AXIS ALIGNMENT
-| */
-
+/// A class providing constants for cross axis alignments.
 class Caa {
+  /// A constant representing `CrossAxisAlignment.start`.
   static const CrossAxisAlignment start = CrossAxisAlignment.start;
+
+  /// A constant representing `CrossAxisAlignment.center`.
   static const CrossAxisAlignment center = CrossAxisAlignment.center;
+
+  /// A constant representing `CrossAxisAlignment.end`.
   static const CrossAxisAlignment end = CrossAxisAlignment.end;
+
+  /// A constant representing `CrossAxisAlignment.baseline`.
   static const CrossAxisAlignment baseline = CrossAxisAlignment.baseline;
+
+  /// A constant representing `CrossAxisAlignment.stretch`.
   static const CrossAxisAlignment stretch = CrossAxisAlignment.stretch;
 }
 
-/* --------------------------------------------------------------------------------
-| WRAP AXIS ALIGNMENT
-| */
-
+/// A class providing constants for wrap cross axis alignments.
 class Wca {
+  /// A constant representing `WrapCrossAlignment.start`.
   static const WrapCrossAlignment start = WrapCrossAlignment.start;
+
+  /// A constant representing `WrapCrossAlignment.center`.
   static const WrapCrossAlignment center = WrapCrossAlignment.center;
+
+  /// A constant representing `WrapCrossAlignment.end`.
   static const WrapCrossAlignment end = WrapCrossAlignment.end;
 }
 
-/* --------------------------------------------------------------------------------
-| WRAP ALIGNMENT
-| */
-
+/// A class providing constants for wrap alignments.
 class Wa {
+  /// A constant representing `WrapAlignment.start`.
   static const WrapAlignment start = WrapAlignment.start;
+
+  /// A constant representing `WrapAlignment.center`.
   static const WrapAlignment center = WrapAlignment.center;
+
+  /// A constant representing `WrapAlignment.end`.
   static const WrapAlignment end = WrapAlignment.end;
+
+  /// A constant representing `WrapAlignment.spaceAround`.
   static const WrapAlignment spaceAround = WrapAlignment.spaceAround;
+
+  /// A constant representing `WrapAlignment.spaceBetween`.
   static const WrapAlignment spaceBetween = WrapAlignment.spaceBetween;
+
+  /// A constant representing `WrapAlignment.spaceEvenly`.
   static const WrapAlignment spaceEvenly = WrapAlignment.spaceEvenly;
 }
 
-/* --------------------------------------------------------------------------------
-| TEXT ALIGN
-| */
-
+/// A class providing constants for text alignments.
 class Ta {
+  /// A constant representing `TextAlign.start`.
   static const TextAlign start = TextAlign.start;
+
+  /// A constant representing `TextAlign.left`.
   static const TextAlign left = TextAlign.left;
+
+  /// A constant representing `TextAlign.right`.
   static const TextAlign right = TextAlign.right;
+
+  /// A constant representing `TextAlign.end`.
   static const TextAlign end = TextAlign.end;
+
+  /// A constant representing `TextAlign.justify`.
   static const TextAlign justify = TextAlign.justify;
+
+  /// A constant representing `TextAlign.center`.
   static const TextAlign center = TextAlign.center;
 }
 
-/* --------------------------------------------------------------------------------
-| TEXT OVERFLOW
-| */
-
+/// A class providing constants for text overflow behaviors.
 class Tof {
+  /// A constant representing `TextOverflow.clip`.
   static const TextOverflow clip = TextOverflow.clip;
+
+  /// A constant representing `TextOverflow.ellipsis`.
   static const TextOverflow ellipsis = TextOverflow.ellipsis;
+
+  /// A constant representing `TextOverflow.fade`.
   static const TextOverflow fade = TextOverflow.fade;
+
+  /// A constant representing `TextOverflow.visible`.
   static const TextOverflow visible = TextOverflow.visible;
 }
 
-/* --------------------------------------------------------------------------------
-| FONT WEIGHT
-| */
-
+/// A class providing constants for font weights.
 class Fw {
+  /// A constant representing normal font weight.
   static const FontWeight normal = FontWeight.normal;
+
+  /// A constant representing bold font weight.
   static const FontWeight bold = FontWeight.bold;
+
+  /// A constant representing font weight 100.
   static const FontWeight w100 = FontWeight.w100;
+
+  /// A constant representing font weight 200.
   static const FontWeight w200 = FontWeight.w200;
+
+  /// A constant representing font weight 300.
   static const FontWeight w300 = FontWeight.w300;
+
+  /// A constant representing font weight 400.
   static const FontWeight w400 = FontWeight.w400;
+
+  /// A constant representing font weight 500.
   static const FontWeight w500 = FontWeight.w500;
+
+  /// A constant representing font weight 600.
   static const FontWeight w600 = FontWeight.w600;
+
+  /// A constant representing font weight 700.
   static const FontWeight w700 = FontWeight.w700;
+
+  /// A constant representing font weight 800.
   static const FontWeight w800 = FontWeight.w800;
+
+  /// A constant representing font weight 900.
   static const FontWeight w900 = FontWeight.w900;
 }
 
-/* --------------------------------------------------------------------------------
-| TEXT INPUT TYPE
-| */
-
+/// A class providing constants for text input types.
 class Tit {
+  /// A constant representing a datetime text input type.
   static const TextInputType datetime = TextInputType.datetime;
+
+  /// A constant representing an email address text input type.
   static const TextInputType emailAddress = TextInputType.emailAddress;
+
+  /// A constant representing a multiline text input type.
   static const TextInputType multiline = TextInputType.multiline;
+
+  /// A constant representing a name text input type.
   static const TextInputType name = TextInputType.name;
+
+  /// A constant representing a number text input type.
   static const TextInputType number = TextInputType.number;
+
+  /// A constant representing a phone text input type.
   static const TextInputType phone = TextInputType.phone;
+
+  /// A constant representing a street address text input type.
   static const TextInputType streetAddress = TextInputType.streetAddress;
+
+  /// A constant representing a generic text input type.
   static const TextInputType text = TextInputType.text;
+
+  /// A constant representing a URL text input type.
   static const TextInputType url = TextInputType.url;
+
+  /// A constant representing a visible password text input type.
   static const TextInputType visiblePassword = TextInputType.visiblePassword;
 }
 
+/// A class providing a utility method for creating box shadows.
 class Bx {
+  /// Creates a box shadow with the specified color and optional blur, spread, x, and y parameters.
+  ///
+  /// [color]: The color of the shadow.
+  /// [blur]: The blur radius of the shadow. Default is 5.
+  /// [spread]: The spread radius of the shadow. Default is 0.
+  /// [x]: The horizontal offset of the shadow. Default is 0.
+  /// [y]: The vertical offset of the shadow. Default is 0.
+  ///
+  /// Returns a box shadow instance.
   static BoxShadow shadow(Color color, {double? blur, double? spread, double? x, double? y}) {
     return BoxShadow(color: color, blurRadius: blur ?? 5, spreadRadius: spread ?? 0, offset: Offset(x ?? 0, y ?? 0));
   }

@@ -1,28 +1,56 @@
 part of extension;
 
+/// Extension method on [BuildContext] to provide access to Lazuli UI context modifiers.
 extension LzContextModifierExtension on BuildContext {
+  /// Returns an instance of [LzContextModifiers] for applying Lazuli UI context modifiers.
+  ///
+  /// Returns an instance of [LzContextModifiers].
   LzContextModifiers get lz => LzContextModifiers(this);
 }
 
+/// A class for applying Lazuli UI context modifiers to a build context.
 class LzContextModifiers {
+  /// The build context to apply modifiers to.
   final BuildContext context;
+
+  /// Constructs a [LzContextModifiers] instance with the provided build context.
+  ///
+  /// [context]: The build context to apply modifiers to.
   LzContextModifiers(this.context);
 
+  /// Pop the current route from the navigation stack.
+  ///
+  /// [result]: An optional result to be returned to the previous route.
   void pop([dynamic result]) => Navigator.pop(context, result);
 
+  /// Navigate to a new page and push it onto the navigation stack.
+  ///
+  /// Returns a future that resolves to the result returned by the new page.
   Future<T?> push<T extends Object?>(Widget page) =>
       Navigator.push<T>(context, MaterialPageRoute(builder: (_) => page));
 
+  /// Request focus for the specified focus node within the current context.
+  ///
+  /// [node]: The focus node to request focus for. If null, a new focus node is created.
   void focus([FocusNode? node]) => FocusScope.of(context).requestFocus(node ?? FocusNode());
 
+  /// Navigate to a new page and remove all previous routes from the navigation stack.
+  ///
+  /// Returns a future that resolves to the result returned by the new page.
   Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
       Navigator.pushAndRemoveUntil<T>(context, MaterialPageRoute(builder: (_) => page), (_) => false);
 
-  Future<T?> pushNamed<T extends Object?>(String routeName, {Object? arguments}) =>
-      Navigator.pushNamed<T>(context, routeName, arguments: arguments);
-
+  /// Navigate to a named route and remove all previous routes from the navigation stack.
+  ///
+  /// Returns a future that resolves to the result returned by the new page.
   Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName, {Object? arguments}) =>
       Navigator.pushNamedAndRemoveUntil<T>(context, routeName, (_) => false, arguments: arguments);
+
+  /// Navigate to a named route and push it onto the navigation stack.
+  ///
+  /// Returns a future that resolves to the result returned by the new page.
+  Future<T?> pushNamed<T extends Object?>(String routeName, {Object? arguments}) =>
+      Navigator.pushNamed<T>(context, routeName, arguments: arguments);
 }
 
 /// Extends the functionality of the [BuildContext] class with additional methods and properties.

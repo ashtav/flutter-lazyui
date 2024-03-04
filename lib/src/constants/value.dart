@@ -1,4 +1,7 @@
+/// A class containing example data lists.
 class ExampleData {
+
+  /// List of example names.
   static List<String> names = [
     "Dutch Van Der Linde",
     "Hosea Mathews",
@@ -25,6 +28,7 @@ class ExampleData {
     "Sadie Adler"
   ];
 
+  /// List of example categories.
   static List<String> categories = [
     "Food",
     "Drink",
@@ -64,6 +68,7 @@ class ExampleData {
     "Crafts"
   ];
 
+  /// List of example addresses.
   static List<String> address = [
     'Jl. Raya Kuta, Gang Cempaka, No. 17, Kuta, Bali',
     'Jl. Gunung Payung, Block F, No. 11, Nusa Dua, Bali',

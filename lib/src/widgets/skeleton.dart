@@ -1,9 +1,18 @@
 part of widget;
 
+/// Skeleton widget used for displaying loading or placeholder content.
 class Skeleton extends StatelessWidget {
+  /// Size of the skeleton widget.
   final Dimen? size;
+
+  /// Radius of the skeleton widget.
   final double radius;
-  final Color? color, highlight;
+
+  /// Color of the skeleton widget.
+  final Color? color;
+
+  /// Highlight color of the skeleton widget.
+  final Color? highlight;
   const Skeleton({super.key, this.size, this.radius = 0, this.color, this.highlight});
 
   @override
@@ -26,6 +35,7 @@ class Skeleton extends StatelessWidget {
     );
   }
 
+  /// Creates a copy of this [Skeleton] but with the given fields replaced with the new values.
   Skeleton copyWith({Dimen? size, double? radius, Color? color, Color? highlight}) {
     return Skeleton(
         size: size ?? this.size,
@@ -34,6 +44,9 @@ class Skeleton extends StatelessWidget {
         highlight: highlight ?? this.highlight);
   }
 
+  /// Creates a dark-themed [Skeleton] widget.
+  /// - [size]: Size of the skeleton widget.
+  /// - [radius]: Radius of the skeleton widget.
   static Skeleton dark({Dimen? size, double? radius}) {
     return Skeleton(
         size: size, radius: radius ?? LazyUi.radius, color: '444'.hex, highlight: '444'.hex.withOpacity(.5));
@@ -41,6 +54,15 @@ class Skeleton extends StatelessWidget {
 }
 
 extension SkeletonExtension on Skeleton {
+  /// Extension method to iterate over a skeleton widget multiple times vertically.
+  ///
+  /// The [value] parameter specifies the number of iterations.
+  ///
+  /// The [alignment] parameter specifies the crossAxisAlignment of the column.
+  ///
+  /// The [gap] parameter specifies the gap between each iteration.
+  ///
+  /// Returns a column widget with the specified number of iterations of the skeleton widget.
   Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start, double gap = 0}) {
     return Column(
         crossAxisAlignment: alignment,
@@ -58,4 +80,3 @@ extension SkeletonExtension on Skeleton {
         })).gap(gap);
   }
 }
-
