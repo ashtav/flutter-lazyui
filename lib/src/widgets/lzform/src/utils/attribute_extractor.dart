@@ -16,6 +16,15 @@ mixin LzFormMixin {
   }
 }
 
+/// Mixin providing utility methods and widgets for forms.
+///
+/// Methods:
+///   - `getAttribute<T>(BuildContext context)`: Retrieves the attribute of a form element.
+///
+/// Widgets:
+///   - `_TopInnerLineLabel`: A widget representing a top inner line label.
+///     Parameters:
+///       - `color`: The color of the line label.
 class _TopInnerLineLabel extends StatelessWidget {
   final Color? color;
   const _TopInnerLineLabel({this.color});

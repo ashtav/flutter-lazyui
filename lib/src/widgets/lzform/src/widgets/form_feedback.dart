@@ -4,9 +4,16 @@ import 'package:lazyui/lazyui.dart';
 import '../models/attribute.dart';
 
 class FormFeedbackMessage extends StatelessWidget {
+  /// Determines whether the feedback message should be displayed.
   final bool show;
+
+  /// The message to be displayed as feedback.
   final String message;
+
+  /// The attribute associated with the feedback message.
   final Attribute? attribute;
+
+  /// Constructs a FormFeedbackMessage widget.
   const FormFeedbackMessage({super.key, this.show = true, this.message = '', this.attribute});
 
   @override

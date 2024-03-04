@@ -6,22 +6,42 @@ import 'package:lazyui/lazyui.dart';
 import '../models/checkbox_model.dart';
 import '../models/radio_model.dart';
 
+/// Notifier for managing form fields.
 class FormNotifier extends ChangeNotifier {
-  String? label; // used to check notifier is owned by a form field
+  /// Used to check if the notifier is owned by a form field.
+  String? label;
+
+  /// Controller for managing the text input.
   TextEditingController controller = TextEditingController();
+
+  /// Focus node for handling focus events.
   FocusNode node = FocusNode();
 
+  /// Length of the text input.
   int textLength = 0;
+
+  /// Error message associated with the form field.
   String errorMessage = '';
-  bool isValid = true, obsecure = false, disabled = false;
+
+  /// Indicates whether the form field is valid.
+  bool isValid = true;
+
+  /// Indicates whether the text should be obscured.
+  bool obsecure = false;
+
+  /// Indicates whether the form field is disabled.
+  bool disabled = false;
+
+  /// Additional data associated with the form field.
   dynamic extra;
 
+  /// Sets the length of the text input and notifies listeners.
   void setLength(int value) {
     textLength = value;
     notifyListeners();
   }
 
-  // form validation
+  /// Sets the error message and validity of the form field and notifies listeners.
   FormNotifier setMessage(String value, bool valid) {
     errorMessage = value.ucfirst;
     isValid = valid;
@@ -29,18 +49,21 @@ class FormNotifier extends ChangeNotifier {
     return this;
   }
 
+  /// Toggles the obsecure state of the form field and notifies listeners.
   FormNotifier setObsecure([bool? value]) {
     obsecure = value ?? !obsecure;
     notifyListeners();
     return this;
   }
 
+  /// Toggles the disabled state of the form field and notifies listeners.
   FormNotifier setDisabled([bool? value]) {
     disabled = value ?? !disabled;
     notifyListeners();
     return this;
   }
 
+  /// Sets the state of the form field and notifies listeners.
   void setState() => notifyListeners();
 
   // radio button
@@ -48,6 +71,7 @@ class FormNotifier extends ChangeNotifier {
   List<RadioModel> radioList = [];
   bool isRadio = false;
 
+  /// Sets the radio button option and notifies listeners.
   void setOption(RadioModel value) {
     if (value.label == '') return;
     selectedRadio = value;
@@ -57,6 +81,7 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Sets the radio button option by value and notifies listeners.
   void setOptionFindBy(dynamic value) {
     if (value == null) return;
 
@@ -71,6 +96,7 @@ class FormNotifier extends ChangeNotifier {
   List<CheckboxModel> selectedCheckbox = [];
   bool isCheckbox = false;
 
+  /// Sets the checkbox option and notifies listeners.
   void setCheckbox(CheckboxModel value) {
     if (value.label.trim().isEmpty) return;
 
@@ -85,6 +111,7 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Sets the checkbox option by value and notifies listeners.
   void setCheckboxFindBy(List value) {
     selectedCheckbox = [];
 
@@ -119,6 +146,7 @@ class FormNotifier extends ChangeNotifier {
   // get select value
   dynamic get getSelect => selectedSelect?.value ?? selectedSelect?.label;
 
+  /// Sets the select option and notifies listeners.
   void setSelect(Option value) {
     if (value.label.trim().isEmpty) return;
     selectedSelect = value;
@@ -126,6 +154,7 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Sets the select option by value and notifies listeners.
   void setSelectOption(List<Option> value) {
     selectList = value;
     selectedSelect = null;
@@ -139,6 +168,7 @@ class FormNotifier extends ChangeNotifier {
   Timer? timer;
   Function(String value)? onChange;
 
+  /// Sets the number value and notifies listeners.
   void setNumber(int index, {bool longPress = false}) {
     if (index == -1) {
       timer?.cancel();
@@ -184,7 +214,7 @@ class FormNotifier extends ChangeNotifier {
     }
   }
 
-  // slider
+  /// Sets the slider value and notifies listeners.
   void setSlider(double value) {
     controller.text = value.toString();
     notifyListeners();

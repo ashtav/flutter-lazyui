@@ -2,13 +2,28 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class LzFormTheme extends StatelessWidget {
+  /// The label widget displayed above the form.
   final Widget? label;
+
+  /// The description text displayed below the label.
   final String? description;
+
+  /// The list of form field widgets.
   final List<Widget> children;
+
+  /// The type of form layout.
   final FormType? type;
+
+  /// The style applied to the form.
   final FormStyle? style;
+
+  /// Determines if the form fields should be grouped together.
   final bool grouping;
+
+  /// The spacing between form fields.
   final double? spacing;
+
+  /// Constructs a LzFormTheme widget.
   const LzFormTheme(
       {super.key,
       this.label,
