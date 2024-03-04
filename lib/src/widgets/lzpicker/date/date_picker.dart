@@ -4,14 +4,27 @@ import 'package:lazyui/lazyui.dart';
 
 import 'notifier.dart';
 
+/// A date picker widget for selecting dates.
 class LzDatePicker extends StatelessWidget {
+  /// The initial date selected on the date picker.
   final DateTime? initDate;
+
+  /// The minimum selectable date on the date picker.
   final DateTime? minDate;
+
+  /// The maximum selectable date on the date picker.
   final DateTime? maxDate;
+
+  /// The style configuration for the date picker.
   final DatePickerStyle? style;
+
+  /// The format of the selected date.
   final String? format;
+
+  /// Determines if the date picker includes time selection.
   final bool withTime;
 
+  /// Constructs a [LzDatePicker] widget with optional parameters.
   const LzDatePicker(
       {super.key, this.initDate, this.minDate, this.maxDate, this.style, this.format, this.withTime = false});
 

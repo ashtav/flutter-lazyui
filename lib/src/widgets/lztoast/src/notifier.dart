@@ -3,21 +3,63 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Notifier for managing toast and overlay states and configurations.
 class ToastNotifier extends ChangeNotifier {
-  bool toast = false, overlay = false, dismissOnTap = false, backdrop = false;
-  bool isProgress = false, showPercentage = false;
+  /// Flag indicating whether a toast is currently displayed.
+  bool toast = false;
 
-  String toastMessage = '', overlayMessage = '';
+  /// Flag indicating whether an overlay is currently displayed.
+  bool overlay = false;
+
+  /// Flag indicating whether the toast should be dismissed on tap.
+  bool dismissOnTap = false;
+
+  /// Flag indicating whether a backdrop should be displayed behind the toast.
+  bool backdrop = false;
+
+  /// Flag indicating whether the current overlay is a progress indicator.
+  bool isProgress = false;
+
+  /// Flag indicating whether to display the progress percentage.
+  bool showPercentage = false;
+
+  /// The message content of the toast.
+  String toastMessage = '';
+
+  /// The message content of the overlay.
+  String overlayMessage = '';
+
+  /// The icon to display in the toast.
   IconData? toastIcon;
-  Color? toastBackgroundColor, toastTextColor;
+
+  /// The background color of the toast.
+  Color? toastBackgroundColor;
+
+  /// The text color of the toast.
+  Color? toastTextColor;
+
+  /// The duration for which the toast should be displayed.
   Duration? toastDuration;
 
+  /// The maximum length of the toast message before truncation.
   int toastMaxLength = 50;
 
+  /// The placement of the toast on the screen.
   ToastPlacement? toastPlacement;
-  Timer? timer, overlayTimer;
-  double? radius, progress = 0;
 
+  /// Timer for controlling toast duration.
+  Timer? timer;
+
+  /// Timer for controlling overlay duration.
+  Timer? overlayTimer;
+
+  /// The corner radius of the toast or overlay.
+  double? radius;
+
+  /// The current progress value for the progress indicator overlay.
+  double? progress = 0;
+
+  /// Callback for when the overlay is dismissed.
   void Function()? onCancel;
 
   void showToast(String? message,
@@ -77,6 +119,8 @@ class ToastNotifier extends ChangeNotifier {
   }
 }
 
+/// Controller for managing the progress of LzToast overlays.
 class LzToastController {
+  /// Sets the progress value for the LzToast overlay.
   void setProgress(double value) {}
 }

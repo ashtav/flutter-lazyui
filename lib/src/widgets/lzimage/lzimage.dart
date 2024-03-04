@@ -7,15 +7,33 @@ import 'package:lazyui/lazyui.dart';
 import 'lzimage_preview.dart';
 import 'utils.dart';
 
+/// A widget for displaying an image.
 class LzImage<T> extends StatelessWidget {
+  /// The image to be displayed.
   final T image;
+
+  /// The size of the image.
   final Dimen? size;
+
+  /// How the image should be inscribed into the box.
   final BoxFit fit;
+
+  /// The radius of the image corners.
   final double? radius;
+
+  /// The alignment of the image within its container.
   final Alignment alignment;
+
+  /// Whether the image is interactive, allowing user interaction.
   final bool interactive;
+
+  /// A placeholder widget to be displayed while the image is loading.
   final Widget? placeholder;
+
+  /// A widget to be displayed if the image fails to load.
   final Widget? errorWidget;
+
+  /// Creates a LzImage widget.
   const LzImage(this.image,
       {super.key,
       this.size,
@@ -37,12 +55,6 @@ class LzImage<T> extends StatelessWidget {
     bool isFile = image is File;
     bool isUint8List = image is Uint8List;
     bool isImage = image is Image;
-
-//     logg('''
-// isString: $isString | isUrl: $isUrl | isSvg: $isSvg | isPath: $isPath |
-// isFile: $isFile | isUint8List: $isUint8List | isImage: $isImage | $image''');
-
-    // bool isValidImage = isUrl || isSvg || isPath || isFile || isUint8List || isImage;
 
     // get image size
     double? width = size?.w;

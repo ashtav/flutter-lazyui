@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A stateful widget for displaying an image with zooming capabilities.
 class LzImageViewer<T> extends StatefulWidget {
+  /// The image to be displayed.
   final T image;
+
+  /// A tag to identify the image viewer.
   final Object tag;
 
-  const LzImageViewer(this.image, {super.key, required this.tag});
+  /// Creates a LzImageViewer widget.
+  const LzImageViewer(this.image, {Key? key, required this.tag}) : super(key: key);
 
   @override
   State<LzImageViewer> createState() => _LzImageViewerState();

@@ -2,10 +2,18 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Widget for displaying a curve indicator.
 class CurveIndicator extends StatelessWidget {
+  /// The controller for the indicator.
   final IndicatorController controller;
+
+  /// The value of the indicator.
   final double value;
+
+  /// The style of the indicator.
   final RefreshtorStyle? style;
+
+  /// Creates a CurveIndicator.
   const CurveIndicator(this.controller, this.value, this.style, {super.key});
 
   @override

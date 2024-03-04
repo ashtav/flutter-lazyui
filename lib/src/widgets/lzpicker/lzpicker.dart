@@ -10,7 +10,16 @@ export 'option/picker_style.dart';
 export 'time/time_model.dart';
 export 'time/time_picker_style.dart';
 
+/// Displays a picker with options.
 class LzPicker {
+  /// Displays a picker with options.
+  ///
+  /// Parameters:
+  ///   - `context`: The build context.
+  ///   - `options`: A list of options to display in the picker.
+  ///   - `initialValue`: The initial value selected in the picker.
+  ///   - `onSelect`: A function called when an option is selected in the picker.
+  ///   - `style`: The style configuration for the picker.
   static void option(BuildContext context,
       {List<Option> options = const [], Option? initialValue, Function(Option)? onSelect, PickerStyle? style}) {
     if (options.isEmpty) {
@@ -28,6 +37,17 @@ class LzPicker {
         safeArea: !(style?.fullScreen ?? false));
   }
 
+  /// Displays a date picker.
+  ///
+  /// Parameters:
+  ///   - `context`: The build context.
+  ///   - `initDate`: The initial date selected in the picker.
+  ///   - `minDate`: The minimum selectable date in the picker.
+  ///   - `maxDate`: The maximum selectable date in the picker.
+  ///   - `style`: The style configuration for the date picker.
+  ///   - `format`: The format of the selected date.
+  ///   - `withTime`: A boolean indicating whether to include time selection in the picker.
+  ///   - `onSelect`: A function called when a date is selected in the picker.
   static void date(BuildContext context,
       {DateTime? initDate,
       DateTime? minDate,
@@ -65,6 +85,15 @@ class LzPicker {
     if (result != null && onSelect != null) onSelect(result);
   }
 
+  /// Displays a time picker.
+  ///
+  /// Parameters:
+  ///   - `context`: The build context.
+  ///   - `initTime`: The initial time selected in the picker.
+  ///   - `minTime`: The minimum selectable time in the picker.
+  ///   - `maxTime`: The maximum selectable time in the picker.
+  ///   - `style`: The style configuration for the time picker.
+  ///   - `onSelect`: A function called when a time is selected in the picker.
   static void time(BuildContext context,
       {Time? initTime, Time? minTime, Time? maxTime, TimePickerStyle? style, Function(Time value)? onSelect}) async {
     Time? result = await context.bottomSheet(

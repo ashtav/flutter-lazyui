@@ -13,13 +13,21 @@ ToastPlacement _defaultPlacement = ToastPlacement.bottom;
 Duration _defaultDuration = 2.s;
 double _defaultRadius = 5;
 
+/// Configuration options for LzToast messages.
 class LzToastConfig {
+  /// The placement of the toast message on the screen.
   ToastPlacement? placement;
+
+  /// The duration for which the toast message will be displayed.
   Duration? duration;
+
+  /// The radius of the toast message corners.
   double radius = 5;
 
+  /// Creates a LzToastConfig instance with optional configuration parameters.
   LzToastConfig({this.placement, this.duration, this.radius = 5});
 
+  /// Sets the default configuration options for LzToast messages.
   static void set({ToastPlacement? placement, Duration? duration, double? radius}) {
     _defaultPlacement = placement ?? _defaultPlacement;
     _defaultDuration = duration ?? _defaultDuration;
@@ -33,6 +41,7 @@ class LzToast {
   Color? backgroundColor;
   LzToastOverlayEntry? overlayEntry;
 
+  /// Singleton instance of LzToast.
   static final LzToast _instance = LzToast();
   static LzToast get instance => _instance;
 
@@ -46,6 +55,7 @@ class LzToast {
   static LzToastConfig get config =>
       LzToastConfig(placement: _defaultPlacement, duration: _defaultDuration, radius: _defaultRadius);
 
+  /// Displays a toast message with the specified parameters.
   static void show(String? message,
       {IconData? icon,
       Duration? duration,
@@ -66,6 +76,7 @@ class LzToast {
         radius: radius);
   }
 
+  /// Displays an error toast message with the specified parameters.
   static void error(String? message,
       {IconData? icon, Duration? duration, int? maxLength, ToastPlacement? placement, bool dismissOnTap = false}) {
     _notifier.showToast(message,
@@ -76,6 +87,7 @@ class LzToast {
         backgroundColor: Colors.red.withOpacity(.8));
   }
 
+  /// Displays a warning toast message with the specified parameters.
   static void warning(String? message,
       {IconData? icon, Duration? duration, int? maxLength, ToastPlacement? placement, bool dismissOnTap = false}) {
     _notifier.showToast(message,
@@ -86,6 +98,7 @@ class LzToast {
         backgroundColor: Colors.orange.withOpacity(.8));
   }
 
+  /// Displays a success toast message with the specified parameters.
   static void success(String? message,
       {IconData? icon, Duration? duration, int? maxLength, ToastPlacement? placement, bool dismissOnTap = false}) {
     _notifier.showToast(message,
@@ -96,6 +109,9 @@ class LzToast {
         backgroundColor: Colors.green.withOpacity(.8));
   }
 
+  /// Displays an overlay with the given message.
+  ///
+  /// Returns a future that completes after the specified duration, if provided.
   static Future<T> overlay<T>(String message,
       {Duration? duration,
       bool dismissOnTap = false,
@@ -128,6 +144,9 @@ class LzToast {
     return null as T;
   }
 
+  /// Displays an overlay with a progress indicator.
+  ///
+  /// If [progress] function is provided, the overlay's progress will be updated accordingly.
   static overlayProgress(String message,
       {bool percentage = false, double Function()? progress, void Function()? then, void Function()? onCancel}) async {
     _notifier.dismiss();
@@ -159,7 +178,7 @@ class LzToast {
     _notifier.showOverlay(message, isProgress: true, showPercentage: percentage, onCancel: onCancel);
   }
 
-  /// dismiss loading
+  /// Dismisses any active toast messages or overlays.
   static void dismiss([Duration? duration]) {
     if (duration != null) {
       Future.delayed(duration, () {
@@ -203,7 +222,7 @@ class LzToastWidget extends StatelessWidget {
                     ),
                 child: state.overlay
                     ? ZoomIn(
-                      child: Center(
+                        child: Center(
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -249,7 +268,7 @@ class LzToastWidget extends StatelessWidget {
                             _notifier.dismiss();
                           }
                         }),
-                    )
+                      )
                     : const None()),
             state.overlay && state.onCancel != null
                 ? Poslign(

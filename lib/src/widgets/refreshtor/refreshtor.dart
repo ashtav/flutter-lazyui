@@ -8,13 +8,24 @@ import 'src/curve_indicator.dart';
 
 export 'src/style.dart';
 
+/// A widget that displays a refresh indicator.
 class Refreshtor extends StatelessWidget {
+  /// The widget below this widget in the tree.
   final Widget? child;
-  final Function() onRefresh;
-  final RefrehtorType type;
-  final RefreshtorStyle? style;
-  final Widget Function(IndicatorController controller, double value)? builder;
 
+  /// Callback function invoked when the user triggers a refresh.
+  final Function() onRefresh;
+
+  /// The type of Refreshtor.
+  final RefrehtorType type;
+
+  /// Style configuration for the Refreshtor.
+  final RefreshtorStyle? style;
+
+  /// A builder function that returns a custom indicator widget.
+final Widget Function(IndicatorController controller, double value)? builder;
+
+  /// Creates a Refreshtor widget.
   const Refreshtor(
       {super.key, this.child, required this.onRefresh, this.type = RefrehtorType.curve, this.style, this.builder});
 

@@ -2,10 +2,18 @@ import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Widget for displaying a bar indicator.
 class BarIndicator extends StatelessWidget {
+  /// The controller for the indicator.
   final IndicatorController controller;
+
+  /// The value of the indicator.
   final double value;
+
+  /// The style of the indicator.
   final RefreshtorStyle? style;
+
+  /// Creates a BarIndicator.
   const BarIndicator(this.controller, this.value, this.style, {super.key});
 
   @override
@@ -41,8 +49,9 @@ class BarIndicator extends StatelessWidget {
                       curve: Curves.linearToEaseOut,
                       height: 2,
                       width: 50 * value,
-                      decoration:
-                          BoxDecoration(color: indicatorColor.withOpacity(value.clamp(0, 1)), borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+                      decoration: BoxDecoration(
+                          color: indicatorColor.withOpacity(value.clamp(0, 1)),
+                          borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
                   ScaleSwitched(
                     alignment: Alignment.center,
                     child: value < .3

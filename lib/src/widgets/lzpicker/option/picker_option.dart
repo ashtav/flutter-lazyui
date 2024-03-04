@@ -4,10 +4,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A stateful widget for displaying a picker with a list of options.
 class LzPickerOption extends StatefulWidget {
+  /// The list of options to display in the picker.
   final List<Option> options;
+
+  /// The initial selected option.
   final Option? initialValue;
+
+  /// A function called when an option is selected.
   final Function(Option)? onSelect;
+
+  /// The style configuration for the picker.
   final PickerStyle? style;
 
   const LzPickerOption({
@@ -157,13 +165,13 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                               alignment: Alignment.center,
                               decoration: BoxDecoration(border: Br.only(['b', 't'])),
                             ),
-    
+
                             // This is called when selected item is changed.
                             onSelectedItemChanged: (int selectedItem) {
                               if (widget.onSelect != null) {
                                 notifier.index = selectedItem;
                                 int i = notifier.index;
-    
+
                                 if (notifier.values.isNotEmpty) {
                                   notifier.result = {
                                     'label': notifier.options[i],
@@ -173,13 +181,13 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                                   notifier.result = {'label': notifier.options[i]};
                                 }
                               }
-    
+
                               notifier.setDisabled(widget.options[selectedItem].disabled);
                             },
                             children: notifier.options.generate((item, i) {
                               final option = widget.options[i];
                               bool disabled = option.disabled;
-    
+
                               return Center(
                                 child: Container(
                                   constraints: BoxConstraints(maxWidth: context.width * .75),
@@ -198,7 +206,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                       ),
                     )),
               ),
-    
+
               // confirm button
               Poslign(
                   alignment: Alignment.bottomCenter,
@@ -245,7 +253,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                       ],
                     ).margin(b: 15, l: 0),
                   )),
-    
+
               // search bar widget
               Poslign(
                 alignment: Alignment.topLeft,
@@ -264,7 +272,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                           notifier.onSearch(keyword);
                         },
                         node: focusNode,
-                        onSubmit: (_){
+                        onSubmit: (_) {
                           focusNode.unfocus();
                         },
                         prefixIcon: Iconr(
@@ -286,9 +294,15 @@ class _LzPickerOptionState extends State<LzPickerOption> {
   }
 }
 
+/// A button widget for confirming actions.
 class ConfirmButton extends StatelessWidget {
+  /// The text displayed on the button.
   final String text;
+
+  /// A function called when the button is tapped.
   final Function()? onTap;
+
+  /// A flag indicating whether the button is disabled.
   final bool disabled;
 
   const ConfirmButton(this.text, {super.key, this.onTap, this.disabled = false});
@@ -314,16 +328,40 @@ class ConfirmButton extends StatelessWidget {
   }
 }
 
-// select picker notifier
+/// A notifier for managing state related to a select picker.
 class SelectPickerNotifier extends ChangeNotifier {
+  /// A controller for handling the keyword input.
   TextEditingController keyword = TextEditingController();
+
+  /// A controller for handling scrolling within the picker.
   FixedExtentScrollController scroll = FixedExtentScrollController(initialItem: 0);
 
-  List<String> options = [], originalOptions = [];
-  List values = [], originalValues = [];
+  /// A list of options available for selection.
+  List<String> options = [];
+
+  /// A copy of the original list of options.
+  List<String> originalOptions = [];
+
+  /// A list of selected values.
+  List<dynamic> values = [];
+
+  /// A copy of the original list of values.
+  List<dynamic> originalValues = [];
+
+  /// A map containing the result of the selection.
   Map<String, dynamic> result = {};
-  double defaultHeight = 300, height = 300;
-  int index = 0, found = 0;
+
+  /// The default height of the picker.
+  double defaultHeight = 300;
+
+  /// The current height of the picker.
+  double height = 300;
+
+  /// The index of the selected option.
+  int index = 0;
+
+  /// The number of options found.
+  int found = 0;
 
   // this is used to disabled item in select picker
   bool disabled = false, isExpanded = false;

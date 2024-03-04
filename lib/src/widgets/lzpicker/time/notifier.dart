@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A notifier class for managing the state of a time picker.
 class TimePickerNotifier extends ChangeNotifier {
+  /// Scroll controllers for the hour and minute pickers.
   Map<String, FixedExtentScrollController> controller = {};
+
+  /// Values representing the selected hour and minute.
   Map<String, int> values = {'h': 0, 'i': 0};
 
+  /// The initial time, minimum time, and maximum time for the picker.
   late Time initTime, minTime, maxTime;
+
+  /// Gets the currently selected time.
   Time get value => Time(values['h'] ?? 0, values['i'] ?? 0);
 
   void onInitialized(List<String> formats, {Time? initTime, Time? minTime, Time? maxTime}) {
@@ -52,29 +59,25 @@ class TimePickerNotifier extends ChangeNotifier {
       int hour = values['h']!;
       int minute = values['i']!;
 
-      
-
       Time time = Time(hour, minute);
 
       bool isLessThanMinTime = time.isBefore(minTime);
       bool isMoreThanMaxTime = time.isAfter(maxTime);
 
-      if(isMoreThanMaxTime){
-        if(hour > maxTime.hour){
+      if (isMoreThanMaxTime) {
+        if (hour > maxTime.hour) {
           scrollTo('h', maxTime.hour);
         }
 
-        if(minute > maxTime.minute){
+        if (minute > maxTime.minute) {
           scrollTo('i', maxTime.minute);
         }
-      }
-
-      else if(isLessThanMinTime){
-        if(hour < minTime.hour){
+      } else if (isLessThanMinTime) {
+        if (hour < minTime.hour) {
           scrollTo('h', minTime.hour);
         }
 
-        if(minute < minTime.minute){
+        if (minute < minTime.minute) {
           scrollTo('i', minTime.minute);
         }
       }

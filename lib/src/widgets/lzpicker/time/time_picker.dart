@@ -4,12 +4,21 @@ import 'package:lazyui/lazyui.dart';
 
 import 'notifier.dart';
 
+/// A time picker widget for selecting a time within a specified range.
 class LzTimePicker extends StatelessWidget {
+  /// The initial time value displayed when the picker is first shown.
   final Time? initTime;
+
+  /// The minimum selectable time.
   final Time? minTime;
+
+  /// The maximum selectable time.
   final Time? maxTime;
+
+  /// The style configuration for the time picker.
   final TimePickerStyle? style;
 
+  /// Constructs a [LzTimePicker] widget.
   const LzTimePicker({
     super.key,
     this.initTime,

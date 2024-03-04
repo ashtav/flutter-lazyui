@@ -3,10 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A circular slider widget.
 class CircularSlider extends StatefulWidget {
+  /// The current value of the slider.
   final double value;
+
+  /// The color of the slider.
   final Color? color;
 
+  /// Constructs a [CircularSlider] widget with the given [value] and optional [color].
   const CircularSlider({Key? key, required this.value, this.color}) : super(key: key);
 
   @override
@@ -55,8 +60,12 @@ class _CircularSliderState extends State<CircularSlider> with SingleTickerProvid
   }
 }
 
+/// A custom painter for rendering a circular slider.
 class CircularSliderPainter extends CustomPainter {
+  /// The current value of the slider.
   final double value;
+
+  /// The color of the slider.
   final Color color;
 
   CircularSliderPainter({required this.value, this.color = Colors.white});

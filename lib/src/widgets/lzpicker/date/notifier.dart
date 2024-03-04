@@ -3,13 +3,21 @@ import 'package:lazyui/lazyui.dart';
 
 import 'constant.dart';
 
+/// A notifier class for managing the state of a date picker.
 class DatePickerNotifier extends ChangeNotifier {
+  /// Scroll controllers for the day, month, year, hour, and minute pickers.
   Map<String, FixedExtentScrollController> controller = {};
+
+  /// Values representing the selected day, month, year, hour, and minute.
   Map<String, int> values = {'d': 1, 'm': 1, 'y': 2021, 'h': 0, 'i': 0};
 
+  /// The initial date, minimum date, and maximum date for the picker.
   late DateTime initDate, minDate, maxDate;
+
+  /// The selected time.
   late Time time;
 
+  /// Gets the currently selected date and time.
   DateTime get value =>
       DateTime(values['y'] ?? 0, values['m'] ?? 0, values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
