@@ -13,12 +13,14 @@ class DropdownView extends StatelessWidget {
     final icons = [Ti.pencil, Ti.trash, null, Ti.map2, Ti.filter];
     final subOptions = {
       'Share to': DropOption.list(['Facebook', 'Instagram', 'Tiktok']),
-      'Filters': DropOption.list(['Price', 'Rating', 'Distance', 'Category', 'Open now', 'Sort by'])
+      'Filters': DropOption.list(
+          ['Price', 'Rating', 'Distance', 'Category', 'Open now', 'Sort by'])
     };
 
     void showDropdown(GlobalKey key) {
       LzDrop.show(key,
-          options: DropOption.list(['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
+          options: DropOption.list(
+              ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
               disabled: [3], subOptions: subOptions),
           style: DropStyle(
               icons: icons,
@@ -68,9 +70,14 @@ class DropdownView extends StatelessWidget {
             child: LzListView(
               children: tabs.generate((item, i) {
                 return LzDropItem(
-                  options: DropOption.list(['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
+                  options: DropOption.list(
+                      ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
                       disabled: [3], subOptions: subOptions),
-                  style: DropStyle(icons: icons, backBlur: true, separators: ['Filters'], criticals: [1]),
+                  style: DropStyle(
+                      icons: icons,
+                      backBlur: true,
+                      separators: ['Filters'],
+                      criticals: [1]),
                   onSelect: (value) {
                     logg(value.toMap());
                   },
@@ -96,7 +103,8 @@ class DropdownView extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, border: Br.only(['t', 'b'])),
+        decoration:
+            BoxDecoration(color: Colors.white, border: Br.only(['t', 'b'])),
         padding: Ei.sym(h: 20),
         child: Row(
           children: [

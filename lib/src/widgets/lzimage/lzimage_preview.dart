@@ -10,13 +10,15 @@ class LzImageViewer<T> extends StatefulWidget {
   final Object tag;
 
   /// Creates a LzImageViewer widget.
-  const LzImageViewer(this.image, {Key? key, required this.tag}) : super(key: key);
+  const LzImageViewer(this.image, {Key? key, required this.tag})
+      : super(key: key);
 
   @override
   State<LzImageViewer> createState() => _LzImageViewerState();
 }
 
-class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProviderStateMixin {
+class _LzImageViewerState extends State<LzImageViewer>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Matrix4> _animation;
   late TransformationController controller;
@@ -92,7 +94,9 @@ class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProvider
                       onDoubleTapDown: (details) => _doubleTapDetails = details,
                       onDoubleTap: () => _handleDoubleTap(),
                       child: LzImage(widget.image,
-                          radius: 0, fit: BoxFit.contain, size: Dimen(h: context.height, w: context.height)))),
+                          radius: 0,
+                          fit: BoxFit.contain,
+                          size: Dimen(h: context.height, w: context.height)))),
             ),
 
             // close button
@@ -103,7 +107,12 @@ class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProvider
                     padding: Ei.all(20),
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 25, spreadRadius: 7)],
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 25,
+                            spreadRadius: 7)
+                      ],
                     ),
                     child: const Icon(
                       La.times,

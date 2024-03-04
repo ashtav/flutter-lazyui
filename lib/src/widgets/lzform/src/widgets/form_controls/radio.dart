@@ -28,7 +28,8 @@ class Radio extends StatelessWidget with LzFormMixin {
   @override
   Widget build(BuildContext context) {
     final attr = getAttribute(context);
-    RadioStyle? style = (attr.isWrapped ? attr.style?.radio : attr.radioStyle) ?? this.style;
+    RadioStyle? style =
+        (attr.isWrapped ? attr.style?.radio : attr.radioStyle) ?? this.style;
 
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
@@ -60,7 +61,8 @@ class Radio extends StatelessWidget with LzFormMixin {
 
     // if values length is not equal to options length, show warning
     if (values.isNotEmpty && values.length != options.length) {
-      logg('Warning: Radio values length is not equal to options length', name: 'LzForm');
+      logg('Warning: Radio values length is not equal to options length',
+          name: 'LzForm');
     }
 
     // check if label is available
@@ -83,10 +85,13 @@ class Radio extends StatelessWidget with LzFormMixin {
     Color borderColor = style?.borderColor ?? Colors.black12;
 
     // get background color
-    Color backgroundColor = style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+    Color backgroundColor = style?.background ??
+        (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
 
     // create label widget
-    Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
+    Widget labelWidget = hasLabel
+        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        : const None();
 
     // create top inner label widget
     Widget topInnerLabelWidget = Positioned(
@@ -107,14 +112,17 @@ class Radio extends StatelessWidget with LzFormMixin {
             : isUnderlined
                 ? Br.only(['b'], color: borderColor)
                 : Br.all(color: borderColor),
-        borderRadius: isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
+        borderRadius:
+            isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
       ),
       padding: Ei.sym(h: 16, v: 10),
       width: context.width,
       child: Column(
         children: [
-          if ((isGrouped || isUnderlined) && !attr.isGrouped) labelWidget.margin(b: 8),
-          if ((!hasLabel || !isGrouped || !isUnderlined)) const SizedBox(height: 5),
+          if ((isGrouped || isUnderlined) && !attr.isGrouped)
+            labelWidget.margin(b: 8),
+          if ((!hasLabel || !isGrouped || !isUnderlined))
+            const SizedBox(height: 5),
 
           // options
           notifier.watch((state) {
@@ -123,7 +131,8 @@ class Radio extends StatelessWidget with LzFormMixin {
             return Wrap(
               alignment: Wa.start,
               children: radioList.generate((item, i) {
-                bool active = state.selectedRadio?.toMap().toString() == item.toMap().toString();
+                bool active = state.selectedRadio?.toMap().toString() ==
+                    item.toMap().toString();
 
                 return _Bullet(item.label, active, item.disabled, () {
                   // hide error message when user select radio
@@ -163,10 +172,14 @@ class Radio extends StatelessWidget with LzFormMixin {
               ],
             )
           else
-            isUnderlined && notifier.disabled ? radioWidget.lz.clip(all: radius) : radioWidget,
+            isUnderlined && notifier.disabled
+                ? radioWidget.lz.clip(all: radius)
+                : radioWidget,
 
-          notifier
-              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+          notifier.watch((state) => FormFeedbackMessage(
+              show: !state.isValid,
+              message: state.errorMessage,
+              attribute: attr))
         ],
       ).start,
     );
@@ -178,7 +191,8 @@ class _Bullet extends StatelessWidget {
   final bool active, disabled;
   final Function() onTap;
   final RadioStyle? style;
-  const _Bullet(this.label, this.active, this.disabled, this.onTap, {this.style});
+  const _Bullet(this.label, this.active, this.disabled, this.onTap,
+      {this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +205,9 @@ class _Bullet extends StatelessWidget {
             margin: Ei.only(r: 10),
             decoration: BoxDecoration(
                 border: Br.all(
-                    color:
-                        active ? (style?.activeColor ?? Colors.blueAccent) : (style?.inactiveColor ?? Colors.black38),
+                    color: active
+                        ? (style?.activeColor ?? Colors.blueAccent)
+                        : (style?.inactiveColor ?? Colors.black38),
                     width: active ? 5 : 1.3),
                 borderRadius: BorderRadius.circular(50))),
         Text(label, style: Gfont.color(style?.textColor ?? Colors.black87))

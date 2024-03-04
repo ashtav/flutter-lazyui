@@ -1,10 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+
 /*
  * Tabler Icons 2.36.0 by tabler  https://tabler.io
  * License  https://github.com/tabler/tablerIcons/blob/master/LICENSE
  */
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 
 /// [TablerIconData] is a base class for all Tabler Icons. It is used to
 /// generate the TablerIcons class.

@@ -1,23 +1,20 @@
-///
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
 /// * author: hunghd
 /// * email: hunghd.yb@gmail.com
 ///
 /// A package provides an easy way to add shimmer effect to Flutter application
-///
-import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-///
 /// An enum defines all supported directions of shimmer effect
 ///
 /// * [ShimmerDirection.ltr] left to right direction
 /// * [ShimmerDirection.rtl] right to left direction
 /// * [ShimmerDirection.ttb] top to bottom direction
 /// * [ShimmerDirection.btt] bottom to top direction
-///
+
 enum ShimmerDirection { ltr, rtl, ttb, btt }
 
-///
 /// A widget renders shimmer effect over [child] widget tree.
 ///
 /// [child] defines an area that shimmer effect blends on. You can build [child]

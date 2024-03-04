@@ -43,11 +43,18 @@ class LzFormTheme extends StatelessWidget {
     Color borderColor = style?.borderColor ?? Colors.black12;
 
     Widget childrenWidget = Container(
-      decoration: grouping ? BoxDecoration(border: Br.all(color: borderColor), borderRadius: Br.radius(radius)) : null,
+      decoration: grouping
+          ? BoxDecoration(
+              border: Br.all(color: borderColor),
+              borderRadius: Br.radius(radius))
+          : null,
       child: Column(
         children: [
           ...children.generate((widget, i) {
-            return grouping ? widget.lz.border(Br.only(['t'], except: i == 0, color: borderColor)) : widget;
+            return grouping
+                ? widget.lz
+                    .border(Br.only(['t'], except: i == 0, color: borderColor))
+                : widget;
           })
         ],
       ).lz.clip(all: radius),
@@ -57,8 +64,10 @@ class LzFormTheme extends StatelessWidget {
             ? childrenWidget
             : Column(
                 children: [
-                  if (label != null) label!.margin(b: description == null ? 8 : 0),
-                  if (description != null) Textml(description!, style: Gfont.fs14).margin(b: 15, t: 5),
+                  if (label != null)
+                    label!.margin(b: description == null ? 8 : 0),
+                  if (description != null)
+                    Textml(description!, style: Gfont.fs14).margin(b: 15, t: 5),
                   childrenWidget,
                 ],
               ).start)

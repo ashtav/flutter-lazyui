@@ -15,7 +15,8 @@ class TimePickerNotifier extends ChangeNotifier {
   /// Gets the currently selected time.
   Time get value => Time(values['h'] ?? 0, values['i'] ?? 0);
 
-  void onInitialized(List<String> formats, {Time? initTime, Time? minTime, Time? maxTime}) {
+  void onInitialized(List<String> formats,
+      {Time? initTime, Time? minTime, Time? maxTime}) {
     final now = DateTime.now();
 
     this.initTime = initTime ?? Time(now.hour, now.minute);
@@ -87,6 +88,7 @@ class TimePickerNotifier extends ChangeNotifier {
   }
 
   void scrollTo(String type, int index, {Duration? duration}) {
-    controller[type]?.animateToItem(index, duration: duration ?? 100.ms, curve: Curves.easeInOut);
+    controller[type]?.animateToItem(index,
+        duration: duration ?? 100.ms, curve: Curves.easeInOut);
   }
 }

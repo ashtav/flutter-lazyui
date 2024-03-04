@@ -18,13 +18,15 @@ class DatePickerNotifier extends ChangeNotifier {
   late Time time;
 
   /// Gets the currently selected date and time.
-  DateTime get value =>
-      DateTime(values['y'] ?? 0, values['m'] ?? 0, values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
+  DateTime get value => DateTime(values['y'] ?? 0, values['m'] ?? 0,
+      values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
-  void onInitialized(List<String> formats, {DateTime? initDate, DateTime? minDate, DateTime? maxDate}) {
+  void onInitialized(List<String> formats,
+      {DateTime? initDate, DateTime? minDate, DateTime? maxDate}) {
     final now = DateTime.now();
 
-    this.initDate = initDate ?? DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
+    this.initDate = initDate ??
+        DateTime(now.year, now.month, now.day, now.hour, now.minute, 0);
     this.minDate = minDate ?? DateTime(now.year, 1, 1, 0, 0, 0);
     this.maxDate = maxDate ?? DateTime(now.year + 10, 12, 31, 23, 59, 59);
 
@@ -81,7 +83,9 @@ class DatePickerNotifier extends ChangeNotifier {
             : months.generate((i) => getMonth(i, format[type] ?? 'MMMM'));
 
       case 'y':
-        return [minDate.year, maxDate.year].iterate().generate((year, i) => year.toString());
+        return [minDate.year, maxDate.year]
+            .iterate()
+            .generate((year, i) => year.toString());
 
       case 'h':
         return 24.generate((i) => i.toString().padLeft(2, '0'));
@@ -140,7 +144,8 @@ class DatePickerNotifier extends ChangeNotifier {
   }
 
   void scrollTo(String type, int index, {Duration? duration}) {
-    controller[type]?.animateToItem(index, duration: duration ?? 100.ms, curve: Curves.easeInOut);
+    controller[type]?.animateToItem(index,
+        duration: duration ?? 100.ms, curve: Curves.easeInOut);
   }
 
   // time picker
@@ -150,8 +155,10 @@ class DatePickerNotifier extends ChangeNotifier {
     openTimePicker = !openTimePicker;
 
     if (openTimePicker) {
-      int hourIndex = generateDate('h', true).indexOf(values['h']!.toString().padLeft(2, '0'));
-      int minuteIndex = generateDate('i', true).indexOf(values['i']!.toString().padLeft(2, '0'));
+      int hourIndex = generateDate('h', true)
+          .indexOf(values['h']!.toString().padLeft(2, '0'));
+      int minuteIndex = generateDate('i', true)
+          .indexOf(values['i']!.toString().padLeft(2, '0'));
 
       controller['h'] = FixedExtentScrollController(initialItem: hourIndex);
       controller['i'] = FixedExtentScrollController(initialItem: minuteIndex);

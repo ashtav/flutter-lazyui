@@ -23,9 +23,12 @@ class BarIndicator extends StatelessWidget {
     bool isLoading = controller.isLoading;
 
     Color backgroundColor = style?.backgroundColor ?? Colors.white;
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color releaseTextColor = style?.releaseTextColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color indicatorColor = style?.indicatorColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color releaseTextColor = style?.releaseTextColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color indicatorColor = style?.indicatorColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     String? text = style?.text;
     String? releaseText = style?.releaseText;
@@ -51,12 +54,16 @@ class BarIndicator extends StatelessWidget {
                       width: 50 * value,
                       decoration: BoxDecoration(
                           color: indicatorColor.withOpacity(value.clamp(0, 1)),
-                          borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+                          borderRadius:
+                              Br.radius(50 * (1 - value.clamp(0, 1))))),
                   ScaleSwitched(
                     alignment: Alignment.center,
                     child: value < .3
                         ? const None()
-                        : Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                        : Textr(
+                            isArmed
+                                ? (releaseText ?? 'Release to refresh')
+                                : (text ?? 'Pull down to refresh'),
                             style: LazyUi.font.copyWith(
                                 fontSize: 13,
                                 fontWeight: isArmed ? Fw.bold : Fw.normal,

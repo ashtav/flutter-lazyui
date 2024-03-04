@@ -41,7 +41,8 @@ class LzState {
   }
 
   /// Creates a widget that rebuilds when the value associated with the specified key changes.
-  static Widget watch<T>(String key, T initValue, Widget Function(T value) builder) {
+  static Widget watch<T>(
+      String key, T initValue, Widget Function(T value) builder) {
     return LzListener<T>(key, builder, initValue: initValue);
   }
 
@@ -67,7 +68,8 @@ class LzListener<T> extends StatelessWidget {
   final dynamic initValue;
 
   /// Constructs a [LzListener] instance with the provided identifier, builder function, and initial value.
-  const LzListener(this.id, this.builder, {Key? key, this.initValue}) : super(key: key);
+  const LzListener(this.id, this.builder, {Key? key, this.initValue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

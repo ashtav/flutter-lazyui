@@ -9,7 +9,16 @@ class UtilsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // actions
-    List<String> titles = ['Bot', 'Error Handler', 'Faker', 'Formatter', 'Lipsum', 'Log', 'Shortcut', 'Utilities'];
+    List<String> titles = [
+      'Bot',
+      'Error Handler',
+      'Faker',
+      'Formatter',
+      'Lipsum',
+      'Log',
+      'Shortcut',
+      'Utilities'
+    ];
     List<String> description = [
       'A simple bot to automate your app, with a custom message, delay, etc.',
       'Show a error message with a custom message, title, etc.',
@@ -49,6 +58,7 @@ class Actions {
   static on(BuildContext context, String label) {
     Map<String, dynamic> routes = {};
 
-    context.lz.push(Utility(title: label, child: routes[label] ?? const None()));
+    context.lz
+        .push(Utility(title: label, child: routes[label] ?? const None()));
   }
 }

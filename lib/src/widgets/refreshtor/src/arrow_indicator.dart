@@ -23,9 +23,12 @@ class ArrowIndicator extends StatelessWidget {
     bool isLoading = controller.isLoading;
 
     Color backgroundColor = style?.backgroundColor ?? Colors.white;
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color releaseTextColor = style?.releaseTextColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color indicatorColor = style?.indicatorColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color releaseTextColor = style?.releaseTextColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color indicatorColor = style?.indicatorColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     String? text = style?.text;
     String? releaseText = style?.releaseText;
@@ -66,7 +69,10 @@ class ArrowIndicator extends StatelessWidget {
                   AnimatedOpacity(
                     duration: 150.ms,
                     opacity: value.clamp(0, 1),
-                    child: Textr(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                    child: Textr(
+                        isArmed
+                            ? (releaseText ?? 'Release to refresh')
+                            : (text ?? 'Pull down to refresh'),
                         style: LazyUi.font.copyWith(
                             fontSize: 13,
                             fontWeight: isArmed ? Fw.bold : Fw.normal,

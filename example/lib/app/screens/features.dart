@@ -29,7 +29,9 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
         'features': [
-          Feature('LzForm', 'Customizable form with validation, error handling and ease full control of your form.',
+          Feature(
+              'LzForm',
+              'Customizable form with validation, error handling and ease full control of your form.',
               Ti.forms),
           Feature(
               'LzPicker',
@@ -44,12 +46,30 @@ class FeaturesView extends StatelessWidget {
         'description':
             'Dynamic elements designed to facilitate user actions, confirmations, and navigation, enhancing overall interactivity.',
         'features': [
-          Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
-          Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
-          Feature('LzPad', 'Show an otp or pin input with a custom message, duration, input, etc.', Ti.number),
-          Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
-          Feature('Refreshtor', 'Show a pull to refresh indicator with a custom color, size, etc.', Ti.refresh),
-          Feature('Trainer', 'Show guide to use your app with a custom message, title, etc.', Ti.books),
+          Feature(
+              'LzButton',
+              'Customizable button with icon, type, loading, disabled, etc.',
+              Ti.click),
+          Feature(
+              'LzDrop',
+              'Show dropdown options in any position, with icons, separators, etc.',
+              Ti.dragDrop),
+          Feature(
+              'LzPad',
+              'Show an otp or pin input with a custom message, duration, input, etc.',
+              Ti.number),
+          Feature(
+              'LzConfirm',
+              'Show a confirmation dialog with a custom message, title, etc.',
+              Ti.questionMark),
+          Feature(
+              'Refreshtor',
+              'Show a pull to refresh indicator with a custom color, size, etc.',
+              Ti.refresh),
+          Feature(
+              'Trainer',
+              'Show guide to use your app with a custom message, title, etc.',
+              Ti.books),
         ]
       },
       {
@@ -57,11 +77,24 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A variety of visual components to display content, notifications, placeholders, and collapsible sections for a polished interface.',
         'features': [
-          Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
-          Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
-          Feature('Skeleton', 'Show a skeleton loader with a custom color, animation, etc.', Ti.loader),
-          Feature('LzAccordion', 'Expandable widget with a custom header, body, etc.', Ti.layoutNavbarExpand),
-          Feature('LzBadge & LzCard', 'Show a badge or card with a custom color, size, etc.', Ti.creditCard),
+          Feature('LzToast',
+              'Show a toast message with a custom icon, color, etc.', Ti.bell),
+          Feature(
+              'LzImage',
+              'Display image in any format such as network, asset, file, etc.',
+              Ti.photo),
+          Feature(
+              'Skeleton',
+              'Show a skeleton loader with a custom color, animation, etc.',
+              Ti.loader),
+          Feature(
+              'LzAccordion',
+              'Expandable widget with a custom header, body, etc.',
+              Ti.layoutNavbarExpand),
+          Feature(
+              'LzBadge & LzCard',
+              'Show a badge or card with a custom color, size, etc.',
+              Ti.creditCard),
           Feature(
               'LzListView',
               'Scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.',
@@ -70,9 +103,12 @@ class FeaturesView extends StatelessWidget {
       },
       {
         'title': 'Custom Widgets',
-        'description': 'A collection of custom widgets that can be used to build your own custom UI components.',
+        'description':
+            'A collection of custom widgets that can be used to build your own custom UI components.',
         'features': [
-          Feature('Custom Widgets', 'List of custom widgets that can be used to build your own custom UI components.',
+          Feature(
+              'Custom Widgets',
+              'List of custom widgets that can be used to build your own custom UI components.',
               Ti.category),
         ]
       },
@@ -81,15 +117,18 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
         'features': [
-          Feature('Custom Utilities',
-              'List of custom utilities that can be used to build your own custom UI components.', Ti.tools),
+          Feature(
+              'Custom Utilities',
+              'List of custom utilities that can be used to build your own custom UI components.',
+              Ti.tools),
         ]
       },
     ];
 
     for (var featureMap in features) {
       if (featureMap['features'] != null) {}
-      (featureMap['features'] as List<Feature>).sort((a, b) => a.title.compareTo(b.title));
+      (featureMap['features'] as List<Feature>)
+          .sort((a, b) => a.title.compareTo(b.title));
     }
 
     return Scaffold(
@@ -128,14 +167,21 @@ class FeaturesView extends StatelessWidget {
                               style: Gfont.bold,
                               icon: feature.icon,
                             ),
-                            Text(feature.description, style: Gfont.muted).margin(t: 5),
+                            Text(feature.description, style: Gfont.muted)
+                                .margin(t: 5),
                           ],
                         ).start.lz.flexible(),
-                        Iconr(Ti.chevronRight, color: Colors.black45, margin: Ei.only(l: 25))
+                        Iconr(Ti.chevronRight,
+                            color: Colors.black45, margin: Ei.only(l: 25))
                       ],
                     ),
                   );
-                })).min.lz.clip(all: 10).lz.border(Br.all(), radius: Br.radius(10))
+                }))
+                    .min
+                    .lz
+                    .clip(all: 10)
+                    .lz
+                    .border(Br.all(), radius: Br.radius(10))
               ],
             ).start;
           }),
@@ -167,11 +213,14 @@ class Actions {
     if (label == 'LzPad') {
       LzPad.show(context,
           expired: 60.s,
-          subtitle: 'OTP code sent to +628100000, please enter the code below to reset your password.',
+          subtitle:
+              'OTP code sent to +628100000, please enter the code below to reset your password.',
           onCompleted: (otp) async {
         otp.pause();
-        LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s, then: () {
-          LzToast.success('Done! You are now logged in.', placement: ToastPlacement.center);
+        LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s,
+            then: () {
+          LzToast.success('Done! You are now logged in.',
+              placement: ToastPlacement.center);
           context.lz.pop();
         });
       });

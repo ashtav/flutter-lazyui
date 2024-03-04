@@ -23,11 +23,16 @@ class Refreshtor extends StatelessWidget {
   final RefreshtorStyle? style;
 
   /// A builder function that returns a custom indicator widget.
-final Widget Function(IndicatorController controller, double value)? builder;
+  final Widget Function(IndicatorController controller, double value)? builder;
 
   /// Creates a Refreshtor widget.
   const Refreshtor(
-      {super.key, this.child, required this.onRefresh, this.type = RefrehtorType.curve, this.style, this.builder});
+      {super.key,
+      this.child,
+      required this.onRefresh,
+      this.type = RefrehtorType.curve,
+      this.style,
+      this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +60,9 @@ final Widget Function(IndicatorController controller, double value)? builder;
                   RefrehtorType.arrow: ArrowIndicator(controller, value, style)
                 };
 
-                return Container(margin: Ei.only(t: style?.height ?? 0), child: contents[type]!);
+                return Container(
+                    margin: Ei.only(t: style?.height ?? 0),
+                    child: contents[type]!);
               },
             ),
             child

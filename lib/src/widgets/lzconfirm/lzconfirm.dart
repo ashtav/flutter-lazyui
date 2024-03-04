@@ -57,7 +57,11 @@ class LzConfirm {
   }
 
   /// Configures global settings for confirmation dialogs or sheets.
-  static void config({String? confirmText, String? cancelText, double? margin, bool? darkMode}) {
+  static void config(
+      {String? confirmText,
+      String? cancelText,
+      double? margin,
+      bool? darkMode}) {
     _confirmText = confirmText;
     _cancelText = cancelText;
     _margin = margin;

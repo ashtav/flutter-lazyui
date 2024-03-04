@@ -27,7 +27,13 @@ class LzButton extends StatelessWidget {
   /// [style]: The style configuration for the button.
   /// [disabled]: A flag indicating whether the button is disabled. Default is false.
   /// [onTap]: A callback function to invoke when the button is tapped.
-  const LzButton({super.key, this.text, this.icon, this.style, this.disabled = false, this.onTap});
+  const LzButton(
+      {super.key,
+      this.text,
+      this.icon,
+      this.style,
+      this.disabled = false,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -40,28 +46,31 @@ class LzButton extends StatelessWidget {
     double radius = style?.radius ?? LazyUi.radius;
     double? width = style?.width;
 
-    Color backgroundColor = isOutline ? Colors.transparent : style?.backgroundColor ?? Colors.white;
+    Color backgroundColor =
+        isOutline ? Colors.transparent : style?.backgroundColor ?? Colors.white;
     Color textColor = style?.textColor ??
         (isOutline
             ? (style?.backgroundColor ?? Colors.black87)
             : (backgroundColor.isDark() ? Colors.white : Colors.black87));
 
-    Widget iconSwitcher(bool condition, Widget child, {EdgeInsetsGeometry? margin}) => AnimatedSwitcher(
-        duration: 150.ms,
-        transitionBuilder: (Widget child, Animation<double> animation) {
-          return ScaleTransition(
-            scale: animation,
-            child: child,
-          );
-        },
-        child: condition
-            ? LzLoader(
-                key: UniqueKey(),
-                color: textColor,
-                size: 17,
-                margin: margin,
-              )
-            : child);
+    Widget iconSwitcher(bool condition, Widget child,
+            {EdgeInsetsGeometry? margin}) =>
+        AnimatedSwitcher(
+            duration: 150.ms,
+            transitionBuilder: (Widget child, Animation<double> animation) {
+              return ScaleTransition(
+                scale: animation,
+                child: child,
+              );
+            },
+            child: condition
+                ? LzLoader(
+                    key: UniqueKey(),
+                    color: textColor,
+                    size: 17,
+                    margin: margin,
+                  )
+                : child);
 
     final notifier = ButtonNotifier();
 
@@ -80,7 +89,9 @@ class LzButton extends StatelessWidget {
                   : !hasIcon
                       ? 0
                       : 8),
-          child: Textr(state.text, style: style?.textStyle ?? LazyUi.font.copyWith(color: textColor)));
+          child: Textr(state.text,
+              style:
+                  style?.textStyle ?? LazyUi.font.copyWith(color: textColor)));
 
       return InkTouch(
         onTap: state.disabled ? null : () => onTap?.call(ButtonState(notifier)),
@@ -95,15 +106,18 @@ class LzButton extends StatelessWidget {
           children: [
             // if button has icon only
             if (hasIcon && !hasText)
-              iconSwitcher(isSubmit, Icon(icon, color: textColor), margin: Ei.only(v: 1.6, h: 1.5)),
+              iconSwitcher(isSubmit, Icon(icon, color: textColor),
+                  margin: Ei.only(v: 1.6, h: 1.5)),
 
             // if button has text only
-            if (!hasIcon && hasText) iconSwitcher(isSubmit, const None(), margin: Ei.only(v: 1.6)),
+            if (!hasIcon && hasText)
+              iconSwitcher(isSubmit, const None(), margin: Ei.only(v: 1.6)),
 
             if (hasText && !hasIcon) textWidget,
             if (hasText && hasIcon)
               Row(children: [
-                iconSwitcher(isSubmit, Icon(icon, color: textColor), margin: Ei.only(v: 1.6, r: 2)),
+                iconSwitcher(isSubmit, Icon(icon, color: textColor),
+                    margin: Ei.only(v: 1.6, r: 2)),
                 textWidget,
               ])
           ],
@@ -140,7 +154,10 @@ class ButtonState {
   /// [then]: A callback function to execute after the submission is aborted.
   /// [future]: A future function to execute after the submission. If provided, this function will be awaited.
   /// Returns a future that completes with the result of the submission.
-  Future<T> submit<T>({Duration? abortOn, Function()? then, Future<T> Function()? future}) async {
+  Future<T> submit<T>(
+      {Duration? abortOn,
+      Function()? then,
+      Future<T> Function()? future}) async {
     _notifier.onSubmit();
 
     if (abortOn != null) {

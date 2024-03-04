@@ -21,12 +21,21 @@ class LzModifiers {
   /// ``` dart
   /// YourWidget().sized(100, 100)
   /// ```
-  Widget sized([double width = 0, double? height]) => SizedBox(width: width, height: height ?? width, child: widget);
+  Widget sized([double width = 0, double? height]) =>
+      SizedBox(width: width, height: height ?? width, child: widget);
 
   /// ``` dart
   /// YourWidget().lz.clip()
   /// ```
-  Widget clip({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? all}) => ClipRRect(
+  Widget clip(
+          {double? tl,
+          double? tr,
+          double? bl,
+          double? br,
+          double? tlr,
+          double? blr,
+          double? all}) =>
+      ClipRRect(
         borderRadius: all != null
             ? BorderRadius.all(Radius.circular(all))
             : BorderRadius.only(
@@ -40,13 +49,18 @@ class LzModifiers {
   /// ``` dart
   /// YourWidget().lz.flexible()
   /// ```
-  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: widget);
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) =>
+      Flexible(flex: flex, fit: fit, child: widget);
 
   /// ``` dart
   /// Container().lz.rotate(90); // the value is in degree between 0 - 360
   /// ```
-  Widget rotate(double value, {AlignmentGeometry alignment = Alignment.center}) {
-    return Transform.rotate(angle: (value % 360) * (3.1415926535897932 / 180), alignment: alignment, child: widget);
+  Widget rotate(double value,
+      {AlignmentGeometry alignment = Alignment.center}) {
+    return Transform.rotate(
+        angle: (value % 360) * (3.1415926535897932 / 180),
+        alignment: alignment,
+        child: widget);
   }
 
   /// ``` dart
@@ -55,7 +69,8 @@ class LzModifiers {
 
   Widget opacity(double value, {bool animated = false, Duration? duration}) {
     return animated
-        ? AnimatedOpacity(opacity: value, duration: duration ?? 250.ms, child: widget)
+        ? AnimatedOpacity(
+            opacity: value, duration: duration ?? 250.ms, child: widget)
         : Opacity(opacity: value, child: widget);
   }
 
@@ -76,15 +91,18 @@ class LzModifiers {
   /// ``` dart
   /// YourWidget().lz.border(Br.all(), width: 1, color: Colors.black)
   /// ```
-  Widget border(BoxBorder border, {BorderRadiusGeometry? radius, Color? color}) {
+  Widget border(BoxBorder border,
+      {BorderRadiusGeometry? radius, Color? color}) {
     if (this is Container) {
       final container = this as Container;
       BoxDecoration? decoration = container.decoration as BoxDecoration?;
 
       if (decoration == null) {
-        decoration = BoxDecoration(borderRadius: radius, color: color, border: border);
+        decoration =
+            BoxDecoration(borderRadius: radius, color: color, border: border);
       } else {
-        decoration = decoration.copyWith(borderRadius: radius, color: color, border: border);
+        decoration = decoration.copyWith(
+            borderRadius: radius, color: color, border: border);
       }
 
       return Container(
@@ -94,7 +112,8 @@ class LzModifiers {
     }
 
     return Container(
-      decoration: BoxDecoration(borderRadius: radius, color: color, border: border),
+      decoration:
+          BoxDecoration(borderRadius: radius, color: color, border: border),
       child: widget,
     );
   }
@@ -102,23 +121,30 @@ class LzModifiers {
   /// ``` dart
   /// YourWidget().lz.ignore()
   /// ```
-  IgnorePointer ignore([bool ignoring = true]) => IgnorePointer(ignoring: ignoring, child: widget);
+  IgnorePointer ignore([bool ignoring = true]) =>
+      IgnorePointer(ignoring: ignoring, child: widget);
 
   /// ``` dart
   /// YourWidget().lz.disabled()
   /// ```
-  Widget disabled([bool disabled = true, double opacity = .5]) =>
-      IgnorePointer(ignoring: disabled, child: Opacity(opacity: disabled ? opacity : 1, child: widget));
+  Widget disabled([bool disabled = true, double opacity = .5]) => IgnorePointer(
+      ignoring: disabled,
+      child: Opacity(opacity: disabled ? opacity : 1, child: widget));
 
   /// ``` dart
   /// YourWidget().lz.hide()
   /// ```
-  Visibility hide([bool value = true]) => Visibility(visible: !value, child: widget);
+  Visibility hide([bool value = true]) =>
+      Visibility(visible: !value, child: widget);
 
   /// ``` dart
   /// YourWidget().lz.blur(); // default sigmaX = 5, sigmaY = 5, duration = 300ms, show = true
   /// ```
-  Widget blur(BuildContext context, {double sigmaX = 5, double sigmaY = 5, Duration? duration, bool show = true}) {
+  Widget blur(BuildContext context,
+      {double sigmaX = 5,
+      double sigmaY = 5,
+      Duration? duration,
+      bool show = true}) {
     return Stack(
       children: [
         AnimatedOpacity(

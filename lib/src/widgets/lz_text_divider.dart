@@ -41,7 +41,11 @@ class LzTextDivider extends StatelessWidget {
 
     Widget divider = Expanded(
         child: Divider(
-            height: height, endIndent: indent, indent: indent, thickness: thickness, color: color ?? Colors.black26));
+            height: height,
+            endIndent: indent,
+            indent: indent,
+            thickness: thickness,
+            color: color ?? Colors.black26));
 
     final children = [divider, text, divider];
 

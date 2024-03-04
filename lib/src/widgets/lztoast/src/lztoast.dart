@@ -28,7 +28,8 @@ class LzToastConfig {
   LzToastConfig({this.placement, this.duration, this.radius = 5});
 
   /// Sets the default configuration options for LzToast messages.
-  static void set({ToastPlacement? placement, Duration? duration, double? radius}) {
+  static void set(
+      {ToastPlacement? placement, Duration? duration, double? radius}) {
     _defaultPlacement = placement ?? _defaultPlacement;
     _defaultDuration = duration ?? _defaultDuration;
     _defaultRadius = radius ?? _defaultRadius;
@@ -48,12 +49,16 @@ class LzToast {
   /// init LazyLoading
   static TransitionBuilder init({TransitionBuilder? builder}) {
     return (BuildContext context, Widget? child) {
-      return builder == null ? LzToastOverlay(child: child) : builder(context, LzToastOverlay(child: child));
+      return builder == null
+          ? LzToastOverlay(child: child)
+          : builder(context, LzToastOverlay(child: child));
     };
   }
 
-  static LzToastConfig get config =>
-      LzToastConfig(placement: _defaultPlacement, duration: _defaultDuration, radius: _defaultRadius);
+  static LzToastConfig get config => LzToastConfig(
+      placement: _defaultPlacement,
+      duration: _defaultDuration,
+      radius: _defaultRadius);
 
   /// Displays a toast message with the specified parameters.
   static void show(String? message,
@@ -78,7 +83,11 @@ class LzToast {
 
   /// Displays an error toast message with the specified parameters.
   static void error(String? message,
-      {IconData? icon, Duration? duration, int? maxLength, ToastPlacement? placement, bool dismissOnTap = false}) {
+      {IconData? icon,
+      Duration? duration,
+      int? maxLength,
+      ToastPlacement? placement,
+      bool dismissOnTap = false}) {
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -89,7 +98,11 @@ class LzToast {
 
   /// Displays a warning toast message with the specified parameters.
   static void warning(String? message,
-      {IconData? icon, Duration? duration, int? maxLength, ToastPlacement? placement, bool dismissOnTap = false}) {
+      {IconData? icon,
+      Duration? duration,
+      int? maxLength,
+      ToastPlacement? placement,
+      bool dismissOnTap = false}) {
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -100,7 +113,11 @@ class LzToast {
 
   /// Displays a success toast message with the specified parameters.
   static void success(String? message,
-      {IconData? icon, Duration? duration, int? maxLength, ToastPlacement? placement, bool dismissOnTap = false}) {
+      {IconData? icon,
+      Duration? duration,
+      int? maxLength,
+      ToastPlacement? placement,
+      bool dismissOnTap = false}) {
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -121,7 +138,8 @@ class LzToast {
     _notifier.dismiss();
 
     if (duration != null && future == null) {
-      _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
+      _notifier.showOverlay(message,
+          dismissOnTap: dismissOnTap, onCancel: onCancel);
       _notifier.overlayTimer = Timer(duration, () {
         _notifier.dismiss();
         then?.call();
@@ -148,7 +166,10 @@ class LzToast {
   ///
   /// If [progress] function is provided, the overlay's progress will be updated accordingly.
   static overlayProgress(String message,
-      {bool percentage = false, double Function()? progress, void Function()? then, void Function()? onCancel}) async {
+      {bool percentage = false,
+      double Function()? progress,
+      void Function()? then,
+      void Function()? onCancel}) async {
     _notifier.dismiss();
 
     if (progress != null) {
@@ -175,7 +196,8 @@ class LzToast {
       });
     }
 
-    _notifier.showOverlay(message, isProgress: true, showPercentage: percentage, onCancel: onCancel);
+    _notifier.showOverlay(message,
+        isProgress: true, showPercentage: percentage, onCancel: onCancel);
   }
 
   /// Dismisses any active toast messages or overlays.
@@ -216,10 +238,12 @@ class LzToastWidget extends StatelessWidget {
                 : const None(),
             AnimatedSwitcher(
                 duration: 130.ms,
-                transitionBuilder: (Widget child, Animation<double> animation) => FadeTransition(
-                      opacity: animation,
-                      child: child,
-                    ),
+                transitionBuilder:
+                    (Widget child, Animation<double> animation) =>
+                        FadeTransition(
+                          opacity: animation,
+                          child: child,
+                        ),
                 child: state.overlay
                     ? ZoomIn(
                         child: Center(
@@ -231,31 +255,48 @@ class LzToastWidget extends StatelessWidget {
                                 // margin: Ei.only(b: context.viewInsets.bottom + 50, others: 50),
                                 padding: Ei.sym(v: 20, h: 20),
                                 decoration: BoxDecoration(
-                                    borderRadius: Br.radius(state.radius ?? _defaultRadius),
+                                    borderRadius: Br.radius(
+                                        state.radius ?? _defaultRadius),
                                     color: Colors.black.withOpacity(.8)),
                                 child: Column(
                                   children: [
                                     state.isProgress
-                                        ? Stack(alignment: AlignmentDirectional.center, children: [
-                                            ...2.generate((index) {
-                                              return CircularSlider(
-                                                value: index == 0 ? state.progress ?? 0 : 100,
-                                                color: [Colors.white, Colors.white12][index],
-                                              );
-                                            }),
-                                            if (state.showPercentage)
-                                              Poslign(
-                                                alignment: Alignment.center,
-                                                child: Text('${state.progress?.toStringAsFixed(0)}%',
-                                                    style: LazyUi.font.copyWith(color: Colors.white, fontSize: 14)),
-                                              )
-                                          ])
+                                        ? Stack(
+                                            alignment:
+                                                AlignmentDirectional.center,
+                                            children: [
+                                                ...2.generate((index) {
+                                                  return CircularSlider(
+                                                    value: index == 0
+                                                        ? state.progress ?? 0
+                                                        : 100,
+                                                    color: [
+                                                      Colors.white,
+                                                      Colors.white12
+                                                    ][index],
+                                                  );
+                                                }),
+                                                if (state.showPercentage)
+                                                  Poslign(
+                                                    alignment: Alignment.center,
+                                                    child: Text(
+                                                        '${state.progress?.toStringAsFixed(0)}%',
+                                                        style: LazyUi.font
+                                                            .copyWith(
+                                                                color: Colors
+                                                                    .white,
+                                                                fontSize: 14)),
+                                                  )
+                                              ])
                                         : Container(
-                                            constraints: const BoxConstraints(maxWidth: 40),
-                                            child: const LzLoader(color: Colors.white, size: 40)),
+                                            constraints: const BoxConstraints(
+                                                maxWidth: 40),
+                                            child: const LzLoader(
+                                                color: Colors.white, size: 40)),
                                     Textr(
                                       state.overlayMessage,
-                                      style: LazyUi.font.copyWith(color: Colors.white),
+                                      style: LazyUi.font
+                                          .copyWith(color: Colors.white),
                                       margin: Ei.only(t: 15),
                                     ),
                                   ],
@@ -283,7 +324,10 @@ class LzToastWidget extends StatelessWidget {
                       margin: Ei.only(b: 20),
                       child: Textr(
                         'Cancel',
-                        style: LazyUi.font.copyWith(color: Colors.white, fontWeight: Fw.bold, letterSpacing: 2),
+                        style: LazyUi.font.copyWith(
+                            color: Colors.white,
+                            fontWeight: Fw.bold,
+                            letterSpacing: 2),
                       ),
                     ))
                 : const None()
@@ -303,22 +347,29 @@ class LzToastWidget extends StatelessWidget {
                 switchInCurve: Curves.linearToEaseOut,
                 switchOutCurve: Curves.easeOutBack,
                 duration: 350.ms,
-                transitionBuilder: (Widget child, Animation<double> animation) => ScaleTransition(
-                      scale: animation,
-                      child: child,
-                    ),
+                transitionBuilder:
+                    (Widget child, Animation<double> animation) =>
+                        ScaleTransition(
+                          scale: animation,
+                          child: child,
+                        ),
                 child: state.toast
                     ? IgnorePointer(
                         key: ValueKey(state.toastMessage),
                         child: Container(
-                          margin: Ei.only(b: MediaQuery.of(context).viewInsets.bottom + 50, others: 50),
+                          margin: Ei.only(
+                              b: MediaQuery.of(context).viewInsets.bottom + 50,
+                              others: 50),
                           padding: Ei.sym(v: 10, h: 20),
                           decoration: BoxDecoration(
-                              borderRadius: Br.radius(state.radius ?? _defaultRadius),
-                              color: state.toastBackgroundColor ?? Colors.black.withOpacity(.8)),
+                              borderRadius:
+                                  Br.radius(state.radius ?? _defaultRadius),
+                              color: state.toastBackgroundColor ??
+                                  Colors.black.withOpacity(.8)),
                           child: AnimatedSwitcher(
                               duration: 350.ms,
-                              transitionBuilder: (Widget child, Animation<double> animation) {
+                              transitionBuilder:
+                                  (Widget child, Animation<double> animation) {
                                 return FadeTransition(
                                   opacity: animation,
                                   child: child,
@@ -328,8 +379,12 @@ class LzToastWidget extends StatelessWidget {
                                 state.toastMessage.length > state.toastMaxLength
                                     ? '${state.toastMessage.substring(0, state.toastMaxLength)}...'
                                     : state.toastMessage,
-                                style: LazyUi.font.copyWith(color: state.toastTextColor ?? Colors.white),
-                                textAlign: state.toastIcon == null ? Ta.center : Ta.start,
+                                style: LazyUi.font.copyWith(
+                                    color:
+                                        state.toastTextColor ?? Colors.white),
+                                textAlign: state.toastIcon == null
+                                    ? Ta.center
+                                    : Ta.start,
                                 icon: state.toastIcon,
                                 key: UniqueKey(),
                               )),

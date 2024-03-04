@@ -53,9 +53,10 @@ extension LzIntNullableExtension on int? {
   /// [separator]: The separator to use for thousands.
   ///
   /// Returns the formatted currency string.
-  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
-    return (this == null ? '0' : toString())
-        .currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String currency(
+      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+    return (this == null ? '0' : toString()).currency(
+        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Formats the value as Indonesian Rupiah (IDR).
@@ -65,7 +66,9 @@ extension LzIntNullableExtension on int? {
   /// [separator]: The separator to use for thousands.
   ///
   /// Returns the formatted IDR string.
-  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String idr(
+      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(
+        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 }

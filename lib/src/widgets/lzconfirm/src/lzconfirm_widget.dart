@@ -68,7 +68,8 @@ class LzConfirmWidget extends StatelessWidget {
           Column(
             children: [
               Container(
-                decoration: BoxDecoration(color: borderColor, shape: BoxShape.circle),
+                decoration:
+                    BoxDecoration(color: borderColor, shape: BoxShape.circle),
                 padding: Ei.all(20),
                 margin: Ei.only(b: 25, t: 15),
                 child: Icon(
@@ -77,8 +78,14 @@ class LzConfirmWidget extends StatelessWidget {
                   color: textColor,
                 ),
               ),
-              if (hasTitle) Text(title!, style: Gfont.fs18.bold.fcolor(textColor), textAlign: Ta.center),
-              if (hasMessage) Text(message!, textAlign: Ta.center, style: Gfont.color(textColor.darken(.3))),
+              if (hasTitle)
+                Text(title!,
+                    style: Gfont.fs18.bold.fcolor(textColor),
+                    textAlign: Ta.center),
+              if (hasMessage)
+                Text(message!,
+                    textAlign: Ta.center,
+                    style: Gfont.color(textColor.darken(.3))),
             ],
           ).gap(10).padding(b: isDialog ? 25 : 45, others: 25),
           Intrinsic(children: texts.generate((label, index) {
@@ -96,11 +103,13 @@ class LzConfirmWidget extends StatelessWidget {
               child: Text(
                 label,
                 textAlign: Ta.center,
-                style: Gfont.bold.fcolor(index == 0 ? textColor : confirmColor ?? textColor),
+                style: Gfont.bold
+                    .fcolor(index == 0 ? textColor : confirmColor ?? textColor),
                 overflow: Tof.ellipsis,
               ),
             );
-          })).lz.border(Br.only(isDialog ? ['t'] : ['t', 'b'], color: borderColor))
+          })).lz.border(
+              Br.only(isDialog ? ['t'] : ['t', 'b'], color: borderColor))
         ],
       ),
     );

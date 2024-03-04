@@ -10,7 +10,8 @@ class ImageView extends StatelessWidget {
         'https://img.freepik.com/free-photo/creative-light-bulb-abstract-glowing-blue-background-generative-ai_188544-8090.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1706684400&semt=sph';
     String image1 =
         'https://media.macphun.com/img/uploads/customer/how-to/608/15542038745ca344e267fb80.28757312.jpg?q=85&w=1340';
-    String image2 = 'https://images.pexels.com/photos/2055100/pexels-photo-2055100.jpeg';
+    String image2 =
+        'https://images.pexels.com/photos/2055100/pexels-photo-2055100.jpeg';
 
     return Scaffold(
         appBar: AppBar(
@@ -40,7 +41,8 @@ class ImageView extends StatelessWidget {
                 )
               ],
             ).gap(10).margin(t: 25, b: 15),
-            Textr('Tap image to preview.', icon: Ti.infoCircle, style: Gfont.muted)
+            Textr('Tap image to preview.',
+                icon: Ti.infoCircle, style: Gfont.muted)
           ],
         ));
   }

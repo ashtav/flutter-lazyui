@@ -15,7 +15,8 @@ class LzToastOverlayEntry extends OverlayEntry {
 
   @override
   void markNeedsBuild() {
-    if (_ambiguate(SchedulerBinding.instance)!.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+    if (_ambiguate(SchedulerBinding.instance)!.schedulerPhase ==
+        SchedulerPhase.persistentCallbacks) {
       _ambiguate(SchedulerBinding.instance)!.addPostFrameCallback((_) {
         super.markNeedsBuild();
       });

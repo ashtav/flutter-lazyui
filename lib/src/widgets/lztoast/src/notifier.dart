@@ -94,7 +94,10 @@ class ToastNotifier extends ChangeNotifier {
   }
 
   void showOverlay(String? message,
-      {bool dismissOnTap = false, bool isProgress = false, bool showPercentage = false, void Function()? onCancel}) {
+      {bool dismissOnTap = false,
+      bool isProgress = false,
+      bool showPercentage = false,
+      void Function()? onCancel}) {
     overlay = true;
     backdrop = true;
     this.dismissOnTap = dismissOnTap;

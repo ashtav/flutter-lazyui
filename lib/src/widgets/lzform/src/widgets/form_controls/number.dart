@@ -74,11 +74,15 @@ class Number extends StatelessWidget with LzFormMixin {
     bool hasLabel = label != null && !attr.isGrouped;
 
     // create label widget
-    Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
+    Widget labelWidget = hasLabel
+        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        : const None();
 
     // create grouped label widget
-    Widget groupedLabelWidget =
-        Positioned(top: 12, child: Container(padding: Ei.sym(h: 16), width: context.width, child: labelWidget));
+    Widget groupedLabelWidget = Positioned(
+        top: 12,
+        child: Container(
+            padding: Ei.sym(h: 16), width: context.width, child: labelWidget));
 
     // create top inner label widget
     Widget topInnerLabelWidget = Positioned(
@@ -95,8 +99,9 @@ class Number extends StatelessWidget with LzFormMixin {
     final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
 
     // create prefix & suffix icon widget
-    Widget? prefixIconWidget =
-        style?.prefixIcon == null ? null : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+    Widget? prefixIconWidget = style?.prefixIcon == null
+        ? null
+        : Icon(style?.prefixIcon, color: style?.prefixIconColor);
 
     void onChangeControl(String value) {
       try {
@@ -116,7 +121,8 @@ class Number extends StatelessWidget with LzFormMixin {
       // get background color
       Color backgroundColor = notifier.disabled
           ? const Color.fromARGB(31, 204, 204, 204)
-          : style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+          : style?.background ??
+              (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
 
       return Container(
         decoration: BoxDecoration(
@@ -126,7 +132,8 @@ class Number extends StatelessWidget with LzFormMixin {
               : isUnderlined
                   ? Br.only(['b'], color: borderColor)
                   : Br.all(color: borderColor),
-          borderRadius: isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
+          borderRadius:
+              isUnderlined ? null : Br.radius(attr.isGrouped ? 0 : radius),
         ),
         child: Stack(
           children: [
@@ -137,7 +144,9 @@ class Number extends StatelessWidget with LzFormMixin {
             LzTextField(
               hint: hint,
               enabled: !state.disabled,
-              prefixIcon: isGrouped || isUnderlined ? prefixIconWidget?.margin(t: 22) : prefixIconWidget,
+              prefixIcon: isGrouped || isUnderlined
+                  ? prefixIconWidget?.margin(t: 22)
+                  : prefixIconWidget,
               padding: hasLabel && (isGrouped || isUnderlined)
                   ? labelAndGroupedPadding
                   : Ei.only(l: 16, r: controls ? (45 * 2) : 16, v: 14),
@@ -146,7 +155,10 @@ class Number extends StatelessWidget with LzFormMixin {
               onChange: onChangeControl,
               autofocus: autofocus,
               keyboard: Tit.number,
-              formatters: [LengthLimitingTextInputFormatter(max < 1 ? 1 : max), Formatter.numeric],
+              formatters: [
+                LengthLimitingTextInputFormatter(max < 1 ? 1 : max),
+                Formatter.numeric
+              ],
               node: focusNode,
               hintStyle: Gfont.color(textColor.withOpacity(.4)),
               textStyle: Gfont.color(textColor),
@@ -168,15 +180,23 @@ class Number extends StatelessWidget with LzFormMixin {
 
                       return Row(
                           children: [iconMin, iconPlus].generate((icon, i) {
-                        bool disabled = (i == 0 && state.getNumber <= min) || (i == 1 && state.getNumber >= max);
+                        bool disabled = (i == 0 && state.getNumber <= min) ||
+                            (i == 1 && state.getNumber >= max);
 
                         return GestureDetector(
-                          onLongPress: disabled ? null : () => notifier.setNumber(i, longPress: true),
-                          onLongPressUp: disabled ? null : () => notifier.setNumber(-1),
+                          onLongPress: disabled
+                              ? null
+                              : () => notifier.setNumber(i, longPress: true),
+                          onLongPressUp:
+                              disabled ? null : () => notifier.setNumber(-1),
                           child: InkTouch(
-                            onTap: disabled ? null : () => notifier.setNumber(i),
+                            onTap:
+                                disabled ? null : () => notifier.setNumber(i),
                             padding: Ei.all(15),
-                            child: Icon(icon, color: disabled ? Colors.black12 : Colors.black38, size: 18),
+                            child: Icon(icon,
+                                color:
+                                    disabled ? Colors.black12 : Colors.black38,
+                                size: 18),
                           ),
                         );
                       })).min;
@@ -211,11 +231,14 @@ class Number extends StatelessWidget with LzFormMixin {
               ],
             )
           else
-            notifier.watch(
-                (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
+            notifier.watch((state) => isUnderlined && state.disabled
+                ? textFieldWidget.lz.clip(all: radius)
+                : textFieldWidget),
 
-          notifier
-              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+          notifier.watch((state) => FormFeedbackMessage(
+              show: !state.isValid,
+              message: state.errorMessage,
+              attribute: attr))
         ],
       ).start,
     );

@@ -32,24 +32,29 @@ class LzContextModifiers {
   /// Request focus for the specified focus node within the current context.
   ///
   /// [node]: The focus node to request focus for. If null, a new focus node is created.
-  void focus([FocusNode? node]) => FocusScope.of(context).requestFocus(node ?? FocusNode());
+  void focus([FocusNode? node]) =>
+      FocusScope.of(context).requestFocus(node ?? FocusNode());
 
   /// Navigate to a new page and remove all previous routes from the navigation stack.
   ///
   /// Returns a future that resolves to the result returned by the new page.
   Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
-      Navigator.pushAndRemoveUntil<T>(context, MaterialPageRoute(builder: (_) => page), (_) => false);
+      Navigator.pushAndRemoveUntil<T>(
+          context, MaterialPageRoute(builder: (_) => page), (_) => false);
 
   /// Navigate to a named route and remove all previous routes from the navigation stack.
   ///
   /// Returns a future that resolves to the result returned by the new page.
-  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName, {Object? arguments}) =>
-      Navigator.pushNamedAndRemoveUntil<T>(context, routeName, (_) => false, arguments: arguments);
+  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName,
+          {Object? arguments}) =>
+      Navigator.pushNamedAndRemoveUntil<T>(context, routeName, (_) => false,
+          arguments: arguments);
 
   /// Navigate to a named route and push it onto the navigation stack.
   ///
   /// Returns a future that resolves to the result returned by the new page.
-  Future<T?> pushNamed<T extends Object?>(String routeName, {Object? arguments}) =>
+  Future<T?> pushNamed<T extends Object?>(String routeName,
+          {Object? arguments}) =>
       Navigator.pushNamed<T>(context, routeName, arguments: arguments);
 }
 
@@ -71,7 +76,8 @@ extension LzContextExtension on BuildContext {
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
 
   /// Gets the padding of the current window.
-  EdgeInsets get windowPadding => MediaQueryData.fromView(View.of(this)).padding;
+  EdgeInsets get windowPadding =>
+      MediaQueryData.fromView(View.of(this)).padding;
 
   /// Show a dialog on top of the current screen.
   ///
@@ -85,10 +91,13 @@ extension LzContextExtension on BuildContext {
   /// }
   /// ```
   Future<T?> dialog<T extends Object?>(Widget widget,
-      {bool dismiss = true, bool backBlur = false, double blur = 7, Color? barrierColor}) async {
+      {bool dismiss = true,
+      bool backBlur = false,
+      double blur = 7,
+      Color? barrierColor}) async {
     // If the `backBlur` flag is set, the background of the bottom sheet is blurred.
-    Widget blurWrapper(Widget child) =>
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+    Widget blurWrapper(Widget child) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
 
     // if (backBlur) {
     //   await Future.delayed(100.ms);
@@ -110,19 +119,25 @@ extension LzContextExtension on BuildContext {
       {bool dismiss = true,
       Duration? duration,
       double begin = .05,
-      Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transitionBuilder}) {
+      Widget Function(
+              BuildContext, Animation<double>, Animation<double>, Widget)?
+          transitionBuilder}) {
     return showGeneralDialog(
       context: this,
       barrierDismissible: dismiss,
       barrierLabel: MaterialLocalizations.of(this).modalBarrierDismissLabel,
       transitionDuration: duration ?? 200.ms,
-      pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+      pageBuilder: (BuildContext buildContext, Animation animation,
+          Animation secondaryAnimation) {
         return widget;
       },
-      transitionBuilder:
-          (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+      transitionBuilder: (BuildContext buildContext,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child) {
         if (transitionBuilder != null) {
-          return transitionBuilder(buildContext, animation, secondaryAnimation, child);
+          return transitionBuilder(
+              buildContext, animation, secondaryAnimation, child);
         }
 
         return FadeTransition(
@@ -179,14 +194,19 @@ extension LzContextExtension on BuildContext {
     /// of the container can be customized; if not specified, it defaults to white with
     /// safe area and transparent without safe area.
     Widget wrapper(Widget child) => Container(
-          padding: EdgeInsets.only(top: safeArea ? MediaQueryData.fromView(View.of(this)).padding.top : 0),
-          decoration: BoxDecoration(color: backgroundColor ?? (safeArea ? Colors.white : Colors.transparent)),
+          padding: EdgeInsets.only(
+              top: safeArea
+                  ? MediaQueryData.fromView(View.of(this)).padding.top
+                  : 0),
+          decoration: BoxDecoration(
+              color: backgroundColor ??
+                  (safeArea ? Colors.white : Colors.transparent)),
           child: child,
         );
 
     // If the `backBlur` flag is set, the background of the bottom sheet is blurred.
-    Widget blurWrapper(Widget child) =>
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+    Widget blurWrapper(Widget child) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
 
     // Show the bottom sheet.
     return showModalBottomSheet<T>(

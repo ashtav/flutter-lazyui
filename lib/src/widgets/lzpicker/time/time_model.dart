@@ -10,7 +10,8 @@ class Time {
   Time([this.hour = 0, this.minute = 0]);
 
   /// Returns a formatted string representation of the time value.
-  String get value => '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
+  String get value =>
+      '${hour.toString().padLeft(2, '0')}:${minute.toString().padLeft(2, '0')}';
 
   /// Parses a string value into a [Time] object.
   ///

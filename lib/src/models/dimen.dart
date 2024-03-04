@@ -44,4 +44,3 @@ class Dimen {
     return 'Dimen(w: $w, h: $h)';
   }
 }
-

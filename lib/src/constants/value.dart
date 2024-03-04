@@ -1,6 +1,5 @@
 /// A class containing example data lists.
 class ExampleData {
-
   /// List of example names.
   static List<String> names = [
     "Dutch Van Der Linde",

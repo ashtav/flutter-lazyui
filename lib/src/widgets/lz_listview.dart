@@ -74,8 +74,10 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
-        controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
+      if (Utils.scrollHasMax(
+          controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+        controller.animateTo(controller.position.pixels,
+            duration: 250.ms, curve: Curves.easeIn);
       }
     }
 
@@ -128,11 +130,16 @@ class _LzListViewState extends State<LzListView> {
 
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
-        : Refreshtor(onRefresh: () async => widget.onRefresh?.call(), type: widget.refreshType, child: listView(cacheExtent));
+        : Refreshtor(
+            onRefresh: () async => widget.onRefresh?.call(),
+            type: widget.refreshType,
+            child: listView(cacheExtent));
 
     return widget.autoCache
         ? StreamBuilder<double>(
-            stream: streamController.stream, builder: (BuildContext context, snap) => content(cacheExtent: snap.data))
+            stream: streamController.stream,
+            builder: (BuildContext context, snap) =>
+                content(cacheExtent: snap.data))
         : content();
   }
 }

@@ -21,13 +21,16 @@ class DropOption {
   /// Optionally, specify [values] to assign values to the options,
   /// [disabled] to mark certain options as disabled, and [subOptions] to add sub-options to specific options.
   static List<DropOption> list(List<String> options,
-      {List<dynamic> values = const [], List<dynamic> disabled = const [], Map<String, List<DropOption>>? subOptions}) {
+      {List<dynamic> values = const [],
+      List<dynamic> disabled = const [],
+      Map<String, List<DropOption>>? subOptions}) {
     // generate options
     return options.generate((item, i) {
       dynamic value = values.length > i ? values[i] : null;
       bool dis = disabled.contains(i) || disabled.contains(item);
 
-      return DropOption(item, value: value, disabled: dis, subOptions: subOptions?[item] ?? []);
+      return DropOption(item,
+          value: value, disabled: dis, subOptions: subOptions?[item] ?? []);
     });
   }
 }

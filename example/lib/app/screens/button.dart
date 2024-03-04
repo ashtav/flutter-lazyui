@@ -23,11 +23,13 @@ class ButtonView extends StatelessWidget {
               ],
             ).gap(10).start,
             Text('Button Icon', style: Gfont.bold).margin(b: 3, t: 35),
-            Text('Example of button with icon only.', style: Gfont.muted).margin(b: 20),
+            Text('Example of button with icon only.', style: Gfont.muted)
+                .margin(b: 20),
             Row(
               children: [
                 LzButton(icon: Ti.archive, onTap: (state) {}),
-                LzButton(icon: Ti.calendarEvent, onTap: (state) {}).bg('#8a8583'.hex),
+                LzButton(icon: Ti.calendarEvent, onTap: (state) {})
+                    .bg('#8a8583'.hex),
                 LzButton(
                     icon: Ti.users,
                     onTap: (state) {
@@ -36,7 +38,8 @@ class ButtonView extends StatelessWidget {
               ],
             ).gap(10),
             Text('Button Padding', style: Gfont.bold).margin(b: 3, t: 35),
-            Text('Example of button with padding.', style: Gfont.muted).margin(b: 20),
+            Text('Example of button with padding.', style: Gfont.muted)
+                .margin(b: 20),
             Row(
               children: [
                 LzButton(
@@ -46,12 +49,14 @@ class ButtonView extends StatelessWidget {
                       state.submit(abortOn: 2.s);
                     }).bg('#cd8b62'.hex, true),
                 LzButton(
-                    icon: Ti.bucketDroplet,
-                    text: 'Bucket Droplet',
-                    onTap: (state) {
-                      state.setText('Loading...');
-                      state.submit(abortOn: 2.s);
-                    }).styled(backgroundColor: '#a3573a'.hex, padding: Ei.all(35)),
+                        icon: Ti.bucketDroplet,
+                        text: 'Bucket Droplet',
+                        onTap: (state) {
+                          state.setText('Loading...');
+                          state.submit(abortOn: 2.s);
+                        })
+                    .styled(
+                        backgroundColor: '#a3573a'.hex, padding: Ei.all(35)),
               ],
             ).gap(10),
           ],
@@ -69,7 +74,10 @@ class MainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LzButton(text: 'Submit', style: LzButtonStyle(textStyle: Gfont.bold.white), onTap: onTap)
+    return LzButton(
+            text: 'Submit',
+            style: LzButtonStyle(textStyle: Gfont.bold.white),
+            onTap: onTap)
         .bg('#475c6c'.hex)
         .shadowed()
         .margin(blr: 20);

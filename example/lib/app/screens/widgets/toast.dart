@@ -53,7 +53,7 @@ class ToastView extends StatelessWidget {
             onTap: (_) {
               LzToast.overlay('Loading...', duration: 3.s, then: () {
                 LzToast.show('Done!', icon: Ti.checks);
-              }, onCancel: (){
+              }, onCancel: () {
                 LzToast.show('Cancelled!');
               });
             },

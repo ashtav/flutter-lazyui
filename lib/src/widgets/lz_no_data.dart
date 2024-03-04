@@ -66,7 +66,8 @@ class LzNoData extends StatelessWidget {
                 onTap: onTap,
                 child: Textr(
                   onTapMessage,
-                  style: LazyUi.font.copyWith(color: textColor, fontWeight: Fw.bold),
+                  style: LazyUi.font
+                      .copyWith(color: textColor, fontWeight: Fw.bold),
                   padding: Ei.sym(v: 7, h: 20),
                 ),
               ),

@@ -15,7 +15,10 @@ class TextFieldView extends StatelessWidget {
                     "Create stylish textfield with a single line of code. <p color=\"09f\">LzTextField(hint: 'Enter your name', border: Br.all())</p>")
                 .margin(b: 35),
             Center(
-              child: LzTextField(hint: 'Enter your name', border: Br.all(), prefixIcon: const Icon(Ti.user)),
+              child: LzTextField(
+                  hint: 'Enter your name',
+                  border: Br.all(),
+                  prefixIcon: const Icon(Ti.user)),
             ),
           ],
         ).center.padding(all: 35),

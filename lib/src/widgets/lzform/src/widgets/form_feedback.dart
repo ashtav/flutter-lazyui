@@ -14,7 +14,8 @@ class FormFeedbackMessage extends StatelessWidget {
   final Attribute? attribute;
 
   /// Constructs a FormFeedbackMessage widget.
-  const FormFeedbackMessage({super.key, this.show = true, this.message = '', this.attribute});
+  const FormFeedbackMessage(
+      {super.key, this.show = true, this.message = '', this.attribute});
 
   @override
   Widget build(BuildContext context) {

@@ -31,11 +31,17 @@ class Intrinsic extends StatelessWidget {
     IntrinsicHeight intrinsicWidget = IntrinsicHeight(
         key: key,
         child: axis == Axis.horizontal
-            ? Row(crossAxisAlignment: CrossAxisAlignment.stretch, children: children)
+            ? Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: children)
             : SizedBox(
                 height: double.infinity,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children)));
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: children)));
 
-    return axis == Axis.horizontal ? intrinsicWidget : Expanded(child: intrinsicWidget);
+    return axis == Axis.horizontal
+        ? intrinsicWidget
+        : Expanded(child: intrinsicWidget);
   }
 }

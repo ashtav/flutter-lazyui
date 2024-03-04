@@ -35,7 +35,8 @@ class _RotatorState extends State<Rotator> with SingleTickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = AnimationController(duration: widget.duration, vsync: this);
-    animation = Tween<double>(begin: 0, end: _degreeToRadian(widget.degree)).animate(controller)
+    animation = Tween<double>(begin: 0, end: _degreeToRadian(widget.degree))
+        .animate(controller)
       ..addListener(() {
         setState(() {});
       });
@@ -45,9 +46,12 @@ class _RotatorState extends State<Rotator> with SingleTickerProviderStateMixin {
   @override
   void didUpdateWidget(Rotator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.degree != widget.degree || oldWidget.duration != widget.duration) {
+    if (oldWidget.degree != widget.degree ||
+        oldWidget.duration != widget.duration) {
       controller.duration = widget.duration;
-      animation = Tween<double>(begin: animation.value, end: _degreeToRadian(widget.degree)).animate(controller)
+      animation = Tween<double>(
+              begin: animation.value, end: _degreeToRadian(widget.degree))
+          .animate(controller)
         ..addListener(() {
           setState(() {});
         });

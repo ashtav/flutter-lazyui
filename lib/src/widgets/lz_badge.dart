@@ -55,11 +55,14 @@ class LzBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color color = this.color ?? Colors.black26;
-    Color textColor = softColor ? color : (Tints.isDark(color) ? Colors.white : Colors.black87);
+    Color textColor = softColor
+        ? color
+        : (Tints.isDark(color) ? Colors.white : Colors.black87);
     bool isShapeCircle = shape == BoxShape.circle;
 
     return Container(
-      padding: isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8),
+      padding:
+          isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8),
       decoration: BoxDecoration(
           color: softColor ? color.lighten(.1) : color,
           borderRadius: isShapeCircle ? null : radius ?? Br.radius(5),
@@ -67,7 +70,8 @@ class LzBadge extends StatelessWidget {
           boxShadow: boxShadow == null ? [] : [boxShadow!],
           border: Br.all(color: color)),
       child: Textr(text,
-          style: textStyle ?? LazyUi.font.copyWith(fontSize: size ?? 14, color: textColor),
+          style: textStyle ??
+              LazyUi.font.copyWith(fontSize: size ?? 14, color: textColor),
           icon: icon,
           iconStyle: iconStyle),
     );

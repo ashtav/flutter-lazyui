@@ -12,7 +12,8 @@ class AccordionView extends StatelessWidget {
         appBar: AppBar(title: const Text('Accordion'), actions: [
           const Icon(Ti.layoutNavbarCollapse).onPressed(() {
             controller.collapse();
-            LzToast.show('All accordions collapsed!!', placement: ToastPlacement.bottom);
+            LzToast.show('All accordions collapsed!!',
+                placement: ToastPlacement.bottom);
           })
         ]),
         body: LzListView(
@@ -47,7 +48,6 @@ class AccordionView extends StatelessWidget {
                 )
               ],
             ).margin(b: 15),
-
             LzAccordion(
               backgroundColor: '444'.hex,
               textColor: Colors.white,
@@ -55,9 +55,9 @@ class AccordionView extends StatelessWidget {
               children: [
                 LzAccordionContent(
                   title: 'Dark Mode',
-                  child: Text(Faker.words(35, 3), style: Gfont.color(Colors.white70)),
+                  child: Text(Faker.words(35, 3),
+                      style: Gfont.color(Colors.white70)),
                 ),
-                
               ],
             )
           ],

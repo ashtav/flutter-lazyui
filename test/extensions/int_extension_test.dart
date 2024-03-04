@@ -17,7 +17,8 @@ void main() {
     expect(2300.idr(), 'Rp2.300');
   });
 
-  test('Check orElse method for handling null values or specific conditions', () {
+  test('Check orElse method for handling null values or specific conditions',
+      () {
     String? name;
     int? age;
 

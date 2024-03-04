@@ -17,7 +17,11 @@ class TecValidation {
   final bool ok;
   final Map<String, dynamic> value;
 
-  TecValidation({required this.error, required this.key, required this.ok, this.value = const {}});
+  TecValidation(
+      {required this.error,
+      required this.key,
+      required this.ok,
+      this.value = const {}});
 }
 
 /// Extension `MapTextEditingControllerExtension` on `Map<String, TextEditingController>`

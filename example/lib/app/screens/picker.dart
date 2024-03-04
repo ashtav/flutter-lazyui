@@ -21,14 +21,23 @@ class PickerView extends StatelessWidget {
               'Select Option',
               style: Gfont.bold,
             ),
-            description: 'Example of using a LzPicker, we can use picker with search bar, disabled items, etc.',
+            description:
+                'Example of using a LzPicker, we can use picker with search bar, disabled items, etc.',
             children: [
               LzForm.input(
                   hint: 'Show picker',
                   model: forms['category'],
                   onTap: (text) {
-                    final disabled = ['Books', 'Art', 'Sports', 'Nature', 'Yoga'];
-                    LzPicker.option(context, options: Option.list(categories, disabled: disabled), onSelect: (value) {
+                    final disabled = [
+                      'Books',
+                      'Art',
+                      'Sports',
+                      'Nature',
+                      'Yoga'
+                    ];
+                    LzPicker.option(context,
+                        options: Option.list(categories, disabled: disabled),
+                        onSelect: (value) {
                       forms.setValue('category', value.label);
                     }, style: const PickerStyle(withSearch: true));
                   }),
@@ -38,7 +47,10 @@ class PickerView extends StatelessWidget {
                   maxLines: 2,
                   onTap: (text) {
                     List<String> words = 10.generate((item) => Faker.words(10));
-                    LzPicker.option(context, options: Option.list(words), style: const PickerStyle(maxLines: 2), onSelect: (value){
+                    LzPicker.option(context,
+                        options: Option.list(words),
+                        style: const PickerStyle(maxLines: 2),
+                        onSelect: (value) {
                       forms.setValue('content', value.label);
                     });
                   })
@@ -50,7 +62,8 @@ class PickerView extends StatelessWidget {
               'Date & Time Picker',
               style: Gfont.bold,
             ),
-            description: 'Example of using a LzPicker in date, time and date-time mode.',
+            description:
+                'Example of using a LzPicker in date, time and date-time mode.',
             children: [
               LzForm.input(
                   hint: 'Show date picker',
@@ -72,8 +85,10 @@ class PickerView extends StatelessWidget {
                   model: forms['time'],
                   style: InputStyle(suffixIcon: Ti.clock),
                   onTap: (text) {
-                    LzPicker.time(context, initTime: Time.parse(text), minTime: Time(8, 30), maxTime: Time(11, 30),
-                        onSelect: (time) {
+                    LzPicker.time(context,
+                        initTime: Time.parse(text),
+                        minTime: Time(8, 30),
+                        maxTime: Time(11, 30), onSelect: (time) {
                       forms.setValue('time', time.value);
                     });
                   })

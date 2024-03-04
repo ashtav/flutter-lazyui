@@ -1,4 +1,3 @@
-## 2.0.9
+## 3.0.0
 
-* documentation
 * improvement and fix some bugs

@@ -70,7 +70,8 @@ class LzAccordion extends StatefulWidget {
   State<LzAccordion> createState() => _LzAccordionState();
 }
 
-class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _LzAccordionState extends State<LzAccordion>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -92,7 +93,10 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
 
     controllers = List.generate(length, (i) {
       bool isExpanded = widget.initValue == i;
-      return AnimationController(vsync: this, duration: widget.duration ?? 300.ms, value: isExpanded ? 1 : 0);
+      return AnimationController(
+          vsync: this,
+          duration: widget.duration ?? 300.ms,
+          value: isExpanded ? 1 : 0);
     });
     animations = List.generate(
         length,
@@ -201,11 +205,15 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
     bool isTi = LazyUi.iconType == IconType.tablerIcon;
 
     Color backgroundColor = widget.backgroundColor ?? Colors.white;
-    Color borderColor = widget.borderColor ?? (backgroundColor.isDark() ? backgroundColor.lighten(.7) : Colors.black12);
+    Color borderColor = widget.borderColor ??
+        (backgroundColor.isDark()
+            ? backgroundColor.lighten(.7)
+            : Colors.black12);
 
     return Container(
       decoration: BoxDecoration(
-          border: widget.border ?? Br.all(color: widget.borderColor ?? Colors.black12),
+          border: widget.border ??
+              Br.all(color: widget.borderColor ?? Colors.black12),
           borderRadius: Br.radius(widget.radius ?? radius)),
       child: ClipRRect(
         borderRadius: Br.radius((widget.radius ?? radius) - 1),
@@ -222,7 +230,8 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
             final gkey = GlobalKey();
 
             return Container(
-              decoration: BoxDecoration(border: Br.only(['t'], except: i == 0, color: borderColor)),
+              decoration: BoxDecoration(
+                  border: Br.only(['t'], except: i == 0, color: borderColor)),
               child: Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
@@ -235,29 +244,40 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
                             onTap(i);
 
                             // scroll to this widget
-                            if (gkey.currentContext != null && widget.scrollToExpanded && controller.value <= 0) {
+                            if (gkey.currentContext != null &&
+                                widget.scrollToExpanded &&
+                                controller.value <= 0) {
                               await Future.delayed(300.ms);
-                              Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
+                              Scrollable.ensureVisible(gkey.currentContext!,
+                                  duration: 250.ms);
                             }
                           },
                           padding: Ei.all(20),
                           color: widget.backgroundColor ?? Colors.white,
-                          border: Br.only([controller.value > .01 ? 'b' : ''], color: borderColor),
+                          border: Br.only([controller.value > .01 ? 'b' : ''],
+                              color: borderColor),
                           child: Row(
                             mainAxisAlignment: Maa.spaceBetween,
                             children: [
                               Flexible(
                                   child: Textr(
                                 title,
-                                style: LazyUi.font.copyWith(color: widget.textColor),
+                                style: LazyUi.font
+                                    .copyWith(color: widget.textColor),
                                 margin: Ei.only(r: 15),
-                                overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
+                                overflow: widget.titleEllipsis
+                                    ? Tof.ellipsis
+                                    : Tof.visible,
                               )),
                               suffix ??
                                   RotationTransition(
                                       turns: turnsTween.animate(controller),
-                                      child: Icon(isTi ? Ti.chevronRight : La.angleRight,
-                                          color: widget.textColor ?? Colors.black38))
+                                      child: Icon(
+                                          isTi
+                                              ? Ti.chevronRight
+                                              : La.angleRight,
+                                          color: widget.textColor ??
+                                              Colors.black38))
                             ],
                           ))),
                   SizeTransition(
@@ -266,7 +286,8 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
                       child: Container(
                         width: context.width,
                         padding: widget.padding ?? Ei.all(20),
-                        color: backgroundColor.darken(backgroundColor.isDark() ? .09 : .03),
+                        color: backgroundColor
+                            .darken(backgroundColor.isDark() ? .09 : .03),
                         child: child,
                       )),
                 ],
@@ -284,7 +305,8 @@ class LzAccordionContent {
   final Widget child;
   final Widget? suffix;
 
-  const LzAccordionContent({required this.title, required this.child, this.suffix});
+  const LzAccordionContent(
+      {required this.title, required this.child, this.suffix});
 }
 
 class AccordionController {

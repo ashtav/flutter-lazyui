@@ -21,9 +21,14 @@ class LzPicker {
   ///   - `onSelect`: A function called when an option is selected in the picker.
   ///   - `style`: The style configuration for the picker.
   static void option(BuildContext context,
-      {List<Option> options = const [], Option? initialValue, Function(Option)? onSelect, PickerStyle? style}) {
+      {List<Option> options = const [],
+      Option? initialValue,
+      Function(Option)? onSelect,
+      PickerStyle? style}) {
     if (options.isEmpty) {
-      return logg('The options list is empty, please provide a list of options.', name: 'LzPicker');
+      return logg(
+          'The options list is empty, please provide a list of options.',
+          name: 'LzPicker');
     }
 
     context.bottomSheet(
@@ -77,7 +82,12 @@ class LzPicker {
 
     DateTime? result = await context.bottomSheet(
         LzDatePicker(
-            initDate: initDate, minDate: minDate, maxDate: maxDate, style: style, format: format, withTime: withTime),
+            initDate: initDate,
+            minDate: minDate,
+            maxDate: maxDate,
+            style: style,
+            format: format,
+            withTime: withTime),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);
@@ -95,9 +105,17 @@ class LzPicker {
   ///   - `style`: The style configuration for the time picker.
   ///   - `onSelect`: A function called when a time is selected in the picker.
   static void time(BuildContext context,
-      {Time? initTime, Time? minTime, Time? maxTime, TimePickerStyle? style, Function(Time value)? onSelect}) async {
+      {Time? initTime,
+      Time? minTime,
+      Time? maxTime,
+      TimePickerStyle? style,
+      Function(Time value)? onSelect}) async {
     Time? result = await context.bottomSheet(
-        LzTimePicker(initTime: initTime, minTime: minTime, maxTime: maxTime, style: style),
+        LzTimePicker(
+            initTime: initTime,
+            minTime: minTime,
+            maxTime: maxTime,
+            style: style),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);

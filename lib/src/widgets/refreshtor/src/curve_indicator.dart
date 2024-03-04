@@ -23,9 +23,12 @@ class CurveIndicator extends StatelessWidget {
     bool isLoading = controller.isLoading;
 
     Color backgroundColor = style?.backgroundColor ?? Colors.white;
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color releaseTextColor = style?.releaseTextColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color indicatorColor = style?.indicatorColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color releaseTextColor = style?.releaseTextColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color indicatorColor = style?.indicatorColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     String? text = style?.text;
     String? releaseText = style?.releaseText;
@@ -34,7 +37,9 @@ class CurveIndicator extends StatelessWidget {
       alignment: Alignment.topCenter,
       children: [
         CustomPaint(
-            painter: _CurvedShapePainter(value: isLoading || isFinal ? 0 : value * .4, color: backgroundColor),
+            painter: _CurvedShapePainter(
+                value: isLoading || isFinal ? 0 : value * .4,
+                color: backgroundColor),
             child: AnimatedContainer(
               duration: 150.ms,
               width: context.width,
@@ -44,9 +49,14 @@ class CurveIndicator extends StatelessWidget {
                 child: AnimatedOpacity(
                     duration: 300.ms,
                     opacity: value > .4 ? 1 : 0,
-                    child: Text(isArmed ? (releaseText ?? 'Release to refresh') : (text ?? 'Pull down to refresh'),
+                    child: Text(
+                        isArmed
+                            ? (releaseText ?? 'Release to refresh')
+                            : (text ?? 'Pull down to refresh'),
                         style: LazyUi.font
-                            .copyWith(fontWeight: isArmed ? Fw.bold : Fw.normal, fontSize: 12 + (1 * value))
+                            .copyWith(
+                                fontWeight: isArmed ? Fw.bold : Fw.normal,
+                                fontSize: 12 + (1 * value))
                             .fcolor(isArmed ? releaseTextColor : textColor),
                         textAlign: Ta.center)),
               ),
@@ -55,7 +65,9 @@ class CurveIndicator extends StatelessWidget {
             duration: 100.ms,
             height: 1.2 * value,
             width: context.width * value,
-            decoration: BoxDecoration(color: indicatorColor, borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
+            decoration: BoxDecoration(
+                color: indicatorColor,
+                borderRadius: Br.radius(50 * (1 - value.clamp(0, 1))))),
       ],
     );
   }
@@ -76,7 +88,8 @@ class _CurvedShapePainter extends CustomPainter {
     final path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);
-    path.quadraticBezierTo(size.width / 2, size.height + (150 * value), size.width, size.height);
+    path.quadraticBezierTo(
+        size.width / 2, size.height + (150 * value), size.width, size.height);
     path.lineTo(size.width, 0);
     path.close();
 

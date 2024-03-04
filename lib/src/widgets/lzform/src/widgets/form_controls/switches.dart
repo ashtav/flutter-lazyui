@@ -11,7 +11,13 @@ class Switches extends StatelessWidget {
   final bool initValue;
   final bool reversed;
 
-  const Switches({super.key, this.label, this.style, this.onChange, this.initValue = false, this.reversed = false});
+  const Switches(
+      {super.key,
+      this.label,
+      this.style,
+      this.onChange,
+      this.initValue = false,
+      this.reversed = false});
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +56,10 @@ class Switches extends StatelessWidget {
         ),
         if (labels.isNotEmpty)
           Textr(state.switchesValue ? labels[0] : labels[1],
-              style: LazyUi.font.copyWith(color: style?.textColor ?? Colors.black87),
-              padding: Ei.only(v: 5, r: reversed ? 10 : 0, l: reversed ? 0 : 10))
+              style: LazyUi.font
+                  .copyWith(color: style?.textColor ?? Colors.black87),
+              padding:
+                  Ei.only(v: 5, r: reversed ? 10 : 0, l: reversed ? 0 : 10))
       ];
 
       return Touch(

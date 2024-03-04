@@ -48,10 +48,25 @@ class FormsView extends StatelessWidget {
       'Lemonade'
     ];
 
-    List<Option> provinces = ['Bali', 'Jakarta', 'Yogyakarta'].option(values: [1, 2, 3]);
+    List<Option> provinces =
+        ['Bali', 'Jakarta', 'Yogyakarta'].option(values: [1, 2, 3]);
     Map<int, List<Option>> cities = {
-      1: ['Denpasar', 'Badung', 'Tabanan', 'Gianyar', 'Bangli', 'Karangasem', 'Buleleng'].option(),
-      2: ['Jakarta Barat', 'Jakarta Pusat', 'Jakarta Selatan', 'Jakarta Timur', 'Jakarta Utara'].option(),
+      1: [
+        'Denpasar',
+        'Badung',
+        'Tabanan',
+        'Gianyar',
+        'Bangli',
+        'Karangasem',
+        'Buleleng'
+      ].option(),
+      2: [
+        'Jakarta Barat',
+        'Jakarta Pusat',
+        'Jakarta Selatan',
+        'Jakarta Timur',
+        'Jakarta Utara'
+      ].option(),
     };
 
     return Wrapper(
@@ -105,16 +120,25 @@ class FormsView extends StatelessWidget {
                 style: InputStyle(suffixIcon: Ti.calendarEvent),
                 onTap: (text) {
                   final now = DateTime.now();
-                  LzPicker.date(context, initDate: text.toDate(), minDate: now.subtract(50.y), maxDate: now,
-                      onSelect: (value) {
+                  LzPicker.date(context,
+                      initDate: text.toDate(),
+                      minDate: now.subtract(50.y),
+                      maxDate: now, onSelect: (value) {
                     forms.setValue('birthdate', value.format('dd/MM/yyyy'));
                   });
                 },
               ),
-              LzForm.checkbox(
-                  options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
-                  disabled: [0, 1],
-                  model: forms['hobby']),
+              LzForm.checkbox(options: [
+                'Football',
+                'Cooking',
+                'Coding',
+                'Swimming',
+                'Reading',
+                'Writing'
+              ], disabled: [
+                0,
+                1
+              ], model: forms['hobby']),
             ]),
 
             // example of using switch, selecta and number
@@ -128,7 +152,8 @@ class FormsView extends StatelessWidget {
                       icon: Ti.gift,
                       margin: Ei.only(b: 5),
                     ),
-                    Text('Select product you want to achieved.', style: Gfont.fs14)
+                    Text('Select product you want to achieved.',
+                        style: Gfont.fs14)
                   ],
                 ).start,
                 LzForm.switches(
@@ -138,9 +163,15 @@ class FormsView extends StatelessWidget {
                       forms.enable('product', value);
 
                       if (value) {
-                        LzToast.overlay('Getting products...', duration: 1.s, then: (() {
+                        LzToast.overlay('Getting products...', duration: 1.s,
+                            then: (() {
                           forms.setSelectOption(
-                              'product', products.option(disabled: ['Spaghetti', 'Cappuccino', 'Lasagna']),
+                              'product',
+                              products.option(disabled: [
+                                'Spaghetti',
+                                'Cappuccino',
+                                'Lasagna'
+                              ]),
                               andShow: true);
 
                           // open select picker automatically
@@ -170,26 +201,31 @@ class FormsView extends StatelessWidget {
 
             LzFormTheme(
                 label: Textr('Address', style: Gfont.bold, icon: Ti.map2),
-                description: 'Example of using a select input with dynamic options.',
+                description:
+                    'Example of using a select input with dynamic options.',
                 grouping: true,
                 children: [
                   LzForm.select(
                       hint: 'Select province',
                       model: forms['province'],
                       onTap: () {
-                        return LzToast.overlay('Getting province...', duration: 1.s, then: (() async {
+                        return LzToast.overlay('Getting province...',
+                            duration: 1.s, then: (() async {
                           // if data we get from server is null, empty or error
                           // we can prevent the select to show by returning false
 
                           // LzToast.show('There is no data to show.', position: Position.center);
                           // return false;
 
-                          forms.setSelectOption('province', provinces, disabled: [3], onSelected: (option) {
+                          forms.setSelectOption('province', provinces,
+                              disabled: [3], onSelected: (option) {
                             forms.set('city').enable().value('');
 
                             // forms.enable('city').setValue('city', '');
                             forms.setExtra(
-                                'province', option?.value); // in case we need to use the value to get the city
+                                'province',
+                                option
+                                    ?.value); // in case we need to use the value to get the city
                           });
 
                           // forms.onSelected('province', (f) => f.enable('city'));
@@ -204,7 +240,8 @@ class FormsView extends StatelessWidget {
                         dynamic provinceId = forms.getExtra('province');
                         logg('Province ID: $provinceId');
 
-                        return LzToast.overlay('Getting city...', duration: 500.ms, then: (() {
+                        return LzToast.overlay('Getting city...',
+                            duration: 500.ms, then: (() {
                           final id = forms.getSelect('province');
                           forms.setSelectOption('city', cities[id] ?? []);
                         }));
@@ -213,14 +250,19 @@ class FormsView extends StatelessWidget {
 
             // Example of using an input field with a prefix widget and slider.
             LzFormTheme(
-                label: Textr('Contact & Distance', style: Gfont.bold, icon: Ti.gift),
-                description: 'Example of using an input field with a prefix widget and input slider.',
+                label: Textr('Contact & Distance',
+                    style: Gfont.bold, icon: Ti.gift),
+                description:
+                    'Example of using an input field with a prefix widget and input slider.',
                 grouping: true,
                 spacing: 5,
                 children: [
                   LzForm.input(
                     hint: 'Type your phone number',
-                    style: InputStyle(radius: 8, borderColor: Colors.black38, prefix: const Textr('+62')),
+                    style: InputStyle(
+                        radius: 8,
+                        borderColor: Colors.black38,
+                        prefix: const Textr('+62')),
                     keyboard: Tit.number,
                     maxLength: 13,
                     model: forms['phone'],
@@ -239,7 +281,8 @@ class FormsView extends StatelessWidget {
                 29.0,
                 (value) => Row(
                       children: [
-                        Text('Your distance is $value Km', style: Gfont.fs14.muted),
+                        Text('Your distance is $value Km',
+                            style: Gfont.fs14.muted),
                       ],
                     ).end),
 
@@ -250,10 +293,17 @@ class FormsView extends StatelessWidget {
                 borderColor: Colors.black38,
               ),
               label: Textr('Account', style: Gfont.bold, icon: Ti.lock),
-              description: 'Example of using an input field with an obscure toggle, show or hide password value.',
+              description:
+                  'Example of using an input field with an obscure toggle, show or hide password value.',
               children: [
-                LzForm.input(hint: 'Enter your email', model: forms['email'], keyboard: Tit.emailAddress),
-                LzForm.input(hint: 'Enter your password', model: forms['password'], obsecureToggle: true),
+                LzForm.input(
+                    hint: 'Enter your email',
+                    model: forms['email'],
+                    keyboard: Tit.emailAddress),
+                LzForm.input(
+                    hint: 'Enter your password',
+                    model: forms['password'],
+                    obsecureToggle: true),
               ],
             ).margin(t: 25, b: 16), // end of account
           ],
@@ -265,7 +315,8 @@ class FormsView extends StatelessWidget {
                   required: ['*'],
                   alert: FormAlert.text,
                   messages: FormMessage(required: {
-                    'name': 'I am sory, we need to know your name, so please provide your valid information.'
+                    'name':
+                        'I am sory, we need to know your name, so please provide your valid information.'
                   }));
 
               logg(form.value);
@@ -273,7 +324,8 @@ class FormsView extends StatelessWidget {
 
               if (form.ok) {
                 LzToast.overlay('Submitting...', duration: 2.s, then: () {
-                  LzToast.success('Your form submitted successfully!', placement: ToastPlacement.center);
+                  LzToast.success('Your form submitted successfully!',
+                      placement: ToastPlacement.center);
                 });
               }
             }).shadowed().padding(blr: 20),

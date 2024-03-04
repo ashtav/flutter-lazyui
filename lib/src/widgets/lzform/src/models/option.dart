@@ -53,7 +53,8 @@ class Option {
   /// [disabled] : The list of options that are disabled. Defaults to an empty list.
   ///
   /// Returns a list of Option objects generated from the given parameters.
-  static List<Option> list(List<String> options, {List<dynamic> values = const [], List<dynamic> disabled = const []}) {
+  static List<Option> list(List<String> options,
+      {List<dynamic> values = const [], List<dynamic> disabled = const []}) {
     return options.option(values: values, disabled: disabled);
   }
 }
@@ -67,7 +68,8 @@ extension OptionExtension on List<String> {
   /// [disabled] : The list of options that are disabled. Defaults to an empty list.
   ///
   /// Returns a list of Option objects generated from the list of strings.
-  List<Option> option({List<dynamic> values = const [], List<dynamic> disabled = const []}) {
+  List<Option> option(
+      {List<dynamic> values = const [], List<dynamic> disabled = const []}) {
     return generate((item, i) {
       bool dis = values.isEmpty
           ? disabled.contains(item)
@@ -75,7 +77,8 @@ extension OptionExtension on List<String> {
               ? disabled.contains(values[i])
               : false;
 
-      return Option(item, value: values.length <= i ? null : values[i], disabled: dis);
+      return Option(item,
+          value: values.length <= i ? null : values[i], disabled: dis);
     });
   }
 }

@@ -32,7 +32,8 @@ class LzTimePicker extends StatelessWidget {
     List<String> formats = ['h', 'i'];
 
     final notifier = TimePickerNotifier();
-    notifier.onInitialized(formats, initTime: initTime, minTime: minTime, maxTime: maxTime);
+    notifier.onInitialized(formats,
+        initTime: initTime, minTime: minTime, maxTime: maxTime);
 
     double radius = style?.radius ?? LazyUi.radius;
     double height = context.height * (context.width > 395 ? .6 : .45);
@@ -52,14 +53,18 @@ class LzTimePicker extends StatelessWidget {
                 children: formats.generate((f, i) {
                   final items = notifier.generateDate(f);
                   return Container(
-                      decoration:
-                          BoxDecoration(border: Br.only(['l'], except: i == 0, color: backgroundColor.darken(.2))),
+                      decoration: BoxDecoration(
+                          border: Br.only(['l'],
+                              except: i == 0,
+                              color: backgroundColor.darken(.2))),
                       child: CupertinoPickerWidget(
                         notifier,
                         type: f,
                         items: items,
                         style: style,
-                        overlayColor: backgroundColor.lighten(isDarkMode ? .8 : .1).withOpacity(.4),
+                        overlayColor: backgroundColor
+                            .lighten(isDarkMode ? .8 : .1)
+                            .withOpacity(.4),
                       ));
                 }),
               ),
@@ -100,8 +105,10 @@ class CupertinoPickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = this.backgroundColor ?? (isDarkMode ? '333'.hex : 'f1f1f1'.hex);
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color backgroundColor =
+        this.backgroundColor ?? (isDarkMode ? '333'.hex : 'f1f1f1'.hex);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     return notifier.watch((state) => CupertinoPicker(
         magnification: 1.9,
@@ -109,7 +116,8 @@ class CupertinoPickerWidget extends StatelessWidget {
         itemExtent: 35,
         diameterRatio: .9,
         squeeze: .9,
-        scrollController: notifier.controller[type] ?? FixedExtentScrollController(initialItem: 0),
+        scrollController: notifier.controller[type] ??
+            FixedExtentScrollController(initialItem: 0),
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
           decoration: BoxDecoration(color: overlayColor),
@@ -121,7 +129,8 @@ class CupertinoPickerWidget extends StatelessWidget {
             child: ZoomIn(
               child: Textr(
                 item,
-                style: LazyUi.font.copyWith(color: textColor, letterSpacing: 1.5),
+                style:
+                    LazyUi.font.copyWith(color: textColor, letterSpacing: 1.5),
                 padding: Ei.sym(h: 15),
               ),
             ),
@@ -139,9 +148,11 @@ class ConfirmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode = style?.darkMode ?? false;
     Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
     Color buttonColor = style?.buttonColor ?? Colors.white;
-    Color confirmTextColor = style?.confirmTextColor ?? (buttonColor.isDark() ? Colors.white : Colors.black87);
+    Color confirmTextColor = style?.confirmTextColor ??
+        (buttonColor.isDark() ? Colors.white : Colors.black87);
 
     return Poslign(
         alignment: Alignment.bottomCenter,
@@ -178,7 +189,9 @@ class ConfirmButton extends StatelessWidget {
                           color: buttonColor,
                           radius: Br.radius(50),
                           child: Text(style?.confirmText ?? 'Confirm',
-                              style: LazyUi.font.copyWith(fontWeight: Fw.bold, color: confirmTextColor)),
+                              style: LazyUi.font.copyWith(
+                                  fontWeight: Fw.bold,
+                                  color: confirmTextColor)),
                         ),
                       ));
           }),

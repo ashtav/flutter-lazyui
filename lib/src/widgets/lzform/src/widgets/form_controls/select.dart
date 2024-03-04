@@ -63,11 +63,15 @@ class Select extends StatelessWidget with LzFormMixin {
     bool hasOnTap = onTap != null;
 
     // create label widget
-    Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
+    Widget labelWidget = hasLabel
+        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        : const None();
 
     // create grouped label widget
-    Widget groupedLabelWidget =
-        Positioned(top: 12, child: Container(padding: Ei.sym(h: 16), width: context.width, child: labelWidget));
+    Widget groupedLabelWidget = Positioned(
+        top: 12,
+        child: Container(
+            padding: Ei.sym(h: 16), width: context.width, child: labelWidget));
 
     // create top inner label widget
     Widget topInnerLabelWidget = Positioned(
@@ -84,10 +88,12 @@ class Select extends StatelessWidget with LzFormMixin {
     final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
 
     // create prefix & suffix icon widget
-    Widget? prefixIconWidget =
-        hasOnTap || style?.prefixIcon == null ? null : Icon(style?.prefixIcon, color: style?.prefixIconColor);
-    Widget? suffixIconWidget =
-        Icon(style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown), color: style?.suffixIconColor);
+    Widget? prefixIconWidget = hasOnTap || style?.prefixIcon == null
+        ? null
+        : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+    Widget? suffixIconWidget = Icon(
+        style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
+        color: style?.suffixIconColor);
 
     // init select list
     notifier.selectList = options;
@@ -97,18 +103,21 @@ class Select extends StatelessWidget with LzFormMixin {
       // get background color
       Color backgroundColor = notifier.disabled
           ? const Color.fromARGB(31, 204, 204, 204)
-          : style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+          : style?.background ??
+              (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
 
       // onTap action
       void onTapSelect() {
         final selected = notifier.selectedSelect;
 
         // create options
-        List<Option> options = state.selectList.map((e) => Option.fromMap(e.toMap())).toList();
+        List<Option> options =
+            state.selectList.map((e) => Option.fromMap(e.toMap())).toList();
         Option initialValue = Option.fromMap(selected?.toMap() ?? {});
 
         notifier.isSelectShow = true;
-        LzPicker.option(context, initialValue: initialValue, options: options, onSelect: (value) {
+        LzPicker.option(context, initialValue: initialValue, options: options,
+            onSelect: (value) {
           notifier.controller.text = value.label;
           notifier.selectedSelect = Option.fromMap(value.toMap());
 
@@ -150,9 +159,15 @@ class Select extends StatelessWidget with LzFormMixin {
             LzTextField(
               hint: hint,
               enabled: false,
-              prefixIcon: isGrouped || isUnderlined ? prefixIconWidget?.margin(t: 22) : prefixIconWidget,
-              suffixIcon: isGrouped || isUnderlined ? suffixIconWidget.margin(t: 22) : suffixIconWidget,
-              padding: hasLabel && (isGrouped || isUnderlined) ? labelAndGroupedPadding : Ei.only(l: 16, r: 16, v: 14),
+              prefixIcon: isGrouped || isUnderlined
+                  ? prefixIconWidget?.margin(t: 22)
+                  : prefixIconWidget,
+              suffixIcon: isGrouped || isUnderlined
+                  ? suffixIconWidget.margin(t: 22)
+                  : suffixIconWidget,
+              padding: hasLabel && (isGrouped || isUnderlined)
+                  ? labelAndGroupedPadding
+                  : Ei.only(l: 16, r: 16, v: 14),
               controller: notifier.controller,
               hintStyle: Gfont.color(textColor.withOpacity(.4)),
               textStyle: Gfont.color(textColor),
@@ -163,7 +178,8 @@ class Select extends StatelessWidget with LzFormMixin {
               Poslign(
                 alignment: Alignment.centerRight,
                 child: Icon(
-                  style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
+                  style?.suffixIcon ??
+                      (isTabler ? Ti.chevronDown : La.angleDown),
                   color: style?.suffixIconColor ?? Colors.black38,
                   size: 18,
                 ).padding(r: 15, b: 1.5),
@@ -195,11 +211,14 @@ class Select extends StatelessWidget with LzFormMixin {
               ],
             )
           else
-            notifier.watch(
-                (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
+            notifier.watch((state) => isUnderlined && state.disabled
+                ? textFieldWidget.lz.clip(all: radius)
+                : textFieldWidget),
 
-          notifier
-              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
+          notifier.watch((state) => FormFeedbackMessage(
+              show: !state.isValid,
+              message: state.errorMessage,
+              attribute: attr))
         ],
       ).start,
     );

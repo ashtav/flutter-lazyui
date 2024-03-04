@@ -18,7 +18,6 @@ class LzToastOverlay extends StatefulWidget {
   State<LzToastOverlay> createState() => _LzToastOverlayState();
 }
 
-
 class _LzToastOverlayState extends State<LzToastOverlay> {
   late LzToastOverlayEntry overlayEntry;
 
@@ -36,7 +35,9 @@ class _LzToastOverlayState extends State<LzToastOverlay> {
     return Material(
       child: Overlay(
         initialEntries: [
-          LzToastOverlayEntry(overlayBuilder: (BuildContext context) => widget.child ?? const SizedBox()),
+          LzToastOverlayEntry(
+              overlayBuilder: (BuildContext context) =>
+                  widget.child ?? const SizedBox()),
           overlayEntry,
         ],
       ),

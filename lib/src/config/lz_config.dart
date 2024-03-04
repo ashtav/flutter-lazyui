@@ -33,7 +33,9 @@ double _defaultRadius = 7.0;
 /// ```
 class LazyUi {
   /// Returns the default text style for the app. If not set, it defaults to Nunito Sans font style.
-  static TextStyle get font => _defaultTextStyle ?? GoogleFonts.nunitoSans(fontSize: 15.5, color: Tints.black);
+  static TextStyle get font =>
+      _defaultTextStyle ??
+      GoogleFonts.nunitoSans(fontSize: 15.5, color: Tints.black);
 
   /// Returns the default icon type set for the app. The default is [IconType.tablerIcon].
   static IconType get iconType => _defaultIconType;
@@ -73,7 +75,8 @@ class LazyUi {
     }
 
     if (alwaysPortrait) {
-      Utils.orientation([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      Utils.orientation(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
     _defaultTextStyle = font;
@@ -93,7 +96,8 @@ class LazyUi {
   /// [child]: The widget to be wrapped and displayed.
   /// [maxScalingFontSize]: The maximum font size scaling factor. If provided, scales text up to this maximum value.
   /// [useLzToast]: If true, wraps the [child] with `LzToastOverlay` for toast notifications.
-  static Widget builder(BuildContext context, Widget? child, {double? maxScalingFontSize, bool useLzToast = true}) {
+  static Widget builder(BuildContext context, Widget? child,
+      {double? maxScalingFontSize, bool useLzToast = true}) {
     // ignore: deprecated_member_uselzf
     double maxScalingFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -106,11 +110,14 @@ class LazyUi {
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
         // ignore: deprecated_member_use
-        textScaleFactor:
-            maxScalingFontSize == null ? maxScalingFactor : maxScalingFactor.clamp(1.0, maxScalingFontSize),
+        textScaleFactor: maxScalingFontSize == null
+            ? maxScalingFactor
+            : maxScalingFactor.clamp(1.0, maxScalingFontSize),
       ),
       child: useLzToast
-          ? LzToastOverlay(child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
+          ? LzToastOverlay(
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
           : child ?? const SizedBox.shrink(),
     );
   }

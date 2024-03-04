@@ -6,13 +6,21 @@ class TrainerView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey(), key4 = GlobalKey();
+    final key1 = GlobalKey(),
+        key2 = GlobalKey(),
+        key3 = GlobalKey(),
+        key4 = GlobalKey();
     final controller = TrainerController();
 
     return Trainer(
       controller: controller,
       targets: [key1, key2, key3, key4].generate((key, i) {
-        List<String> titles = ['Search Icon', 'Calendar Icon', 'Floating Action Button', 'Button'];
+        List<String> titles = [
+          'Search Icon',
+          'Calendar Icon',
+          'Floating Action Button',
+          'Button'
+        ];
         return Target(
             key: key,
             title: titles[i],
@@ -32,8 +40,9 @@ class TrainerView extends StatelessWidget {
             title: const Text('Trainer'),
             elevation: 0,
             backgroundColor: Colors.transparent,
-            actions: [La.search, La.calendar]
-                .generate((icon, i) => Iconr(icon, flipX: true, key: [key1, key2][i]).onPressed(() => {}))),
+            actions: [La.search, La.calendar].generate((icon, i) =>
+                Iconr(icon, flipX: true, key: [key1, key2][i])
+                    .onPressed(() => {}))),
         body: LzListView(
           children: [
             const Textml(

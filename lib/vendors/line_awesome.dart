@@ -1,8 +1,13 @@
 import 'package:flutter/widgets.dart';
 
+/// A class providing access to LineAwesomeIcons font family.
+///
+/// This class contains static constants for accessing icons from the LineAwesomeIcons font family.
+/// It also defines the font family used by the LineAwesomeIcons.
 class La {
   La._();
 
+  /// The font family used for LineAwesomeIcons.
   static const _kFontFam = 'packages/lazyui/LineAwesomeIcons';
 
   static const IconData i500px = IconData(0xf26e, fontFamily: _kFontFam);

@@ -85,8 +85,10 @@ class _TrainerState extends State<Trainer> {
 
                   // get target properties and styles
                   bool hasTitle = target.title != null;
-                  Color backgroundColor = target.backgroundColor ?? Colors.transparent;
-                  Color textColor = target.textColor ?? Colors.white.withOpacity(.8);
+                  Color backgroundColor =
+                      target.backgroundColor ?? Colors.transparent;
+                  Color textColor =
+                      target.textColor ?? Colors.white.withOpacity(.8);
                   double radius = target.radius ?? LazyUi.radius;
 
                   Widget targetWidget = SingleChildScrollView(
@@ -95,7 +97,10 @@ class _TrainerState extends State<Trainer> {
                     child: target.child ??
                         Column(
                           children: [
-                            Iconr(target.icon ?? Ti.book, size: 50, color: textColor, margin: Ei.only(b: 25)),
+                            Iconr(target.icon ?? Ti.book,
+                                size: 50,
+                                color: textColor,
+                                margin: Ei.only(b: 25)),
                             if (hasTitle)
                               Textr(
                                 target.title!,
@@ -114,14 +119,20 @@ class _TrainerState extends State<Trainer> {
                     children: [
                       Container(
                         constraints: BoxConstraints(
-                            maxWidth: 260, minWidth: 200, maxHeight: widget.style?.maxHeight ?? context.height / 2),
+                            maxWidth: 260,
+                            minWidth: 200,
+                            maxHeight:
+                                widget.style?.maxHeight ?? context.height / 2),
                         decoration: BoxDecoration(
                           color: backgroundColor,
                           border: Br.all(color: Colors.white70),
                           borderRadius: Br.radius(radius),
                         ),
                         child: (widget.style?.backBlur ?? true)
-                            ? BackdropFilter(filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), child: targetWidget)
+                            ? BackdropFilter(
+                                    filter: ImageFilter.blur(
+                                        sigmaX: 5.0, sigmaY: 5.0),
+                                    child: targetWidget)
                                 .lz
                                 .clip(all: radius)
                             : targetWidget,
@@ -142,12 +153,19 @@ class _TrainerState extends State<Trainer> {
                             key: UniqueKey(),
                             delay: (i + 1) * 200,
                             child: Container(
-                                    padding: Ei.only(v: 15, l: i == 0 ? h : h + 10, r: i == 0 ? h + 10 : h),
-                                    decoration:
-                                        BoxDecoration(border: Br.only(['l'], except: i == 0, color: Colors.white70)),
+                                    padding: Ei.only(
+                                        v: 15,
+                                        l: i == 0 ? h : h + 10,
+                                        r: i == 0 ? h + 10 : h),
+                                    decoration: BoxDecoration(
+                                        border: Br.only(['l'],
+                                            except: i == 0,
+                                            color: Colors.white70)),
                                     child: Text(
                                       label,
-                                      style: LazyUi.font.copyWith(color: Colors.white, letterSpacing: 2),
+                                      style: LazyUi.font.copyWith(
+                                          color: Colors.white,
+                                          letterSpacing: 2),
                                     ).lz.disabled(disabled, 0))
                                 .onTap(
                               () {
@@ -208,7 +226,8 @@ class _TrainerState extends State<Trainer> {
           hideSkip: true,
           colorShadow: style?.shadowColor ?? Colors.black.withOpacity(.8),
           opacityShadow: style?.shadowOpacity ?? .8,
-          onClickTarget: (target) => widget.onClickTarget?.call(target.identify.toString()),
+          onClickTarget: (target) =>
+              widget.onClickTarget?.call(target.identify.toString()),
           onFinish: () {
             widget.onFinish?.call();
             isActive = false;

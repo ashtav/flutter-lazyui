@@ -30,7 +30,8 @@ class Slider extends StatelessWidget with LzFormMixin {
   @override
   Widget build(BuildContext context) {
     final attr = getAttribute(context);
-    SlideStyle? style = (attr.isWrapped ? attr.style?.slide : attr.slideStyle) ?? this.style;
+    SlideStyle? style =
+        (attr.isWrapped ? attr.style?.slide : attr.slideStyle) ?? this.style;
 
     final notifier = model?.notifier ?? FormNotifier();
     notifier.controller = model?.controller ?? TextEditingController();
@@ -40,7 +41,8 @@ class Slider extends StatelessWidget with LzFormMixin {
     bool hasIndicator = indicator != null;
 
     Color activeColor = style?.activeColor ?? Colors.blueAccent;
-    Color inactiveColor = style?.inactiveColor ?? Colors.blueAccent.withOpacity(.5);
+    Color inactiveColor =
+        style?.inactiveColor ?? Colors.blueAccent.withOpacity(.5);
 
     return notifier.watch((state) {
       double getValue(value) {
@@ -132,13 +134,16 @@ class _SlideLiner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Poslign(
-        alignment: alignment == 'l' ? Alignment.centerLeft : Alignment.centerRight,
+        alignment:
+            alignment == 'l' ? Alignment.centerLeft : Alignment.centerRight,
         child: Container(
           height: height,
           width: 10.1,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: alignment == 'l' ? Br.radiusOnly(ltb: 5) : Br.radiusOnly(rtb: 5),
+            borderRadius: alignment == 'l'
+                ? Br.radiusOnly(ltb: 5)
+                : Br.radiusOnly(rtb: 5),
           ),
         ));
   }

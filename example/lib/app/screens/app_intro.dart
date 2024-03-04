@@ -161,7 +161,8 @@ class AppIntro2 extends StatelessWidget {
         ),
         Container(
           padding: Ei.only(h: 30, t: 30, b: 50),
-          decoration: BoxDecoration(color: Colors.white, border: Br.only(['t'], color: '011b22'.hex)),
+          decoration: BoxDecoration(
+              color: Colors.white, border: Br.only(['t'], color: '011b22'.hex)),
           child: Column(
             children: [
               Text(
@@ -169,7 +170,8 @@ class AppIntro2 extends StatelessWidget {
                 style: Gfont.muted,
                 textAlign: Ta.center,
               ).margin(t: 10, b: 15),
-              Text('©2024, v3.0.0 240215.1', style: Gfont.fs14.muted).margin(b: 35),
+              Text('©2024, v3.0.0 240215.1', style: Gfont.fs14.muted)
+                  .margin(b: 35),
               LzButton(
                       text: 'Get Started',
                       icon: La.arrowRight,
@@ -221,7 +223,10 @@ class AppIntro3 extends StatelessWidget {
             children: [
               notifier.watch((s) {
                 double value = s.index / 5;
-                return CircularValueWidget(value: value, size: 70, backgroundColor: Colors.transparent);
+                return CircularValueWidget(
+                    value: value,
+                    size: 70,
+                    backgroundColor: Colors.transparent);
               }),
               Poslign(
                 alignment: Alignment.center,
@@ -232,7 +237,9 @@ class AppIntro3 extends StatelessWidget {
                         notifier.onChange(value >= 6 ? 0 : value);
                       },
                       radius: Br.circle,
-                      border: Br.all(color: s.index >= 5 ? Colors.blue : Colors.transparent),
+                      border: Br.all(
+                          color:
+                              s.index >= 5 ? Colors.blue : Colors.transparent),
                       color: s.index >= 5 ? Colors.white : Colors.black12,
                       child: Center(
                           child: Icon(
@@ -268,7 +275,8 @@ class CircularValueWidget extends StatefulWidget {
   State<CircularValueWidget> createState() => _CircularValueWidgetState();
 }
 
-class _CircularValueWidgetState extends State<CircularValueWidget> with SingleTickerProviderStateMixin {
+class _CircularValueWidgetState extends State<CircularValueWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
 
@@ -299,7 +307,8 @@ class _CircularValueWidgetState extends State<CircularValueWidget> with SingleTi
     if (widget.value != oldWidget.value) {
       _controller.reset();
       _controller.forward();
-      _animation = Tween<double>(begin: oldWidget.value, end: widget.value).animate(
+      _animation =
+          Tween<double>(begin: oldWidget.value, end: widget.value).animate(
         CurvedAnimation(
           parent: _controller,
           curve: Curves.easeOut,
