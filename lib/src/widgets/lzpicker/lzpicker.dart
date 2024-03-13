@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import 'date/date_picker.dart';
+import 'date_range/date_picker.dart';
 import 'option/picker_option.dart';
 import 'time/time_picker.dart';
 
@@ -21,14 +22,9 @@ class LzPicker {
   ///   - `onSelect`: A function called when an option is selected in the picker.
   ///   - `style`: The style configuration for the picker.
   static void option(BuildContext context,
-      {List<Option> options = const [],
-      Option? initialValue,
-      Function(Option)? onSelect,
-      PickerStyle? style}) {
+      {List<Option> options = const [], Option? initialValue, Function(Option)? onSelect, PickerStyle? style}) {
     if (options.isEmpty) {
-      return logg(
-          'The options list is empty, please provide a list of options.',
-          name: 'LzPicker');
+      return logg('The options list is empty, please provide a list of options.', name: 'LzPicker');
     }
 
     context.bottomSheet(
@@ -62,7 +58,7 @@ class LzPicker {
       bool withTime = false,
       Function(DateTime value)? onSelect}) async {
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
-      logg('First date must be smaller than last date.', name: 'LzPicker');
+      logg('Min date must be smaller than max date.', name: 'LzPicker');
       return null;
     }
 
@@ -82,12 +78,57 @@ class LzPicker {
 
     DateTime? result = await context.bottomSheet(
         LzDatePicker(
-            initDate: initDate,
-            minDate: minDate,
-            maxDate: maxDate,
-            style: style,
-            format: format,
-            withTime: withTime),
+            initDate: initDate, minDate: minDate, maxDate: maxDate, style: style, format: format, withTime: withTime),
+        draggable: true,
+        safeArea: false,
+        isScrollControlled: true);
+
+    if (result != null && onSelect != null) onSelect(result);
+  }
+
+  static void dateRange(BuildContext context,
+      {List<DateTime>? initDate,
+      DateTime? minDate,
+      DateTime? maxDate,
+      DatePickerStyle? style,
+      String? format,
+      String? rangeFormat,
+      Function(List<DateTime> value)? onSelect}) async {
+    List<DateTime> initDateValue = initDate ?? [DateTime.now(), DateTime.now().add(1.d)];
+
+    if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
+      logg('Min date must be smaller than max date.', name: 'LzPicker');
+      return null;
+    }
+
+    // check valid initDate
+    else if (initDate != null && initDate.length < 2) {
+      initDateValue = [DateTime.now(), DateTime.now().add(1.d)];
+    } 
+    
+    // check valid minDate and maxDate
+    else if (minDate != null && initDateValue[0].isBefore(minDate)) {
+      initDateValue[0] = minDate;
+    } else if (maxDate != null && initDateValue[1].isAfter(maxDate)) {
+      initDateValue[1] = maxDate;
+    }
+
+    format = format ?? 'd/m/y';
+
+    // check valid format
+    List<String> validFormat = ['d', 'm', 'mm', 'mmm', 'y'];
+    List<String> formatList = format.split('/').toSet().toList();
+
+    // if format is not contain d or m or y then return null
+    if (!formatList.every((element) => validFormat.contains(element))) {
+      logg('Invalid format, please use d/m/y', name: 'LzPicker');
+      return null;
+    }
+
+    format = formatList.join('/');
+
+    List<DateTime>? result = await context.bottomSheet(
+        LzDateRangePicker(initDate: initDateValue, minDate: minDate, maxDate: maxDate, style: style, format: format, rangeFormat: rangeFormat),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);
@@ -105,17 +146,9 @@ class LzPicker {
   ///   - `style`: The style configuration for the time picker.
   ///   - `onSelect`: A function called when a time is selected in the picker.
   static void time(BuildContext context,
-      {Time? initTime,
-      Time? minTime,
-      Time? maxTime,
-      TimePickerStyle? style,
-      Function(Time value)? onSelect}) async {
+      {Time? initTime, Time? minTime, Time? maxTime, TimePickerStyle? style, Function(Time value)? onSelect}) async {
     Time? result = await context.bottomSheet(
-        LzTimePicker(
-            initTime: initTime,
-            minTime: minTime,
-            maxTime: maxTime,
-            style: style),
+        LzTimePicker(initTime: initTime, minTime: minTime, maxTime: maxTime, style: style),
         draggable: true,
         safeArea: false,
         isScrollControlled: true);
