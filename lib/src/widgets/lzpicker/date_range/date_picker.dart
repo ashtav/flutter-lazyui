@@ -43,7 +43,8 @@ class LzDateRangePicker extends StatelessWidget {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
     final notifier = DatePickerNotifier();
-    notifier.onInitialized(formats, initDate: initDate, minDate: minDate, maxDate: maxDate);
+    notifier.onInitialized(formats,
+        initDate: initDate, minDate: minDate, maxDate: maxDate);
 
     double radius = style?.radius ?? LazyUi.radius;
     double height = context.height * (context.width > 395 ? .6 : .45);
@@ -65,14 +66,18 @@ class LzDateRangePicker extends StatelessWidget {
                   children: formats.generate((f, i) {
                     final items = notifier.generateDate(f);
                     return Container(
-                        decoration:
-                            BoxDecoration(border: Br.only(['l'], except: i == 0, color: backgroundColor.darken(.2))),
+                        decoration: BoxDecoration(
+                            border: Br.only(['l'],
+                                except: i == 0,
+                                color: backgroundColor.darken(.2))),
                         child: CupertinoPickerWidget(
                           notifier,
                           type: f,
                           items: items,
                           style: style,
-                          overlayColor: backgroundColor.lighten(isDarkMode ? .8 : .1).withOpacity(.4),
+                          overlayColor: backgroundColor
+                              .lighten(isDarkMode ? .8 : .1)
+                              .withOpacity(.4),
                         ));
                   }),
                 ),
@@ -120,7 +125,8 @@ class CupertinoPickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int length = notifier.controller.keys.length;
-    bool isYearOnly = notifier.controller.keys.toList().contains('y') && length == 1;
+    bool isYearOnly =
+        notifier.controller.keys.toList().contains('y') && length == 1;
 
     double magnification = this.magnification ?? (isYearOnly ? 1.5 : 1);
     double itemExtent = this.itemExtent ?? (isYearOnly ? 45 : 40);
@@ -130,8 +136,10 @@ class CupertinoPickerWidget extends StatelessWidget {
     String type = ['mm', 'mmm'].contains(this.type) ? 'm' : this.type;
 
     bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = this.backgroundColor ?? (isDarkMode ? '333'.hex : 'f1f1f1'.hex);
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color backgroundColor =
+        this.backgroundColor ?? (isDarkMode ? '333'.hex : 'f1f1f1'.hex);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     return notifier.watch((state) => CupertinoPicker(
         magnification: magnification,
@@ -139,7 +147,8 @@ class CupertinoPickerWidget extends StatelessWidget {
         itemExtent: itemExtent,
         diameterRatio: diameterRatio,
         squeeze: squeeze,
-        scrollController: notifier.controller[type] ?? FixedExtentScrollController(initialItem: 0),
+        scrollController: notifier.controller[type] ??
+            FixedExtentScrollController(initialItem: 0),
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
           decoration: BoxDecoration(color: overlayColor),
@@ -151,7 +160,8 @@ class CupertinoPickerWidget extends StatelessWidget {
             child: ZoomIn(
               child: Textr(
                 item,
-                style: LazyUi.font.copyWith(color: textColor, letterSpacing: letterSpacing),
+                style: LazyUi.font
+                    .copyWith(color: textColor, letterSpacing: letterSpacing),
                 padding: Ei.sym(h: 15),
               ),
             ),
@@ -169,9 +179,11 @@ class ConfirmButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isDarkMode = style?.darkMode ?? false;
     Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
     Color buttonColor = style?.buttonColor ?? Colors.white;
-    Color confirmTextColor = style?.confirmTextColor ?? (buttonColor.isDark() ? Colors.white : Colors.black87);
+    Color confirmTextColor = style?.confirmTextColor ??
+        (buttonColor.isDark() ? Colors.white : Colors.black87);
 
     return Poslign(
         alignment: Alignment.bottomCenter,
@@ -208,7 +220,8 @@ class ConfirmButton extends StatelessWidget {
                         child: InkTouch(
                           onTap: () {
                             if (notifier.openTimePicker) {
-                              notifier.time = Time(notifier.values['h']!, notifier.values['i']!);
+                              notifier.time = Time(
+                                  notifier.values['h']!, notifier.values['i']!);
                               notifier.toggleTimePicker();
                               return;
                             }
@@ -221,7 +234,9 @@ class ConfirmButton extends StatelessWidget {
                           color: buttonColor,
                           radius: Br.radius(50),
                           child: Text(style?.confirmText ?? 'Confirm',
-                              style: LazyUi.font.copyWith(fontWeight: Fw.bold, color: confirmTextColor)),
+                              style: LazyUi.font.copyWith(
+                                  fontWeight: Fw.bold,
+                                  color: confirmTextColor)),
                         ),
                       ));
           }),
@@ -239,7 +254,8 @@ class TimePicker extends StatelessWidget {
     double radius = style?.radius ?? LazyUi.radius;
     bool isDarkMode = style?.darkMode ?? false;
     Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
     return Poslign(
         alignment: Alignment.topRight,
@@ -259,7 +275,9 @@ class TimePicker extends StatelessWidget {
 
                 return AnimatedContainer(
                   duration: 350.ms,
-                  curve: state.openTimePicker ? Curves.easeInOutBack : Curves.fastEaseInToSlowEaseOut,
+                  curve: state.openTimePicker
+                      ? Curves.easeInOutBack
+                      : Curves.fastEaseInToSlowEaseOut,
                   height: state.openTimePicker ? 250 : 35,
                   width: state.openTimePicker ? context.width - 40 : 120,
                   child: Center(
@@ -273,7 +291,9 @@ class TimePicker extends StatelessWidget {
                               return Container(
                                 decoration: BoxDecoration(
                                     border: Br.only(['l'],
-                                        except: i == 0, color: backgroundColor.darken(isDarkMode ? .4 : .3))),
+                                        except: i == 0,
+                                        color: backgroundColor
+                                            .darken(isDarkMode ? .4 : .3))),
                                 child: CupertinoPickerWidget(
                                   notifier,
                                   type: f,
@@ -284,7 +304,9 @@ class TimePicker extends StatelessWidget {
                                   diameterRatio: .9,
                                   style: style,
                                   letterSpacing: 1.5,
-                                  overlayColor: (isDarkMode ? backgroundColor.lighten(.92) : backgroundColor.darken(.1))
+                                  overlayColor: (isDarkMode
+                                          ? backgroundColor.lighten(.92)
+                                          : backgroundColor.darken(.1))
                                       .withOpacity(.4),
                                 ),
                               );
@@ -292,7 +314,8 @@ class TimePicker extends StatelessWidget {
                           )
                         : Textr(
                             time,
-                            style: Gfont.muted.copyWith(letterSpacing: 2, color: textColor),
+                            style: Gfont.muted
+                                .copyWith(letterSpacing: 2, color: textColor),
                             icon: Ti.clock,
                           ),
                   ),
@@ -343,7 +366,11 @@ class StartEndDate extends StatelessWidget {
                     bool isTo = i == 1;
 
                     IconData arrow = isFirstDate ? Ti.arrowLeft : Ti.arrowRight;
-                    Color textColor = state.dateIndex == ii ? Colors.orange : isDarkMode ? Colors.white : Colors.black54;
+                    Color textColor = state.dateIndex == ii
+                        ? Colors.orange
+                        : isDarkMode
+                            ? Colors.white
+                            : Colors.black54;
 
                     return Expanded(
                       flex: isTo ? 0 : 1,
@@ -354,8 +381,13 @@ class StartEndDate extends StatelessWidget {
                         // color: backgroundColor,
                         child: Center(
                             child: isTo
-                                ? Icon(arrow, color: isDarkMode ? Colors.white : Colors.black38)
-                                : Text(text, style: Gfont.color(textColor).fbold(state.dateIndex == ii))),
+                                ? Icon(arrow,
+                                    color: isDarkMode
+                                        ? Colors.white
+                                        : Colors.black38)
+                                : Text(text,
+                                    style: Gfont.color(textColor)
+                                        .fbold(state.dateIndex == ii))),
                       ),
                     );
                   }));

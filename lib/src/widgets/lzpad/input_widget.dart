@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-class PasscodeWidgetInput extends StatelessWidget {
+class PasscodeInput extends StatelessWidget {
   final bool filled;
-  const PasscodeWidgetInput({super.key, this.filled = false});
+  const PasscodeInput({super.key, this.filled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +21,16 @@ class PasscodeWidgetInput extends StatelessWidget {
               width: filled ? width : 5,
               height: filled ? height : 5,
               margin: Ei.sym(h: 5),
-              decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green.withOpacity(filled ? .3 : 0))),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.green.withOpacity(filled ? .3 : 0))),
           Container(
               width: width - 10,
               height: height - 10,
               margin: Ei.sym(h: 5),
-              decoration: BoxDecoration(shape: BoxShape.circle, color: filled ? Colors.green : Colors.grey)),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: filled ? Colors.green : Colors.grey)),
         ],
       ),
     );
