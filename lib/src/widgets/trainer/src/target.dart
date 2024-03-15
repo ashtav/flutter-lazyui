@@ -7,7 +7,7 @@ class Target {
   final GlobalKey key;
 
   /// The alignment of the tutorial content relative to the target widget.
-  final ContentAlign align;
+  final ContentAlign? align;
 
   /// The list of contents to display in the tutorial.
   final List<Widget>? contents;
@@ -42,7 +42,7 @@ class Target {
   /// Creates a [Target] object.
   Target({
     required this.key,
-    required this.align,
+    this.align,
     this.contents,
     this.title,
     this.description,

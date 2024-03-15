@@ -78,7 +78,7 @@ class _TrainerState extends State<Trainer> {
           radius: target.radius ?? LazyUi.radius,
           contents: [
             TargetContent(
-                align: target.align,
+                align: target.align ?? ContentAlign.bottom,
                 builder: (context, controller) {
                   // set onNext callback, so that we can call it anywhere
                   onNext = controller.next;
