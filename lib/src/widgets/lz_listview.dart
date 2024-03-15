@@ -39,15 +39,15 @@ class LzListView extends StatefulWidget {
   final ScrollPhysics? physics;
 
   /// Callback when the list is scrolled.
-  final Function(ScrollController controller)? onScroll;
+  final Function(Scroller scroll)? onScroll;
 
   /// Whether to automatically cache the list height.
   final bool autoCache;
 
   /// Optional callback when the list is refreshed.
-  final Future<void> Function()? onRefresh;
+  final void Function()? onRefresh;
 
-  final RefrehtorType type;
+  final RefrehtorType refreshType;
 
   const LzListView(
       {super.key,
@@ -60,7 +60,7 @@ class LzListView extends StatefulWidget {
       this.onScroll,
       this.autoCache = false,
       this.onRefresh,
-      this.type = RefrehtorType.bar});
+      this.refreshType = RefrehtorType.bar});
 
   @override
   State<LzListView> createState() => _LzListViewState();
@@ -81,12 +81,17 @@ class _LzListViewState extends State<LzListView> {
       }
     }
 
-    widget.onScroll?.call(controller);
+    widget.onScroll?.call(Scroller(
+      controller: controller
+    ));
   }
 
   Future onInitials() async {
     controller = widget.controller ?? ScrollController();
     controller.addListener(listenToScroll);
+
+    // render and cache list height
+    render();
   }
 
   Future render() async {
@@ -128,8 +133,8 @@ class _LzListViewState extends State<LzListView> {
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
         : Refreshtor(
-            onRefresh: widget.onRefresh!,
-            type: widget.type,
+            onRefresh: () async => widget.onRefresh?.call(),
+            type: widget.refreshType,
             child: listView(cacheExtent));
 
     return widget.autoCache
@@ -138,5 +143,16 @@ class _LzListViewState extends State<LzListView> {
             builder: (BuildContext context, snap) =>
                 content(cacheExtent: snap.data))
         : content();
+  }
+}
+
+class Scroller {
+  /// The scroll controller for the list.
+  final ScrollController controller;
+  Scroller({required this.controller});
+
+  /// Returns true if the list is scrolled to the top.
+  bool atBottom([double offset = 0]){
+    return controller.position.pixels + offset >= controller.position.maxScrollExtent;
   }
 }
