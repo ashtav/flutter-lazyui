@@ -39,7 +39,7 @@ class LzListView extends StatefulWidget {
   final ScrollPhysics? physics;
 
   /// Callback when the list is scrolled.
-  final Function(ScrollController scroller)? onScroll;
+  final Function(Scroller scroll)? onScroll;
 
   /// Whether to automatically cache the list height.
   final bool autoCache;
@@ -81,7 +81,9 @@ class _LzListViewState extends State<LzListView> {
       }
     }
 
-    widget.onScroll?.call(controller);
+    widget.onScroll?.call(Scroller(
+      controller: controller
+    ));
   }
 
   Future onInitials() async {
@@ -141,5 +143,16 @@ class _LzListViewState extends State<LzListView> {
             builder: (BuildContext context, snap) =>
                 content(cacheExtent: snap.data))
         : content();
+  }
+}
+
+class Scroller {
+  /// The scroll controller for the list.
+  final ScrollController controller;
+  Scroller({required this.controller});
+
+  /// Returns true if the list is scrolled to the top.
+  bool atBottom([double offset = 0]){
+    return controller.position.pixels + offset >= controller.position.maxScrollExtent;
   }
 }

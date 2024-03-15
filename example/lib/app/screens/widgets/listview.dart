@@ -11,15 +11,20 @@ class LzListViewExample extends StatelessWidget {
           title: const Text('LzListView Example'),
         ),
         body: LzListView(
-          onScroll: (scroller) {
-            double pixels = scroller.position.pixels;
+          onScroll: (scroll) {
+            double pixels = scroll.controller.position.pixels;
             LzState.set('#pixel', pixels);
 
-            bool isMaxScrolled =
-                (pixels + 150) >= scroller.position.maxScrollExtent;
+            bool isMaxScrolled = (pixels + 150) >= scroll.controller.position.maxScrollExtent;
             if (isMaxScrolled) {
               // Load more data
             }
+
+            // or use the built-in atBottom method
+            // bool isMaxScrolled = scroll.atBottom(150);
+            // if (isMaxScrolled) {
+            //   LzToast.show('Loading more data...');
+            // }
           },
           scrollLimit: const [50, 100],
           onRefresh: () => LzToast.show('List refreshed successfully!'),
@@ -30,11 +35,9 @@ class LzListViewExample extends StatelessWidget {
                 .margin(b: 25),
 
             const Text('Scroll limit, top: 50, bottom: 100'),
-            LzState.watch(
-                '#pixel',
-                0.0,
-                (value) =>
-                    Text('Scroll pixels: $value')), // watch scroll pixels
+            LzState.watch('#pixel', 0.0, (value) => Text('Scroll pixels: $value')), // watch scroll pixels
+
+            Textr(Faker.words(25, 10), border: Br.only(['t']), padding: Ei.only(t: 50), margin: Ei.only(t: 20))
           ],
         ));
   }
