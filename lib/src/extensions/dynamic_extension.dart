@@ -2,7 +2,7 @@ part of extension;
 
 /// Extension method to provide a fallback value if the object is null or meets certain conditions.
 /// This extension can be applied to any data type.
-extension LzDynamicExtension<T extends dynamic> on T {
+extension LzDynamicExtension<T extends dynamic> on T? {
   /// Returns a fallback value if the object is null or meets certain conditions.
   ///
   /// The [defaultValue] parameter specifies the value to return if the object is null or meets the conditions.

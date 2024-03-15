@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lazyui/src/extensions/extension.dart';
 
+class Xx {
+  final String? name;
+  Xx({this.name});
+}
+
 void main() {
   test('Ucwords', () async {
     String str = 'hello world';
