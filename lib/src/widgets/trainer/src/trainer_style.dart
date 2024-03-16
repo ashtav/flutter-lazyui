@@ -1,0 +1,36 @@
+import 'package:flutter/material.dart';
+
+/// Style configuration for the [Trainer] widget.
+class TrainerStyle {
+  /// The label for the "Next" button.
+  final String? nextLabel;
+
+  /// The label for the "Finish" button.
+  final String? finishLabel;
+
+  /// The label for the "Skip" button.
+  final String? skipLabel;
+
+  /// The color of the shadow displayed around highlighted elements.
+  final Color? shadowColor;
+
+  /// The opacity of the shadow displayed around highlighted elements.
+  final double? shadowOpacity;
+
+  /// Whether to apply a blur effect to the background during the tour.
+  final bool? backBlur;
+
+  /// The maximum height of the tour dialog.
+  final double? maxHeight;
+
+  /// Creates a [TrainerStyle] object.
+  const TrainerStyle({
+    this.nextLabel,
+    this.finishLabel,
+    this.skipLabel,
+    this.shadowColor,
+    this.shadowOpacity,
+    this.backBlur,
+    this.maxHeight,
+  });
+}

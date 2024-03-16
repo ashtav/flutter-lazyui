@@ -114,6 +114,10 @@ class LzModifiers {
   IgnorePointer ignore([bool ignoring = true]) =>
       IgnorePointer(ignoring: ignoring, child: widget);
 
+  Widget disabled([bool disabled = true, double opacity = .5]) => IgnorePointer(
+      ignoring: disabled,
+      child: Opacity(opacity: disabled ? opacity : 1, child: widget));
+
   /// ``` dart
   /// YourWidget().hide()
   /// ```

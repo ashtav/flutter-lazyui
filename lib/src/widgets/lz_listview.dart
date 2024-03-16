@@ -155,4 +155,7 @@ class Scroller {
   bool atBottom([double offset = 0]){
     return controller.position.pixels + offset >= controller.position.maxScrollExtent;
   }
+
+  /// Returns true if the list is scrolled to the bottom.
+  double get pixels => controller.position.pixels;
 }

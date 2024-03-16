@@ -7,11 +7,11 @@ class AppTrainerView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final key1 = GlobalKey(), key2 = GlobalKey(), key3 = GlobalKey();
-    AppTrainerController controller = AppTrainerController();
+    TrainerController controller = TrainerController();
 
     final forms = LzForm.make(['name']);
 
-    return AppTrainer(
+    return Trainer(
       controller: controller,
       onClickTarget: (target) {
         logg(target);
@@ -26,7 +26,6 @@ class AppTrainerView extends StatelessWidget {
         Target(key: key1, title: 'Search Icon', description: Faker.words(15)),
         Target(
           key: key2,
-          identify: 'calendar',
           title: 'Calendar Icon',
           onNext: (control) {
             control.next(); // or control.skip();
@@ -35,7 +34,6 @@ class AppTrainerView extends StatelessWidget {
         ),
         Target(
             key: key3,
-            identify: 'fab',
             title: 'Floating Action Button',
             description: Faker.words(15),
             align: ContentAlign.top),
@@ -46,7 +44,6 @@ class AppTrainerView extends StatelessWidget {
             align: ContentAlign.bottom,
             shape: ShapeLightFocus.RRect),
       ],
-      showSectionLabel: true,
       child: Scaffold(
         appBar: AppBar(
             title: const Text('App Trainer'),
