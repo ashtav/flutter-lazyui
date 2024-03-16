@@ -111,7 +111,7 @@ extension LzContextExtension on BuildContext {
     return showDialog<T>(
         context: this,
         barrierDismissible: dismiss,
-        barrierColor: barrierColor,
+        barrierColor: barrierColor ?? Colors.black54,
         builder: (_) => backBlur ? blurWrapper(widget) : widget);
   }
 
