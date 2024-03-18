@@ -48,16 +48,22 @@ class LzImage<T> extends StatelessWidget {
   /// The widget displayed when an error occurs while loading the image (optional).
   final Widget? errorWidget;
 
-  const LzImage(this.image,
-      {super.key,
-      this.fit = BoxFit.cover,
-      this.color,
-      this.width,
-      this.height,
-      this.size,
-      this.radius,
-      this.placeholder,
-      this.errorWidget});
+  /// Whether the image is interactive, allowing user interaction.
+  final bool interactive;
+
+  const LzImage(
+    this.image, {
+    super.key,
+    this.fit = BoxFit.cover,
+    this.color,
+    this.width,
+    this.height,
+    this.size,
+    this.radius,
+    this.placeholder,
+    this.errorWidget,
+    this.interactive = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -218,6 +224,21 @@ class LzImage<T> extends StatelessWidget {
       );
     }
 
+    if (interactive) {
+      final tag = DateTime.now().microsecond;
+      return Hero(
+          tag: tag,
+          child: SizedBox(
+      width: width,
+      height: height,
+      child: result,
+    ).lz.clip(all: radius).onTap(() {
+            Navigator.push(context, MaterialPageRoute(builder: (context) {
+              return LzImageViewer(image, tag: tag);
+            }));
+          }));
+    }
+
     return SizedBox(
       width: width,
       height: height,
@@ -233,3 +254,130 @@ class LzImage<T> extends StatelessWidget {
 
 Widget? _defaultErrorWidget;
 double? _defaultRadius;
+
+/// A stateful widget for displaying an image with zooming capabilities.
+class LzImageViewer<T> extends StatefulWidget {
+  /// The image to be displayed.
+  final T image;
+
+  /// A tag to identify the image viewer.
+  final Object tag;
+
+  /// Creates a LzImageViewer widget.
+  const LzImageViewer(this.image, {Key? key, required this.tag})
+      : super(key: key);
+
+  @override
+  State<LzImageViewer> createState() => _LzImageViewerState();
+}
+
+class _LzImageViewerState extends State<LzImageViewer>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+  late Animation<Matrix4> _animation;
+  late TransformationController controller;
+
+  TapDownDetails? _doubleTapDetails;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TransformationController();
+    _animationController = AnimationController(vsync: this, duration: 250.ms);
+    _animationController.addListener(() {
+      controller.value = _animation.value;
+    });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _handleDoubleTap() {
+    // get current transformation matrix
+    final double currentScale = controller.value.getMaxScaleOnAxis();
+
+    // scale we want to zoom to
+    double scale = 1.0;
+
+    if (currentScale > scale) {
+      scale = 1.0;
+    } else {
+      scale = 2.0;
+
+      // get tap position in the coordinate system of the image
+      final tapPosition = _doubleTapDetails!.localPosition;
+
+      // translate tap position to the center of the viewport
+      final Matrix4 transform = Matrix4.identity()
+        ..translate(-tapPosition.dx, -tapPosition.dy)
+        ..scale(scale);
+
+      return _animateToMatrix(transform);
+    }
+
+    final targetMatrix = Matrix4.identity();
+    _animateToMatrix(targetMatrix);
+  }
+
+  void _animateToMatrix(Matrix4 targetMatrix) {
+    _animation = Matrix4Tween(
+      begin: controller.value,
+      end: targetMatrix,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      curve: Curves.easeInOut,
+    ));
+
+    _animationController.forward(from: 0.0);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            Hero(
+              tag: widget.tag,
+              child: InteractiveViewer(
+                  transformationController: controller,
+                  child: GestureDetector(
+                      onDoubleTapDown: (details) => _doubleTapDetails = details,
+                      onDoubleTap: () => _handleDoubleTap(),
+                      child: LzImage(widget.image,
+                          radius: 0,
+                          fit: BoxFit.contain,
+                          width: context.width,
+                          height: context.height,
+                          ))),
+            ),
+
+            // close button
+            Poslign(
+                alignment: Alignment.topRight,
+                child: Container(
+                    margin: Ei.only(t: context.viewInsets.top + 30),
+                    padding: Ei.all(20),
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 25,
+                            spreadRadius: 7)
+                      ],
+                    ),
+                    child: const Icon(
+                      La.times,
+                      color: Colors.white,
+                      size: 23,
+                    )).onTap(
+                  () => context.lzPop(),
+                ))
+          ],
+        ));
+  }
+}
