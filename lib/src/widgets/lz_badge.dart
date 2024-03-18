@@ -1,57 +1,77 @@
 part of widget;
 
-/// A custom badge widget used to display a small piece of information, typically a label or a status indicator.
-///
-/// This widget is designed to be simple yet customizable. It can be used to show a text label, optionally with an icon, and with various styling options.
-///
-/// Parameters:
-/// - [text]: The text to display on the badge. This is a required parameter.
-/// - [spacing]: The spacing around the text inside the badge. Defaults to 5.
-/// - [color]: The background color of the badge. If not specified, defaults to a light gray color.
-/// - [textColor]: The text color of the badge. If not specified, defaults to black.
-/// - [radius]: The border radius of the badge. Allows customization of the badge's corner roundness. If not specified, a default radius is used.
-/// - [icon]: An optional icon to display in the badge. If not provided, only text is displayed.
-/// - [iconStyle]: Optional styling for the icon. Used if an icon is provided.
-///
-/// Example usage:
-/// ```dart
-/// LzBadge('New', color: Colors.green, icon: Icons.check)
-/// ```
+/// A badge widget to display textual or icon-based information.
 class LzBadge extends StatelessWidget {
+  /// The text content of the badge.
   final String text;
+
+  /// The spacing between the text and the icon (if present).
   final double spacing;
-  final Color? color, textColor;
+
+  /// The size of the badge.
+  final double? size;
+
+  /// The background color of the badge.
+  final Color? color;
+
+  /// The border radius of the badge.
   final BorderRadiusGeometry? radius;
+
+  /// The icon to be displayed alongside the text.
   final IconData? icon;
+
+  /// The style of the icon.
   final IconStyle? iconStyle;
+
+  /// Determines if the badge uses a softer color palette.
   final bool softColor;
 
-  /// Constructs a [LzBadge] widget with the given parameters.
+  /// The text style of the badge.
+  final TextStyle? textStyle;
+
+  /// The shape of the badge container.
+  final BoxShape? shape;
+
+  /// The shadow of the badge container.
+  final BoxShadow? boxShadow;
+
+  /// Creates a [LzBadge] widget.
+  ///
+  /// The [text] parameter is required and must not be null.
+
   const LzBadge(this.text,
       {super.key,
-      this.spacing = 5,
+      this.spacing = 2,
+      this.size,
       this.color,
-      this.textColor,
       this.radius,
       this.icon,
       this.iconStyle,
-      this.softColor = false});
+      this.softColor = false,
+      this.textStyle,
+      this.shape,
+      this.boxShadow});
 
   @override
   Widget build(BuildContext context) {
     Color color = this.color ?? Colors.black26;
+    Color textColor = softColor
+        ? color
+        : (LzColors.isDark(color) ? Colors.white : Colors.black87);
+    bool isShapeCircle = shape == BoxShape.circle;
 
     return Container(
-      padding: Ei.syms(spacing, spacing + 8),
+      padding:
+          isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8),
       decoration: BoxDecoration(
-          color: color.withOpacity(softColor ? .1 : 1),
-          borderRadius: radius ?? Br.radius(5),
+          color: softColor ? color.lighten(.1) : color,
+          borderRadius: isShapeCircle ? null : radius ?? Br.radius(5),
+          shape: shape ?? BoxShape.rectangle,
+          boxShadow: boxShadow == null ? [] : [boxShadow!],
           border: Br.all(color: color)),
       child: Textr(text,
-          style: Gfont.color(textColor ??
-              (softColor
-                  ? color
-                  : (LzColors.isDark(color) ? Colors.white : Colors.black87))),
+          style: textStyle ??
+              LazyUi.font.copyWith(fontSize: size ?? 14, color: textColor),
           icon: icon,
           iconStyle: iconStyle),
     );

@@ -34,6 +34,7 @@ part 'intrinsic.dart';
 part 'lz_accordion.dart';
 part 'lz_badge.dart';
 part 'lz_button.dart';
+part 'lz_card.dart';
 part 'lz_image.dart';
 part 'lz_listview.dart';
 part 'lz_loader.dart';
