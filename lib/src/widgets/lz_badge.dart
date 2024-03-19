@@ -35,6 +35,8 @@ class LzBadge extends StatelessWidget {
   /// The shadow of the badge container.
   final BoxShadow? boxShadow;
 
+  final EdgeInsetsGeometry? padding;
+
   /// Creates a [LzBadge] widget.
   ///
   /// The [text] parameter is required and must not be null.
@@ -50,7 +52,8 @@ class LzBadge extends StatelessWidget {
       this.softColor = false,
       this.textStyle,
       this.shape,
-      this.boxShadow});
+      this.boxShadow,
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -61,8 +64,8 @@ class LzBadge extends StatelessWidget {
     bool isShapeCircle = shape == BoxShape.circle;
 
     return Container(
-      padding:
-          isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8),
+      padding: padding ??
+          (isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8)),
       decoration: BoxDecoration(
           color: softColor ? color.lighten(.1) : color,
           borderRadius: isShapeCircle ? null : radius ?? Br.radius(5),
