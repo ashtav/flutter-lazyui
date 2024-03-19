@@ -89,23 +89,25 @@ class LzConfirmWidget extends StatelessWidget {
             ],
           ).gap(10).padding(b: isDialog ? 25 : 45, others: 25),
           Intrinsic(children: texts.generate((label, index) {
-            return InkTouch(
-              onTap: () {
-                context.lzPop();
-
-                if (index == 1) {
-                  onConfirm?.call();
-                }
-              },
-              padding: Ei.sym(v: 20, h: 10),
-              border: Br.only(['l'], except: index == 0, color: borderColor),
-              splash: backgroundColor.lighten(.97),
-              child: Text(
-                label,
-                textAlign: Ta.center,
-                style: Gfont.bold
-                    .fcolor(index == 0 ? textColor : confirmColor ?? textColor),
-                overflow: Tof.ellipsis,
+            return Expanded(
+              child: InkTouch(
+                onTap: () {
+                  context.lzPop();
+            
+                  if (index == 1) {
+                    onConfirm?.call();
+                  }
+                },
+                padding: Ei.sym(v: 20, h: 10),
+                border: Br.only(['l'], except: index == 0, color: borderColor),
+                splash: backgroundColor.lighten(.97),
+                child: Text(
+                  label,
+                  textAlign: Ta.center,
+                  style: Gfont.bold
+                      .fcolor(index == 0 ? textColor : confirmColor ?? textColor),
+                  overflow: Tof.ellipsis,
+                ),
               ),
             );
           })).lz.border(
