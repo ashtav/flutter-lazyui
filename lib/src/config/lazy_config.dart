@@ -7,7 +7,7 @@ import 'package:lazyui/src/constants/enum.dart';
 
 import '../constants/color.dart';
 import '../utils/utils.dart';
-import '../widgets/lazytoast/lazytoast.dart';
+import '../widgets/lztoast/src/loading.dart';
 
 TextStyle? _defaultTextStyle;
 IconType _defaultIconType = IconType.tablerIcon;

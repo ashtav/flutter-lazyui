@@ -245,7 +245,7 @@ extension FormModelExtension on Map<String, FormModel> {
       List<String> email = const [],
       FormMessages? messages,
       LzFormNotifier notifierType = LzFormNotifier.toast,
-      Position? toastPosition,
+      ToastPlacement? toastPosition,
       bool singleNotifier = true}) {
     return LzForm.validate(this,
         required: required,

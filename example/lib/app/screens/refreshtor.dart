@@ -9,7 +9,7 @@ class RefreshtorView extends StatelessWidget {
     Future getData() async {
       await Future.delayed(1.s);
       LzToast.show('Refreshed!',
-          position: Position.center, icon: La.checkCircle);
+          placement: ToastPlacement.center, icon: La.checkCircle);
     }
 
     return Scaffold(

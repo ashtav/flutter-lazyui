@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
+/// Ambiguity resolution helper function.
 T? _ambiguate<T>(T? value) => value;
 
-class LazyLoadingOverlayEntry extends OverlayEntry {
+/// Custom overlay entry for displaying toast notifications.
+class LzToastOverlayEntry extends OverlayEntry {
+  /// A function that builds the overlay widget.
   final WidgetBuilder overlayBuilder;
 
-  LazyLoadingOverlayEntry({
+  LzToastOverlayEntry({
     required this.overlayBuilder,
   }) : super(builder: overlayBuilder);
 
