@@ -306,7 +306,7 @@ extension LxFormExtension on Map<String, LxFormModel> {
   Map<String, LxFormModel> setSelectOption(Object key, List<LxOption> options,
       {bool andShow = false,
       List<dynamic> disabled = const [],
-      Function(LxOption? value)? onSelected}) {
+      Function(LxOption value)? onSelected}) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {

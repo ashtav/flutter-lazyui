@@ -145,7 +145,7 @@ class LxFormNotifier extends ChangeNotifier {
   dynamic Function()? onTapSelect;
 
   // this method is called when select value is selected
-  dynamic Function(LxOption? value)? onSelected;
+  dynamic Function(LxOption value)? onSelected;
 
   // get select value
   dynamic get getSelect => selectedSelect?.value ?? selectedSelect?.label;
@@ -161,8 +161,8 @@ class LxFormNotifier extends ChangeNotifier {
   /// Sets the select option by value and notifies listeners.
   void setSelectOption(List<LxOption> value) {
     selectList = value;
-    selectedSelect = null;
-    controller.clear();
+    // selectedSelect = null;
+    // controller.clear();
     notifyListeners();
   }
 
