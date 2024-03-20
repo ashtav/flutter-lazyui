@@ -158,7 +158,7 @@ class Dropdown extends StatelessWidget {
                                       Text(label,
                                           style: Gfont.color(isCritical
                                               ? Colors.redAccent
-                                              : textColor)),
+                                              : textColor)).lz.flexible(),
                                       if (hasIcon) iconWidget(icon),
                                       if (hasSubOptions && !hasIcon)
                                         Rotator(
@@ -187,7 +187,7 @@ class Dropdown extends StatelessWidget {
                                   } else {
                                     context.lzPop();
                                     onSelect?.call(
-                                        DropValue(item.label, item.value));
+                                        DropValue(item.label, item.value, index: i));
                                   }
                                 }),
                                 ResizedSwitched(
@@ -200,7 +200,7 @@ class Dropdown extends StatelessWidget {
                                           isSubOption: true, onTap: () {
                                         context.lzPop();
                                         onSelect?.call(
-                                            DropValue(item.label, item.value));
+                                            DropValue(item.label, item.value, index: '$i.$j'));
                                       });
                                     }),
                                   ),
