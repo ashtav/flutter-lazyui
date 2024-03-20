@@ -151,7 +151,7 @@ class Input extends StatelessWidget with FormWidgetMixin {
 
       // setting input formatter
       if (keyboard == Tit.number) {
-        formatters.add(InputFormat.numeric);
+        formatters.add(Formatter.numeric);
       }
 
       // listen to controller

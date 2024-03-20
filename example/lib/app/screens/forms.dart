@@ -198,7 +198,7 @@ class FormsView extends StatelessWidget {
               hint: 'Input your salary',
               keyboard: Tit.number,
               prefix: const Text('Rp.'),
-              formatters: [InputFormat.currency()]),
+              formatters: [Formatter.currency()]),
           LzForm.input(
               label: 'Input with Suffix',
               hint: 'You can type or tap suffix',

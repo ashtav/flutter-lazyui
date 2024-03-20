@@ -1,5 +1,24 @@
 part of extension;
 
+/// Extension method on [BuildContext] to provide access to Lazuli UI context modifiers.
+extension LzContextModifierExtension on BuildContext {
+  /// Returns an instance of [LzContextModifiers] for applying Lazuli UI context modifiers.
+  ///
+  /// Returns an instance of [LzContextModifiers].
+  LzContextModifiers get lz => LzContextModifiers(this);
+}
+
+class LzContextModifiers {
+  final BuildContext context;
+
+  /// Constructs a [LzContextModifiers] instance with the provided build context.
+  ///
+  /// [context]: The build context to apply modifiers to.
+  LzContextModifiers(this.context);
+
+  void pop([dynamic result]) => Navigator.pop(context, result);
+}
+
 /// Extends the functionality of the [BuildContext] class with additional methods and properties.
 extension LzContextExtension on BuildContext {
   /// Gets the height of the current screen.
@@ -102,7 +121,10 @@ extension LzContextExtension on BuildContext {
   /// }
   /// ```
   Future<T?> dialog<T extends Object?>(Widget widget,
-      {bool dismiss = true, bool backBlur = false, double blur = 7, Color? barrierColor}) {
+      {bool dismiss = true,
+      bool backBlur = false,
+      double blur = 7,
+      Color? barrierColor}) {
     // If the `backBlur` flag is set, the background of the bottom sheet is blurred.
     Widget blurWrapper(Widget child) => BackdropFilter(
         filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);

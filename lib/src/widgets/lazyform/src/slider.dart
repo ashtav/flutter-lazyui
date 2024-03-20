@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/lazyui.dart'
+    hide Input, Number, Select, Checkbox, Radio, Slider;
 
 import '../common/mixin.dart';
 import '../common/notifier.dart';

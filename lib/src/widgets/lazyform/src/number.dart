@@ -86,7 +86,7 @@ class Number extends StatelessWidget with FormWidgetMixin {
     bool isFirst = attr.isFirst;
 
     final notifier = model?.notifier ?? FormNotifier();
-    List<TextInputFormatter> formatters = [InputFormat.allowRegex("[0-9-]")];
+    List<TextInputFormatter> formatters = [Formatter.allowRegex("[0-9-]")];
 
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
     final lkey = GlobalKey();

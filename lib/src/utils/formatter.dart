@@ -3,7 +3,7 @@ part of utils;
 /// The `InputFormat` class provides a set of predefined input formatters for text input fields.
 ///
 /// You can use these formatters to restrict and format the input entered by users.
-class InputFormat {
+class Formatter {
   /// Returns a text input formatter that allows only strict numeric input (0-9).
   static TextInputFormatter get strictNumeric =>
       FilteringTextInputFormatter.allow(RegExp("[0-9]"));

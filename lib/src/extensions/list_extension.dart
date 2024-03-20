@@ -57,48 +57,36 @@ extension LzListMapExtension on List<Map> {
   ///   return [...data.map((e) => YourModel.fromJson(e))];
   /// }, addKeys: ['gender']);
   /// ```
-  List<Map<dynamic, dynamic>> groupBy(String key,
-      {String? setKeyAs,
-      Function(dynamic)? wrapWith,
-      List<String> addKeys = const []}) {
+  List<Map<String, dynamic>> groupBy<T>(String key,
+      {String? groupKey,
+      List<T> Function(List<Map<String, dynamic>> value)? wrap}) {
     try {
-      List<Map<dynamic, dynamic>> result = [];
-      List keys = [];
+      List<Map<String, dynamic>> result = [];
+      List<String> values = [];
 
+      // check if the key is available
+      // also get value by key, and store it in values
       for (Map f in this) {
-        keys.add(f[key]);
-
         if (!f.keys.toList().contains(key)) {
-          return this;
+          return this as List<Map<String, dynamic>>;
         }
+
+        values.add(f[key]);
       }
 
-      for (var k in [...keys.toSet()]) {
-        List data = [...where((e) => e[key] == k)];
-        Map map = {};
-
-        if (addKeys.isNotEmpty) {
-          for (var k in addKeys) {
-            map[k] = data.first[k];
-          }
-        }
-
-        if (wrapWith != null) {
-          data = wrapWith(data);
-        }
-
-        if (setKeyAs != null) map['group_by'] = k;
-
-        //remove key (group_by)
-        //data.forEach((w) => w.removeWhere((k, v) => k == key));
-        map[setKeyAs ?? k] = data;
-
-        result.add(map);
+      // loop unique values and get data where key is equal to value
+      for (var k in values.toSet()) {
+        final data =
+            List<Map<String, dynamic>>.from([...where((e) => e[key] == k)]);
+        final wrapped = wrap?.call(data) ?? data as T;
+        result.add({groupKey ?? 'group_by': k, k: wrapped});
       }
 
       return result;
-    } catch (e) {
-      throw Exception('$e');
+    } catch (e, s) {
+      Utils.errorCatcher(e, s, tracing: true);
+      return [];
+      // throw Exception('$e, $s');
     }
   }
 }

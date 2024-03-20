@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart' hide Checkbox, Radio;
 import 'package:flutter/services.dart';
-import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/lazyui.dart' hide Input, Number, Select, Checkbox, Radio;
 
 import '../common/notifier.dart';
 import 'checkbox.dart';
@@ -474,7 +474,7 @@ class LzForm {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);
           } else {
-            final group = errorFields.groupBy('key', addKeys: ['key']);
+            final group = errorFields.groupBy('key', groupKey: 'key');
 
             for (Map e in group) {
               Map map = (e[e['key']] as List).first;

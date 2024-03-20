@@ -28,6 +28,8 @@ export 'src/models/custom_radius.dart';
 export 'src/models/option.dart';
 export 'src/utils/utils.dart';
 export 'src/widgets/lazyform/lazyform.dart';
+export 'src/widgets/lxform/lxform.dart';
+export 'src/widgets/lxpicker/lxpicker.dart';
 export 'src/widgets/lzconfirm/lzconfirm.dart';
 export 'src/widgets/lzdrop/lzdrop.dart';
 export 'src/widgets/lzpad/pad.dart';
