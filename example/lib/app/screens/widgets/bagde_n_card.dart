@@ -12,6 +12,7 @@ class BadgeNCardView extends StatelessWidget {
       ),
       body: LzListView(
         children: [
+
           Column(
             children: [
               const Textml(

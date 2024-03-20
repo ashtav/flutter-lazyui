@@ -303,7 +303,7 @@ extension LzFormExtension on Map<String, FormModel> {
   Map<String, FormModel> setSelectOption(Object key, List<Option> options,
       {bool andShow = false,
       List<dynamic> disabled = const [],
-      Function(Option? value)? onSelected}) {
+      Function(Option value)? onSelected}) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {

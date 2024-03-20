@@ -6,12 +6,15 @@ class DropValue {
   /// The value associated with the dropdown label.
   final dynamic value;
 
+  /// the value associated with the option index
+  final dynamic index;
+
   /// Constructs a DropValue with the specified label and value.
-  DropValue(this.label, this.value);
+  DropValue(this.label, this.value, {this.index});
 
   /// Converts the DropValue to a map with 'label' and 'value' keys.
   Map<String, dynamic> toMap() {
-    return {'label': label, 'value': value};
+    return {'label': label, 'value': value, 'index': index};
   }
 }
 

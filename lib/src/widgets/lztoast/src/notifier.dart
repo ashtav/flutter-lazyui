@@ -108,9 +108,9 @@ class ToastNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void dismiss() {
-    toast = false;
-    overlay = false;
+  void dismiss({bool toast = true, bool overlay = true}) {
+    this.toast = !toast;
+    this.overlay = !overlay;
     backdrop = false;
     overlayTimer?.cancel();
     notifyListeners();
