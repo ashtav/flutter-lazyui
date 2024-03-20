@@ -55,7 +55,10 @@ class LzCard extends StatelessWidget {
       padding: padding ?? Ei.all(LazyUi.space),
       color: color ?? Colors.white,
       margin: Ei.only(t: stacked ? 5 : 0),
-      child: gap == null ? child : child.gap(gap!),
+      child: SizedBox(
+        width: context.width,
+        child: gap == null ? child : child.gap(gap!),
+      ),
     );
 
     return stacked
