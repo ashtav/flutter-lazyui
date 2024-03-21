@@ -36,11 +36,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
 
   double radius = LazyUi.radius;
   BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: 0, tr: 0);
-  double magnification = 1,
-      diameterRatio = 1,
-      squeeze = 1,
-      itemExtent = 40,
-      maxLines = 1;
+  double magnification = 1, diameterRatio = 1, squeeze = 1, itemExtent = 40, maxLines = 1;
   bool fullScreen = false, withSearch = false;
   String confirmText = 'Select';
 
@@ -56,8 +52,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
 
     borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
-    int i = widget.options.indexWhere(
-        (e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
+    int i = widget.options.indexWhere((e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
     i = (i == -1 ? 0 : i);
 
     // set initial index
@@ -86,8 +81,6 @@ class _LzPickerOptionState extends State<LzPickerOption> {
   }
 
   void setHeight() {
-    maxLines = maxLines >= 4 ? 4 : maxLines;
-
     magnification = maxLines > 1
         ? 1
         : fullScreen
@@ -95,7 +88,6 @@ class _LzPickerOptionState extends State<LzPickerOption> {
             : 1.2;
     diameterRatio = fullScreen ? 1 : .8;
     squeeze = 1.2;
-    itemExtent = 40 * maxLines;
 
     double defaultHeight = widget.style?.height ?? (context.height / 2) - 100;
     double height = fullScreen
@@ -141,6 +133,9 @@ class _LzPickerOptionState extends State<LzPickerOption> {
     bool isLineAwesome = LazyUi.iconType == IconType.lineAwesome;
     IconData searchIcon = isLineAwesome ? La.search : Ti.search;
 
+    maxLines = maxLines >= 4 ? 4 : maxLines;
+    itemExtent = 40 * maxLines;
+
     return Wrapper(
       child: FractionallySizedBox(
         widthFactor: isMobile ? 1 : toDecimal(context.width),
@@ -153,11 +148,9 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                 behavior: Unglow(),
                 child: notifier.watch((state) => AnimatedContainer(
                       duration: 150.ms,
-                      decoration: BoxDecoration(
-                          color: Colors.white, borderRadius: borderRadius),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: borderRadius),
                       height: state.height,
-                      padding:
-                          Ei.only(b: state.isExpanded ? state.height / 4 : 0),
+                      padding: Ei.only(b: state.isExpanded ? state.height / 4 : 0),
                       child: SafeArea(
                         top: false,
                         child: CupertinoPicker(
@@ -170,8 +163,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                             scrollController: notifier.scroll,
                             selectionOverlay: Container(
                               alignment: Alignment.center,
-                              decoration:
-                                  BoxDecoration(border: Br.only(['b', 't'])),
+                              decoration: BoxDecoration(border: Br.only(['b', 't'])),
                             ),
 
                             // This is called when selected item is changed.
@@ -183,19 +175,14 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                                 if (notifier.values.isNotEmpty) {
                                   notifier.result = {
                                     'label': notifier.options[i],
-                                    'value': notifier.values.length < i
-                                        ? null
-                                        : notifier.values[i]
+                                    'value': notifier.values.length < i ? null : notifier.values[i]
                                   };
                                 } else {
-                                  notifier.result = {
-                                    'label': notifier.options[i]
-                                  };
+                                  notifier.result = {'label': notifier.options[i]};
                                 }
                               }
 
-                              notifier.setDisabled(
-                                  widget.options[selectedItem].disabled);
+                              notifier.setDisabled(widget.options[selectedItem].disabled);
                             },
                             children: notifier.options.generate((item, i) {
                               final option = widget.options[i];
@@ -203,17 +190,14 @@ class _LzPickerOptionState extends State<LzPickerOption> {
 
                               return Center(
                                 child: Container(
-                                  constraints: BoxConstraints(
-                                      maxWidth: context.width * .75),
+                                  constraints: BoxConstraints(maxWidth: context.width * .75),
                                   child: Text(
                                     item,
                                     overflow: Tof.ellipsis,
                                     textAlign: Ta.center,
                                     maxLines: maxLines.toInt(),
                                     style: LazyUi.font.copyWith(
-                                      color: disabled
-                                          ? Colors.black12
-                                          : Colors.black87,
+                                      color: disabled ? Colors.black12 : Colors.black87,
                                     ),
                                   ),
                                 ),
@@ -231,8 +215,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                     child: Row(
                       mainAxisAlignment: Maa.center,
                       children: [
-                        const SizedBox(
-                            width: 60), // empty space to center the button
+                        const SizedBox(width: 60), // empty space to center the button
                         SlideUp(
                           delay: 300,
                           child: Container(
@@ -253,9 +236,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                                     onTap: state.disabled
                                         ? null
                                         : () {
-                                            widget.onSelect?.call(
-                                                Option.fromMap(
-                                                    notifier.result));
+                                            widget.onSelect?.call(Option.fromMap(notifier.result));
                                             Navigator.pop(context);
                                           },
                                   ));
@@ -284,9 +265,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                         hint: 'Type to search',
                         controller: notifier.keyword,
                         listenKeyboard: (active) {
-                          double newHeight = active
-                              ? (context.height)
-                              : notifier.defaultHeight;
+                          double newHeight = active ? (context.height) : notifier.defaultHeight;
                           notifier.setHeight(newHeight);
                         },
                         onChange: (keyword) {
@@ -302,9 +281,8 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                           size: 16,
                         ),
                       )),
-                    notifier.watch((state) => state.found == 0
-                        ? const None()
-                        : Textr(state.found.toString(), margin: Ei.only(r: 15)))
+                    notifier.watch((state) =>
+                        state.found == 0 ? const None() : Textr(state.found.toString(), margin: Ei.only(r: 15)))
                   ],
                 ).margin(all: 5),
               )
@@ -327,8 +305,7 @@ class ConfirmButton extends StatelessWidget {
   /// A flag indicating whether the button is disabled.
   final bool disabled;
 
-  const ConfirmButton(this.text,
-      {super.key, this.onTap, this.disabled = false});
+  const ConfirmButton(this.text, {super.key, this.onTap, this.disabled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -345,9 +322,7 @@ class ConfirmButton extends StatelessWidget {
             textAlign: Ta.center,
             maxLines: 1,
             overflow: Tof.ellipsis,
-            style: LazyUi.font.copyWith(
-                fontWeight: Fw.bold,
-                color: disabled ? 'ccc'.hex : Colors.black87),
+            style: LazyUi.font.copyWith(fontWeight: Fw.bold, color: disabled ? 'ccc'.hex : Colors.black87),
           ),
         ));
   }
@@ -359,8 +334,7 @@ class SelectPickerNotifier extends ChangeNotifier {
   TextEditingController keyword = TextEditingController();
 
   /// A controller for handling scrolling within the picker.
-  FixedExtentScrollController scroll =
-      FixedExtentScrollController(initialItem: 0);
+  FixedExtentScrollController scroll = FixedExtentScrollController(initialItem: 0);
 
   /// A list of options available for selection.
   List<String> options = [];
@@ -425,13 +399,8 @@ class SelectPickerNotifier extends ChangeNotifier {
       //     : {'option': options.isEmpty ? null : options[index], 'value': values.isEmpty ? null : values[index]};
 
       // more efficient is to use this
-      found = value.trim().isEmpty
-          ? 0
-          : options
-              .where((e) => e.toLowerCase().contains(value.toLowerCase()))
-              .length;
-      index = options
-          .indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
+      found = value.trim().isEmpty ? 0 : options.where((e) => e.toLowerCase().contains(value.toLowerCase())).length;
+      index = options.indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
       scroll.animateToItem(index, duration: 250.ms, curve: Curves.easeInOut);
 
       notifyListeners();
