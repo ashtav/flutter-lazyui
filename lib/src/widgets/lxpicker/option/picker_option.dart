@@ -86,8 +86,6 @@ class _LzPickerOptionState extends State<LzPickerOption> {
   }
 
   void setHeight() {
-    maxLines = maxLines >= 4 ? 4 : maxLines;
-
     magnification = maxLines > 1
         ? 1
         : fullScreen
@@ -95,7 +93,6 @@ class _LzPickerOptionState extends State<LzPickerOption> {
             : 1.2;
     diameterRatio = fullScreen ? 1 : .8;
     squeeze = 1.2;
-    itemExtent = 40 * maxLines;
 
     double defaultHeight = widget.style?.height ?? (context.height / 2) - 100;
     double height = fullScreen
@@ -140,6 +137,9 @@ class _LzPickerOptionState extends State<LzPickerOption> {
 
     bool isLineAwesome = LazyUi.iconType == IconType.lineAwesome;
     IconData searchIcon = isLineAwesome ? La.search : Ti.search;
+
+    maxLines = maxLines >= 4 ? 4 : maxLines;
+    itemExtent = 40 * maxLines;
 
     return Wrapper(
       child: FractionallySizedBox(

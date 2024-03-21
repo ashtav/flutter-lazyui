@@ -186,7 +186,7 @@ extension LzWidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().onTap(() {})
   /// ```
-  Touch onTap(Function() onTap) => Touch(onTap: onTap, child: this);
+  Touch onTap(Function() onTap, {bool? hoverable}) => Touch(onTap: onTap, hoverable: hoverable ?? false, child: this);
 
   /// ``` dart
   /// YourWidget().margin() // Only works on widget with no margin property
