@@ -16,6 +16,8 @@ class DropStyle {
   /// The color of the barrier behind the dropdown menu.
   final Color? barrierColor;
 
+  final Color? backgroundColor;
+
   /// Indicates whether dark mode is enabled.
   final bool darkMode;
 
@@ -42,6 +44,7 @@ class DropStyle {
       this.separatorColor,
       this.textColor,
       this.barrierColor,
+      this.backgroundColor,
       this.darkMode = false,
       this.backBlur = false,
       this.separators = const [],

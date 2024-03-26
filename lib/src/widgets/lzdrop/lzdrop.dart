@@ -17,9 +17,7 @@ class LzDrop {
   /// - `style`: The style configuration for the dropdown menu.
   /// - `onSelect`: A callback function invoked when an option is selected.
   static void show(GlobalKey key,
-      {List<DropOption> options = const [],
-      DropStyle? style,
-      void Function(DropValue value)? onSelect}) {
+      {List<DropOption> options = const [], DropStyle? style, void Function(DropValue value)? onSelect}) {
     try {
       // only accept GlobalKey or BuildContext
       if ([BuildContext, GlobalKey].contains(key.runtimeType)) {
@@ -38,16 +36,8 @@ class LzDrop {
       Offset target = o ?? Offset.zero;
 
       // show dropdown
-      context.dialog(
-          Dropdown(
-              target: target,
-              box: box,
-              options: options,
-              style: style,
-              onSelect: onSelect),
-          barrierColor: style?.barrierColor,
-          backBlur: style?.backBlur ?? false,
-          blur: 5);
+      context.dialog(Dropdown(target: target, box: box, options: options, style: style, onSelect: onSelect),
+          barrierColor: style?.barrierColor, backBlur: style?.backBlur ?? false, blur: 5);
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }
@@ -68,11 +58,8 @@ abstract class LzDropView<T> extends StatelessWidget {
   /// - `options`: A list of options to be displayed in the dropdown menu.
   /// - `style`: The style configuration for the dropdown menu.
   /// - `onSelect`: A callback function invoked when an option is selected.
-  void showDropdown(
-      BuildContext context, String tag, GlobalKey key, Widget child,
-      {List<DropOption> options = const [],
-      DropStyle? style,
-      void Function(DropValue value)? onSelect}) {
+  void showDropdown(BuildContext context, String tag, GlobalKey key, Widget child,
+      {List<DropOption> options = const [], DropStyle? style, void Function(DropValue value)? onSelect}) {
     BuildContext context = key.currentContext!;
 
     // render box of the target
@@ -115,7 +102,6 @@ abstract class LzDropView<T> extends StatelessWidget {
     //               .lz
     //               .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)));
     //     }));
-
     context.dialog(
         Dropdown(
             target: target,
@@ -124,14 +110,11 @@ abstract class LzDropView<T> extends StatelessWidget {
             style: style,
             onSelect: onSelect,
             child: Container(
-                    color: Colors.white,
+                    color: style?.backgroundColor ?? Colors.transparent,
                     constraints: BoxConstraints(maxWidth: width),
                     child: child)
                 .lz
-                .clip(
-                    tlr: LazyUi.radius,
-                    bl: isLeftAlign ? 0 : LazyUi.radius,
-                    br: isLeftAlign ? LazyUi.radius : 0)),
+                .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)),
         backBlur: style?.backBlur ?? false,
         barrierColor: style?.barrierColor);
   }
@@ -154,12 +137,7 @@ class LzDropItem extends LzDropView {
   /// A callback function invoked when an option is selected.
   final void Function(DropValue value)? onSelect;
 
-  const LzDropItem(
-      {super.key,
-      required this.child,
-      this.options = const [],
-      this.style,
-      this.onSelect});
+  const LzDropItem({super.key, required this.child, this.options = const [], this.style, this.onSelect});
 
   @override
   Widget build(BuildContext context) {
@@ -169,8 +147,7 @@ class LzDropItem extends LzDropView {
     return InkTouch(
         key: key,
         onTap: () {
-          showDropdown(context, tag, key, child,
-              options: options, style: style, onSelect: onSelect);
+          showDropdown(context, tag, key, child, options: options, style: style, onSelect: onSelect);
         },
         child: child);
   }

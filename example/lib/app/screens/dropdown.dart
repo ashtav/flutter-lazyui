@@ -81,22 +81,17 @@ class DropdownView extends StatelessWidget {
                   onSelect: (value) {
                     logg(value.toMap());
                   },
-                  child: Container(
-                    padding: Ei.all(20),
-                    decoration: BoxDecoration(
-                      border: Br.only(['t'], except: i == 0),
-                    ),
-                    child: Column(
-                      children: [
-                        Text(
-                          item,
-                          style: Gfont.bold,
-                        ),
-                        Textr(Faker.words(15), margin: Ei.only(t: 5))
-                      ],
-                    ).start,
+                  child: LzCard(
+                    stacked: true,
+                    children: [
+                      Text(
+                        item,
+                        style: Gfont.bold,
+                      ),
+                      Textr(Faker.words(15), margin: Ei.only(t: 5))
+                    ],
                   ),
-                );
+                ).margin(b: 15);
               }),
             ),
           ),

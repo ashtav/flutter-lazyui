@@ -47,6 +47,9 @@ class Dropdown extends StatelessWidget {
     bool hasChild = child != null;
     bool isDarkMode = style?.darkMode ?? false;
     bool isLeftAlign = style?.alignment == DropAlignment.left;
+    bool isBgHasColor = style?.backgroundColor != null;
+
+    logg('background-color: ${style?.backgroundColor} -> $isBgHasColor');
 
     Color backgroundColor = isDarkMode ? '#222'.hex : Colors.white;
     Color subBackgroundColor =
@@ -91,9 +94,10 @@ class Dropdown extends StatelessWidget {
                   crossAxisAlignment: isLeftAlign ? Caa.start : Caa.end,
                   children: [
                     if (child != null) child!,
+                    SizedBox(height: isBgHasColor ? 0 : 5),
                     Container(
                       key: dkey,
-                      margin: Ei.only(t: hasChild ? 2 : 0),
+                      margin: Ei.only(t: hasChild ? 0 : 0),
                       decoration: BoxDecoration(color: backgroundColor),
                       constraints:
                           BoxConstraints(maxHeight: 300, maxWidth: width),
@@ -211,7 +215,7 @@ class Dropdown extends StatelessWidget {
                         })).min.start,
                       ),
                     ).lz.clip(
-                        all: hasChild ? null : LazyUi.radius,
+                        all: hasChild && isBgHasColor ? null : LazyUi.radius,
                         blr: hasChild ? LazyUi.radius : 0),
                   ],
                 )),

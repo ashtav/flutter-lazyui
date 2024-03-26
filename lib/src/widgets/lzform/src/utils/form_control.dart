@@ -45,4 +45,9 @@ class FormControl {
     });
     return this;
   }
+
+  FormControl maxLength(int value) {
+    notifier.setMaxLength(value);
+    return this;
+  }
 }

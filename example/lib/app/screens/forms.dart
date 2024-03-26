@@ -86,7 +86,9 @@ class FormsView extends StatelessWidget {
                     hint: 'Enter your full name',
                     model: forms['name'],
                     indicator: true,
-                    style: InputStyle(suffixIcon: Ti.user)),
+                    style: InputStyle(suffix: const Icon(Ti.user).onTap((){
+                      logg('suffix has been tapped!');
+                    }, hoverable: true))),
                 LzForm.radio(
                   label: 'Select Gender',
                   options: ['Male', 'Female'],
@@ -206,7 +208,10 @@ class FormsView extends StatelessWidget {
 
                         return LzToast.overlay('Getting city...', duration: 500.ms, then: (() {
                           final id = forms.getSelect('province');
-                          forms.setSelectOption('city', cities[id] ?? []);
+                          forms.setSelectOption('city', cities[id] ?? [], onSelected: (option) {
+                            // set focus to phone
+                            forms.set('phone').value('').focus().maxLength(5);
+                          });
                         }));
                       }),
                 ]).margin(t: 25),

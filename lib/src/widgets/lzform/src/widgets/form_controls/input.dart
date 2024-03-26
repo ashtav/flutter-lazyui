@@ -60,6 +60,7 @@ class Input extends StatelessWidget with LzFormMixin {
 
     // set enabled or disabled
     notifier.disabled = disabled;
+    notifier.setMaxLength(maxLength);
 
     // set obsecure
     if (onTap == null) {
@@ -111,14 +112,11 @@ class Input extends StatelessWidget with LzFormMixin {
     bool hasPrefix = style?.prefix != null;
 
     // create label widget
-    Widget labelWidget = hasLabel
-        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
-        : const None();
+    Widget labelWidget = hasLabel ? Text(label!, style: Gfont.fs14.fcolor(textColor)) : const None();
 
     // create indicator widget
     Widget indicatorWidget = indicator && !attr.isGrouped
-        ? notifier.watch((state) => Text('${state.textLength}/$maxLength',
-            style: Gfont.fs14.fcolor(textColor)))
+        ? notifier.watch((state) => Text('${state.textLength}/$maxLength', style: Gfont.fs14.fcolor(textColor)))
         : const None();
 
     // create grouped label widget
@@ -161,23 +159,21 @@ class Input extends StatelessWidget with LzFormMixin {
     final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
 
     // create prefix & suffix icon widget
-    Widget? prefixIconWidget =
-        hasOnTap || style?.prefixIcon == null && style?.prefix == null
-            ? null
-            : hasPrefix
-                ? Center(widthFactor: 1, child: style?.prefix).padding(h: 16)
-                : Icon(style?.prefixIcon, color: style?.prefixIconColor);
-    Widget? suffixIconWidget = hasOnTap || style?.suffixIcon == null
+    Widget? prefixIconWidget = hasOnTap || style?.prefixIcon == null && style?.prefix == null
         ? null
-        : Icon(style?.suffixIcon, color: style?.suffixIconColor);
+        : hasPrefix
+            ? Center(widthFactor: 1, child: style?.prefix).padding(h: 16)
+            : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+    Widget? suffixIconWidget = hasOnTap || style?.suffixIcon == null && style?.suffix == null
+        ? null
+        : style?.suffix ?? Icon(style?.suffixIcon, color: style?.suffixIconColor);
 
     // ink touch & input field
     Widget textFieldWidget = notifier.watch((state) {
       // get background color
       Color backgroundColor = notifier.disabled
           ? const Color.fromARGB(31, 204, 204, 204)
-          : style?.background ??
-              (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+          : style?.background ?? (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
 
       return InkTouch(
         onTap: disabled || !hasOnTap
@@ -202,9 +198,7 @@ class Input extends StatelessWidget with LzFormMixin {
             LzTextField(
               hint: hint,
               enabled: !state.disabled && !hasOnTap,
-              prefixIcon: isGrouped || isUnderlined
-                  ? prefixIconWidget?.margin(t: 22)
-                  : prefixIconWidget,
+              prefixIcon: isGrouped || isUnderlined ? prefixIconWidget?.margin(t: 22) : prefixIconWidget,
               suffixIcon: obsecureToggle
                   ? null
                   : isGrouped || isUnderlined
@@ -212,10 +206,9 @@ class Input extends StatelessWidget with LzFormMixin {
                       : suffixIconWidget,
               padding: hasLabel && (isGrouped || isUnderlined)
                   ? labelAndGroupedPadding
-                  : Ei.only(
-                      l: 16, r: obsecureToggle || hasOnTap ? 45 : 16, v: 14),
+                  : Ei.only(l: 16, r: obsecureToggle || hasOnTap ? 45 : 16, v: 14),
               controller: notifier.controller,
-              maxLength: maxLength,
+              maxLength: state.maxLength,
               obsecure: state.obsecure,
               onChange: (String value) {
                 onChange?.call(value);
@@ -240,8 +233,7 @@ class Input extends StatelessWidget with LzFormMixin {
               Poslign(
                 alignment: Alignment.centerRight,
                 child: Icon(
-                  style?.suffixIcon ??
-                      (isTabler ? Ti.chevronDown : La.angleDown),
+                  style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
                   color: style?.suffixIconColor ?? Colors.black38,
                   size: 18,
                 ).padding(r: 15, b: 1.5),
@@ -295,14 +287,11 @@ class Input extends StatelessWidget with LzFormMixin {
               ],
             )
           else
-            notifier.watch((state) => isUnderlined && state.disabled
-                ? textFieldWidget.lz.clip(all: radius)
-                : textFieldWidget),
+            notifier.watch(
+                (state) => isUnderlined && state.disabled ? textFieldWidget.lz.clip(all: radius) : textFieldWidget),
 
-          notifier.watch((state) => FormFeedbackMessage(
-              show: !state.isValid,
-              message: state.errorMessage,
-              attribute: attr))
+          notifier
+              .watch((state) => FormFeedbackMessage(show: !state.isValid, message: state.errorMessage, attribute: attr))
         ],
       ).start,
     );
