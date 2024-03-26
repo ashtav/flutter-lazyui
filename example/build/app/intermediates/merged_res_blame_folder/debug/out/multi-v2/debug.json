@@ -462,7 +462,7 @@
                     }
                 },
                 {
-                    "source": "D:\\Development\\Mobile\\2023\\packages\\lazyui-2.0.9 - old\\example\\android\\app\\src\\main\\res\\values\\styles.xml",
+                    "source": "D:\\Development\\Mobile\\2024\\packages\\flutter-lazyui - OLD\\example\\android\\app\\src\\main\\res\\values\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
@@ -1207,7 +1207,7 @@
             "outputFile": "com.example.example.app-merged_res-11:/values-night-v8_values-night-v8.arsc.flat",
             "map": [
                 {
-                    "source": "D:\\Development\\Mobile\\2023\\packages\\lazyui-2.0.9 - old\\example\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "D:\\Development\\Mobile\\2024\\packages\\flutter-lazyui - OLD\\example\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

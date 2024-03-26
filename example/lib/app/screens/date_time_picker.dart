@@ -23,8 +23,9 @@ class DateTimePicker extends StatelessWidget {
                   model: forms['date'],
                   suffixIcon: La.calendar,
                   onTap: (model) async {
-                    DateTime? date = await LzPicker.datePicker(context);
-                    if (date != null) model.text = date.format();
+
+                  LxPicker.date(context);
+                    
                   }),
               LzForm.input(
                   label: 'Date & Month',

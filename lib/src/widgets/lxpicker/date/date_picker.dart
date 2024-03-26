@@ -59,20 +59,22 @@ class LzDatePicker extends StatelessWidget {
               child: Intrinsic(
                 children: formats.generate((f, i) {
                   final items = notifier.generateDate(f);
-                  return Container(
-                      decoration: BoxDecoration(
-                          border: Br.only(['l'],
-                              except: i == 0,
-                              color: backgroundColor.darken(.2))),
-                      child: CupertinoPickerWidget(
-                        notifier,
-                        type: f,
-                        items: items,
-                        style: style,
-                        overlayColor: backgroundColor
-                            .lighten(isDarkMode ? .8 : .1)
-                            .withOpacity(.4),
-                      ));
+                  return Expanded(
+                    child: Container(
+                        decoration: BoxDecoration(
+                            border: Br.only(['l'],
+                                except: i == 0,
+                                color: backgroundColor.darken(.2))),
+                        child: CupertinoPickerWidget(
+                          notifier,
+                          type: f,
+                          items: items,
+                          style: style,
+                          overlayColor: backgroundColor
+                              .lighten(isDarkMode ? .8 : .1)
+                              .withOpacity(.4),
+                        )),
+                  );
                 }),
               ),
             ),

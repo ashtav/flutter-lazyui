@@ -48,8 +48,8 @@ extension LzIntExtension on int {
   /// ``` dart
   /// 7.generate((item) => item); // [0, 1, 2, 3, 4, 5, 6, 7]
   /// ```
-  List<E> generate<E>(E Function(int item) generator) {
-    return [...List.generate(this, (i) => generator(this))];
+  List<E> generate<E>(E Function(int index) generator) {
+    return List.generate(this, (i) => generator(i));
   }
 }
 

@@ -13,17 +13,17 @@
 13         to allow setting breakpoints, to provide hot reload, etc.
 14    -->
 15    <uses-permission android:name="android.permission.INTERNET" />
-15-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:3:5-67
-15-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:3:22-64
+15-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:3:5-67
+15-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:3:22-64
 16    <uses-permission android:name="android.permission.CAMERA" />
-16-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:4:5-65
-16-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:4:22-62
+16-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:4:5-65
+16-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:4:22-62
 17    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-17-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:5:5-80
-17-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:5:22-77
+17-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:5:5-80
+17-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:5:22-77
 18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-18-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:6:5-81
-18-->D:\Development\Mobile\2023\packages\lazyui-2.0.9 - old\example\android\app\src\main\AndroidManifest.xml:6:22-78
+18-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:6:5-81
+18-->D:\Development\Mobile\2024\packages\flutter-lazyui - OLD\example\android\app\src\main\AndroidManifest.xml:6:22-78
 19
 20    <application
 21        android:name="android.app.Application"

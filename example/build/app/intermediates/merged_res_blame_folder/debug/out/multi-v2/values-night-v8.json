@@ -4,7 +4,7 @@
             "outputFile": "com.example.example.app-mergeDebugResources-9:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "D:\\Development\\Mobile\\2023\\packages\\lazyui-2.0.9 - old\\example\\android\\app\\src\\main\\res\\values-night\\styles.xml",
+                    "source": "D:\\Development\\Mobile\\2024\\packages\\flutter-lazyui - OLD\\example\\android\\app\\src\\main\\res\\values-night\\styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",
