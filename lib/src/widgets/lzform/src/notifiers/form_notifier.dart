@@ -94,7 +94,8 @@ class FormNotifier extends ChangeNotifier {
   void setOptionFindBy(dynamic value) {
     if (value == null) return;
 
-    final radio = radioList.firstWhere((e) => e.value == null ? e.label == value.toString() : e.value == value,
+    final radio = radioList.firstWhere(
+        (e) => e.value == null ? e.label == value.toString() : e.value == value,
         orElse: () => RadioModel(''));
 
     setOption(radio);
@@ -116,7 +117,8 @@ class FormNotifier extends ChangeNotifier {
     }
 
     // if value is not set, use label instead
-    controller.text = selectedCheckbox.map((e) => e.value ?? e.label).join(', ');
+    controller.text =
+        selectedCheckbox.map((e) => e.value ?? e.label).join(', ');
     notifyListeners();
   }
 
@@ -126,7 +128,8 @@ class FormNotifier extends ChangeNotifier {
 
     for (var f in value) {
       // find checkbox by checkbox value if available, otherwise find by label
-      final checkbox = checkboxList.firstWhere((e) => e.value == null ? e.label == f.toString() : e.value == f,
+      final checkbox = checkboxList.firstWhere(
+          (e) => e.value == null ? e.label == f.toString() : e.value == f,
           orElse: () => CheckboxModel(''));
 
       if (checkbox.label.trim().isNotEmpty) {
@@ -135,7 +138,8 @@ class FormNotifier extends ChangeNotifier {
     }
 
     // set text editing controller
-    controller.text = selectedCheckbox.map((e) => e.value ?? e.label).join(', ');
+    controller.text =
+        selectedCheckbox.map((e) => e.value ?? e.label).join(', ');
     notifyListeners();
   }
 
@@ -172,7 +176,8 @@ class FormNotifier extends ChangeNotifier {
   }
 
   // number
-  int get getNumber => int.parse(controller.text.trim().isEmpty ? '0' : controller.text);
+  int get getNumber =>
+      int.parse(controller.text.trim().isEmpty ? '0' : controller.text);
   int min = 0, max = 100, step = 1;
   Timer? timer;
   Function(String value)? onChange;

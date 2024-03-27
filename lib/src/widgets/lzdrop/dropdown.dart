@@ -160,9 +160,11 @@ class Dropdown extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(label,
-                                          style: Gfont.color(isCritical
-                                              ? Colors.redAccent
-                                              : textColor)).lz.flexible(),
+                                              style: Gfont.color(isCritical
+                                                  ? Colors.redAccent
+                                                  : textColor))
+                                          .lz
+                                          .flexible(),
                                       if (hasIcon) iconWidget(icon),
                                       if (hasSubOptions && !hasIcon)
                                         Rotator(
@@ -190,8 +192,9 @@ class Dropdown extends StatelessWidget {
                                     notifier.toggleSubOptions(item.label, ikey);
                                   } else {
                                     context.lz.pop();
-                                    onSelect?.call(
-                                        DropValue(item.label, item.value, index: i));
+                                    onSelect?.call(DropValue(
+                                        item.label, item.value,
+                                        index: i));
                                   }
                                 }),
                                 ResizedSwitched(
@@ -203,8 +206,9 @@ class Dropdown extends StatelessWidget {
                                           isDisabled: item.disabled,
                                           isSubOption: true, onTap: () {
                                         context.lz.pop();
-                                        onSelect?.call(
-                                            DropValue(item.label, item.value, index: '$i.$j'));
+                                        onSelect?.call(DropValue(
+                                            item.label, item.value,
+                                            index: '$i.$j'));
                                       });
                                     }),
                                   ),

@@ -50,16 +50,15 @@ class InputStyle {
   /// [textColor] : The text color of the input field.
   ///
   /// [prefix] : The prefix widget to be displayed before the input field.
-  InputStyle({
-    this.background,
-    this.borderColor,
-    this.radius,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.prefixIconColor,
-    this.suffixIconColor,
-    this.textColor,
-    this.prefix,
-    this.suffix
-  });
+  InputStyle(
+      {this.background,
+      this.borderColor,
+      this.radius,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.prefixIconColor,
+      this.suffixIconColor,
+      this.textColor,
+      this.prefix,
+      this.suffix});
 }

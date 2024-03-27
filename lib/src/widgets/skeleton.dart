@@ -14,11 +14,13 @@ class Skeleton extends StatelessWidget {
   /// Highlight color of the skeleton widget.
   final Color? highlight;
 
-  const Skeleton({super.key, this.size, this.radius = 0, this.color, this.highlight});
+  const Skeleton(
+      {super.key, this.size, this.radius = 0, this.color, this.highlight});
 
   @override
   Widget build(BuildContext context) {
-    double width = _getSize(size, 'width') ?? 50, height = _getSize(size, 'height') ?? 15;
+    double width = _getSize(size, 'width') ?? 50,
+        height = _getSize(size, 'height') ?? 15;
     double radius = LazyUi.radius;
 
     return Shimmer.fromColors(
@@ -37,7 +39,8 @@ class Skeleton extends StatelessWidget {
   }
 
   /// Creates a copy of this [Skeleton] but with the given fields replaced with the new values.
-  Skeleton copyWith({dynamic size, double? radius, Color? color, Color? highlight}) {
+  Skeleton copyWith(
+      {dynamic size, double? radius, Color? color, Color? highlight}) {
     return Skeleton(
         size: size ?? this.size,
         radius: radius ?? this.radius,
@@ -50,7 +53,10 @@ class Skeleton extends StatelessWidget {
   /// - [radius]: Radius of the skeleton widget.
   static Skeleton dark({dynamic size, double? radius}) {
     return Skeleton(
-        size: size, radius: radius ?? LazyUi.radius, color: '444'.hex, highlight: '444'.hex.withOpacity(.5));
+        size: size,
+        radius: radius ?? LazyUi.radius,
+        color: '444'.hex,
+        highlight: '444'.hex.withOpacity(.5));
   }
 }
 
@@ -64,7 +70,9 @@ extension SkeletonExtension on Skeleton {
   /// The [gap] parameter specifies the gap between each iteration.
   ///
   /// Returns a column widget with the specified number of iterations of the skeleton widget.
-  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start, double gap = 0}) {
+  Widget iterate(int value,
+      {CrossAxisAlignment alignment = CrossAxisAlignment.start,
+      double gap = 0}) {
     return Column(
         crossAxisAlignment: alignment,
         children: List.generate(value, (i) {

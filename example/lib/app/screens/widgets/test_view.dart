@@ -29,7 +29,7 @@ class TestView extends StatelessWidget {
   Widget build(BuildContext context) {
     final forms = LzForm.make(['name']);
 
-    Bindings.onRendered((){
+    Bindings.onRendered(() {
       forms.fill({'name': 'John Doe'});
     });
 
@@ -40,25 +40,25 @@ class TestView extends StatelessWidget {
           autoCache: true,
           children: [
             LzFormTheme(
-              grouping: true,
-              label: Textr(
-                'Biodata',
-                style: Gfont.bold,
-                icon: Ti.user,
-              ),
-              description: 'Please input your full name and gender.',
-              style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
-              children: [
-            LzForm.input(
-                    label: 'Full Name',
-                    hint: 'Enter your full name',
-                    model: forms['name'],
-                    indicator: true,
-                    style: InputStyle(
-                        suffix: const Icon(Ti.user).onTap(() {
-                      logg('suffix has been tapped!');
-                    }, hoverable: true))),
-              ])
+                grouping: true,
+                label: Textr(
+                  'Biodata',
+                  style: Gfont.bold,
+                  icon: Ti.user,
+                ),
+                description: 'Please input your full name and gender.',
+                style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
+                children: [
+                  LzForm.input(
+                      label: 'Full Name',
+                      hint: 'Enter your full name',
+                      model: forms['name'],
+                      indicator: true,
+                      style: InputStyle(
+                          suffix: const Icon(Ti.user).onTap(() {
+                        logg('suffix has been tapped!');
+                      }, hoverable: true))),
+                ])
           ],
         ),
       ),

@@ -9,7 +9,8 @@ class PickerView extends StatelessWidget {
     List<String> categories = 10.generate((i) => Faker.category());
     List<String> words = 10.generate((item) => Faker.words(10));
 
-    final forms = LzForm.make(['category', 'content', 'date', 'date_range', 'time']);
+    final forms =
+        LzForm.make(['category', 'content', 'date', 'date_range', 'time']);
 
     return Scaffold(
       appBar: AppBar(
@@ -23,22 +24,31 @@ class PickerView extends StatelessWidget {
               'Select Option',
               style: Gfont.bold,
             ),
-            description: 'Example of using a LzPicker, we can use picker with search bar, disabled items, etc.',
+            description:
+                'Example of using a LzPicker, we can use picker with search bar, disabled items, etc.',
             children: [
               LzForm.input(
                   hint: 'Show picker',
                   model: forms['category'],
                   onTap: (text) {
-                    final disabled = ['Books', 'Art', 'Sports', 'Nature', 'Yoga'];
+                    final disabled = [
+                      'Books',
+                      'Art',
+                      'Sports',
+                      'Nature',
+                      'Yoga'
+                    ];
 
                     final init = Option(text);
 
-                    LzPicker.option(context, initialValue: init, options: Option.list(categories, disabled: disabled),
+                    LzPicker.option(context,
+                        initialValue: init,
+                        options: Option.list(categories, disabled: disabled),
                         onSelect: (value) {
                       forms.setValue('category', value.label);
-                    }, style: const PickerStyle(
-                      title: 'Select Option',
-                      withSearch: true));
+                    },
+                        style: const PickerStyle(
+                            title: 'Select Option', withSearch: true));
                   }),
               LzForm.input(
                   hint: 'Show picker with long content',
@@ -66,7 +76,8 @@ class PickerView extends StatelessWidget {
               'Date & Time Picker',
               style: Gfont.bold,
             ),
-            description: 'Example of using a LzPicker in date, time and date-time mode.',
+            description:
+                'Example of using a LzPicker in date, time and date-time mode.',
             children: [
               LzForm.input(
                   hint: 'Show date picker',
@@ -88,14 +99,16 @@ class PickerView extends StatelessWidget {
                   model: forms['date_range'],
                   style: InputStyle(suffixIcon: Ti.calendarEvent),
                   onTap: (text) {
-                    List<DateTime> initDate = text.split(' - ').map((e) => e.toDate()).toList();
+                    List<DateTime> initDate =
+                        text.split(' - ').map((e) => e.toDate()).toList();
 
                     LzPicker.dateRange(context,
                         initDate: initDate,
                         minDate: '2024-02-25'.toDate(),
                         maxDate: '2026-10-15'.toDate(),
                         rangeFormat: 'dd / MM / yyyy', onSelect: (value) {
-                      forms.setValue('date_range', value.map((e) => e.format('dd/MM/yyyy')).join(' - '));
+                      forms.setValue('date_range',
+                          value.map((e) => e.format('dd/MM/yyyy')).join(' - '));
                     });
                   }),
               LzForm.input(
@@ -103,8 +116,10 @@ class PickerView extends StatelessWidget {
                   model: forms['time'],
                   style: InputStyle(suffixIcon: Ti.clock),
                   onTap: (text) {
-                    LzPicker.time(context, initTime: Time.parse(text), minTime: Time(8, 30), maxTime: Time(11, 30),
-                        onSelect: (time) {
+                    LzPicker.time(context,
+                        initTime: Time.parse(text),
+                        minTime: Time(8, 30),
+                        maxTime: Time(11, 30), onSelect: (time) {
                       forms.setValue('time', time.value);
                     });
                   })

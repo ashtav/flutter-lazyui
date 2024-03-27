@@ -81,9 +81,7 @@ class _LzListViewState extends State<LzListView> {
       }
     }
 
-    widget.onScroll?.call(Scroller(
-      controller: controller
-    ));
+    widget.onScroll?.call(Scroller(controller: controller));
   }
 
   Future onInitials() async {
@@ -152,8 +150,9 @@ class Scroller {
   Scroller({required this.controller});
 
   /// Returns true if the list is scrolled to the top.
-  bool atBottom([double offset = 0]){
-    return controller.position.pixels + offset >= controller.position.maxScrollExtent;
+  bool atBottom([double offset = 0]) {
+    return controller.position.pixels + offset >=
+        controller.position.maxScrollExtent;
   }
 
   /// Returns true if the list is scrolled to the bottom.
