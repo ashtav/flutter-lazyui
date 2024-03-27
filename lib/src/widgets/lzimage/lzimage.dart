@@ -56,6 +56,8 @@ class LzImage<T> extends StatelessWidget {
     bool isUint8List = image is Uint8List;
     bool isImage = image is Image;
 
+    // logg('isPath: $isPath, isFile: $isFile');
+
     // get image size
     double? width = _getImageSize(size, 'width');
     double? height = _getImageSize(size, 'height');
@@ -111,8 +113,8 @@ class LzImage<T> extends StatelessWidget {
         bool isAsset = image.startsWith('assets/');
         bool isFileNameOnly = !image.contains('/');
 
-        if (isAsset || isFileNameOnly) {
-          if (isFileNameOnly) {
+        if (isAsset || isFileNameOnly || !image.startsWith('/')) {
+          if (isFileNameOnly || !image.startsWith('/')) {
             image = 'assets/images/$image';
           }
 
