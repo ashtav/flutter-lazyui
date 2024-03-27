@@ -1,157 +1,137 @@
 part of widget;
 
-/// `Skeleton` is a Flutter widget that provides a skeleton loading effect,
-/// often used as a placeholder for content that is loading. This effect is useful
-/// for enhancing the user experience by indicating that content is in the process
-/// of being loaded.
-///
-/// The widget can be customized in various ways, including color, shape, and size.
-///
-/// Example usage:
-/// ```dart
-/// Skeleton(
-///   color: Colors.grey[300], // Base color of the skeleton.
-///   darkColor: Colors.grey[200], // Darker shade for a gradient effect.
-///   radius: 8.0, // Border radius.
-///   margin: EdgeInsets.symmetric(vertical: 10.0), // Margin around the skeleton.
-///   brightness: 1.0, // Brightness of the skeleton.
-///   size: [50, 15], // Fixed width and height.
-///   // OR
-///   size: [[15, 50], 15], // Width ranges from 15 to 50, fixed height of 15.
-///   // OR
-///   size: [[15, 50], [5, 15]], // Width ranges from 15 to 50, height ranges from 5 to 15.
-/// )
-/// ```
-/// The `size` parameter can be specified in different formats:
-/// - A single value (e.g., `15`), which sets both width and height to that value.
-/// - A list of two values (e.g., `[50, 15]`), which sets width to the first and height to the second value.
-/// - A list of two lists (e.g., `[[15, 50], [5, 15]]`), where each list contains two values representing the minimum and maximum sizes for width and height, respectively.
-
+/// Skeleton widget used for displaying loading or placeholder content.
 class Skeleton extends StatelessWidget {
-  /// Base color of the skeleton.
-  final Color color;
-
-  /// Optional darker shade for a more realistic effect.
-  final Color? darkColor;
-
-  /// Border radius for the skeleton (optional).
-  final double radius;
-
-  /// Optional specific border radii for different sides (topLeft, topRight, bottomLeft, bottomRight).
-  final CustomRadius? radiusOnly;
-
-  /// Optional margin around the skeleton.
-  final EdgeInsets? margin;
-
-  /// Brightness of the skeleton (optional).
-  final double brightness;
-
-  /// The `size` parameter can be specified in different formats:
-  /// - A single value (e.g., `15`), which sets both width and height to that value.
-  /// - A list of two values (e.g., `[50, 15]`), which sets width to the first and height to the second value.
-  /// - A list of two lists (e.g., `[[15, 50], [5, 15]]`), where each list contains two values representing the range for width and height respectively.
+  /// Size of the skeleton widget.
   final dynamic size;
 
-  /// ``` dart
-  /// Skeleton(size: 15); // width and height is 15
-  /// Skeleton(size: [50, 15]); // width is 50, height is 15
-  /// Skeleton(size: [[15, 50], 15]); // width is (min: 15, max: 50), height is 15
-  /// Skeleton(size: [[15, 50], [5, 15]]); // width is (min: 15, max: 50), height is (min: 5, max: 15)
-  /// Skeleton(size: [[15, 50], [5, 15]], radiusOnly: LzRadius());
-  /// ```
-  const Skeleton(
-      {Key? key,
-      this.color = Colors.black,
-      this.darkColor,
-      this.margin,
-      this.size = const [50, 15],
-      this.radius = 0,
-      this.radiusOnly,
-      this.brightness = .5})
-      : super(key: key);
+  /// Radius of the skeleton widget.
+  final double radius;
+
+  /// Color of the skeleton widget.
+  final Color? color;
+
+  /// Highlight color of the skeleton widget.
+  final Color? highlight;
+
+  const Skeleton({super.key, this.size, this.radius = 0, this.color, this.highlight});
 
   @override
   Widget build(BuildContext context) {
-    // default size
-    num minW = 50, maxW = 50;
-    num minH = 15, maxH = 15;
+    double width = _getSize(size, 'width') ?? 50, height = _getSize(size, 'height') ?? 15;
+    double radius = LazyUi.radius;
 
-    bool isSizeList = size is List;
-
-    if (isSizeList) {
-      List sizes = size;
-
-      // size.length < 2, eg: [50]
-      if ((size as List).length < 2) sizes = [size[0], size[0]];
-
-      bool isSizeWList = sizes[0] is List, isSizeHList = sizes[1] is List;
-
-      // width
-      if (isSizeWList) {
-        minW = sizes[0][0];
-        maxW = sizes[0][1];
-      } else {
-        minW = sizes[0];
-        maxW = sizes[0];
-      }
-
-      // height
-      if (isSizeHList) {
-        minH = sizes[1][0];
-        maxH = sizes[1][1];
-      } else {
-        minH = sizes[1];
-        maxH = sizes[1];
-      }
-    } else {
-      minW = maxW = minH =
-          maxH = (size is int) ? (size as int).toDouble() : size as double;
-    }
-
-    // prevent brightness out of range
-    double brightness = this.brightness < 0
-        ? 0
-        : this.brightness > 1
-            ? 1
-            : this.brightness;
-
-    // base color
-    double bs = brightness - .2;
-    double bsOpacity = bs < 0
-        ? 0
-        : bs > 1
-            ? 1
-            : bs;
-
-    return Container(
-      margin: margin,
-      child: Shimmer.fromColors(
-        baseColor: (darkColor == null ? color : LzColors.inverse(darkColor!))
-            .withOpacity(bsOpacity),
-        highlightColor:
-            (darkColor == null ? color : LzColors.inverse(darkColor!))
-                .withOpacity(brightness),
-        child: Container(
-          width: [minW, maxW].numInRange(),
-          height: [minH, maxH].numInRange(),
-          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-          decoration: BoxDecoration(
-              color: (darkColor == null ? color : LzColors.inverse(darkColor!))
-                  .withOpacity(brightness),
-              borderRadius: radiusOnly != null
-                  ? CustomRadius.getRadius(radiusOnly!)
-                  : BorderRadius.circular(radius)),
+    return Shimmer.fromColors(
+      baseColor: color ?? Colors.grey[300]!,
+      highlightColor: highlight ?? Colors.grey[200]!,
+      child: Container(
+        width: width,
+        height: height,
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        decoration: BoxDecoration(
+          color: Colors.grey[200]!,
+          borderRadius: BorderRadius.circular(radius),
         ),
       ),
     );
   }
+
+  /// Creates a copy of this [Skeleton] but with the given fields replaced with the new values.
+  Skeleton copyWith({dynamic size, double? radius, Color? color, Color? highlight}) {
+    return Skeleton(
+        size: size ?? this.size,
+        radius: radius ?? this.radius,
+        color: color ?? this.color,
+        highlight: highlight ?? this.highlight);
+  }
+
+  /// Creates a dark-themed [Skeleton] widget.
+  /// - [size]: Size of the skeleton widget.
+  /// - [radius]: Radius of the skeleton widget.
+  static Skeleton dark({dynamic size, double? radius}) {
+    return Skeleton(
+        size: size, radius: radius ?? LazyUi.radius, color: '444'.hex, highlight: '444'.hex.withOpacity(.5));
+  }
 }
 
 extension SkeletonExtension on Skeleton {
-  Widget iterate(int value,
-      {CrossAxisAlignment alignment = CrossAxisAlignment.start}) {
+  /// Extension method to iterate over a skeleton widget multiple times vertically.
+  ///
+  /// The [value] parameter specifies the number of iterations.
+  ///
+  /// The [alignment] parameter specifies the crossAxisAlignment of the column.
+  ///
+  /// The [gap] parameter specifies the gap between each iteration.
+  ///
+  /// Returns a column widget with the specified number of iterations of the skeleton widget.
+  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start, double gap = 0}) {
     return Column(
         crossAxisAlignment: alignment,
-        children: List.generate(value, (i) => this));
+        children: List.generate(value, (i) {
+          return copyWith(size: size, color: color, highlight: highlight);
+        })).gap(gap);
   }
+}
+
+double? _getSize(dynamic size, String type) {
+  if (size == null) {
+    return null;
+  }
+
+  num result = 0;
+
+  if (size is num || size is List) {
+    if (type == 'width') {
+      if (size is num) {
+        result = size;
+      } else {
+        size as List;
+
+        if (size.isNotEmpty) {
+          if (size[0] is List) {
+            List<num> size0 = size[0];
+
+            // generate between
+            if (size0.length > 1) {
+              result = size0.numInRange<double>();
+            } else {
+              result = size0[0];
+            }
+          } else {
+            result = size[0];
+          }
+        }
+      }
+    }
+
+    // height
+    else {
+      if (size is num) {
+        result = size;
+      } else {
+        size as List;
+
+        if (size.isNotEmpty && size.length > 1) {
+          if (size[1] is List) {
+            List<num> size1 = size[1];
+
+            // generate between
+            if (size1.length > 1) {
+              result = size1.numInRange<double>();
+            } else {
+              result = size1[0];
+            }
+          } else {
+            result = size[1];
+          }
+        } else {
+          return null;
+        }
+      }
+    }
+  } else {
+    return null;
+  }
+
+  return result.toDouble();
 }

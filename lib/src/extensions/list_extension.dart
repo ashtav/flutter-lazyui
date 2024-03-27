@@ -40,13 +40,19 @@ extension LzListExtension<T> on List<T> {
 /// Extends the functionality of the [List<num>] class with additional methods and properties.
 extension ListNumExtension on List<num> {
   /// ```dart
-  /// [10, 50].numInRange() // 30.5
+  /// [10, 50].numInRange<double>() // 30.5
   /// ```
-  numInRange([Type type = double]) {
-    if (isEmpty) return 0;
-    num start = this[0], end = length > 1 ? this[1] : this[0];
-    num result = start + (Random().nextDouble() * (end - start));
-    return result = type == int ? result.round() : result;
+  T numInRange<T extends num>() {
+    if (isEmpty) return 0 as T;
+    num start = length == 1 ? 0 : this[0];
+    num end = length > 1 ? this[1] : this[0];
+    num range = start + (Random().nextDouble() * (end - start));
+
+    if (T == int) {
+      return range.round() as T;
+    } else {
+      return range as T;
+    }
   }
 }
 

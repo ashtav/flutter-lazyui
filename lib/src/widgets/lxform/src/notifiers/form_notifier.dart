@@ -20,6 +20,8 @@ class LxFormNotifier extends ChangeNotifier {
   /// Length of the text input.
   int textLength = 0;
 
+  int maxLength = 255;
+
   /// Error message associated with the form field.
   String errorMessage = '';
 
@@ -38,6 +40,12 @@ class LxFormNotifier extends ChangeNotifier {
   /// Sets the length of the text input and notifies listeners.
   void setLength(int value) {
     textLength = value;
+    notifyListeners();
+  }
+
+   /// Sets max length of the text input and notifies listeners.
+  void setMaxLength(int value) {
+    maxLength = value;
     notifyListeners();
   }
 

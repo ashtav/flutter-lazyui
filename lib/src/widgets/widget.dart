@@ -1,7 +1,6 @@
 library widget;
 
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
@@ -35,7 +34,6 @@ part 'lz_accordion.dart';
 part 'lz_badge.dart';
 part 'lz_button.dart';
 part 'lz_card.dart';
-part 'lz_image.dart';
 part 'lz_listview.dart';
 part 'lz_loader.dart';
 part 'lz_no_data.dart';

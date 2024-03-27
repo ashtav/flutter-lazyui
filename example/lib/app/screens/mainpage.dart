@@ -12,7 +12,6 @@ import 'dropdown.dart';
 import 'forms.dart';
 import 'refreshtor.dart';
 import 'select_option.dart';
-import 'skeleton.dart';
 import 'toast.dart';
 
 class MainPageView extends StatelessWidget {
@@ -98,10 +97,6 @@ class Actions {
 
       case 'refreshtor':
         context.lzPush(const RefreshtorView());
-        break;
-
-      case 'skeleton':
-        context.lzPush(const SkeletonView());
         break;
 
       case 'toast':

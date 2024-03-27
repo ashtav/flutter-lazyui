@@ -73,8 +73,8 @@ class LxForm {
         keys,
         List.generate(
             keys.length,
-            (i) =>
-                LxFormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
+            (i) => LxFormModel(
+                forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
   }
 
   /// Fills the provided form models with data.
@@ -455,6 +455,7 @@ class LxForm {
     List<LxOption> options = const [],
     FormType? type,
     FormStyle? style,
+    LxPickerStyle? pickerStyle,
     bool disabled = false,
     Future Function()? onTap,
     Function(SelectValue value)? onChange,
@@ -466,6 +467,7 @@ class LxForm {
         options: options,
         type: type,
         style: style,
+          pickerStyle: pickerStyle,
         disabled: disabled,
         onTap: onTap,
         onChange: onChange,

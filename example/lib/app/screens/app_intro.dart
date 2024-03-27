@@ -97,7 +97,7 @@ class AppIntro1 extends StatelessWidget {
               items: List.generate(3, (i) {
                 return const LzImage(
                   'https://www.pngarts.com/files/18/Illustration-PNG-HQ-Pic.png',
-                  height: 300,
+                  size: [null, 300],
                 );
               })),
           Text('Get Organized', style: Gfont.fs20.bold),
@@ -157,7 +157,7 @@ class AppIntro2 extends StatelessWidget {
               items: List.generate(images.length, (i) {
                 return LzImage(
                   images[i],
-                  width: context.width,
+                  size: [context.width, null],
                   radius: 0,
                 );
               })),

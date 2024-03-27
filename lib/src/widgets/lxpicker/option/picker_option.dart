@@ -307,7 +307,22 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                         : Textr(state.found.toString(), margin: Ei.only(r: 15)))
                   ],
                 ).margin(all: 5),
-              )
+              ),
+
+              // title & description
+              if (widget.style?.title != null &&
+                  widget.style?.withSearch == false)
+                Poslign(
+                    alignment: Alignment.topLeft,
+                    margin: Ei.all(20),
+                    child: Column(
+                      children: [
+                        Text(widget.style!.title!, style: Gfont.bold),
+                        if (widget.style?.description != null)
+                          Text(widget.style!.description!,
+                              style: Gfont.fs14.muted),
+                      ],
+                    ).start.gap(2).lz.ignore())
             ],
           ),
         ),

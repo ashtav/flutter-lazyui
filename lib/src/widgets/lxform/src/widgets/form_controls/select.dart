@@ -7,6 +7,7 @@ class Select extends StatelessWidget with LzFormMixin {
   final List<LxOption> options;
   final FormType? type;
   final FormStyle? style;
+  final LxPickerStyle? pickerStyle;
   final bool disabled;
   final Future Function()? onTap;
   final Function(SelectValue value)? onChange;
@@ -19,6 +20,7 @@ class Select extends StatelessWidget with LzFormMixin {
     this.options = const [],
     this.type,
     this.style,
+    this.pickerStyle,
     this.disabled = false,
     this.onTap,
     this.onChange,
@@ -129,7 +131,7 @@ class Select extends StatelessWidget with LzFormMixin {
           if (!notifier.isValid) {
             notifier.setMessage('', true);
           }
-        });
+        }, style: pickerStyle);
       }
 
       notifier.onTapSelect = onTapSelect;

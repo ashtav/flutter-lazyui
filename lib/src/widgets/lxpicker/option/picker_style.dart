@@ -1,5 +1,11 @@
 /// Represents the style configuration for a picker.
 class LxPickerStyle {
+  /// The title of the picker.
+  final String? title;
+
+  /// The description of the picker.
+  final String? description;
+
   /// The text to display on the confirm button.
   final String? confirmText;
 
@@ -17,6 +23,8 @@ class LxPickerStyle {
 
   /// Constructs a LxPickerStyle instance with the specified parameters.
   const LxPickerStyle({
+    this.title,
+    this.description,
     this.confirmText,
     this.fullScreen = false,
     this.withSearch = false,

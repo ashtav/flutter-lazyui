@@ -16,6 +16,8 @@ class DropStyle {
   /// The color of the barrier behind the dropdown menu.
   final Color? barrierColor;
 
+  final Color? backgroundColor;
+
   /// Indicates whether dark mode is enabled.
   final bool darkMode;
 
@@ -37,16 +39,21 @@ class DropStyle {
   /// The alignment of the dropdown menu relative to its anchor.
   final DropAlignment? alignment;
 
+  /// The offset to adjust the position of the dropdown menu.
+  final Offset? offset;
+
   DropStyle(
       {this.width,
       this.separatorColor,
       this.textColor,
       this.barrierColor,
+      this.backgroundColor,
       this.darkMode = false,
       this.backBlur = false,
       this.separators = const [],
       this.icons = const [],
       this.criticals = const [],
       this.transition = false,
-      this.alignment});
+      this.alignment,
+      this.offset});
 }

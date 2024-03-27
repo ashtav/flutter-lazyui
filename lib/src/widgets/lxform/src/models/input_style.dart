@@ -29,6 +29,8 @@ class InputStyle {
   /// The prefix widget to be displayed before the input field.
   final Widget? prefix;
 
+  final Widget? suffix;
+
   /// Constructs an [InputStyle].
   ///
   /// [background] : The background color of the input field.
@@ -58,5 +60,6 @@ class InputStyle {
     this.suffixIconColor,
     this.textColor,
     this.prefix,
+    this.suffix
   });
 }

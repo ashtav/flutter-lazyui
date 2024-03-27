@@ -32,6 +32,7 @@ export 'src/widgets/lxform/lxform.dart';
 export 'src/widgets/lxpicker/lxpicker.dart';
 export 'src/widgets/lzconfirm/lzconfirm.dart';
 export 'src/widgets/lzdrop/lzdrop.dart';
+export 'src/widgets/lzimage/lzimage.dart';
 export 'src/widgets/lzpad/pad.dart';
 export 'src/widgets/lztoast/lztoast.dart';
 export 'src/widgets/pickers/pickers.dart';

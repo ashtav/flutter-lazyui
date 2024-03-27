@@ -60,6 +60,7 @@ class Input extends StatelessWidget with LzFormMixin {
 
     // set enabled or disabled
     notifier.disabled = disabled;
+    notifier.setMaxLength(maxLength);
 
     // set obsecure
     if (onTap == null) {
@@ -167,9 +168,9 @@ class Input extends StatelessWidget with LzFormMixin {
             : hasPrefix
                 ? Center(widthFactor: 1, child: style?.prefix).padding(h: 16)
                 : Icon(style?.prefixIcon, color: style?.prefixIconColor);
-    Widget? suffixIconWidget = hasOnTap || style?.suffixIcon == null
+    Widget? suffixIconWidget = hasOnTap || style?.suffixIcon == null && style?.suffix == null
         ? null
-        : Icon(style?.suffixIcon, color: style?.suffixIconColor);
+        : style?.suffix ?? Icon(style?.suffixIcon, color: style?.suffixIconColor);
 
     // ink touch & input field
     Widget textFieldWidget = notifier.watch((state) {
@@ -215,7 +216,7 @@ class Input extends StatelessWidget with LzFormMixin {
                   : Ei.only(
                       l: 16, r: obsecureToggle || hasOnTap ? 45 : 16, v: 14),
               controller: notifier.controller,
-              maxLength: maxLength,
+              maxLength: state.maxLength,
               obsecure: state.obsecure,
               onChange: (String value) {
                 onChange?.call(value);
