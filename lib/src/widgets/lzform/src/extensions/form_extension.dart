@@ -11,8 +11,7 @@ extension LzFormExtension on Map<String, FormModel> {
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```
-  Map<String, FormModel> fill(Map<String, dynamic> data,
-      {List<String> except = const [], bool when = true}) {
+  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const [], bool when = true}) {
     if (when) {
       for (var e in data.keys) {
         if (containsKey(e) && !except.contains(e)) {
@@ -36,8 +35,7 @@ extension LzFormExtension on Map<String, FormModel> {
   /// If both [except] and [only] are provided, [except] takes precedence.
   ///
   /// Returns a map of the form model after resetting.
-  Map<String, FormModel> reset(
-      {List<String> except = const [], List<String> only = const []}) {
+  Map<String, FormModel> reset({List<String> except = const [], List<String> only = const []}) {
     for (var e in keys) {
       if (!except.contains(e) && (only.isEmpty || only.contains(e))) {
         final notifier = this[e]!.notifier;
@@ -213,8 +211,7 @@ extension LzFormExtension on Map<String, FormModel> {
         bool isListString = value is List && value.every((e) => e is String);
 
         // if value is List<String>, join the values with comma
-        notifier.controller.text =
-            isListString ? value.join(', ') : value.toString();
+        notifier.controller.text = isListString ? value.join(', ') : value.toString();
 
         // hide error message
         if (!notifier.isValid) {
@@ -223,12 +220,13 @@ extension LzFormExtension on Map<String, FormModel> {
 
         if (notifier.isRadio) {
           notifier.setOptionFindBy(value);
+        } else if (notifier.isSelect) {
+          notifier.setSelect(value);
         } else if (notifier.isCheckbox) {
           if (value is List) {
             notifier.setCheckboxFindBy(value);
           } else {
-            logg('Invalid value type for checkbox, expected List',
-                name: 'LzForm');
+            logg('Invalid value type for checkbox, expected List', name: 'LzForm');
           }
         }
       }
@@ -301,9 +299,7 @@ extension LzFormExtension on Map<String, FormModel> {
   ///
   /// Returns the updated map of form models.
   Map<String, FormModel> setSelectOption(Object key, List<Option> options,
-      {bool andShow = false,
-      List<dynamic> disabled = const [],
-      Function(Option value)? onSelected}) {
+      {bool andShow = false, List<dynamic> disabled = const [], Function(Option value)? onSelected}) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {

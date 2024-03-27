@@ -10,8 +10,9 @@ class ImageView extends StatelessWidget {
         'https://img.freepik.com/free-photo/creative-light-bulb-abstract-glowing-blue-background-generative-ai_188544-8090.jpg?size=626&ext=jpg&ga=GA1.1.1448711260.1706684400&semt=sph';
     String image1 =
         'https://media.macphun.com/img/uploads/customer/how-to/608/15542038745ca344e267fb80.28757312.jpg?q=85&w=1340';
-    String image2 =
-        'https://images.pexels.com/photos/2055100/pexels-photo-2055100.jpeg';
+    String image2 = 'https://images.pexels.com/photos/2055100/pexels-photo-2055100.jpeg';
+
+    String image3 = 'https://i.pinimg.com/originals/de/01/4b/de014b9bc37a75b00e6e6a8d5c16c965.jpg';
 
     return Scaffold(
         appBar: AppBar(
@@ -25,24 +26,32 @@ class ImageView extends StatelessWidget {
               children: [
                 LzImage(
                   image,
-                  size: Dimen(h: 220, w: context.width * 0.35),
+                  size: [context.width * .35, 220],
                   interactive: true,
                 ),
                 LzImage(
                   image1,
-                  size: Dimen(h: 150, w: context.width * 0.25),
+                  size: [context.width * .25, 150],
                   interactive: true,
                 ),
                 LzImage(
                   image2,
-                  size: Dimen(h: 110, w: context.width * 0.20),
+                  size: [context.width * .20, 110],
                   alignment: Alignment.topCenter,
                   interactive: true,
                 )
               ],
             ).gap(10).margin(t: 25, b: 15),
-            Textr('Tap image to preview.',
-                icon: Ti.infoCircle, style: Gfont.muted)
+            Textr('Tap image to preview.', icon: Ti.infoCircle, style: Gfont.muted),
+            const SizedBox(height: 35),
+            Column(
+              children: [
+                LzImage(
+                  image3,
+                  interactive: true,
+                ),
+              ],
+            ).start
           ],
         ));
   }

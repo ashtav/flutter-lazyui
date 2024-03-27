@@ -96,7 +96,7 @@ class _LzImageViewerState extends State<LzImageViewer>
                       child: LzImage(widget.image,
                           radius: 0,
                           fit: BoxFit.contain,
-                          size: Dimen(h: context.height, w: context.width)))),
+                          size: [context.width, context.height]))),
             ),
 
             // close button

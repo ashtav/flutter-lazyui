@@ -15,20 +15,53 @@ List<String> titles = [
 
 double progress = 90;
 
+class User {
+  final int? id;
+  final String? name;
+
+  User({this.id, this.name});
+}
+
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Center(
-      child: Touch(
-        onTap: () {
-          LzToast.overlayProgress('Loading...',
-              progress: () => progress, percentage: true);
-        },
-        child: const Text('Tap me!'),
+    final forms = LzForm.make(['name']);
+
+    Bindings.onRendered((){
+      forms.fill({'name': 'John Doe'});
+    });
+
+    return Wrapper(
+      child: Scaffold(
+        appBar: AppBar(),
+        body: LzListView(
+          autoCache: true,
+          children: [
+            LzFormTheme(
+              grouping: true,
+              label: Textr(
+                'Biodata',
+                style: Gfont.bold,
+                icon: Ti.user,
+              ),
+              description: 'Please input your full name and gender.',
+              style: FormStyle(radio: RadioStyle(activeColor: Colors.orange)),
+              children: [
+            LzForm.input(
+                    label: 'Full Name',
+                    hint: 'Enter your full name',
+                    model: forms['name'],
+                    indicator: true,
+                    style: InputStyle(
+                        suffix: const Icon(Ti.user).onTap(() {
+                      logg('suffix has been tapped!');
+                    }, hoverable: true))),
+              ])
+          ],
+        ),
       ),
-    ));
+    );
   }
 }

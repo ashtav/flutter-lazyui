@@ -150,8 +150,8 @@ class LzModifiers {
   Widget skeleton(bool value, [Widget? skeleton]) {
     return value
         ? (skeleton ??
-            Skeleton(
-              size: Dimen.range(w: [100, 200]),
+            const Skeleton(
+              size: [[100, 200]],
             ))
         : widget;
   }

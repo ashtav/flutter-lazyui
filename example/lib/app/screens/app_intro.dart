@@ -140,9 +140,8 @@ class AppIntro2 extends StatelessWidget {
               Container(
                 color: 'd5d5d5'.hex,
                 padding: Ei.all(20),
-                child: LzImage(
+                child: const LzImage(
                   'lazyui.png',
-                  size: Dimen(w: context.width),
                   radius: 0,
                   fit: BoxFit.contain,
                 ),

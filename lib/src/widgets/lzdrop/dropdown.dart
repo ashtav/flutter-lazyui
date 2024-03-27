@@ -87,8 +87,8 @@ class Dropdown extends StatelessWidget {
                     : state.offset == Offset.zero || style?.transition == false
                         ? 0.ms
                         : 150.ms,
-                left: state.offset.dx,
-                top: state.offset.dy,
+                left: state.offset.dx + (style?.offset?.dx ?? 0),
+                top: state.offset.dy + (style?.offset?.dy ?? 0),
                 child: Column(
                   mainAxisSize: Mas.min,
                   crossAxisAlignment: isLeftAlign ? Caa.start : Caa.end,

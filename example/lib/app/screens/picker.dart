@@ -36,7 +36,9 @@ class PickerView extends StatelessWidget {
                     LzPicker.option(context, initialValue: init, options: Option.list(categories, disabled: disabled),
                         onSelect: (value) {
                       forms.setValue('category', value.label);
-                    }, style: const PickerStyle(withSearch: true));
+                    }, style: const PickerStyle(
+                      title: 'Select Option',
+                      withSearch: true));
                   }),
               LzForm.input(
                   hint: 'Show picker with long content',
@@ -45,8 +47,14 @@ class PickerView extends StatelessWidget {
                   onTap: (text) {
                     final init = Option(text);
 
-                    LzPicker.option(context, initialValue: init, options: Option.list(words), style: const PickerStyle(maxLines: 2),
-                        onSelect: (value) {
+                    LzPicker.option(context,
+                        initialValue: init,
+                        options: Option.list(words),
+                        style: PickerStyle(
+                            height: context.height / 1.5,
+                            title: 'Select Option',
+                            description: Faker.words(7),
+                            maxLines: 2), onSelect: (value) {
                       forms.setValue('content', value.label);
                     });
                   })

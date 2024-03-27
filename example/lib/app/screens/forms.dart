@@ -28,6 +28,7 @@ class FormsView extends StatelessWidget {
 
     Bindings.onRendered(() {
       forms.fill({'name': 'John Doe', 'qty': 1, 'distance': 29});
+      forms.setValue('province', Option('Jakarta', value: 2));
     });
 
     List<String> products = [
@@ -86,7 +87,8 @@ class FormsView extends StatelessWidget {
                     hint: 'Enter your full name',
                     model: forms['name'],
                     indicator: true,
-                    style: InputStyle(suffix: const Icon(Ti.user).onTap((){
+                    style: InputStyle(
+                        suffix: const Icon(Ti.user).onTap(() {
                       logg('suffix has been tapped!');
                     }, hoverable: true))),
                 LzForm.radio(
@@ -178,6 +180,10 @@ class FormsView extends StatelessWidget {
                   LzForm.select(
                       hint: 'Select province',
                       model: forms['province'],
+                      pickerStyle: const PickerStyle(
+                          height: 500,
+                          title: 'Select Province',
+                          description: 'Please select the province where you are located.'),
                       onTap: () {
                         return LzToast.overlay('Getting province...', duration: 1.s, then: (() async {
                           // if data we get from server is null, empty or error

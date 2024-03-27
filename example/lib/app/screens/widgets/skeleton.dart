@@ -38,26 +38,24 @@ class _SkeletonViewState extends State<SkeletonView> {
         body: LzListView(children: [
           Column(
             children: [
-              const Textml(
-                      'Random size of skeleton, <p color="888">Dimen.range(w: [170, 290], h: [15, 50])</p>')
+              const Textml('Random size of skeleton, <p color="888">[[170, 290], [15, 50]]</p>')
                   .margin(b: 15),
-              Skeleton(size: Dimen.range(w: [170, 290], h: [15, 50])),
+              const Skeleton(size: [
+                [170, 290],
+                [15, 50]
+              ]),
               const SizedBox(height: 45),
-              const Textml(
-                      'Color & Dark Mode, <p color="888">Skeleton.dark()</p>')
-                  .margin(b: 15),
-              Skeleton(
-                  color: Colors.orange,
-                  highlight: Colors.orange.withOpacity(.3),
-                  size: Dimen.range(w: [170, context.width])).margin(b: 5),
-              Skeleton.dark(size: Dimen.range(w: [170, context.width]))
-                  .iterate(2, gap: 5)
+              const Textml('Color & Dark Mode, <p color="888">Skeleton.dark()</p>').margin(b: 15),
+              Skeleton(color: Colors.orange, highlight: Colors.orange.withOpacity(.3), size: [
+                [170, context.width]
+              ]).margin(b: 5),
+              Skeleton.dark(size: [
+                [170, context.width]
+              ]).iterate(2, gap: 5)
             ],
           ).start,
           const SizedBox(height: 45),
-          const Textml(
-                  'List widget extension, <p color="888">[].skeleton(true, [CustomSkeleton()])</p>')
-              .margin(b: 15),
+          const Textml('List widget extension, <p color="888">[].skeleton(true, [CustomSkeleton()])</p>').margin(b: 15),
           LzCard(
               onTap: () => setLoading(),
               gap: 5,
@@ -68,16 +66,13 @@ class _SkeletonViewState extends State<SkeletonView> {
                       width: 72,
                       height: 72,
                       margin: Ei.only(r: 15),
-                      decoration: BoxDecoration(
-                          color: Colors.black12, borderRadius: Br.radius(5)),
+                      decoration: BoxDecoration(color: Colors.black12, borderRadius: Br.radius(5)),
                       child: const Icon(Ti.settings, size: 25),
                     ),
                     Column(
                       children: [
                         Text('Custom Skeleton', style: Gfont.bold),
-                        Text(
-                            'Tap this text to show the skeleton with random size.',
-                            style: Gfont.muted),
+                        Text('Tap this text to show the skeleton with random size.', style: Gfont.muted),
                       ],
                     ).start.gap(5).lz.flexible()
                   ],
@@ -85,25 +80,25 @@ class _SkeletonViewState extends State<SkeletonView> {
               ].skeleton(isLoading, [
                 Row(
                   children: [
-                    Skeleton(size: Dimen.all(72)).margin(r: 15),
+                    const Skeleton(size: 72).margin(r: 15),
                     Column(
                       children: [
-                        Skeleton(size: Dimen.range(w: [50, 150])),
-                        Skeleton(size: Dimen.range(w: [180, context.width]))
-                            .iterate(2, gap: 5),
+                        const Skeleton(size: [
+                          [50, 150]
+                        ]),
+                        Skeleton(size: [
+                          [180, context.width]
+                        ]).iterate(2, gap: 5),
                       ],
                     ).start.gap(5).lz.flexible()
                   ],
                 )
               ])),
           const SizedBox(height: 45),
-          const Textml(
-                  'Widget extension, <p color="888">MyWidget().lz.skeleton(true)</p>')
-              .margin(b: 15),
-          Textr(Faker.words(13), icon: Ti.infoCircle).lz.skeleton(
-              isLoading,
-              Skeleton(size: Dimen.range(w: [180, context.width]))
-                  .iterate(2, gap: 5))
+          const Textml('Widget extension, <p color="888">MyWidget().lz.skeleton(true)</p>').margin(b: 15),
+          Textr(Faker.words(13), icon: Ti.infoCircle)
+              .lz
+              .skeleton(isLoading, Skeleton(size: [[180, context.width]]).iterate(2, gap: 5))
         ]));
   }
 }
