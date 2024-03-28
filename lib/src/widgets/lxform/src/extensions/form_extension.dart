@@ -227,7 +227,8 @@ extension LxFormExtension on Map<String, LxFormModel> {
         if (notifier.isRadio) {
           notifier.setOptionFindBy(value);
         } else if (notifier.isSelect) {
-          notifier.setSelect(value);
+          notifier.setSelect(
+              value is LxOption ? value : LxOption(value.toString()));
         } else if (notifier.isCheckbox) {
           if (value is List) {
             notifier.setCheckboxFindBy(value);

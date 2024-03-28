@@ -39,7 +39,7 @@ String colorize(String value, LogColor color) =>
 /// ```
 void logg(dynamic value,
     {LogColor color = LogColor.yellow,
-    int limit = 500,
+    int limit = 1500,
     String? name,
     bool nolimit = false}) {
   // Get the string representation of the value
@@ -49,7 +49,7 @@ void logg(dynamic value,
   String subStr = '$value'.substring(
       0,
       nolimit
-          ? 999999
+          ? 99999
           : valueString.length > limit
               ? limit
               : valueString.length);
