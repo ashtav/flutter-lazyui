@@ -161,7 +161,6 @@ class FormNotifier extends ChangeNotifier {
 
   /// Sets the select option and notifies listeners.
   void setSelect(Option value) {
-    if (value.label.trim().isEmpty) return;
     selectedSelect = value;
     controller.text = value.label;
     notifyListeners();

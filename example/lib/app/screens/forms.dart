@@ -105,6 +105,7 @@ class FormsView extends StatelessWidget {
                     style: InputStyle(
                         suffix: const Icon(Ti.user).onTap(() {
                       logg('suffix has been tapped!');
+                      forms.set('product').value(Option(''));
                     }, hoverable: true))),
                 LzForm.radio(
                   label: 'Select Gender',

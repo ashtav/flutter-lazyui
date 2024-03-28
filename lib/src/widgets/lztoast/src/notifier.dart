@@ -42,7 +42,7 @@ class ToastNotifier extends ChangeNotifier {
   Duration? toastDuration;
 
   /// The maximum length of the toast message before truncation.
-  int toastMaxLength = 50;
+  int toastMaxLength = 80;
 
   /// The placement of the toast on the screen.
   ToastPlacement? toastPlacement;
