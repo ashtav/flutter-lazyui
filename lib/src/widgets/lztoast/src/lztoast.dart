@@ -12,6 +12,7 @@ import 'overlay_progress.dart';
 ToastPlacement _defaultPlacement = ToastPlacement.bottom;
 Duration _defaultDuration = 2.s;
 double _defaultRadius = 5;
+int _defaultMaxLength = 80;
 
 /// Configuration options for LzToast messages.
 class LzToastConfig {
@@ -29,10 +30,11 @@ class LzToastConfig {
 
   /// Sets the default configuration options for LzToast messages.
   static void set(
-      {ToastPlacement? placement, Duration? duration, double? radius}) {
+      {ToastPlacement? placement, Duration? duration, double? radius, int? maxLength}) {
     _defaultPlacement = placement ?? _defaultPlacement;
     _defaultDuration = duration ?? _defaultDuration;
     _defaultRadius = radius ?? _defaultRadius;
+    _defaultMaxLength = maxLength ?? _defaultMaxLength;
   }
 }
 
@@ -48,6 +50,8 @@ class LzToast {
 
   /// init LazyLoading
   static TransitionBuilder init({TransitionBuilder? builder}) {
+    _notifier.toastMaxLength = _defaultMaxLength;
+
     return (BuildContext context, Widget? child) {
       return builder == null
           ? LzToastOverlay(child: child)
