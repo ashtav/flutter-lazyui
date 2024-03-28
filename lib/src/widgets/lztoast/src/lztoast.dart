@@ -141,6 +141,8 @@ class LzToast {
       Future<T> Function()? future}) async {
     _notifier.dismiss();
 
+
+
     if (duration != null && future == null) {
       _notifier.showOverlay(message,
           dismissOnTap: dismissOnTap, onCancel: onCancel);
@@ -153,7 +155,7 @@ class LzToast {
     }
 
     if (future != null) {
-      _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
+      _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
 
       return future().then((value) {
         _notifier.dismiss();
@@ -162,7 +164,7 @@ class LzToast {
       });
     }
 
-    _notifier.showOverlay(message, dismissOnTap: dismissOnTap);
+    _notifier.showOverlay(message, dismissOnTap: dismissOnTap, onCancel: onCancel);
     return null as T;
   }
 

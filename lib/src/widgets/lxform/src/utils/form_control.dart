@@ -22,7 +22,20 @@ class FormControl {
   ///
   /// Returns this form control after setting the value.
   FormControl value(dynamic value) {
-    notifier.controller.text = value.toString();
+    if (notifier.isRadio) {
+      notifier.setOptionFindBy(value);
+    } else if (notifier.isSelect) {
+      notifier.setSelect(value);
+    } else if (notifier.isCheckbox) {
+      if (value is List) {
+        notifier.setCheckboxFindBy(value);
+      } else {
+        logg('Invalid value type for checkbox, expected List', name: 'LzForm');
+      }
+    } else {
+      notifier.controller.text = value.toString();
+    }
+
     return this;
   }
 

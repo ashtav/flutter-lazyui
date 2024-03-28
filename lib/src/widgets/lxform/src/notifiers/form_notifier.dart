@@ -160,7 +160,6 @@ class LxFormNotifier extends ChangeNotifier {
 
   /// Sets the select option and notifies listeners.
   void setSelect(LxOption value) {
-    if (value.label.trim().isEmpty) return;
     selectedSelect = value;
     controller.text = value.label;
     notifyListeners();

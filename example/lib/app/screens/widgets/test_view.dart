@@ -23,7 +23,15 @@ class TestView extends StatelessWidget {
           children: [
             LxForm.select(hint: 'Select something', style: FormStyle(
               suffixIcon: La.angleDown
-            ))
+            )),
+
+            InkTouch(
+              onTap: (){
+                LzToast.overlay('Loading...', dismissOnTap: true, onCancel: (){});
+              },
+              padding: Ei.all(20),
+              child: const Text('Test Toast'),
+            )
           ],
         ),
         );
