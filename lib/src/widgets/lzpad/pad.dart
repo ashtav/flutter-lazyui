@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'input_widget.dart';
 import 'pad_notifier.dart';
 
 /// This class provides a utility for displaying a numeric keypad widget.
@@ -14,6 +15,7 @@ class LzPad {
   /// - [title]: The title of the keypad widget.
   /// - [subtitle]: The subtitle of the keypad widget.
   /// - [header]: The header widget of the keypad widget.
+  /// - [footer]: The footer widget of the keypad widget.
   /// - [length]: The length of the input.
   /// - [expired]: The duration until expiration.
   /// - [type]: The type of the keypad widget.
@@ -23,16 +25,19 @@ class LzPad {
       {String? title,
       String? subtitle,
       Widget? header,
+      Widget? footer,
       int length = 6,
       Duration? expired,
       PadType type = PadType.bottomLine,
       PadStyle? style,
       void Function(PadController controller)? onCompleted}) {
+    context.lzFocus(); // hide keyboard
     context.bottomSheet(
         PadWidget(
             title: title,
             subtitle: subtitle,
             header: header,
+            footer: footer,
             length: length,
             expired: expired,
             type: type,
@@ -45,7 +50,7 @@ class LzPad {
 /// Widget for displaying the numeric keypad.
 class PadWidget extends StatefulWidget {
   final String? title, subtitle;
-  final Widget? header;
+  final Widget? header, footer;
   final int length;
   final Duration? expired;
   final PadType type;
@@ -57,6 +62,7 @@ class PadWidget extends StatefulWidget {
       this.title,
       this.subtitle,
       this.header,
+      this.footer,
       this.length = 6,
       this.expired,
       this.type = PadType.bottomLine,
@@ -71,7 +77,20 @@ class _PadWidgetState extends State<PadWidget> {
   final notifier = PadNotifier();
   late PadController valuesController;
 
-  List<String> keyboards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'x', '0', '<'];
+  List<String> keyboards = [
+    '1',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    'x',
+    '0',
+    '<'
+  ];
   Timer? timer;
 
   void initExpired() {
@@ -114,7 +133,8 @@ class _PadWidgetState extends State<PadWidget> {
     Widget header = widget.header ??
         Column(
           children: [
-            Text(widget.title ?? 'Please enter your OTP code', style: Gfont.bold),
+            Text(widget.title ?? 'Please enter your OTP code',
+                style: Gfont.bold),
             if (widget.subtitle != null)
               Textr(
                 widget.subtitle!,
@@ -148,66 +168,101 @@ class _PadWidgetState extends State<PadWidget> {
               child: Column(
             mainAxisAlignment: Maa.center,
             children: [
-              header,
-              notifier.watch((state) => Row(
-                    mainAxisSize: Mas.min,
-                    children: List.generate(state.length, (i) {
-                      String value = state.values.length > i ? state.values[i] : '';
-                      bool isFilled = value.isNotEmpty;
-                      bool inFocus = state.values.length == i;
+              LzListView(
+                shrinkWrap: true,
+                padding: Ei.sym(v: 35),
+                scrollLimit: const [35, 35],
+                children: [
+                  Column(
+                    mainAxisAlignment: Maa.center,
+                    children: [
+                      header,
+                      notifier.watch((state) => Row(
+                            mainAxisSize: Mas.min,
+                            children: List.generate(state.length, (i) {
+                              String value = state.values.length > i
+                                  ? state.values[i]
+                                  : '';
+                              bool isFilled = value.isNotEmpty;
+                              bool inFocus = state.values.length == i;
 
-                      return Container(
-                        width: (context.width - 100) / notifier.length,
-                        height: 55,
-                        decoration: BoxDecoration(
-                          borderRadius: Br.radius(4),
-                          border: widget.type == PadType.bottomLine
-                              ? null
-                              : Br.all(color: isFilled ? Colors.black87 : Colors.black26),
-                        ),
-                        padding: Ei.sym(v: 0, h: 5),
-                        margin: Ei.sym(h: 3),
-                        child: Stack(
-                          children: [
-                            Center(
-                              child: value.isEmpty ? const None() : SlideUp(child: Text(value, style: Gfont.fs20.bold)),
-                            ),
-                            if (widget.type == PadType.bottomLine)
-                              Positioned(
-                                bottom: 0,
-                                child: AnimatedContainer(
-                                  duration: 150.ms,
-                                  decoration: BoxDecoration(
-                                    color: inFocus
-                                        ? style?.bottomInline?.focusColor ?? Colors.black12
-                                        : isFilled
-                                            ? style?.bottomInline?.filledColor ?? Colors.black54
-                                            : style?.bottomInline?.unfillColor ?? Colors.black12,
-                                    borderRadius: Br.radius(4),
-                                  ),
-                                  width: (context.width - 160) / notifier.length,
-                                  height: 2,
-                                ).lz.blink(inFocus, 300.ms),
-                              )
-                          ],
-                        ),
-                      );
-                    }),
-                  )),
-              if (widget.expired != null)
-                notifier.watch((state) {
-                  return Textr('Expired in ${state.expired} seconds', style: Gfont.red, margin: Ei.only(t: 25))
-                      .lz
-                      .blink(!state.isPaused, 500.ms);
-                }),
+                              if (widget.type == PadType.passcode) {
+                                return PasscodeInput(filled: isFilled);
+                              }
+
+                              return Container(
+                                width: (context.width - 100) / notifier.length,
+                                height: 55,
+                                decoration: BoxDecoration(
+                                  borderRadius: Br.radius(4),
+                                  border: widget.type == PadType.bottomLine
+                                      ? null
+                                      : Br.all(
+                                          color: isFilled
+                                              ? Colors.black87
+                                              : Colors.black26),
+                                ),
+                                padding: Ei.sym(v: 0, h: 5),
+                                margin: Ei.sym(h: 3),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: value.isEmpty
+                                          ? const None()
+                                          : SlideUp(
+                                              child: Text(value,
+                                                  style: Gfont.fs20.bold)),
+                                    ),
+                                    if (widget.type == PadType.bottomLine)
+                                      Positioned(
+                                        bottom: 0,
+                                        child: AnimatedContainer(
+                                          duration: 150.ms,
+                                          decoration: BoxDecoration(
+                                            color: inFocus
+                                                ? style?.bottomInline
+                                                        ?.focusColor ??
+                                                    Colors.black12
+                                                : isFilled
+                                                    ? style?.bottomInline
+                                                            ?.filledColor ??
+                                                        Colors.black54
+                                                    : style?.bottomInline
+                                                            ?.unfillColor ??
+                                                        Colors.black12,
+                                            borderRadius: Br.radius(4),
+                                          ),
+                                          width: (context.width - 160) /
+                                              notifier.length,
+                                          height: 2,
+                                        ).lz.blink(inFocus, 300.ms),
+                                      )
+                                  ],
+                                ),
+                              );
+                            }),
+                          )),
+                      if (widget.expired != null)
+                        notifier.watch((state) {
+                          return Textr('Expired in ${state.expired} seconds',
+                                  style: Gfont.red, margin: Ei.only(t: 25))
+                              .lz
+                              .blink(!state.isPaused, 500.ms);
+                        }),
+                    ],
+                  ),
+                ],
+              ),
             ],
           )),
+          widget.footer ?? const None(),
           Container(
             decoration: BoxDecoration(border: Br.only(['t'])),
             child: notifier.watch((state) {
               return Wrap(
                 children: keyboards.generate((item, i) {
-                  bool isEmpty = state.values.isEmpty && ['<', 'x'].contains(item);
+                  bool isEmpty =
+                      state.values.isEmpty && ['<', 'x'].contains(item);
 
                   return InkTouch(
                     onTap: isEmpty
@@ -227,11 +282,13 @@ class _PadWidgetState extends State<PadWidget> {
                     border: Br.only([i < 3 ? '' : 't', i % 3 != 0 ? 'l' : '']),
                     color: Colors.white,
                     child: Container(
-                        padding: Ei.sym(h: 15, v: ['<', 'x'].contains(item) ? 16.5 : 15),
+                        padding: Ei.sym(
+                            h: 15, v: ['<', 'x'].contains(item) ? 16.5 : 15),
                         width: (context.width - 2) / 3,
                         child: Center(
                                 child: item == '<'
-                                    ? const Icon(Ti.backspace, color: Colors.black54)
+                                    ? const Icon(Ti.backspace,
+                                        color: Colors.black54)
                                     : item == 'x'
                                         ? const Icon(
                                             Ti.eraser,
@@ -252,7 +309,7 @@ class _PadWidgetState extends State<PadWidget> {
 }
 
 /// Enumeration for the type of keypad.
-enum PadType { borderRounded, bottomLine }
+enum PadType { borderRounded, bottomLine, passcode }
 
 /// Style configuration for the keypad widget.
 class PadStyle {
@@ -302,5 +359,31 @@ class PadController {
   PadController reset() {
     _notifier.reset();
     return this;
+  }
+}
+
+/// LzPadHeader widget for the keypad.
+class LzPadHeader extends StatelessWidget {
+  /// The icon of the keypad.
+  final IconData? icon;
+
+  /// The title and subtitle of the keypad.
+  final String? title, subtitle;
+
+  /// Creates a new LzPadHeader widget.
+  const LzPadHeader({super.key, this.icon, this.title, this.subtitle});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        if (icon != null)
+          Iconr(icon!, size: 50, color: Colors.black54, margin: Ei.only(b: 25)),
+        if (title != null) Text(title!, style: Gfont.fs18.bold),
+        if (subtitle != null)
+          Text(subtitle!, style: Gfont.muted, textAlign: Ta.center),
+        const SizedBox(height: 20)
+      ],
+    ).gap(10);
   }
 }
