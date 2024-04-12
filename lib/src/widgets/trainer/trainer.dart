@@ -69,8 +69,11 @@ class _TrainerState extends State<Trainer> {
 
     targetFocus = [];
     final targets = widget.targets;
+    int length = targets.length;
 
     targets.generate((target, i) {
+      bool isLast = length - 1 == i;
+
       targetFocus.add(TargetFocus(
           identify: id(target.title ?? 'target_$i'),
           keyTarget: target.key,
@@ -83,12 +86,18 @@ class _TrainerState extends State<Trainer> {
                   // set onNext callback, so that we can call it anywhere
                   onNext = controller.next;
 
+                  void onSkip() {
+                    for (var _ in targets) {
+                      controller.next();
+                    }
+
+                    widget.onSkip?.call();
+                  }
+
                   // get target properties and styles
                   bool hasTitle = target.title != null;
-                  Color backgroundColor =
-                      target.backgroundColor ?? Colors.transparent;
-                  Color textColor =
-                      target.textColor ?? Colors.white.withOpacity(.8);
+                  Color backgroundColor = target.backgroundColor ?? Colors.transparent;
+                  Color textColor = target.textColor ?? Colors.white.withOpacity(.8);
                   double radius = target.radius ?? LazyUi.radius;
 
                   Widget targetWidget = SingleChildScrollView(
@@ -97,97 +106,82 @@ class _TrainerState extends State<Trainer> {
                     child: target.child ??
                         Column(
                           children: [
-                            Iconr(target.icon ?? Ti.book,
-                                size: 50,
-                                color: textColor,
-                                margin: Ei.only(b: 25)),
+                            Iconr(target.icon ?? Ti.book, size: 50, color: textColor, margin: Ei.only(b: 25)),
                             if (hasTitle)
                               Textr(
                                 target.title!,
                                 style: Gfont.bold.fcolor(textColor),
                                 margin: Ei.only(b: 8),
                               ),
-                            Text(
-                              target.description!,
-                              style: Gfont.color(textColor),
-                            )
+                            if (target.description != null)
+                              Text(
+                                target.description!,
+                                style: Gfont.color(textColor),
+                              )
                           ],
                         ).start,
                   );
 
                   return Column(
                     children: [
-                      Container(
-                        constraints: BoxConstraints(
-                            maxWidth: 260,
-                            minWidth: 200,
-                            maxHeight:
-                                widget.style?.maxHeight ?? context.height / 2),
-                        decoration: BoxDecoration(
-                          color: backgroundColor,
-                          border: Br.all(color: Colors.white70),
-                          borderRadius: Br.radius(radius),
-                        ),
-                        child: (widget.style?.backBlur ?? true)
-                            ? BackdropFilter(
-                                    filter: ImageFilter.blur(
-                                        sigmaX: 5.0, sigmaY: 5.0),
-                                    child: targetWidget)
-                                .lz
-                                .clip(all: radius)
-                            : targetWidget,
-                      ),
+                      widget.style?.content?.call(target.icon ?? Ti.book, target.title ?? 'Untitled',
+                              target.description ?? 'No description') ??
+                          Container(
+                            constraints: BoxConstraints(
+                                maxWidth: 260, minWidth: 200, maxHeight: widget.style?.maxHeight ?? context.height / 2),
+                            decoration: BoxDecoration(
+                              color: backgroundColor,
+                              // border: Br.all(color: Colors.white70),
+                              borderRadius: Br.radius(radius),
+                            ),
+                            child: (widget.style?.backBlur ?? true)
+                                ? BackdropFilter(
+                                        filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0), child: targetWidget)
+                                    .lz
+                                    .clip(all: radius)
+                                : targetWidget,
+                          ),
 
                       // action buttons
-                      Row(
-                        children: ['Skip', 'Next'].generate((label, i) {
-                          double h = 20;
-                          bool isSkip = i == 0;
-                          bool disabled = false;
+                      widget.style?.control?.call(onSkip, controller.next, isLast) ??
+                          Row(
+                            children: (isLast ? ['Done'] : ['Skip', 'Next']).generate((label, i) {
+                              double h = 20;
+                              bool isSkip = i == 0;
+                              bool disabled = false;
 
-                          if (targets.length == 1 && i == 1) {
-                            disabled = true;
-                          }
+                              if (targets.length == 1 && i == 1) {
+                                disabled = true;
+                              }
 
-                          return SlideLeft(
-                            key: UniqueKey(),
-                            delay: (i + 1) * 200,
-                            child: Container(
-                                    padding: Ei.only(
-                                        v: 15,
-                                        l: i == 0 ? h : h + 10,
-                                        r: i == 0 ? h + 10 : h),
-                                    decoration: BoxDecoration(
-                                        border: Br.only(['l'],
-                                            except: i == 0,
-                                            color: Colors.white70)),
-                                    child: Text(
-                                      label,
-                                      style: LazyUi.font.copyWith(
-                                          color: Colors.white,
-                                          letterSpacing: 2),
-                                    ).lz.disabled(disabled, 0))
-                                .onTap(
-                              () {
-                                if (!disabled) {
-                                  if (isSkip) {
-                                    for (var _ in targets) {
-                                      controller.next();
+                              return SlideLeft(
+                                key: UniqueKey(),
+                                delay: (i + 1) * 200,
+                                child: Container(
+                                        padding: Ei.only(v: 15, l: i == 0 ? h : h + 10, r: i == 0 ? h + 10 : h),
+                                        decoration: BoxDecoration(
+                                            border: Br.only(['l'], except: i == 0, color: Colors.white70)),
+                                        child: Text(
+                                          label,
+                                          style: LazyUi.font.copyWith(color: Colors.white, letterSpacing: 2),
+                                        ).lz.disabled(disabled, 0))
+                                    .onTap(
+                                  () {
+                                    if (!disabled) {
+                                      if (isSkip) {
+                                        onSkip();
+                                      }
+
+                                      // next target
+                                      else {
+                                        controller.next();
+                                      }
                                     }
-
-                                    widget.onSkip?.call();
-                                  }
-
-                                  // next target
-                                  else {
-                                    controller.next();
-                                  }
-                                }
-                              },
-                            ),
-                          );
-                        }),
-                      )
+                                  },
+                                ),
+                              );
+                            }),
+                          )
                     ],
                   ).start;
                 })
@@ -226,8 +220,7 @@ class _TrainerState extends State<Trainer> {
           hideSkip: true,
           colorShadow: style?.shadowColor ?? Colors.black.withOpacity(.8),
           opacityShadow: style?.shadowOpacity ?? .8,
-          onClickTarget: (target) =>
-              widget.onClickTarget?.call(target.identify.toString()),
+          onClickTarget: (target) => widget.onClickTarget?.call(target.identify.toString()),
           onFinish: () {
             widget.onFinish?.call();
             isActive = false;

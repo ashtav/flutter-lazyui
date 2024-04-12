@@ -216,7 +216,7 @@ class Actions {
         if (value == 'OTP Input') {
           LzPad.show(context,
               expired: 60.s,
-              subtitle:
+              message:
                   'OTP code sent to +628100000, please enter the code below to reset your password.',
               onCompleted: (otp) async {
             otp.pause();
@@ -232,7 +232,7 @@ class Actions {
               header: const LzPadHeader(
                   icon: Ti.lock,
                   title: 'Enter Passcode',
-                  subtitle:
+                  message:
                       'Please enter your passcode to continue payment process.'),
               footer: Textr('Lupa PIN?',
                       style: Gfont.bold.green, padding: Ei.all(20))
@@ -240,12 +240,15 @@ class Actions {
                 context.lz.pop();
                 // open forgot passcode screen
               }),
-              type: PadType.passcode, onCompleted: (_) async {
-            LzToast.overlay('Processing...', duration: 2.s, then: () {
-              LzToast.success('Done! Your payment is successful.',
-                  placement: ToastPlacement.center);
-              context.lz.pop();
-            });
+              type: PadType.passcode, onCompleted: (state) async {
+
+                state.setMessage('Lorem ipsum dolor seet amet');
+
+            // LzToast.overlay('Processing...', duration: 2.s, then: () {
+            //   LzToast.success('Done! Your payment is successful.',
+            //       placement: ToastPlacement.center);
+            //   context.lz.pop();
+            // });
           });
         }
       });

@@ -13,7 +13,7 @@ class LzPad {
   /// Parameters:
   /// - [context]: The build context.
   /// - [title]: The title of the keypad widget.
-  /// - [subtitle]: The subtitle of the keypad widget.
+  /// - [message]: The message of the keypad widget.
   /// - [header]: The header widget of the keypad widget.
   /// - [footer]: The footer widget of the keypad widget.
   /// - [length]: The length of the input.
@@ -23,7 +23,7 @@ class LzPad {
   /// - [onCompleted]: A function called when input is completed.
   static void show(BuildContext context,
       {String? title,
-      String? subtitle,
+      String? message,
       Widget? header,
       Widget? footer,
       int length = 6,
@@ -35,7 +35,7 @@ class LzPad {
     context.bottomSheet(
         PadWidget(
             title: title,
-            subtitle: subtitle,
+            message: message,
             header: header,
             footer: footer,
             length: length,
@@ -49,7 +49,7 @@ class LzPad {
 
 /// Widget for displaying the numeric keypad.
 class PadWidget extends StatefulWidget {
-  final String? title, subtitle;
+  final String? title, message;
   final Widget? header, footer;
   final int length;
   final Duration? expired;
@@ -60,7 +60,7 @@ class PadWidget extends StatefulWidget {
   const PadWidget(
       {super.key,
       this.title,
-      this.subtitle,
+      this.message,
       this.header,
       this.footer,
       this.length = 6,
@@ -77,23 +77,12 @@ class _PadWidgetState extends State<PadWidget> {
   final notifier = PadNotifier();
   late PadController valuesController;
 
-  List<String> keyboards = [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    'x',
-    '0',
-    '<'
-  ];
+  List<String> keyboards = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'x', '0', '<'];
   Timer? timer;
 
-  void initExpired() {
+  void onInit() {
+    notifier.setMessage(widget.message ?? '');
+
     if (widget.expired != null) {
       timer = notifier.startTimer(widget.expired!, onTimeout: () {
         timer?.cancel();
@@ -108,7 +97,7 @@ class _PadWidgetState extends State<PadWidget> {
   void initState() {
     super.initState();
 
-    initExpired();
+    onInit();
 
     notifier.length = widget.length < 4
         ? 4
@@ -133,15 +122,14 @@ class _PadWidgetState extends State<PadWidget> {
     Widget header = widget.header ??
         Column(
           children: [
-            Text(widget.title ?? 'Please enter your OTP code',
-                style: Gfont.bold),
-            if (widget.subtitle != null)
-              Textr(
-                widget.subtitle!,
-                textAlign: Ta.center,
-                style: Gfont.muted,
-                padding: Ei.all(20),
-              ),
+            Text(widget.title ?? 'Please enter your OTP code', style: Gfont.bold),
+            if (widget.message != null)
+              notifier.watch((state) => Textr(
+                    state.message,
+                    textAlign: Ta.center,
+                    style: Gfont.muted,
+                    padding: Ei.all(20),
+                  )),
             const SizedBox(height: 25),
           ],
         );
@@ -180,9 +168,7 @@ class _PadWidgetState extends State<PadWidget> {
                       notifier.watch((state) => Row(
                             mainAxisSize: Mas.min,
                             children: List.generate(state.length, (i) {
-                              String value = state.values.length > i
-                                  ? state.values[i]
-                                  : '';
+                              String value = state.values.length > i ? state.values[i] : '';
                               bool isFilled = value.isNotEmpty;
                               bool inFocus = state.values.length == i;
 
@@ -197,10 +183,7 @@ class _PadWidgetState extends State<PadWidget> {
                                   borderRadius: Br.radius(4),
                                   border: widget.type == PadType.bottomLine
                                       ? null
-                                      : Br.all(
-                                          color: isFilled
-                                              ? Colors.black87
-                                              : Colors.black26),
+                                      : Br.all(color: isFilled ? Colors.black87 : Colors.black26),
                                 ),
                                 padding: Ei.sym(v: 0, h: 5),
                                 margin: Ei.sym(h: 3),
@@ -209,9 +192,7 @@ class _PadWidgetState extends State<PadWidget> {
                                     Center(
                                       child: value.isEmpty
                                           ? const None()
-                                          : SlideUp(
-                                              child: Text(value,
-                                                  style: Gfont.fs20.bold)),
+                                          : SlideUp(child: Text(value, style: Gfont.fs20.bold)),
                                     ),
                                     if (widget.type == PadType.bottomLine)
                                       Positioned(
@@ -220,20 +201,13 @@ class _PadWidgetState extends State<PadWidget> {
                                           duration: 150.ms,
                                           decoration: BoxDecoration(
                                             color: inFocus
-                                                ? style?.bottomInline
-                                                        ?.focusColor ??
-                                                    Colors.black12
+                                                ? style?.bottomInline?.focusColor ?? Colors.black12
                                                 : isFilled
-                                                    ? style?.bottomInline
-                                                            ?.filledColor ??
-                                                        Colors.black54
-                                                    : style?.bottomInline
-                                                            ?.unfillColor ??
-                                                        Colors.black12,
+                                                    ? style?.bottomInline?.filledColor ?? Colors.black54
+                                                    : style?.bottomInline?.unfillColor ?? Colors.black12,
                                             borderRadius: Br.radius(4),
                                           ),
-                                          width: (context.width - 160) /
-                                              notifier.length,
+                                          width: (context.width - 160) / notifier.length,
                                           height: 2,
                                         ).lz.blink(inFocus, 300.ms),
                                       )
@@ -244,8 +218,7 @@ class _PadWidgetState extends State<PadWidget> {
                           )),
                       if (widget.expired != null)
                         notifier.watch((state) {
-                          return Textr('Expired in ${state.expired} seconds',
-                                  style: Gfont.red, margin: Ei.only(t: 25))
+                          return Textr('Expired in ${state.expired} seconds', style: Gfont.red, margin: Ei.only(t: 25))
                               .lz
                               .blink(!state.isPaused, 500.ms);
                         }),
@@ -261,8 +234,7 @@ class _PadWidgetState extends State<PadWidget> {
             child: notifier.watch((state) {
               return Wrap(
                 children: keyboards.generate((item, i) {
-                  bool isEmpty =
-                      state.values.isEmpty && ['<', 'x'].contains(item);
+                  bool isEmpty = state.values.isEmpty && ['<', 'x'].contains(item);
 
                   return InkTouch(
                     onTap: isEmpty
@@ -282,13 +254,11 @@ class _PadWidgetState extends State<PadWidget> {
                     border: Br.only([i < 3 ? '' : 't', i % 3 != 0 ? 'l' : '']),
                     color: Colors.white,
                     child: Container(
-                        padding: Ei.sym(
-                            h: 15, v: ['<', 'x'].contains(item) ? 16.5 : 15),
+                        padding: Ei.sym(h: 15, v: ['<', 'x'].contains(item) ? 16.5 : 15),
                         width: (context.width - 2) / 3,
                         child: Center(
                                 child: item == '<'
-                                    ? const Icon(Ti.backspace,
-                                        color: Colors.black54)
+                                    ? const Icon(Ti.backspace, color: Colors.black54)
                                     : item == 'x'
                                         ? const Icon(
                                             Ti.eraser,
@@ -360,6 +330,11 @@ class PadController {
     _notifier.reset();
     return this;
   }
+
+  PadController setMessage(String value){
+    _notifier.setMessage(value);
+    return this;
+  }
 }
 
 /// LzPadHeader widget for the keypad.
@@ -367,21 +342,19 @@ class LzPadHeader extends StatelessWidget {
   /// The icon of the keypad.
   final IconData? icon;
 
-  /// The title and subtitle of the keypad.
-  final String? title, subtitle;
+  /// The title and message of the keypad.
+  final String? title, message;
 
   /// Creates a new LzPadHeader widget.
-  const LzPadHeader({super.key, this.icon, this.title, this.subtitle});
+  const LzPadHeader({super.key, this.icon, this.title, this.message});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (icon != null)
-          Iconr(icon, size: 50, color: Colors.black54, margin: Ei.only(b: 25)),
+        if (icon != null) Iconr(icon, size: 50, color: Colors.black54, margin: Ei.only(b: 25)),
         if (title != null) Text(title!, style: Gfont.fs18.bold),
-        if (subtitle != null)
-          Text(subtitle!, style: Gfont.muted, textAlign: Ta.center),
+        if (message != null) Text(message!, style: Gfont.muted, textAlign: Ta.center),
         const SizedBox(height: 20)
       ],
     ).gap(10);

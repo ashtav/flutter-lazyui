@@ -1,3 +1,4 @@
+import 'package:example/app/widgets/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -35,7 +36,13 @@ class TestView extends StatelessWidget {
 
     return Wrapper(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          actions: [
+            IconButton(onPressed: (){
+              Pickers.show(context);
+            }, icon: const Icon(Ti.photo))
+          ],
+        ),
         body: LzListView(
           autoCache: true,
           children: [

@@ -74,10 +74,8 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Utils.scrollHasMax(
-          controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
-        controller.animateTo(controller.position.pixels,
-            duration: 250.ms, curve: Curves.easeIn);
+      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+        controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
       }
     }
 
@@ -131,15 +129,11 @@ class _LzListViewState extends State<LzListView> {
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
         : Refreshtor(
-            onRefresh: () async => widget.onRefresh?.call(),
-            type: widget.refreshType,
-            child: listView(cacheExtent));
+            onRefresh: () async => widget.onRefresh?.call(), type: widget.refreshType, child: listView(cacheExtent));
 
     return widget.autoCache
         ? StreamBuilder<double>(
-            stream: streamController.stream,
-            builder: (BuildContext context, snap) =>
-                content(cacheExtent: snap.data))
+            stream: streamController.stream, builder: (BuildContext context, snap) => content(cacheExtent: snap.data))
         : content();
   }
 }
@@ -151,8 +145,19 @@ class Scroller {
 
   /// Returns true if the list is scrolled to the top.
   bool atBottom([double offset = 0]) {
-    return controller.position.pixels + offset >=
-        controller.position.maxScrollExtent;
+    return controller.position.pixels + offset >= controller.position.maxScrollExtent;
+  }
+
+  /// Returns the opacity value based on the scroll position.
+  ///
+  /// The [factor] parameter determines the speed at which opacity changes.
+  /// A lower value of [factor] results in faster opacity changes.
+  ///
+  /// The [invertOpacity] parameter determines whether to invert the opacity value.
+  /// If set to true, the opacity value is inverted, resulting in the opposite behavior.
+  double getOpacity([double factor = 100, bool invertOpacity = true]) {
+    double value = (controller.position.pixels / (factor < 1 ? 1 : factor));
+    return (invertOpacity == true ? (1 - value) : value).clamp(0, 1);
   }
 
   /// Returns true if the list is scrolled to the bottom.
