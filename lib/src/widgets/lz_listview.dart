@@ -158,4 +158,9 @@ class Scroller {
 
   /// Returns true if the list is scrolled to the bottom.
   double get pixels => controller.position.pixels;
+
+  double getOpacity([double factor = 100, bool invertOpacity = true]) {
+    double value = (controller.position.pixels / (factor < 1 ? 1 : factor));
+    return (invertOpacity == true ? (1 - value) : value).clamp(0, 1);
+  }
 }
