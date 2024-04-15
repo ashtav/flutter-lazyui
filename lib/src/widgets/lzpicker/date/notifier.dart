@@ -17,6 +17,9 @@ class DatePickerNotifier extends ChangeNotifier {
   /// The selected time.
   late Time time;
 
+  /// Get changes activity
+  Function(DateTime value)? onChangeForWidget;
+
   /// Gets the currently selected date and time.
   DateTime get value => DateTime(values['y'] ?? 0, values['m'] ?? 0,
       values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
@@ -138,6 +141,8 @@ class DatePickerNotifier extends ChangeNotifier {
           scrollTo('d', maxDate.day - 1);
         }
       }
+
+      onChangeForWidget?.call(dateTime);
     } catch (e, s) {
       Utils.errorCatcher(e, s);
     }

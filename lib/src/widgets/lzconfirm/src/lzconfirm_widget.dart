@@ -83,7 +83,7 @@ class LzConfirmWidget extends StatelessWidget {
                     style: Gfont.fs18.bold.fcolor(textColor),
                     textAlign: Ta.center),
               if (hasMessage)
-                Text(message!,
+                Textml(message!,
                     textAlign: Ta.center,
                     style: Gfont.color(textColor.darken(.3))),
             ],
