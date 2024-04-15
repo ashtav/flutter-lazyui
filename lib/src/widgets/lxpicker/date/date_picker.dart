@@ -89,6 +89,44 @@ class LzDatePicker extends StatelessWidget {
       ).lz.clip(tlr: radius),
     );
   }
+
+   static Widget widget(
+      {DateTime? initDate,
+      DateTime? minDate,
+      DateTime? maxDate,
+      String? format,
+      double height = 300,
+      DatePickerStyle? style,
+      Function(DateTime value)? onChange}) {
+    List<String> formats = (format ?? 'd/m/y').split('/');
+
+    final notifier = DatePickerNotifier();
+    notifier.onInitialized(formats, initDate: initDate, minDate: minDate, maxDate: maxDate);
+    notifier.onChangeForWidget = onChange;
+
+    bool isDarkMode = style?.darkMode ?? false;
+    Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
+
+    return ScrollGlowless(
+      child: SizedBox(
+        height: height,
+        child: Intrinsic(
+          children: formats.generate((f, i) {
+            final items = notifier.generateDate(f);
+            return Container(
+                decoration: BoxDecoration(border: Br.only(['l'], except: i == 0, color: backgroundColor.darken(.2))),
+                child: CupertinoPickerWidget(
+                  notifier,
+                  type: f,
+                  items: items,
+                  style: style,
+                  overlayColor: backgroundColor.lighten(isDarkMode ? .8 : .1).withOpacity(.4),
+                ));
+          }),
+        ),
+      ),
+    );
+  }
 }
 
 class CupertinoPickerWidget extends StatelessWidget {
