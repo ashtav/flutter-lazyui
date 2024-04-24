@@ -22,7 +22,7 @@ class PadNotifier extends ChangeNotifier {
 
   /// Boolean flag indicating if the input is paused.
   bool isPaused = false;
-  
+
   String message = '';
 
   /// Handles the input action.
@@ -82,7 +82,7 @@ class PadNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setMessage(String value){
+  void setMessage(String value) {
     message = value;
     notifyListeners();
   }

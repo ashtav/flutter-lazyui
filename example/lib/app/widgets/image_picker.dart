@@ -5,11 +5,17 @@ import 'package:image_picker/image_picker.dart';
 import 'package:lazyui/lazyui.dart';
 
 class Pickers {
-  static void show(BuildContext context, {double size = 2000, int quality = 90, Function(File? file)? then}) async {
+  static void show(BuildContext context,
+      {double size = 2000,
+      int quality = 90,
+      Function(File? file)? then}) async {
     final ImagePicker picker = ImagePicker();
 
-    final pickedFile =
-        await picker.pickImage(source: ImageSource.gallery, maxWidth: size, maxHeight: size, imageQuality: quality);
+    final pickedFile = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: size,
+        maxHeight: size,
+        imageQuality: quality);
 
     if (pickedFile != null) {
       File file = File(pickedFile.path);
@@ -33,7 +39,8 @@ class ImagePickerPreview extends StatelessWidget {
             children: [
               SlideDown(
                 child: Container(
-                  decoration: BoxDecoration(borderRadius: Br.radius(7), color: Colors.white70),
+                  decoration: BoxDecoration(
+                      borderRadius: Br.radius(7), color: Colors.white70),
                   width: 260,
                   height: 20,
                 ),
@@ -41,7 +48,8 @@ class ImagePickerPreview extends StatelessWidget {
               Container(
                 width: 290,
                 margin: Ei.only(b: 7),
-                decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(7)),
+                decoration: BoxDecoration(
+                    color: Colors.white, borderRadius: Br.radius(7)),
                 child: Column(
                   children: [
                     LzImage(file, size: [context.width, 250], radius: 0),
@@ -52,7 +60,8 @@ class ImagePickerPreview extends StatelessWidget {
                           decoration: BoxDecoration(border: Br.only(['t'])),
                           child: Text(
                             text,
-                            textAlign: Ta.center, style: i == 0 ? Gfont.bold : Gfont.normal,
+                            textAlign: Ta.center,
+                            style: i == 0 ? Gfont.bold : Gfont.normal,
                           )).onTap(() {}, hoverable: true);
                     })
                   ],

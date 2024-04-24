@@ -241,8 +241,7 @@ class Actions {
                 // open forgot passcode screen
               }),
               type: PadType.passcode, onCompleted: (state) async {
-
-                state.setMessage('Lorem ipsum dolor seet amet');
+            state.setMessage('Lorem ipsum dolor seet amet');
 
             // LzToast.overlay('Processing...', duration: 2.s, then: () {
             //   LzToast.success('Done! Your payment is successful.',

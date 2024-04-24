@@ -48,7 +48,8 @@ class LzImage<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     // check image type
     bool isString = image is String;
-    bool isUrl = isString && ('$image'.startsWith('http://') || '$image'.startsWith('https://'));
+    bool isUrl = isString &&
+        ('$image'.startsWith('http://') || '$image'.startsWith('https://'));
     bool isSvg = '$image'.endsWith('.svg');
     bool isPath = isValidPath('$image');
 
@@ -63,7 +64,10 @@ class LzImage<T> extends StatelessWidget {
     double? height = _getImageSize(size, 'height');
 
     Widget imageWidget = Container(
-        width: width, height: height, color: Colors.black12, child: const Center(child: Icon(La.exclamationCircle)));
+        width: width,
+        height: height,
+        color: Colors.black12,
+        child: const Center(child: Icon(La.exclamationCircle)));
 
     Widget placeholder = this.placeholder ??
         Skeleton(
@@ -100,7 +104,8 @@ class LzImage<T> extends StatelessWidget {
             width: width,
             height: height,
             alignment: alignment,
-            progressIndicatorBuilder: (context, url, downloadProgress) => placeholder,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                placeholder,
             errorWidget: (context, url, error) => errorWidget,
           );
         }
@@ -120,14 +125,21 @@ class LzImage<T> extends StatelessWidget {
 
           if (isSvg) {
             imageWidget = SvgPicture.asset(image,
-                fit: fit, width: width, height: height, alignment: alignment, placeholderBuilder: (_) => placeholder);
+                fit: fit,
+                width: width,
+                height: height,
+                alignment: alignment,
+                placeholderBuilder: (_) => placeholder);
           } else {
             imageWidget = Container(
               width: width,
               height: height,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(image), fit: fit, alignment: alignment, onError: (e, s) => errorWidget),
+                    image: AssetImage(image),
+                    fit: fit,
+                    alignment: alignment,
+                    onError: (e, s) => errorWidget),
               ),
             );
           }

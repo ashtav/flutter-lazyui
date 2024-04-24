@@ -72,7 +72,8 @@ abstract class LzDropView<T> extends StatelessWidget {
       BuildContext context, String tag, GlobalKey key, Widget child,
       {List<DropOption> options = const [],
       DropStyle? style,
-      void Function(DropValue value)? onSelect, Widget Function(Widget child)? builder}) {
+      void Function(DropValue value)? onSelect,
+      Widget Function(Widget child)? builder}) {
     BuildContext context = key.currentContext!;
 
     // render box of the target
@@ -117,14 +118,14 @@ abstract class LzDropView<T> extends StatelessWidget {
     //     }));
 
     Widget dropdownWidget = Container(
-                    color: style?.backgroundColor ?? Colors.transparent,
-                    constraints: BoxConstraints(maxWidth: width),
-                    child: child)
-                .lz
-                .clip(
-                    tlr: LazyUi.radius,
-                    bl: isLeftAlign ? 0 : LazyUi.radius,
-                    br: isLeftAlign ? LazyUi.radius : 0);
+            color: style?.backgroundColor ?? Colors.transparent,
+            constraints: BoxConstraints(maxWidth: width),
+            child: child)
+        .lz
+        .clip(
+            tlr: LazyUi.radius,
+            bl: isLeftAlign ? 0 : LazyUi.radius,
+            br: isLeftAlign ? LazyUi.radius : 0);
 
     context.dialog(
         Dropdown(
@@ -175,7 +176,10 @@ class LzDropItem extends LzDropView {
         key: key,
         onTap: () {
           showDropdown(context, tag, key, child,
-              options: options, style: style, onSelect: onSelect, builder: builder);
+              options: options,
+              style: style,
+              onSelect: onSelect,
+              builder: builder);
         },
         child: child);
   }

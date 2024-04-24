@@ -18,7 +18,7 @@ class LzListViewExample extends StatelessWidget {
             bool isMaxScrolled =
                 (pixels + 150) >= scroll.controller.position.maxScrollExtent;
             if (isMaxScrolled) {
-              // Load more data 
+              // Load more data
             }
 
             // or use the built-in atBottom method
@@ -26,7 +26,6 @@ class LzListViewExample extends StatelessWidget {
             // if (isMaxScrolled) {
             //   LzToast.show('Loading more data...');
             // }
-
           },
           scrollLimit: const [50, 100],
           onRefresh: () => LzToast.show('List refreshed successfully!'),

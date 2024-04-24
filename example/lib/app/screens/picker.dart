@@ -125,12 +125,14 @@ class PickerView extends StatelessWidget {
                   })
             ],
           ),
-
           Text('Picker Widget', style: Gfont.bold),
-          LzDatePicker.widget(format: 'm/y', maxDate: DateTime.now().add(120.d), minDate: DateTime.now().add(3.d), onChange: (value){
-            logg(value);
-          })
-
+          LzDatePicker.widget(
+              format: 'm/y',
+              maxDate: DateTime.now().add(120.d),
+              minDate: DateTime.now().add(3.d),
+              onChange: (value) {
+                logg(value);
+              })
         ],
       ),
     );
