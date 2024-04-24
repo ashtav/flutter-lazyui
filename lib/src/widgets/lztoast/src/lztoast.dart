@@ -74,6 +74,7 @@ class LzToast {
       ToastPlacement? placement,
       bool dismissOnTap = false,
       double? radius}) {
+    _notifier.dismiss();
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -92,6 +93,7 @@ class LzToast {
       int? maxLength,
       ToastPlacement? placement,
       bool dismissOnTap = false}) {
+    _notifier.dismiss();
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -107,6 +109,7 @@ class LzToast {
       int? maxLength,
       ToastPlacement? placement,
       bool dismissOnTap = false}) {
+    _notifier.dismiss();
     _notifier.showToast(message,
         icon: icon,
         duration: duration,
@@ -122,6 +125,7 @@ class LzToast {
       int? maxLength,
       ToastPlacement? placement,
       bool dismissOnTap = false}) {
+    _notifier.dismiss();
     _notifier.showToast(message,
         icon: icon,
         duration: duration,

@@ -26,6 +26,9 @@ class LzCard extends StatelessWidget {
   /// Determines if the children widgets should be stacked vertically.
   final bool stacked;
 
+  /// The alignment of stacked children widgets.
+  final StackAlign stackAlign;
+
   /// Creates a [LzCard] widget.
   ///
   /// The [children] parameter is required and must not be null.
@@ -40,10 +43,13 @@ class LzCard extends StatelessWidget {
       this.radius,
       this.onTap,
       this.gap,
-      this.stacked = false});
+      this.stacked = false,
+      this.stackAlign = StackAlign.top});
 
   @override
   Widget build(BuildContext context) {
+    bool isStackedTop = stackAlign == StackAlign.top;
+
     Column child = Column(
       children: children,
     ).start;
@@ -54,7 +60,7 @@ class LzCard extends StatelessWidget {
       radius: radius ?? Br.radius(5),
       padding: padding ?? Ei.all(LazyUi.space),
       color: color ?? Colors.white,
-      margin: Ei.only(t: stacked ? 5 : 0),
+      margin: Ei.only(t: stacked && isStackedTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
       child: SizedBox(
         width: context.width,
         child: gap == null ? child : child.gap(gap!),
@@ -63,7 +69,7 @@ class LzCard extends StatelessWidget {
 
     return stacked
         ? Stack(
-            alignment: Alignment.topCenter,
+            alignment: isStackedTop ? Alignment.topCenter : Alignment.bottomCenter,
             children: [
               Container(
                 width: context.width - 55,
@@ -80,3 +86,5 @@ class LzCard extends StatelessWidget {
         : inktouch;
   }
 }
+
+enum StackAlign { top, bottom }

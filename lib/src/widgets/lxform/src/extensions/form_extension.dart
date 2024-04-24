@@ -16,18 +16,20 @@ extension LxFormExtension on Map<String, LxFormModel> {
   /// ```
   Map<String, LxFormModel> fill(Map<String, dynamic> data,
       {List<String> except = const [], bool when = true}) {
-    if (when) {
-      for (var e in data.keys) {
-        if (containsKey(e) && !except.contains(e)) {
-          final notifier = this[e]!.notifier;
-          String value = data[e] == null ? '' : data[e].toString();
+    Bindings.onRendered(() {
+      if (when) {
+        for (var e in data.keys) {
+          if (containsKey(e) && !except.contains(e)) {
+            final notifier = this[e]!.notifier;
+            String value = data[e] == null ? '' : data[e].toString();
 
-          notifier.controller.text = value;
-          notifier.textLength = value.length;
-          notifier.setState();
+            notifier.controller.text = value;
+            notifier.textLength = value.length;
+            notifier.setState();
+          }
         }
       }
-    }
+    });
 
     return this;
   }

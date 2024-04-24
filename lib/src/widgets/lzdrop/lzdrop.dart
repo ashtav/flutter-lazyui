@@ -166,7 +166,7 @@ class LzDropItem extends LzDropView {
     final tag = 'drop-${DateTime.now().millisecondsSinceEpoch}';
     final key = GlobalKey();
 
-    return InkTouch(
+    return Touch(
         key: key,
         onTap: () {
           showDropdown(context, tag, key, child,

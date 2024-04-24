@@ -47,7 +47,11 @@ class LzListView extends StatefulWidget {
   /// Optional callback when the list is refreshed.
   final void Function()? onRefresh;
 
+  /// Type of refresh indicator to be displayed.
   final RefrehtorType refreshType;
+
+  /// Gap between items in the list.
+  final double? gap;
 
   const LzListView(
       {super.key,
@@ -60,7 +64,8 @@ class LzListView extends StatefulWidget {
       this.onScroll,
       this.autoCache = false,
       this.onRefresh,
-      this.refreshType = RefrehtorType.bar});
+      this.refreshType = RefrehtorType.bar,
+      this.gap});
 
   @override
   State<LzListView> createState() => _LzListViewState();
@@ -74,16 +79,12 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Utils.scrollHasMax(
-          controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
-        controller.animateTo(controller.position.pixels,
-            duration: 250.ms, curve: Curves.easeIn);
+      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+        controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
       }
     }
 
-    widget.onScroll?.call(Scroller(
-      controller: controller
-    ));
+    widget.onScroll?.call(Scroller(controller: controller));
   }
 
   Future onInitials() async {
@@ -121,27 +122,35 @@ class _LzListViewState extends State<LzListView> {
   Widget build(BuildContext context) {
     double spacing = LazyUi.space;
 
+    List<Widget> children = widget.children;
+    List<Widget> newChildren = [];
+
+    if (widget.gap != null && children.length > 1) {
+      for (int i = 0; i < children.length; i++) {
+        newChildren.add(children[i]);
+        if (i != children.length - 1) {
+          newChildren.add(SizedBox(height: widget.gap!));
+        }
+      }
+    }
+
     Widget listView([double? cacheExtent]) => ListView(
           physics: widget.physics ?? BounceScroll(),
           controller: controller,
           padding: widget.padding ?? Ei.all(spacing),
           shrinkWrap: widget.shrinkWrap,
           cacheExtent: cacheExtent,
-          children: widget.children,
+          children: widget.gap == null ? children : newChildren,
         );
 
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
         : Refreshtor(
-            onRefresh: () async => widget.onRefresh?.call(),
-            type: widget.refreshType,
-            child: listView(cacheExtent));
+            onRefresh: () async => widget.onRefresh?.call(), type: widget.refreshType, child: listView(cacheExtent));
 
     return widget.autoCache
         ? StreamBuilder<double>(
-            stream: streamController.stream,
-            builder: (BuildContext context, snap) =>
-                content(cacheExtent: snap.data))
+            stream: streamController.stream, builder: (BuildContext context, snap) => content(cacheExtent: snap.data))
         : content();
   }
 }
@@ -152,15 +161,22 @@ class Scroller {
   Scroller({required this.controller});
 
   /// Returns true if the list is scrolled to the top.
-  bool atBottom([double offset = 0]){
+  bool atBottom([double offset = 0]) {
     return controller.position.pixels + offset >= controller.position.maxScrollExtent;
   }
 
-  /// Returns true if the list is scrolled to the bottom.
-  double get pixels => controller.position.pixels;
-
+  /// Returns the opacity value based on the scroll position.
+  ///
+  /// The [factor] parameter determines the speed at which opacity changes.
+  /// A lower value of [factor] results in faster opacity changes.
+  ///
+  /// The [invertOpacity] parameter determines whether to invert the opacity value.
+  /// If set to true, the opacity value is inverted, resulting in the opposite behavior.
   double getOpacity([double factor = 100, bool invertOpacity = true]) {
     double value = (controller.position.pixels / (factor < 1 ? 1 : factor));
     return (invertOpacity == true ? (1 - value) : value).clamp(0, 1);
   }
+
+  /// Returns true if the list is scrolled to the bottom.
+  double get pixels => controller.position.pixels;
 }
