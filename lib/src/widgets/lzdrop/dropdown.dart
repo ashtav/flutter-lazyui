@@ -49,7 +49,7 @@ class Dropdown extends StatelessWidget {
     bool isLeftAlign = style?.alignment == DropAlignment.left;
     bool isBgHasColor = style?.backgroundColor != null;
 
-    logg('background-color: ${style?.backgroundColor} -> $isBgHasColor');
+    // logg('background-color: ${style?.backgroundColor} -> $isBgHasColor');
 
     Color backgroundColor = isDarkMode ? '#222'.hex : Colors.white;
     Color subBackgroundColor =

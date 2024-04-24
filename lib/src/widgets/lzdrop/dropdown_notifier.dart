@@ -16,8 +16,7 @@ class DropdownNotifier extends ChangeNotifier {
 
   void reArangeDropYPosition() {
     // render box of the dropdown
-    final dropBox =
-        dropdownKey.currentContext?.findRenderObject() as RenderBox?;
+    final dropBox = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
     final dropSize = dropBox?.size;
     final dropHeight = dropSize?.height ?? 0;
 
@@ -25,9 +24,7 @@ class DropdownNotifier extends ChangeNotifier {
     double dy = offset.dy;
     double dropYPosition = dy + dropHeight; // current drop y position
 
-    dy = dropYPosition + (bar + targetHeight) > screenHeight
-        ? dy - (dropHeight - this.dropHeight)
-        : dy;
+    dy = dropYPosition + (bar + targetHeight) > screenHeight ? dy - (dropHeight - this.dropHeight) : dy;
 
     offset = Offset(offset.dx, dy);
     _latestOffset = offset;
@@ -39,14 +36,13 @@ class DropdownNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPosition(Offset target, RenderBox? box, BuildContext context,
-      double dropWidth, GlobalKey dropdownKey, bool hasChild) {
+  void setPosition(
+      Offset target, RenderBox? box, BuildContext context, double dropWidth, GlobalKey dropdownKey, bool hasChild) {
     Bindings.onRendered(() async {
       this.dropdownKey = dropdownKey;
 
       // render box of the dropdown
-      final dropBox =
-          dropdownKey.currentContext?.findRenderObject() as RenderBox?;
+      final dropBox = dropdownKey.currentContext?.findRenderObject() as RenderBox?;
       final dropSize = dropBox?.size;
       final dropHeight = dropSize?.height ?? 0;
 
@@ -55,7 +51,7 @@ class DropdownNotifier extends ChangeNotifier {
       double bar = context.windowPadding.top;
       this.bar = bar;
 
-      double margin = 20.0; // margin from screen
+      double margin = hasChild ? 0 : 20.0; // margin from screen
 
       // get size of screen
       double screenWidth = context.width;
@@ -81,13 +77,10 @@ class DropdownNotifier extends ChangeNotifier {
       if (alignment == DropAlignment.right) {
         dropXPosition = dx;
         dx = dx - (dropWidth - targetWidth);
-        dx = dx + dropWidth + margin > screenWidth
-            ? (screenWidth - dropWidth) - margin
-            : dx;
+        dx = dx + dropWidth + margin > screenWidth ? (screenWidth - dropWidth) - margin : dx;
       }
 
-      dx =
-          dropXPosition > screenWidth ? (screenWidth - dropWidth) - margin : dx;
+      dx = dropXPosition > screenWidth ? (screenWidth - dropWidth) - margin : dx;
       dx = dx < margin ? margin : dx;
 
       // dy = dropYPosition + (bar + targetHeight) > screenHeight ? (screenHeight - dropHeight) - (margin + bar) : dy;
@@ -105,8 +98,7 @@ class DropdownNotifier extends ChangeNotifier {
         duration = 0.ms;
         dy = dy + targetHeight < bar ? (bar) : (dy - bar) + targetHeight;
 
-        double targetNDropPosition =
-            target.dy + targetHeight + dropHeight + bar;
+        double targetNDropPosition = target.dy + targetHeight + dropHeight + bar;
         bool isOutOfY = targetNDropPosition >= screenHeight + bar;
 
         if (isOutOfY) {
@@ -161,8 +153,7 @@ class DropdownNotifier extends ChangeNotifier {
       // scroll to specific position
       if (subOptionsToggle[label] == true) {
         if (key.currentContext != null) {
-          Scrollable.ensureVisible(key.currentContext!,
-              duration: const Duration(milliseconds: 300), alignment: .0);
+          Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .0);
           reArangeDropYPosition();
         }
       }

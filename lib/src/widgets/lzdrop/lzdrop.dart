@@ -72,7 +72,7 @@ abstract class LzDropView<T> extends StatelessWidget {
       BuildContext context, String tag, GlobalKey key, Widget child,
       {List<DropOption> options = const [],
       DropStyle? style,
-      void Function(DropValue value)? onSelect}) {
+      void Function(DropValue value)? onSelect, Widget Function(Widget child)? builder}) {
     BuildContext context = key.currentContext!;
 
     // render box of the target
@@ -115,14 +115,8 @@ abstract class LzDropView<T> extends StatelessWidget {
     //               .lz
     //               .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0)));
     //     }));
-    context.dialog(
-        Dropdown(
-            target: target,
-            box: box,
-            options: options,
-            style: style,
-            onSelect: onSelect,
-            child: Container(
+
+    Widget dropdownWidget = Container(
                     color: style?.backgroundColor ?? Colors.transparent,
                     constraints: BoxConstraints(maxWidth: width),
                     child: child)
@@ -130,7 +124,16 @@ abstract class LzDropView<T> extends StatelessWidget {
                 .clip(
                     tlr: LazyUi.radius,
                     bl: isLeftAlign ? 0 : LazyUi.radius,
-                    br: isLeftAlign ? LazyUi.radius : 0)),
+                    br: isLeftAlign ? LazyUi.radius : 0);
+
+    context.dialog(
+        Dropdown(
+            target: target,
+            box: box,
+            options: options,
+            style: style,
+            onSelect: onSelect,
+            child: dropdownWidget),
         backBlur: style?.backBlur ?? false,
         barrierColor: style?.barrierColor);
   }
@@ -153,23 +156,26 @@ class LzDropItem extends LzDropView {
   /// A callback function invoked when an option is selected.
   final void Function(DropValue value)? onSelect;
 
+  final Widget Function(Widget child)? builder;
+
   const LzDropItem(
       {super.key,
       required this.child,
       this.options = const [],
       this.style,
-      this.onSelect});
+      this.onSelect,
+      this.builder});
 
   @override
   Widget build(BuildContext context) {
     final tag = 'drop-${DateTime.now().millisecondsSinceEpoch}';
     final key = GlobalKey();
 
-    return InkTouch(
+    return Touch(
         key: key,
         onTap: () {
           showDropdown(context, tag, key, child,
-              options: options, style: style, onSelect: onSelect);
+              options: options, style: style, onSelect: onSelect, builder: builder);
         },
         child: child);
   }

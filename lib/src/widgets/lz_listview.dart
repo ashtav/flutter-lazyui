@@ -47,7 +47,11 @@ class LzListView extends StatefulWidget {
   /// Optional callback when the list is refreshed.
   final void Function()? onRefresh;
 
+  /// Type of refresh indicator to be displayed.
   final RefrehtorType refreshType;
+
+  /// Gap between items in the list.
+  final double? gap;
 
   const LzListView(
       {super.key,
@@ -60,7 +64,8 @@ class LzListView extends StatefulWidget {
       this.onScroll,
       this.autoCache = false,
       this.onRefresh,
-      this.refreshType = RefrehtorType.bar});
+      this.refreshType = RefrehtorType.bar,
+      this.gap});
 
   @override
   State<LzListView> createState() => _LzListViewState();
@@ -117,13 +122,25 @@ class _LzListViewState extends State<LzListView> {
   Widget build(BuildContext context) {
     double spacing = LazyUi.space;
 
+    List<Widget> children = widget.children;
+    List<Widget> newChildren = [];
+
+    if (widget.gap != null && children.length > 1) {
+      for (int i = 0; i < children.length; i++) {
+        newChildren.add(children[i]);
+        if (i != children.length - 1) {
+          newChildren.add(SizedBox(height: widget.gap!));
+        }
+      }
+    }
+
     Widget listView([double? cacheExtent]) => ListView(
           physics: widget.physics ?? BounceScroll(),
           controller: controller,
           padding: widget.padding ?? Ei.all(spacing),
           shrinkWrap: widget.shrinkWrap,
           cacheExtent: cacheExtent,
-          children: widget.children,
+          children: widget.gap == null ? children : newChildren,
         );
 
     Widget content({double? cacheExtent}) => widget.onRefresh == null
