@@ -11,6 +11,8 @@ class TestView extends StatelessWidget {
 
     forms.fill({'name': 'John Doe'});
 
+    List<String> labels = ['Text A', 'Text B', 'Text C'];
+
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(
@@ -23,6 +25,7 @@ class TestView extends StatelessWidget {
           ],
         ),
         body: LzListView(
+          gap: 10,
           children: [
             LzForm.input(hint: 'Enter your name', model: forms['name']),
             LzDropItem(
@@ -36,7 +39,18 @@ class TestView extends StatelessWidget {
                 stackAlign: StackAlign.top,
                 children: [Text(Faker.words(25))],
               ),
-            )
+            ),
+            Intrinsic(
+                gap: 3,
+                children: labels.generate((item, i) {
+                  return InkTouch(
+                    onTap: () {},
+                    border: Br.all(),
+                    radius: Br.radius(5),
+                    padding: Ei.sym(v: 13, h: 20),
+                    child: Text(item),
+                  );
+                })),
           ],
         ),
       ),

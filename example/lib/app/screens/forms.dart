@@ -87,7 +87,7 @@ class FormsView extends StatelessWidget {
         body: LzListView(
           autoCache: true,
           children: [
-            LzFormTheme(
+            LzFormWrap(
               grouping: true,
               label: Textr(
                 'Biodata',
@@ -118,7 +118,7 @@ class FormsView extends StatelessWidget {
                 ),
               ],
             ),
-            LzFormTheme(grouping: true, children: [
+            LzFormWrap(grouping: true, children: [
               LzForm.input(
                 hint: 'Please input your birthdate',
                 model: forms['birthdate'],
@@ -186,7 +186,7 @@ class FormsView extends StatelessWidget {
                     }),
               ],
             ).between.margin(b: 16, t: 25),
-            LzFormTheme(
+            LzFormWrap(
               grouping: true,
               children: [
                 LzForm.select(
@@ -204,7 +204,7 @@ class FormsView extends StatelessWidget {
               ],
             ),
 
-            LzFormTheme(
+            LzFormWrap(
                 label: Textr('Address', style: Gfont.bold, icon: Ti.map2),
                 description:
                     'Example of using a select input with dynamic options.',
@@ -263,7 +263,7 @@ class FormsView extends StatelessWidget {
                 ]).margin(t: 25),
 
             // Example of using an input field with a prefix widget and slider.
-            LzFormTheme(
+            LzFormWrap(
                 label: Textr('Contact & Distance',
                     style: Gfont.bold, icon: Ti.gift),
                 description:
@@ -301,7 +301,7 @@ class FormsView extends StatelessWidget {
                     ).end),
 
             // example of using input (obsecureToggle)
-            LzFormTheme(
+            LzFormWrap(
               grouping: true,
               style: FormStyle(
                 borderColor: Colors.black38,

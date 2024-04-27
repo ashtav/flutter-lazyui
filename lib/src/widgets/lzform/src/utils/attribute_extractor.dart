@@ -6,7 +6,7 @@ import '../models/attribute.dart';
 mixin LzFormMixin {
   Attribute getAttribute<T>(BuildContext context) {
     // get ancestor widget name
-    final fa = context.findAncestorWidgetOfExactType<LzFormTheme>();
+    final fa = context.findAncestorWidgetOfExactType<LzFormWrap>();
     return Attribute(
         style: fa?.style,
         isWrapped: fa != null,

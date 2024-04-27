@@ -260,6 +260,28 @@ extension CustomIconExtension on Icon {
   IconButton onPressed(Function() onPressed, {String? tooltip}) {
     return IconButton(icon: this, tooltip: tooltip, onPressed: onPressed);
   }
+
+  /// A method to create a muted version of the icon with reduced opacity.
+  ///
+  /// Returns an [Icon] widget with the same properties as the original icon
+  /// but with reduced opacity.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Icon myIcon = Icon(Icons.favorite);
+  /// Icon mutedIcon = myIcon.muted;
+  /// ```
+  Icon get muted => Icon(icon,
+      key: key,
+      size: size,
+      fill: fill,
+      weight: weight,
+      grade: grade,
+      opticalSize: opticalSize,
+      color: (color ?? Colors.black87).withOpacity(.4),
+      shadows: shadows,
+      semanticLabel: semanticLabel,
+      textDirection: textDirection);
 }
 
 /// Extends the functionality of the [Iconr] class with an additional method.

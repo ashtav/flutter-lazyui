@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-class LzFormTheme extends StatelessWidget {
+class LzFormWrap extends StatelessWidget {
   /// The label widget displayed above the form.
   final Widget? label;
 
@@ -23,8 +23,8 @@ class LzFormTheme extends StatelessWidget {
   /// The spacing between form fields.
   final double? spacing;
 
-  /// Constructs a LzFormTheme widget.
-  const LzFormTheme(
+  /// Constructs a LzFormWrap widget.
+  const LzFormWrap(
       {super.key,
       this.label,
       this.description,

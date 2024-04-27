@@ -18,7 +18,7 @@ class PickerView extends StatelessWidget {
       ),
       body: LzListView(
         children: [
-          LzFormTheme(
+          LzFormWrap(
             grouping: true,
             label: Text(
               'Select Option',
@@ -70,7 +70,7 @@ class PickerView extends StatelessWidget {
                   })
             ],
           ),
-          LzFormTheme(
+          LzFormWrap(
             grouping: true,
             label: Text(
               'Date & Time Picker',

@@ -357,40 +357,41 @@ class StartEndDate extends StatelessWidget {
               String start = state.initDate[0].format(format ?? 'yyyy-MM-dd');
               String end = state.initDate[1].format(format ?? 'yyyy-MM-dd');
 
-              return Intrinsic(
-                  expand: false,
-                  children: [start, '-', end].generate((text, i) {
-                    int ii = i == 0 ? 0 : 1;
+              return IntrinsicHeight(
+                child: Row(
+                    children: [start, '-', end].generate((text, i) {
+                  int ii = i == 0 ? 0 : 1;
 
-                    bool isFirstDate = state.dateIndex == 0;
-                    bool isTo = i == 1;
+                  bool isFirstDate = state.dateIndex == 0;
+                  bool isTo = i == 1;
 
-                    IconData arrow = isFirstDate ? Ti.arrowLeft : Ti.arrowRight;
-                    Color textColor = state.dateIndex == ii
-                        ? Colors.orange
-                        : isDarkMode
-                            ? Colors.white
-                            : Colors.black54;
+                  IconData arrow = isFirstDate ? Ti.arrowLeft : Ti.arrowRight;
+                  Color textColor = state.dateIndex == ii
+                      ? Colors.orange
+                      : isDarkMode
+                          ? Colors.white
+                          : Colors.black54;
 
-                    return Expanded(
-                      flex: isTo ? 0 : 1,
-                      child: InkTouch(
-                        onTap: isTo ? null : () => state.onSelectDate(ii),
-                        padding: Ei.sym(v: 7, h: 15),
-                        radius: Br.radius(4),
-                        // color: backgroundColor,
-                        child: Center(
-                            child: isTo
-                                ? Icon(arrow,
-                                    color: isDarkMode
-                                        ? Colors.white
-                                        : Colors.black38)
-                                : Text(text,
-                                    style: Gfont.color(textColor)
-                                        .fbold(state.dateIndex == ii))),
-                      ),
-                    );
-                  }));
+                  return Expanded(
+                    flex: isTo ? 0 : 1,
+                    child: InkTouch(
+                      onTap: isTo ? null : () => state.onSelectDate(ii),
+                      padding: Ei.sym(v: 7, h: 15),
+                      radius: Br.radius(4),
+                      // color: backgroundColor,
+                      child: Center(
+                          child: isTo
+                              ? Icon(arrow,
+                                  color: isDarkMode
+                                      ? Colors.white
+                                      : Colors.black38)
+                              : Text(text,
+                                  style: Gfont.color(textColor)
+                                      .fbold(state.dateIndex == ii))),
+                    ),
+                  );
+                })),
+              );
             },
           ),
         ));
