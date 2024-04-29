@@ -18,9 +18,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LzTheme(
-        builder: (theme) => MaterialApp(
+        builder: (state) => MaterialApp(
               title: 'LazyUi',
-              theme: theme,
+              theme: state.theme,
               home: const AppIntro(),
               builder: (BuildContext context, Widget? widget) {
                 // use LazyUi.builder to wrap your widget

@@ -104,7 +104,7 @@ class Input extends StatelessWidget with LzFormMixin {
     Color borderColor = style?.borderColor ?? Colors.black12.adaptWithTheme;
 
     // get text color
-    Color textColor = style?.textColor ?? Colors.black87;
+    Color textColor = style?.textColor ?? Colors.black87.adaptWithTheme;
 
     // check if label is available
     bool hasLabel = label != null && !attr.isGrouped;

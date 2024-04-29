@@ -6,9 +6,17 @@ import 'package:lazyui/src/config/colors.dart';
 
 part 'notifier.dart';
 
+class AppThemeData {
+  final ThemeData theme;
+  final bool isDarkMode;
+  final Color? background;
+
+  AppThemeData({required this.theme, this.isDarkMode = false, this.background});
+}
+
 class LzTheme extends StatelessWidget {
   final bool darkMode;
-  final MaterialApp Function(ThemeData theme) builder;
+  final MaterialApp Function(AppThemeData theme) builder;
   const LzTheme({super.key, required this.builder, this.darkMode = false});
 
   @override
@@ -16,7 +24,10 @@ class LzTheme extends StatelessWidget {
     LzTheme.toggle(darkMode);
 
     return themeNotifier.watch((state) {
-      return builder.call(state.themeData);
+      return builder.call(AppThemeData(
+          theme: state.themeData,
+          isDarkMode: state.isDarkMode,
+          background: state.isDarkMode ? '444'.hex : Colors.white));
     });
   }
 
@@ -25,4 +36,10 @@ class LzTheme extends StatelessWidget {
   }
 
   static bool get isDark => themeNotifier.isDarkMode;
+
+  static Widget toggleWidget() {
+    return LzForm.switches(onChange: (value) {
+      themeNotifier.toggle(value);
+    });
+  }
 }

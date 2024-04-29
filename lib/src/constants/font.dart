@@ -54,11 +54,9 @@ class Gfont {
   static final TextStyle fs19 = gfont.copyWith(fontSize: 19);
   static final TextStyle fs20 = gfont.copyWith(fontSize: 20);
 
-  static final TextStyle bold =
-      gfont.copyWith(fontWeight: FontWeight.bold, color: gfont.color);
+  static final TextStyle bold = gfont.copyWith(fontWeight: FontWeight.bold, color: gfont.color);
   static final TextStyle normal = gfont.copyWith(fontWeight: FontWeight.normal);
-  static final TextStyle muted =
-      gfont.copyWith(color: gfont.color?.withOpacity(.7));
+  static final TextStyle muted = gfont.copyWith(color: (gfont.color ?? Colors.black87).withOpacity(.1));
 
   /// Creates a custom text style with the specified font size.
   ///
@@ -97,8 +95,7 @@ class Gfont {
   /// )
   /// ```
 
-  static TextStyle fbold(bool value) =>
-      gfont.copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
+  static TextStyle fbold(bool value) => gfont.copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
 }
 
 /// The `TextStyleExtension` extension provides a set of convenience methods
@@ -125,8 +122,7 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.bold,
   /// )
   /// ```
-  TextStyle get bold =>
-      copyWith(fontWeight: FontWeight.bold, color: color, fontSize: fontSize);
+  TextStyle get bold => copyWith(fontWeight: FontWeight.bold, color: color, fontSize: fontSize);
 
   /// Creates a copy of the text style with a normal (regular) font weight.
   ///
@@ -150,7 +146,7 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.muted,
   /// )
   /// ```
-  TextStyle get muted => copyWith(color: color?.withOpacity(.7));
+  TextStyle get muted => copyWith(color: color?.withOpacity(.5));
 
   /// Creates a copy of the text style with a white font color.
   TextStyle get white => copyWith(color: Colors.white);
@@ -207,8 +203,7 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.fopacity(0.7),
   /// )
   /// ```
-  TextStyle fopacity(double opacity) =>
-      copyWith(color: color?.withOpacity(opacity));
+  TextStyle fopacity(double opacity) => copyWith(color: color?.withOpacity(opacity));
 
   /// Creates a copy of the text style with a custom font weight.
   ///
@@ -220,6 +215,5 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.fbold(true),
   /// )
   /// ```
-  TextStyle fbold(bool value) =>
-      copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
+  TextStyle fbold(bool value) => copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
 }

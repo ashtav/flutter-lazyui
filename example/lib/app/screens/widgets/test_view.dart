@@ -12,11 +12,14 @@ class TestView extends StatelessWidget {
     forms.fill({'name': 'John Doe'});
 
     List<String> labels = ['Text A', 'Text B', 'Text C'];
+    final font = Gfont.style(context);
 
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(
+          title: const Text('Test View'),
           actions: [
+            LzTheme.toggleWidget(),
             IconButton(
                 onPressed: () {
                   Pickers.show(context);
@@ -27,6 +30,10 @@ class TestView extends StatelessWidget {
         body: LzListView(
           gap: 10,
           children: [
+            Text('Hello World!', style: font.bold),
+            Text(Faker.words(15), style: font.muted),
+            const SizedBox(height: 15),
+
             LzForm.input(hint: 'Enter your name', model: forms['name']),
             LzDropItem(
               options:
