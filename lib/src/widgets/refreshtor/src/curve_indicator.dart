@@ -1,6 +1,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/colors.dart';
 
 /// Widget for displaying a curve indicator.
 class CurveIndicator extends StatelessWidget {
@@ -22,7 +23,7 @@ class CurveIndicator extends StatelessWidget {
     bool isFinal = controller.isFinalizing;
     bool isLoading = controller.isLoading;
 
-    Color backgroundColor = style?.backgroundColor ?? Colors.white;
+    Color backgroundColor = style?.backgroundColor ?? lzBackgroundColor;
     Color textColor = style?.textColor ??
         (backgroundColor.isDark() ? Colors.white : Colors.black87);
     Color releaseTextColor = style?.releaseTextColor ??

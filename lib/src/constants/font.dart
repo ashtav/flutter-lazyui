@@ -56,7 +56,7 @@ class Gfont {
 
   static final TextStyle bold = gfont.copyWith(fontWeight: FontWeight.bold, color: gfont.color);
   static final TextStyle normal = gfont.copyWith(fontWeight: FontWeight.normal);
-  static final TextStyle muted = gfont.copyWith(color: (gfont.color ?? Colors.black87).withOpacity(.1));
+  static final TextStyle muted = gfont.copyWith(color: (gfont.color ?? Colors.black87).withOpacity(.7));
 
   /// Creates a custom text style with the specified font size.
   ///
@@ -146,7 +146,7 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.muted,
   /// )
   /// ```
-  TextStyle get muted => copyWith(color: color?.withOpacity(.5));
+  TextStyle get muted => copyWith(color: color?.withOpacity(.6));
 
   /// Creates a copy of the text style with a white font color.
   TextStyle get white => copyWith(color: Colors.white);
@@ -216,4 +216,16 @@ extension TextStyleExtension on TextStyle {
   /// )
   /// ```
   TextStyle fbold(bool value) => copyWith(fontWeight: value ? FontWeight.bold : FontWeight.normal);
+
+  TextStyle get fs10 => copyWith(fontSize: 10);
+  TextStyle get fs11 => copyWith(fontSize: 11);
+  TextStyle get fs12 => copyWith(fontSize: 12);
+  TextStyle get fs13 => copyWith(fontSize: 13);
+  TextStyle get fs14 => copyWith(fontSize: 14);
+  TextStyle get fs15 => copyWith(fontSize: 15);
+  TextStyle get fs16 => copyWith(fontSize: 16);
+  TextStyle get fs17 => copyWith(fontSize: 17);
+  TextStyle get fs18 => copyWith(fontSize: 18);
+  TextStyle get fs19 => copyWith(fontSize: 19);
+  TextStyle get fs20 => copyWith(fontSize: 20);
 }

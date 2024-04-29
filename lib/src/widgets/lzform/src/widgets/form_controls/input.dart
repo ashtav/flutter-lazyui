@@ -236,8 +236,8 @@ class Input extends StatelessWidget with LzFormMixin {
               formatters: formatters,
               maxLines: maxLines,
               node: focusNode,
-              hintStyle: Gfont.color(textColor.withOpacity(.4).adaptWithTheme),
-              textStyle: Gfont.color(textColor.adaptWithTheme),
+              hintStyle: Gfont.color(textColor.withOpacity(.4)),
+              textStyle: Gfont.color(textColor),
             ),
 
             // if onTap is not null, add icon

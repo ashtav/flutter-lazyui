@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LzTheme(
+        darkMode: true,
         builder: (state) => MaterialApp(
               title: 'LazyUi',
               theme: state.theme,

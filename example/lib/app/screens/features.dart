@@ -179,7 +179,7 @@ class FeaturesView extends StatelessWidget {
                               style: Gfont.bold,
                               icon: feature.icon,
                             ),
-                            Text(feature.description, style: Gfont.muted)
+                            Text(feature.description, style: font.muted)
                                 .margin(t: 5),
                           ],
                         ).start.lz.flexible(),
