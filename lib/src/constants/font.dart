@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:lazyui/src/config/lz_config.dart';
 import 'package:lazyui/src/constants/color.dart';
-
-import '../config/lz_config.dart';
 
 TextStyle gfont = LazyUi.font;
 
@@ -27,6 +27,11 @@ TextStyle gfont = LazyUi.font;
 /// ```
 
 class Gfont {
+  static TextStyle style(BuildContext context) {
+    TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+    return GoogleFonts.nunitoSans(fontSize: 15.5, color: style?.color);
+  }
+
   // font color
   static final TextStyle black = gfont.copyWith(color: Tints.black);
   static final TextStyle white = gfont.copyWith(color: Colors.white);
@@ -49,10 +54,11 @@ class Gfont {
   static final TextStyle fs19 = gfont.copyWith(fontSize: 19);
   static final TextStyle fs20 = gfont.copyWith(fontSize: 20);
 
-  static final TextStyle bold = gfont.copyWith(fontWeight: FontWeight.bold);
+  static final TextStyle bold =
+      gfont.copyWith(fontWeight: FontWeight.bold, color: gfont.color);
   static final TextStyle normal = gfont.copyWith(fontWeight: FontWeight.normal);
   static final TextStyle muted =
-      gfont.copyWith(fontWeight: FontWeight.normal, color: Colors.black54);
+      gfont.copyWith(color: gfont.color?.withOpacity(.7));
 
   /// Creates a custom text style with the specified font size.
   ///
@@ -144,7 +150,7 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.muted,
   /// )
   /// ```
-  TextStyle get muted => copyWith(color: Colors.black54);
+  TextStyle get muted => copyWith(color: color?.withOpacity(.7));
 
   /// Creates a copy of the text style with a white font color.
   TextStyle get white => copyWith(color: Colors.white);

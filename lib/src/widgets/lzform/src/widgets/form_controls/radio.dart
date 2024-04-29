@@ -76,17 +76,17 @@ class Radio extends StatelessWidget with LzFormMixin {
     bool isTopInner = formType == FormType.topInner;
 
     // get text color
-    Color textColor = style?.textColor ?? Colors.black87;
+    Color textColor = style?.textColor ?? Colors.black87.adaptWithTheme;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
 
     // get border color
-    Color borderColor = style?.borderColor ?? Colors.black12;
+    Color borderColor = style?.borderColor ?? Colors.black12.adaptWithTheme;
 
     // get background color
     Color backgroundColor = style?.background ??
-        (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+        (isUnderlined || isTopInner ? Colors.transparent : lzBackgroundColor);
 
     // create label widget
     Widget labelWidget = hasLabel
@@ -207,10 +207,13 @@ class _Bullet extends StatelessWidget {
                 border: Br.all(
                     color: active
                         ? (style?.activeColor ?? Colors.blueAccent)
-                        : (style?.inactiveColor ?? Colors.black38),
+                        : (style?.inactiveColor ??
+                            Colors.black38.adaptWithTheme),
                     width: active ? 5 : 1.3),
                 borderRadius: BorderRadius.circular(50))),
-        Text(label, style: Gfont.color(style?.textColor ?? Colors.black87))
+        Text(label,
+            style:
+                Gfont.color(style?.textColor ?? Colors.black87.adaptWithTheme))
       ],
     ).min.margin(r: 15, b: 5).onTap(() => onTap()).lz.disabled(disabled);
   }

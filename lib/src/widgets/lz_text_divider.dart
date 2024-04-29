@@ -45,7 +45,7 @@ class LzTextDivider extends StatelessWidget {
             endIndent: indent,
             indent: indent,
             thickness: thickness,
-            color: color ?? Colors.black26));
+            color: color ?? Colors.black26.adaptWithTheme));
 
     final children = [divider, text, divider];
 

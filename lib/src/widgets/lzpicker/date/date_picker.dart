@@ -45,8 +45,8 @@ class LzDatePicker extends StatelessWidget {
     double radius = style?.radius ?? LazyUi.radius;
     double height = context.height * (context.width > 395 ? .6 : .45);
 
-    bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
+    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
 
     return ScrollGlowless(
       child: Container(
@@ -102,8 +102,8 @@ class LzDatePicker extends StatelessWidget {
         initDate: initDate, minDate: minDate, maxDate: maxDate);
     notifier.onChangeForWidget = onChange;
 
-    bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
+    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
 
     return ScrollGlowless(
       child: SizedBox(
@@ -167,9 +167,10 @@ class CupertinoPickerWidget extends StatelessWidget {
 
     String type = ['mm', 'mmm'].contains(this.type) ? 'm' : this.type;
 
-    bool isDarkMode = style?.darkMode ?? false;
+    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
     Color backgroundColor =
         this.backgroundColor ?? (isDarkMode ? '333'.hex : 'f1f1f1'.hex);
+
     Color textColor = style?.textColor ??
         (backgroundColor.isDark() ? Colors.white : Colors.black87);
 
@@ -209,11 +210,13 @@ class ConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = style?.darkMode ?? false;
-    Color backgroundColor = isDarkMode ? '222'.hex : 'f1f1f1'.hex;
+    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
     Color textColor = style?.textColor ??
         (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color buttonColor = style?.buttonColor ?? Colors.white;
+    Color buttonColor = style?.buttonColor ??
+        (themeNotifier.isDarkMode ? '222'.hex : Colors.white);
+
     Color confirmTextColor = style?.confirmTextColor ??
         (buttonColor.isDark() ? Colors.white : Colors.black87);
 
@@ -284,7 +287,7 @@ class TimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = style?.radius ?? LazyUi.radius;
-    bool isDarkMode = style?.darkMode ?? false;
+    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
     Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
     Color textColor = style?.textColor ??
         (backgroundColor.isDark() ? Colors.white : Colors.black87);

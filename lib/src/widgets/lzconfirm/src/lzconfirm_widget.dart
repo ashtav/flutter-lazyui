@@ -22,7 +22,7 @@ class LzConfirmWidget extends StatelessWidget {
   final Color? confirmColor;
 
   /// Indicates whether to use dark mode for the confirmation dialog.
-  final bool darkMode;
+  final bool? darkMode;
 
   /// Callback function triggered when the confirm button is pressed.
   final Function()? onConfirm;
@@ -41,7 +41,7 @@ class LzConfirmWidget extends StatelessWidget {
     this.confirmText,
     this.cancelText,
     this.confirmColor,
-    this.darkMode = false,
+    this.darkMode,
     this.onConfirm,
     this.type = ConfirmType.dialog,
     this.margin,
@@ -53,15 +53,17 @@ class LzConfirmWidget extends StatelessWidget {
     bool hasMessage = message != null;
     bool isDialog = type == ConfirmType.dialog;
 
-    Color backgroundColor = darkMode ? '222'.hex : 'fff'.hex;
-    Color textColor = darkMode ? 'fff'.hex : '555'.hex;
-    Color borderColor = darkMode ? '444'.hex : Colors.black12;
+    bool isDarkMode = darkMode ?? themeNotifier.isDarkMode;
+
+    Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
+    Color textColor = isDarkMode ? 'fff'.hex : '555'.hex;
+    Color borderColor = isDarkMode ? '444'.hex : Colors.black12;
 
     List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
 
     Widget widget = Container(
       decoration: BoxDecoration(color: backgroundColor),
-      constraints: BoxConstraints(maxWidth: 320 - (margin ?? 0)),
+      constraints: BoxConstraints(maxWidth: 295 - (margin ?? 0)),
       child: Column(
         mainAxisSize: Mas.min,
         children: [

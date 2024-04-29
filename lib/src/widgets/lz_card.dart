@@ -59,7 +59,7 @@ class LzCard extends StatelessWidget {
       border: border ?? Br.all(),
       radius: radius ?? Br.radius(5),
       padding: padding ?? Ei.all(LazyUi.space),
-      color: color ?? Colors.white,
+      color: color ?? lzBackgroundColor,
       margin: Ei.only(
           t: stacked && isStackedTop ? 5 : 0,
           b: stacked && !isStackedTop ? 5 : 0),
@@ -78,7 +78,7 @@ class LzCard extends StatelessWidget {
                 width: context.width - 55,
                 height: 20,
                 decoration: BoxDecoration(
-                  color: color ?? Colors.white,
+                  color: color ?? lzBackgroundColor,
                   border: border ?? Br.all(),
                   borderRadius: radius ?? Br.radius(5),
                 ),

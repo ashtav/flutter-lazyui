@@ -54,10 +54,10 @@ class Select extends StatelessWidget with LzFormMixin {
     double radius = style?.radius ?? LazyUi.radius;
 
     // get border color
-    Color borderColor = style?.borderColor ?? Colors.black12;
+    Color borderColor = style?.borderColor ?? Colors.black12.adaptWithTheme;
 
     // get text color
-    Color textColor = style?.textColor ?? Colors.black87;
+    Color textColor = style?.textColor ?? Colors.black87.adaptWithTheme;
 
     // check if label is available
     bool hasLabel = label != null && !attr.isGrouped;
@@ -105,7 +105,9 @@ class Select extends StatelessWidget with LzFormMixin {
       Color backgroundColor = notifier.disabled
           ? const Color.fromARGB(31, 204, 204, 204)
           : style?.background ??
-              (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+              (isUnderlined || isTopInner
+                  ? Colors.transparent
+                  : lzBackgroundColor);
 
       // onTap action
       void onTapSelect() {

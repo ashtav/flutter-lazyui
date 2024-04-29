@@ -26,8 +26,7 @@ class DropdownView extends StatelessWidget {
               icons: icons,
               separators: ['Filters'],
               criticals: [1],
-              alignment: DropAlignment.right,
-              darkMode: true), onSelect: (value) {
+              alignment: DropAlignment.right), onSelect: (value) {
         logg(value.toMap());
       });
     }
@@ -98,8 +97,8 @@ class DropdownView extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration:
-            BoxDecoration(color: Colors.white, border: Br.only(['t', 'b'])),
+        decoration: BoxDecoration(
+            color: Colors.white30.adaptWithTheme, border: Br.only(['t', 'b'])),
         padding: Ei.sym(h: 20),
         child: Row(
           children: [

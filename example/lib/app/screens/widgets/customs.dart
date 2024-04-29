@@ -109,7 +109,7 @@ class CustomWidgetView extends StatelessWidget {
               mainAxisAlignment: Maa.spaceBetween,
               children: [
                 Text(item),
-                const Icon(Ti.chevronRight, color: Colors.black45)
+                Icon(Ti.chevronRight, color: Colors.black45.adaptWithTheme)
               ],
             ),
           );

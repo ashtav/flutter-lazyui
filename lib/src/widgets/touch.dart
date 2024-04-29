@@ -11,11 +11,13 @@ part of widget;
 /// )
 /// ```
 
+bool _hoverable = false;
+
 class Touch extends StatelessWidget {
   final void Function()? onTap, onDoubleTap;
   final Widget? child;
   final EdgeInsetsGeometry? margin;
-  final bool hoverable;
+  final bool? hoverable;
 
   const Touch({
     Key? key,
@@ -23,11 +25,13 @@ class Touch extends StatelessWidget {
     this.onTap,
     this.onDoubleTap,
     this.margin,
-    this.hoverable = false,
+    this.hoverable,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool hoverable = this.hoverable ?? _hoverable;
+
     return hoverable
         ? _TouchHover(
             onTap: onTap,
@@ -41,6 +45,10 @@ class Touch extends StatelessWidget {
             behavior: HitTestBehavior.translucent,
             child: Container(margin: margin, child: child),
           );
+  }
+
+  static config({bool? hoverable}) {
+    _hoverable = hoverable ?? false;
   }
 }
 

@@ -18,11 +18,15 @@ import 'trainer.dart';
 import 'widgets/image.dart';
 import 'widgets/listview.dart';
 
+bool isDarkMode = false;
+
 class FeaturesView extends StatelessWidget {
   const FeaturesView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
+
     List<Map<String, dynamic>> features = [
       {
         'title': 'Tools',
@@ -134,6 +138,14 @@ class FeaturesView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lazy UI'),
+        actions: [
+          LzForm.switches(
+              initValue: isDarkMode,
+              onChange: (value) {
+                isDarkMode = value;
+                LzTheme.toggle(value);
+              }).margin(r: 20)
+        ],
       ),
       body: LzListView(children: [
         Column(
@@ -148,8 +160,8 @@ class FeaturesView extends StatelessWidget {
                   margin: Ei.only(t: i == 0 ? 0 : 35, b: 25),
                   child: Column(
                     children: [
-                      Textr(title, style: Gfont.bold, margin: Ei.only(b: 5)),
-                      Text(description, style: Gfont.muted)
+                      Textr(title, style: font.bold, margin: Ei.only(b: 5)),
+                      Text(description, style: font.muted)
                     ],
                   ).start,
                 ),
@@ -172,7 +184,8 @@ class FeaturesView extends StatelessWidget {
                           ],
                         ).start.lz.flexible(),
                         Iconr(Ti.chevronRight,
-                            color: Colors.black45, margin: Ei.only(l: 25))
+                            color: Colors.black45.adaptWithTheme,
+                            margin: Ei.only(l: 25))
                       ],
                     ),
                   );

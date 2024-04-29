@@ -204,16 +204,16 @@ class _LzAccordionState extends State<LzAccordion>
     double radius = LazyUi.radius;
     bool isTi = LazyUi.iconType == IconType.tablerIcon;
 
-    Color backgroundColor = widget.backgroundColor ?? Colors.white;
+    Color backgroundColor = widget.backgroundColor ?? lzBackgroundColor;
     Color borderColor = widget.borderColor ??
         (backgroundColor.isDark()
-            ? backgroundColor.lighten(.7)
-            : Colors.black12);
+            ? backgroundColor.lighten(.9)
+            : lzBorderColor);
 
     return Container(
       decoration: BoxDecoration(
           border: widget.border ??
-              Br.all(color: widget.borderColor ?? Colors.black12),
+              Br.all(color: widget.borderColor ?? lzBorderColor),
           borderRadius: Br.radius(widget.radius ?? radius)),
       child: ClipRRect(
         borderRadius: Br.radius((widget.radius ?? radius) - 1),
@@ -253,7 +253,7 @@ class _LzAccordionState extends State<LzAccordion>
                             }
                           },
                           padding: Ei.all(20),
-                          color: widget.backgroundColor ?? Colors.white,
+                          color: widget.backgroundColor ?? lzBackgroundColor,
                           border: Br.only([controller.value > .01 ? 'b' : ''],
                               color: borderColor),
                           child: Row(
@@ -276,8 +276,7 @@ class _LzAccordionState extends State<LzAccordion>
                                           isTi
                                               ? Ti.chevronRight
                                               : La.angleRight,
-                                          color: widget.textColor ??
-                                              Colors.black38))
+                                          color: Colors.black45.adaptWithTheme))
                             ],
                           ))),
                   SizeTransition(

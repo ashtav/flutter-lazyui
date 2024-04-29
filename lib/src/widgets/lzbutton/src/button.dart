@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/colors.dart';
 
 import 'notifier.dart';
 
@@ -46,8 +47,9 @@ class LzButton extends StatelessWidget {
     double radius = style?.radius ?? LazyUi.radius;
     double? width = style?.width;
 
-    Color backgroundColor =
-        isOutline ? Colors.transparent : style?.backgroundColor ?? Colors.white;
+    Color backgroundColor = isOutline
+        ? Colors.transparent
+        : style?.backgroundColor ?? lzBackgroundColor.darken(.5);
     Color textColor = style?.textColor ??
         (isOutline
             ? (style?.backgroundColor ?? Colors.black87)
@@ -98,7 +100,7 @@ class LzButton extends StatelessWidget {
         padding: style?.padding ?? Ei.only(v: 13, h: 18),
         border: Br.all(
             color: isOutline
-                ? (style?.backgroundColor ?? Colors.black12)
+                ? (style?.backgroundColor ?? Colors.black12.adaptWithTheme)
                 : (style?.borderColor ?? backgroundColor.darken(.2))),
         radius: Br.radius(radius),
         color: backgroundColor,

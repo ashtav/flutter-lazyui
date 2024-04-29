@@ -174,11 +174,13 @@ class InkTouch extends StatelessWidget {
     Widget? child,
     BorderRadius? radius,
   }) {
+    Color defaultColor = LzTheme.isDark ? '444'.hex : Colors.white;
+
     return InkTouch(
       onTap: onTap,
       padding: Ei.all(LazyUi.space),
       border: border,
-      color: color ?? Colors.white,
+      color: color ?? defaultColor,
       radius: radius,
       child: child,
     );

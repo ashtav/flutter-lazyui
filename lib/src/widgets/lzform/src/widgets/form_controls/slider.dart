@@ -46,11 +46,12 @@ class Slider extends StatelessWidget with LzFormMixin {
 
     return notifier.watch((state) {
       double getValue(value) {
+        value as double;
         value = double.parse(value.toStringAsFixed(0));
         return value;
       }
 
-      double value = getValue(double.tryParse(state.controller.text) ?? 0);
+      double value = getValue(double.tryParse(state.controller.text) ?? 0.0);
 
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,7 +70,7 @@ class Slider extends StatelessWidget with LzFormMixin {
             ),
           Container(
               padding: Ei.sym(h: attr.isGrouped ? 16 : 0),
-              color: attr.isGrouped ? Colors.white : Colors.transparent,
+              color: attr.isGrouped ? lzBackgroundColor : Colors.transparent,
               child: Stack(
                 children: [
                   // additional widget for slider

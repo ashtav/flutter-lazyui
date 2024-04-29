@@ -42,4 +42,11 @@ extension LzColorExtension on Color {
   ///
   /// @return A boolean value that is true if the color is dark and false otherwise.
   bool isDark() => Tints.isDark(this);
+
+  Color get adaptWithTheme => themeNotifier.isDarkMode ? inverse() : this;
+}
+
+extension LzNullableColorExtension on Color? {
+  Color? get adaptWithTheme =>
+      this != null && themeNotifier.isDarkMode ? this!.inverse() : this;
 }

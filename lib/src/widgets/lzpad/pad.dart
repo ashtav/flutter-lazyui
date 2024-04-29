@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/colors.dart';
 
 import 'input_widget.dart';
 import 'pad_notifier.dart';
@@ -163,7 +164,8 @@ class _PadWidgetState extends State<PadWidget> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      backgroundColor: 'f1f1f1'.hex,
+      backgroundColor:
+          themeNotifier.isDarkMode ? '444'.hex.darken(.2) : 'f1f1f1'.hex,
       body: Column(
         children: [
           Expanded(
@@ -224,14 +226,17 @@ class _PadWidgetState extends State<PadWidget> {
                                             color: inFocus
                                                 ? style?.bottomInline
                                                         ?.focusColor ??
-                                                    Colors.black12
+                                                    Colors
+                                                        .black12.adaptWithTheme
                                                 : isFilled
                                                     ? style?.bottomInline
                                                             ?.filledColor ??
                                                         Colors.black54
+                                                            .adaptWithTheme
                                                     : style?.bottomInline
                                                             ?.unfillColor ??
-                                                        Colors.black12,
+                                                        Colors.black12
+                                                            .adaptWithTheme,
                                             borderRadius: Br.radius(4),
                                           ),
                                           width: (context.width - 160) /
@@ -282,19 +287,20 @@ class _PadWidgetState extends State<PadWidget> {
                             }
                           },
                     border: Br.only([i < 3 ? '' : 't', i % 3 != 0 ? 'l' : '']),
-                    color: Colors.white,
+                    color: lzBackgroundColor,
                     child: Container(
                         padding: Ei.sym(
                             h: 15, v: ['<', 'x'].contains(item) ? 16.5 : 15),
                         width: (context.width - 2) / 3,
                         child: Center(
                                 child: item == '<'
-                                    ? const Icon(Ti.backspace,
-                                        color: Colors.black54)
+                                    ? Icon(Ti.backspace,
+                                        color: Colors.black87.adaptWithTheme)
                                     : item == 'x'
-                                        ? const Icon(
+                                        ? Icon(
                                             Ti.eraser,
-                                            color: Colors.black54,
+                                            color:
+                                                Colors.black87.adaptWithTheme,
                                           )
                                         : Text(item, style: Gfont.fs17))
                             .lz
@@ -385,7 +391,10 @@ class LzPadHeader extends StatelessWidget {
     return Column(
       children: [
         if (icon != null)
-          Iconr(icon, size: 50, color: Colors.black54, margin: Ei.only(b: 25)),
+          Iconr(icon,
+              size: 50,
+              color: Colors.black54.adaptWithTheme,
+              margin: Ei.only(b: 25)),
         if (title != null) Text(title!, style: Gfont.fs18.bold),
         if (message != null)
           Text(message!, style: Gfont.muted, textAlign: Ta.center),

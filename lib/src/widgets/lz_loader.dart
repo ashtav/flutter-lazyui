@@ -83,7 +83,7 @@ class LzLoader extends StatelessWidget {
             ? const None()
             : Text(
                 message,
-                style: textStyle.copyWith(color: Colors.black54),
+                style: textStyle.copyWith(color: Colors.black54.adaptWithTheme),
               ),
       ],
     );

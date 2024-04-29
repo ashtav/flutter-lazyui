@@ -6,6 +6,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart' hide TextDirection;
+import 'package:lazyui/src/config/colors.dart';
 
 import '../constants/string.dart';
 
@@ -18,6 +19,7 @@ export 'lzpad/pad.dart';
 export 'lzpicker/lzpicker.dart';
 export 'lztoast/lztoast.dart';
 export 'refreshtor/refreshtor.dart';
+export 'theme/lztheme.dart';
 export 'trainer/trainer.dart';
 
 part 'animations/blink.dart';

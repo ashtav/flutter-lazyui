@@ -45,7 +45,7 @@ class Dropdown extends StatelessWidget {
     notifier.checkSubOptions(options);
 
     bool hasChild = child != null;
-    bool isDarkMode = style?.darkMode ?? false;
+    bool isDarkMode = themeNotifier.isDarkMode;
     bool isLeftAlign = style?.alignment == DropAlignment.left;
     bool isBgHasColor = style?.backgroundColor != null;
 

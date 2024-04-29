@@ -51,7 +51,7 @@ class LzNoData extends StatelessWidget {
             icon ??
                 Iconr(
                   isTi ? Ti.infoCircle : La.infoCircle,
-                  color: textColor ?? Colors.black38,
+                  color: textColor ?? Colors.black38.adaptWithTheme,
                   size: 50,
                   margin: Ei.only(b: 25),
                 ),

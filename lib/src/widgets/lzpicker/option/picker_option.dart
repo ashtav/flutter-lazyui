@@ -141,6 +141,8 @@ class _LzPickerOptionState extends State<LzPickerOption> {
     maxLines = maxLines >= 4 ? 4 : maxLines;
     itemExtent = 40 * maxLines;
 
+    Color backgroundColor = themeNotifier.isDarkMode ? '333'.hex : 'f1f1f1'.hex;
+
     return Wrapper(
       child: FractionallySizedBox(
         widthFactor: isMobile ? 1 : toDecimal(context.width),
@@ -154,7 +156,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                 child: notifier.watch((state) => AnimatedContainer(
                       duration: 150.ms,
                       decoration: BoxDecoration(
-                          color: Colors.white, borderRadius: borderRadius),
+                          color: backgroundColor, borderRadius: borderRadius),
                       height: state.height,
                       padding:
                           Ei.only(b: state.isExpanded ? state.height / 4 : 0),
@@ -212,8 +214,8 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                                     maxLines: maxLines.toInt(),
                                     style: LazyUi.font.copyWith(
                                       color: disabled
-                                          ? Colors.black12
-                                          : Colors.black87,
+                                          ? Colors.black12.adaptWithTheme
+                                          : Colors.black87.adaptWithTheme,
                                     ),
                                   ),
                                 ),
@@ -239,7 +241,9 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: 'fafafa'.hex,
+                                  color: themeNotifier.isDarkMode
+                                      ? '333'.hex
+                                      : 'fafafa'.hex,
                                   spreadRadius: 15,
                                   blurRadius: 25,
                                   offset: const Offset(0, -5),
@@ -351,7 +355,11 @@ class ConfirmButton extends StatelessWidget {
         onTap: onTap,
         padding: Ei.sym(v: 11, h: text.length > 25 ? 25 : 45),
         radius: Br.radius(50),
-        color: disabled ? 'f5f5f5'.hex : Colors.white,
+        color: themeNotifier.isDarkMode
+            ? '222'.hex
+            : disabled
+                ? 'f5f5f5'.hex
+                : Colors.white,
         border: Br.all(),
         child: Container(
           constraints: BoxConstraints(maxWidth: context.width * .4),
@@ -361,10 +369,9 @@ class ConfirmButton extends StatelessWidget {
             maxLines: 1,
             overflow: Tof.ellipsis,
             style: LazyUi.font.copyWith(
-                fontWeight: Fw.bold,
-                color: disabled ? 'ccc'.hex : Colors.black87),
+                fontWeight: Fw.bold, color: Colors.black87.adaptWithTheme),
           ),
-        ));
+        )).lz.disabled(disabled);
   }
 }
 

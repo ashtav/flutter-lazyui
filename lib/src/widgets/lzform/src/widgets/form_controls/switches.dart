@@ -56,8 +56,8 @@ class Switches extends StatelessWidget {
         ),
         if (labels.isNotEmpty)
           Textr(state.switchesValue ? labels[0] : labels[1],
-              style: LazyUi.font
-                  .copyWith(color: style?.textColor ?? Colors.black87),
+              style: LazyUi.font.copyWith(
+                  color: style?.textColor ?? Colors.black87.adaptWithTheme),
               padding:
                   Ei.only(v: 5, r: reversed ? 10 : 0, l: reversed ? 0 : 10))
       ];

@@ -45,19 +45,6 @@ class _SkeletonViewState extends State<SkeletonView> {
                 [170, 290],
                 [15, 50]
               ]),
-              const SizedBox(height: 45),
-              const Textml(
-                      'Color & Dark Mode, <p color="888">Skeleton.dark()</p>')
-                  .margin(b: 15),
-              Skeleton(
-                  color: Colors.orange,
-                  highlight: Colors.orange.withOpacity(.3),
-                  size: [
-                    [170, context.width]
-                  ]).margin(b: 5),
-              Skeleton.dark(size: [
-                [170, context.width]
-              ]).iterate(2, gap: 5)
             ],
           ).start,
           const SizedBox(height: 45),

@@ -77,17 +77,17 @@ class Checkbox extends StatelessWidget with LzFormMixin {
     bool isTopInner = formType == FormType.topInner;
 
     // get text color
-    Color textColor = style?.textColor ?? Colors.black87;
+    Color textColor = style?.textColor ?? Colors.black87.adaptWithTheme;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
 
     // get border color
-    Color borderColor = style?.borderColor ?? Colors.black12;
+    Color borderColor = style?.borderColor ?? Colors.black12.adaptWithTheme;
 
     // get background color
     Color backgroundColor = style?.background ??
-        (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+        (isUnderlined || isTopInner ? Colors.transparent : lzBackgroundColor);
 
     // create label widget
     Widget labelWidget = hasLabel
@@ -209,7 +209,9 @@ class _Square extends StatelessWidget {
           margin: Ei.only(r: 10),
           decoration: BoxDecoration(
               color: active ? activeColor : Colors.white,
-              border: Br.all(color: Colors.black38, width: active ? 0 : 1.3),
+              border: Br.all(
+                  color: Colors.black38.adaptWithTheme,
+                  width: active ? 0 : 1.3),
               borderRadius: BorderRadius.circular(3)),
           child: Center(
               child: AnimatedOpacity(
@@ -222,7 +224,9 @@ class _Square extends StatelessWidget {
             ),
           )),
         ),
-        Text(label, style: Gfont.color(style?.textColor ?? Colors.black87))
+        Text(label,
+            style:
+                Gfont.color(style?.textColor ?? Colors.black87.adaptWithTheme))
       ],
     ).min.margin(r: 15, b: 5).onTap(() => onTap()).lz.disabled(disabled);
   }

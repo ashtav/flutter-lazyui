@@ -19,9 +19,6 @@ class DropStyle {
   /// The background color of the dropdown menu.
   final Color? backgroundColor;
 
-  /// Indicates whether dark mode is enabled.
-  final bool darkMode;
-
   /// Indicates whether the background should blur when the dropdown menu is displayed.
   final bool backBlur;
 
@@ -49,7 +46,6 @@ class DropStyle {
       this.textColor,
       this.barrierColor,
       this.backgroundColor,
-      this.darkMode = false,
       this.backBlur = false,
       this.separators = const [],
       this.icons = const [],

@@ -101,7 +101,7 @@ class Input extends StatelessWidget with LzFormMixin {
     double radius = style?.radius ?? LazyUi.radius;
 
     // get border color
-    Color borderColor = style?.borderColor ?? Colors.black12;
+    Color borderColor = style?.borderColor ?? Colors.black12.adaptWithTheme;
 
     // get text color
     Color textColor = style?.textColor ?? Colors.black87;
@@ -180,7 +180,9 @@ class Input extends StatelessWidget with LzFormMixin {
       Color backgroundColor = notifier.disabled
           ? const Color.fromARGB(31, 204, 204, 204)
           : style?.background ??
-              (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+              (isUnderlined || isTopInner
+                  ? Colors.transparent
+                  : lzBackgroundColor);
 
       return InkTouch(
         onTap: disabled || !hasOnTap
@@ -234,8 +236,8 @@ class Input extends StatelessWidget with LzFormMixin {
               formatters: formatters,
               maxLines: maxLines,
               node: focusNode,
-              hintStyle: Gfont.color(textColor.withOpacity(.4)),
-              textStyle: Gfont.color(textColor),
+              hintStyle: Gfont.color(textColor.withOpacity(.4).adaptWithTheme),
+              textStyle: Gfont.color(textColor.adaptWithTheme),
             ),
 
             // if onTap is not null, add icon
@@ -245,7 +247,8 @@ class Input extends StatelessWidget with LzFormMixin {
                 child: Icon(
                   style?.suffixIcon ??
                       (isTabler ? Ti.chevronDown : La.angleDown),
-                  color: style?.suffixIconColor ?? Colors.black38,
+                  color:
+                      style?.suffixIconColor ?? Colors.black38.adaptWithTheme,
                   size: 18,
                 ).padding(r: 15, b: 1.5),
               ),
@@ -259,12 +262,10 @@ class Input extends StatelessWidget with LzFormMixin {
                       IconData iconView = isTabler ? Ti.eye : La.eye;
                       IconData iconHide = isTabler ? Ti.eyeOff : La.eyeSlash;
 
-                      return Iconr(
-                        notifier.obsecure ? iconView : iconHide,
-                        color: Colors.black38,
-                        padding: Ei.all(15),
-                        size: 18,
-                      );
+                      return Iconr(notifier.obsecure ? iconView : iconHide,
+                          color: Colors.black38.adaptWithTheme,
+                          padding: Ei.all(15),
+                          size: 18);
                     })
                     .padding(b: 1.5, t: isGrouped || isUnderlined ? 22 : 0)
                     .onTap(() => notifier.setObsecure()),

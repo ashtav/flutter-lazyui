@@ -101,9 +101,9 @@ class LzTextField extends StatelessWidget {
       selectionControls: selectionControls,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
-        prefixIconColor: prefixIconColor ?? Colors.black38,
+        prefixIconColor: prefixIconColor ?? Colors.black38.adaptWithTheme,
         suffixIcon: suffixIcon,
-        suffixIconColor: suffixIconColor ?? Colors.black38,
+        suffixIconColor: suffixIconColor ?? Colors.black38.adaptWithTheme,
         isDense: true,
         contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
         hintText: hint,
@@ -111,7 +111,7 @@ class LzTextField extends StatelessWidget {
             Theme.of(context)
                 .textTheme
                 .bodyMedium
-                ?.copyWith(color: Colors.black38),
+                ?.copyWith(color: Colors.black38.adaptWithTheme),
         border: InputBorder.none,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,

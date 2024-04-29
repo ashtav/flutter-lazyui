@@ -2,7 +2,6 @@ part of utils;
 
 // Br Configuration
 
-Color _borderColor = Colors.black12;
 double _borderWidth = .7;
 
 class Br {
@@ -11,24 +10,25 @@ class Br {
   /// ``` dart
   /// Br.config(color: Colors.black12)
   /// ```
-  static void config({Color? color, double? width}) {
-    _borderColor = color ?? _borderColor;
-    _borderWidth = width ?? _borderWidth;
-  }
+  // static void config({Color? color, double? width}) {
+  //   lzBorderColor = color ?? lzBorderColor;
+  //   _borderWidth = width ?? _borderWidth;
+  // }
 
   /// ``` dart
   /// border: Br.all(color: Colors.black12)
   /// ```
   static BoxBorder all(
-          {Color? color,
-          double? width,
-          BorderStyle style = BorderStyle.solid,
-          double strokeAlign = BorderSide.strokeAlignInside}) =>
-      Border.all(
-          color: color ?? _borderColor,
-          width: width ?? _borderWidth,
-          style: style,
-          strokeAlign: strokeAlign);
+      {Color? color,
+      double? width,
+      BorderStyle style = BorderStyle.solid,
+      double strokeAlign = BorderSide.strokeAlignInside}) {
+    return Border.all(
+        color: color ?? lzBorderColor,
+        width: width ?? _borderWidth,
+        style: style,
+        strokeAlign: strokeAlign);
+  }
 
   /// ``` dart
   /// border: Br.only(['t'])
@@ -38,7 +38,7 @@ class Br {
       double? width,
       bool except = false,
       BorderStyle style = BorderStyle.solid}) {
-    Color bcolor = color ?? _borderColor;
+    Color bcolor = color ?? lzBorderColor;
     double bwidth = width ?? _borderWidth;
 
     return Border(
@@ -61,7 +61,7 @@ class Br {
   /// ```
   static BoxBorder except(List<String> except,
       {Color? color, double? width, BorderStyle style = BorderStyle.solid}) {
-    Color bcolor = color ?? _borderColor;
+    Color bcolor = color ?? lzBorderColor;
     double bwidth = width ?? _borderWidth;
 
     return Border(

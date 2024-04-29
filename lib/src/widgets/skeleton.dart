@@ -23,9 +23,13 @@ class Skeleton extends StatelessWidget {
         height = _getSize(size, 'height') ?? 15;
     double radius = LazyUi.radius;
 
+    Color baseColor = color ?? (LzTheme.isDark ? '444'.hex : Colors.grey[300]!);
+    Color highlightColor =
+        highlight ?? (LzTheme.isDark ? '555'.hex : Colors.grey[200]!);
+
     return Shimmer.fromColors(
-      baseColor: color ?? Colors.grey[300]!,
-      highlightColor: highlight ?? Colors.grey[200]!,
+      baseColor: baseColor,
+      highlightColor: highlightColor,
       child: Container(
         width: width,
         height: height,
@@ -46,17 +50,6 @@ class Skeleton extends StatelessWidget {
         radius: radius ?? this.radius,
         color: color ?? this.color,
         highlight: highlight ?? this.highlight);
-  }
-
-  /// Creates a dark-themed [Skeleton] widget.
-  /// - [size]: Size of the skeleton widget.
-  /// - [radius]: Radius of the skeleton widget.
-  static Skeleton dark({dynamic size, double? radius}) {
-    return Skeleton(
-        size: size,
-        radius: radius ?? LazyUi.radius,
-        color: '444'.hex,
-        highlight: '444'.hex.withOpacity(.5));
   }
 }
 

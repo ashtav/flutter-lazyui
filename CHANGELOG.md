@@ -1,3 +1,3 @@
-## 3.0.3
+## 3.0.4
 
 * improvement and fix some bugs

@@ -6,10 +6,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lazyui/src/constants/enum.dart';
 import 'package:lazyui/src/widgets/lztoast/src/loading.dart';
 
-import '../constants/color.dart';
 import '../utils/util.dart';
 
-TextStyle? _defaultTextStyle;
+BuildContext? gcontext;
+
+TextStyle _defaultTextStyle = const TextStyle();
 IconType _defaultIconType = IconType.tablerIcon;
 double _defaultSpace = 20.0;
 double _defaultRadius = 7.0;
@@ -33,9 +34,7 @@ double _defaultRadius = 7.0;
 /// ```
 class LazyUi {
   /// Returns the default text style for the app. If not set, it defaults to Nunito Sans font style.
-  static TextStyle get font =>
-      _defaultTextStyle ??
-      GoogleFonts.nunitoSans(fontSize: 15.5, color: Tints.black);
+  static TextStyle get font => _defaultTextStyle;
 
   /// Returns the default icon type set for the app. The default is [IconType.tablerIcon].
   static IconType get iconType => _defaultIconType;
@@ -79,7 +78,7 @@ class LazyUi {
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
-    _defaultTextStyle = font;
+    _defaultTextStyle = font ?? GoogleFonts.nunitoSans(fontSize: 15.5);
 
     _defaultIconType = icon;
 
@@ -98,6 +97,8 @@ class LazyUi {
   /// [useLzToast]: If true, wraps the [child] with `LzToastOverlay` for toast notifications.
   static Widget builder(BuildContext context, Widget? child,
       {double? maxScalingFontSize, bool useLzToast = true}) {
+    _defaultTextStyle = _getFontStyle(context);
+
     // ignore: deprecated_member_uselzf
     double maxScalingFactor = MediaQuery.of(context).textScaleFactor;
 
@@ -121,4 +122,9 @@ class LazyUi {
           : child ?? const SizedBox.shrink(),
     );
   }
+}
+
+TextStyle _getFontStyle(BuildContext context) {
+  TextStyle? style = Theme.of(context).textTheme.bodyMedium;
+  return _defaultTextStyle.copyWith(color: style?.color);
 }

@@ -65,10 +65,10 @@ class Number extends StatelessWidget with LzFormMixin {
     double radius = style?.radius ?? LazyUi.radius;
 
     // get border color
-    Color borderColor = style?.borderColor ?? Colors.black12;
+    Color borderColor = style?.borderColor ?? Colors.black12.adaptWithTheme;
 
     // get text color
-    Color textColor = style?.textColor ?? Colors.black87;
+    Color textColor = style?.textColor ?? Colors.black87.adaptWithTheme;
 
     // check if label is available
     bool hasLabel = label != null && !attr.isGrouped;
@@ -122,7 +122,9 @@ class Number extends StatelessWidget with LzFormMixin {
       Color backgroundColor = notifier.disabled
           ? const Color.fromARGB(31, 204, 204, 204)
           : style?.background ??
-              (isUnderlined || isTopInner ? Colors.transparent : Colors.white);
+              (isUnderlined || isTopInner
+                  ? Colors.transparent
+                  : lzBackgroundColor);
 
       return Container(
         decoration: BoxDecoration(
@@ -194,8 +196,9 @@ class Number extends StatelessWidget with LzFormMixin {
                                 disabled ? null : () => notifier.setNumber(i),
                             padding: Ei.all(15),
                             child: Icon(icon,
-                                color:
-                                    disabled ? Colors.black12 : Colors.black38,
+                                color: disabled
+                                    ? Colors.black12.adaptWithTheme
+                                    : Colors.black38.adaptWithTheme,
                                 size: 18),
                           ),
                         );
