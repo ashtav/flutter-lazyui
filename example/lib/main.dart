@@ -1,3 +1,4 @@
+import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:example/app/screens/app_intro.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -17,17 +18,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LzTheme(
-        darkMode: true,
-        builder: (state) => MaterialApp(
-              title: 'LazyUi',
-              theme: state.theme,
-              home: const AppIntro(),
-              builder: (BuildContext context, Widget? widget) {
-                // use LazyUi.builder to wrap your widget
-                // so that you can use LzToast and setting maxScalingFontSize
-                return LazyUi.builder(context, widget, maxScalingFontSize: 1.1);
-              },
-            ));
+    return ThemeProvider(
+      initTheme: LzTheme.light(),
+      builder: (context, theme) {
+        return MaterialApp(
+          theme: theme,
+          title: 'LazyUi',
+          home: const AppIntro(),
+          builder: (BuildContext context, Widget? widget) {
+            // use LazyUi.builder to wrap your widget
+            // so that you can use LzToast and setting maxScalingFontSize
+            return LazyUi.builder(context, widget, maxScalingFontSize: 1.1);
+          },
+        );
+      },
+    );
   }
 }

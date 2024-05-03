@@ -8,8 +8,6 @@ import 'package:lazyui/src/widgets/lztoast/src/loading.dart';
 
 import '../utils/util.dart';
 
-BuildContext? gcontext;
-
 TextStyle _defaultTextStyle = const TextStyle();
 IconType _defaultIconType = IconType.tablerIcon;
 double _defaultSpace = 20.0;

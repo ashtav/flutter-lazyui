@@ -1,3 +1,4 @@
+import 'package:example/app/modules/settings/setting_view.dart';
 import 'package:example/app/screens/forms.dart';
 import 'package:example/app/screens/refreshtor.dart';
 import 'package:example/app/screens/widgets/accordion.dart';
@@ -139,12 +140,10 @@ class FeaturesView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Lazy UI'),
         actions: [
-          LzForm.switches(
-              initValue: isDarkMode,
-              onChange: (value) {
-                isDarkMode = value;
-                LzTheme.toggle(value);
-              }).margin(r: 20)
+          IconButton(
+            onPressed: () => context.lz.push(const SettingView()),
+            icon: const Icon(Ti.settings),
+          )
         ],
       ),
       body: LzListView(children: [
@@ -176,7 +175,7 @@ class FeaturesView extends StatelessWidget {
                           children: [
                             Textr(
                               feature.title,
-                              style: Gfont.bold,
+                              style: font.bold,
                               icon: feature.icon,
                             ),
                             Text(feature.description, style: font.muted)
@@ -223,6 +222,7 @@ class Actions {
       'LzListView': const LzListViewExample(),
     };
 
+    final font = Gfont.style(context);
     if (label == 'LzPad') {
       LzPicker.picker(context, options: ['OTP Input', 'Passcode Input'],
           onSelect: (value) {
@@ -248,7 +248,7 @@ class Actions {
                   message:
                       'Please enter your passcode to continue payment process.'),
               footer: Textr('Lupa PIN?',
-                      style: Gfont.bold.green, padding: Ei.all(20))
+                      style: font.bold.green, padding: Ei.all(20))
                   .onTap(() {
                 context.lz.pop();
                 // open forgot passcode screen
@@ -280,6 +280,9 @@ class LzPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
+    final theme = LzTheme.get(context);
+
     return Column(
       children: [
         Column(
@@ -289,7 +292,7 @@ class LzPicker extends StatelessWidget {
               padding: Ei.sym(v: 15, h: 20),
               border: Br.only(['t'],
                   except: i == 0, width: separator.contains(i) ? 4 : .5),
-              color: Colors.white,
+              color: theme.background,
               child: Row(
                 children: [
                   Text(item),
@@ -303,9 +306,9 @@ class LzPicker extends StatelessWidget {
           padding: Ei.sym(v: 15, h: 20),
           radius: Br.radius(LazyUi.radius),
           margin: Ei.only(t: 10),
-          color: Colors.white,
+          color: theme.background,
           child: Row(
-            children: [Text('Cancel', style: Gfont.bold.red)],
+            children: [Text('Cancel', style: font.bold.red)],
           ).center,
         )
       ],

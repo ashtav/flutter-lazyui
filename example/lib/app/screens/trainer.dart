@@ -11,6 +11,7 @@ class TrainerView extends StatelessWidget {
         key3 = GlobalKey(),
         key4 = GlobalKey();
     final controller = TrainerController();
+    final font = Gfont.style(context);
 
     return Trainer(
       controller: controller,
@@ -40,8 +41,8 @@ class TrainerView extends StatelessWidget {
           constraints: const BoxConstraints(maxWidth: 290, minWidth: 200),
           child: Column(
             children: [
-              Text(title, style: Gfont.bold.white),
-              Text(description, style: Gfont.white)
+              Text(title, style: font.bold.white),
+              Text(description, style: font.white)
             ],
           ).start.gap(10),
         );
@@ -63,7 +64,7 @@ class TrainerView extends StatelessWidget {
                 },
                 hoverable: true,
                 child: Textr(item,
-                    style: Gfont.white,
+                    style: font.white,
                     padding: Ei.sym(h: 30, v: 10),
                     border:
                         Br.only(['l'], except: i == 0, color: Colors.white70)),

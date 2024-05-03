@@ -6,7 +6,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart' hide TextDirection;
-import 'package:lazyui/src/config/colors.dart';
+import 'package:lazyui/src/styles/styles.dart';
 
 import '../constants/string.dart';
 

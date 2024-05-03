@@ -83,6 +83,8 @@ class _TrainerState extends State<Trainer> {
             TargetContent(
                 align: target.align ?? ContentAlign.bottom,
                 builder: (context, controller) {
+                  final font = Gfont.style(context);
+
                   // set onNext callback, so that we can call it anywhere
                   onNext = controller.next;
 
@@ -115,13 +117,13 @@ class _TrainerState extends State<Trainer> {
                             if (hasTitle)
                               Textr(
                                 target.title!,
-                                style: Gfont.bold.fcolor(textColor),
+                                style: font.bold.fcolor(textColor),
                                 margin: Ei.only(b: 8),
                               ),
                             if (target.description != null)
                               Text(
                                 target.description!,
-                                style: Gfont.color(textColor),
+                                style: font.fcolor(textColor),
                               )
                           ],
                         ).start,

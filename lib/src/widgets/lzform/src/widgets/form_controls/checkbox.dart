@@ -27,6 +27,8 @@ class Checkbox extends StatelessWidget with LzFormMixin {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
+
     final attr = getAttribute(context);
     CheckboxStyle? style =
         (attr.isWrapped ? attr.style?.checkbox : attr.checkboxStyle) ??
@@ -91,7 +93,7 @@ class Checkbox extends StatelessWidget with LzFormMixin {
 
     // create label widget
     Widget labelWidget = hasLabel
-        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        ? Text(label!, style: font.fs14.fcolor(textColor))
         : const None();
 
     // create top inner label widget
@@ -199,6 +201,7 @@ class _Square extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color activeColor = style?.activeColor ?? Colors.blueAccent;
+    final font = Gfont.style(context);
 
     return Row(
       children: [
@@ -208,10 +211,16 @@ class _Square extends StatelessWidget {
           height: 20,
           margin: Ei.only(r: 10),
           decoration: BoxDecoration(
-              color: active ? activeColor : Colors.white,
+              color: active
+                  ? activeColor
+                  : (lzDarkMode ? '333'.hex : Colors.white),
               border: Br.all(
                   color: Colors.black38.adaptWithTheme,
-                  width: active ? 0 : 1.3),
+                  width: active
+                      ? 0
+                      : lzDarkMode
+                          ? 0
+                          : 1.3),
               borderRadius: BorderRadius.circular(3)),
           child: Center(
               child: AnimatedOpacity(
@@ -226,7 +235,7 @@ class _Square extends StatelessWidget {
         ),
         Text(label,
             style:
-                Gfont.color(style?.textColor ?? Colors.black87.adaptWithTheme))
+                font.fcolor(style?.textColor ?? Colors.black87.adaptWithTheme))
       ],
     ).min.margin(r: 15, b: 5).onTap(() => onTap()).lz.disabled(disabled);
   }

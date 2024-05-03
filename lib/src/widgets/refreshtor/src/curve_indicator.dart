@@ -1,7 +1,7 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/config/colors.dart';
+import 'package:lazyui/src/styles/styles.dart';
 
 /// Widget for displaying a curve indicator.
 class CurveIndicator extends StatelessWidget {

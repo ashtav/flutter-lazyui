@@ -104,6 +104,5 @@ extension LzButtonExtension on LzButton {
   /// [color]: The color of the shadow. Default is 'f1f1f1'.
   LzButton shadowed([Color? color]) => styled(
       shadow: true,
-      shadowColor:
-          color ?? (themeNotifier.isDarkMode ? '333'.hex : 'f1f1f1'.hex));
+      shadowColor: color ?? (lzDarkMode ? '333'.hex : 'f1f1f1'.hex));
 }

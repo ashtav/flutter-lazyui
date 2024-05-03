@@ -27,6 +27,7 @@ class Radio extends StatelessWidget with LzFormMixin {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     final attr = getAttribute(context);
     RadioStyle? style =
         (attr.isWrapped ? attr.style?.radio : attr.radioStyle) ?? this.style;
@@ -90,7 +91,7 @@ class Radio extends StatelessWidget with LzFormMixin {
 
     // create label widget
     Widget labelWidget = hasLabel
-        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        ? Text(label!, style: font.fs14.fcolor(textColor))
         : const None();
 
     // create top inner label widget
@@ -196,6 +197,7 @@ class _Bullet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return Row(
       children: [
         AnimatedContainer(
@@ -213,7 +215,7 @@ class _Bullet extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50))),
         Text(label,
             style:
-                Gfont.color(style?.textColor ?? Colors.black87.adaptWithTheme))
+                font.fcolor(style?.textColor ?? Colors.black87.adaptWithTheme))
       ],
     ).min.margin(r: 15, b: 5).onTap(() => onTap()).lz.disabled(disabled);
   }

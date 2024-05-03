@@ -45,7 +45,7 @@ class LzDatePicker extends StatelessWidget {
     double radius = style?.radius ?? LazyUi.radius;
     double height = context.height * (context.width > 395 ? .6 : .45);
 
-    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    bool isDarkMode = style?.darkMode ?? lzDarkMode;
     Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
 
     return ScrollGlowless(
@@ -102,7 +102,7 @@ class LzDatePicker extends StatelessWidget {
         initDate: initDate, minDate: minDate, maxDate: maxDate);
     notifier.onChangeForWidget = onChange;
 
-    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    bool isDarkMode = style?.darkMode ?? lzDarkMode;
     Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
 
     return ScrollGlowless(
@@ -167,7 +167,7 @@ class CupertinoPickerWidget extends StatelessWidget {
 
     String type = ['mm', 'mmm'].contains(this.type) ? 'm' : this.type;
 
-    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    bool isDarkMode = style?.darkMode ?? lzDarkMode;
     Color backgroundColor =
         this.backgroundColor ?? (isDarkMode ? '333'.hex : 'f1f1f1'.hex);
 
@@ -210,12 +210,12 @@ class ConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    bool isDarkMode = style?.darkMode ?? lzDarkMode;
     Color backgroundColor = isDarkMode ? '333'.hex : 'f1f1f1'.hex;
     Color textColor = style?.textColor ??
         (backgroundColor.isDark() ? Colors.white : Colors.black87);
-    Color buttonColor = style?.buttonColor ??
-        (themeNotifier.isDarkMode ? '222'.hex : Colors.white);
+    Color buttonColor =
+        style?.buttonColor ?? (lzDarkMode ? '222'.hex : Colors.white);
 
     Color confirmTextColor = style?.confirmTextColor ??
         (buttonColor.isDark() ? Colors.white : Colors.black87);
@@ -287,10 +287,11 @@ class TimePicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double radius = style?.radius ?? LazyUi.radius;
-    bool isDarkMode = style?.darkMode ?? themeNotifier.isDarkMode;
+    bool isDarkMode = style?.darkMode ?? lzDarkMode;
     Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
     Color textColor = style?.textColor ??
         (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    final font = Gfont.style(context);
 
     return Poslign(
         alignment: Alignment.topRight,
@@ -349,7 +350,7 @@ class TimePicker extends StatelessWidget {
                           )
                         : Textr(
                             time,
-                            style: Gfont.muted
+                            style: font.muted
                                 .copyWith(letterSpacing: 2, color: textColor),
                             icon: Ti.clock,
                           ),

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart' as m;
 import 'package:flutter/material.dart' hide Radio, Checkbox, Switch, Slider;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/config/colors.dart';
+import 'package:lazyui/src/styles/styles.dart';
 
 import '../models/checkbox_model.dart';
 import '../models/checkbox_value.dart';

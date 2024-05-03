@@ -44,6 +44,8 @@ class Input extends StatelessWidget with LzFormMixin {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
+
     final attr = getAttribute(context);
     InputStyle? style = attr.inputStyle ?? this.style;
 
@@ -113,13 +115,13 @@ class Input extends StatelessWidget with LzFormMixin {
 
     // create label widget
     Widget labelWidget = hasLabel
-        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        ? Text(label!, style: font.fs14.fcolor(textColor))
         : const None();
 
     // create indicator widget
     Widget indicatorWidget = indicator && !attr.isGrouped
         ? notifier.watch((state) => Text('${state.textLength}/$maxLength',
-            style: Gfont.fs14.fcolor(textColor)))
+            style: font.fs14.fcolor(textColor)))
         : const None();
 
     // create grouped label widget
@@ -236,8 +238,8 @@ class Input extends StatelessWidget with LzFormMixin {
               formatters: formatters,
               maxLines: maxLines,
               node: focusNode,
-              hintStyle: Gfont.color(textColor.withOpacity(.4)),
-              textStyle: Gfont.color(textColor),
+              hintStyle: font.fcolor(textColor.withOpacity(.4)),
+              textStyle: font.fcolor(textColor),
             ),
 
             // if onTap is not null, add icon

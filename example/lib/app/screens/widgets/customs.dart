@@ -53,6 +53,8 @@ class CustomWidgetView extends StatelessWidget {
       'Center Dialog is a custom Flutter [Dialog] that simplifies the process of creating a centered dialog. It provides a convenient way to create a dialog with a custom width, height, and padding.',
     ];
 
+    final font = Gfont.style(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Custom Widgets'),
@@ -63,8 +65,8 @@ class CustomWidgetView extends StatelessWidget {
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
-                Textr(item, style: Gfont.bold.muted, margin: Ei.only(b: 5)),
-                Text(actionWidgetsDescription[i], style: Gfont.muted)
+                Textr(item, style: font.bold, margin: Ei.only(b: 5)),
+                Text(actionWidgetsDescription[i], style: font.muted)
               ],
             ).start,
           );
@@ -77,8 +79,8 @@ class CustomWidgetView extends StatelessWidget {
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
-                Textr(item, style: Gfont.bold.muted, margin: Ei.only(b: 5)),
-                Text(widgetsDescription[i], style: Gfont.muted)
+                Textr(item, style: font.bold.muted, margin: Ei.only(b: 5)),
+                Text(widgetsDescription[i], style: font.muted)
               ],
             ).start,
           );
@@ -91,8 +93,8 @@ class CustomWidgetView extends StatelessWidget {
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
-                Textr(item, style: Gfont.bold.muted, margin: Ei.only(b: 5)),
-                Text(behaviorWidgetsDescription[i], style: Gfont.muted)
+                Textr(item, style: font.bold.muted, margin: Ei.only(b: 5)),
+                Text(behaviorWidgetsDescription[i], style: font.muted)
               ],
             ).start,
           );

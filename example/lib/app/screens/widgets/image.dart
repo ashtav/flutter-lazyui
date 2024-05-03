@@ -15,6 +15,7 @@ class ImageView extends StatelessWidget {
 
     String image3 =
         'https://i.pinimg.com/originals/de/01/4b/de014b9bc37a75b00e6e6a8d5c16c965.jpg';
+    final font = Gfont.style(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -45,7 +46,7 @@ class ImageView extends StatelessWidget {
               ],
             ).gap(10).margin(t: 25, b: 15),
             Textr('Tap image to preview.',
-                icon: Ti.infoCircle, style: Gfont.muted),
+                icon: Ti.infoCircle, style: font.muted),
             const SizedBox(height: 35),
             Column(
               children: [

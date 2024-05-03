@@ -30,6 +30,7 @@ class UtilsView extends StatelessWidget {
       'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.'
     ];
 
+    final font = Gfont.style(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Custom Utilities'),
@@ -42,8 +43,8 @@ class UtilsView extends StatelessWidget {
               border: Br.only(['t'], except: i == 0),
               child: Column(
                 children: [
-                  Textr(item, style: Gfont.bold.muted, margin: Ei.only(b: 5)),
-                  Text(description[i], style: Gfont.muted)
+                  Textr(item, style: font.bold.muted, margin: Ei.only(b: 5)),
+                  Text(description[i], style: font.muted)
                 ],
               ).start,
             );

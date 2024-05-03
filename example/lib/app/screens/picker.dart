@@ -12,6 +12,7 @@ class PickerView extends StatelessWidget {
     final forms =
         LzForm.make(['category', 'content', 'date', 'date_range', 'time']);
 
+    final font = Gfont.style(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Picker'),
@@ -22,7 +23,7 @@ class PickerView extends StatelessWidget {
             grouping: true,
             label: Text(
               'Select Option',
-              style: Gfont.bold,
+              style: font.bold,
             ),
             description:
                 'Example of using a LzPicker, we can use picker with search bar, disabled items, etc.',
@@ -74,7 +75,7 @@ class PickerView extends StatelessWidget {
             grouping: true,
             label: Text(
               'Date & Time Picker',
-              style: Gfont.bold,
+              style: font.bold,
             ),
             description:
                 'Example of using a LzPicker in date, time and date-time mode.',
@@ -125,7 +126,7 @@ class PickerView extends StatelessWidget {
                   })
             ],
           ),
-          Text('Picker Widget', style: Gfont.bold),
+          Text('Picker Widget', style: font.bold),
           LzDatePicker.widget(
               format: 'm/y',
               maxDate: DateTime.now().add(120.d),

@@ -75,6 +75,7 @@ class AppIntro1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = AppIntroNotifier();
+    final font = Gfont.style(context);
 
     return Center(
       child: Column(
@@ -100,11 +101,11 @@ class AppIntro1 extends StatelessWidget {
                   // height: 300,
                 );
               })),
-          Text('Get Organized', style: Gfont.fs20.bold),
+          Text('Get Organized', style: font.fs20.bold),
           Text(
             Faker.words(15),
             textAlign: Ta.center,
-            style: Gfont.muted,
+            style: font.muted,
           ).margin(t: 10, b: 25),
           notifier.watch((s) => LzSlideIndicator(
                 active: s.index,
@@ -132,6 +133,7 @@ class AppIntro2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return Column(
       children: [
         Expanded(
@@ -166,10 +168,10 @@ class AppIntro2 extends StatelessWidget {
             children: [
               Text(
                 'LazyUI is a Flutter UI Kit that helps you to build your app faster and easier. It contains lots of ready-to-use utilities and widgets.',
-                style: Gfont.muted,
+                style: font.muted,
                 textAlign: Ta.center,
               ).margin(t: 10, b: 15),
-              Text('©2024, v3.0.0 240215.1', style: Gfont.fs14.muted)
+              Text('©2024, v3.0.0 240215.1', style: font.fs14.muted)
                   .margin(b: 35),
               LzButton(
                       text: 'Get Started',
@@ -178,7 +180,8 @@ class AppIntro2 extends StatelessWidget {
                         state.submit(
                             abortOn: 1.s,
                             then: () {
-                              context.lz.push(const FeaturesView());
+                              context.lz
+                                  .pushAndRemoveUntil(const FeaturesView());
                             });
                       })
                   .styled(
@@ -204,6 +207,7 @@ class AppIntro3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = AppIntroNotifier();
+    final font = Gfont.style(context);
 
     return Center(
       child: Column(
@@ -212,11 +216,11 @@ class AppIntro3 extends StatelessWidget {
           const LzImage(
             'https://i.pinimg.com/originals/a4/1d/43/a41d43c058fb7fb526b725980f4a8ea4.gif',
           ).margin(b: 25),
-          Text('Get Organized', style: Gfont.fs20.bold),
+          Text('Get Organized', style: font.fs20.bold),
           Text(
             Faker.words(15),
             textAlign: Ta.center,
-            style: Gfont.muted,
+            style: font.muted,
           ).margin(t: 10, b: 50),
           Stack(
             children: [

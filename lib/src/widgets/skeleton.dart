@@ -23,9 +23,9 @@ class Skeleton extends StatelessWidget {
         height = _getSize(size, 'height') ?? 15;
     double radius = LazyUi.radius;
 
-    Color baseColor = color ?? (LzTheme.isDark ? '444'.hex : Colors.grey[300]!);
+    Color baseColor = color ?? (lzDarkMode ? '444'.hex : Colors.grey[300]!);
     Color highlightColor =
-        highlight ?? (LzTheme.isDark ? '555'.hex : Colors.grey[200]!);
+        highlight ?? (lzDarkMode ? '555'.hex : Colors.grey[200]!);
 
     return Shimmer.fromColors(
       baseColor: baseColor,

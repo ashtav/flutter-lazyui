@@ -53,13 +53,14 @@ class LzConfirmWidget extends StatelessWidget {
     bool hasMessage = message != null;
     bool isDialog = type == ConfirmType.dialog;
 
-    bool isDarkMode = darkMode ?? themeNotifier.isDarkMode;
+    bool isDarkMode = darkMode ?? lzDarkMode;
 
     Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
     Color textColor = isDarkMode ? 'fff'.hex : '555'.hex;
     Color borderColor = isDarkMode ? '444'.hex : Colors.black12;
 
     List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
+    final font = Gfont.style(context);
 
     Widget widget = Container(
       decoration: BoxDecoration(color: backgroundColor),
@@ -82,12 +83,12 @@ class LzConfirmWidget extends StatelessWidget {
               ),
               if (hasTitle)
                 Text(title!,
-                    style: Gfont.fs18.bold.fcolor(textColor),
+                    style: font.fs18.bold.fcolor(textColor),
                     textAlign: Ta.center),
               if (hasMessage)
                 Textml(message!,
                     textAlign: Ta.center,
-                    style: Gfont.color(textColor.darken(.3))),
+                    style: font.fcolor(textColor.darken(.3))),
             ],
           ).gap(10).padding(b: isDialog ? 25 : 45, others: 25),
           Intrinsic(children: texts.generate((label, index) {
@@ -105,7 +106,7 @@ class LzConfirmWidget extends StatelessWidget {
               child: Text(
                 label,
                 textAlign: Ta.center,
-                style: Gfont.bold
+                style: font.bold
                     .fcolor(index == 0 ? textColor : confirmColor ?? textColor),
                 overflow: Tof.ellipsis,
               ),

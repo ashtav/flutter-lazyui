@@ -1,3 +1,4 @@
-## 3.0.6
+## 3.1.0
 
 * improvement and fix some bugs
+* dark mode

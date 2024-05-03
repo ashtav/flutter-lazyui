@@ -34,6 +34,7 @@ class Number extends StatelessWidget with LzFormMixin {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     final attr = getAttribute(context);
     FormStyle? style = attr.style ?? this.style;
 
@@ -75,7 +76,7 @@ class Number extends StatelessWidget with LzFormMixin {
 
     // create label widget
     Widget labelWidget = hasLabel
-        ? Text(label!, style: Gfont.fs14.fcolor(textColor))
+        ? Text(label!, style: font.fs14.fcolor(textColor))
         : const None();
 
     // create grouped label widget
@@ -162,8 +163,8 @@ class Number extends StatelessWidget with LzFormMixin {
                 Formatter.numeric
               ],
               node: focusNode,
-              hintStyle: Gfont.color(textColor.withOpacity(.4)),
-              textStyle: Gfont.color(textColor),
+              hintStyle: font.fcolor(textColor.withOpacity(.4)),
+              textStyle: font.fcolor(textColor),
             ),
 
             // input number control

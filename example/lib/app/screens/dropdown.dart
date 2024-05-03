@@ -31,6 +31,7 @@ class DropdownView extends StatelessWidget {
       });
     }
 
+    final font = Gfont.style(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Dropdown'),
@@ -85,7 +86,7 @@ class DropdownView extends StatelessWidget {
                     children: [
                       Text(
                         item,
-                        style: Gfont.bold,
+                        style: font.bold,
                       ),
                       Textr(Faker.words(15), margin: Ei.only(t: 5))
                     ],

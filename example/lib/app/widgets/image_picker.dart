@@ -54,6 +54,7 @@ class ImagePickerPreview extends StatelessWidget {
                   children: [
                     LzImage(file, size: [context.width, 250], radius: 0),
                     ...['Jadikan Foto Profil', 'Batal'].generate((text, i) {
+                      final font = Gfont.style(context);
                       return Container(
                           padding: Ei.all(20),
                           width: context.width,
@@ -61,7 +62,7 @@ class ImagePickerPreview extends StatelessWidget {
                           child: Text(
                             text,
                             textAlign: Ta.center,
-                            style: i == 0 ? Gfont.bold : Gfont.normal,
+                            style: i == 0 ? font.bold : font.normal,
                           )).onTap(() {}, hoverable: true);
                     })
                   ],

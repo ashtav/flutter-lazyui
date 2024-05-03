@@ -70,6 +70,7 @@ class FormsView extends StatelessWidget {
       ].option(),
     };
 
+    final font = Gfont.style(context);
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(
@@ -91,7 +92,7 @@ class FormsView extends StatelessWidget {
               grouping: true,
               label: Textr(
                 'Biodata',
-                style: Gfont.bold,
+                style: font.bold,
                 icon: Ti.user,
               ),
               description: 'Please input your full name and gender.',
@@ -153,12 +154,12 @@ class FormsView extends StatelessWidget {
                   children: [
                     Textr(
                       'Get a Gift',
-                      style: Gfont.bold,
+                      style: font.bold,
                       icon: Ti.gift,
                       margin: Ei.only(b: 5),
                     ),
                     Text('Select product you want to achieved.',
-                        style: Gfont.fs14)
+                        style: font.fs14)
                   ],
                 ).start,
                 LzForm.switches(
@@ -205,7 +206,7 @@ class FormsView extends StatelessWidget {
             ),
 
             LzFormWrap(
-                label: Textr('Address', style: Gfont.bold, icon: Ti.map2),
+                label: Textr('Address', style: font.bold, icon: Ti.map2),
                 description:
                     'Example of using a select input with dynamic options.',
                 grouping: true,
@@ -265,7 +266,7 @@ class FormsView extends StatelessWidget {
             // Example of using an input field with a prefix widget and slider.
             LzFormWrap(
                 label: Textr('Contact & Distance',
-                    style: Gfont.bold, icon: Ti.gift),
+                    style: font.bold, icon: Ti.gift),
                 description:
                     'Example of using an input field with a prefix widget and input slider.',
                 grouping: true,
@@ -296,7 +297,7 @@ class FormsView extends StatelessWidget {
                 (value) => Row(
                       children: [
                         Text('Your distance is $value Km',
-                            style: Gfont.fs14.muted),
+                            style: font.fs14.muted),
                       ],
                     ).end),
 
@@ -306,7 +307,7 @@ class FormsView extends StatelessWidget {
               style: FormStyle(
                 borderColor: Colors.black38,
               ),
-              label: Textr('Account', style: Gfont.bold, icon: Ti.lock),
+              label: Textr('Account', style: font.bold, icon: Ti.lock),
               description:
                   'Example of using an input field with an obscure toggle, show or hide password value.',
               children: [

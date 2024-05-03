@@ -7,6 +7,7 @@ class AccordionView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = AccordionController();
+    final font = Gfont.style(context);
 
     return Scaffold(
         appBar: AppBar(title: const Text('Accordion'), actions: [
@@ -29,7 +30,7 @@ class AccordionView extends StatelessWidget {
                       'An <b>Accordion</b> in UI/UX is a collapsible panel for showing and hiding content, ideal for organizing and optimizing space in an interface. It enhances usability by allowing users to expand sections for more details and collapse them to reduce clutter.'),
                 ),
                 LzAccordionContent(
-                  suffix: Text('Expand', style: Gfont.muted),
+                  suffix: Text('Expand', style: font.muted),
                   title: 'Why do we use it?',
                   child: const Text(
                       'Accordions streamline content presentation, enhancing user engagement by minimizing distractions and focusing on layout readability.'),
@@ -56,7 +57,7 @@ class AccordionView extends StatelessWidget {
                 LzAccordionContent(
                   title: 'Dark Mode',
                   child: Text(Faker.words(35, 3),
-                      style: Gfont.color(Colors.white70)),
+                      style: font.fcolor(Colors.white70)),
                 ),
               ],
             )

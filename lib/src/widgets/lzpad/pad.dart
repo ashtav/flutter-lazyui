@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/config/colors.dart';
+import 'package:lazyui/src/styles/styles.dart';
 
 import 'input_widget.dart';
 import 'pad_notifier.dart';
@@ -133,16 +133,18 @@ class _PadWidgetState extends State<PadWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
+
     Widget header = widget.header ??
         Column(
           children: [
             Text(widget.title ?? 'Please enter your OTP code',
-                style: Gfont.bold),
+                style: font.bold),
             if (widget.message != null)
               notifier.watch((state) => Textr(
                     state.message,
                     textAlign: Ta.center,
-                    style: Gfont.muted,
+                    style: font.muted,
                     padding: Ei.all(20),
                   )),
             const SizedBox(height: 25),
@@ -164,8 +166,7 @@ class _PadWidgetState extends State<PadWidget> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      backgroundColor:
-          themeNotifier.isDarkMode ? '444'.hex.darken(.2) : 'f1f1f1'.hex,
+      backgroundColor: lzDarkMode ? '444'.hex.darken(.2) : 'f1f1f1'.hex,
       body: Column(
         children: [
           Expanded(
@@ -215,7 +216,7 @@ class _PadWidgetState extends State<PadWidget> {
                                           ? const None()
                                           : SlideUp(
                                               child: Text(value,
-                                                  style: Gfont.fs20.bold)),
+                                                  style: font.fs20.bold)),
                                     ),
                                     if (widget.type == PadType.bottomLine)
                                       Positioned(
@@ -252,7 +253,7 @@ class _PadWidgetState extends State<PadWidget> {
                       if (widget.expired != null)
                         notifier.watch((state) {
                           return Textr('Expired in ${state.expired} seconds',
-                                  style: Gfont.red, margin: Ei.only(t: 25))
+                                  style: font.red, margin: Ei.only(t: 25))
                               .lz
                               .blink(!state.isPaused, 500.ms);
                         }),
@@ -302,7 +303,7 @@ class _PadWidgetState extends State<PadWidget> {
                                             color:
                                                 Colors.black87.adaptWithTheme,
                                           )
-                                        : Text(item, style: Gfont.fs17))
+                                        : Text(item, style: font.fs17))
                             .lz
                             .opacity(isEmpty ? .4 : 1)),
                   );
@@ -388,6 +389,7 @@ class LzPadHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return Column(
       children: [
         if (icon != null)
@@ -395,9 +397,9 @@ class LzPadHeader extends StatelessWidget {
               size: 50,
               color: Colors.black54.adaptWithTheme,
               margin: Ei.only(b: 25)),
-        if (title != null) Text(title!, style: Gfont.fs18.bold),
+        if (title != null) Text(title!, style: font.fs18.bold),
         if (message != null)
-          Text(message!, style: Gfont.muted, textAlign: Ta.center),
+          Text(message!, style: font.muted, textAlign: Ta.center),
         const SizedBox(height: 20)
       ],
     ).gap(10);

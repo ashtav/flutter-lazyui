@@ -31,6 +31,7 @@ class _SkeletonViewState extends State<SkeletonView> {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Skeleton'),
@@ -67,10 +68,10 @@ class _SkeletonViewState extends State<SkeletonView> {
                     ),
                     Column(
                       children: [
-                        Text('Custom Skeleton', style: Gfont.bold),
+                        Text('Custom Skeleton', style: font.bold),
                         Text(
                             'Tap this text to show the skeleton with random size.',
-                            style: Gfont.muted),
+                            style: font.muted),
                       ],
                     ).start.gap(5).lz.flexible()
                   ],

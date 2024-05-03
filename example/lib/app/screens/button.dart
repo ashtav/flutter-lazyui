@@ -6,6 +6,7 @@ class ButtonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Button'),
@@ -22,8 +23,8 @@ class ButtonView extends StatelessWidget {
                     }),
               ],
             ).gap(10).start,
-            Text('Button Icon', style: Gfont.bold).margin(b: 3, t: 35),
-            Text('Example of button with icon only.', style: Gfont.muted)
+            Text('Button Icon', style: font.bold).margin(b: 3, t: 35),
+            Text('Example of button with icon only.', style: font.muted)
                 .margin(b: 20),
             Row(
               children: [
@@ -37,8 +38,8 @@ class ButtonView extends StatelessWidget {
                     }).bg('#cd8b62'.hex, true),
               ],
             ).gap(10),
-            Text('Button Padding', style: Gfont.bold).margin(b: 3, t: 35),
-            Text('Example of button with padding.', style: Gfont.muted)
+            Text('Button Padding', style: font.bold).margin(b: 3, t: 35),
+            Text('Example of button with padding.', style: font.muted)
                 .margin(b: 20),
             Row(
               children: [
@@ -74,9 +75,10 @@ class MainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return LzButton(
             text: 'Submit',
-            style: LzButtonStyle(textStyle: Gfont.bold.white),
+            style: LzButtonStyle(textStyle: font.bold.white),
             onTap: onTap)
         .bg('#475c6c'.hex)
         .shadowed()

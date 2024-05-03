@@ -38,15 +38,25 @@ extension LzColorExtension on Color {
   /// @return A new [Color] object representing the inverted color.
   Color inverse() => Tints.inverse(this);
 
+  /// Returns the inverted color if [value] is true, otherwise returns the original color.
+  ///
+  /// If [value] is true, returns a new [Color] object representing the inverted color.
+  /// If [value] is false, returns the original [Color] object.
+  ///
+  /// Example:
+  /// ```dart
+  /// Color originalColor = Colors.black;
+  /// Color invertedColor = originalColor.inversed(true); // Inverted color
+  /// Color sameColor = originalColor.inversed(false); // Original color
+  /// ```
+  Color inversed(bool value) => value ? Tints.inverse(this) : this;
+
   /// Determines whether the color is considered "dark" based on its luminosity.
   ///
   /// @return A boolean value that is true if the color is dark and false otherwise.
   bool isDark() => Tints.isDark(this);
-
-  Color get adaptWithTheme => themeNotifier.isDarkMode ? inverse() : this;
 }
 
-extension LzNullableColorExtension on Color? {
-  Color? get adaptWithTheme =>
-      this != null && themeNotifier.isDarkMode ? this!.inverse() : this;
-}
+// extension LzNullableColorExtension on Color? {
+//   Color? get adaptWithTheme => this != null && lzDarkMode ? this!.inverse() : this;
+// }

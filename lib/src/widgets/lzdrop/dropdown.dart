@@ -45,7 +45,7 @@ class Dropdown extends StatelessWidget {
     notifier.checkSubOptions(options);
 
     bool hasChild = child != null;
-    bool isDarkMode = themeNotifier.isDarkMode;
+    bool isDarkMode = lzDarkMode;
     bool isLeftAlign = style?.alignment == DropAlignment.left;
     bool isBgHasColor = style?.backgroundColor != null;
 
@@ -71,6 +71,7 @@ class Dropdown extends StatelessWidget {
 
     // generate globalkey based on option length
     List<GlobalKey> keys = options.generate((item, i) => GlobalKey());
+    final font = Gfont.style(context);
 
     return notifier.watch((state) => Stack(
           children: [
@@ -160,7 +161,7 @@ class Dropdown extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(label,
-                                              style: Gfont.color(isCritical
+                                              style: font.fcolor(isCritical
                                                   ? Colors.redAccent
                                                   : textColor))
                                           .lz

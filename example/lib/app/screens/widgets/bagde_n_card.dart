@@ -6,6 +6,7 @@ class BadgeNCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final font = Gfont.style(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Badge and Card'),
@@ -72,7 +73,7 @@ class BadgeNCardView extends StatelessWidget {
               LzCard(
                 gap: 5,
                 children: [
-                  Text('Card Example', style: Gfont.bold),
+                  Text('Card Example', style: font.bold),
                   Text(Faker.words(13))
                 ],
               ),
@@ -82,7 +83,7 @@ class BadgeNCardView extends StatelessWidget {
                 gap: 5,
                 stacked: true,
                 children: [
-                  Text('Stacked Card', style: Gfont.bold),
+                  Text('Stacked Card', style: font.bold),
                   Text(Faker.words(13))
                 ],
               )

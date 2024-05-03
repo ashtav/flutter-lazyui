@@ -19,7 +19,6 @@ class TestView extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Test View'),
           actions: [
-            LzTheme.toggleWidget(),
             IconButton(
                 onPressed: () {
                   Pickers.show(context);
@@ -33,7 +32,6 @@ class TestView extends StatelessWidget {
             Text('Hello World!', style: font.bold),
             Text(Faker.words(15), style: font.muted),
             const SizedBox(height: 15),
-
             LzForm.input(hint: 'Enter your name', model: forms['name']),
             LzDropItem(
               options:

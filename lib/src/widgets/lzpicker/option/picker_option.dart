@@ -141,7 +141,8 @@ class _LzPickerOptionState extends State<LzPickerOption> {
     maxLines = maxLines >= 4 ? 4 : maxLines;
     itemExtent = 40 * maxLines;
 
-    Color backgroundColor = themeNotifier.isDarkMode ? '333'.hex : 'f1f1f1'.hex;
+    Color backgroundColor = lzDarkMode ? '333'.hex : 'f1f1f1'.hex;
+    final font = Gfont.style(context);
 
     return Wrapper(
       child: FractionallySizedBox(
@@ -241,9 +242,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                             decoration: BoxDecoration(
                               boxShadow: [
                                 BoxShadow(
-                                  color: themeNotifier.isDarkMode
-                                      ? '333'.hex
-                                      : 'fafafa'.hex,
+                                  color: lzDarkMode ? '333'.hex : 'fafafa'.hex,
                                   spreadRadius: 15,
                                   blurRadius: 25,
                                   offset: const Offset(0, -5),
@@ -321,10 +320,10 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                     margin: Ei.all(20),
                     child: Column(
                       children: [
-                        Text(widget.style!.title!, style: Gfont.bold),
+                        Text(widget.style!.title!, style: font.bold),
                         if (widget.style?.description != null)
                           Text(widget.style!.description!,
-                              style: Gfont.fs14.muted),
+                              style: font.fs14.muted),
                       ],
                     ).start.gap(2).lz.ignore())
             ],
@@ -355,7 +354,7 @@ class ConfirmButton extends StatelessWidget {
         onTap: onTap,
         padding: Ei.sym(v: 11, h: text.length > 25 ? 25 : 45),
         radius: Br.radius(50),
-        color: themeNotifier.isDarkMode
+        color: lzDarkMode
             ? '222'.hex
             : disabled
                 ? 'f5f5f5'.hex

@@ -1,10 +1,13 @@
 library lztheme;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/config/colors.dart';
+import 'package:lazyui/src/styles/styles.dart';
 
 part 'notifier.dart';
+
+bool lzDarkMode = false;
 
 class AppThemeData {
   final ThemeData theme;
@@ -14,32 +17,92 @@ class AppThemeData {
   AppThemeData({required this.theme, this.isDarkMode = false, this.background});
 }
 
-class LzTheme extends StatelessWidget {
-  final bool darkMode;
-  final MaterialApp Function(AppThemeData theme) builder;
-  const LzTheme({super.key, required this.builder, this.darkMode = false});
+class LzTheme {
+  // final bool darkMode;
+  // final MaterialApp Function(AppThemeData theme) builder;
+  // const LzTheme({super.key, required this.builder, this.darkMode = false});
 
-  @override
-  Widget build(BuildContext context) {
-    LzTheme.toggle(darkMode);
+  // @override
+  // Widget build(BuildContext context) {
+  //   LzTheme.toggle(darkMode);
 
-    return themeNotifier.watch((state) {
-      return builder.call(AppThemeData(
-          theme: state.themeData,
-          isDarkMode: state.isDarkMode,
-          background: state.isDarkMode ? '444'.hex : Colors.white));
-    });
+  //   return themeNotifier.watch((state) {
+  //     return builder.call(AppThemeData(
+  //         theme: state.themeData,
+  //         isDarkMode: state.isDarkMode,
+  //         background: state.isDarkMode ? '444'.hex : Colors.white));
+  //   });
+  // }
+
+  // static toggle(bool isDark) {
+  //   themeNotifier.toggle(isDark);
+  // }
+
+  // static bool get isDark => lzDarkMode;
+
+  // static Widget toggleWidget() {
+  //   return LzForm.switches(onChange: (value) {
+  //     themeNotifier.toggle(value);
+  //   });
+  // }
+
+  static ThemeData light() {
+    return ThemeData.light().copyWith(
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+            elevation: .5,
+            titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.black87),
+            backgroundColor: Colors.white,
+            iconTheme: const IconThemeData(color: Colors.black87)),
+        textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.black87)),
+        iconTheme: const IconThemeData(size: 20, color: Colors.black87));
   }
 
-  static toggle(bool isDark) {
-    themeNotifier.toggle(isDark);
+  static ThemeData dark() {
+    return ThemeData.dark().copyWith(
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+            elevation: .5,
+            titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.white)),
+        textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.white)),
+        iconTheme: const IconThemeData(size: 20, color: Colors.white));
   }
 
-  static bool get isDark => themeNotifier.isDarkMode;
+  static AppThemeData get(BuildContext context) {
+    bool isDark = Theme.of(context).brightness == Brightness.dark;
 
-  static Widget toggleWidget() {
-    return LzForm.switches(onChange: (value) {
-      themeNotifier.toggle(value);
-    });
+    return AppThemeData(
+        theme: isDark ? LzTheme.dark() : LzTheme.light(),
+        background: isDark ? '444'.hex : Colors.white,
+        isDarkMode: isDark);
+  }
+
+  static ThemeData system() {
+    Brightness brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    bool isDarkMode = brightness == Brightness.dark;
+    return isDarkMode ? LzTheme.dark() : LzTheme.light();
+  }
+
+  static void setTheme(bool darkMode) {
+    lzDarkMode = darkMode;
+
+    if (darkMode) {
+      lzBorderColor = Colors.black12.inverse();
+      lzIconColor = Colors.black45.inverse();
+      lzBackgroundColor = '444'.hex;
+      gfont = gfont.copyWith(color: Colors.white);
+    } else {
+      lzBorderColor = Colors.black12;
+      lzIconColor = Colors.black45;
+      lzBackgroundColor = Colors.white;
+      gfont = gfont.copyWith(color: Colors.black87);
+    }
+  }
+}
+
+extension CustomColorExtension on Color {
+  Color get adaptWithTheme {
+    return lzDarkMode ? inverse() : this;
   }
 }
