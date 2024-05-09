@@ -10,6 +10,7 @@ import 'package:lazyui/src/styles/styles.dart';
 
 import '../constants/string.dart';
 
+export '../utils/theme.dart';
 export 'lzbutton/lzbutton.dart';
 export 'lzconfirm/lzconfirm.dart';
 export 'lzdrop/lzdrop.dart';
@@ -19,7 +20,6 @@ export 'lzpad/pad.dart';
 export 'lzpicker/lzpicker.dart';
 export 'lztoast/lztoast.dart';
 export 'refreshtor/refreshtor.dart';
-export 'theme/lztheme.dart';
 export 'trainer/trainer.dart';
 
 part 'animations/blink.dart';
