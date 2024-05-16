@@ -1,7 +1,7 @@
 part of extension;
 
 /// Extends the functionality of the [bool] class with additional methods.
-extension LzDoubleExtension on bool {
+extension LzBoolExtension on bool {
   /// ``` dart
   /// // This extension is used to convert bool to int
   ///

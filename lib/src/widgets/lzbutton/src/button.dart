@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/styles/styles.dart';
+import 'package:lazyui/src/config/theme.dart';
 
 import 'notifier.dart';
 
@@ -52,7 +52,7 @@ class LzButton extends StatelessWidget {
         : style?.backgroundColor ?? lzBackgroundColor.darken(.5);
     Color textColor = style?.textColor ??
         (isOutline
-            ? (style?.backgroundColor ?? Colors.black87)
+            ? (style?.backgroundColor ?? Colors.black87).adaptWithTheme
             : (backgroundColor.isDark() ? Colors.white : Colors.black87));
 
     Widget iconSwitcher(bool condition, Widget child,
@@ -100,7 +100,7 @@ class LzButton extends StatelessWidget {
         padding: style?.padding ?? Ei.only(v: 13, h: 18),
         border: Br.all(
             color: isOutline
-                ? (style?.backgroundColor ?? Colors.black12.adaptWithTheme)
+                ? (style?.backgroundColor ?? Colors.black12).adaptWithTheme
                 : (style?.borderColor ?? backgroundColor.darken(.2))),
         radius: Br.radius(radius),
         color: backgroundColor,

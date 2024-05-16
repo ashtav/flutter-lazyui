@@ -6,6 +6,9 @@ extension LzContextModifierExtension on BuildContext {
   ///
   /// Returns an instance of [LzContextModifiers].
   LzContextModifiers get lz => LzContextModifiers(this);
+
+  /// Returns a [TextStyle] using the Gfont style for the current value.
+  TextStyle get gfont => Gfont.style(this);
 }
 
 /// A class for applying Lazuli UI context modifiers to a build context.

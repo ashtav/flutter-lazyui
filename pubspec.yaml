@@ -40,4 +40,4 @@ flutter:
         - asset: assets/fonts/LineAwesome.ttf
     - family: TablerIcons
       fonts:
-        - asset: assets/fonts/TablerIcons.ttf
+        - asset: assets/fonts/tabler-icons.ttf

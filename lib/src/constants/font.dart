@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/src/config/lz_config.dart';
+import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/constants/color.dart';
 
 TextStyle gfont = LazyUi.font;

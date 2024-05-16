@@ -16,7 +16,7 @@ export 'package:path_provider/path_provider.dart';
 export 'package:stack_trace/stack_trace.dart';
 export 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
-export 'src/config/lz_config.dart';
+export 'src/config/config.dart';
 export 'src/constants/color.dart';
 export 'src/constants/enum.dart';
 export 'src/constants/font.dart';

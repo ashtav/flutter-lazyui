@@ -12,12 +12,11 @@ class BadgeNCardView extends StatelessWidget {
         title: const Text('Badge and Card'),
       ),
       body: LzListView(
+        gap: 15,
         children: [
           Column(
             children: [
-              const Textml(
-                      '<b>LzBadge</b> is a simple widget to create a badge with text and icon.')
-                  .margin(b: 15),
+              const Textml('<b>LzBadge</b> is a simple widget to create a badge with text and icon.').margin(b: 15),
 
               Row(
                 children: [
@@ -43,8 +42,7 @@ class BadgeNCardView extends StatelessWidget {
                         child: const LzAvatar(
                           clip: HexagonClip(stroke: 2, color: Colors.red),
                           size: 90,
-                          child: LzImage(
-                              'https://www.headshotpro.com/avatar-results/danny-3.webp'),
+                          child: LzImage('https://www.headshotpro.com/avatar-results/danny-3.webp'),
                         ).margin(l: 10),
                       ),
                       Poslign(
@@ -54,8 +52,7 @@ class BadgeNCardView extends StatelessWidget {
                           child: LzBadge('15',
                               spacing: 0,
                               color: Colors.red,
-                              boxShadow: Bx.shadow(Colors.red.withOpacity(.5),
-                                  x: 5, y: 3)),
+                              boxShadow: Bx.shadow(Colors.red.withOpacity(.5), x: 5, y: 3)),
                         ),
                       )
                     ],
@@ -63,32 +60,38 @@ class BadgeNCardView extends StatelessWidget {
                 ],
               ).between,
 
-              const SizedBox(height: 50),
+              20.height,
 
               // see card example in tabler
-              const Textml(
-                      '<b>LzCard</b> is a simple widget to create a card with multiple children.')
-                  .margin(b: 15),
+              const Textml('<b>LzCard</b> is a simple widget to create a card with multiple children.'),
 
               LzCard(
                 gap: 5,
-                children: [
-                  Text('Card Example', style: font.bold),
-                  Text(Faker.words(13))
-                ],
+                children: [Text('Card Example', style: font.bold), Text(Faker.words(12))],
               ),
-              const SizedBox(height: 15),
 
               LzCard(
                 gap: 5,
                 stacked: true,
-                children: [
-                  Text('Stacked Card', style: font.bold),
-                  Text(Faker.words(13))
-                ],
+                children: [Text('Stacked Card', style: font.bold), Text(Faker.words(12))],
+              ),
+
+              LzCard(
+                gap: 5,
+                stacked: true,
+                background: BgCard(icon: Ti.gift),
+                children: [Text('Background Card', style: font.bold), Text(Faker.words(12))],
+              ),
+
+              LzCard(
+                gap: 5,
+                background: BgCard(icon: Ti.cards),
+                stacked: true,
+                ribbon: Ribbon(icon: Ti.gift, color: Colors.blue),
+                children: [Text('Ribbon Card', style: font.bold), Text(Faker.words(12), style: font.muted)],
               )
             ],
-          ).start
+          ).start.gap(15)
         ],
       ),
     );

@@ -42,6 +42,12 @@ extension LzIntExtension on int {
   List<E> generate<E>(E Function(int index) generator) {
     return List.generate(this, (i) => generator(i));
   }
+
+  /// Returns a SizedBox with the specified width.
+  SizedBox get width => SizedBox(width: toDouble());
+
+  /// Returns a SizedBox with the specified height.
+  SizedBox get height => SizedBox(height: toDouble());
 }
 
 /// Extension method on [int?] to format the value as a currency string.
@@ -53,10 +59,9 @@ extension LzIntNullableExtension on int? {
   /// [separator]: The separator to use for thousands.
   ///
   /// Returns the formatted currency string.
-  String currency(
-      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
-    return (this == null ? '0' : toString()).currency(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String currency({String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+    return (this == null ? '0' : toString())
+        .currency(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Formats the value as Indonesian Rupiah (IDR).
@@ -66,9 +71,15 @@ extension LzIntNullableExtension on int? {
   /// [separator]: The separator to use for thousands.
   ///
   /// Returns the formatted IDR string.
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).idr(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String idr({String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(symbol: symbol, decimalDigits: decimalDigits, separator: separator);
   }
+}
+
+extension LzDoubleExtension on double {
+  /// Returns a SizedBox with the specified width.
+  SizedBox get width => SizedBox(width: this);
+
+  /// Returns a SizedBox with the specified height.
+  SizedBox get height => SizedBox(height: this);
 }

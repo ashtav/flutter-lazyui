@@ -134,6 +134,8 @@ class _LzListViewState extends State<LzListView> {
           newChildren.add(SizedBox(height: widget.gap!));
         }
       }
+    } else {
+      newChildren = children;
     }
 
     Widget listView([double? cacheExtent]) => ListView(

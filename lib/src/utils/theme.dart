@@ -3,7 +3,7 @@ library lztheme;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:lazyui/lazyui.dart';
-import 'package:lazyui/src/styles/styles.dart';
+import 'package:lazyui/src/config/theme.dart';
 
 bool lzDarkMode = false;
 
