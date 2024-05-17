@@ -20,9 +20,19 @@ class TestView extends StatelessWidget {
             title: const Text('Test View'),
             actions: [Ti.swipe, Ti.photo].iconButton((i) {
               if (i == 0) {
-                LzModal.show(context, options: [
-                  ModalOption(label: 'Profile', widget: Textr('Your profile!', padding: Ei.all(35))),
-                  ModalOption(label: 'Birth Date', widget: LzDatePicker.widget()),
+                LzModal.show(context, title: 'Select Menu', options: [
+                  ModalOption(label: 'Profile', widget: Textr('Your profile!', padding: Ei.all(35)), icon: Ti.user),
+                  ModalOption(label: 'Birth Date', widget: LzDatePicker.widget(format: 'd/mmm/y'), icon: Ti.calendarEvent),
+                  ModalOption(
+                      label: 'Long Content',
+                      widget: Column(
+                        children: [
+                          Textr(
+                            Faker.words(25, 10),
+                            padding: Ei.all(20),
+                          )
+                        ],
+                      ), icon: Ti.news),
                 ]);
               } else {
                 Pickers.show(context);
@@ -64,20 +74,15 @@ class TestView extends StatelessWidget {
 }
 
 class LzModalNotifier extends ChangeNotifier {
-  String? label;
-  Widget? widget;
   List<ModalOption> actives = [];
+  ModalOption? get option => actives.isEmpty ? null : actives.last;
 
   void action(ModalOption data) {
     actives.add(data);
-
-    label = data.label;
-    widget = data.widget;
-
     notifyListeners();
   }
 
-  void onBack(){
+  void onBack() {
     actives.removeLast();
     notifyListeners();
   }
@@ -86,13 +91,17 @@ class LzModalNotifier extends ChangeNotifier {
 class ModalOption {
   final String label;
   final Widget? widget;
+  final IconData? icon;
 
-  ModalOption({required this.label, this.widget});
+  ModalOption({required this.label, this.widget, this.icon});
 }
 
 class LzModal extends StatelessWidget {
+  final String? title;
   final List<ModalOption> options;
-  const LzModal({super.key, this.options = const []});
+  final MainAxisAlignment? align;
+  final double? maxHeight;
+  const LzModal({super.key, this.title, this.options = const [], this.align, this.maxHeight});
 
   @override
   Widget build(BuildContext context) {
@@ -107,13 +116,17 @@ class LzModal extends StatelessWidget {
           children: [
             notifier.watch((state) {
               bool isRoot = state.actives.isEmpty;
-              String label = state.actives.last.label;
+              String? label = isRoot ? null : state.actives.last.label;
 
               return Row(
-              children: [
-                Textr('Back', icon: Ti.arrowLeft, padding: Ei.sym(v: 20), style: font.white),
-              ],
-            ).between;
+                children: [
+                  Touch(
+                    onTap: isRoot ? null : () => state.onBack(),
+                    hoverable: !isRoot,
+                    child: Textr(label ?? (title ?? ''), icon: isRoot ? null : Ti.arrowLeft, padding: Ei.sym(v: 20), style: font.white),
+                  ),
+                ],
+              ).between;
             }),
             Stack(
               alignment: Alignment.bottomCenter,
@@ -126,34 +139,45 @@ class LzModal extends StatelessWidget {
                 ),
                 notifier.watch((state) {
                   return Container(
-                    width: width,
-                    margin: Ei.only(b: 7),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(7)),
-                    child: state.label != null
-                        ? state.widget
-                        : Column(
-                            children: options.generate((option, i) {
-                              return Touch(
-                                onTap: () {
-                                  if (option.widget != null) {
-                                    state.action(option);
-                                  }
-                                },
-                                hoverable: true,
-                                child: Textr(
-                                  option.label,
-                                  padding: Ei.all(20),
-                                  border: Br.only(['t'], except: i == 0),
-                                  width: context.width,
-                                  textAlign: Ta.center,
-                                ),
-                              );
-                            }),
-                          ),
-                  );
+                      width: width,
+                      margin: Ei.only(b: 7),
+                      constraints: BoxConstraints(maxHeight: maxHeight ?? context.height * .5),
+                      decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(7)),
+                      child: SingleChildScrollView(
+                        physics: BounceScroll(),
+                        child: state.option != null
+                            ? state.option!.widget
+                            : Column(
+                                children: options.generate((option, i) {
+                                  return Touch(
+                                    onTap: () {
+                                      if (option.widget != null) {
+                                        state.action(option);
+                                      }
+                                    },
+                                    hoverable: true,
+                                    child: Container(
+                                      padding: Ei.all(20),
+                                      decoration: BoxDecoration(border: Br.only(['t'], except: i == 0)),
+                                      child: Row(
+                                        mainAxisAlignment: align ?? Maa.spaceBetween,
+                                        children: [
+                                          Text(
+                                            option.label,
+                                            textAlign: Ta.center,
+                                          ),
+                                          Icon(
+                                            option.icon,
+                                            color: Colors.black45,
+                                          ).lz.hide(option.icon == null)
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }),
+                              ).min,
+                      ));
                 }),
-      
-                // Poslign(alignment: Alignment.topLeft, child: )
               ],
             ),
           ],
@@ -162,7 +186,8 @@ class LzModal extends StatelessWidget {
     );
   }
 
-  static show(BuildContext context, {List<ModalOption> options = const []}) {
-    context.dialog(LzModal(options: options), backBlur: true);
+  static show(BuildContext context,
+      {String? title, List<ModalOption> options = const [], MainAxisAlignment? align, double? maxHeight}) {
+    context.dialog(LzModal(title: title, options: options, align: align, maxHeight: maxHeight), backBlur: true);
   }
 }

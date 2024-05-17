@@ -120,9 +120,7 @@ class LzDatePicker extends StatelessWidget {
                   type: f,
                   items: items,
                   style: style,
-                  overlayColor: backgroundColor
-                      .lighten(isDarkMode ? .8 : .1)
-                      .withOpacity(.4),
+                  overlayColor: backgroundColor.withOpacity(.4),
                 ));
           }),
         ),
@@ -194,7 +192,7 @@ class CupertinoPickerWidget extends StatelessWidget {
               child: Textr(
                 item,
                 style: LazyUi.font
-                    .copyWith(color: textColor, letterSpacing: letterSpacing),
+                    .copyWith(color: textColor, letterSpacing: letterSpacing, overflow: Tof.ellipsis),
                 padding: Ei.sym(h: 15),
               ),
             ),
