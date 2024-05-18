@@ -34,9 +34,7 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
         'features': [
-          Feature(
-              'LzForm',
-              'Customizable form with validation, error handling and ease full control of your form.',
+          Feature('LzForm', 'Customizable form with validation, error handling and ease full control of your form.',
               Ti.forms),
           Feature(
               'LzPicker',
@@ -51,30 +49,14 @@ class FeaturesView extends StatelessWidget {
         'description':
             'Dynamic elements designed to facilitate user actions, confirmations, and navigation, enhancing overall interactivity.',
         'features': [
+          Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
+          Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
+          Feature('LzPad', 'Show an otp or pin input with a custom message, duration, input, etc.', Ti.number),
           Feature(
-              'LzButton',
-              'Customizable button with icon, type, loading, disabled, etc.',
-              Ti.click),
-          Feature(
-              'LzDrop',
-              'Show dropdown options in any position, with icons, separators, etc.',
-              Ti.dragDrop),
-          Feature(
-              'LzPad',
-              'Show an otp or pin input with a custom message, duration, input, etc.',
-              Ti.number),
-          Feature(
-              'LzConfirm',
-              'Show a confirmation dialog with a custom message, title, etc.',
-              Ti.questionMark),
-          Feature(
-              'Refreshtor',
-              'Show a pull to refresh indicator with a custom color, size, etc.',
-              Ti.refresh),
-          Feature(
-              'Trainer',
-              'Show guide to use your app with a custom message, title, etc.',
-              Ti.books),
+              'LzOption', 'Display dynamic menus with optional associated widgets triggered upon selection.', Ti.menu2),
+          Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
+          Feature('Refreshtor', 'Show a pull to refresh indicator with a custom color, size, etc.', Ti.refresh),
+          Feature('Trainer', 'Show guide to use your app with a custom message, title, etc.', Ti.books),
         ]
       },
       {
@@ -82,24 +64,11 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A variety of visual components to display content, notifications, placeholders, and collapsible sections for a polished interface.',
         'features': [
-          Feature('LzToast',
-              'Show a toast message with a custom icon, color, etc.', Ti.bell),
-          Feature(
-              'LzImage',
-              'Display image in any format such as network, asset, file, etc.',
-              Ti.photo),
-          Feature(
-              'Skeleton',
-              'Show a skeleton loader with a custom color, animation, etc.',
-              Ti.loader),
-          Feature(
-              'LzAccordion',
-              'Expandable widget with a custom header, body, etc.',
-              Ti.layoutNavbarExpand),
-          Feature(
-              'LzBadge & LzCard',
-              'Show a badge or card with a custom color, size, etc.',
-              Ti.creditCard),
+          Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
+          Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
+          Feature('Skeleton', 'Show a skeleton loader with a custom color, animation, etc.', Ti.loader),
+          Feature('LzAccordion', 'Expandable widget with a custom header, body, etc.', Ti.layoutNavbarExpand),
+          Feature('LzBadge & LzCard', 'Show a badge or card with a custom color, size, etc.', Ti.creditCard),
           Feature(
               'LzListView',
               'Scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.',
@@ -108,12 +77,9 @@ class FeaturesView extends StatelessWidget {
       },
       {
         'title': 'Custom Widgets',
-        'description':
-            'A collection of custom widgets that can be used to build your own custom UI components.',
+        'description': 'A collection of custom widgets that can be used to build your own custom UI components.',
         'features': [
-          Feature(
-              'Custom Widgets',
-              'List of custom widgets that can be used to build your own custom UI components.',
+          Feature('Custom Widgets', 'List of custom widgets that can be used to build your own custom UI components.',
               Ti.category),
         ]
       },
@@ -122,18 +88,15 @@ class FeaturesView extends StatelessWidget {
         'description':
             'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
         'features': [
-          Feature(
-              'Custom Utilities',
-              'List of custom utilities that can be used to build your own custom UI components.',
-              Ti.tools),
+          Feature('Custom Utilities',
+              'List of custom utilities that can be used to build your own custom UI components.', Ti.tools),
         ]
       },
     ];
 
     for (var featureMap in features) {
       if (featureMap['features'] != null) {}
-      (featureMap['features'] as List<Feature>)
-          .sort((a, b) => a.title.compareTo(b.title));
+      (featureMap['features'] as List<Feature>).sort((a, b) => a.title.compareTo(b.title));
     }
 
     return Scaffold(
@@ -178,22 +141,14 @@ class FeaturesView extends StatelessWidget {
                               style: font.bold,
                               icon: feature.icon,
                             ),
-                            Text(feature.description, style: font.muted)
-                                .margin(t: 5),
+                            Text(feature.description, style: font.muted).margin(t: 5),
                           ],
                         ).start.lz.flexible(),
-                        Iconr(Ti.chevronRight,
-                            color: Colors.black45.adaptWithTheme,
-                            margin: Ei.only(l: 25))
+                        Iconr(Ti.chevronRight, color: Colors.black45.adaptWithTheme, margin: Ei.only(l: 25))
                       ],
                     ),
                   );
-                }))
-                    .min
-                    .lz
-                    .clip(all: 10)
-                    .lz
-                    .border(Br.all(), radius: Br.radius(10))
+                })).min.lz.clip(all: 10).lz.border(Br.all(), radius: Br.radius(10))
               ],
             ).start;
           }),
@@ -224,19 +179,15 @@ class Actions {
 
     final font = Gfont.style(context);
     if (label == 'LzPad') {
-      LzPicker.picker(context, options: ['OTP Input', 'Passcode Input'],
-          onSelect: (value) {
+      LzPicker.picker(context, options: ['OTP Input', 'Passcode Input'], onSelect: (value) {
         if (value == 'OTP Input') {
           LzPad.show(context,
               expired: 60.s,
-              message:
-                  'OTP code sent to +628100000, please enter the code below to reset your password.',
+              message: 'OTP code sent to +628100000, please enter the code below to reset your password.',
               onCompleted: (otp) async {
             otp.pause();
-            LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s,
-                then: () {
-              LzToast.success('Done! You are now logged in.',
-                  placement: ToastPlacement.center);
+            LzToast.overlay('Verifying OTP... ${otp.value}', duration: 2.s, then: () {
+              LzToast.success('Done! You are now logged in.', placement: ToastPlacement.center);
               context.lz.pop();
             });
           });
@@ -245,11 +196,8 @@ class Actions {
               header: const LzPadHeader(
                   icon: Ti.lock,
                   title: 'Enter Passcode',
-                  message:
-                      'Please enter your passcode to continue payment process.'),
-              footer: Textr('Lupa PIN?',
-                      style: font.bold.green, padding: Ei.all(20))
-                  .onTap(() {
+                  message: 'Please enter your passcode to continue payment process.'),
+              footer: Textr('Lupa PIN?', style: font.bold.green, padding: Ei.all(20)).onTap(() {
                 context.lz.pop();
                 // open forgot passcode screen
               }),
@@ -266,6 +214,31 @@ class Actions {
       });
 
       return;
+    } else if (label == 'LzOption') {
+      LzOption.show(context, title: 'Select Menu', options: [
+        OptionMenu(label: 'Profile', widget: Textr('Your profile!', padding: Ei.all(35)), icon: Ti.user),
+        OptionMenu(label: 'Birth Date', widget: LzDatePicker.widget(format: 'd/mmm/y'), icon: Ti.calendarEvent),
+        OptionMenu(
+            label: 'News - Long Content',
+            widget: Column(
+              children: [
+                Textr(
+                  Faker.words(25, 10),
+                  padding: Ei.all(20),
+                )
+              ],
+            ),
+            icon: Ti.news),
+        OptionMenu(
+            label: 'No Widget',
+            icon: Ti.gift,
+            onTap: () {
+              context.lz.pop();
+              LzToast.show('Thank you!', placement: ToastPlacement.center);
+            }),
+      ]);
+
+      return;
     }
 
     context.lz.push(routes[label] ?? const TestView());
@@ -275,8 +248,7 @@ class Actions {
 class LzPicker extends StatelessWidget {
   final List<String> options;
   final List<int> separator;
-  const LzPicker(
-      {super.key, this.options = const [], this.separator = const []});
+  const LzPicker({super.key, this.options = const [], this.separator = const []});
 
   @override
   Widget build(BuildContext context) {
@@ -290,8 +262,7 @@ class LzPicker extends StatelessWidget {
             return InkTouch(
               onTap: () => context.lz.pop(item),
               padding: Ei.sym(v: 15, h: 20),
-              border: Br.only(['t'],
-                  except: i == 0, width: separator.contains(i) ? 4 : .5),
+              border: Br.only(['t'], except: i == 0, width: separator.contains(i) ? 4 : .5),
               color: theme.background,
               child: Row(
                 children: [
@@ -316,13 +287,9 @@ class LzPicker extends StatelessWidget {
   }
 
   static picker(BuildContext context,
-      {List<String> options = const [],
-      List<int> separator = const [],
-      Function(String)? onSelect}) {
+      {List<String> options = const [], List<int> separator = const [], Function(String)? onSelect}) {
     context
-        .bottomSheet(LzPicker(options: options, separator: separator),
-            draggable: true, safeArea: false)
-        .then((value) =>
-            value == null ? () {} : onSelect?.call(value.toString()));
+        .bottomSheet(LzPicker(options: options, separator: separator), draggable: true, safeArea: false)
+        .then((value) => value == null ? () {} : onSelect?.call(value.toString()));
   }
 }
