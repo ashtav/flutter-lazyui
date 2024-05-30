@@ -191,8 +191,10 @@ class CupertinoPickerWidget extends StatelessWidget {
             child: ZoomIn(
               child: Textr(
                 item,
-                style: LazyUi.font
-                    .copyWith(color: textColor, letterSpacing: letterSpacing, overflow: Tof.ellipsis),
+                style: LazyUi.font.copyWith(
+                    color: textColor,
+                    letterSpacing: letterSpacing,
+                    overflow: Tof.ellipsis),
                 padding: Ei.sym(h: 15),
               ),
             ),

@@ -92,7 +92,8 @@ class LzCard extends StatelessWidget {
               border: border ?? Br.all(),
               radius: radius ?? Br.radius(5),
               color: color ?? lzBackgroundColor,
-              margin: Ei.only(t: isMarginTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
+              margin: Ei.only(
+                  t: isMarginTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
               child: inktouch),
           Positioned(
               top: 0,
@@ -102,13 +103,18 @@ class LzCard extends StatelessWidget {
                   Positioned(
                     top: -1,
                     left: 0,
-                    child: CustomPaint(size: const Size(6, 6), painter: TrianglePainter(color: ribbon?.color)).lz.rotate(180),
+                    child: CustomPaint(
+                            size: const Size(6, 6),
+                            painter: TrianglePainter(color: ribbon?.color))
+                        .lz
+                        .rotate(180),
                   ),
                   Container(
                     margin: Ei.only(l: 5),
                     padding: Ei.sym(v: 12, h: 10),
                     decoration: BoxDecoration(
-                        color: ribbon?.color ?? Colors.orange, borderRadius: Br.radiusOnly(tr: 5, blr: 5)),
+                        color: ribbon?.color ?? Colors.orange,
+                        borderRadius: Br.radiusOnly(tr: 5, blr: 5)),
                     child: Icon(ribbon!.icon, color: Colors.white),
                   ),
                 ],
@@ -121,13 +127,15 @@ class LzCard extends StatelessWidget {
           border: border ?? Br.all(),
           radius: radius ?? Br.radius(5),
           color: color ?? lzBackgroundColor,
-          margin: Ei.only(t: isMarginTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
+          margin: Ei.only(
+              t: isMarginTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
           child: inktouch);
     }
 
     return stacked
         ? Stack(
-            alignment: isStackedTop ? Alignment.topCenter : Alignment.bottomCenter,
+            alignment:
+                isStackedTop ? Alignment.topCenter : Alignment.bottomCenter,
             children: [
               Container(
                 width: context.width - 55,
@@ -154,7 +162,12 @@ class BgCard {
   final double? angle;
   final Color? color;
 
-  BgCard({this.offset = const Offset(-20, -20), required this.icon, this.size = 180, this.angle, this.color});
+  BgCard(
+      {this.offset = const Offset(-20, -20),
+      required this.icon,
+      this.size = 180,
+      this.angle,
+      this.color});
 }
 
 class Ribbon {

@@ -66,6 +66,8 @@ class ButtonView extends StatelessWidget {
           state.setText('Submitting...');
           state.submit(abortOn: 2.s);
         }));
+
+    // Button('Submit', () => {})
   }
 }
 

@@ -20,7 +20,7 @@ class TestView extends StatelessWidget {
             title: const Text('Test View'),
             actions: [Ti.swipe, Ti.photo].iconButton((i) {
               if (i == 0) {
-                
+                context.bottomSheet(const MyComment());
               } else {
                 Pickers.show(context);
               }
@@ -33,9 +33,11 @@ class TestView extends StatelessWidget {
             const SizedBox(height: 15),
             LzForm.input(hint: 'Enter your name', model: forms['name']),
             LzDropItem(
-              options: DropOption.list(['Details', 'Edit', 'Delete', 'Archive']),
+              options:
+                  DropOption.list(['Details', 'Edit', 'Delete', 'Archive']),
               style: DropStyle(separators: [3]),
-              builder: (child) => Container(padding: Ei.all(20), width: context.width, child: child),
+              builder: (child) => Container(
+                  padding: Ei.all(20), width: context.width, child: child),
               child: LzCard(
                 stacked: true,
                 stackAlign: StackAlign.top,
@@ -55,6 +57,29 @@ class TestView extends StatelessWidget {
                 })),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class MyComment extends StatelessWidget {
+  const MyComment({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+              child: LzListView(
+            children: [Text(Faker.words(10, 25))],
+          )),
+          const LzTextField(
+            hint: 'Type your comment...',
+            prefixIcon: Icon(Ti.message),
+            borderRadius: Br.zero,
+          ).bordered()
+        ],
       ),
     );
   }

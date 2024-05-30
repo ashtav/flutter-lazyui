@@ -1,7 +1,7 @@
 name: lazyui
 description: LazyUi is a collection of widgets and utilities designed to
   simplify and speed up the app development process with Flutter.
-version: 3.1.1
+version: 3.1.2
 homepage: https://github.com/ashtav/flutter-lazyui.git
 
 environment:
@@ -37,7 +37,7 @@ flutter:
   fonts:
     - family: LineAwesomeIcons
       fonts:
-        - asset: assets/fonts/LineAwesome.ttf
+        - asset: assets/fonts/line-awesome.ttf
     - family: TablerIcons
       fonts:
         - asset: assets/fonts/tabler-icons.ttf

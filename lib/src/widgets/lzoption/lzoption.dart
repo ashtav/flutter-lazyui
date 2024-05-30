@@ -39,7 +39,13 @@ class LzOption extends StatelessWidget {
   final MainAxisAlignment? align;
   final double? maxHeight;
   final double? width;
-  const LzOption({Key? key, this.title, this.options = const [], this.align, this.maxHeight, this.width})
+  const LzOption(
+      {Key? key,
+      this.title,
+      this.options = const [],
+      this.align,
+      this.maxHeight,
+      this.width})
       : super(key: key);
 
   @override
@@ -68,7 +74,10 @@ class LzOption extends StatelessWidget {
                         style: font.white.bold,
                         overflow: Tof.ellipsis),
                   ).lz.flexible(),
-                  Iconr(Ti.x, padding: Ei.only(r: 0, others: 20), color: Colors.white).onTap(() => context.lz.pop())
+                  Iconr(Ti.x,
+                          padding: Ei.only(r: 0, others: 20),
+                          color: Colors.white)
+                      .onTap(() => context.lz.pop())
                 ],
               ).between;
             }),
@@ -77,7 +86,8 @@ class LzOption extends StatelessWidget {
               children: [
                 SlideDown(
                   child: Container(
-                      decoration: BoxDecoration(borderRadius: Br.radius(7), color: Colors.white70),
+                      decoration: BoxDecoration(
+                          borderRadius: Br.radius(7), color: Colors.white70),
                       width: width - 20,
                       height: 20),
                 ),
@@ -85,8 +95,10 @@ class LzOption extends StatelessWidget {
                   return Container(
                       width: width,
                       margin: Ei.only(b: 7),
-                      constraints: BoxConstraints(maxHeight: maxHeight ?? context.height * .5),
-                      decoration: BoxDecoration(color: lzBackgroundColor, borderRadius: Br.radius(7)),
+                      constraints: BoxConstraints(
+                          maxHeight: maxHeight ?? context.height * .5),
+                      decoration: BoxDecoration(
+                          color: lzBackgroundColor, borderRadius: Br.radius(7)),
                       child: SingleChildScrollView(
                         physics: BounceScroll(),
                         controller: state.scrollController,
@@ -105,9 +117,12 @@ class LzOption extends StatelessWidget {
                                     hoverable: true,
                                     child: Container(
                                       padding: Ei.all(20),
-                                      decoration: BoxDecoration(border: Br.only(['t'], except: i == 0)),
+                                      decoration: BoxDecoration(
+                                          border:
+                                              Br.only(['t'], except: i == 0)),
                                       child: Row(
-                                        mainAxisAlignment: align ?? Maa.spaceBetween,
+                                        mainAxisAlignment:
+                                            align ?? Maa.spaceBetween,
                                         children: [
                                           Text(
                                             option.label,
@@ -152,7 +167,14 @@ class LzOption extends StatelessWidget {
       double? maxHeight,
       double? width,
       bool dismiss = false}) {
-    context.dialog(LzOption(title: title, options: options, align: align, maxHeight: maxHeight, width: width),
-        backBlur: true, dismiss: dismiss);
+    context.dialog(
+        LzOption(
+            title: title,
+            options: options,
+            align: align,
+            maxHeight: maxHeight,
+            width: width),
+        backBlur: true,
+        dismiss: dismiss);
   }
 }
