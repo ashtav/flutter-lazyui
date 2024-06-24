@@ -1,7 +1,6 @@
+import 'package:example/src/screens/home/views/feature_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
-
-import 'feature_view.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -19,32 +18,37 @@ class HomeView extends StatelessWidget {
                 Stack(
                   alignment: Ad.center,
                   children: [
-                    Container(margin: Ei.only(t: 110, r: 70), child: Text('Lz', style: Gfont.fsize(70))),
-                    Text('4', style: Gfont.fsize(170)),
+                    Textr('Lz', style: Gfont.fsize(70), margin: Ei.only(t: 110, r: 70)),
+                    const T4(),
+                    Textr(
+                        'LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter.',
+                        textAlign: Ta.center,
+                        padding: Ei.only(h: 35, t: 300)),
                   ],
                 ),
-                Container(
-                  padding: Ei.sym(h: 35),
-                  margin: Ei.only(b: 25),
-                  child: const Text(
-                      'LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter.',
-                      textAlign: Ta.center),
-                ),
-                Touch(
-                  onTap: () {
-                    context.lz.push(const FeatureView());
-                  },
-                  hoverable: true,
-                  child: Container(
-                      padding: Ei.sym(v: 15, h: 35),
-                      decoration: BoxDecoration(border: Br.all(), borderRadius: Br.radius(7)),
-                      child: Text('Explore More', style: Gfont.bold)),
-                ),
+                Touch.button('Explore More', onTap: () {
+                  context.lz.push(const FeatureView());
+                })
               ],
-            ),
+            ).gap(25),
           ),
         ],
       ),
     ));
+  }
+}
+
+class T4 extends StatelessWidget {
+  const T4({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Ad.center,
+      children: [
+        Text('4', style: Gfont.fsize(170)),
+        Textr('.0.0', style: Gfont.fsize(14), margin: Ei.only(l: 100, t: 100),),
+      ],
+    );
   }
 }

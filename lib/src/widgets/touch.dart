@@ -64,6 +64,17 @@ class Touch extends StatelessWidget {
   static void config({bool? hoverable}) {
     _hoverable = hoverable ?? false;
   }
+
+  static Widget button(String text, {Function()? onTap}) {
+    return Touch(
+      onTap: onTap,
+      hoverable: true,
+      child: Container(
+          padding: Ei.sym(v: 15, h: 35),
+          decoration: BoxDecoration(border: Br.all(), borderRadius: Br.radius(7)),
+          child: Text(text, style: Gfont.bold)),
+    );
+  }
 }
 
 /// Internal stateful widget used for hover effect in `Touch`.

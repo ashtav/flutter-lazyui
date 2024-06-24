@@ -8,7 +8,8 @@ export 'package:http/http.dart';
 export 'package:intl/intl.dart';
 export 'package:path_provider/path_provider.dart';
 export 'package:stack_trace/stack_trace.dart';
-export 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+
+// export 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 export 'config/lazyui.dart';
 // extensions
