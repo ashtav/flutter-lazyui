@@ -18,7 +18,8 @@ class HomeView extends StatelessWidget {
                 Stack(
                   alignment: Ad.center,
                   children: [
-                    Textr('Lz', style: Gfont.fsize(70), margin: Ei.only(t: 110, r: 70)),
+                    Textr('Lz',
+                        style: Gfont.fsize(70), margin: Ei.only(t: 110, r: 70)),
                     const T4(),
                     Textr(
                         'LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter.',
@@ -47,7 +48,11 @@ class T4 extends StatelessWidget {
       alignment: Ad.center,
       children: [
         Text('4', style: Gfont.fsize(170)),
-        Textr('.0.0', style: Gfont.fsize(14), margin: Ei.only(l: 100, t: 100),),
+        Textr(
+          '.0.0',
+          style: Gfont.fsize(14),
+          margin: Ei.only(l: 100, t: 100),
+        ),
       ],
     );
   }

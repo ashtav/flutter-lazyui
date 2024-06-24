@@ -71,7 +71,8 @@ class Touch extends StatelessWidget {
       hoverable: true,
       child: Container(
           padding: Ei.sym(v: 15, h: 35),
-          decoration: BoxDecoration(border: Br.all(), borderRadius: Br.radius(7)),
+          decoration:
+              BoxDecoration(border: Br.all(), borderRadius: Br.radius(7)),
           child: Text(text, style: Gfont.bold)),
     );
   }

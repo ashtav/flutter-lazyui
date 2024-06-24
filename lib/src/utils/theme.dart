@@ -13,11 +13,13 @@ class LzTheme {
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
         elevation: .5,
-        titleTextStyle: LazyUi.font.copyWith(fontSize: 20, color: Colors.black87),
+        titleTextStyle:
+            LazyUi.font.copyWith(fontSize: 20, color: Colors.black87),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black87),
       ),
-      textTheme: TextTheme(bodyMedium: LazyUi.font.copyWith(color: Colors.black87)),
+      textTheme:
+          TextTheme(bodyMedium: LazyUi.font.copyWith(color: Colors.black87)),
       iconTheme: const IconThemeData(size: 20, color: Colors.black87),
     );
   }
@@ -33,7 +35,8 @@ class LzTheme {
         elevation: .5,
         titleTextStyle: LazyUi.font.copyWith(fontSize: 20, color: Colors.white),
       ),
-      textTheme: TextTheme(bodyMedium: LazyUi.font.copyWith(color: Colors.white)),
+      textTheme:
+          TextTheme(bodyMedium: LazyUi.font.copyWith(color: Colors.white)),
       iconTheme: const IconThemeData(size: 20, color: Colors.white),
     );
   }

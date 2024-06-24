@@ -17,7 +17,8 @@ class LzContextModifiers {
   /// Focuses on the specified [node] within the current [context].
   ///
   /// If [node] is not provided, a new [FocusNode] will be created and focused.
-  void focus([FocusNode? node]) => FocusScope.of(context).requestFocus(node ?? FocusNode());
+  void focus([FocusNode? node]) =>
+      FocusScope.of(context).requestFocus(node ?? FocusNode());
 
   /// Pops the current route off the navigator stack, optionally passing a [result].
   void pop([dynamic result]) => Navigator.pop(context, result);
@@ -29,7 +30,8 @@ class LzContextModifiers {
   ///
   /// Optionally, [arguments] can be passed to the destination.
   /// If [removeUntil] is true, removes all previous routes from the stack.
-  Future<T?> push<T extends Object?>(Object destination, {Object? arguments, bool removeUntil = false}) {
+  Future<T?> push<T extends Object?>(Object destination,
+      {Object? arguments, bool removeUntil = false}) {
     if (destination is String) {
       if (removeUntil) {
         return Navigator.pushNamedAndRemoveUntil<T>(
@@ -80,7 +82,8 @@ extension LzContextExtensions on BuildContext {
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
 
   /// Returns the window padding from the view.
-  EdgeInsets get windowPadding => MediaQueryData.fromView(View.of(this)).padding;
+  EdgeInsets get windowPadding =>
+      MediaQueryData.fromView(View.of(this)).padding;
 
   /// Shows a dialog and returns a future that completes when the dialog is dismissed.
   ///
@@ -90,9 +93,12 @@ extension LzContextExtensions on BuildContext {
   /// - [blur]: The amount of blur to apply if [backBlur] is true.
   /// - [barrierColor]: The color of the barrier behind the dialog.
   Future<T?> dialog<T extends Object?>(Widget widget,
-      {bool dismiss = true, bool backBlur = false, double blur = 7, Color? barrierColor}) async {
-    Widget blurWrapper(Widget child) =>
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+      {bool dismiss = true,
+      bool backBlur = false,
+      double blur = 7,
+      Color? barrierColor}) async {
+    Widget blurWrapper(Widget child) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
 
     return showDialog<T>(
         context: this,
@@ -112,19 +118,25 @@ extension LzContextExtensions on BuildContext {
       {bool dismiss = true,
       Duration? duration,
       double begin = .05,
-      Widget Function(BuildContext, Animation<double>, Animation<double>, Widget)? transitionBuilder}) {
+      Widget Function(
+              BuildContext, Animation<double>, Animation<double>, Widget)?
+          transitionBuilder}) {
     return showGeneralDialog(
       context: this,
       barrierDismissible: dismiss,
       barrierLabel: MaterialLocalizations.of(this).modalBarrierDismissLabel,
       transitionDuration: duration ?? const Duration(milliseconds: 200),
-      pageBuilder: (BuildContext buildContext, Animation animation, Animation secondaryAnimation) {
+      pageBuilder: (BuildContext buildContext, Animation animation,
+          Animation secondaryAnimation) {
         return widget;
       },
-      transitionBuilder:
-          (BuildContext buildContext, Animation<double> animation, Animation<double> secondaryAnimation, Widget child) {
+      transitionBuilder: (BuildContext buildContext,
+          Animation<double> animation,
+          Animation<double> secondaryAnimation,
+          Widget child) {
         if (transitionBuilder != null) {
-          return transitionBuilder(buildContext, animation, secondaryAnimation, child);
+          return transitionBuilder(
+              buildContext, animation, secondaryAnimation, child);
         }
 
         return FadeTransition(
@@ -160,13 +172,18 @@ extension LzContextExtensions on BuildContext {
       Color? barrierColor,
       bool isScrollControlled = true}) async {
     Widget wrapper(Widget child) => Container(
-          padding: EdgeInsets.only(top: safeArea ? MediaQueryData.fromView(View.of(this)).padding.top : 0),
-          decoration: BoxDecoration(color: backgroundColor ?? (safeArea ? Colors.white : Colors.transparent)),
+          padding: EdgeInsets.only(
+              top: safeArea
+                  ? MediaQueryData.fromView(View.of(this)).padding.top
+                  : 0),
+          decoration: BoxDecoration(
+              color: backgroundColor ??
+                  (safeArea ? Colors.white : Colors.transparent)),
           child: child,
         );
 
-    Widget blurWrapper(Widget child) =>
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+    Widget blurWrapper(Widget child) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
 
     return showModalBottomSheet<T>(
       context: this,

@@ -7,7 +7,10 @@ class Utils {
   static void errorCatcher(Object e, StackTrace s, {bool verbose = false}) {
     final frames = Trace.from(s).terse.frames;
     final location = verbose
-        ? frames.take(5).map((e) => '${e.member ?? 'Unknown'}(${e.line}:${e.column})').join(', ')
+        ? frames
+            .take(5)
+            .map((e) => '${e.member ?? 'Unknown'}(${e.line}:${e.column})')
+            .join(', ')
         : '${frames.isNotEmpty ? frames[1].member : 'Unknown location'} (Line ${frames.isNotEmpty ? frames[1].line : 'Unknown'})';
     logg('-- Error on $location, $e', name: 'ERROR');
   }

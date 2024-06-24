@@ -12,9 +12,7 @@ class FeatureView extends StatelessWidget {
       ),
       body: ListView(
         padding: Ei.all(20),
-        children: [
-
-        ],
+        children: [],
       ),
     );
   }
