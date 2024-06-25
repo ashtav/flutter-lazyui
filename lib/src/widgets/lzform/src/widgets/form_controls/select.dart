@@ -2,17 +2,39 @@
 
 part of forms;
 
+/// A dropdown selection widget for choosing an option from a list.
 class Select extends StatelessWidget with LzFormMixin {
-  final String? label, hint;
+  /// The label displayed above the dropdown selection.
+  final String? label;
+
+  /// The hint text displayed in the dropdown selection.
+  final String? hint;
+
+  /// The list of options available for selection.
   final List<Option> options;
+
+  /// The form type configuration.
   final FormType? type;
+
+  /// The style configuration for the dropdown selection.
   final FormStyle? style;
+
+  /// The style configuration for the picker used in the dropdown selection.
   final PickerStyle? pickerStyle;
+
+  /// Specifies if the dropdown selection is disabled.
   final bool disabled;
+
+  /// Callback function invoked when the dropdown selection is tapped.
   final Future Function()? onTap;
+
+  /// Callback function invoked when the selected option changes.
   final Function(SelectValue value)? onChange;
+
+  /// The form model associated with the dropdown selection.
   final FormModel? model;
 
+  /// Create widget
   const Select(
       {super.key,
       this.label,

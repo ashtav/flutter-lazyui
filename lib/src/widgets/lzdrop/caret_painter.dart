@@ -27,6 +27,7 @@ class CaretPainter extends CustomPainter {
   /// its orientation or position relative to other elements.
   final int side;
 
+  /// Create widget
   CaretPainter({
     this.strokeColor = Colors.black,
     this.strokeWidth = 3,
@@ -74,6 +75,7 @@ class CaretPainter extends CustomPainter {
     }
   }
 
+  /// Generates a triangular path.
   Path getTrianglePath(double x, double y) {
     return Path()
       ..moveTo(0, y)

@@ -79,6 +79,7 @@ extension LzIntNullableExtension on int? {
   }
 }
 
+/// Extends the functionality of the [double] class with additional methods.
 extension LzDoubleExtension on double {
   /// Returns a SizedBox with the specified width.
   SizedBox get width => SizedBox(width: this);

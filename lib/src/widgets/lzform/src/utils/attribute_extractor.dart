@@ -1,11 +1,24 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../models/attribute.dart';
 
+/// A mixin for form-related functionalities to be used with widgets.
+///
+/// This mixin provides utility methods to interact with form attributes and create internal widgets.
 mixin LzFormMixin {
+  /// Retrieves the attribute of type `Attribute` from the nearest ancestor widget of type `LzFormWrap`.
+  ///
+  /// If the `LzFormWrap` widget is found, returns an `Attribute` object containing:
+  /// - `style`: The style inherited from `LzFormWrap`.
+  /// - `isWrapped`: Indicates whether the widget is wrapped by `LzFormWrap`.
+  /// - `isGrouped`: Indicates whether grouping is enabled in `LzFormWrap`.
+  /// - `type`: The type of the `LzFormWrap`.
+  ///
+  /// If no `LzFormWrap` widget is found, returns an `Attribute` object with default or null values.
   Attribute getAttribute<T>(BuildContext context) {
-    // get ancestor widget name
     final fa = context.findAncestorWidgetOfExactType<LzFormWrap>();
     return Attribute(
         style: fa?.style,
@@ -14,7 +27,9 @@ mixin LzFormMixin {
         type: fa?.type);
   }
 
-  // ignore: library_private_types_in_public_api
+  /// Creates and returns a `_TopInnerLineLabel` widget with the specified `color`.
+  ///
+  /// This is a private method used internally.
   _TopInnerLineLabel getTopInnerLineLabel({Color? color}) {
     return _TopInnerLineLabel(color: color);
   }

@@ -112,6 +112,7 @@ extension LzStringExtension on String {
   }
 }
 
+/// Extension method on [String?] to format the value as a currency string.
 extension LzNullableStringExtension on String? {
   /// Formats the value as Indonesian Rupiah (IDR).
   ///

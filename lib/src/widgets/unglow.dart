@@ -34,11 +34,19 @@ class Unglow extends ScrollBehavior {
 /// ```
 
 class ScrollGlowless extends StatelessWidget {
+  /// The child widget to display within the scrollable area.
   final Widget child;
-  const ScrollGlowless({super.key, required this.child});
+
+  /// Creates a widget that removes the scroll glow effect.
+  ///
+  /// [child]: The child widget to display within the scrollable area.
+  const ScrollGlowless({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ScrollConfiguration(behavior: Unglow(), child: child);
+    return ScrollConfiguration(
+      behavior: Unglow(),
+      child: child,
+    );
   }
 }

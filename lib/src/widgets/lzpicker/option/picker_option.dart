@@ -18,6 +18,7 @@ class LzPickerOption extends StatefulWidget {
   /// The style configuration for the picker.
   final PickerStyle? style;
 
+  /// Create widget
   const LzPickerOption({
     Key? key,
     this.options = const [],
@@ -345,6 +346,7 @@ class ConfirmButton extends StatelessWidget {
   /// A flag indicating whether the button is disabled.
   final bool disabled;
 
+  /// Create widget
   const ConfirmButton(this.text,
       {super.key, this.onTap, this.disabled = false});
 
@@ -410,15 +412,16 @@ class SelectPickerNotifier extends ChangeNotifier {
   /// The number of options found.
   int found = 0;
 
-  // this is used to disabled item in select picker
+  /// This is used to disabled item in select picker
   bool disabled = false, isExpanded = false;
 
+  /// Set disabled
   void setDisabled(bool value) {
     disabled = value;
     notifyListeners();
   }
 
-  // set height
+  /// Set height
   void setHeight(double value) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       height = value;
@@ -427,6 +430,7 @@ class SelectPickerNotifier extends ChangeNotifier {
     });
   }
 
+  /// Do search
   void onSearch(String value) {
     try {
       // if (value.isEmpty) {

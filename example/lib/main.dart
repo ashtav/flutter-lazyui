@@ -1,14 +1,11 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:example/app/screens/app_intro.dart';
+import 'package:example/app/modules/home/views/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // call LazyUi.config() before runApp()
-  // to set your own default values, such as: theme, font, spacing, etc.
-  LazyUi.config();
+  // initialize lazyui
+  LazyUi.init();
 
   runApp(const MyApp());
 }
@@ -19,12 +16,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ThemeProvider(
-      initTheme: LzTheme.light(),
+      initTheme: LzTheme.light,
       builder: (context, theme) {
         return MaterialApp(
           theme: theme,
           title: 'LazyUi',
-          home: const AppIntro(),
+          home: const HomeView(),
           builder: (BuildContext context, Widget? widget) {
             // use LazyUi.builder to wrap your widget
             // so that you can use LzToast and setting maxScalingFontSize

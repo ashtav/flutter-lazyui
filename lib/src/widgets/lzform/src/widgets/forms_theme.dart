@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Wrapper widget for encapsulating a form and managing its styling and behavior.
 class LzFormWrap extends StatelessWidget {
   /// The label widget displayed above the form.
   final Widget? label;

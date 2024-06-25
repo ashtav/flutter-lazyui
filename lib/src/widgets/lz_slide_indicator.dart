@@ -1,51 +1,43 @@
 part of widget;
 
-/// LzSlideIndicator is a Flutter widget used to display a row of indicators typically used for indicating the current page or position within a set of items or slides.
-/// It allows customization of the appearance and behavior of the indicators.
-///
-/// ```dart
-/// LzSlideIndicator(
-///   length: 5, // Total number of indicators.
-///   active: 2, // The currently active indicator.
-///   size: (index) => [10, 10], // Optional function to customize indicator sizes.
-///   activeColor: Colors.blue, // Color of the active indicator.
-///   color: Colors.grey, // Color of inactive indicators.
-///   radius: 5.0, // Radius of the indicator shapes.
-///   spacing: 7, // Spacing between indicators.
-///   position: CrossAxisAlignment.center, // Alignment of the row of indicators.
-/// )
-/// ```
-
+/// A widget that displays a row of slide indicators with customizable properties.
 class LzSlideIndicator extends StatelessWidget {
-  const LzSlideIndicator(
-      {super.key,
-      this.length = 3,
-      this.size,
-      this.active = 0,
-      this.color,
-      this.activeColor,
-      this.radius = 5.0,
-      this.spacing = 7,
-      this.position = Caa.center});
-
+  /// The total number of slide indicators to display.
   final int length;
 
-  /// Function to customize the size of each indicator.
-  ///
-  /// The function receives an `index` representing the position of the indicator
-  /// and returns a List of two doubles representing the width and height of the indicator.
-  ///
-  /// For example, if you want to set a fixed size for all indicators:
-  /// ```dart
-  /// (index) => [10, 10] // Sets both width and height to 10 for all indicators.
-  /// ```
-  ///
-  /// If the function returns an empty list or a list with only one element, default values are used.
+  /// Optional callback to determine the size of indicators based on their active state.
   final List<double> Function(bool active)? size;
+
+  /// The index of the currently active slide indicator.
   final int active;
-  final Color? activeColor, color;
-  final double radius, spacing;
+
+  /// Color of the active slide indicator.
+  final Color? activeColor;
+
+  /// Color of inactive slide indicators.
+  final Color? color;
+
+  /// Radius of the slide indicators' border.
+  final double radius;
+
+  /// Spacing between slide indicators.
+  final double spacing;
+
+  /// Alignment of the slide indicators within the row.
   final CrossAxisAlignment position;
+
+  /// Create widget
+  const LzSlideIndicator({
+    super.key,
+    this.length = 3,
+    this.size,
+    this.active = 0,
+    this.color,
+    this.activeColor,
+    this.radius = 5.0,
+    this.spacing = 7,
+    this.position = CrossAxisAlignment.center,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +46,7 @@ class LzSlideIndicator extends StatelessWidget {
 
     return Row(
       crossAxisAlignment: position,
-      mainAxisSize: Mas.min,
+      mainAxisSize: MainAxisSize.min,
       children: List.generate(length, (i) {
         if (size != null) {
           List<double> size = this.size!(active == i);
@@ -64,7 +56,7 @@ class LzSlideIndicator extends StatelessWidget {
 
         return AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          margin: Ei.only(r: spacing),
+          margin: EdgeInsets.only(right: spacing),
           width: width,
           height: height,
           decoration: BoxDecoration(

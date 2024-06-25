@@ -2,19 +2,51 @@
 
 part of forms;
 
+/// A number input widget for capturing numeric values.
 class Number extends StatelessWidget with LzFormMixin {
-  final String? label, hint;
+  /// The label displayed above the number input field.
+  final String? label;
+
+  /// The hint text displayed inside the number input field.
+  final String? hint;
+
+  /// The form type configuration.
   final FormType? type;
+
+  /// The style configuration for the number input field.
   final FormStyle? style;
+
+  /// Whether the number input field is disabled.
   final bool disabled;
+
+  /// Whether the number input field should have autofocus.
   final bool autofocus;
+
+  /// Callback function invoked when the number input text changes.
   final Function(String value)? onChange;
+
+  /// The form model associated with the number input field.
   final FormModel? model;
+
+  /// The focus node that controls the focus state of the number input field.
   final FocusNode? node;
-  final int min, max, step;
+
+  /// The minimum value allowed for the number input.
+  final int min;
+
+  /// The maximum value allowed for the number input.
+  final int max;
+
+  /// The step value used for incrementing or decrementing the number input.
+  final int step;
+
+  /// Whether to show control buttons (e.g., increment and decrement buttons).
   final bool controls;
+
+  /// List of icon data for control buttons.
   final List<IconData>? iconControls;
 
+  /// Create widget
   const Number(
       {super.key,
       this.label,

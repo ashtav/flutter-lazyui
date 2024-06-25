@@ -16,6 +16,7 @@ class Formatter {
   static TextInputFormatter get alpha =>
       FilteringTextInputFormatter.allow(RegExp("[a-zA-Z ]"));
 
+  /// Returns a [TextInputFormatter] that allows only valid email characters.
   static TextInputFormatter get email =>
       FilteringTextInputFormatter.allow(RegExp("[a-zA-Z0-9@._-]"));
 

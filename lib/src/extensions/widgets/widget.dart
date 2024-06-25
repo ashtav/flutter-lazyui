@@ -185,6 +185,7 @@ class LzModifiers {
   }
 }
 
+/// Extension on [Widget] providing custom methods.
 extension LzWidgetExtension on Widget {
   /// ``` dart
   /// YourWidget().onTap(() {})

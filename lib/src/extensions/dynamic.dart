@@ -46,9 +46,9 @@ extension LzDynamicExtension<T extends dynamic> on T? {
     return this!;
   }
 
-  // check null or empty
+  /// check null or empty
   bool get hasNullOrEmpty => this == null || toString().trim() == '';
 
-  // check null
+  /// check null
   bool get hasNull => this == null;
 }

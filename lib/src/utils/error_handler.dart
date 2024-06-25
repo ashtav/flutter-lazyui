@@ -21,45 +21,58 @@ Map<String, dynamic> _errorConfig = {
   'error_info': null
 };
 
-/// ErrorInfo Class
-///
-/// [ErrorInfo] is a class used to represent information about the error that occurred.
-/// It has several properties:
-///
-/// - `device`: An optional String that represents the device associated with the error.
-/// - `botToken`: An optional String that represents the bot token used to send error messages.
-/// - `chatId`: An optional String that represents the chat ID where error messages will be sent.
-/// - `error`: A String that is the message or description of the error that occurred.
-/// - `networkError`: An object of [NetworkError] used to store additional information about network errors (optional).
-///
+/// A class to encapsulate error information.
 class ErrorInfo {
-  final String? device, botToken, chatId;
+  /// The device identifier associated with the error, if available.
+  final String? device;
+
+  /// The bot token related to the error, if applicable.
+  final String? botToken;
+
+  /// The chat ID associated with the error, if relevant.
+  final String? chatId;
+
+  /// The main error message or description.
   final String error;
+
+  /// Optional details about a network error that occurred.
   final NetworkError? networkError;
 
-  ErrorInfo(
-      {this.device,
-      this.botToken,
-      this.chatId,
-      required this.error,
-      this.networkError});
+  /// Constructs an [ErrorInfo] object with optional device identifier,
+  /// bot token, chat ID, a required error message, and optional network error details.
+  ErrorInfo({
+    this.device,
+    this.botToken,
+    this.chatId,
+    required this.error,
+    this.networkError,
+  });
 }
 
-/// NetworkError Class
-///
-/// [NetworkError] is a class used to represent errors related to the network.
-/// It has several properties:
-///
-/// - `baseUrl`: An optional String representing the base URL associated with the network error.
-/// - `path`: An optional String representing the path or URL endpoint that caused the network error.
-/// - `error`: A String that is the message or description of the network error that occurred.
-///
+/// A class to encapsulate network error details.
 class NetworkError {
-  final String? baseUrl, path, error;
+  /// The base URL associated with the network error, if applicable.
+  final String? baseUrl;
+
+  /// The path or endpoint where the network error occurred, if known.
+  final String? path;
+
+  /// The error message or description related to the network error.
+  final String? error;
+
+  /// Constructs a [NetworkError] object with optional base URL, path, and error message.
   NetworkError({this.baseUrl, this.path, this.error});
 }
 
+/// A class to configure and handle error reporting.
 class Errors {
+  /// Configures the error reporting settings.
+  ///
+  /// [botToken]: The bot token to use for reporting errors via a bot.
+  /// [chatId]: The chat ID to send error reports to.
+  /// [useBot]: Whether to use the bot for reporting errors. Defaults to true.
+  /// [useList]: Whether to use a list for collecting errors. Defaults to false.
+  /// [errorBuilder]: A function to build custom error information.
   static void config(
       {String? botToken,
       String? chatId,

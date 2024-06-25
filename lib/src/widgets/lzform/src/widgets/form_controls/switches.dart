@@ -4,13 +4,24 @@ import 'package:lazyui/lazyui.dart';
 
 import '../../notifiers/form_notifier.dart';
 
+/// Switch widget that allows toggling between two states.
 class Switches extends StatelessWidget {
+  /// Optional label displayed alongside the switch.
   final String? label;
+
+  /// Styling configuration for the switch.
   final SwitchStyle? style;
+
+  /// Callback function invoked when the switch state changes.
   final Function(bool)? onChange;
+
+  /// Initial value of the switch.
   final bool initValue;
+
+  /// Whether the switch operates in a reversed state.
   final bool reversed;
 
+  /// Create widget
   const Switches(
       {super.key,
       this.label,

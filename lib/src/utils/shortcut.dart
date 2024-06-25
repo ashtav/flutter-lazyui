@@ -4,6 +4,7 @@ part of utils;
 
 double _borderWidth = .7;
 
+/// A utility class for defining border styles and configurations.
 class Br {
   /// This method is used to set the default border color and width for the entire application.
   ///
@@ -136,6 +137,7 @@ class Br {
   static const BoxBorder none = Border.fromBorderSide(BorderSide.none);
 }
 
+/// A class containing commonly used EdgeInsets constants.
 class Ei {
   /// ``` dart
   /// padding: Ei.zero
@@ -378,6 +380,61 @@ class Tit {
 
   /// A constant representing a visible password text input type.
   static const TextInputType visiblePassword = TextInputType.visiblePassword;
+}
+
+/// This class provides constants representing the different options
+/// for the `AlignmentDirectional` enum used in Flutter for aligning
+/// widgets within a directional context (typically used with widgets
+/// that have a defined reading direction, like `Text`).
+class Ad {
+  /// The `bottomCenter` constant aligns the bottom edge of the widget
+  /// with the bottom edge of the available space, and the center of the
+  /// widget with the center of the available space along the main axis
+  /// (which depends on the reading direction).
+  static const AlignmentDirectional bottomCenter =
+      AlignmentDirectional.bottomCenter;
+
+  /// The `bottomEnd` constant aligns the bottom edge of the widget with
+  /// the bottom edge of the available space, and the trailing edge of the
+  /// widget with the trailing edge of the available space along the main axis.
+  static const AlignmentDirectional bottomEnd = AlignmentDirectional.bottomEnd;
+
+  /// The `bottomStart` constant aligns the bottom edge of the widget with
+  /// the bottom edge of the available space, and the leading edge of the
+  /// widget with the leading edge of the available space along the main axis.
+  static const AlignmentDirectional bottomStart =
+      AlignmentDirectional.bottomStart;
+
+  /// The `center` constant centers the widget both horizontally and
+  /// vertically within the available space, considering the reading direction
+  /// for horizontal centering.
+  static const AlignmentDirectional center = AlignmentDirectional.center;
+
+  /// The `centerEnd` constant aligns the center of the widget with the
+  /// center of the available space vertically, and the trailing edge of the
+  /// widget with the trailing edge of the available space along the main axis.
+  static const AlignmentDirectional centerEnd = AlignmentDirectional.centerEnd;
+
+  /// The `centerStart` constant aligns the center of the widget with the
+  /// center of the available space vertically, and the leading edge of the
+  /// widget with the leading edge of the available space along the main axis.
+  static const AlignmentDirectional centerStart =
+      AlignmentDirectional.centerStart;
+
+  /// The `topCenter` constant aligns the top edge of the widget with the
+  /// top edge of the available space, and the center of the widget with
+  /// the center of the available space along the main axis.
+  static const AlignmentDirectional topCenter = AlignmentDirectional.topCenter;
+
+  /// The `topEnd` constant aligns the top edge of the widget with the
+  /// top edge of the available space, and the trailing edge of the widget
+  /// with the trailing edge of the available space along the main axis.
+  static const AlignmentDirectional topEnd = AlignmentDirectional.topEnd;
+
+  /// The `topStart` constant aligns the top edge of the widget with the
+  /// top edge of the available space, and the leading edge of the widget
+  /// with the leading edge of the available space along the main axis.
+  static const AlignmentDirectional topStart = AlignmentDirectional.topStart;
 }
 
 /// A class providing a utility method for creating box shadows.

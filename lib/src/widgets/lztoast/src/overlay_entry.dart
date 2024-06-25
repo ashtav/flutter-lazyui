@@ -9,6 +9,7 @@ class LzToastOverlayEntry extends OverlayEntry {
   /// A function that builds the overlay widget.
   final WidgetBuilder overlayBuilder;
 
+  /// Create instance
   LzToastOverlayEntry({
     required this.overlayBuilder,
   }) : super(builder: overlayBuilder);

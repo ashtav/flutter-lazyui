@@ -14,6 +14,7 @@ class Skeleton extends StatelessWidget {
   /// Highlight color of the skeleton widget.
   final Color? highlight;
 
+  /// Create widget
   const Skeleton(
       {super.key, this.size, this.radius = 0, this.color, this.highlight});
 
@@ -53,16 +54,13 @@ class Skeleton extends StatelessWidget {
   }
 }
 
+/// Extension on Skeleton to generate a column of widgets based on [value].
 extension SkeletonExtension on Skeleton {
-  /// Extension method to iterate over a skeleton widget multiple times vertically.
+  /// Iterates over [value] to generate a column of Skeleton widgets.
   ///
-  /// The [value] parameter specifies the number of iterations.
-  ///
-  /// The [alignment] parameter specifies the crossAxisAlignment of the column.
-  ///
-  /// The [gap] parameter specifies the gap between each iteration.
-  ///
-  /// Returns a column widget with the specified number of iterations of the skeleton widget.
+  /// [value]: Number of Skeleton widgets to generate.
+  /// [alignment]: CrossAxisAlignment for the Column.
+  /// [gap]: Vertical gap between generated Skeleton widgets.
   Widget iterate(int value,
       {CrossAxisAlignment alignment = CrossAxisAlignment.start,
       double gap = 0}) {

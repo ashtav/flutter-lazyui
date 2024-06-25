@@ -75,9 +75,13 @@ class FormNotifier extends ChangeNotifier {
   /// Sets the state of the form field and notifies listeners.
   void setState() => notifyListeners();
 
-  // radio button
+  /// Represents the selected radio button and the list of available radio options.
   RadioModel? selectedRadio;
+
+  /// List of radio options.
   List<RadioModel> radioList = [];
+
+  /// Flag indicating whether radio buttons are enabled or not.
   bool isRadio = false;
 
   /// Sets the radio button option and notifies listeners.
@@ -101,9 +105,13 @@ class FormNotifier extends ChangeNotifier {
     setOption(radio);
   }
 
-  // checkbox
+  /// List of checkboxes available for selection.
   List<CheckboxModel> checkboxList = [];
+
+  /// List of currently selected checkboxes.
   List<CheckboxModel> selectedCheckbox = [];
+
+  /// Flag indicating whether checkboxes are enabled or not.
   bool isCheckbox = false;
 
   /// Sets the checkbox option and notifies listeners.
@@ -143,20 +151,31 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // switches
+  /// Flag indicating whether switches are enabled or not.
   bool isSwitches = false;
+
+  /// The current value of the switches.
   bool switchesValue = false;
 
-  // select
-  bool isSelect = false, isSelectShow = false;
+  /// Flag indicating whether selection is enabled or not.
+  bool isSelect = false;
+
+  /// Flag indicating whether the selection widget is visible.
+  bool isSelectShow = false;
+
+  /// List of options for selection.
   List<Option> selectList = [];
+
+  /// The currently selected option.
   Option? selectedSelect;
+
+  /// Callback function triggered when the selection widget is tapped.
   dynamic Function()? onTapSelect;
 
-  // this method is called when select value is selected
+  /// this method is called when select value is selected
   dynamic Function(Option value)? onSelected;
 
-  // get select value
+  /// get select value
   dynamic get getSelect => selectedSelect?.value ?? selectedSelect?.label;
 
   /// Sets the select option and notifies listeners.
@@ -174,11 +193,23 @@ class FormNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  // number
+  /// Retrieves the integer value from the text controller, defaulting to 0 if empty.
   int get getNumber =>
       int.parse(controller.text.trim().isEmpty ? '0' : controller.text);
-  int min = 0, max = 100, step = 1;
+
+  /// The minimum value allowed for the number input.
+  int min = 0;
+
+  /// The maximum value allowed for the number input.
+  int max = 100;
+
+  /// The step size for incrementing or decrementing the number input.
+  int step = 1;
+
+  /// Timer instance used for delaying updates.
   Timer? timer;
+
+  /// Callback function triggered when the input value changes.
   Function(String value)? onChange;
 
   /// Sets the number value and notifies listeners.
@@ -241,6 +272,7 @@ class FormNotifier extends ChangeNotifier {
     super.dispose();
   }
 
+  /// FormNotifier
   FormNotifier() {
     // logg('FormNotifier created', name: 'LzForm');
   }

@@ -40,6 +40,7 @@ class DropStyle {
   /// The offset to adjust the position of the dropdown menu.
   final Offset? offset;
 
+  /// Create widget
   DropStyle(
       {this.width,
       this.separatorColor,

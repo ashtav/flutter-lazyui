@@ -43,13 +43,20 @@ class LzToastConfig {
 
 final _notifier = ToastNotifier();
 
+/// A class for displaying toast messages on the screen.
+
 class LzToast {
+  /// Background color for the toast message (defaults to null for transparency).
   Color? backgroundColor;
+
+  /// Internal reference to the overlay entry used for displaying the toast.
   LzToastOverlayEntry? overlayEntry;
 
-  /// Singleton instance of LzToast.
-  static final LzToast _instance = LzToast();
-  static LzToast get instance => _instance;
+  /// Private constructor to enforce singleton pattern.
+  LzToast._internal(); // Use factory constructor instead
+
+  /// Singleton instance of `LzToast`.
+  static final LzToast instance = LzToast._internal();
 
   /// init LazyLoading
   static TransitionBuilder init({TransitionBuilder? builder}) {
@@ -62,10 +69,18 @@ class LzToast {
     };
   }
 
+  /// Getter for accessing the default configuration for `LzToast`.
+
   static LzToastConfig get config => LzToastConfig(
-      placement: _defaultPlacement,
-      duration: _defaultDuration,
-      radius: _defaultRadius);
+        /// Default placement for the toast message (likely a value from LzToastPlacement enum).
+        placement: _defaultPlacement,
+
+        /// Default duration for which the toast message is displayed.
+        duration: _defaultDuration,
+
+        /// Default corner radius for the toast message background.
+        radius: _defaultRadius,
+      );
 
   /// Displays a toast message with the specified parameters.
   static void show(String? message,
@@ -226,7 +241,9 @@ class LzToast {
   }
 }
 
+/// A widget responsible for displaying the toast message on the screen.
 class LzToastWidget extends StatelessWidget {
+  /// Creates a new instance of `LzToastWidget`.
   const LzToastWidget({super.key});
 
   @override

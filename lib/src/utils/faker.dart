@@ -3,7 +3,7 @@ part of utils;
 /// The `Faker` class provides methods for generating random text content.
 
 class Faker {
-  // generate random words based on length
+  /// generate random words based on length
   static String words([int length = 3, int? paragraph]) {
     String result = Lipsum.createWord(length);
 
@@ -16,7 +16,7 @@ class Faker {
     return result;
   }
 
-  // generate random number based on length
+  /// generate random number based on length
   static String number(int length, {int? startWith}) {
     try {
       String result = '';
@@ -30,7 +30,7 @@ class Faker {
     }
   }
 
-  // generate random price based on length
+  /// generate random price based on length
   static String price(
       {int length = 5, String locale = 'id_ID', String prefix = ''}) {
     int randomInt = math.Random().nextInt(math.pow(10, length) as int);
@@ -47,18 +47,18 @@ class Faker {
     return result;
   }
 
-  // generate random name
+  /// generate random name
   static String name() {
     return ExampleData.names[math.Random().nextInt(ExampleData.names.length)];
   }
 
-  // generate random category
+  /// generate random category
   static String category() {
     return ExampleData
         .categories[math.Random().nextInt(ExampleData.categories.length)];
   }
 
-  // generate random email
+  /// generate random email
   static String email({String domain = 'gmail.com', bool addNumber = false}) {
     String result = name().toLowerCase().replaceAll(' ', '');
 
@@ -72,40 +72,40 @@ class Faker {
     return result;
   }
 
-  // generate random phone number
+  /// generate random phone number
   static String phone([String prefix = '08']) {
     return '$prefix${math.Random().nextInt(999999999)}';
   }
 
-  // generate random address
+  /// generate random address
   static String address() {
     return ExampleData
         .address[math.Random().nextInt(ExampleData.address.length)];
   }
 
-  // generate random date
+  /// generate random date
   static String date({String format = 'yyyy-MM-dd'}) {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat(format).format(now);
     return formattedDate;
   }
 
-  // generate random gender
+  /// generate random gender
   static String gender([List<String> data = const ['Male', 'Female']]) {
     return data[math.Random().nextInt(data.length)];
   }
 
-  // generate random time
+  /// generate random time
   static String time() {
     return '${math.Random().nextInt(24)}:${math.Random().nextInt(60)}:${math.Random().nextInt(60)}';
   }
 
-  // generate random invoice number
+  /// generate random invoice number
   static String invoice() {
     return 'INV-${math.Random().nextInt(999999999)}';
   }
 
-  // generate random password with lowercase, uppercase, number, and special character
+  /// generate random password with lowercase, uppercase, number, and special character
   static String password({int length = 8, bool useSpecialChar = false}) {
     List<String> specials = [
       '!',

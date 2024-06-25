@@ -86,6 +86,7 @@ class InkTouch extends StatelessWidget {
   /// The duration of the splash animation.
   final Duration? animationDuration;
 
+  /// Create InkTouch
   const InkTouch(
       {Key? key,
       this.child,
@@ -166,6 +167,16 @@ class InkTouch extends StatelessWidget {
     );
   }
 
+  /// Creates a touchable ink space widget with customizable properties.
+  ///
+  /// [onTap]: Callback function when the space is tapped.
+  /// [padding]: Padding around the space.
+  /// [border]: Border decoration for the space.
+  /// [color]: Background color of the space, defaults to the application's default color.
+  /// [child]: The widget to display inside the space.
+  /// [radius]: Border radius for the space.
+  ///
+  /// Returns an [InkTouch] widget configured with the provided properties.
   static InkTouch space({
     VoidCallback? onTap,
     EdgeInsetsGeometry? padding,

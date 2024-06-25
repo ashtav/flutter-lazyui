@@ -9,8 +9,16 @@ part of widget;
 /// ```
 
 class Wrapper extends StatelessWidget {
+  /// The main child widget to display within this wrapper.
   final Widget child;
+
+  /// Callback function triggered when a back press event occurs.
   final Function()? onBackPress;
+
+  /// Creates a wrapper widget.
+  ///
+  /// [child]: The main child widget to display within this wrapper.
+  /// [onBackPress]: Callback function triggered when a back press event occurs.
   const Wrapper({Key? key, required this.child, this.onBackPress})
       : super(key: key);
 

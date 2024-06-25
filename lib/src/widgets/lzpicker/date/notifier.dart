@@ -24,6 +24,7 @@ class DatePickerNotifier extends ChangeNotifier {
   DateTime get value => DateTime(values['y'] ?? 0, values['m'] ?? 0,
       values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
+  /// Initializes the state of the `DatePickerNotifier` with format parts and optional dates.
   void onInitialized(List<String> formats,
       {DateTime? initDate, DateTime? minDate, DateTime? maxDate}) {
     final now = DateTime.now();
@@ -59,6 +60,7 @@ class DatePickerNotifier extends ChangeNotifier {
     });
   }
 
+  /// Generates a list of strings representing date values based on the provided type.
   List<String> generateDate(String type, [bool useNumericFormat = false]) {
     final now = DateTime.now();
 
@@ -100,6 +102,7 @@ class DatePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Updates the internal state of the `DatePickerNotifier` based on user selection changes.
   void onChange(int index, String type) {
     try {
       int value = int.parse(generateDate(type, true)[index]);
@@ -148,14 +151,16 @@ class DatePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Scrolls a list associated with the given `type` to the item at the specified `index`.
   void scrollTo(String type, int index, {Duration? duration}) {
     controller[type]?.animateToItem(index,
         duration: duration ?? 100.ms, curve: Curves.easeInOut);
   }
 
-  // time picker
+  /// time picker
   bool openTimePicker = false;
 
+  /// Toggles the visibility of the time picker and sets the initial scroll positions for the hour and minute lists.
   void toggleTimePicker() {
     openTimePicker = !openTimePicker;
 

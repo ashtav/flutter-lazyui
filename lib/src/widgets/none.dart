@@ -4,6 +4,7 @@ part of widget;
 /// It allows you to quickly create a widget that takes up no space in your layout.
 
 class None extends StatelessWidget {
+  /// Create widget
   const None({Key? key}) : super(key: key);
 
   @override

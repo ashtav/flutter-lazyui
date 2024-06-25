@@ -1,23 +1,21 @@
 part of widget;
 
-/// A [StatelessWidget] that provides a blinking animation effect to its child.
-///
-/// The `BlinkAnimate` widget animates the opacity of the `child` widget, creating a blinking effect.
-/// This can be turned off by setting `animate` to `false`.
-/// You can also specify the `duration` of the blink animation, if left null, it defaults to 300 milliseconds.
-///
-/// Example usage:
-/// ```dart
-/// BlinkAnimate(
-///   child: Text('Hello, world!'),
-/// );
-/// ```
-
+/// A widget that animates its child widget to blink.
 class BlinkAnimate extends StatefulWidget {
+  /// The child widget to be animated.
   final Widget child;
+
+  /// Whether the animation should be active.
   final bool animate;
+
+  /// The duration of the blink animation.
   final Duration? duration;
 
+  /// Creates a [BlinkAnimate] widget.
+  ///
+  /// [child]: The child widget to be animated.
+  /// [animate]: Whether the animation should be active (default is true).
+  /// [duration]: The duration of the blink animation.
   const BlinkAnimate({
     Key? key,
     required this.child,

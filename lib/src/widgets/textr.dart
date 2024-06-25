@@ -18,22 +18,55 @@ part of widget;
 /// ```
 
 class Textr extends StatelessWidget {
+  /// The text to display.
   final String text;
+
+  /// The style of the text.
   final TextStyle? style;
+
+  /// The alignment of the text within its container.
   final TextAlign? textAlign;
+
+  /// The text direction (ltr or rtl).
   final TextDirection? textDecoration;
+
+  /// How overflowing text should be handled.
   final TextOverflow? overflow;
+
+  /// Whether the text should wrap if it exceeds its container's width.
   final bool? softwrap;
+
+  /// The maximum number of lines to display before truncating.
   final int? maxLines;
-  final EdgeInsetsGeometry? margin, padding;
+
+  /// The margin around the text widget.
+  final EdgeInsetsGeometry? margin;
+
+  /// The padding around the text widget.
+  final EdgeInsetsGeometry? padding;
+
+  /// The radius of the corners of the text widget's background.
   final BorderRadiusGeometry? radius;
+
+  /// The border of the text widget's background.
   final BoxBorder? border;
+
+  /// The background color of the text widget.
   final Color? color;
+
+  /// The width of the text widget.
   final double? width;
+
+  /// The alignment of the text widget within its parent widget.
   final AlignmentGeometry? alignment;
+
+  /// The icon to display alongside the text.
   final IconData? icon;
+
+  /// The style of the icon.
   final IconStyle? iconStyle;
 
+  /// Creates a customizable text widget.
   const Textr(this.text,
       {Key? key,
       this.style,

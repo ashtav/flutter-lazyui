@@ -28,6 +28,7 @@ class Textml extends StatelessWidget {
   /// Optional text overflow behavior.
   final TextOverflow? overflow;
 
+  /// Create widget
   const Textml(this.text,
       {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
       : super(key: key);

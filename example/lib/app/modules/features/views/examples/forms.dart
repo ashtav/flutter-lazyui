@@ -27,8 +27,15 @@ class FormsView extends StatelessWidget {
     final forms = controller.forms;
 
     Bindings.onRendered(() {
-      forms.fill({'name': 'John Doe', 'qty': 1, 'distance': 29});
-      forms.setValue('province', Option('Jakarta', value: 2));
+      forms.fill({
+        'name': 'John Doe',
+        'qty': 1,
+        'distance': 29,
+        'gender': 'Male',
+        'hobby': ['Coding', 'Swimming'],
+        'province': Option('Jakarta', value: 2)
+      });
+      // forms.setValue('province', Option('Jakarta', value: 2)); // or like this
     });
 
     List<String> products = [

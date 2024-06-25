@@ -62,6 +62,7 @@ class ToastNotifier extends ChangeNotifier {
   /// Callback for when the overlay is dismissed.
   void Function()? onCancel;
 
+  /// Shows the toast message
   void showToast(String? message,
       {IconData? icon,
       Color? backgroundColor,
@@ -93,6 +94,7 @@ class ToastNotifier extends ChangeNotifier {
     });
   }
 
+  /// Shows the toast message with an optional overlay (background).
   void showOverlay(String? message,
       {bool dismissOnTap = false,
       bool isProgress = false,
@@ -108,6 +110,7 @@ class ToastNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Dismisses the toast message and/or the overlay (optional).
   void dismiss({bool toast = true, bool overlay = true}) {
     this.toast = !toast;
     this.overlay = !overlay;
@@ -116,6 +119,7 @@ class ToastNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Sets the progress value (likely for a progress bar within the toast).
   void setProgress(double value) {
     progress = value;
     notifyListeners();

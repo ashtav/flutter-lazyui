@@ -73,6 +73,7 @@ class CircularSliderPainter extends CustomPainter {
   /// The color of the slider.
   final Color color;
 
+  /// Create instance
   CircularSliderPainter({required this.value, this.color = Colors.white});
 
   @override
@@ -97,6 +98,7 @@ class CircularSliderPainter extends CustomPainter {
     );
   }
 
+  /// get degree to radians
   double degreesToRadians(double degrees) {
     return degrees * pi / 180;
   }

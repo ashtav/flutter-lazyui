@@ -1,5 +1,6 @@
 part of utils;
 
+/// Utility class containing common helper methods.
 class Utils {
   /// Converts a hexadecimal color code to a Color object in Dart.
   ///

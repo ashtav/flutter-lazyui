@@ -78,7 +78,7 @@ class MyComment extends StatelessWidget {
             hint: 'Type your comment...',
             prefixIcon: Icon(Ti.message),
             borderRadius: Br.zero,
-          ).bordered()
+          ).bordered(),
         ],
       ),
     );

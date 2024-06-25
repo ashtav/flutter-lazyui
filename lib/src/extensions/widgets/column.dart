@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extension on [Column] providing custom methods.
 extension CustomColumnExtension on Column {
   /// ``` dart
   /// // This extension is used to align the children of a column to the start.

@@ -299,18 +299,35 @@ class _LzAccordionState extends State<LzAccordion>
   }
 }
 
+/// Represents content for an accordion widget, consisting of a [title], [child], and optional [suffix].
 class LzAccordionContent {
+  /// The title of the accordion content.
   final String title;
+
+  /// The main child widget to be displayed when the accordion is expanded.
   final Widget child;
+
+  /// Optional widget to display as a suffix after the main child.
   final Widget? suffix;
 
-  const LzAccordionContent(
-      {required this.title, required this.child, this.suffix});
+  /// Creates a new instance of [LzAccordionContent].
+  ///
+  /// [title]: The title of the accordion content.
+  /// [child]: The main child widget to display.
+  /// [suffix]: Optional widget to display as a suffix after the main child.
+  const LzAccordionContent({
+    required this.title,
+    required this.child,
+    this.suffix,
+  });
 }
 
+/// Controller class for managing accordions, providing methods to control their state.
 class AccordionController {
+  /// Function to collapse all accordions managed by this controller.
   Function? collapseAll;
 
+  /// Collapses all accordions.
   void collapse() {
     if (collapseAll != null) {
       collapseAll!();

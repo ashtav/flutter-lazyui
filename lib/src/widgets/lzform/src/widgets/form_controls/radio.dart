@@ -2,17 +2,36 @@
 
 part of forms;
 
+/// A radio button group widget for selecting a single option from a list.
 class Radio extends StatelessWidget with LzFormMixin {
+  /// The label displayed above the radio button group.
   final String? label;
+
+  /// The list of options displayed as radio button labels.
   final List<String> options;
+
+  /// The list of values corresponding to each option.
   final List<dynamic> values;
+
+  /// The initial selected value for the radio button group.
   final dynamic initValue;
+
+  /// The form model associated with the radio button group.
   final FormModel? model;
+
+  /// List of disabled values for the radio button group.
   final List<dynamic> disabled;
+
+  /// The form type configuration.
   final FormType? type;
+
+  /// The style configuration for the radio button group.
   final RadioStyle? style;
+
+  /// Callback function invoked when the selected radio button changes.
   final Function(RadioValue value)? onChange;
 
+  /// Create widget
   const Radio(
       {super.key,
       this.label,

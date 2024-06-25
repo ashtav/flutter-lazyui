@@ -172,10 +172,17 @@ extension LzRangeIteration on List<int> {
   }
 }
 
+/// Extension on [List<IconData>] providing convenience methods for generating icon buttons.
 extension LzIconButtonExtension on List<IconData> {
+  /// Generates a list of [IconButton] widgets based on the list of [IconData].
+  ///
+  /// [onTap]: Callback function triggered when an icon button is tapped. Receives the index of the tapped icon.
   List<Widget> iconButton(Function(int index) onTap) {
     return generate((icon, i) {
-      return IconButton(onPressed: () => onTap.call(i), icon: Icon(icon));
+      return IconButton(
+        onPressed: () => onTap.call(i),
+        icon: Icon(icon),
+      );
     });
   }
 }

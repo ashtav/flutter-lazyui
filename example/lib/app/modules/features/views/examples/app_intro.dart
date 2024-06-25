@@ -5,8 +5,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import 'features.dart';
-
 class AppIntroNotifier extends ChangeNotifier {
   int index = 0;
   CarouselController carouselController = CarouselController();
@@ -177,12 +175,7 @@ class AppIntro2 extends StatelessWidget {
                       text: 'Get Started',
                       icon: La.arrowRight,
                       onTap: (state) {
-                        state.submit(
-                            abortOn: 1.s,
-                            then: () {
-                              context.lz
-                                  .pushAndRemoveUntil(const FeaturesView());
-                            });
+                        state.submit(abortOn: 1.s, then: () {});
                       })
                   .styled(
                       radius: LazyUi.radius,

@@ -96,6 +96,7 @@ class LzPicker {
     if (result != null && onSelect != null) onSelect(result);
   }
 
+  /// Opens a date range picker dialog and returns the selected date range.
   static void dateRange(BuildContext context,
       {List<DateTime>? initDate,
       DateTime? minDate,

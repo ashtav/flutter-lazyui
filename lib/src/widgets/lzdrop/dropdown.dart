@@ -24,6 +24,7 @@ class Dropdown extends StatelessWidget {
   /// An optional widget that can be displayed alongside the dropdown menu.
   final Widget? child;
 
+  /// Create widget
   const Dropdown(
       {super.key,
       required this.target,

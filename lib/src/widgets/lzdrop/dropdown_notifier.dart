@@ -3,17 +3,39 @@ import 'package:lazyui/lazyui.dart';
 
 Offset _latestOffset = Offset.zero;
 
+/// Notifier class for managing dropdown options and their positioning.
 class DropdownNotifier extends ChangeNotifier {
+  /// Controller for managing scrolling within the dropdown.
   ScrollController scroller = ScrollController();
+
+  /// Alignment of the dropdown relative to its anchor.
   DropAlignment alignment = DropAlignment.left;
 
+  /// Offset of the dropdown.
   Offset offset = _latestOffset;
+
+  /// List of dropdown options.
   List<DropOption> options = [];
 
+  /// Key for accessing the dropdown widget.
   late GlobalKey dropdownKey;
-  double bar = 0, targetHeight = 0, screenHeight = 0, dropHeight = 0;
-  Duration duration = 0.ms;
 
+  /// Height of the status bar.
+  double bar = 0;
+
+  /// Target height for positioning the dropdown.
+  double targetHeight = 0;
+
+  /// Height of the screen.
+  double screenHeight = 0;
+
+  /// Height of the dropdown.
+  double dropHeight = 0;
+
+  /// Duration for dropdown animations.
+  Duration duration = Duration.zero;
+
+  /// Adjusts the vertical position of the dropdown to ensure it fits within the screen.
   void reArangeDropYPosition() {
     // render box of the dropdown
     final dropBox =
@@ -39,6 +61,7 @@ class DropdownNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Sets the position of the dropdown based on the provided parameters.
   void setPosition(Offset target, RenderBox? box, BuildContext context,
       double dropWidth, GlobalKey dropdownKey, bool hasChild) {
     Bindings.onRendered(() async {
@@ -132,9 +155,15 @@ class DropdownNotifier extends ChangeNotifier {
     });
   }
 
-  // sub options
+  /// Tracks the toggle state of sub-options within the dropdown.
   Map<String, bool> subOptionsToggle = {};
 
+  /// Initializes the subOptionsToggle map based on the provided list of options.
+  ///
+  /// This method sets initial toggle states for sub-options to false.
+  ///
+  /// Parameters:
+  /// - `options`: The list of DropOption objects to check for sub-options.
   void checkSubOptions(List<DropOption> options) {
     for (var item in options) {
       if (item.subOptions != null) {
@@ -143,6 +172,15 @@ class DropdownNotifier extends ChangeNotifier {
     }
   }
 
+  /// Toggles the visibility of sub-options for a given label and ensures it's scrolled into view.
+  ///
+  /// This method toggles the visibility of sub-options identified by the `label`.
+  /// It hides all other sub-options and scrolls the dropdown to ensure the toggled
+  /// sub-options are visible.
+  ///
+  /// Parameters:
+  /// - `label`: The label of the sub-options to toggle.
+  /// - `key`: The GlobalKey associated with the sub-options widget to scroll to.
   void toggleSubOptions(String label, GlobalKey key) async {
     // hide all sub options
     for (var item in subOptionsToggle.keys) {

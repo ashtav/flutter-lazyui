@@ -1,6 +1,9 @@
+// ignore_for_file: public_member_api_docs
+
 part of utils;
 
 /// Enum representing different log colors.
+/// @nodoc
 enum LogColor { normal, yellow, blue, green, red, purple, cyan, brightBlue }
 
 /// Map of log colors and their corresponding ANSI escape codes.

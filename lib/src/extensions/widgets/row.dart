@@ -1,5 +1,6 @@
 part of extension;
 
+/// Extension on [Row] providing custom methods.
 extension CustomRowExtension on Row {
   /// ``` dart
   /// // This extension is used to align the children of a Row to the end.

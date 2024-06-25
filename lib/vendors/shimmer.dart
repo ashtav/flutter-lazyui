@@ -13,7 +13,19 @@ import 'package:flutter/rendering.dart';
 /// * [ShimmerDirection.ttb] top to bottom direction
 /// * [ShimmerDirection.btt] bottom to top direction
 
-enum ShimmerDirection { ltr, rtl, ttb, btt }
+enum ShimmerDirection {
+  /// Shimmer animation flows from left to right.
+  ltr,
+
+  /// Shimmer animation flows from right to left.
+  rtl,
+
+  /// Shimmer animation flows from top to bottom.
+  ttb,
+
+  /// Shimmer animation flows from bottom to top.
+  btt,
+}
 
 /// A widget renders shimmer effect over [child] widget tree.
 ///
@@ -51,12 +63,25 @@ enum ShimmerDirection { ltr, rtl, ttb, btt }
 ///
 @immutable
 class Shimmer extends StatefulWidget {
+  /// The child widget to apply shimmer effect.
   final Widget child;
+
+  /// The duration of each shimmer animation cycle.
   final Duration period;
+
+  /// The direction of the shimmer animation.
   final ShimmerDirection direction;
+
+  /// The gradient used for the shimmer effect.
   final Gradient gradient;
+
+  /// The number of times the shimmer animation loops.
   final int loop;
+
+  /// Whether the shimmer effect is currently enabled.
   final bool enabled;
+
+  /// Creates a shimmer effect widget.
 
   const Shimmer({
     Key? key,

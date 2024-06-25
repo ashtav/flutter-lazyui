@@ -2,10 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/theme.dart';
 
-/// Notifier class for managing state and actions of the LzOption widget.
+/// Manages options and notifies listeners about changes.
+///
+/// Inherits from `ChangeNotifier` to provide change notifications.
 class LzOptionNotifier extends ChangeNotifier {
-  ScrollController scrollController = ScrollController();
+  /// Controls scrolling of the options (likely in a list view).
+  final ScrollController scrollController = ScrollController();
+
+  /// List of currently active option menu items.
   List<OptionMenu> actives = [];
+
+  /// Gets the most recently activated option menu item, or null if none are active.
   OptionMenu? get option => actives.isEmpty ? null : actives.last;
 
   /// Adds a new option to the list and notifies listeners.
@@ -22,23 +29,51 @@ class LzOptionNotifier extends ChangeNotifier {
   }
 }
 
-/// Represents a menu option with a label, optional widget, icon, and onTap callback.
+/// Represents an option menu item.
 class OptionMenu {
+  /// Text label displayed for the option.
   final String label;
+
+  /// Optional widget to customize the visual representation of the option.
   final Widget? widget;
+
+  /// Optional icon displayed alongside the label.
   final IconData? icon;
+
+  /// Callback function to execute when the option is tapped.
   final Function()? onTap;
 
-  OptionMenu({required this.label, this.widget, this.icon, this.onTap});
+  /// Creates a new `OptionMenu` instance.
+  ///
+  /// [label] is required, all other parameters are optional.
+  OptionMenu({
+    required this.label,
+    this.widget,
+    this.icon,
+    this.onTap,
+  });
 }
 
-/// A widget for displaying dynamic menus with optional associated widgets triggered upon selection.
+/// Represents a visual option element with a title and a list of options.
 class LzOption extends StatelessWidget {
+  /// Title displayed above the options (optional).
   final String? title;
+
+  /// List of option menu items displayed below the title.
   final List<OptionMenu> options;
+
+  /// Alignment of the options within the widget (default: MainAxisAlignment.start).
   final MainAxisAlignment? align;
+
+  /// Maximum height of the options list (optional).
   final double? maxHeight;
+
+  /// Width of the `LzOption` widget (optional).
   final double? width;
+
+  /// Creates a new `LzOption` instance.
+  ///
+  /// [options] is required, all other parameters are optional.
   const LzOption(
       {Key? key,
       this.title,

@@ -1,27 +1,27 @@
 part of utils;
 
-/// `TecValidation` - A class to handle validation results in technical processes.
-///
-/// This class is used to encapsulate the result of a validation process,
-/// providing details about any errors that occurred and a flag indicating
-/// whether the validation was successful or not.
-///
-/// Parameters:
-///   - `error`: A `String` that describes the error encountered during
-///     validation. It is expected to be informative and concise.
-///   - `ok`: A `bool` that indicates whether the validation was successful.
-///     `true` implies successful validation, and `false` implies a failure.
-///
+/// A class representing validation results for a technical validation.
 class TecValidation {
-  final String error, key;
+  /// The error message or description.
+  final String error;
+
+  /// The key associated with the validation result.
+  final String key;
+
+  /// Indicates whether the validation passed (`true`) or failed (`false`).
   final bool ok;
+
+  /// Additional values or data associated with the validation result.
   final Map<String, dynamic> value;
 
-  TecValidation(
-      {required this.error,
-      required this.key,
-      required this.ok,
-      this.value = const {}});
+  /// Constructs a [TecValidation] object with required error message [error],
+  /// key [key], validation result [ok], and optional additional [value] data.
+  TecValidation({
+    required this.error,
+    required this.key,
+    required this.ok,
+    this.value = const {},
+  });
 }
 
 /// Extension `MapTextEditingControllerExtension` on `Map<String, TextEditingController>`
@@ -51,6 +51,10 @@ class TecValidation {
 ///         if it failed.
 extension MapTextEditingControllerExtension
     on Map<String, TextEditingController> {
+  /// Converts the entries into a map of key-value pairs.
+  ///
+  /// Returns a [Map<String, String>] where each key corresponds to the entry's key
+  /// and the value is extracted from the entry's value as text.
   Map<String, String> get value {
     return entries.fold({}, (Map<String, String> previousValue, element) {
       previousValue[element.key] = element.value.text;
@@ -58,6 +62,11 @@ extension MapTextEditingControllerExtension
     });
   }
 
+  /// Validates the entries based on the specified list of required keys.
+  ///
+  /// [required]: List of keys that are required for validation.
+  ///
+  /// Returns a [TecValidation] object indicating the validation result.
   TecValidation validate({List<String> required = const []}) {
     try {
       final Map<String, String> value = this.value;
@@ -122,6 +131,12 @@ extension MapTextEditingControllerExtension
 /// in UI code, especially in form-related widgets in Flutter.
 
 extension TextEditingControllerExtension on String {
+  /// Creates a [TextEditingController] initialized with this string as its initial text.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// TextEditingController controller = 'initial text'.tec;
+  /// ```
   TextEditingController get tec => TextEditingController(text: this);
 }
 
@@ -154,6 +169,12 @@ extension TextEditingControllerExtension on String {
 /// This class is particularly handy in scenarios involving dynamic form creation
 /// where the fields are not known beforehand or change frequently.
 class TEC {
+  /// Creates a map of [TextEditingController] instances mapped by the specified [keys].
+  ///
+  /// [keys]: List of keys to use for the map.
+  ///
+  /// Returns a [Map<String, TextEditingController>] where each key from [keys]
+  /// is mapped to a newly created [TextEditingController] instance.
   static Map<String, TextEditingController> make(List<String> keys) {
     return keys.fold({},
         (Map<String, TextEditingController> previousValue, key) {

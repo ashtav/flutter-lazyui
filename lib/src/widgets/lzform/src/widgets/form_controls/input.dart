@@ -2,25 +2,63 @@
 
 part of forms;
 
+/// A text input widget for capturing user input.
 class Input extends StatelessWidget with LzFormMixin {
-  final String? label, hint;
+  /// The label displayed above the input field.
+  final String? label;
+
+  /// The hint text displayed inside the input field.
+  final String? hint;
+
+  /// The form type configuration.
   final FormType? type;
+
+  /// The style configuration for the input field.
   final InputStyle? style;
+
+  /// Whether to show an input indicator.
   final bool indicator;
+
+  /// Whether the input text is obscured.
   final bool obsecure;
+
+  /// Whether to show a toggle button for obscuring text.
   final bool obsecureToggle;
+
+  /// Whether the input field is disabled.
   final bool disabled;
+
+  /// Whether the input field should have autofocus.
   final bool autofocus;
+
+  /// The type of keyboard to display.
   final TextInputType? keyboard;
+
+  /// List of input formatters to modify input text.
   final List<TextInputFormatter> formatters;
+
+  /// Callback function invoked when the input is tapped.
   final Function(String text)? onTap;
+
+  /// Callback function invoked when the input text changes.
   final Function(String value)? onChange;
+
+  /// Callback function invoked when the input is submitted.
   final Function(String value)? onSubmit;
+
+  /// The form model associated with the input field.
   final FormModel? model;
+
+  /// The focus node that controls the focus state of the input field.
   final FocusNode? node;
+
+  /// The maximum length of input allowed.
   final int maxLength;
+
+  /// The maximum number of lines for multiline input.
   final int? maxLines;
 
+  /// Create widget
   const Input(
       {super.key,
       this.label,

@@ -1,6 +1,7 @@
 part of extension;
 
-/// Extends the functionality of the [GlobalKey] class with additional methods.
+/// Extension on [GlobalKey] providing convenience methods.
 extension LzGlobalKeyExtension on GlobalKey {
+  /// Returns the [BuildContext] associated with this [GlobalKey].
   BuildContext? get context => currentContext;
 }

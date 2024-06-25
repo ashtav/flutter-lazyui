@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Represents a widget for entering a passcode.
 class PasscodeInput extends StatelessWidget {
+  /// Whether to use a filled (rounded) or outlined style for the input field (defaults to `false`).
   final bool filled;
+
+  /// Creates a new `PasscodeInput` instance.
   const PasscodeInput({super.key, this.filled = false});
 
   @override

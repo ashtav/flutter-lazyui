@@ -11,6 +11,7 @@ part 'bool.dart';
 part 'color.dart';
 part 'context.dart';
 part 'datetime.dart';
+part 'duration.dart';
 part 'dynamic.dart';
 part 'globalkey.dart';
 part 'list.dart';

@@ -3,24 +3,36 @@ import 'package:lazyui/lazyui.dart';
 
 import '../utils/util.dart';
 
+/// A utility class for defining and manipulating color tints.
 class Tints {
+  /// Returns a black color tint.
   static Color get black => Utils.hex('#334155');
+
+  /// Returns a blue color tint.
   static Color get blue => Utils.hex('#60a5fa');
+
+  /// Returns a red color tint.
   static Color get red => Utils.hex('#f87171');
+
+  /// Returns a green color tint.
   static Color get green => Colors.green;
+
+  /// Returns an orange color tint.
   static Color get orange => Utils.hex('#fb923c');
+
+  /// Returns a dark color tint.
   static Color get dark => Utils.hex('#0f172a');
+
+  /// Returns a grey color tint.
   static Color get grey => Utils.hex('#9ca3af');
 
-  /// ```dart
-  /// Tints.lighten(Colors.orange);
-  /// ```
-
-  static Color lighten(Color color, {double mixFactor = .5}) {
-    // make sure mixFactor is in the range 0.0 to 1.0
+  /// Lightens the given [color] by [mixFactor].
+  ///
+  /// [color]: The color to lighten.
+  /// [mixFactor]: The factor to mix the color with white (0.0 to 1.0).
+  static Color lighten(Color color, {double mixFactor = 0.5}) {
     mixFactor = mixFactor.clamp(0.0, 1.0);
 
-    // use the calculated mix factor to create a thinned color
     int red = (color.red * mixFactor + 255 * (1 - mixFactor)).round();
     int green = (color.green * mixFactor + 255 * (1 - mixFactor)).round();
     int blue = (color.blue * mixFactor + 255 * (1 - mixFactor)).round();
@@ -28,15 +40,13 @@ class Tints {
     return Color.fromARGB(color.alpha, red, green, blue);
   }
 
-  /// ```dart
-  /// Tints.darken(Colors.orange);
-  /// ```
-
-  static Color darken(Color color, {double mixFactor = .5}) {
-    // make sure mixFactor is in the range 0.0 to 1.0
+  /// Darkens the given [color] by [mixFactor].
+  ///
+  /// [color]: The color to darken.
+  /// [mixFactor]: The factor to mix the color with black (0.0 to 1.0).
+  static Color darken(Color color, {double mixFactor = 0.5}) {
     mixFactor = mixFactor.clamp(0.0, 1.0);
 
-    // use the calculated mix factor to create a darkened color
     int red = (color.red * (1 - mixFactor)).round();
     int green = (color.green * (1 - mixFactor)).round();
     int blue = (color.blue * (1 - mixFactor)).round();
@@ -44,27 +54,24 @@ class Tints {
     return Color.fromARGB(color.alpha, red, green, blue);
   }
 
-  /// ```dart
-  /// Tints.inverse(Colors.black); // white
-  /// ```
-
+  /// Computes the inverse color of the given [color].
+  ///
+  /// [color]: The color to invert.
   static Color inverse(Color color) {
     int inverted = 0xFFFFFF ^ color.value;
     return Color(inverted).withAlpha(color.alpha);
   }
 
-  /// ```dart
-  /// Tints.isDark(Colors.black); // true
-  /// ```
-
+  /// Checks if the given [color] is dark.
+  ///
+  /// [color]: The color to check.
   static bool isDark(Color color) {
     return color.computeLuminance() < 0.5;
   }
 
-  /// ```dart
-  /// Tints.hex('fff'); // white
-  /// ```
-
+  /// Creates a color from the provided hex [code].
+  ///
+  /// [code]: The hex code representing the color.
   static Color hex(String code) {
     return Utils.hex(code);
   }

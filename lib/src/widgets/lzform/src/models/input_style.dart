@@ -29,6 +29,7 @@ class InputStyle {
   /// The prefix widget to be displayed before the input field.
   final Widget? prefix;
 
+  /// The suffix widget to be displayed after the input field.
   final Widget? suffix;
 
   /// Constructs an [InputStyle].

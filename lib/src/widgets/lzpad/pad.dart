@@ -48,16 +48,39 @@ class LzPad {
   }
 }
 
-/// Widget for displaying the numeric keypad.
+/// Represents a customizable pad widget for user input.
+///
+/// This widget can be used for various input purposes, potentially including
+/// passcodes, PINs, or other sensitive data entry.
 class PadWidget extends StatefulWidget {
-  final String? title, message;
-  final Widget? header, footer;
+  /// Title displayed above the input area (optional).
+  final String? title;
+
+  /// Message displayed below the input area (optional).
+  final String? message;
+
+  /// Optional header widget displayed at the top of the pad.
+  final Widget? header;
+
+  /// Optional footer widget displayed at the bottom of the pad.
+  final Widget? footer;
+
+  /// Length of the input required (defaults to 6).
   final int length;
+
+  /// Optional duration after which the pad expires (clears input).
   final Duration? expired;
+
+  /// Type of pad to display (defaults to PadType.bottomLine).
   final PadType type;
+
+  /// Optional styling options for the pad.
   final PadStyle? style;
+
+  /// Callback function executed when the user completes input (optional).
   final Function(PadController values)? onCompleted;
 
+  /// Creates a new `PadWidget` instance.
   const PadWidget(
       {super.key,
       this.title,
@@ -317,30 +340,68 @@ class _PadWidgetState extends State<PadWidget> {
   }
 }
 
-/// Enumeration for the type of keypad.
-enum PadType { borderRounded, bottomLine, passcode }
+/// Enumerates different visual styles for the keypad widget.
+enum PadType {
+  /// Pad with rounded borders.
+  borderRounded,
 
-/// Style configuration for the keypad widget.
+  /// Pad with a bottom line separating the keys.
+  bottomLine,
+
+  /// Pad specifically designed for passcode input (might have visual cues for hiding characters).
+  passcode,
+}
+
+/// Configuration options for the visual style of the keypad widget.
 class PadStyle {
+  /// Customizes the appearance of the bottom line in the `bottomLine` pad type (optional).
   final BottomInlineStyle? bottomInline;
 
+  /// Creates a new `PadStyle` instance.
+  ///
+  /// All parameters are optional.
   const PadStyle({this.bottomInline});
 }
 
-/// Style configuration for the bottom inline keypad.
+/// Defines styling options for the bottom line in the `PadType.bottomLine` keypad.
 class BottomInlineStyle {
-  final Color? unfillColor, focusColor, filledColor;
+  /// Color used for the unfilled portion of the bottom line (optional).
+  final Color? unfillColor;
 
+  /// Color used for the focused key's section of the bottom line (optional).
+  final Color? focusColor;
+
+  /// Color used for the filled portion of the bottom line (optional).
+  final Color? filledColor;
+
+  /// Creates a new `BottomInlineStyle` instance.
+  ///
+  /// All parameters are optional.
   BottomInlineStyle({this.unfillColor, this.focusColor, this.filledColor});
 }
 
-/// Controller for managing the keypad.
+/// Manages user input and state for the keypad widget.
+///
+/// This class provides methods to handle user interactions with the keypad,
+/// update the current input value, and interact with the associated `PadNotifier`
+/// to trigger UI updates.
 class PadController {
+  /// The build context of the widget using this controller.
   final BuildContext _context;
+
+  /// The `PadNotifier` instance used for notifying the UI about changes.
   final PadNotifier _notifier;
+
+  /// Optional timer object for handling timeouts or expiration (can be null).
   Timer? timer;
+
+  /// The current value entered by the user.
   String value;
 
+  /// Creates a new `PadController` instance.
+  ///
+  /// [context] and [notifier] are required parameters.
+  /// [timer] and [value] are optional.
   PadController(this._context, this._notifier, {this.timer, this.value = ''});
 
   /// Pauses the keypad.
@@ -370,6 +431,7 @@ class PadController {
     return this;
   }
 
+  /// Set message
   PadController setMessage(String value) {
     _notifier.setMessage(value);
     return this;

@@ -56,6 +56,7 @@ class LzDrop {
 
 /// An abstract class for creating dropdown view widgets.
 abstract class LzDropView<T> extends StatelessWidget {
+  /// Create widget
   const LzDropView({Key? key}) : super(key: key);
 
   /// Displays a dropdown menu.
@@ -157,8 +158,13 @@ class LzDropItem extends LzDropView {
   /// A callback function invoked when an option is selected.
   final void Function(DropValue value)? onSelect;
 
+  /// A builder function that wraps the child widget.
+  ///
+  /// This builder function allows customization of the child widget,
+  /// such as adding additional wrappers or transformations.
   final Widget Function(Widget child)? builder;
 
+  /// Create widget
   const LzDropItem(
       {super.key,
       required this.child,

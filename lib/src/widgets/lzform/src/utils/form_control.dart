@@ -5,6 +5,7 @@ import 'package:lazyui/src/widgets/lzform/src/notifiers/form_notifier.dart';
 
 /// Represents a control for managing form fields.
 class FormControl {
+  /// The form notifier instance associated with this control.
   final FormNotifier notifier;
 
   /// Constructs a [FormControl] with the specified notifier.
@@ -59,6 +60,9 @@ class FormControl {
     return this;
   }
 
+  /// Sets the maximum length for input validation in the associated [FormNotifier].
+  ///
+  /// Returns this [FormControl] instance after setting the maximum length.
   FormControl maxLength(int value) {
     notifier.setMaxLength(value);
     return this;

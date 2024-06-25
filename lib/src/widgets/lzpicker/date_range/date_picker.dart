@@ -99,16 +99,48 @@ class LzDateRangePicker extends StatelessWidget {
   }
 }
 
+/// Represents a widget for displaying a Cupertino-style picker.
+///
+/// This widget is likely used within a date picker UI to select specific
+/// values (e.g., year, month, day) using a picker wheel.
 class CupertinoPickerWidget extends StatelessWidget {
+  /// The `DatePickerNotifier` instance used for managing picker state and updates.
   final DatePickerNotifier notifier;
+
+  /// The type of value being selected (e.g., "year", "month", "day").
   final String type;
+
+  /// List of items to display in the picker wheel (defaults to an empty list).
   final List<String> items;
-  final double? magnification, itemExtent, diameterRatio, squeeze;
+
+  /// Optional magnification factor for the picker wheel (default: unspecified).
+  final double? magnification;
+
+  /// Optional extent (height) of each item in the picker wheel (default: unspecified).
+  final double? itemExtent;
+
+  /// Optional diameter ratio for the picker wheel (default: unspecified).
+  final double? diameterRatio;
+
+  /// Optional squeeze factor for the picker wheel (default: unspecified).
+  final double? squeeze;
+
+  /// Optional styling options for the picker (default: unspecified).
   final DatePickerStyle? style;
+
+  /// Optional letter spacing for the picker text (default: unspecified).
   final double? letterSpacing;
+
+  /// Optional background color for the picker (default: unspecified).
   final Color? backgroundColor;
+
+  /// Optional overlay color for the picker (default: unspecified).
   final Color? overlayColor;
 
+  /// Creates a new `CupertinoPickerWidget` instance.
+  ///
+  /// [notifier] and [type] are required parameters.
+  /// All other parameters are optional.
   const CupertinoPickerWidget(this.notifier,
       {super.key,
       required this.type,
@@ -170,9 +202,20 @@ class CupertinoPickerWidget extends StatelessWidget {
   }
 }
 
+/// Represents a confirmation button likely used within a date picker UI.
+///
+/// This button might be used to finalize a selected date or trigger an action
+/// based on the picker's state.
 class ConfirmButton extends StatelessWidget {
+  /// The `DatePickerNotifier` instance used for interaction with picker state.
   final DatePickerNotifier notifier;
+
+  /// Optional styling options for the button (default: unspecified).
   final DatePickerStyle? style;
+
+  /// Creates a new `ConfirmButton` instance.
+  ///
+  /// [notifier] is required, [style] is optional.
   const ConfirmButton(this.notifier, {super.key, this.style});
 
   @override
@@ -245,9 +288,20 @@ class ConfirmButton extends StatelessWidget {
   }
 }
 
+/// Represents a time picker widget likely used within a date picker UI.
+///
+/// This widget allows users to select a specific time, potentially in
+/// conjunction with a date picker for a complete datetime selection.
 class TimePicker extends StatelessWidget {
+  /// The `DatePickerNotifier` instance used for interaction with picker state.
   final DatePickerNotifier notifier;
+
+  /// Optional styling options for the time picker (default: unspecified).
   final DatePickerStyle? style;
+
+  /// Creates a new `TimePicker` instance.
+  ///
+  /// [notifier] is required, [style] is optional.
   const TimePicker(this.notifier, {super.key, this.style});
 
   @override
@@ -327,10 +381,24 @@ class TimePicker extends StatelessWidget {
   }
 }
 
+/// Represents a widget for displaying and potentially selecting start and end dates.
+///
+/// This widget might be used within a date picker UI where users need to specify
+/// a date range (start and end dates). The `format` property allows customization
+/// of how the dates are displayed.
 class StartEndDate extends StatelessWidget {
+  /// The `DatePickerNotifier` instance used for interaction with picker state.
   final DatePickerNotifier notifier;
+
+  /// Optional styling options for the start and end date display (default: unspecified).
   final DatePickerStyle? style;
+
+  /// Optional format string for displaying the dates (e.g., "yyyy-MM-dd").
   final String? format;
+
+  /// Creates a new `StartEndDate` instance.
+  ///
+  /// [notifier] is required, [style] and [format] are optional.
   const StartEndDate(this.notifier, {super.key, this.style, this.format});
 
   @override

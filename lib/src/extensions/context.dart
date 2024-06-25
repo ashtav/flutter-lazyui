@@ -21,44 +21,54 @@ class LzContextModifiers {
   /// [context]: The build context to apply modifiers to.
   LzContextModifiers(this.context);
 
-  /// Pop the current route from the navigation stack.
+  /// Focuses on the specified [node] within the current [context].
   ///
-  /// [result]: An optional result to be returned to the previous route.
-  void pop([dynamic result]) => Navigator.pop(context, result);
-
-  /// Navigate to a new page and push it onto the navigation stack.
-  ///
-  /// Returns a future that resolves to the result returned by the new page.
-  Future<T?> push<T extends Object?>(Widget page) =>
-      Navigator.push<T>(context, MaterialPageRoute(builder: (_) => page));
-
-  /// Request focus for the specified focus node within the current context.
-  ///
-  /// [node]: The focus node to request focus for. If null, a new focus node is created.
+  /// If [node] is not provided, a new [FocusNode] will be created and focused.
   void focus([FocusNode? node]) =>
       FocusScope.of(context).requestFocus(node ?? FocusNode());
 
-  /// Navigate to a new page and remove all previous routes from the navigation stack.
-  ///
-  /// Returns a future that resolves to the result returned by the new page.
-  Future<T?> pushAndRemoveUntil<T extends Object?>(Widget page) =>
-      Navigator.pushAndRemoveUntil<T>(
-          context, MaterialPageRoute(builder: (_) => page), (_) => false);
+  /// Pops the current route off the navigator stack, optionally passing a [result].
+  void pop([dynamic result]) => Navigator.pop(context, result);
 
-  /// Navigate to a named route and remove all previous routes from the navigation stack.
+  /// Navigates to a new screen specified by [destination].
   ///
-  /// Returns a future that resolves to the result returned by the new page.
-  Future<T?> pushNamedAndRemoveUntil<T extends Object?>(String routeName,
-          {Object? arguments}) =>
-      Navigator.pushNamedAndRemoveUntil<T>(context, routeName, (_) => false,
-          arguments: arguments);
-
-  /// Navigate to a named route and push it onto the navigation stack.
+  /// - If [destination] is a String, navigates using named routes.
+  /// - If [destination] is a Widget, navigates using MaterialPageRoute.
   ///
-  /// Returns a future that resolves to the result returned by the new page.
-  Future<T?> pushNamed<T extends Object?>(String routeName,
-          {Object? arguments}) =>
-      Navigator.pushNamed<T>(context, routeName, arguments: arguments);
+  /// Optionally, [arguments] can be passed to the destination.
+  /// If [clean] is true, removes all previous routes from the stack.
+  Future<T?> push<T extends Object?>(Object destination,
+      {Object? arguments, bool clean = false}) {
+    if (destination is String) {
+      if (clean) {
+        return Navigator.pushNamedAndRemoveUntil<T>(
+          context,
+          destination,
+          (_) => false,
+          arguments: arguments,
+        );
+      } else {
+        return Navigator.pushNamed<T>(
+          context,
+          destination,
+          arguments: arguments,
+        );
+      }
+    } else {
+      if (clean) {
+        return Navigator.pushAndRemoveUntil<T>(
+          context,
+          MaterialPageRoute(builder: (_) => destination as Widget),
+          (_) => false,
+        );
+      } else {
+        return Navigator.push<T>(
+          context,
+          MaterialPageRoute(builder: (_) => destination as Widget),
+        );
+      }
+    }
+  }
 }
 
 /// Extends the functionality of the [BuildContext] class with additional methods and properties.

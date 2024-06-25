@@ -79,16 +79,43 @@ class LzTimePicker extends StatelessWidget {
   }
 }
 
+/// A widget representing a single column in the date picker using the Cupertino style.
+
 class CupertinoPickerWidget extends StatelessWidget {
+  /// Reference to the `TimePickerNotifier` object providing data and state updates.
   final TimePickerNotifier notifier;
+
+  /// Identifier for the date format part (e.g., 'd', 'm', 'y').
   final String type;
+
+  /// List of items displayed in the picker column (e.g., days, months, years).
   final List<String> items;
-  final double? magnification, itemExtent, diameterRatio, squeeze;
+
+  /// Optional magnification factor for the picker items.
+  final double? magnification;
+
+  /// Optional fixed extent for each picker item.
+  final double? itemExtent;
+
+  /// Optional diameter ratio for the picker.
+  final double? diameterRatio;
+
+  /// Optional squeeze factor for the picker items.
+  final double? squeeze;
+
+  /// Optional styling for the picker.
   final TimePickerStyle? style;
+
+  /// Optional letter spacing for the picker items.
   final double? letterSpacing;
+
+  /// Optional background color for the picker column.
   final Color? backgroundColor;
+
+  /// Optional overlay color for the picker.
   final Color? overlayColor;
 
+  /// Creates a new instance of `CupertinoPickerWidget`.
   const CupertinoPickerWidget(this.notifier,
       {super.key,
       required this.type,
@@ -139,9 +166,18 @@ class CupertinoPickerWidget extends StatelessWidget {
   }
 }
 
+/// A customizable confirm button for use with time pickers.
 class ConfirmButton extends StatelessWidget {
+  /// The `TimePickerNotifier` object providing data and state updates.
+  /// The button's behavior is likely tied to actions within the notifier.
   final TimePickerNotifier notifier;
+
+  /// Optional style customizations for the confirm button.
+  /// These might influence appearance (colors, font, etc.) based on the
+  /// chosen button widget implementation.
   final TimePickerStyle? style;
+
+  /// Creates a new instance of `ConfirmButton`.
   const ConfirmButton(this.notifier, {super.key, this.style});
 
   @override

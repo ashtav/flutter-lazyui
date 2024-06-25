@@ -13,12 +13,24 @@ part of widget;
 
 bool _hoverable = false;
 
+/// A widget that responds to tap and double-tap events.
 class Touch extends StatelessWidget {
-  final void Function()? onTap, onDoubleTap;
+  /// Callback function triggered when the widget is tapped.
+  final void Function()? onTap;
+
+  /// Callback function triggered when the widget is double-tapped.
+  final void Function()? onDoubleTap;
+
+  /// The widget to display within this touchable widget.
   final Widget? child;
+
+  /// The margin around the touchable widget.
   final EdgeInsetsGeometry? margin;
+
+  /// Whether the widget can respond to hover events (web-specific).
   final bool? hoverable;
 
+  /// Creates a widget that responds to tap and double-tap events.
   const Touch({
     Key? key,
     this.child,
@@ -47,8 +59,22 @@ class Touch extends StatelessWidget {
           );
   }
 
+  /// Configures the hoverable behavior for the widget.
   static config({bool? hoverable}) {
     _hoverable = hoverable ?? false;
+  }
+
+  /// Creates a customizable button widget with the specified text and optional tap handler.
+  static Widget button(String text, {Function()? onTap}) {
+    return Touch(
+      onTap: onTap,
+      hoverable: true,
+      child: Container(
+          padding: Ei.sym(v: 15, h: 35),
+          decoration: BoxDecoration(
+              border: Br.all(color: lzBorderColor), borderRadius: Br.radius(7)),
+          child: Text(text, style: Gfont.bold)),
+    );
   }
 }
 

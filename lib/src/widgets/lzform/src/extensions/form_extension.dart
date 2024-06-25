@@ -6,6 +6,7 @@ import 'package:lazyui/lazyui.dart';
 
 import '../utils/form_control.dart';
 
+/// Extension on a map of `String` keys and `FormModel` values.
 extension LzFormExtension on Map<String, FormModel> {
   /// ``` dart
   /// final forms = LzForm.make(['name', 'email', 'password']]);
@@ -18,11 +19,23 @@ extension LzFormExtension on Map<String, FormModel> {
         for (var e in data.keys) {
           if (containsKey(e) && !except.contains(e)) {
             final notifier = this[e]!.notifier;
-            String value = data[e] == null ? '' : data[e].toString();
+            dynamic value = data[e];
 
-            notifier.controller.text = value;
-            notifier.textLength = value.length;
-            notifier.setState();
+            if (notifier.isRadio) {
+              notifier.setOptionFindBy(value);
+            } else if (notifier.isSelect) {
+              notifier.setSelect(
+                  value is Option ? value : Option(value.toString()));
+            } else if (notifier.isCheckbox) {
+              logg(value is List);
+              if (value is List) {
+                notifier.setCheckboxFindBy(value);
+              }
+            } else {
+              notifier.controller.text = value.toString();
+              notifier.textLength = value.toString().length;
+              notifier.setState();
+            }
           }
         }
       }
@@ -194,6 +207,10 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 
+  /// Retrieves a `FormControl` for the specified key from the map.
+  ///
+  /// Returns a `FormControl` associated with the provided [key]. If the key is not found
+  /// or the corresponding `FormModel` is `null`, this method will throw an exception.
   FormControl set(String key) {
     final notifier = this[key]!.notifier;
     return FormControl(notifier);

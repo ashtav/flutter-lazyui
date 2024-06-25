@@ -2,18 +2,39 @@
 
 part of forms;
 
+/// A slider widget for selecting a value within a specified range.
 class Slider extends StatelessWidget with LzFormMixin {
+  /// The label displayed above the slider.
   final String? label;
+
+  /// The initial value of the slider.
   final double? initValue;
+
+  /// The minimum value of the slider.
   final double min;
+
+  /// The maximum value of the slider.
   final double max;
+
+  /// The number of discrete divisions between the minimum and maximum values.
   final int? divisions;
+
+  /// Specifies if the slider is disabled.
   final bool disabled;
+
+  /// The form model associated with the slider.
   final FormModel? model;
+
+  /// Callback function invoked when the slider value changes.
   final Function(double value)? onChange;
+
+  /// The style configuration for the slider.
   final SlideStyle? style;
+
+  /// Function that returns a widget to display as an indicator on the slider thumb.
   final Widget Function(double value)? indicator;
 
+  /// Create widget
   const Slider(
       {super.key,
       this.label,
@@ -108,6 +129,7 @@ class Slider extends StatelessWidget with LzFormMixin {
   }
 }
 
+/// Custom track shape for a slider that positions the track horizontally with padding.
 class CustomTrackShape extends RectangularSliderTrackShape {
   @override
   Rect getPreferredRect({

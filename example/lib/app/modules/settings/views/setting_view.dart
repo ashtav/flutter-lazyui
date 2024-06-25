@@ -2,7 +2,7 @@ import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import 'setting_notifier.dart';
+import '../notifiers/setting_notifier.dart';
 
 class SettingView extends StatelessWidget {
   const SettingView({super.key});
@@ -40,9 +40,8 @@ class SettingView extends StatelessWidget {
                                     initValue: state.isDarkMode,
                                     onChange: (value) {
                                       state.changeTheme(value);
-                                      final theme = value
-                                          ? LzTheme.dark()
-                                          : LzTheme.light();
+                                      final theme =
+                                          value ? LzTheme.dark : LzTheme.light;
 
                                       Utils.timer(() {
                                         ThemeSwitcher.of(context).changeTheme(

@@ -1,3 +1,4 @@
+/// Check path validation
 bool isValidPath(String path) {
   // check if path has invalid separator usage
   bool hasInvalidSeparatorUsage = path.contains('//') || path.contains('\\\\');

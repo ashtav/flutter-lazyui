@@ -25,12 +25,21 @@ part 'form_controls/radio.dart';
 part 'form_controls/select.dart';
 part 'form_controls/slider.dart';
 
+/// Represents the outcome of an Lz form submission.
 class LzForm {
+  /// True if successful, false otherwise.
   final bool ok;
+
+  /// Error details if submission failed.
   final FormError? error;
+
+  /// Submitted form values.
   final Map<String, dynamic> value;
+
+  /// Extra data associated with the submission.
   final Map<String, dynamic> extra;
 
+  /// Creates a new `LzForm` instance.
   LzForm(
       {this.ok = false,
       this.error,
@@ -164,6 +173,11 @@ class LzForm {
     }
   }
 
+  /// Validates a map of form fields against user input.
+  ///
+  /// This static method takes a map of `FormModel` objects and performs validation
+  /// based on various criteria, including required fields, minimum/maximum lengths,
+  /// email format checking, and custom messages.
   static LzForm validate(Map<String, FormModel> forms,
       {List<String> required = const [],
       List<String> min = const [],
@@ -346,7 +360,7 @@ class LzForm {
                 .toMap());
   }
 
-  // input form-controls
+  /// input form-controls
   static Input input(
           {String? label,
           String? hint,
@@ -387,7 +401,7 @@ class LzForm {
         maxLines: maxLines,
       );
 
-  // radio form-controls
+  /// radio form-controls
   static Radio radio({
     String? label,
     required List<String> options,
@@ -411,7 +425,7 @@ class LzForm {
         onChange: onChange,
       );
 
-  // checkbox form-controls
+  /// checkbox form-controls
   static Checkbox checkbox({
     String? label,
     required List<String> options,
@@ -435,7 +449,7 @@ class LzForm {
         onChange: onChange,
       );
 
-  // switch form-controls
+  /// switch form-controls
   static Switches switches(
           {String? label,
           SwitchStyle? style,
@@ -449,7 +463,7 @@ class LzForm {
           initValue: initValue,
           reversed: reversed);
 
-  // select form-controls
+  /// select form-controls
   static Select select(
           {String? label,
           String? hint,
@@ -473,7 +487,7 @@ class LzForm {
           onChange: onChange,
           model: model);
 
-  // number form-controls
+  /// number form-controls
   static Number number(
           {String? label,
           String? hint,
@@ -506,7 +520,7 @@ class LzForm {
         iconControls: iconControls,
       );
 
-  // slider form-controls
+  /// slider form-controls
   static Slider slider({
     String? label,
     double? initValue,

@@ -3,17 +3,18 @@ import 'package:lazyui/lazyui.dart';
 
 import '../models/attribute.dart';
 
+/// Widget for displaying feedback messages related to form validation or input status.
 class FormFeedbackMessage extends StatelessWidget {
-  /// Determines whether the feedback message should be displayed.
+  /// Determines whether to display the feedback message.
   final bool show;
 
-  /// The message to be displayed as feedback.
+  /// The message to be displayed.
   final String message;
 
-  /// The attribute associated with the feedback message.
+  /// Additional styling attributes for the message.
   final Attribute? attribute;
 
-  /// Constructs a FormFeedbackMessage widget.
+  /// Create widget
   const FormFeedbackMessage(
       {super.key, this.show = true, this.message = '', this.attribute});
 

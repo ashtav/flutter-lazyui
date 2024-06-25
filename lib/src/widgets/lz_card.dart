@@ -1,42 +1,41 @@
 part of widget;
 
-/// A card widget with customizable content.
+/// Represents a custom card widget with configurable properties.
 class LzCard extends StatelessWidget {
-  /// The list of children widgets inside the card.
+  /// List of child widgets to display inside the card.
   final List<Widget> children;
 
-  /// The padding around the content of the card.
+  /// Padding around the content of the card.
   final EdgeInsetsGeometry? padding;
 
-  /// The background color of the card.
+  /// Background color of the card.
   final Color? color;
 
-  /// The border of the card.
+  /// Border decoration for the card.
   final BoxBorder? border;
 
-  /// The border radius of the card.
+  /// Border radius of the card.
   final BorderRadius? radius;
 
-  /// The callback function when the card is tapped.
+  /// Callback function triggered when the card is tapped.
   final Function()? onTap;
 
-  /// The gap between each child widget.
+  /// Gap between stacked child widgets, if [stacked] is true.
   final double? gap;
 
-  /// Determines if the children widgets should be stacked vertically.
+  /// Flag indicating whether child widgets should be stacked.
   final bool stacked;
 
-  /// The alignment of stacked children widgets.
+  /// Vertical alignment of stacked content in the card.
   final StackAlign stackAlign;
 
-  /// Creates a [LzCard] widget.
-  ///
-  /// The [children] parameter is required and must not be null.
-  /// All other parameters are optional.
-  ///
+  /// Background style configuration for the card.
   final BgCard? background;
+
+  /// Optional ribbon widget to display on the card.
   final Ribbon? ribbon;
 
+  /// Creates a [LzCard] widget.
   const LzCard(
       {super.key,
       this.children = const [],
@@ -66,7 +65,6 @@ class LzCard extends StatelessWidget {
       child: gap == null ? child : child.gap(gap!),
     );
 
-    // background card
     if (background != null) {
       inktouch = Stack(
         children: [
@@ -83,7 +81,6 @@ class LzCard extends StatelessWidget {
       ).lz.clip(all: 5);
     }
 
-    // ribbon card
     if (ribbon != null) {
       inktouch = Stack(
         children: [
@@ -153,32 +150,74 @@ class LzCard extends StatelessWidget {
   }
 }
 
-enum StackAlign { top, bottom }
+/// Enum to define vertical alignment of stacked content in a widget.
+enum StackAlign {
+  /// Aligns stacked content at the top.
+  top,
 
-class BgCard {
-  final Offset offset;
-  final IconData icon;
-  final double size;
-  final double? angle;
-  final Color? color;
+  /// Aligns stacked content at the center.
+  center,
 
-  BgCard(
-      {this.offset = const Offset(-20, -20),
-      required this.icon,
-      this.size = 180,
-      this.angle,
-      this.color});
+  /// Aligns stacked content at the bottom.
+  bottom,
 }
 
-class Ribbon {
-  final Color? color;
+/// Represents configuration for a background card element.
+class BgCard {
+  /// Offset of the background card element.
+  final Offset offset;
+
+  /// Icon data to be displayed in the background card.
   final IconData icon;
 
+  /// Size of the background card element.
+  final double size;
+
+  /// Optional angle at which the background card element is tilted.
+  final double? angle;
+
+  /// Optional background color of the card element.
+  final Color? color;
+
+  /// Creates a [BgCard] instance.
+  ///
+  /// [offset]: Offset of the background card element from the top-left corner.
+  /// [icon]: Icon data to be displayed in the background card.
+  /// [size]: Size of the background card element.
+  /// [angle]: Optional angle at which the background card element is tilted.
+  /// [color]: Optional background color of the card element.
+  BgCard({
+    this.offset = const Offset(-20, -20),
+    required this.icon,
+    this.size = 180,
+    this.angle,
+    this.color,
+  });
+}
+
+/// Represents a ribbon widget with optional color and icon.
+class Ribbon {
+  /// Optional color of the ribbon.
+  final Color? color;
+
+  /// Icon data to be displayed in the ribbon.
+  final IconData icon;
+
+  /// Creates a [Ribbon] instance.
+  ///
+  /// [icon]: Icon data to be displayed in the ribbon.
+  /// [color]: Optional color of the ribbon.
   Ribbon({required this.icon, this.color});
 }
 
+/// Custom painter for drawing a triangular shape.
 class TrianglePainter extends CustomPainter {
+  /// Optional color of the triangle shape.
   final Color? color;
+
+  /// Creates a [TrianglePainter] instance.
+  ///
+  /// [color]: Optional color of the triangle shape.
   TrianglePainter({this.color});
 
   @override

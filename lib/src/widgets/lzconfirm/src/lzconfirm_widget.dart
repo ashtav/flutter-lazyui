@@ -33,6 +33,7 @@ class LzConfirmWidget extends StatelessWidget {
   /// Margin around the confirmation widget.
   final double? margin;
 
+  /// Create widget
   const LzConfirmWidget({
     Key? key,
     this.title,

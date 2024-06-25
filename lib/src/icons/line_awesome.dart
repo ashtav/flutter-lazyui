@@ -1,9 +1,12 @@
+// ignore_for_file: public_member_api_docs
+
 import 'package:flutter/widgets.dart';
 
 /// A class providing access to LineAwesomeIcons font family.
 ///
 /// This class contains static constants for accessing icons from the LineAwesomeIcons font family.
 /// It also defines the font family used by the LineAwesomeIcons.
+/// @nodoc
 class La {
   La._();
 

@@ -2,17 +2,36 @@
 
 part of forms;
 
+/// A checkbox widget that allows selecting multiple options from a list.
 class Checkbox extends StatelessWidget with LzFormMixin {
+  /// The label displayed with the checkbox options.
   final String? label;
+
+  /// The list of options available for selection.
   final List<String> options;
+
+  /// The list of values corresponding to each option.
   final List<dynamic> values;
+
+  /// The initial selected values.
   final List<dynamic> initValue;
+
+  /// The form model associated with the checkbox.
   final FormModel? model;
+
+  /// The list of disabled options.
   final List<dynamic> disabled;
+
+  /// The form type configuration.
   final FormType? type;
+
+  /// The style configuration for the checkbox.
   final CheckboxStyle? style;
+
+  /// A callback function invoked when the selection changes.
   final Function(List<CheckboxValue> value)? onChange;
 
+  /// Create widget
   const Checkbox(
       {super.key,
       this.label,

@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 /*
  * Tabler Icons 3.2.0 by tabler  https://tabler.io
  * License  https://github.com/tabler/tablerIcons/blob/master/LICENSE
@@ -39,6 +41,7 @@ class TablerIconData extends IconData {
 // 6. Don't forget to rename icon name that begins with number (ex: 123) to i123, and fing icon with name "switch" to "switch1"
 // 7. If you still have error, just reload vscode!
 
+/// @nodoc
 class Ti {
   static const IconData aB = TablerIconData(0xec36);
   static const IconData aB2 = TablerIconData(0xf25f);

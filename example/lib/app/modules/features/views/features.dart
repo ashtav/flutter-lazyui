@@ -1,144 +1,32 @@
-import 'package:example/app/modules/settings/setting_view.dart';
-import 'package:example/app/screens/forms.dart';
-import 'package:example/app/screens/refreshtor.dart';
-import 'package:example/app/screens/widgets/accordion.dart';
-import 'package:example/app/screens/widgets/bagde_n_card.dart';
-import 'package:example/app/screens/widgets/customs.dart';
-import 'package:example/app/screens/widgets/skeleton.dart';
-import 'package:example/app/screens/widgets/test_view.dart';
-import 'package:example/app/screens/widgets/toast.dart';
+import 'package:example/app/data/feature.dart';
+import 'package:example/app/modules/settings/views/setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../models/feature.dart';
-import 'button.dart';
-import 'confirm.dart';
-import 'dropdown.dart';
-import 'picker.dart';
-import 'trainer.dart';
-import 'widgets/image.dart';
-import 'widgets/listview.dart';
+import 'examples/button.dart';
+import 'examples/confirm.dart';
+import 'examples/dropdown.dart';
+import 'examples/forms.dart';
+import 'examples/picker.dart';
+import 'examples/refreshtor.dart';
+import 'examples/trainer.dart';
+import 'examples/widgets/accordion.dart';
+import 'examples/widgets/bagde_n_card.dart';
+import 'examples/widgets/customs.dart';
+import 'examples/widgets/image.dart';
+import 'examples/widgets/listview.dart';
+import 'examples/widgets/skeleton.dart';
+import 'examples/widgets/test_view.dart';
+import 'examples/widgets/toast.dart';
 
 bool isDarkMode = false;
 
-class FeaturesView extends StatelessWidget {
-  const FeaturesView({super.key});
+class FeatureView extends StatelessWidget {
+  const FeatureView({super.key});
 
   @override
   Widget build(BuildContext context) {
     final font = Gfont.style(context);
-
-    List<Map<String, dynamic>> features = [
-      {
-        'title': 'Tools',
-        'description':
-            'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
-        'features': [
-          Feature(
-              'LzForm',
-              'Customizable form with validation, error handling and ease full control of your form.',
-              Ti.forms),
-          Feature(
-              'LzPicker',
-              'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
-              Ti.alignBoxCenterBottom),
-          // 'App Intro',
-          // 'Widgets'
-        ]
-      },
-      {
-        'title': 'Interaction',
-        'description':
-            'Dynamic elements designed to facilitate user actions, confirmations, and navigation, enhancing overall interactivity.',
-        'features': [
-          Feature(
-              'LzButton',
-              'Customizable button with icon, type, loading, disabled, etc.',
-              Ti.click),
-          Feature(
-              'LzDrop',
-              'Show dropdown options in any position, with icons, separators, etc.',
-              Ti.dragDrop),
-          Feature(
-              'LzPad',
-              'Show an otp or pin input with a custom message, duration, input, etc.',
-              Ti.number),
-          Feature(
-              'LzOption',
-              'Display dynamic menus with optional associated widgets triggered upon selection.',
-              Ti.menu2),
-          Feature(
-              'LzConfirm',
-              'Show a confirmation dialog with a custom message, title, etc.',
-              Ti.questionMark),
-          Feature(
-              'Refreshtor',
-              'Show a pull to refresh indicator with a custom color, size, etc.',
-              Ti.refresh),
-          Feature(
-              'Trainer',
-              'Show guide to use your app with a custom message, title, etc.',
-              Ti.books),
-        ]
-      },
-      {
-        'title': 'Widgets',
-        'description':
-            'A variety of visual components to display content, notifications, placeholders, and collapsible sections for a polished interface.',
-        'features': [
-          Feature('LzToast',
-              'Show a toast message with a custom icon, color, etc.', Ti.bell),
-          Feature(
-              'LzImage',
-              'Display image in any format such as network, asset, file, etc.',
-              Ti.photo),
-          Feature(
-              'Skeleton',
-              'Show a skeleton loader with a custom color, animation, etc.',
-              Ti.loader),
-          Feature(
-              'LzAccordion',
-              'Expandable widget with a custom header, body, etc.',
-              Ti.layoutNavbarExpand),
-          Feature(
-              'LzBadge & LzCard',
-              'Show a badge or card with a custom color, size, etc.',
-              Ti.creditCard),
-          Feature(
-              'LzListView',
-              'Scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.',
-              Ti.list),
-        ]
-      },
-      {
-        'title': 'Custom Widgets',
-        'description':
-            'A collection of custom widgets that can be used to build your own custom UI components.',
-        'features': [
-          Feature(
-              'Custom Widgets',
-              'List of custom widgets that can be used to build your own custom UI components.',
-              Ti.category),
-        ]
-      },
-      {
-        'title': 'Utilities',
-        'description':
-            'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
-        'features': [
-          Feature(
-              'Custom Utilities',
-              'List of custom utilities that can be used to build your own custom UI components.',
-              Ti.tools),
-        ]
-      },
-    ];
-
-    for (var featureMap in features) {
-      if (featureMap['features'] != null) {}
-      (featureMap['features'] as List<Feature>)
-          .sort((a, b) => a.title.compareTo(b.title));
-    }
 
     return Scaffold(
       appBar: AppBar(

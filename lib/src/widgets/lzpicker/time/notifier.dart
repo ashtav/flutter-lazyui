@@ -15,6 +15,7 @@ class TimePickerNotifier extends ChangeNotifier {
   /// Gets the currently selected time.
   Time get value => Time(values['h'] ?? 0, values['i'] ?? 0);
 
+  /// Handles initialization logic for a time picker or similar component.
   void onInitialized(List<String> formats,
       {Time? initTime, Time? minTime, Time? maxTime}) {
     final now = DateTime.now();
@@ -40,6 +41,7 @@ class TimePickerNotifier extends ChangeNotifier {
     });
   }
 
+  /// Generates a list of dates based on the provided type and optional formatting.
   List<String> generateDate(String type, [bool useNumericFormat = false]) {
     switch (type) {
       case 'h':
@@ -52,6 +54,7 @@ class TimePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Updates the value based on the selected index and type, handling potential errors.
   void onChange(int index, String type) {
     try {
       int value = int.parse(generateDate(type, true)[index]);
@@ -87,6 +90,7 @@ class TimePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Scrolls a list associated with the given `type` to the item at the specified `index`.
   void scrollTo(String type, int index, {Duration? duration}) {
     controller[type]?.animateToItem(index,
         duration: duration ?? 100.ms, curve: Curves.easeInOut);

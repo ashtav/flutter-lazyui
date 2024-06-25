@@ -87,6 +87,7 @@ class LzDatePicker extends StatelessWidget {
     );
   }
 
+  /// Creates a customizable date picker widget with optional configuration.
   static Widget widget(
       {DateTime? initDate,
       DateTime? minDate,
@@ -129,16 +130,53 @@ class LzDatePicker extends StatelessWidget {
   }
 }
 
+/// A customizable Cupertino-style picker widget.
+
 class CupertinoPickerWidget extends StatelessWidget {
+  /// The `DatePickerNotifier` object providing data and state updates.
   final DatePickerNotifier notifier;
+
+  /// The type of picker (e.g., "hour", "minute") used to identify the list
+  /// of items and potentially apply styling based on the type.
   final String type;
+
+  /// The list of items to be displayed in the picker. This list is expected
+  /// to be populated by the `DatePickerNotifier`.
   final List<String> items;
-  final double? magnification, itemExtent, diameterRatio, squeeze;
+
+  /// Optional magnification factor for the text displayed in the picker items.
+  /// A value greater than 1.0 will magnify the text.
+  final double? magnification;
+
+  /// Optional height of each picker item. This can be used to customize the
+  /// spacing between items in the picker.
+  final double? itemExtent;
+
+  /// Optional diameter ratio for the picker wheel. This value affects the
+  /// visual appearance of the picker, typically used by the chosen date picker
+  /// library.
+  final double? diameterRatio;
+
+  /// Optional squeeze factor for item spacing. This can be used to adjust the
+  /// visual density of items within the picker.
+  final double? squeeze;
+
+  /// Optional style customizations for the picker. The specific effects of
+  /// style depend on the chosen date picker library.
   final DatePickerStyle? style;
+
+  /// Optional letter spacing for the text displayed in the picker items.
+  /// A positive value will increase the space between letters.
   final double? letterSpacing;
+
+  /// Optional background color for the picker widget.
   final Color? backgroundColor;
+
+  /// Optional overlay color for the picker widget. This might be used for
+  /// visual effects like highlighting the selected item.
   final Color? overlayColor;
 
+  /// Creates a new instance of `CupertinoPickerWidget`.
   const CupertinoPickerWidget(this.notifier,
       {super.key,
       required this.type,
@@ -203,9 +241,19 @@ class CupertinoPickerWidget extends StatelessWidget {
   }
 }
 
+/// A customizable confirm button for use with date pickers.
+
 class ConfirmButton extends StatelessWidget {
+  /// The `DatePickerNotifier` object providing data and state updates.
+  /// The button's behavior is likely tied to actions within the notifier.
   final DatePickerNotifier notifier;
+
+  /// Optional style customizations for the confirm button.
+  /// These might influence appearance (colors, font, etc.) based on the
+  /// chosen button widget implementation.
   final DatePickerStyle? style;
+
+  /// Creates a new instance of `ConfirmButton`.
   const ConfirmButton(this.notifier, {super.key, this.style});
 
   @override
@@ -279,11 +327,20 @@ class ConfirmButton extends StatelessWidget {
   }
 }
 
-class TimePicker extends StatelessWidget {
-  final DatePickerNotifier notifier;
-  final DatePickerStyle? style;
-  const TimePicker(this.notifier, {super.key, this.style});
+/// A customizable time picker widget for use with date pickers.
 
+class TimePicker extends StatelessWidget {
+  /// The `DatePickerNotifier` object providing data and state updates.
+  /// The time picker likely interacts with the notifier to update the selected time.
+  final DatePickerNotifier notifier;
+
+  /// Optional style customizations for the time picker.
+  /// These might influence appearance (colors, font, etc.) based on the
+  /// chosen time picker library implementation.
+  final DatePickerStyle? style;
+
+  /// Creates a new instance of `TimePicker`.
+  const TimePicker(this.notifier, {super.key, this.style});
   @override
   Widget build(BuildContext context) {
     double radius = style?.radius ?? LazyUi.radius;

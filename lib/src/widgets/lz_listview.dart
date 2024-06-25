@@ -53,6 +53,7 @@ class LzListView extends StatefulWidget {
   /// Gap between items in the list.
   final double? gap;
 
+  /// Create widget
   const LzListView(
       {super.key,
       this.controller,
@@ -163,29 +164,35 @@ class _LzListViewState extends State<LzListView> {
   }
 }
 
+/// Utility class for handling scrolling operations with a [ScrollController].
 class Scroller {
   /// The scroll controller for the list.
   final ScrollController controller;
+
+  /// Creates a [Scroller] instance with the provided [controller].
   Scroller({required this.controller});
 
-  /// Returns true if the list is scrolled to the top.
+  /// Checks if the list is scrolled to the bottom.
+  ///
+  /// Returns true if the current scroll position plus [offset] is greater than or equal to
+  /// the maximum scroll extent of the list.
   bool atBottom([double offset = 0]) {
     return controller.position.pixels + offset >=
         controller.position.maxScrollExtent;
   }
 
-  /// Returns the opacity value based on the scroll position.
+  /// Calculates the opacity value based on the current scroll position.
   ///
-  /// The [factor] parameter determines the speed at which opacity changes.
-  /// A lower value of [factor] results in faster opacity changes.
+  /// The [factor] parameter adjusts the speed of opacity changes. Lower values make opacity change faster.
   ///
-  /// The [invertOpacity] parameter determines whether to invert the opacity value.
-  /// If set to true, the opacity value is inverted, resulting in the opposite behavior.
+  /// Setting [invertOpacity] to true will invert the opacity value.
+  /// - When true, the opacity decreases as the scroll position increases.
+  /// - When false, the opacity increases as the scroll position increases.
   double getOpacity([double factor = 100, bool invertOpacity = true]) {
     double value = (controller.position.pixels / (factor < 1 ? 1 : factor));
-    return (invertOpacity == true ? (1 - value) : value).clamp(0, 1);
+    return (invertOpacity ? (1 - value) : value).clamp(0, 1);
   }
 
-  /// Returns true if the list is scrolled to the bottom.
+  /// Retrieves the current scroll position in pixels.
   double get pixels => controller.position.pixels;
 }

@@ -13,25 +13,43 @@ IconType _defaultIconType = IconType.tablerIcon;
 double _defaultSpace = 20.0;
 double _defaultRadius = 7.0;
 
+/// A utility class for configuring lazy UI settings and styles.
 class LazyUi {
+  /// The default font style.
   static TextStyle get font => _defaultTextStyle;
+
+  /// The default icon type.
   static IconType get iconType => _defaultIconType;
+
+  /// The default spacing value.
   static double get space => _defaultSpace;
+
+  /// The default border radius value.
   static double get radius => _defaultRadius;
 
-  static void config(
-      {AppTheme theme = AppTheme.light,
-      IconType icon = IconType.tablerIcon,
-      TextStyle? font,
-      double? space,
-      double? radius,
-      bool alwaysPortrait = true}) {
-    // set app theme
+  /// Initializes LazyUi with optional configuration parameters.
+  ///
+  /// - [theme]: The theme mode for the app.
+  /// - [icon]: The default icon type to use.
+  /// - [font]: Optional font style configuration.
+  /// - [space]: Optional spacing configuration.
+  /// - [radius]: Optional border radius configuration.
+  /// - [alwaysPortrait]: Whether to enforce portrait mode.
+  static void init({
+    AppTheme theme = AppTheme.light,
+    IconType icon = IconType.tablerIcon,
+    TextStyle? font,
+    double? space,
+    double? radius,
+    bool alwaysPortrait = true,
+  }) {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Set app theme
     switch (theme) {
       case AppTheme.dark:
         Utils.setSystemUI(navBarColor: Colors.black);
         break;
-
       case AppTheme.light:
         Utils.setSystemUI(navBarColor: Colors.white);
         break;
@@ -50,18 +68,18 @@ class LazyUi {
     _defaultRadius = radius ?? _defaultRadius;
   }
 
+  /// Builds a widget with lazy UI configurations applied.
+  ///
+  /// - [context]: The build context.
+  /// - [child]: The child widget.
+  /// - [maxScalingFontSize]: Maximum font scaling factor.
+  /// - [useLzToast]: Whether to use LazyToast overlay.
   static Widget builder(BuildContext context, Widget? child,
       {double? maxScalingFontSize, bool useLzToast = true}) {
     _defaultTextStyle = _getFontStyle(context);
 
-    // ignore: deprecated_member_uselzf
+    // ignore: deprecated_member_use
     double maxScalingFactor = MediaQuery.of(context).textScaleFactor;
-
-    //   data: MediaQuery.of(context).copyWith(
-    //   textScaler: maxScalingFontSize == null
-    //       ? TextScaler.noScaling
-    //       : TextScaler.linear(maxScalingFontSize),
-    // ),
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(

@@ -11,8 +11,10 @@ class DatePickerNotifier extends ChangeNotifier {
   /// Values representing the selected day, month, year, hour, and minute.
   Map<String, int> values = {'d': 1, 'm': 1, 'y': 2021, 'h': 0, 'i': 0};
 
-  /// The initial date, minimum date, and maximum date for the picker.
+  /// The initial date for the picker.
   late List<DateTime> initDate = [DateTime.now(), DateTime.now().add(1.d)];
+
+  /// Minimum date and maximum date for the picker.
   late DateTime minDate, maxDate;
 
   /// The selected time.
@@ -31,6 +33,7 @@ class DatePickerNotifier extends ChangeNotifier {
   DateTime get value => DateTime(values['y'] ?? 0, values['m'] ?? 0,
       values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
+  /// Handles initialization logic for a date picker or similar component.
   void onInitialized(List<String> formats,
       {List<DateTime>? initDate, DateTime? minDate, DateTime? maxDate}) {
     final now = DateTime.now();
@@ -68,6 +71,7 @@ class DatePickerNotifier extends ChangeNotifier {
     });
   }
 
+  /// Generates a list of dates based on the provided type and optional formatting.
   List<String> generateDate(String type, [bool useNumericFormat = false]) {
     final now = DateTime.now();
 
@@ -109,6 +113,7 @@ class DatePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Selects a date from the date picker and updates the state accordingly.
   void onSelectDate(int index) async {
     try {
       isFromSelectDate = true;
@@ -151,6 +156,7 @@ class DatePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Updates the value based on the selected index and type, handling potential errors.
   void onChange(int index, String type) async {
     try {
       if (isFromSelectDate) return;
@@ -212,14 +218,16 @@ class DatePickerNotifier extends ChangeNotifier {
     }
   }
 
+  /// Scrolls a list associated with the given `type` to the item at the specified `index`.
   void scrollTo(String type, int index, {Duration? duration}) {
     controller[type]?.animateToItem(index,
         duration: duration ?? 100.ms, curve: Curves.easeInOut);
   }
 
-  // time picker
+  /// time picker
   bool openTimePicker = false;
 
+  /// Toggles the visibility of the time picker and sets the initial scroll positions for the hour and minute lists.
   void toggleTimePicker() {
     openTimePicker = !openTimePicker;
 

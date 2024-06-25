@@ -6,6 +6,7 @@ export 'src/enum.dart';
 
 /// Utility class for displaying confirmation dialogs or sheets.
 class LzConfirm {
+  /// Displays a confirmation dialog or sheet.
   static void show(BuildContext context,
       {String? title,
       String? message,

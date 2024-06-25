@@ -1,25 +1,41 @@
 /// Enum representing different application themes.
-///
-/// - `light`: Light theme.
-/// - `dark`: Dark theme.
-/// - `system`: Theme based on the system settings.
-enum AppTheme { light, dark, system }
+enum AppTheme {
+  /// Light theme.
+  light,
 
-/// Enum representing types of icons used in the application.
-///
-/// - `lineAwesome`: Icons from the LineAwesome icon set.
-/// - `tablerIcon`: Icons from the Tabler icon set.
-enum IconType { lineAwesome, tablerIcon }
+  /// Dark theme.
+  dark,
 
-/// Enum representing slide directions for animations in the application.
-///
-/// - `up`: Slide or animation moves upward.
-/// - `down`: Slide or animation moves downward.
-enum SlideDirection { up, down }
+  /// System theme (device default).
+  system,
+}
 
-/// Enum representing different types of refresh indicators in the application.
-///
-/// - `curve`: Curved refresh indicator.
-/// - `bar`: Progress bar-based refresh indicator.
-/// - `arrow`: Arrow-based refresh indicator.
-enum RefrehtorType { curve, bar, arrow }
+/// Enum representing different icon types.
+enum IconType {
+  /// LineAwesome icon set.
+  lineAwesome,
+
+  /// Tabler icon set.
+  tablerIcon,
+}
+
+/// Enum representing different slide directions.
+enum SlideDirection {
+  /// Slide direction: up.
+  up,
+
+  /// Slide direction: down.
+  down,
+}
+
+/// Enum representing different types of refresh indicators.
+enum RefrehtorType {
+  /// Curved refresh indicator.
+  curve,
+
+  /// Bar style refresh indicator.
+  bar,
+
+  /// Arrow style refresh indicator.
+  arrow,
+}
