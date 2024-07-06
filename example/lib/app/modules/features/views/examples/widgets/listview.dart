@@ -35,9 +35,16 @@ class LzListViewExample extends StatelessWidget {
                 .margin(b: 25),
 
             const Text('Scroll limit, top: 50, bottom: 100'),
-            LzState.watch('#pixel', 0.0, (value) => Text('Scroll pixels: $value')), // watch scroll pixels
+            LzState.watch(
+                '#pixel',
+                0.0,
+                (value) =>
+                    Text('Scroll pixels: $value')), // watch scroll pixels
 
-            Textr(Faker.words(25, 10), border: Br.only(['t']), padding: Ei.only(t: 50), margin: Ei.only(t: 20))
+            Textr(Faker.words(25, 10),
+                border: Br.only(['t']),
+                padding: Ei.only(t: 50),
+                margin: Ei.only(t: 20))
           ],
         ));
   }

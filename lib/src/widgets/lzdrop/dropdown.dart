@@ -26,7 +26,13 @@ class Dropdown extends StatelessWidget {
 
   /// Create widget
   const Dropdown(
-      {super.key, required this.target, this.box, this.options = const [], this.style, this.onSelect, this.child});
+      {super.key,
+      required this.target,
+      this.box,
+      this.options = const [],
+      this.style,
+      this.onSelect,
+      this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -47,15 +53,19 @@ class Dropdown extends StatelessWidget {
     // logg('background-color: ${style?.backgroundColor} -> $isBgHasColor');
 
     Color backgroundColor = isDarkMode ? '#222'.hex : Colors.white;
-    Color subBackgroundColor = isDarkMode ? '#222'.hex.darken(.2) : '#f5f5f5'.hex;
+    Color subBackgroundColor =
+        isDarkMode ? '#222'.hex.darken(.2) : '#f5f5f5'.hex;
 
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
     List separators = style?.separators ?? [];
     List<IconData?> icons = style?.icons ?? [];
     List criticals = style?.criticals ?? [];
 
     // get dropdown width size
-    double width = (style?.width ?? 230) > context.width ? context.width - 20 : (style?.width ?? 230);
+    double width = (style?.width ?? 230) > context.width
+        ? context.width - 20
+        : (style?.width ?? 230);
 
     // set dropdown position
     notifier.setPosition(target, box, context, width, dkey, hasChild);
@@ -76,7 +86,9 @@ class Dropdown extends StatelessWidget {
             AnimatedPositioned(
                 duration: hasChild
                     ? state.duration
-                    : state.offset == Offset.zero || style?.transition == false || style == null
+                    : state.offset == Offset.zero ||
+                            style?.transition == false ||
+                            style == null
                         ? 0.ms
                         : 150.ms,
                 left: state.offset.dx + (style?.offset?.dx ?? 0),
@@ -91,7 +103,8 @@ class Dropdown extends StatelessWidget {
                       key: dkey,
                       margin: Ei.only(t: hasChild ? 0 : 0),
                       decoration: BoxDecoration(color: backgroundColor),
-                      constraints: BoxConstraints(maxHeight: 300, maxWidth: width),
+                      constraints:
+                          BoxConstraints(maxHeight: 300, maxWidth: width),
                       child: SingleChildScrollView(
                         physics: BounceScroll(),
                         controller: notifier.scroller,
@@ -99,9 +112,11 @@ class Dropdown extends StatelessWidget {
                           GlobalKey ikey = keys[i];
                           IconData? icon = icons.length > i ? icons[i] : null;
 
-                          bool isSeparator = separators.contains(i) || separators.contains(item.label);
+                          bool isSeparator = separators.contains(i) ||
+                              separators.contains(item.label);
                           bool isDisabled = item.disabled;
-                          bool isCritical = criticals.contains(i) || criticals.contains(item.label);
+                          bool isCritical = criticals.contains(i) ||
+                              criticals.contains(item.label);
 
                           List<DropOption> subOptions = item.subOptions ?? [];
                           bool hasSubOptions = subOptions.isNotEmpty;
@@ -119,32 +134,46 @@ class Dropdown extends StatelessWidget {
 
                             Icon iconWidget(IconData icon) => Icon(
                                   icon,
-                                  color: isCritical ? Colors.redAccent : textColor.lighten(.6),
+                                  color: isCritical
+                                      ? Colors.redAccent
+                                      : textColor.lighten(.6),
                                   size: 18,
                                 );
 
-                            bool hasExpanded = hasSubOptions && state.subOptionsToggle[item.label] == true;
+                            bool hasExpanded = hasSubOptions &&
+                                state.subOptionsToggle[item.label] == true;
 
                             return InkTouch(
                               key: key,
                               onTap: isDisabled ? null : () => onTap?.call(),
-                              padding: isSubOption ? Ei.only(v: 12, r: 16, l: 30) : Ei.only(r: 16, v: 12, l: 16),
+                              padding: isSubOption
+                                  ? Ei.only(v: 12, r: 16, l: 30)
+                                  : Ei.only(r: 16, v: 12, l: 16),
                               border: Br.only(['t'],
                                   except: i == 0 && !isSubOption,
                                   width: isSeparator ? 5 : .5,
                                   color: style?.separatorColor ??
-                                      (backgroundColor.isDark() ? Colors.white10 : Colors.black12)),
-                              color: isSubOption ? subBackgroundColor : backgroundColor,
+                                      (backgroundColor.isDark()
+                                          ? Colors.white10
+                                          : Colors.black12)),
+                              color: isSubOption
+                                  ? subBackgroundColor
+                                  : backgroundColor,
                               child: Column(
                                 children: [
                                   Row(
                                     children: [
-                                      Text(label, style: font.fcolor(isCritical ? Colors.redAccent : textColor))
+                                      Text(label,
+                                              style: font.fcolor(isCritical
+                                                  ? Colors.redAccent
+                                                  : textColor))
                                           .lz
                                           .flexible(),
                                       if (hasIcon) iconWidget(icon),
                                       if (hasSubOptions && !hasIcon)
-                                        Rotator(degree: hasExpanded ? 90 : 0, child: iconWidget(Ti.chevronRight))
+                                        Rotator(
+                                            degree: hasExpanded ? 90 : 0,
+                                            child: iconWidget(Ti.chevronRight))
                                     ],
                                   ).between.lz.opacity(isDisabled ? .4 : 1),
                                 ],
@@ -167,17 +196,23 @@ class Dropdown extends StatelessWidget {
                                     notifier.toggleSubOptions(item.label, ikey);
                                   } else {
                                     context.lz.pop();
-                                    onSelect?.call(DropValue(item.label, item.value, index: i));
+                                    onSelect?.call(DropValue(
+                                        item.label, item.value,
+                                        index: i));
                                   }
                                 }),
                                 ResizedSwitched(
-                                  show: state.subOptionsToggle[item.label] ?? false,
+                                  show: state.subOptionsToggle[item.label] ??
+                                      false,
                                   child: Column(
                                     children: subOptions.generate((item, j) {
-                                      return itemWidget(j, item.label, isDisabled: item.disabled, isSubOption: true,
-                                          onTap: () {
+                                      return itemWidget(j, item.label,
+                                          isDisabled: item.disabled,
+                                          isSubOption: true, onTap: () {
                                         context.lz.pop();
-                                        onSelect?.call(DropValue(item.label, item.value, index: '$i.$j'));
+                                        onSelect?.call(DropValue(
+                                            item.label, item.value,
+                                            index: '$i.$j'));
                                       });
                                     }),
                                   ),
@@ -187,7 +222,9 @@ class Dropdown extends StatelessWidget {
                           );
                         })).min.start,
                       ),
-                    ).lz.clip(all: hasChild && isBgHasColor ? null : LazyUi.radius, blr: hasChild ? LazyUi.radius : 0),
+                    ).lz.clip(
+                        all: hasChild && isBgHasColor ? null : LazyUi.radius,
+                        blr: hasChild ? LazyUi.radius : 0),
                   ],
                 )),
           ],

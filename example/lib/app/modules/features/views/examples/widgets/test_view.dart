@@ -27,7 +27,8 @@ class TestView extends StatelessWidget {
             }
           }),
           Icon(Ti.filter, key: key).onPressed(() {
-            LzDrop.show(key, options: DropOption.list(['Latest', 'Most Liked']));
+            LzDrop.show(key,
+                options: DropOption.list(['Latest', 'Most Liked']));
           })
         ]),
         body: LzListView(
@@ -38,9 +39,11 @@ class TestView extends StatelessWidget {
             const SizedBox(height: 15),
             LzForm.input(hint: 'Enter your name', model: forms['name']),
             LzDropItem(
-              options: DropOption.list(['Details', 'Edit', 'Delete', 'Archive']),
+              options:
+                  DropOption.list(['Details', 'Edit', 'Delete', 'Archive']),
               style: DropStyle(separators: [3]),
-              builder: (child) => Container(padding: Ei.all(20), width: context.width, child: child),
+              builder: (child) => Container(
+                  padding: Ei.all(20), width: context.width, child: child),
               child: LzCard(
                 stacked: true,
                 stackAlign: StackAlign.top,
