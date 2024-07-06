@@ -14,17 +14,22 @@ class TestView extends StatelessWidget {
     List<String> labels = ['Text A', 'Text B', 'Text C'];
     final font = context.gfont;
 
+    final key = GlobalKey();
+
     return Wrapper(
       child: Scaffold(
-        appBar: AppBar(
-            title: const Text('Test View'),
-            actions: [Ti.swipe, Ti.photo].iconButton((i) {
-              if (i == 0) {
-                context.bottomSheet(const MyComment());
-              } else {
-                Pickers.show(context);
-              }
-            })),
+        appBar: AppBar(title: const Text('Test View'), actions: [
+          ...[Ti.swipe, Ti.photo].iconButton((i) {
+            if (i == 0) {
+              context.bottomSheet(const MyComment());
+            } else {
+              Pickers.show(context);
+            }
+          }),
+          Icon(Ti.filter, key: key).onPressed(() {
+            LzDrop.show(key, options: DropOption.list(['Latest', 'Most Liked']));
+          })
+        ]),
         body: LzListView(
           gap: 10,
           children: [
@@ -33,11 +38,9 @@ class TestView extends StatelessWidget {
             const SizedBox(height: 15),
             LzForm.input(hint: 'Enter your name', model: forms['name']),
             LzDropItem(
-              options:
-                  DropOption.list(['Details', 'Edit', 'Delete', 'Archive']),
+              options: DropOption.list(['Details', 'Edit', 'Delete', 'Archive']),
               style: DropStyle(separators: [3]),
-              builder: (child) => Container(
-                  padding: Ei.all(20), width: context.width, child: child),
+              builder: (child) => Container(padding: Ei.all(20), width: context.width, child: child),
               child: LzCard(
                 stacked: true,
                 stackAlign: StackAlign.top,

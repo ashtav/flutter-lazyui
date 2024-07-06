@@ -6,7 +6,7 @@ class Skeleton extends StatelessWidget {
   final dynamic size;
 
   /// Radius of the skeleton widget.
-  final double radius;
+  final double? radius;
 
   /// Color of the skeleton widget.
   final Color? color;
@@ -15,18 +15,15 @@ class Skeleton extends StatelessWidget {
   final Color? highlight;
 
   /// Create widget
-  const Skeleton(
-      {super.key, this.size, this.radius = 0, this.color, this.highlight});
+  const Skeleton({super.key, this.size, this.radius, this.color, this.highlight});
 
   @override
   Widget build(BuildContext context) {
-    double width = _getSize(size, 'width') ?? 50,
-        height = _getSize(size, 'height') ?? 15;
-    double radius = LazyUi.radius;
+    double width = _getSize(size, 'width') ?? 50, height = _getSize(size, 'height') ?? 15;
+    double radius = this.radius ?? LazyUi.radius;
 
     Color baseColor = color ?? (lzDarkMode ? '444'.hex : Colors.grey[300]!);
-    Color highlightColor =
-        highlight ?? (lzDarkMode ? '555'.hex : Colors.grey[200]!);
+    Color highlightColor = highlight ?? (lzDarkMode ? '555'.hex : Colors.grey[200]!);
 
     return Shimmer.fromColors(
       baseColor: baseColor,
@@ -44,8 +41,7 @@ class Skeleton extends StatelessWidget {
   }
 
   /// Creates a copy of this [Skeleton] but with the given fields replaced with the new values.
-  Skeleton copyWith(
-      {dynamic size, double? radius, Color? color, Color? highlight}) {
+  Skeleton copyWith({dynamic size, double? radius, Color? color, Color? highlight}) {
     return Skeleton(
         size: size ?? this.size,
         radius: radius ?? this.radius,
@@ -61,9 +57,7 @@ extension SkeletonExtension on Skeleton {
   /// [value]: Number of Skeleton widgets to generate.
   /// [alignment]: CrossAxisAlignment for the Column.
   /// [gap]: Vertical gap between generated Skeleton widgets.
-  Widget iterate(int value,
-      {CrossAxisAlignment alignment = CrossAxisAlignment.start,
-      double gap = 0}) {
+  Widget iterate(int value, {CrossAxisAlignment alignment = CrossAxisAlignment.start, double gap = 0}) {
     return Column(
         crossAxisAlignment: alignment,
         children: List.generate(value, (i) {

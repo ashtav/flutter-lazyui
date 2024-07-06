@@ -12,11 +12,10 @@ class LzListViewExample extends StatelessWidget {
         ),
         body: LzListView(
           onScroll: (scroll) {
-            double pixels = scroll.controller.position.pixels;
+            double pixels = scroll.pixels;
             LzState.set('#pixel', pixels);
 
-            bool isMaxScrolled =
-                (pixels + 150) >= scroll.controller.position.maxScrollExtent;
+            bool isMaxScrolled = (pixels + 150) >= scroll.max;
             if (isMaxScrolled) {
               // Load more data
             }
@@ -27,7 +26,7 @@ class LzListViewExample extends StatelessWidget {
             //   LzToast.show('Loading more data...');
             // }
           },
-          scrollLimit: const [50, 100],
+          scrollLimit: const [70, 130],
           onRefresh: () => LzToast.show('List refreshed successfully!'),
           refreshType: RefrehtorType.curve,
           children: [
@@ -36,16 +35,9 @@ class LzListViewExample extends StatelessWidget {
                 .margin(b: 25),
 
             const Text('Scroll limit, top: 50, bottom: 100'),
-            LzState.watch(
-                '#pixel',
-                0.0,
-                (value) =>
-                    Text('Scroll pixels: $value')), // watch scroll pixels
+            LzState.watch('#pixel', 0.0, (value) => Text('Scroll pixels: $value')), // watch scroll pixels
 
-            Textr(Faker.words(25, 10),
-                border: Br.only(['t']),
-                padding: Ei.only(t: 50),
-                margin: Ei.only(t: 20))
+            Textr(Faker.words(25, 10), border: Br.only(['t']), padding: Ei.only(t: 50), margin: Ei.only(t: 20))
           ],
         ));
   }

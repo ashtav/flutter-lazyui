@@ -49,6 +49,9 @@ class Iconr extends StatelessWidget {
   /// Icon color (optional).
   final Color? color;
 
+  /// Background color (optional).
+  final Color? backgroundColor;
+
   /// Icon size (optional).
   final double? size;
 
@@ -74,6 +77,7 @@ class Iconr extends StatelessWidget {
   /// The [border] is the border around the icon container (optional).
   /// The [alignment] is the alignment of the icon within the container (optional).
   /// The [color] is the icon color (optional).
+  /// The [backgroundColor] is the background icon color (optional).
   /// The [size] is the icon size (optional).
   /// The [rotate] is the rotation angle in degrees (optional).
   /// The [flipX] determines whether to flip horizontally (optional).
@@ -87,6 +91,7 @@ class Iconr extends StatelessWidget {
     this.width,
     this.radius,
     this.color,
+    this.backgroundColor,
     this.size,
     this.rotate,
     this.alignment,
@@ -105,8 +110,7 @@ class Iconr extends StatelessWidget {
         : flipX || flipY
             ? Transform(
                 alignment: Alignment.center,
-                transform:
-                    flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
+                transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
                 child: iconWidget)
             : iconWidget;
 
@@ -115,10 +119,8 @@ class Iconr extends StatelessWidget {
       padding: padding,
       margin: margin,
       width: width,
-      decoration: BoxDecoration(border: border, borderRadius: radius),
-      child: rotate == null
-          ? flipWidget
-          : Transform.rotate(angle: rotate!, child: flipWidget),
+      decoration: BoxDecoration(border: border, borderRadius: radius, color: backgroundColor),
+      child: rotate == null ? flipWidget : Transform.rotate(angle: rotate!, child: flipWidget),
     );
   }
 }

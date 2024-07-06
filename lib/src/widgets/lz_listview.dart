@@ -80,10 +80,8 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Utils.scrollHasMax(
-          controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
-        controller.animateTo(controller.position.pixels,
-            duration: 250.ms, curve: Curves.easeIn);
+      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+        controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
       }
     }
 
@@ -151,15 +149,11 @@ class _LzListViewState extends State<LzListView> {
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
         : Refreshtor(
-            onRefresh: () async => widget.onRefresh?.call(),
-            type: widget.refreshType,
-            child: listView(cacheExtent));
+            onRefresh: () async => widget.onRefresh?.call(), type: widget.refreshType, child: listView(cacheExtent));
 
     return widget.autoCache
         ? StreamBuilder<double>(
-            stream: streamController.stream,
-            builder: (BuildContext context, snap) =>
-                content(cacheExtent: snap.data))
+            stream: streamController.stream, builder: (BuildContext context, snap) => content(cacheExtent: snap.data))
         : content();
   }
 }
@@ -177,8 +171,7 @@ class Scroller {
   /// Returns true if the current scroll position plus [offset] is greater than or equal to
   /// the maximum scroll extent of the list.
   bool atBottom([double offset = 0]) {
-    return controller.position.pixels + offset >=
-        controller.position.maxScrollExtent;
+    return controller.position.pixels + offset >= controller.position.maxScrollExtent;
   }
 
   /// Calculates the opacity value based on the current scroll position.
@@ -195,4 +188,73 @@ class Scroller {
 
   /// Retrieves the current scroll position in pixels.
   double get pixels => controller.position.pixels;
+
+  /// Retrieves the max scroll position.
+  double get max => controller.position.maxScrollExtent;
+
+  /// Calculates the opacity value based on the current scroll position.
+  ///
+  /// The [factor] parameter adjusts the speed of opacity changes. Lower values make opacity change faster.
+  ///
+  /// The [type] parameter determines the type of opacity calculation:
+  /// - [ScrollOpacity.top01]: Opacity increases from 0 to 1 as you scroll from top to bottom.
+  /// - [ScrollOpacity.top10]: Opacity decreases from 1 to 0 as you scroll from top to bottom.
+  /// - [ScrollOpacity.bottom01]: Opacity increases from 0 to 1 as you scroll from bottom to top.
+  /// - [ScrollOpacity.bottom10]: Opacity decreases from 1 to 0 as you scroll from bottom to top.
+  ///
+  /// Returns a double value representing the opacity, clamped between 0 and 1.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// double opacityValue = scroller.opacity(factor: 50, type: ScrollOpacity.top01);
+  /// ```
+  ///
+  /// [factor] defaults to 100 if not provided.
+  /// [type] defaults to [ScrollOpacity.top01] if not provided.
+  double opacity([double factor = 100, ScrollOpacity type = ScrollOpacity.top01]) {
+    double pixels = controller.position.pixels;
+    double value = (pixels / (factor < 1 ? 1 : factor));
+
+    // scroll to top start from 0 - 1
+    double scrollTop01 = value.clamp(0, 1);
+
+    // scroll to top start from 1 - 0
+    double scrollTop10 = 1 - value.clamp(0, 1);
+
+    // scroll to bottom start from 0 - 1
+    double scrollBottom01 = value > 0 ? 0 : value.abs().clamp(0, 1);
+
+    // scroll to bottom start from 1 - 0
+    double scrollBottom10 = value > 0 ? 1 : 1 - value.abs().clamp(0, 1);
+
+    final results = {
+      ScrollOpacity.top01: scrollTop01,
+      ScrollOpacity.top10: scrollTop10,
+      ScrollOpacity.bottom01: scrollBottom01,
+      ScrollOpacity.bottom10: scrollBottom10,
+    };
+
+    return results[type] ?? scrollTop01;
+  }
+}
+
+/// Enum representing different types of opacity calculations based on the scroll position.
+///
+/// The [ScrollOpacity] enum defines four types:
+/// - [top01]: Opacity increases from 0 to 1 as you scroll from top to bottom.
+/// - [top10]: Opacity decreases from 1 to 0 as you scroll from top to bottom.
+/// - [bottom01]: Opacity increases from 0 to 1 as you scroll from bottom to top.
+/// - [bottom10]: Opacity decreases from 1 to 0 as you scroll from bottom to top.
+enum ScrollOpacity {
+  /// Opacity increases from 0 to 1 as you scroll from top to bottom.
+  top01,
+
+  /// Opacity decreases from 1 to 0 as you scroll from top to bottom.
+  top10,
+
+  /// Opacity increases from 0 to 1 as you scroll from bottom to top.
+  bottom01,
+
+  /// Opacity decreases from 1 to 0 as you scroll from bottom to top.
+  bottom10
 }
