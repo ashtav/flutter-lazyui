@@ -103,7 +103,7 @@ class _SkeletonViewState extends State<SkeletonView> {
               isLoading,
               Skeleton(size: [
                 [180, context.width]
-              ]).iterate(2, gap: 5))
+              ]).iterate(2, gap: 5)),
         ]));
   }
 }

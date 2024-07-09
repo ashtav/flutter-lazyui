@@ -22,11 +22,7 @@ class MyApp extends StatelessWidget {
           theme: theme,
           title: 'LazyUi',
           home: const HomeView(),
-          builder: (BuildContext context, Widget? widget) {
-            // use LazyUi.builder to wrap your widget
-            // so that you can use LzToast and setting maxScalingFontSize
-            return LazyUi.builder(context, widget, maxScalingFontSize: 1.1);
-          },
+          builder: LazyUi.builder,
         );
       },
     );

@@ -294,6 +294,39 @@ extension LzFormExtension on Map<String, FormModel> {
     return result;
   }
 
+  /// Updates the provided data map with extra values for specified keys.
+  ///
+  /// This method iterates through a list of keys and updates the corresponding
+  /// values in the `data` map with the extra values associated with the keys in
+  /// the current map. If a key exists in the current map and has an extra value,
+  /// the value in the `data` map is updated; otherwise, it remains unchanged.
+  ///
+  /// - [data]: The map to be updated with extra values.
+  /// - [keys]: The list of keys to check for extra values.
+  ///
+  /// Example:
+  /// ```dart
+  /// Map<String, dynamic> data = {'name': 'Alice', 'age': 25};
+  /// List<String> keys = ['name', 'city'];
+  ///
+  /// setFromExtra(data, keys);
+  ///
+  /// // After calling setFromExtra, data might be updated to:
+  /// // {'name': 'Alice', 'age': 25, 'city': 'New York'}
+  /// // if 'city' has an extra value 'New York' associated with it.
+  /// ```
+  ///
+  /// Note: This method assumes that the current map contains keys with associated
+  /// notifiers that have an `extra` property. If a key does not exist in the current
+  /// map or has no associated extra value, the value in the `data` map remains unchanged.
+  void setFromExtra(Map<String, dynamic> data, List<String> keys) {
+    for (String key in keys) {
+      if (data.containsKey(key)) {
+        data[key] = getExtra(key);
+      }
+    }
+  }
+
   /// Retrieves the selected value associated with the specified form field key.
   ///
   /// The [key] parameter specifies the key of the form field.

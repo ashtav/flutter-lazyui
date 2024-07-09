@@ -61,7 +61,10 @@ class Select extends StatelessWidget with LzFormMixin {
     notifier.isSelect = true;
 
     // set enabled or disabled
-    notifier.disabled = disabled;
+    if (!notifier.hasInit) {
+      notifier.disabled = disabled;
+      notifier.hasInit = true;
+    }
 
     // get form type
     FormType formType = attr.type ?? (type ?? FormType.topAligned);

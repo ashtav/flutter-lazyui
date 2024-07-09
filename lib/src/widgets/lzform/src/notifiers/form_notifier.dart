@@ -26,6 +26,9 @@ class FormNotifier extends ChangeNotifier {
   /// Error message associated with the form field.
   String errorMessage = '';
 
+  /// Indicates whether the form has ben initialized.
+  bool hasInit = false;
+
   /// Indicates whether the form field is valid.
   bool isValid = true;
 

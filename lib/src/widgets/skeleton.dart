@@ -52,6 +52,26 @@ class Skeleton extends StatelessWidget {
         color: color ?? this.color,
         highlight: highlight ?? this.highlight);
   }
+
+  /// Ready-to-use skeleton with card style
+  static Widget card({bool thumbnail = false}) {
+    return Container(
+      padding: Ei.all(20),
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: Br.radius(LazyUi.radius)),
+      child: Row(
+        children: [
+          if (thumbnail)
+            const Skeleton(
+              size: 50,
+            ),
+          const Skeleton(size: [
+            [100, 200]
+          ]).iterate(2, gap: 5)
+        ],
+      ).gap(15),
+    );
+  }
 }
 
 /// Extension on Skeleton to generate a column of widgets based on [value].

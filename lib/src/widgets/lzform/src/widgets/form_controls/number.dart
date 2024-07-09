@@ -78,7 +78,11 @@ class Number extends StatelessWidget with LzFormMixin {
     FocusNode focusNode = node ?? notifier.node;
 
     // set enabled or disabled
-    notifier.disabled = disabled;
+    if (!notifier.hasInit) {
+      notifier.disabled = disabled;
+      notifier.hasInit = true;
+    }
+
     notifier.min = min;
     notifier.max = max;
     notifier.step = step;

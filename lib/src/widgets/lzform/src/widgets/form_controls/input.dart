@@ -99,7 +99,11 @@ class Input extends StatelessWidget with LzFormMixin {
     ];
 
     // set enabled or disabled
-    notifier.disabled = disabled;
+    if (!notifier.hasInit) {
+      notifier.disabled = disabled;
+      notifier.hasInit = true;
+    }
+
     notifier.setMaxLength(maxLength);
 
     // set obsecure
@@ -225,7 +229,7 @@ class Input extends StatelessWidget with LzFormMixin {
                   : lzBackgroundColor);
 
       return InkTouch(
-        onTap: disabled || !hasOnTap
+        onTap: state.disabled || !hasOnTap
             ? null
             : () {
                 onTap?.call(notifier.controller.text);

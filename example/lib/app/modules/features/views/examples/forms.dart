@@ -87,7 +87,8 @@ class FormsView extends StatelessWidget {
                 onPressed: () {
                   // set focus to specific input
                   // forms.set('name').enable().focus();
-                  forms.focus('name');
+                  // forms.focus('name');
+                  // forms.set('birthdate').enable();
                 },
                 icon: const Icon(Ti.forms))
           ],
@@ -265,6 +266,7 @@ class FormsView extends StatelessWidget {
                               onSelected: (option) {
                             // set focus to phone
                             forms.set('phone').value('').focus().maxLength(5);
+                            forms.setExtra('city', 9);
                           });
                         }));
                       }),
@@ -341,8 +343,11 @@ class FormsView extends StatelessWidget {
                         'I am sory, we need to know your name, so please provide your valid information.'
                   }));
 
-              logg(form.value);
-              logg(form.extra);
+              final payload = form.value;
+              forms.setFromExtra(payload, ['province', 'city']);
+
+              logg('-- form value: $payload');
+              logg('-- form extra: ${form.extra}');
 
               if (form.ok) {
                 LzToast.overlay('Submitting...', duration: 2.s, then: () {
