@@ -376,9 +376,9 @@ class LzForm {
 
     return LzForm(
         ok: true,
-        value:
-            Map.fromIterables(forms.keys, forms.values.map((e) => e.controller))
-                .toMap());
+        value: Map.fromIterables(
+                forms.keys, forms.values.map((e) => e.notifier.controller))
+            .toMap());
   }
 
   /// input form-controls

@@ -131,7 +131,7 @@ extension LzFormExtension on Map<String, FormModel> {
     Map<String, dynamic> value = {};
 
     for (var e in keys) {
-      value[e] = this[e]!.controller.text;
+      value[e] = this[e]!.notifier.controller.text;
     }
 
     return value;

@@ -63,6 +63,10 @@ class TestView extends StatelessWidget {
                 })),
           ],
         ),
+        bottomNavigationBar: LzButton(
+          text: 'Submit',
+          onTap: (_) {},
+        ).shadowed().padding(blr: 20),
       ),
     );
   }
