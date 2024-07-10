@@ -28,15 +28,12 @@ class LazyUi {
   static double get radius => _defaultRadius;
 
   /// Initializes LazyUi with optional configuration parameters.
-  ///
-  /// This method, by default, runs `WidgetsFlutterBinding.ensureInitialized()`.
-  ///
-  /// - [theme]: The theme mode for the app.
-  /// - [style]: The default style configuration.
-  /// - [alwaysPortrait]: Whether to enforce portrait mode.
   static void init({
     AppTheme theme = AppTheme.light,
-    LzStyle? style,
+    TextStyle? font,
+    IconType? icon,
+    double? space,
+    double? radius,
     bool alwaysPortrait = true,
   }) {
     WidgetsFlutterBinding.ensureInitialized();
@@ -58,10 +55,10 @@ class LazyUi {
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
-    _defaultTextStyle = style?.font ?? GoogleFonts.nunitoSans(fontSize: 15.5);
-    _defaultIconType = style?.icon ?? IconType.tablerIcon;
-    _defaultSpace = style?.space ?? _defaultSpace;
-    _defaultRadius = style?.radius ?? _defaultRadius;
+    _defaultTextStyle = font ?? GoogleFonts.nunitoSans(fontSize: 15.5);
+    _defaultIconType = icon ?? IconType.tablerIcon;
+    _defaultSpace = space ?? _defaultSpace;
+    _defaultRadius = radius ?? _defaultRadius;
   }
 
   /// Builds a widget with lazy UI configurations applied.
@@ -94,56 +91,4 @@ class LazyUi {
 TextStyle _getFontStyle(BuildContext context) {
   TextStyle? style = Theme.of(context).textTheme.bodyMedium;
   return _defaultTextStyle.copyWith(color: style?.color);
-}
-
-/// A class for configuring custom styles in LazyUi.
-///
-/// This class allows you to customize various UI elements within the LazyUi
-/// framework, including font styles, border radii, spacing, and icon types.
-class LzStyle {
-  /// The font style to be used.
-  ///
-  /// This can be any [TextStyle] object. If not specified, the default
-  /// font style defined in LazyUi will be used.
-  final TextStyle? font;
-
-  /// The border radius value to be used.
-  ///
-  /// This is a double value representing the radius of borders. If not
-  /// specified, the default border radius defined in LazyUi will be used.
-  final double? radius;
-
-  /// The spacing value to be used.
-  ///
-  /// This is a double value representing the spacing between UI elements.
-  /// If not specified, the default spacing defined in LazyUi will be used.
-  final double? space;
-
-  /// The icon type to be used.
-  ///
-  /// This can be any [IconType] object. If not specified, the default
-  /// icon type defined in LazyUi will be used.
-  final IconType? icon;
-
-  /// Creates an instance of [LzStyle].
-  ///
-  /// You can specify custom values for [font], [radius], [space], and [icon].
-  /// If any of these values are not specified, the defaults defined in LazyUi
-  /// will be used.
-  ///
-  /// Example:
-  /// ```dart
-  /// LzStyle(
-  ///   font: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-  ///   radius: 10.0,
-  ///   space: 15.0,
-  ///   icon: IconType.tablerIcon,
-  /// );
-  /// ```
-  const LzStyle({
-    this.font,
-    this.radius,
-    this.space,
-    this.icon,
-  });
 }

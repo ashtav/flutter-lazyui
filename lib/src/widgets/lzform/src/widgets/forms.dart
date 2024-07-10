@@ -12,7 +12,6 @@ import '../models/checkbox_model.dart';
 import '../models/checkbox_value.dart';
 import '../models/form_error.dart';
 import '../models/radio_model.dart';
-import '../models/select_value.dart';
 import '../notifiers/form_notifier.dart';
 import '../utils/attribute_extractor.dart';
 import 'form_controls/switches.dart';
@@ -178,13 +177,35 @@ class LzForm {
   /// This static method takes a map of `FormModel` objects and performs validation
   /// based on various criteria, including required fields, minimum/maximum lengths,
   /// email format checking, and custom messages.
+  ///
+  /// ```dart
+  /// // init models
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
+  ///
+  /// // use in widget
+  /// LzForm.input(label: 'Name', hint: 'Enter your name', model: forms['name']);
+  ///
+  /// // validate
+  /// final form = LzForm.validate(forms, required: ['*']);
+  /// if(form.ok) // do something...
+  ///
+  /// // validate params
+  /// required: ['*'] // required all
+  /// required: ['address', 'phone'] // required only address and phone
+  /// required: ['*', 'address', 'phone'] // required all except address and phone
+  ///
+  /// min: ['phone:10', 'address:5']
+  /// max: ['phone:15', 'address:100']
+  /// email: ['email']
+  ///
+  /// ```
   static LzForm validate(Map<String, FormModel> forms,
       {List<String> required = const [],
       List<String> min = const [],
       List<String> max = const [],
       List<String> email = const [],
       FormMessage? messages,
-      FormAlert alert = FormAlert.toast,
+      FormAlert alert = FormAlert.text,
       ToastPlacement? toastPlacement,
       bool singleNotifier = true}) {
     try {

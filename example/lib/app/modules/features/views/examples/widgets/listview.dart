@@ -20,6 +20,9 @@ class LzListViewExample extends StatelessWidget {
               // Load more data
             }
 
+            // detect scroll direction
+            // logg(scroll.direction);
+
             // or use the built-in atBottom method
             // bool isMaxScrolled = scroll.atBottom(150);
             // if (isMaxScrolled) {

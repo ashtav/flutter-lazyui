@@ -11,5 +11,6 @@ export 'src/models/radio_style.dart';
 export 'src/models/radio_value.dart';
 export 'src/models/slide_style.dart';
 export 'src/models/switch_style.dart';
+export 'src/models/select_value.dart';
 export 'src/widgets/forms.dart';
 export 'src/widgets/forms_theme.dart';

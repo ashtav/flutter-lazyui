@@ -76,7 +76,26 @@ class _LzListViewState extends State<LzListView> {
   ScrollController controller = ScrollController();
   StreamController<double> streamController = StreamController<double>();
 
+  double previousScrollPosition = 0.0;
+  ScrollDirection direction = ScrollDirection.idle;
+
   void listenToScroll() {
+    // detect scroll direction
+    double currentScrollPosition = controller.position.pixels;
+
+    if (currentScrollPosition > previousScrollPosition &&
+        currentScrollPosition > 0) {
+      direction = ScrollDirection.forward;
+    } else if (currentScrollPosition < previousScrollPosition &&
+        currentScrollPosition >= 0) {
+      direction = ScrollDirection.reverse;
+    } else {
+      direction = ScrollDirection.idle;
+    }
+
+    previousScrollPosition = currentScrollPosition;
+
+    // set scroll limitation
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
@@ -87,7 +106,8 @@ class _LzListViewState extends State<LzListView> {
       }
     }
 
-    widget.onScroll?.call(Scroller(controller: controller));
+    widget.onScroll
+        ?.call(Scroller(controller: controller, direction: direction));
   }
 
   Future onInitials() async {
@@ -169,8 +189,11 @@ class Scroller {
   /// The scroll controller for the list.
   final ScrollController controller;
 
-  /// Creates a [Scroller] instance with the provided [controller].
-  Scroller({required this.controller});
+  /// The scroll direction.
+  final ScrollDirection direction;
+
+  /// Creates a [Scroller] instance with the provided [controller] and [direction].
+  Scroller({required this.controller, required this.direction});
 
   /// Checks if the list is scrolled to the bottom.
   ///

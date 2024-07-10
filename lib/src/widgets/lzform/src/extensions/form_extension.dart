@@ -216,6 +216,40 @@ extension LzFormExtension on Map<String, FormModel> {
     return FormControl(notifier);
   }
 
+  /// Sets a specified value for multiple keys in the map.
+  ///
+  /// This method iterates through a list of keys and sets the provided value
+  /// for each key in the map. It uses the `setValue` method to update the value
+  /// for each key. If a key does not exist in the map, it should be handled
+  /// accordingly in the `setValue` method.
+  ///
+  /// - [keys]: A list of keys to be updated.
+  /// - [value]: The value to set for each key.
+  ///
+  /// Returns the updated map.
+  ///
+  /// Example:
+  /// ```dart
+  /// Map<String, FormModel> formMap = {
+  ///   'name': FormModel(),
+  ///   'email': FormModel(),
+  /// };
+  ///
+  /// formMap.setMany(['name', 'email'], 'new value');
+  ///
+  /// // After calling setMany, the formMap will have 'new value' set for 'name' and 'email'.
+  /// ```
+  ///
+  /// Note: Ensure that the `setValue` method is defined to handle the value
+  /// setting logic for the keys appropriately.
+  Map<String, FormModel> setMany(List<String> keys, dynamic value) {
+    for (var key in keys) {
+      setValue(key, value);
+    }
+
+    return this;
+  }
+
   /// Sets the form control for the specified key.
   ///
   /// The [key] parameter specifies the key of the form field.

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart' hide TextDirection;
 import 'package:lazyui/src/config/theme.dart';
