@@ -12,6 +12,7 @@ import 'examples/refreshtor.dart';
 import 'examples/trainer.dart';
 import 'examples/widgets/accordion.dart';
 import 'examples/widgets/bagde_n_card.dart';
+import 'examples/widgets/countdown.dart';
 import 'examples/widgets/customs.dart';
 import 'examples/widgets/image.dart';
 import 'examples/widgets/listview.dart';
@@ -112,6 +113,7 @@ class Actions {
       'Custom Widgets': const CustomWidgetView(),
       'LzBadge & LzCard': const BadgeNCardView(),
       'LzListView': const LzListViewExample(),
+      'LzCountDown': const LzCountDownExample(),
     };
 
     final font = Gfont.style(context);

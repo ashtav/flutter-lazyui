@@ -60,9 +60,7 @@ class Refreshtor extends StatelessWidget {
                   RefrehtorType.arrow: ArrowIndicator(controller, value, style)
                 };
 
-                return Container(
-                    margin: Ei.only(t: style?.height ?? 0),
-                    child: contents[type]!);
+                return contents[type]!;
               },
             ),
             child

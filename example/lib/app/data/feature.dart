@@ -89,6 +89,10 @@ List<Map<String, dynamic>> _features = [
           'LzListView',
           'Scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.',
           Ti.list),
+      Feature(
+          'LzCountDown',
+          'A countdown timer widget that displays the time remaining until a specified expiration time.',
+          Ti.list),
     ]
   },
   {

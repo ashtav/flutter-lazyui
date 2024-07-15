@@ -47,7 +47,7 @@ class BarIndicator extends StatelessWidget {
                 mainAxisAlignment: Maa.center,
                 children: [
                   AnimatedContainer(
-                      margin: Ei.only(t: 35 * value),
+                      margin: Ei.only(t: 35 * value + (style?.height ?? 0)),
                       duration: 100.ms,
                       curve: Curves.linearToEaseOut,
                       height: 2,

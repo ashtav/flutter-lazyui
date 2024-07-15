@@ -52,7 +52,8 @@ class ArrowIndicator extends StatelessWidget {
                       child: value < .1
                           ? const None()
                           : Container(
-                              margin: Ei.only(t: 25 * value),
+                              margin:
+                                  Ei.only(t: 25 * value + (style?.height ?? 0)),
                               child: ResizedSwitched(
                                 show: true,
                                 alignment: Alignment.center,

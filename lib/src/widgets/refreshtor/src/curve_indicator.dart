@@ -45,7 +45,9 @@ class CurveIndicator extends StatelessWidget {
               duration: 150.ms,
               width: context.width,
               padding: Ei.only(t: (10 * value) + 3),
-              height: isLoading || isFinal ? 0 : 55 * value,
+              height: isLoading || isFinal
+                  ? 0
+                  : 55 * value + (value * (style?.height ?? 0)),
               child: Center(
                 child: AnimatedOpacity(
                     duration: 300.ms,

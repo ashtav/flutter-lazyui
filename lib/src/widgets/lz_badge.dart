@@ -6,7 +6,14 @@ class LzBadge extends StatelessWidget {
   final String text;
 
   /// The spacing between the text and the icon (if present).
+  ///
+  /// This spacing is only applied if [padding] is null.
   final double spacing;
+
+  /// The padding inside the badge.
+  ///
+  /// If this is set, the [spacing] parameter will be ignored.
+  final EdgeInsetsGeometry? padding;
 
   /// The size of the badge.
   final double? size;
@@ -42,6 +49,7 @@ class LzBadge extends StatelessWidget {
   const LzBadge(this.text,
       {super.key,
       this.spacing = 2,
+      this.padding,
       this.size,
       this.color,
       this.radius,
@@ -61,8 +69,8 @@ class LzBadge extends StatelessWidget {
     bool isShapeCircle = shape == BoxShape.circle;
 
     return Container(
-      padding:
-          isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8),
+      padding: padding ??
+          (isShapeCircle ? Ei.all(spacing + 2) : Ei.syms(spacing, spacing + 8)),
       decoration: BoxDecoration(
           color: softColor ? color.lighten(.1) : color,
           borderRadius: isShapeCircle ? null : radius ?? Br.radius(5),
