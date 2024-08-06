@@ -50,7 +50,7 @@ class AccordionView extends StatelessWidget {
               ],
             ).margin(b: 15),
             LzAccordion(
-              backgroundColor: '444'.hex,
+              backgroundColor: '1e1d21'.hex,
               textColor: Colors.white,
               border: Br.none,
               children: [

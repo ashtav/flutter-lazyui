@@ -259,13 +259,13 @@ class CircularValueWidget extends StatefulWidget {
   final Duration duration;
 
   const CircularValueWidget({
-    Key? key,
+    super.key,
     required this.value,
     this.size = 100,
     this.backgroundColor = Colors.grey,
     this.fillColor = Colors.blue,
     this.duration = const Duration(milliseconds: 500),
-  }) : super(key: key);
+  });
 
   @override
   State<CircularValueWidget> createState() => _CircularValueWidgetState();

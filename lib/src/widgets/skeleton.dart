@@ -24,7 +24,7 @@ class Skeleton extends StatelessWidget {
         height = _getSize(size, 'height') ?? 15;
     double radius = this.radius ?? LazyUi.radius;
 
-    Color baseColor = color ?? (lzDarkMode ? '444'.hex : Colors.grey[300]!);
+    Color baseColor = color ?? (lzDarkMode ? '1e1d21'.hex : Colors.grey[300]!);
     Color highlightColor =
         highlight ?? (lzDarkMode ? '555'.hex : Colors.grey[200]!);
 

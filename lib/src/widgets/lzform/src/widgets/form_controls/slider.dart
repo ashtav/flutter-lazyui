@@ -104,11 +104,10 @@ class Slider extends StatelessWidget with LzFormMixin {
                       trackShape: CustomTrackShape(),
                       activeTrackColor: activeColor,
                       inactiveTrackColor: inactiveColor,
-                      thumbColor: style?.thumbColor,
+                      thumbColor: style?.thumbColor ?? Colors.blueAccent,
                       activeTickMarkColor: style?.activeTickMarkColor,
                       inactiveTickMarkColor: style?.inactiveTickMarkColor,
-                      // valueIndicatorColor: Colors.transparent,
-                      // valueIndicatorTextStyle: Gfont.black
+                      valueIndicatorColor: style?.valueIndicatorColor ?? Colors.blueAccent,
                     ),
                     child: m.Slider(
                       value: value,

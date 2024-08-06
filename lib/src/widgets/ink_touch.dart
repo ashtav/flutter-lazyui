@@ -185,7 +185,7 @@ class InkTouch extends StatelessWidget {
     Widget? child,
     BorderRadius? radius,
   }) {
-    Color defaultColor = lzDarkMode ? '444'.hex : Colors.white;
+    Color defaultColor = lzDarkMode ? '1e1d21'.hex : Colors.white;
 
     return InkTouch(
       onTap: onTap,

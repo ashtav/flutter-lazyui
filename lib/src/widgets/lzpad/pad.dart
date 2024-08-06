@@ -189,7 +189,7 @@ class _PadWidgetState extends State<PadWidget> {
         ),
         backgroundColor: Colors.transparent,
       ),
-      backgroundColor: lzDarkMode ? '444'.hex.darken(.2) : 'f1f1f1'.hex,
+      backgroundColor: lzDarkMode ? '1e1d21'.hex.darken(.2) : 'f1f1f1'.hex,
       body: Column(
         children: [
           Expanded(

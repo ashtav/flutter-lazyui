@@ -35,11 +35,16 @@ class LzTheme {
     return ThemeData.light().copyWith(
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
-        elevation: 0.5,
         titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.black87),
         backgroundColor: Colors.white,
+        foregroundColor: Colors.white,
+        shadowColor: Colors.black38,
+        elevation: .7,
+        scrolledUnderElevation: .7,
+        surfaceTintColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black87),
       ),
+      scaffoldBackgroundColor: 'fafafa'.hex,
       textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.black87)),
       iconTheme: const IconThemeData(size: 20, color: Colors.black87),
     );
@@ -50,7 +55,6 @@ class LzTheme {
     return ThemeData.dark().copyWith(
       brightness: Brightness.dark,
       appBarTheme: AppBarTheme(
-        elevation: 0.5,
         titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.white),
       ),
       textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.white)),
@@ -68,7 +72,7 @@ class LzTheme {
 
     return AppThemeData(
       theme: isDark ? LzTheme.dark : LzTheme.light,
-      background: isDark ? '444'.hex : Colors.white,
+      background: isDark ? '1e1d21'.hex : Colors.white,
       isDarkMode: isDark,
     );
   }
@@ -77,8 +81,7 @@ class LzTheme {
   ///
   /// Returns the system's current theme, either light or dark.
   static ThemeData system() {
-    Brightness brightness =
-        SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    Brightness brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
     bool isDarkMode = brightness == Brightness.dark;
     return isDarkMode ? LzTheme.dark : LzTheme.light;
   }
@@ -92,7 +95,7 @@ class LzTheme {
     if (darkMode) {
       lzBorderColor = Colors.black12.inverse();
       lzIconColor = Colors.black45.inverse();
-      lzBackgroundColor = '444'.hex;
+      lzBackgroundColor = '1e1d21'.hex;
       gfont = gfont.copyWith(color: Colors.white);
     } else {
       lzBorderColor = Colors.black12;

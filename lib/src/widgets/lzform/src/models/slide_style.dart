@@ -20,6 +20,9 @@ class SlideStyle {
   /// The color of the tick marks when the slide is inactive.
   final Color? inactiveTickMarkColor;
 
+  /// The color of value indicator color
+  final Color? valueIndicatorColor;
+
   /// Constructs a [SlideStyle].
   ///
   /// [textColor] : The text color of the slide.
@@ -40,5 +43,6 @@ class SlideStyle {
     this.thumbColor,
     this.activeTickMarkColor,
     this.inactiveTickMarkColor,
+    this.valueIndicatorColor,
   });
 }

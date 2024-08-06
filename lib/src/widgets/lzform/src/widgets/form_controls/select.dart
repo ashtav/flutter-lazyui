@@ -88,6 +88,7 @@ class Select extends StatelessWidget with LzFormMixin {
     // check if label is available
     bool hasLabel = label != null && !attr.isGrouped;
     bool hasOnTap = onTap != null;
+    bool hasPrefix = style?.prefix != null;
 
     // create label widget
     Widget labelWidget = hasLabel
@@ -115,9 +116,11 @@ class Select extends StatelessWidget with LzFormMixin {
     final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
 
     // create prefix & suffix icon widget
-    Widget? prefixIconWidget = hasOnTap || style?.prefixIcon == null
-        ? null
-        : Icon(style?.prefixIcon, color: style?.prefixIconColor);
+    Widget? prefixIconWidget = style?.prefixIcon == null && style?.prefix == null
+            ? null
+            : hasPrefix
+                ? Center(widthFactor: 1, child: style?.prefix).padding(h: 16)
+                : Icon(style?.prefixIcon, color: style?.prefixIconColor);
     Widget? suffixIconWidget = Icon(
         style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
         color: style?.suffixIconColor);

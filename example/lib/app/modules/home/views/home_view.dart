@@ -49,7 +49,7 @@ class T4 extends StatelessWidget {
       children: [
         Text('4', style: Gfont.fsize(170)),
         Textr(
-          '.0.3',
+          '.0.6',
           style: Gfont.fsize(14),
           margin: Ei.only(l: 100, t: 100),
         ),

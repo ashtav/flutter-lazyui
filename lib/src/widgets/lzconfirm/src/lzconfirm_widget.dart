@@ -58,7 +58,7 @@ class LzConfirmWidget extends StatelessWidget {
 
     Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
     Color textColor = isDarkMode ? 'fff'.hex : '555'.hex;
-    Color borderColor = isDarkMode ? '444'.hex : Colors.black12;
+    Color borderColor = isDarkMode ? '1e1d21'.hex : Colors.black12;
 
     List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
     final font = Gfont.style(context);
