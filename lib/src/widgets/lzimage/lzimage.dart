@@ -48,7 +48,8 @@ class LzImage<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     // check image type
     bool isString = image is String;
-    bool isUrl = isString && ('$image'.startsWith('http://') || '$image'.startsWith('https://'));
+    bool isUrl = isString &&
+        ('$image'.startsWith('http://') || '$image'.startsWith('https://'));
     bool isSvg = '$image'.endsWith('.svg');
     bool isPath = isValidPath('$image');
 
@@ -72,7 +73,8 @@ class LzImage<T> extends StatelessWidget {
         width: width,
         height: height,
         color: Colors.black12,
-        child: this.errorWidget ?? const Center(child: Icon(La.exclamationCircle)));
+        child: this.errorWidget ??
+            const Center(child: Icon(La.exclamationCircle)));
 
     Widget imageWidget = this.image == null
         ? errorWidget
@@ -104,7 +106,8 @@ class LzImage<T> extends StatelessWidget {
             width: width,
             height: height,
             alignment: alignment,
-            progressIndicatorBuilder: (context, url, downloadProgress) => placeholder,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                placeholder,
             errorWidget: (context, url, error) => errorWidget,
           );
         }
@@ -124,20 +127,31 @@ class LzImage<T> extends StatelessWidget {
 
           if (isSvg) {
             imageWidget = SvgPicture.asset(image,
-                fit: fit, width: width, height: height, alignment: alignment, placeholderBuilder: (_) => placeholder);
+                fit: fit,
+                width: width,
+                height: height,
+                alignment: alignment,
+                placeholderBuilder: (_) => placeholder);
           } else {
             imageWidget = Container(
               width: width,
               height: height,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(image), fit: fit, alignment: alignment, onError: (e, s) => errorWidget),
+                    image: AssetImage(image),
+                    fit: fit,
+                    alignment: alignment,
+                    onError: (e, s) => errorWidget),
               ),
             );
           }
         } else {
           imageWidget = Image.file(File(image),
-              fit: fit, width: width, height: height, alignment: alignment, errorBuilder: (_, e, s) => errorWidget);
+              fit: fit,
+              width: width,
+              height: height,
+              alignment: alignment,
+              errorBuilder: (_, e, s) => errorWidget);
         }
       }
     }
@@ -146,7 +160,11 @@ class LzImage<T> extends StatelessWidget {
     // This section determines how the image should be loaded based on its type
     else if (isFile) {
       imageWidget = Image.file(image as File,
-          fit: fit, width: width, height: height, alignment: alignment, errorBuilder: (_, e, s) => errorWidget);
+          fit: fit,
+          width: width,
+          height: height,
+          alignment: alignment,
+          errorBuilder: (_, e, s) => errorWidget);
     }
 
     // Uint8List

@@ -82,7 +82,9 @@ class MainButton extends StatelessWidget {
             text: 'Submit',
             style: LzButtonStyle(textStyle: font.bold.white),
             onTap: onTap)
-        .bg('#475c6c'.hex).lz.shadowed(context)
+        .bg('#475c6c'.hex)
+        .lz
+        .shadowed(context)
         .margin(blr: 20);
   }
 }

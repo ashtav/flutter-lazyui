@@ -82,7 +82,8 @@ class LzTheme {
   ///
   /// Returns the system's current theme, either light or dark.
   static ThemeData system() {
-    Brightness brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
+    Brightness brightness =
+        SchedulerBinding.instance.platformDispatcher.platformBrightness;
     bool isDarkMode = brightness == Brightness.dark;
     return isDarkMode ? LzTheme.dark : LzTheme.light;
   }

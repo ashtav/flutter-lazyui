@@ -222,9 +222,7 @@ class FormsView extends StatelessWidget {
                   LzForm.select(
                       hint: 'Select province',
                       model: forms['province'],
-                      style: FormStyle(
-                        prefixIcon: Ti.map2
-                      ),
+                      style: FormStyle(prefixIcon: Ti.map2),
                       pickerStyle: const PickerStyle(
                           height: 500,
                           title: 'Select Province',

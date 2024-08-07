@@ -107,7 +107,8 @@ class Slider extends StatelessWidget with LzFormMixin {
                       thumbColor: style?.thumbColor ?? Colors.blueAccent,
                       activeTickMarkColor: style?.activeTickMarkColor,
                       inactiveTickMarkColor: style?.inactiveTickMarkColor,
-                      valueIndicatorColor: style?.valueIndicatorColor ?? Colors.blueAccent,
+                      valueIndicatorColor:
+                          style?.valueIndicatorColor ?? Colors.blueAccent,
                     ),
                     child: m.Slider(
                       value: value,

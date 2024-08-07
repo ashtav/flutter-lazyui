@@ -116,7 +116,8 @@ class Select extends StatelessWidget with LzFormMixin {
     final labelAndGroupedPadding = Ei.only(h: 16, t: 35, b: 12);
 
     // create prefix & suffix icon widget
-    Widget? prefixIconWidget = style?.prefixIcon == null && style?.prefix == null
+    Widget? prefixIconWidget =
+        style?.prefixIcon == null && style?.prefix == null
             ? null
             : hasPrefix
                 ? Center(widthFactor: 1, child: style?.prefix).padding(h: 16)

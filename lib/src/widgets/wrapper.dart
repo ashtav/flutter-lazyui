@@ -19,7 +19,8 @@ class Wrapper extends StatelessWidget {
   ///
   /// [child]: The main child widget to display within this wrapper.
   /// [onBackPress]: Callback function triggered when a back press event occurs.
-  const Wrapper({Key? key, required this.child, this.onBackPress}) : super(key: key);
+  const Wrapper({Key? key, required this.child, this.onBackPress})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) => GestureDetector(
