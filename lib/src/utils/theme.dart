@@ -42,7 +42,7 @@ class LzTheme {
         elevation: .7,
         scrolledUnderElevation: .7,
         surfaceTintColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black87),
+        iconTheme: const IconThemeData(color: Colors.black87, size: 20),
       ),
       scaffoldBackgroundColor: 'fafafa'.hex,
       textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.black87)),
@@ -56,6 +56,7 @@ class LzTheme {
       brightness: Brightness.dark,
       appBarTheme: AppBarTheme(
         titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white, size: 20),
       ),
       textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.white)),
       iconTheme: const IconThemeData(size: 20, color: Colors.white),

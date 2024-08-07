@@ -321,7 +321,7 @@ class Input extends StatelessWidget with LzFormMixin {
 
     return Container(
       key: model?.key,
-      margin: Ei.only(b: attr.isGrouped ? 0 : 16),
+      margin: Ei.only(b: attr.isGrouped ? 0 : 0),
       child: Column(
         children: [
           // input label

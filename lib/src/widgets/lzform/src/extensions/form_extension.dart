@@ -27,7 +27,6 @@ extension LzFormExtension on Map<String, FormModel> {
               notifier.setSelect(
                   value is Option ? value : Option(value.toString()));
             } else if (notifier.isCheckbox) {
-              logg(value is List);
               if (value is List) {
                 notifier.setCheckboxFindBy(value);
               }

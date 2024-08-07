@@ -358,7 +358,7 @@ class FormsView extends StatelessWidget {
                       placement: ToastPlacement.center);
                 });
               }
-            }).shadowed().padding(blr: 20),
+            }).lz.shadowed(context).padding(blr: 20),
       ),
     );
   }

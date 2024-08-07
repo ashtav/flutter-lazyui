@@ -98,11 +98,4 @@ extension LzButtonExtension on LzButton {
       shadowColor: style?.shadowColor,
     ));
   }
-
-  /// Creates a copy of the current LzButton with a shadow effect.
-  ///
-  /// [color]: The color of the shadow. Default is 'f1f1f1'.
-  LzButton shadowed([Color? color]) => styled(
-      shadow: true,
-      shadowColor: color ?? (lzDarkMode ? '141218'.hex : 'f1f1f1'.hex));
 }
