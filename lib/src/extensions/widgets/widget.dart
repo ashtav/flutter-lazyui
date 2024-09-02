@@ -185,7 +185,7 @@ class LzModifiers {
   }
 
   /// ``` dart
-  /// Widget().lz.skeleton(true);
+  /// Widget().lz.shadowed(true);
   /// ```
   Widget shadowed(BuildContext context,
       {double? spread, double? blur, Offset? offset}) {
