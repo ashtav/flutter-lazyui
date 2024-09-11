@@ -79,7 +79,10 @@ class MyContent extends StatelessWidget {
               padding: Ei.all(20),
               decoration: BoxDecoration(border: Br.only(['t'])),
               child: Row(
-                children: [Text(Faker.address()).lz.flexible(), const Icon(Ti.chevronRight, color: Colors.black45)],
+                children: [
+                  Text(Faker.address()).lz.flexible(),
+                  const Icon(Ti.chevronRight, color: Colors.black45)
+                ],
               ).between.gap(20),
             );
           })

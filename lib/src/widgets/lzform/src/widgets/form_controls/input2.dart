@@ -43,7 +43,8 @@ class _Input2State extends State<Input2> {
           bool disabled = state.disabled;
 
           // background color
-          Color backgroundColor = disabled ? const Color.fromARGB(31, 204, 204, 204) : Colors.white;
+          Color backgroundColor =
+              disabled ? const Color.fromARGB(31, 204, 204, 204) : Colors.white;
 
           return LzTextField(
             hint: widget.hint,

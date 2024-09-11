@@ -10,7 +10,7 @@ part of widget;
 /// The child widget is displayed as the main content of the dialog.
 ///
 /// Example usage:
-/// 
+///
 /// ```dart
 /// LzDialog(
 ///   width: 300,
@@ -51,7 +51,13 @@ class LzDialog extends StatelessWidget {
 
   /// Create widget
   const LzDialog(
-      {super.key, this.width, this.maxHeight, required this.child, this.header, this.footer, this.scrollable = false});
+      {super.key,
+      this.width,
+      this.maxHeight,
+      required this.child,
+      this.header,
+      this.footer,
+      this.scrollable = false});
 
   @override
   Widget build(BuildContext context) {
@@ -74,15 +80,18 @@ class LzDialog extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               children: [
                 Container(
-                  decoration: BoxDecoration(borderRadius: Br.radius(7), color: Colors.white70),
+                  decoration: BoxDecoration(
+                      borderRadius: Br.radius(7), color: Colors.white70),
                   width: width - 20,
                   height: 20,
                 ),
                 Container(
                     width: width,
                     margin: Ei.only(b: 7),
-                    constraints: BoxConstraints(maxHeight: (maxHeight ?? context.height) * .7),
-                    decoration: BoxDecoration(color: Colors.white, borderRadius: Br.radius(5)),
+                    constraints: BoxConstraints(
+                        maxHeight: (maxHeight ?? context.height) * .7),
+                    decoration: BoxDecoration(
+                        color: Colors.white, borderRadius: Br.radius(5)),
                     child: scrollable
                         ? LzListView(
                             controller: notifier.scroller,
@@ -99,8 +108,10 @@ class LzDialog extends StatelessWidget {
                     right: 5,
                     child: Container(
                       width: 3,
-                      height: ((maxHeight ?? context.height) * .05).clamp(20, 100),
-                      decoration: BoxDecoration(borderRadius: Br.radius(5), color: Colors.black26),
+                      height:
+                          ((maxHeight ?? context.height) * .05).clamp(20, 100),
+                      decoration: BoxDecoration(
+                          borderRadius: Br.radius(5), color: Colors.black26),
                     ).lz.hide(!scrollable)))
               ],
             ),
@@ -115,19 +126,26 @@ class LzDialog extends StatelessWidget {
 
   /// Creates a title widget with optional [style] and [icon].
   static Widget title(String text, {TextStyle? style, IconData? icon}) {
-    return Textr(text, style: style ?? Gfont.white.bold, icon: icon, padding: Ei.sym(v: 15));
+    return Textr(text,
+        style: style ?? Gfont.white.bold, icon: icon, padding: Ei.sym(v: 15));
   }
 
   /// Creates a button widget with customizable options such as [color], [outline], [radius], [style], [onTap], and [icon].
   static Widget button(String label,
-      {Color? color, bool outline = false, double? radius, TextStyle? style, Function()? onTap, IconData? icon}) {
+      {Color? color,
+      bool outline = false,
+      double? radius,
+      TextStyle? style,
+      Function()? onTap,
+      IconData? icon}) {
     return InkTouch(
       onTap: onTap,
       color: outline ? Colors.transparent : (color ?? Colors.white70),
       radius: Br.radius(radius ?? 50),
       padding: Ei.sym(v: 10, h: 30),
       border: outline ? Br.all(color: Colors.white) : null,
-      child: Textr(label, style: style ?? (outline ? Gfont.white : null), icon: icon),
+      child: Textr(label,
+          style: style ?? (outline ? Gfont.white : null), icon: icon),
     );
   }
 }
