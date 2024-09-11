@@ -95,6 +95,7 @@ class FormsView extends StatelessWidget {
         ),
         body: LzListView(
           autoCache: true,
+          gap: 20,
           children: [
             LzFormWrap(
               grouping: true,
@@ -109,7 +110,7 @@ class FormsView extends StatelessWidget {
                 LzForm.input(
                     label: 'Full Name',
                     hint: 'Enter your full name',
-                    model: forms['name'],
+                    model: forms.at(0),
                     indicator: true,
                     style: InputStyle(
                         suffix: const Icon(Ti.user).onTap(() {
@@ -138,7 +139,8 @@ class FormsView extends StatelessWidget {
                       initDate: text.toDate(),
                       minDate: now.subtract(50.y),
                       maxDate: now, onSelect: (value) {
-                    forms.setValue('birthdate', value.format('dd/MM/yyyy'));
+                    // forms.setValue('birthdate', value.format('dd/MM/yyyy'));
+                    forms.at(2).value(value.format('dd/MM/yyyy'));
                   });
                 },
               ),

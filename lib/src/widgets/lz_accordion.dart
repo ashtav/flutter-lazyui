@@ -6,7 +6,7 @@ class LzAccordion extends StatefulWidget {
   final List<LzAccordionContent> children;
 
   /// The index of the panel to be initially expanded.
-  final int? initValue;
+  final List<int> initValues;
 
   /// Determines if multiple panels can be expanded simultaneously.
   final bool multiple;
@@ -51,7 +51,7 @@ class LzAccordion extends StatefulWidget {
   const LzAccordion({
     Key? key,
     this.children = const [],
-    this.initValue,
+    this.initValues = const [],
     this.multiple = false,
     this.titleEllipsis = false,
     this.scrollToExpanded = true,
@@ -70,8 +70,7 @@ class LzAccordion extends StatefulWidget {
   State<LzAccordion> createState() => _LzAccordionState();
 }
 
-class _LzAccordionState extends State<LzAccordion>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -92,11 +91,8 @@ class _LzAccordionState extends State<LzAccordion>
     length = widget.children.length;
 
     controllers = List.generate(length, (i) {
-      bool isExpanded = widget.initValue == i;
-      return AnimationController(
-          vsync: this,
-          duration: widget.duration ?? 300.ms,
-          value: isExpanded ? 1 : 0);
+      bool isExpanded = widget.initValues.contains(i);
+      return AnimationController(vsync: this, duration: widget.duration ?? 300.ms, value: isExpanded ? 1 : 0);
     });
     animations = List.generate(
         length,
@@ -106,11 +102,11 @@ class _LzAccordionState extends State<LzAccordion>
             ));
 
     Bindings.onRendered(() {
-      int? index = widget.initValue;
-
-      if (index != null && index > -1 && index < length) {
-        actives.add(index);
-        controllers[index].forward();
+      for (var index in widget.initValues) {
+        if (index > -1 && index < length) {
+          actives.add(index);
+          controllers[index].forward();
+        }
       }
     });
   }
@@ -205,15 +201,11 @@ class _LzAccordionState extends State<LzAccordion>
     bool isTi = LazyUi.iconType == IconType.tablerIcon;
 
     Color backgroundColor = widget.backgroundColor ?? lzBackgroundColor;
-    Color borderColor = widget.borderColor ??
-        (backgroundColor.isDark()
-            ? backgroundColor.lighten(.9)
-            : lzBorderColor);
+    Color borderColor = widget.borderColor ?? (backgroundColor.isDark() ? backgroundColor.lighten(.9) : lzBorderColor);
 
     return Container(
       decoration: BoxDecoration(
-          border: widget.border ??
-              Br.all(color: widget.borderColor ?? lzBorderColor),
+          border: widget.border ?? Br.all(color: widget.borderColor ?? lzBorderColor),
           borderRadius: Br.radius(widget.radius ?? radius)),
       child: ClipRRect(
         borderRadius: Br.radius((widget.radius ?? radius) - 1),
@@ -230,8 +222,7 @@ class _LzAccordionState extends State<LzAccordion>
             final gkey = GlobalKey();
 
             return Container(
-              decoration: BoxDecoration(
-                  border: Br.only(['t'], except: i == 0, color: borderColor)),
+              decoration: BoxDecoration(border: Br.only(['t'], except: i == 0, color: borderColor)),
               child: Column(
                 crossAxisAlignment: Caa.start,
                 mainAxisSize: Mas.min,
@@ -244,38 +235,28 @@ class _LzAccordionState extends State<LzAccordion>
                             onTap(i);
 
                             // scroll to this widget
-                            if (gkey.currentContext != null &&
-                                widget.scrollToExpanded &&
-                                controller.value <= 0) {
+                            if (gkey.currentContext != null && widget.scrollToExpanded && controller.value <= 0) {
                               await Future.delayed(300.ms);
-                              Scrollable.ensureVisible(gkey.currentContext!,
-                                  duration: 250.ms);
+                              Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
                             }
                           },
                           padding: Ei.all(20),
                           color: widget.backgroundColor ?? lzBackgroundColor,
-                          border: Br.only([controller.value > .01 ? 'b' : ''],
-                              color: borderColor),
+                          border: Br.only([controller.value > .01 ? 'b' : ''], color: borderColor),
                           child: Row(
                             mainAxisAlignment: Maa.spaceBetween,
                             children: [
                               Flexible(
                                   child: Textr(
                                 title,
-                                style: LazyUi.font
-                                    .copyWith(color: widget.textColor),
+                                style: LazyUi.font.copyWith(color: widget.textColor),
                                 margin: Ei.only(r: 15),
-                                overflow: widget.titleEllipsis
-                                    ? Tof.ellipsis
-                                    : Tof.visible,
+                                overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
                               )),
                               suffix ??
                                   RotationTransition(
                                       turns: turnsTween.animate(controller),
-                                      child: Icon(
-                                          isTi
-                                              ? Ti.chevronRight
-                                              : La.angleRight,
+                                      child: Icon(isTi ? Ti.chevronRight : La.angleRight,
                                           color: Colors.black45.adaptWithTheme))
                             ],
                           ))),
@@ -285,8 +266,7 @@ class _LzAccordionState extends State<LzAccordion>
                       child: Container(
                         width: context.width,
                         padding: widget.padding ?? Ei.all(20),
-                        color: backgroundColor
-                            .darken(backgroundColor.isDark() ? .09 : .03),
+                        color: backgroundColor.darken(backgroundColor.isDark() ? .09 : .03),
                         child: child,
                       )),
                 ],

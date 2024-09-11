@@ -449,7 +449,6 @@ class StartEndDate extends StatelessWidget {
                       onTap: isTo ? null : () => state.onSelectDate(ii),
                       padding: Ei.sym(v: 7, h: 15),
                       radius: Br.radius(4),
-                      // color: backgroundColor,
                       child: Center(
                           child: isTo
                               ? Icon(arrow,

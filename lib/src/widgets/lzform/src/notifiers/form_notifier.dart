@@ -269,14 +269,16 @@ class FormNotifier extends ChangeNotifier {
 
   @override
   void dispose() {
-    controller.dispose();
+    // controller.dispose();
     node.dispose();
     timer?.cancel();
     super.dispose();
+
+    logg('FormNotifier has been disposed.');
   }
 
   /// FormNotifier
   FormNotifier() {
-    // logg('FormNotifier created', name: 'LzForm');
+    logg('FormNotifier created', name: 'LzForm');
   }
 }

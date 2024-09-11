@@ -75,6 +75,6 @@ class LzFormWrap extends StatelessWidget {
                   childrenWidget,
                 ],
               ).start)
-        .margin(b: spacing ?? 16);
+        .margin(b: spacing ?? 0);
   }
 }

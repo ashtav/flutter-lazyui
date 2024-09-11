@@ -18,6 +18,7 @@ class PickerView extends StatelessWidget {
         title: const Text('Picker'),
       ),
       body: LzListView(
+        gap: 35,
         children: [
           LzFormWrap(
             grouping: true,

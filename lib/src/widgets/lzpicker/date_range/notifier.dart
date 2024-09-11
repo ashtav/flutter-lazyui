@@ -30,12 +30,11 @@ class DatePickerNotifier extends ChangeNotifier {
   bool isFromSelectDate = false;
 
   /// Gets the currently selected date and time.
-  DateTime get value => DateTime(values['y'] ?? 0, values['m'] ?? 0,
-      values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
+  DateTime get value =>
+      DateTime(values['y'] ?? 0, values['m'] ?? 0, values['d'] ?? 0, values['h'] ?? 0, values['i'] ?? 0);
 
   /// Handles initialization logic for a date picker or similar component.
-  void onInitialized(List<String> formats,
-      {List<DateTime>? initDate, DateTime? minDate, DateTime? maxDate}) {
+  void onInitialized(List<String> formats, {List<DateTime>? initDate, DateTime? minDate, DateTime? maxDate}) {
     final now = DateTime.now();
 
     this.initDate = initDate ?? this.initDate;
@@ -58,11 +57,9 @@ class DatePickerNotifier extends ChangeNotifier {
       f = ['mm', 'mmm'].contains(f) ? 'm' : f;
 
       if (f == 'd') {
-        index = items
-            .indexOf(this.initDate[dateIndex].day.toString().padLeft(2, '0'));
+        index = items.indexOf(this.initDate[dateIndex].day.toString().padLeft(2, '0'));
       } else if (f == 'm') {
-        index = items
-            .indexOf(this.initDate[dateIndex].month.toString().padLeft(2, '0'));
+        index = items.indexOf(this.initDate[dateIndex].month.toString().padLeft(2, '0'));
       } else {
         index = items.indexOf(this.initDate[dateIndex].year.toString());
       }
@@ -99,9 +96,7 @@ class DatePickerNotifier extends ChangeNotifier {
             : months.generate((i) => getMonth(i, format[type] ?? 'MMMM'));
 
       case 'y':
-        return [minDate.year, maxDate.year]
-            .iterate()
-            .generate((year, i) => year.toString());
+        return [minDate.year, maxDate.year].iterate().generate((year, i) => year.toString());
 
       case 'h':
         return 24.generate((i) => i.toString().padLeft(2, '0'));
@@ -134,11 +129,9 @@ class DatePickerNotifier extends ChangeNotifier {
         f = ['mm', 'mmm'].contains(f) ? 'm' : f;
 
         if (f == 'd') {
-          index =
-              items.indexOf(initDate[dateIndex].day.toString().padLeft(2, '0'));
+          index = items.indexOf(initDate[dateIndex].day.toString().padLeft(2, '0'));
         } else if (f == 'm') {
-          index = items
-              .indexOf(initDate[dateIndex].month.toString().padLeft(2, '0'));
+          index = items.indexOf(initDate[dateIndex].month.toString().padLeft(2, '0'));
         } else {
           index = items.indexOf(initDate[dateIndex].year.toString());
         }
@@ -208,6 +201,10 @@ class DatePickerNotifier extends ChangeNotifier {
 
       if (initDate[0].isAfter(initDate[1]) && dateIndex == 0) {
         initDate[1] = initDate[0].add(1.d);
+
+        if (initDate[1].isAfter(maxDate)) {
+          initDate[1] = maxDate;
+        }
       } else if (isEndBeforeStart && dateIndex == 1) {
         scrollTo('d', initDate[0].day - 1);
         scrollTo('m', initDate[0].month - 1);
@@ -220,8 +217,7 @@ class DatePickerNotifier extends ChangeNotifier {
 
   /// Scrolls a list associated with the given `type` to the item at the specified `index`.
   void scrollTo(String type, int index, {Duration? duration}) {
-    controller[type]?.animateToItem(index,
-        duration: duration ?? 100.ms, curve: Curves.easeInOut);
+    controller[type]?.animateToItem(index, duration: duration ?? 100.ms, curve: Curves.easeInOut);
   }
 
   /// time picker
@@ -232,10 +228,8 @@ class DatePickerNotifier extends ChangeNotifier {
     openTimePicker = !openTimePicker;
 
     if (openTimePicker) {
-      int hourIndex = generateDate('h', true)
-          .indexOf(values['h']!.toString().padLeft(2, '0'));
-      int minuteIndex = generateDate('i', true)
-          .indexOf(values['i']!.toString().padLeft(2, '0'));
+      int hourIndex = generateDate('h', true).indexOf(values['h']!.toString().padLeft(2, '0'));
+      int minuteIndex = generateDate('i', true).indexOf(values['i']!.toString().padLeft(2, '0'));
 
       controller['h'] = FixedExtentScrollController(initialItem: hourIndex);
       controller['i'] = FixedExtentScrollController(initialItem: minuteIndex);

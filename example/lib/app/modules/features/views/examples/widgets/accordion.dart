@@ -21,7 +21,7 @@ class AccordionView extends StatelessWidget {
           children: [
             LzAccordion(
               border: Br.all(width: 2),
-              initValue: 0,
+              initValues: const [0],
               controller: controller,
               children: [
                 const LzAccordionContent(

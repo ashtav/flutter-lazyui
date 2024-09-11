@@ -12,8 +12,7 @@ extension LzFormExtension on Map<String, FormModel> {
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   /// forms.fill({'name': 'John Doe'});
   /// ```
-  Map<String, FormModel> fill(Map<String, dynamic> data,
-      {List<String> except = const [], bool when = true}) {
+  Map<String, FormModel> fill(Map<String, dynamic> data, {List<String> except = const [], bool when = true}) {
     Bindings.onRendered(() {
       if (when) {
         for (var e in data.keys) {
@@ -24,8 +23,7 @@ extension LzFormExtension on Map<String, FormModel> {
             if (notifier.isRadio) {
               notifier.setOptionFindBy(value);
             } else if (notifier.isSelect) {
-              notifier.setSelect(
-                  value is Option ? value : Option(value.toString()));
+              notifier.setSelect(value is Option ? value : Option(value.toString()));
             } else if (notifier.isCheckbox) {
               if (value is List) {
                 notifier.setCheckboxFindBy(value);
@@ -50,8 +48,7 @@ extension LzFormExtension on Map<String, FormModel> {
   /// If both [except] and [only] are provided, [except] takes precedence.
   ///
   /// Returns a map of the form model after resetting.
-  Map<String, FormModel> reset(
-      {List<String> except = const [], List<String> only = const []}) {
+  Map<String, FormModel> reset({List<String> except = const [], List<String> only = const []}) {
     for (var e in keys) {
       if (!except.contains(e) && (only.isEmpty || only.contains(e))) {
         final notifier = this[e]!.notifier;
@@ -64,6 +61,43 @@ extension LzFormExtension on Map<String, FormModel> {
     }
 
     return this;
+  }
+
+  /// Returns the [FormModel] at the given [index] in the form's keys.
+  ///
+  /// If the [index] is less than 0 or greater than or equal to the number of keys,
+  /// it defaults to returning the [FormModel] at index 0.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// model: form.at(2); // Returns the FormModel at index 2
+  /// ```
+  ///
+  /// If the index is out of range:
+  /// ```dart
+  /// model: form.at(-1); // Returns the FormModel at index 0
+  /// ```
+  ///
+  /// Parameters:
+  /// - [index]: The position in the list of keys to retrieve the associated [FormModel].
+  ///
+  /// Returns:
+  /// - The [FormModel] associated with the key at the given [index], or the [FormModel]
+  ///   at index 0 if the index is out of range.
+  ///
+  /// Assumes that every key has a corresponding [FormModel], as it returns a non-null [FormModel].
+  FormModel at(int index) {
+    List<String> keys = this.keys.toList();
+
+    // Check if index is out of range
+    if (index < 0 || index >= keys.length) {
+      index = 0;
+    }
+
+    String key = keys[index];
+
+    // Return the FormModel for the specified key
+    return this[key]!;
   }
 
   /// ``` dart
@@ -259,33 +293,7 @@ extension LzFormExtension on Map<String, FormModel> {
 
     for (var e in keys) {
       if (containsKey(e) && this[e] != null) {
-        final notifier = this[e]!.notifier;
-
-        // check if value is List<String>
-        bool isListString = value is List && value.every((e) => e is String);
-
-        // if value is List<String>, join the values with comma
-        notifier.controller.text =
-            isListString ? value.join(', ') : value.toString();
-
-        // hide error message
-        if (!notifier.isValid) {
-          notifier.setMessage('', true);
-        }
-
-        if (notifier.isRadio) {
-          notifier.setOptionFindBy(value);
-        } else if (notifier.isSelect) {
-          notifier
-              .setSelect(value is Option ? value : Option(value.toString()));
-        } else if (notifier.isCheckbox) {
-          if (value is List) {
-            notifier.setCheckboxFindBy(value);
-          } else {
-            logg('Invalid value type for checkbox, expected List',
-                name: 'LzForm');
-          }
-        }
+        this[e]!.value(value);
       }
     }
 
@@ -389,9 +397,7 @@ extension LzFormExtension on Map<String, FormModel> {
   ///
   /// Returns the updated map of form models.
   Map<String, FormModel> setSelectOption(Object key, List<Option> options,
-      {bool andShow = false,
-      List<dynamic> disabled = const [],
-      Function(Option value)? onSelected}) {
+      {bool andShow = false, List<dynamic> disabled = const [], Function(Option value)? onSelected}) {
     List<String> keys = key is List<String> ? key : [key.toString()];
 
     for (var e in keys) {
@@ -452,3 +458,96 @@ extension LzFormExtension on Map<String, FormModel> {
     return this;
   }
 }
+
+/// Extension on [FormModel] that provides a convenient method to set the form field value.
+///
+/// This extension allows you to set a value for the form field represented by the [FormModel].
+/// It handles different types of values such as plain text, lists, and specific form input types
+/// like radios, selects, and checkboxes. Additionally, it hides error messages when a value is updated.
+///
+/// Example usage:
+/// ```dart
+/// formModel.value('New Value');  // Sets a simple text value.
+/// formModel.value(['Option1', 'Option2']);  // Sets a list value (e.g., for a checkbox).
+/// ```
+///
+/// Features:
+/// - If the value is a [List<String]`, it joins the values with a comma separator.
+/// - Resets the error message if the form field is invalid.
+/// - Handles specific form input types like radio buttons, select boxes, and checkboxes.
+///
+/// Parameters:
+/// - [value]: The value to be set for the form field. It can be of various types:
+///     - [String]: Sets the text directly.
+///     - [List<String>]: Joins the list into a single comma-separated string.
+///     - [Option]: Sets the selected option for select fields.
+///     - [List]: Used for setting multiple options for checkbox fields.
+///
+/// Returns:
+/// - The [FormModel] instance, allowing for method chaining.
+extension LzFormModelExtension on FormModel {
+  /// Sets the value for the form field represented by this [FormModel].
+  ///
+  /// This method intelligently handles different input types:
+  /// - If the value is a [List<String]`, it joins the values into a comma-separated string.
+  /// - If the field is invalid, it hides the error message after updating the value.
+  /// - For radio buttons, it sets the selected option by value.
+  /// - For select boxes, it sets the selected [Option].
+  /// - For checkboxes, it sets the checked options from a list of values.
+  ///
+  /// Parameters:
+  /// - [value]: The value to set for the form field, which can be a string, list, or other appropriate types.
+  ///
+  /// Returns:
+  /// - The current [FormModel] for chaining.
+  FormModel value(dynamic value) {
+    final notifier = this.notifier;
+
+    // Check if value is List<String>
+    bool isListString = value is List && value.every((e) => e is String);
+
+    // If value is List<String>, join the values with a comma
+    notifier.controller.text = isListString ? value.join(', ') : value.toString();
+
+    // Hide error message
+    if (!notifier.isValid) {
+      notifier.setMessage('', true);
+    }
+
+    // Handle specific form input types
+    if (notifier.isRadio) {
+      notifier.setOptionFindBy(value);
+    } else if (notifier.isSelect) {
+      notifier.setSelect(value is Option ? value : Option(value.toString()));
+    } else if (notifier.isCheckbox) {
+      if (value is List) {
+        notifier.setCheckboxFindBy(value);
+      } else {
+        logg('Invalid value type for checkbox, expected List', name: 'LzForm');
+      }
+    }
+
+    return this;
+  }
+
+  /// Enables or disables the form control.
+  ///
+  /// Returns this form control after enabling or disabling it.
+  FormModel enable([bool value = true]) {
+    notifier.setDisabled(!value);
+    return this;
+  }
+
+  // ModelAttribute get attr {
+  //   return ModelAttribute(notifier.disabled);
+  // }
+}
+
+// ignore: public_member_api_docs
+// class ModelAttribute {
+//   // ignore: public_member_api_docs
+//   final bool disabled;
+
+//   // ignore: public_member_api_docs
+//   const ModelAttribute(this.disabled);
+// }

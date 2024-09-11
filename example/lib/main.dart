@@ -7,6 +7,15 @@ void main() async {
   // initialize lazyui
   LazyUi.init();
 
+  FlutterError.onError = (FlutterErrorDetails details) {
+    if (details.library == 'image resource service' && details.exception.toString().contains('404')) {
+      logg('Suppressed cachedNetworkImage Exception');
+      return;
+    }
+    
+    FlutterError.presentError(details);
+  };
+
   runApp(const MyApp());
 }
 

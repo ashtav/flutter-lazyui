@@ -45,6 +45,7 @@ part 'lz_accordion.dart';
 part 'lz_badge.dart';
 part 'lz_card.dart';
 part 'lz_count_down.dart';
+part 'lz_dialog.dart';
 part 'lz_listview.dart';
 part 'lz_loader.dart';
 part 'lz_no_data.dart';
