@@ -12,20 +12,33 @@ class DropdownView extends StatelessWidget {
 
     final icons = [Ti.pencil, Ti.trash, null, Ti.map2, Ti.filter];
     final subOptions = {
-      'Share to': DropOption.list(['Facebook', 'Instagram', 'Tiktok']),
-      'Filters': DropOption.list(
-          ['Price', 'Rating', 'Distance', 'Category', 'Open now', 'Sort by'])
+      'Share to': ['Facebook', 'Instagram', 'Tiktok'],
+      'Filters': ['Price', 'Rating', 'Distance', 'Category', 'Open now', 'Sort by']
     };
 
     void showDropdown(GlobalKey key) {
+      /*
+        simple dropdown
+
+        LzDrop.show(
+          key, 
+          options: ['Details', 'Edit', 'Delete'], 
+          onSelect: (value) {
+            logg(value.toMap());
+          }
+        );
+
+      */
+
+      // complex dropdown
       LzDrop.show(key,
-          options: DropOption.list(
-              ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
-              disabled: [3], subOptions: subOptions),
+          options: ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
+          subOptions: subOptions,
           style: DropStyle(
               icons: icons,
+              critical: ['Delete'],
               separators: ['Filters'],
-              criticals: [1],
+              backBlur: true,
               alignment: DropAlignment.right), onSelect: (value) {
         logg(value.toMap());
       });
@@ -70,36 +83,28 @@ class DropdownView extends StatelessWidget {
             child: LzListView(
               children: tabs.generate((item, i) {
                 return LzDropItem(
-                  options: DropOption.list(
-                      ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
-                      disabled: [3], subOptions: subOptions),
-                  style: DropStyle(
-                      icons: icons,
-                      backBlur: true,
-                      separators: ['Filters'],
-                      criticals: [1]),
-                  onSelect: (value) {
-                    logg(value.toMap());
-                  },
-                  child: LzCard(
-                    stacked: true,
-                    children: [
-                      Text(
-                        item,
-                        style: font.bold,
-                      ),
-                      Textr(Faker.words(15), margin: Ei.only(t: 5))
-                    ],
-                  ),
-                ).margin(b: 15);
+                    options: const ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
+                    subOptions: subOptions,
+                    style:
+                        DropStyle(icons: icons, backBlur: true, disabled: [3], separators: ['Filters'], critical: [1]),
+                    builder: (action) {
+                      return LzCard(
+                        stacked: true,
+                        onTap: () {
+                          action.show((value){
+                            logg(value.toMap());
+                          });
+                        },
+                        children: [Text(item, style: font.bold), Textr(Faker.words(15), margin: Ei.only(t: 5))],
+                      );
+                    }).margin(b: 15);
               }),
             ),
           ),
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-            color: Colors.white30.adaptWithTheme, border: Br.only(['t', 'b'])),
+        decoration: BoxDecoration(color: Colors.white30.adaptWithTheme, border: Br.only(['t', 'b'])),
         padding: Ei.sym(h: 20),
         child: Row(
           children: [

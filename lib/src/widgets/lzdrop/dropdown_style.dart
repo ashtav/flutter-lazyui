@@ -29,7 +29,10 @@ class DropStyle {
   final List<IconData?> icons;
 
   /// A list of critical options, which are styled differently to draw attention.
-  final List<dynamic> criticals;
+  final List<dynamic> critical;
+
+  /// A list indicating which dropdown options are disabled.
+  final List<dynamic> disabled;
 
   /// Indicates whether to animate the dropdown menu.
   final bool transition;
@@ -40,18 +43,20 @@ class DropStyle {
   /// The offset to adjust the position of the dropdown menu.
   final Offset? offset;
 
-  /// Create widget
-  DropStyle(
-      {this.width,
-      this.separatorColor,
-      this.textColor,
-      this.barrierColor,
-      this.backgroundColor,
-      this.backBlur = false,
-      this.separators = const [],
-      this.icons = const [],
-      this.criticals = const [],
-      this.transition = false,
-      this.alignment,
-      this.offset});
+  /// Creates an instance of [DropStyle].
+  DropStyle({
+    this.width,
+    this.separatorColor,
+    this.textColor,
+    this.barrierColor,
+    this.backgroundColor,
+    this.backBlur = false,
+    this.separators = const [],
+    this.icons = const [],
+    this.critical = const [],
+    this.disabled = const [],
+    this.transition = false,
+    this.alignment,
+    this.offset,
+  });
 }

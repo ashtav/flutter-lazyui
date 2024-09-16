@@ -35,6 +35,9 @@ class DropdownNotifier extends ChangeNotifier {
   /// Duration for dropdown animations.
   Duration duration = Duration.zero;
 
+  /// Out of screen indicator
+  bool outOfScreen = false;
+
   /// Adjusts the vertical position of the dropdown to ensure it fits within the screen.
   void reArangeDropYPosition() {
     // render box of the dropdown
@@ -130,13 +133,17 @@ class DropdownNotifier extends ChangeNotifier {
 
         double targetNDropPosition =
             target.dy + targetHeight + dropHeight + bar;
+
         bool isOutOfY = targetNDropPosition >= screenHeight + bar;
+        outOfScreen = isOutOfY;
 
         if (isOutOfY) {
-          duration = 150.ms;
+          // duration = 150.ms;
+          // outOfScreen = true;
 
-          double remains = targetNDropPosition - screenHeight;
-          dy = dy - (remains);
+          // double remains = targetNDropPosition - screenHeight;
+          // logg(remains);
+          // dy = dy - (remains);
         }
       }
 
@@ -201,7 +208,7 @@ class DropdownNotifier extends ChangeNotifier {
         if (key.currentContext != null) {
           Scrollable.ensureVisible(key.currentContext!,
               duration: const Duration(milliseconds: 300), alignment: .0);
-          reArangeDropYPosition();
+          // reArangeDropYPosition();
         }
       }
     }

@@ -120,17 +120,31 @@ extension LzFormExtension on Map<String, FormModel> {
   }
 
   /// Validates the form fields based on specified validation rules.
+  /// This static method takes a map of `FormModel` objects and performs validation
+  /// based on various criteria, including required fields, minimum/maximum lengths,
+  /// email format checking, and custom messages.
   ///
-  /// The [required] parameter specifies a list of keys for fields that are required.
-  /// The [min] parameter specifies a list of keys for fields that have a minimum length requirement.
-  /// The [max] parameter specifies a list of keys for fields that have a maximum length requirement.
-  /// The [email] parameter specifies a list of keys for fields that should contain valid email addresses.
-  /// The [messages] parameter allows customizing error messages for different validation rules.
-  /// The [alert] parameter determines how validation errors are displayed.
-  /// The [toastPlacement] parameter specifies the placement of toast notifications if [alert] is set to FormAlert.toast.
-  /// The [singleNotifier] parameter specifies whether to use a single notifier for all fields or individual notifiers.
+  /// ```dart
+  /// // init models
+  /// final forms = LzForm.make(['name', 'email', 'password']]);
   ///
-  /// Returns the LzForm instance after validation.
+  /// // use in widget
+  /// LzForm.input(label: 'Name', hint: 'Enter your name', model: forms['name']);
+  ///
+  /// // validate
+  /// final form = LzForm.validate(forms, required: ['*']);
+  /// if(form.ok) // do something...
+  ///
+  /// // validate params
+  /// required: ['*'] // required all
+  /// required: ['address', 'phone'] // required only address and phone
+  /// required: ['*', 'address', 'phone'] // required all except address and phone
+  ///
+  /// min: ['phone:10', 'address:5']
+  /// max: ['phone:15', 'address:100']
+  /// email: ['email']
+  ///
+  /// ```
   LzForm validate(
       {List<String> required = const [],
       List<String> min = const [],
