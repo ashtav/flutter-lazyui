@@ -20,6 +20,7 @@ export 'src/constants/color.dart';
 export 'src/constants/enum.dart';
 export 'src/constants/font.dart';
 export 'src/extensions/extension.dart';
+export 'src/icons/huge_icons.dart';
 export 'src/icons/line_awesome.dart';
 export 'src/icons/tabler_icons.dart';
 export 'src/models/model.dart';

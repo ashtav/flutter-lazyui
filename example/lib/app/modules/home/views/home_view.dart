@@ -29,7 +29,7 @@ class HomeView extends StatelessWidget {
                 ),
                 Touch.button('Explore More', onTap: () {
                   context.lz.push(const FeatureView());
-                })
+                }),
               ],
             ).gap(25),
           ),

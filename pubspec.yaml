@@ -41,3 +41,6 @@ flutter:
     - family: TablerIcons
       fonts:
         - asset: assets/fonts/tabler-icons.ttf
+    - family: HgiStrokeRounded
+      fonts:
+        - asset: assets/fonts/hgi-stroke-rounded.ttf
