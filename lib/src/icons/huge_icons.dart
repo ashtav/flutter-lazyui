@@ -362,7 +362,8 @@ class Hi {
   static const IconData strokeRoundedAlignBottom = HugeIconData(0x3b09);
 
   /// IconData for the 'strokeRoundedAlignBoxBottomCenter' icon.
-  static const IconData strokeRoundedAlignBoxBottomCenter = HugeIconData(0x3b0a);
+  static const IconData strokeRoundedAlignBoxBottomCenter =
+      HugeIconData(0x3b0a);
 
   /// IconData for the 'strokeRoundedAlignBoxBottomLeft' icon.
   static const IconData strokeRoundedAlignBoxBottomLeft = HugeIconData(0x3b0b);
@@ -371,7 +372,8 @@ class Hi {
   static const IconData strokeRoundedAlignBoxBottomRight = HugeIconData(0x3b0c);
 
   /// IconData for the 'strokeRoundedAlignBoxMiddleCenter' icon.
-  static const IconData strokeRoundedAlignBoxMiddleCenter = HugeIconData(0x3b0d);
+  static const IconData strokeRoundedAlignBoxMiddleCenter =
+      HugeIconData(0x3b0d);
 
   /// IconData for the 'strokeRoundedAlignBoxMiddleLeft' icon.
   static const IconData strokeRoundedAlignBoxMiddleLeft = HugeIconData(0x3b0e);
@@ -389,7 +391,8 @@ class Hi {
   static const IconData strokeRoundedAlignBoxTopRight = HugeIconData(0x3b12);
 
   /// IconData for the 'strokeRoundedAlignHorizontalCenter' icon.
-  static const IconData strokeRoundedAlignHorizontalCenter = HugeIconData(0x3b13);
+  static const IconData strokeRoundedAlignHorizontalCenter =
+      HugeIconData(0x3b13);
 
   /// IconData for the 'strokeRoundedAlignKeyObject' icon.
   static const IconData strokeRoundedAlignKeyObject = HugeIconData(0x3b14);
@@ -539,10 +542,12 @@ class Hi {
   static const IconData strokeRoundedApple = HugeIconData(0x3b44);
 
   /// IconData for the 'strokeRoundedApproximatelyEqualCircle' icon.
-  static const IconData strokeRoundedApproximatelyEqualCircle = HugeIconData(0x3b45);
+  static const IconData strokeRoundedApproximatelyEqualCircle =
+      HugeIconData(0x3b45);
 
   /// IconData for the 'strokeRoundedApproximatelyEqualSquare' icon.
-  static const IconData strokeRoundedApproximatelyEqualSquare = HugeIconData(0x3b46);
+  static const IconData strokeRoundedApproximatelyEqualSquare =
+      HugeIconData(0x3b46);
 
   /// IconData for the 'strokeRoundedApproximatelyEqual' icon.
   static const IconData strokeRoundedApproximatelyEqual = HugeIconData(0x3b47);
@@ -590,13 +595,16 @@ class Hi {
   static const IconData strokeRoundedArrowAllDirection = HugeIconData(0x3b55);
 
   /// IconData for the 'strokeRoundedArrowDataTransferDiagonal' icon.
-  static const IconData strokeRoundedArrowDataTransferDiagonal = HugeIconData(0x3b56);
+  static const IconData strokeRoundedArrowDataTransferDiagonal =
+      HugeIconData(0x3b56);
 
   /// IconData for the 'strokeRoundedArrowDataTransferHorizontal' icon.
-  static const IconData strokeRoundedArrowDataTransferHorizontal = HugeIconData(0x3b57);
+  static const IconData strokeRoundedArrowDataTransferHorizontal =
+      HugeIconData(0x3b57);
 
   /// IconData for the 'strokeRoundedArrowDataTransferVertical' icon.
-  static const IconData strokeRoundedArrowDataTransferVertical = HugeIconData(0x3b58);
+  static const IconData strokeRoundedArrowDataTransferVertical =
+      HugeIconData(0x3b58);
 
   /// IconData for the 'strokeRoundedArrowDiagonal' icon.
   static const IconData strokeRoundedArrowDiagonal = HugeIconData(0x3b59);
@@ -638,10 +646,12 @@ class Hi {
   static const IconData strokeRoundedArrowExpand02 = HugeIconData(0x3b65);
 
   /// IconData for the 'strokeRoundedArrowExpandDiagonal01' icon.
-  static const IconData strokeRoundedArrowExpandDiagonal01 = HugeIconData(0x3b66);
+  static const IconData strokeRoundedArrowExpandDiagonal01 =
+      HugeIconData(0x3b66);
 
   /// IconData for the 'strokeRoundedArrowExpandDiagonal02' icon.
-  static const IconData strokeRoundedArrowExpandDiagonal02 = HugeIconData(0x3b67);
+  static const IconData strokeRoundedArrowExpandDiagonal02 =
+      HugeIconData(0x3b67);
 
   /// IconData for the 'strokeRoundedArrowExpand' icon.
   static const IconData strokeRoundedArrowExpand = HugeIconData(0x3b68);
@@ -689,7 +699,8 @@ class Hi {
   static const IconData strokeRoundedArrowMoveUpRight = HugeIconData(0x3b76);
 
   /// IconData for the 'strokeRoundedArrowReloadHorizontal' icon.
-  static const IconData strokeRoundedArrowReloadHorizontal = HugeIconData(0x3b77);
+  static const IconData strokeRoundedArrowReloadHorizontal =
+      HugeIconData(0x3b77);
 
   /// IconData for the 'strokeRoundedArrowReloadVertical' icon.
   static const IconData strokeRoundedArrowReloadVertical = HugeIconData(0x3b78);
@@ -776,25 +787,32 @@ class Hi {
   static const IconData strokeRoundedArtboard = HugeIconData(0x3b93);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence01' icon.
-  static const IconData strokeRoundedArtificialIntelligence01 = HugeIconData(0x3b94);
+  static const IconData strokeRoundedArtificialIntelligence01 =
+      HugeIconData(0x3b94);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence02' icon.
-  static const IconData strokeRoundedArtificialIntelligence02 = HugeIconData(0x3b95);
+  static const IconData strokeRoundedArtificialIntelligence02 =
+      HugeIconData(0x3b95);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence03' icon.
-  static const IconData strokeRoundedArtificialIntelligence03 = HugeIconData(0x3b96);
+  static const IconData strokeRoundedArtificialIntelligence03 =
+      HugeIconData(0x3b96);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence04' icon.
-  static const IconData strokeRoundedArtificialIntelligence04 = HugeIconData(0x3b97);
+  static const IconData strokeRoundedArtificialIntelligence04 =
+      HugeIconData(0x3b97);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence05' icon.
-  static const IconData strokeRoundedArtificialIntelligence05 = HugeIconData(0x3b98);
+  static const IconData strokeRoundedArtificialIntelligence05 =
+      HugeIconData(0x3b98);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence06' icon.
-  static const IconData strokeRoundedArtificialIntelligence06 = HugeIconData(0x3b99);
+  static const IconData strokeRoundedArtificialIntelligence06 =
+      HugeIconData(0x3b99);
 
   /// IconData for the 'strokeRoundedArtificialIntelligence07' icon.
-  static const IconData strokeRoundedArtificialIntelligence07 = HugeIconData(0x3b9a);
+  static const IconData strokeRoundedArtificialIntelligence07 =
+      HugeIconData(0x3b9a);
 
   /// IconData for the 'strokeRoundedAspectRatio' icon.
   static const IconData strokeRoundedAspectRatio = HugeIconData(0x3b9b);
@@ -1319,7 +1337,8 @@ class Hi {
   static const IconData strokeRoundedBluetoothCircle = HugeIconData(0x3c48);
 
   /// IconData for the 'strokeRoundedBluetoothNotConnected' icon.
-  static const IconData strokeRoundedBluetoothNotConnected = HugeIconData(0x3c49);
+  static const IconData strokeRoundedBluetoothNotConnected =
+      HugeIconData(0x3c49);
 
   /// IconData for the 'strokeRoundedBluetoothSearch' icon.
   static const IconData strokeRoundedBluetoothSearch = HugeIconData(0x3c4a);
@@ -1643,10 +1662,12 @@ class Hi {
   static const IconData strokeRoundedBubbleChatDone = HugeIconData(0x3cb4);
 
   /// IconData for the 'strokeRoundedBubbleChatDownload01' icon.
-  static const IconData strokeRoundedBubbleChatDownload01 = HugeIconData(0x3cb5);
+  static const IconData strokeRoundedBubbleChatDownload01 =
+      HugeIconData(0x3cb5);
 
   /// IconData for the 'strokeRoundedBubbleChatDownload02' icon.
-  static const IconData strokeRoundedBubbleChatDownload02 = HugeIconData(0x3cb6);
+  static const IconData strokeRoundedBubbleChatDownload02 =
+      HugeIconData(0x3cb6);
 
   /// IconData for the 'strokeRoundedBubbleChatEdit' icon.
   static const IconData strokeRoundedBubbleChatEdit = HugeIconData(0x3cb7);
@@ -1661,7 +1682,8 @@ class Hi {
   static const IconData strokeRoundedBubbleChatLock = HugeIconData(0x3cba);
 
   /// IconData for the 'strokeRoundedBubbleChatNotification' icon.
-  static const IconData strokeRoundedBubbleChatNotification = HugeIconData(0x3cbb);
+  static const IconData strokeRoundedBubbleChatNotification =
+      HugeIconData(0x3cbb);
 
   /// IconData for the 'strokeRoundedBubbleChatOutcome' icon.
   static const IconData strokeRoundedBubbleChatOutcome = HugeIconData(0x3cbc);
@@ -2015,10 +2037,12 @@ class Hi {
   static const IconData strokeRoundedCameraAdd02 = HugeIconData(0x3d30);
 
   /// IconData for the 'strokeRoundedCameraAutomatically01' icon.
-  static const IconData strokeRoundedCameraAutomatically01 = HugeIconData(0x3d31);
+  static const IconData strokeRoundedCameraAutomatically01 =
+      HugeIconData(0x3d31);
 
   /// IconData for the 'strokeRoundedCameraAutomatically02' icon.
-  static const IconData strokeRoundedCameraAutomatically02 = HugeIconData(0x3d32);
+  static const IconData strokeRoundedCameraAutomatically02 =
+      HugeIconData(0x3d32);
 
   /// IconData for the 'strokeRoundedCameraLens' icon.
   static const IconData strokeRoundedCameraLens = HugeIconData(0x3d33);
@@ -2153,7 +2177,8 @@ class Hi {
   static const IconData strokeRoundedCargoShip = HugeIconData(0x3d5e);
 
   /// IconData for the 'strokeRoundedCarouselHorizontal02' icon.
-  static const IconData strokeRoundedCarouselHorizontal02 = HugeIconData(0x3d5f);
+  static const IconData strokeRoundedCarouselHorizontal02 =
+      HugeIconData(0x3d5f);
 
   /// IconData for the 'strokeRoundedCarouselHorizontal' icon.
   static const IconData strokeRoundedCarouselHorizontal = HugeIconData(0x3d60);
@@ -2204,7 +2229,8 @@ class Hi {
   static const IconData strokeRoundedCells = HugeIconData(0x3d6f);
 
   /// IconData for the 'strokeRoundedCellularNetworkOffline' icon.
-  static const IconData strokeRoundedCellularNetworkOffline = HugeIconData(0x3d70);
+  static const IconData strokeRoundedCellularNetworkOffline =
+      HugeIconData(0x3d70);
 
   /// IconData for the 'strokeRoundedCellularNetwork' icon.
   static const IconData strokeRoundedCellularNetwork = HugeIconData(0x3d71);
@@ -2456,19 +2482,24 @@ class Hi {
   static const IconData strokeRoundedCinnamonRoll = HugeIconData(0x3dc3);
 
   /// IconData for the 'strokeRoundedCircleArrowDataTransferDiagonal' icon.
-  static const IconData strokeRoundedCircleArrowDataTransferDiagonal = HugeIconData(0x3dc4);
+  static const IconData strokeRoundedCircleArrowDataTransferDiagonal =
+      HugeIconData(0x3dc4);
 
   /// IconData for the 'strokeRoundedCircleArrowDataTransferHorizontal' icon.
-  static const IconData strokeRoundedCircleArrowDataTransferHorizontal = HugeIconData(0x3dc5);
+  static const IconData strokeRoundedCircleArrowDataTransferHorizontal =
+      HugeIconData(0x3dc5);
 
   /// IconData for the 'strokeRoundedCircleArrowDataTransferVertical' icon.
-  static const IconData strokeRoundedCircleArrowDataTransferVertical = HugeIconData(0x3dc6);
+  static const IconData strokeRoundedCircleArrowDataTransferVertical =
+      HugeIconData(0x3dc6);
 
   /// IconData for the 'strokeRoundedCircleArrowDiagonal01' icon.
-  static const IconData strokeRoundedCircleArrowDiagonal01 = HugeIconData(0x3dc7);
+  static const IconData strokeRoundedCircleArrowDiagonal01 =
+      HugeIconData(0x3dc7);
 
   /// IconData for the 'strokeRoundedCircleArrowDiagonal02' icon.
-  static const IconData strokeRoundedCircleArrowDiagonal02 = HugeIconData(0x3dc8);
+  static const IconData strokeRoundedCircleArrowDiagonal02 =
+      HugeIconData(0x3dc8);
 
   /// IconData for the 'strokeRoundedCircleArrowDown01' icon.
   static const IconData strokeRoundedCircleArrowDown01 = HugeIconData(0x3dc9);
@@ -2480,13 +2511,15 @@ class Hi {
   static const IconData strokeRoundedCircleArrowDown03 = HugeIconData(0x3dcb);
 
   /// IconData for the 'strokeRoundedCircleArrowDownDouble' icon.
-  static const IconData strokeRoundedCircleArrowDownDouble = HugeIconData(0x3dcc);
+  static const IconData strokeRoundedCircleArrowDownDouble =
+      HugeIconData(0x3dcc);
 
   /// IconData for the 'strokeRoundedCircleArrowDownLeft' icon.
   static const IconData strokeRoundedCircleArrowDownLeft = HugeIconData(0x3dcd);
 
   /// IconData for the 'strokeRoundedCircleArrowDownRight' icon.
-  static const IconData strokeRoundedCircleArrowDownRight = HugeIconData(0x3dce);
+  static const IconData strokeRoundedCircleArrowDownRight =
+      HugeIconData(0x3dce);
 
   /// IconData for the 'strokeRoundedCircleArrowExpand01' icon.
   static const IconData strokeRoundedCircleArrowExpand01 = HugeIconData(0x3dcf);
@@ -2495,7 +2528,8 @@ class Hi {
   static const IconData strokeRoundedCircleArrowExpand02 = HugeIconData(0x3dd0);
 
   /// IconData for the 'strokeRoundedCircleArrowHorizontal' icon.
-  static const IconData strokeRoundedCircleArrowHorizontal = HugeIconData(0x3dd1);
+  static const IconData strokeRoundedCircleArrowHorizontal =
+      HugeIconData(0x3dd1);
 
   /// IconData for the 'strokeRoundedCircleArrowLeft01' icon.
   static const IconData strokeRoundedCircleArrowLeft01 = HugeIconData(0x3dd2);
@@ -2507,28 +2541,36 @@ class Hi {
   static const IconData strokeRoundedCircleArrowLeft03 = HugeIconData(0x3dd4);
 
   /// IconData for the 'strokeRoundedCircleArrowLeftDouble' icon.
-  static const IconData strokeRoundedCircleArrowLeftDouble = HugeIconData(0x3dd5);
+  static const IconData strokeRoundedCircleArrowLeftDouble =
+      HugeIconData(0x3dd5);
 
   /// IconData for the 'strokeRoundedCircleArrowLeftRight' icon.
-  static const IconData strokeRoundedCircleArrowLeftRight = HugeIconData(0x3dd6);
+  static const IconData strokeRoundedCircleArrowLeftRight =
+      HugeIconData(0x3dd6);
 
   /// IconData for the 'strokeRoundedCircleArrowMoveDownLeft' icon.
-  static const IconData strokeRoundedCircleArrowMoveDownLeft = HugeIconData(0x3dd7);
+  static const IconData strokeRoundedCircleArrowMoveDownLeft =
+      HugeIconData(0x3dd7);
 
   /// IconData for the 'strokeRoundedCircleArrowMoveDownRight' icon.
-  static const IconData strokeRoundedCircleArrowMoveDownRight = HugeIconData(0x3dd8);
+  static const IconData strokeRoundedCircleArrowMoveDownRight =
+      HugeIconData(0x3dd8);
 
   /// IconData for the 'strokeRoundedCircleArrowMoveLeftDown' icon.
-  static const IconData strokeRoundedCircleArrowMoveLeftDown = HugeIconData(0x3dd9);
+  static const IconData strokeRoundedCircleArrowMoveLeftDown =
+      HugeIconData(0x3dd9);
 
   /// IconData for the 'strokeRoundedCircleArrowMoveRightDown' icon.
-  static const IconData strokeRoundedCircleArrowMoveRightDown = HugeIconData(0x3dda);
+  static const IconData strokeRoundedCircleArrowMoveRightDown =
+      HugeIconData(0x3dda);
 
   /// IconData for the 'strokeRoundedCircleArrowMoveUpLeft' icon.
-  static const IconData strokeRoundedCircleArrowMoveUpLeft = HugeIconData(0x3ddb);
+  static const IconData strokeRoundedCircleArrowMoveUpLeft =
+      HugeIconData(0x3ddb);
 
   /// IconData for the 'strokeRoundedCircleArrowMoveUpRight' icon.
-  static const IconData strokeRoundedCircleArrowMoveUpRight = HugeIconData(0x3ddc);
+  static const IconData strokeRoundedCircleArrowMoveUpRight =
+      HugeIconData(0x3ddc);
 
   /// IconData for the 'strokeRoundedCircleArrowReload01' icon.
   static const IconData strokeRoundedCircleArrowReload01 = HugeIconData(0x3ddd);
@@ -2546,7 +2588,8 @@ class Hi {
   static const IconData strokeRoundedCircleArrowRight03 = HugeIconData(0x3de1);
 
   /// IconData for the 'strokeRoundedCircleArrowRightDouble' icon.
-  static const IconData strokeRoundedCircleArrowRightDouble = HugeIconData(0x3de2);
+  static const IconData strokeRoundedCircleArrowRightDouble =
+      HugeIconData(0x3de2);
 
   /// IconData for the 'strokeRoundedCircleArrowShrink01' icon.
   static const IconData strokeRoundedCircleArrowShrink01 = HugeIconData(0x3de3);
@@ -2882,10 +2925,12 @@ class Hi {
   static const IconData strokeRoundedComputerPhoneSync = HugeIconData(0x3e51);
 
   /// IconData for the 'strokeRoundedComputerProgramming01' icon.
-  static const IconData strokeRoundedComputerProgramming01 = HugeIconData(0x3e52);
+  static const IconData strokeRoundedComputerProgramming01 =
+      HugeIconData(0x3e52);
 
   /// IconData for the 'strokeRoundedComputerProgramming02' icon.
-  static const IconData strokeRoundedComputerProgramming02 = HugeIconData(0x3e53);
+  static const IconData strokeRoundedComputerProgramming02 =
+      HugeIconData(0x3e53);
 
   /// IconData for the 'strokeRoundedComputerProtection' icon.
   static const IconData strokeRoundedComputerProtection = HugeIconData(0x3e54);
@@ -3095,7 +3140,8 @@ class Hi {
   static const IconData strokeRoundedCreditCardPos = HugeIconData(0x3e98);
 
   /// IconData for the 'strokeRoundedCreditCardValidation' icon.
-  static const IconData strokeRoundedCreditCardValidation = HugeIconData(0x3e99);
+  static const IconData strokeRoundedCreditCardValidation =
+      HugeIconData(0x3e99);
 
   /// IconData for the 'strokeRoundedCreditCard' icon.
   static const IconData strokeRoundedCreditCard = HugeIconData(0x3e9a);
@@ -3149,16 +3195,20 @@ class Hi {
   static const IconData strokeRoundedCursor02 = HugeIconData(0x3eaa);
 
   /// IconData for the 'strokeRoundedCursorAddSelection01' icon.
-  static const IconData strokeRoundedCursorAddSelection01 = HugeIconData(0x3eab);
+  static const IconData strokeRoundedCursorAddSelection01 =
+      HugeIconData(0x3eab);
 
   /// IconData for the 'strokeRoundedCursorAddSelection02' icon.
-  static const IconData strokeRoundedCursorAddSelection02 = HugeIconData(0x3eac);
+  static const IconData strokeRoundedCursorAddSelection02 =
+      HugeIconData(0x3eac);
 
   /// IconData for the 'strokeRoundedCursorCircleSelection01' icon.
-  static const IconData strokeRoundedCursorCircleSelection01 = HugeIconData(0x3ead);
+  static const IconData strokeRoundedCursorCircleSelection01 =
+      HugeIconData(0x3ead);
 
   /// IconData for the 'strokeRoundedCursorCircleSelection02' icon.
-  static const IconData strokeRoundedCursorCircleSelection02 = HugeIconData(0x3eae);
+  static const IconData strokeRoundedCursorCircleSelection02 =
+      HugeIconData(0x3eae);
 
   /// IconData for the 'strokeRoundedCursorDisabled01' icon.
   static const IconData strokeRoundedCursorDisabled01 = HugeIconData(0x3eaf);
@@ -3194,10 +3244,12 @@ class Hi {
   static const IconData strokeRoundedCursorLoading02 = HugeIconData(0x3eb9);
 
   /// IconData for the 'strokeRoundedCursorMagicSelection01' icon.
-  static const IconData strokeRoundedCursorMagicSelection01 = HugeIconData(0x3eba);
+  static const IconData strokeRoundedCursorMagicSelection01 =
+      HugeIconData(0x3eba);
 
   /// IconData for the 'strokeRoundedCursorMagicSelection02' icon.
-  static const IconData strokeRoundedCursorMagicSelection02 = HugeIconData(0x3ebb);
+  static const IconData strokeRoundedCursorMagicSelection02 =
+      HugeIconData(0x3ebb);
 
   /// IconData for the 'strokeRoundedCursorMove01' icon.
   static const IconData strokeRoundedCursorMove01 = HugeIconData(0x3ebc);
@@ -3224,16 +3276,20 @@ class Hi {
   static const IconData strokeRoundedCursorProgress04 = HugeIconData(0x3ec3);
 
   /// IconData for the 'strokeRoundedCursorRectangleSelection01' icon.
-  static const IconData strokeRoundedCursorRectangleSelection01 = HugeIconData(0x3ec4);
+  static const IconData strokeRoundedCursorRectangleSelection01 =
+      HugeIconData(0x3ec4);
 
   /// IconData for the 'strokeRoundedCursorRectangleSelection02' icon.
-  static const IconData strokeRoundedCursorRectangleSelection02 = HugeIconData(0x3ec5);
+  static const IconData strokeRoundedCursorRectangleSelection02 =
+      HugeIconData(0x3ec5);
 
   /// IconData for the 'strokeRoundedCursorRemoveSelection01' icon.
-  static const IconData strokeRoundedCursorRemoveSelection01 = HugeIconData(0x3ec6);
+  static const IconData strokeRoundedCursorRemoveSelection01 =
+      HugeIconData(0x3ec6);
 
   /// IconData for the 'strokeRoundedCursorRemoveSelection02' icon.
-  static const IconData strokeRoundedCursorRemoveSelection02 = HugeIconData(0x3ec7);
+  static const IconData strokeRoundedCursorRemoveSelection02 =
+      HugeIconData(0x3ec7);
 
   /// IconData for the 'strokeRoundedCursorText' icon.
   static const IconData strokeRoundedCursorText = HugeIconData(0x3ec8);
@@ -3245,13 +3301,15 @@ class Hi {
   static const IconData strokeRoundedCurvyLeftDirection = HugeIconData(0x3eca);
 
   /// IconData for the 'strokeRoundedCurvyLeftRightDirection' icon.
-  static const IconData strokeRoundedCurvyLeftRightDirection = HugeIconData(0x3ecb);
+  static const IconData strokeRoundedCurvyLeftRightDirection =
+      HugeIconData(0x3ecb);
 
   /// IconData for the 'strokeRoundedCurvyRightDirection' icon.
   static const IconData strokeRoundedCurvyRightDirection = HugeIconData(0x3ecc);
 
   /// IconData for the 'strokeRoundedCurvyUpDownDirection' icon.
-  static const IconData strokeRoundedCurvyUpDownDirection = HugeIconData(0x3ecd);
+  static const IconData strokeRoundedCurvyUpDownDirection =
+      HugeIconData(0x3ecd);
 
   /// IconData for the 'strokeRoundedCustomerService01' icon.
   static const IconData strokeRoundedCustomerService01 = HugeIconData(0x3ece);
@@ -3299,10 +3357,12 @@ class Hi {
   static const IconData strokeRoundedDashboardCircleEdit = HugeIconData(0x3edc);
 
   /// IconData for the 'strokeRoundedDashboardCircleRemove' icon.
-  static const IconData strokeRoundedDashboardCircleRemove = HugeIconData(0x3edd);
+  static const IconData strokeRoundedDashboardCircleRemove =
+      HugeIconData(0x3edd);
 
   /// IconData for the 'strokeRoundedDashboardCircleSettings' icon.
-  static const IconData strokeRoundedDashboardCircleSettings = HugeIconData(0x3ede);
+  static const IconData strokeRoundedDashboardCircleSettings =
+      HugeIconData(0x3ede);
 
   /// IconData for the 'strokeRoundedDashboardCircle' icon.
   static const IconData strokeRoundedDashboardCircle = HugeIconData(0x3edf);
@@ -3329,10 +3389,12 @@ class Hi {
   static const IconData strokeRoundedDashboardSquareEdit = HugeIconData(0x3ee6);
 
   /// IconData for the 'strokeRoundedDashboardSquareRemove' icon.
-  static const IconData strokeRoundedDashboardSquareRemove = HugeIconData(0x3ee7);
+  static const IconData strokeRoundedDashboardSquareRemove =
+      HugeIconData(0x3ee7);
 
   /// IconData for the 'strokeRoundedDashboardSquareSetting' icon.
-  static const IconData strokeRoundedDashboardSquareSetting = HugeIconData(0x3ee8);
+  static const IconData strokeRoundedDashboardSquareSetting =
+      HugeIconData(0x3ee8);
 
   /// IconData for the 'strokeRoundedDashedLine01' icon.
   static const IconData strokeRoundedDashedLine01 = HugeIconData(0x3ee9);
@@ -3494,10 +3556,12 @@ class Hi {
   static const IconData strokeRoundedDeviceAccess = HugeIconData(0x3f1d);
 
   /// IconData for the 'strokeRoundedDiagonalScrollPoint01' icon.
-  static const IconData strokeRoundedDiagonalScrollPoint01 = HugeIconData(0x3f1e);
+  static const IconData strokeRoundedDiagonalScrollPoint01 =
+      HugeIconData(0x3f1e);
 
   /// IconData for the 'strokeRoundedDiagonalScrollPoint02' icon.
-  static const IconData strokeRoundedDiagonalScrollPoint02 = HugeIconData(0x3f1f);
+  static const IconData strokeRoundedDiagonalScrollPoint02 =
+      HugeIconData(0x3f1f);
 
   /// IconData for the 'strokeRoundedDialpadCircle01' icon.
   static const IconData strokeRoundedDialpadCircle01 = HugeIconData(0x3f20);
@@ -3629,22 +3693,28 @@ class Hi {
   static const IconData strokeRoundedDispleased = HugeIconData(0x3f4a);
 
   /// IconData for the 'strokeRoundedDistributeHorizontalCenter' icon.
-  static const IconData strokeRoundedDistributeHorizontalCenter = HugeIconData(0x3f4b);
+  static const IconData strokeRoundedDistributeHorizontalCenter =
+      HugeIconData(0x3f4b);
 
   /// IconData for the 'strokeRoundedDistributeHorizontalLeft' icon.
-  static const IconData strokeRoundedDistributeHorizontalLeft = HugeIconData(0x3f4c);
+  static const IconData strokeRoundedDistributeHorizontalLeft =
+      HugeIconData(0x3f4c);
 
   /// IconData for the 'strokeRoundedDistributeHorizontalRight' icon.
-  static const IconData strokeRoundedDistributeHorizontalRight = HugeIconData(0x3f4d);
+  static const IconData strokeRoundedDistributeHorizontalRight =
+      HugeIconData(0x3f4d);
 
   /// IconData for the 'strokeRoundedDistributeVerticalBottom' icon.
-  static const IconData strokeRoundedDistributeVerticalBottom = HugeIconData(0x3f4e);
+  static const IconData strokeRoundedDistributeVerticalBottom =
+      HugeIconData(0x3f4e);
 
   /// IconData for the 'strokeRoundedDistributeVerticalCenter' icon.
-  static const IconData strokeRoundedDistributeVerticalCenter = HugeIconData(0x3f4f);
+  static const IconData strokeRoundedDistributeVerticalCenter =
+      HugeIconData(0x3f4f);
 
   /// IconData for the 'strokeRoundedDistributeVerticalTop' icon.
-  static const IconData strokeRoundedDistributeVerticalTop = HugeIconData(0x3f50);
+  static const IconData strokeRoundedDistributeVerticalTop =
+      HugeIconData(0x3f50);
 
   /// IconData for the 'strokeRoundedDistribution' icon.
   static const IconData strokeRoundedDistribution = HugeIconData(0x3f51);
@@ -3899,7 +3969,8 @@ class Hi {
   static const IconData strokeRoundedEarth = HugeIconData(0x3fa4);
 
   /// IconData for the 'strokeRoundedEaseCurveControlPoints' icon.
-  static const IconData strokeRoundedEaseCurveControlPoints = HugeIconData(0x3fa5);
+  static const IconData strokeRoundedEaseCurveControlPoints =
+      HugeIconData(0x3fa5);
 
   /// IconData for the 'strokeRoundedEaseInControlPoint' icon.
   static const IconData strokeRoundedEaseInControlPoint = HugeIconData(0x3fa6);
@@ -4028,7 +4099,8 @@ class Hi {
   static const IconData strokeRoundedEquipmentGym03 = HugeIconData(0x3fcf);
 
   /// IconData for the 'strokeRoundedEquipmentWeightlifting' icon.
-  static const IconData strokeRoundedEquipmentWeightlifting = HugeIconData(0x3fd0);
+  static const IconData strokeRoundedEquipmentWeightlifting =
+      HugeIconData(0x3fd0);
 
   /// IconData for the 'strokeRoundedEraser01' icon.
   static const IconData strokeRoundedEraser01 = HugeIconData(0x3fd1);
@@ -4490,7 +4562,8 @@ class Hi {
   static const IconData strokeRoundedFolderCloud = HugeIconData(0x4069);
 
   /// IconData for the 'strokeRoundedFolderDetailsReference' icon.
-  static const IconData strokeRoundedFolderDetailsReference = HugeIconData(0x406a);
+  static const IconData strokeRoundedFolderDetailsReference =
+      HugeIconData(0x406a);
 
   /// IconData for the 'strokeRoundedFolderDetails' icon.
   static const IconData strokeRoundedFolderDetails = HugeIconData(0x406b);
@@ -4733,7 +4806,8 @@ class Hi {
   static const IconData strokeRoundedGitMerge = HugeIconData(0x40ba);
 
   /// IconData for the 'strokeRoundedGitPullRequestClosed' icon.
-  static const IconData strokeRoundedGitPullRequestClosed = HugeIconData(0x40bb);
+  static const IconData strokeRoundedGitPullRequestClosed =
+      HugeIconData(0x40bb);
 
   /// IconData for the 'strokeRoundedGitPullRequestDraft' icon.
   static const IconData strokeRoundedGitPullRequestDraft = HugeIconData(0x40bc);
@@ -5264,7 +5338,8 @@ class Hi {
   static const IconData strokeRoundedHoodie = HugeIconData(0x416b);
 
   /// IconData for the 'strokeRoundedHorizonalScrollPoint' icon.
-  static const IconData strokeRoundedHorizonalScrollPoint = HugeIconData(0x416c);
+  static const IconData strokeRoundedHorizonalScrollPoint =
+      HugeIconData(0x416c);
 
   /// IconData for the 'strokeRoundedHorizontalResize' icon.
   static const IconData strokeRoundedHorizontalResize = HugeIconData(0x416d);
@@ -5405,7 +5480,8 @@ class Hi {
   static const IconData strokeRoundedImageAdd02 = HugeIconData(0x419a);
 
   /// IconData for the 'strokeRoundedImageCompositionOval' icon.
-  static const IconData strokeRoundedImageCompositionOval = HugeIconData(0x419b);
+  static const IconData strokeRoundedImageCompositionOval =
+      HugeIconData(0x419b);
 
   /// IconData for the 'strokeRoundedImageComposition' icon.
   static const IconData strokeRoundedImageComposition = HugeIconData(0x419c);
@@ -5720,10 +5796,12 @@ class Hi {
   static const IconData strokeRoundedKeyframeAlignCenter = HugeIconData(0x4203);
 
   /// IconData for the 'strokeRoundedKeyframeAlignHorizontal' icon.
-  static const IconData strokeRoundedKeyframeAlignHorizontal = HugeIconData(0x4204);
+  static const IconData strokeRoundedKeyframeAlignHorizontal =
+      HugeIconData(0x4204);
 
   /// IconData for the 'strokeRoundedKeyframeAlignVertical' icon.
-  static const IconData strokeRoundedKeyframeAlignVertical = HugeIconData(0x4205);
+  static const IconData strokeRoundedKeyframeAlignVertical =
+      HugeIconData(0x4205);
 
   /// IconData for the 'strokeRoundedKeyframeBottom' icon.
   static const IconData strokeRoundedKeyframeBottom = HugeIconData(0x4206);
@@ -5747,16 +5825,19 @@ class Hi {
   static const IconData strokeRoundedKeyframesDoubleAdd = HugeIconData(0x420c);
 
   /// IconData for the 'strokeRoundedKeyframesDoubleRemove' icon.
-  static const IconData strokeRoundedKeyframesDoubleRemove = HugeIconData(0x420d);
+  static const IconData strokeRoundedKeyframesDoubleRemove =
+      HugeIconData(0x420d);
 
   /// IconData for the 'strokeRoundedKeyframesDouble' icon.
   static const IconData strokeRoundedKeyframesDouble = HugeIconData(0x420e);
 
   /// IconData for the 'strokeRoundedKeyframesMultipleAdd' icon.
-  static const IconData strokeRoundedKeyframesMultipleAdd = HugeIconData(0x420f);
+  static const IconData strokeRoundedKeyframesMultipleAdd =
+      HugeIconData(0x420f);
 
   /// IconData for the 'strokeRoundedKeyframesMultipleRemove' icon.
-  static const IconData strokeRoundedKeyframesMultipleRemove = HugeIconData(0x4210);
+  static const IconData strokeRoundedKeyframesMultipleRemove =
+      HugeIconData(0x4210);
 
   /// IconData for the 'strokeRoundedKeyframesMultiple' icon.
   static const IconData strokeRoundedKeyframesMultiple = HugeIconData(0x4211);
@@ -6029,25 +6110,30 @@ class Hi {
   static const IconData strokeRoundedLeftAngle = HugeIconData(0x426a);
 
   /// IconData for the 'strokeRoundedLeftToRightBlockQuote' icon.
-  static const IconData strokeRoundedLeftToRightBlockQuote = HugeIconData(0x426b);
+  static const IconData strokeRoundedLeftToRightBlockQuote =
+      HugeIconData(0x426b);
 
   /// IconData for the 'strokeRoundedLeftToRightListBullet' icon.
-  static const IconData strokeRoundedLeftToRightListBullet = HugeIconData(0x426c);
+  static const IconData strokeRoundedLeftToRightListBullet =
+      HugeIconData(0x426c);
 
   /// IconData for the 'strokeRoundedLeftToRightListDash' icon.
   static const IconData strokeRoundedLeftToRightListDash = HugeIconData(0x426d);
 
   /// IconData for the 'strokeRoundedLeftToRightListNumber' icon.
-  static const IconData strokeRoundedLeftToRightListNumber = HugeIconData(0x426e);
+  static const IconData strokeRoundedLeftToRightListNumber =
+      HugeIconData(0x426e);
 
   /// IconData for the 'strokeRoundedLeftToRightListStar01' icon.
-  static const IconData strokeRoundedLeftToRightListStar01 = HugeIconData(0x426f);
+  static const IconData strokeRoundedLeftToRightListStar01 =
+      HugeIconData(0x426f);
 
   /// IconData for the 'strokeRoundedLeftToRightListStar' icon.
   static const IconData strokeRoundedLeftToRightListStar = HugeIconData(0x4270);
 
   /// IconData for the 'strokeRoundedLeftToRightListTriangle' icon.
-  static const IconData strokeRoundedLeftToRightListTriangle = HugeIconData(0x4271);
+  static const IconData strokeRoundedLeftToRightListTriangle =
+      HugeIconData(0x4271);
 
   /// IconData for the 'strokeRoundedLeftTriangle' icon.
   static const IconData strokeRoundedLeftTriangle = HugeIconData(0x4272);
@@ -6857,10 +6943,12 @@ class Hi {
   static const IconData strokeRoundedMessageMultiple02 = HugeIconData(0x437e);
 
   /// IconData for the 'strokeRoundedMessageNotification01' icon.
-  static const IconData strokeRoundedMessageNotification01 = HugeIconData(0x437f);
+  static const IconData strokeRoundedMessageNotification01 =
+      HugeIconData(0x437f);
 
   /// IconData for the 'strokeRoundedMessageNotification02' icon.
-  static const IconData strokeRoundedMessageNotification02 = HugeIconData(0x4380);
+  static const IconData strokeRoundedMessageNotification02 =
+      HugeIconData(0x4380);
 
   /// IconData for the 'strokeRoundedMessageOutgoing01' icon.
   static const IconData strokeRoundedMessageOutgoing01 = HugeIconData(0x4381);
@@ -7229,16 +7317,20 @@ class Hi {
   static const IconData strokeRoundedMore03 = HugeIconData(0x43fa);
 
   /// IconData for the 'strokeRoundedMoreHorizontalCircle01' icon.
-  static const IconData strokeRoundedMoreHorizontalCircle01 = HugeIconData(0x43fb);
+  static const IconData strokeRoundedMoreHorizontalCircle01 =
+      HugeIconData(0x43fb);
 
   /// IconData for the 'strokeRoundedMoreHorizontalCircle02' icon.
-  static const IconData strokeRoundedMoreHorizontalCircle02 = HugeIconData(0x43fc);
+  static const IconData strokeRoundedMoreHorizontalCircle02 =
+      HugeIconData(0x43fc);
 
   /// IconData for the 'strokeRoundedMoreHorizontalSquare01' icon.
-  static const IconData strokeRoundedMoreHorizontalSquare01 = HugeIconData(0x43fd);
+  static const IconData strokeRoundedMoreHorizontalSquare01 =
+      HugeIconData(0x43fd);
 
   /// IconData for the 'strokeRoundedMoreHorizontalSquare02' icon.
-  static const IconData strokeRoundedMoreHorizontalSquare02 = HugeIconData(0x43fe);
+  static const IconData strokeRoundedMoreHorizontalSquare02 =
+      HugeIconData(0x43fe);
 
   /// IconData for the 'strokeRoundedMoreHorizontal' icon.
   static const IconData strokeRoundedMoreHorizontal = HugeIconData(0x43ff);
@@ -7253,16 +7345,20 @@ class Hi {
   static const IconData strokeRoundedMoreOrLess = HugeIconData(0x4402);
 
   /// IconData for the 'strokeRoundedMoreVerticalCircle01' icon.
-  static const IconData strokeRoundedMoreVerticalCircle01 = HugeIconData(0x4403);
+  static const IconData strokeRoundedMoreVerticalCircle01 =
+      HugeIconData(0x4403);
 
   /// IconData for the 'strokeRoundedMoreVerticalCircle02' icon.
-  static const IconData strokeRoundedMoreVerticalCircle02 = HugeIconData(0x4404);
+  static const IconData strokeRoundedMoreVerticalCircle02 =
+      HugeIconData(0x4404);
 
   /// IconData for the 'strokeRoundedMoreVerticalSquare01' icon.
-  static const IconData strokeRoundedMoreVerticalSquare01 = HugeIconData(0x4405);
+  static const IconData strokeRoundedMoreVerticalSquare01 =
+      HugeIconData(0x4405);
 
   /// IconData for the 'strokeRoundedMoreVerticalSquare02' icon.
-  static const IconData strokeRoundedMoreVerticalSquare02 = HugeIconData(0x4406);
+  static const IconData strokeRoundedMoreVerticalSquare02 =
+      HugeIconData(0x4406);
 
   /// IconData for the 'strokeRoundedMoreVertical' icon.
   static const IconData strokeRoundedMoreVertical = HugeIconData(0x4407);
@@ -7463,10 +7559,12 @@ class Hi {
   static const IconData strokeRoundedMuhammad = HugeIconData(0x4448);
 
   /// IconData for the 'strokeRoundedMultiplicationSignCircle' icon.
-  static const IconData strokeRoundedMultiplicationSignCircle = HugeIconData(0x4449);
+  static const IconData strokeRoundedMultiplicationSignCircle =
+      HugeIconData(0x4449);
 
   /// IconData for the 'strokeRoundedMultiplicationSignSquare' icon.
-  static const IconData strokeRoundedMultiplicationSignSquare = HugeIconData(0x444a);
+  static const IconData strokeRoundedMultiplicationSignSquare =
+      HugeIconData(0x444a);
 
   /// IconData for the 'strokeRoundedMultiplicationSign' icon.
   static const IconData strokeRoundedMultiplicationSign = HugeIconData(0x444b);
@@ -7697,13 +7795,16 @@ class Hi {
   static const IconData strokeRoundedNotificationOff03 = HugeIconData(0x4496);
 
   /// IconData for the 'strokeRoundedNotificationSnooze01' icon.
-  static const IconData strokeRoundedNotificationSnooze01 = HugeIconData(0x4497);
+  static const IconData strokeRoundedNotificationSnooze01 =
+      HugeIconData(0x4497);
 
   /// IconData for the 'strokeRoundedNotificationSnooze02' icon.
-  static const IconData strokeRoundedNotificationSnooze02 = HugeIconData(0x4498);
+  static const IconData strokeRoundedNotificationSnooze02 =
+      HugeIconData(0x4498);
 
   /// IconData for the 'strokeRoundedNotificationSnooze03' icon.
-  static const IconData strokeRoundedNotificationSnooze03 = HugeIconData(0x4499);
+  static const IconData strokeRoundedNotificationSnooze03 =
+      HugeIconData(0x4499);
 
   /// IconData for the 'strokeRoundedNotificationSquare' icon.
   static const IconData strokeRoundedNotificationSquare = HugeIconData(0x449a);
@@ -7868,10 +7969,12 @@ class Hi {
   static const IconData strokeRoundedParagliding = HugeIconData(0x44cf);
 
   /// IconData for the 'strokeRoundedParagraphBulletsPoint01' icon.
-  static const IconData strokeRoundedParagraphBulletsPoint01 = HugeIconData(0x44d0);
+  static const IconData strokeRoundedParagraphBulletsPoint01 =
+      HugeIconData(0x44d0);
 
   /// IconData for the 'strokeRoundedParagraphBulletsPoint02' icon.
-  static const IconData strokeRoundedParagraphBulletsPoint02 = HugeIconData(0x44d1);
+  static const IconData strokeRoundedParagraphBulletsPoint02 =
+      HugeIconData(0x44d1);
 
   /// IconData for the 'strokeRoundedParagraphSpacing' icon.
   static const IconData strokeRoundedParagraphSpacing = HugeIconData(0x44d2);
@@ -7925,7 +8028,8 @@ class Hi {
   static const IconData strokeRoundedPathfinderMinusBack = HugeIconData(0x44e2);
 
   /// IconData for the 'strokeRoundedPathfinderMinusFront' icon.
-  static const IconData strokeRoundedPathfinderMinusFront = HugeIconData(0x44e3);
+  static const IconData strokeRoundedPathfinderMinusFront =
+      HugeIconData(0x44e3);
 
   /// IconData for the 'strokeRoundedPathfinderOutline' icon.
   static const IconData strokeRoundedPathfinderOutline = HugeIconData(0x44e4);
@@ -8084,7 +8188,8 @@ class Hi {
   static const IconData strokeRoundedPickup02 = HugeIconData(0x4517);
 
   /// IconData for the 'strokeRoundedPictureInPictureExit' icon.
-  static const IconData strokeRoundedPictureInPictureExit = HugeIconData(0x4518);
+  static const IconData strokeRoundedPictureInPictureExit =
+      HugeIconData(0x4518);
 
   /// IconData for the 'strokeRoundedPictureInPictureOn' icon.
   static const IconData strokeRoundedPictureInPictureOn = HugeIconData(0x4519);
@@ -8384,7 +8489,8 @@ class Hi {
   static const IconData strokeRoundedPrayerRug02 = HugeIconData(0x457b);
 
   /// IconData for the 'strokeRoundedPreferenceHorizontal' icon.
-  static const IconData strokeRoundedPreferenceHorizontal = HugeIconData(0x457c);
+  static const IconData strokeRoundedPreferenceHorizontal =
+      HugeIconData(0x457c);
 
   /// IconData for the 'strokeRoundedPreferenceVertical' icon.
   static const IconData strokeRoundedPreferenceVertical = HugeIconData(0x457d);
@@ -8414,16 +8520,20 @@ class Hi {
   static const IconData strokeRoundedPresentation07 = HugeIconData(0x4585);
 
   /// IconData for the 'strokeRoundedPresentationBarChart01' icon.
-  static const IconData strokeRoundedPresentationBarChart01 = HugeIconData(0x4586);
+  static const IconData strokeRoundedPresentationBarChart01 =
+      HugeIconData(0x4586);
 
   /// IconData for the 'strokeRoundedPresentationBarChart02' icon.
-  static const IconData strokeRoundedPresentationBarChart02 = HugeIconData(0x4587);
+  static const IconData strokeRoundedPresentationBarChart02 =
+      HugeIconData(0x4587);
 
   /// IconData for the 'strokeRoundedPresentationLineChart01' icon.
-  static const IconData strokeRoundedPresentationLineChart01 = HugeIconData(0x4588);
+  static const IconData strokeRoundedPresentationLineChart01 =
+      HugeIconData(0x4588);
 
   /// IconData for the 'strokeRoundedPresentationLineChart02' icon.
-  static const IconData strokeRoundedPresentationLineChart02 = HugeIconData(0x4589);
+  static const IconData strokeRoundedPresentationLineChart02 =
+      HugeIconData(0x4589);
 
   /// IconData for the 'strokeRoundedPresentationOnline' icon.
   static const IconData strokeRoundedPresentationOnline = HugeIconData(0x458a);
@@ -8843,19 +8953,23 @@ class Hi {
   static const IconData strokeRoundedRightAngle = HugeIconData(0x4615);
 
   /// IconData for the 'strokeRoundedRightToLeftBlockQuote' icon.
-  static const IconData strokeRoundedRightToLeftBlockQuote = HugeIconData(0x4616);
+  static const IconData strokeRoundedRightToLeftBlockQuote =
+      HugeIconData(0x4616);
 
   /// IconData for the 'strokeRoundedRightToLeftListBullet' icon.
-  static const IconData strokeRoundedRightToLeftListBullet = HugeIconData(0x4617);
+  static const IconData strokeRoundedRightToLeftListBullet =
+      HugeIconData(0x4617);
 
   /// IconData for the 'strokeRoundedRightToLeftListDash' icon.
   static const IconData strokeRoundedRightToLeftListDash = HugeIconData(0x4618);
 
   /// IconData for the 'strokeRoundedRightToLeftListNumber' icon.
-  static const IconData strokeRoundedRightToLeftListNumber = HugeIconData(0x4619);
+  static const IconData strokeRoundedRightToLeftListNumber =
+      HugeIconData(0x4619);
 
   /// IconData for the 'strokeRoundedRightToLeftListTriangle' icon.
-  static const IconData strokeRoundedRightToLeftListTriangle = HugeIconData(0x461a);
+  static const IconData strokeRoundedRightToLeftListTriangle =
+      HugeIconData(0x461a);
 
   /// IconData for the 'strokeRoundedRightTriangle' icon.
   static const IconData strokeRoundedRightTriangle = HugeIconData(0x461b);
@@ -9530,58 +9644,76 @@ class Hi {
   static const IconData strokeRoundedShoppingBasketAdd03 = HugeIconData(0x46fa);
 
   /// IconData for the 'strokeRoundedShoppingBasketCheckIn01' icon.
-  static const IconData strokeRoundedShoppingBasketCheckIn01 = HugeIconData(0x46fb);
+  static const IconData strokeRoundedShoppingBasketCheckIn01 =
+      HugeIconData(0x46fb);
 
   /// IconData for the 'strokeRoundedShoppingBasketCheckIn02' icon.
-  static const IconData strokeRoundedShoppingBasketCheckIn02 = HugeIconData(0x46fc);
+  static const IconData strokeRoundedShoppingBasketCheckIn02 =
+      HugeIconData(0x46fc);
 
   /// IconData for the 'strokeRoundedShoppingBasketCheckIn03' icon.
-  static const IconData strokeRoundedShoppingBasketCheckIn03 = HugeIconData(0x46fd);
+  static const IconData strokeRoundedShoppingBasketCheckIn03 =
+      HugeIconData(0x46fd);
 
   /// IconData for the 'strokeRoundedShoppingBasketCheckOut01' icon.
-  static const IconData strokeRoundedShoppingBasketCheckOut01 = HugeIconData(0x46fe);
+  static const IconData strokeRoundedShoppingBasketCheckOut01 =
+      HugeIconData(0x46fe);
 
   /// IconData for the 'strokeRoundedShoppingBasketCheckOut02' icon.
-  static const IconData strokeRoundedShoppingBasketCheckOut02 = HugeIconData(0x46ff);
+  static const IconData strokeRoundedShoppingBasketCheckOut02 =
+      HugeIconData(0x46ff);
 
   /// IconData for the 'strokeRoundedShoppingBasketCheckOut03' icon.
-  static const IconData strokeRoundedShoppingBasketCheckOut03 = HugeIconData(0x4700);
+  static const IconData strokeRoundedShoppingBasketCheckOut03 =
+      HugeIconData(0x4700);
 
   /// IconData for the 'strokeRoundedShoppingBasketDone01' icon.
-  static const IconData strokeRoundedShoppingBasketDone01 = HugeIconData(0x4701);
+  static const IconData strokeRoundedShoppingBasketDone01 =
+      HugeIconData(0x4701);
 
   /// IconData for the 'strokeRoundedShoppingBasketDone02' icon.
-  static const IconData strokeRoundedShoppingBasketDone02 = HugeIconData(0x4702);
+  static const IconData strokeRoundedShoppingBasketDone02 =
+      HugeIconData(0x4702);
 
   /// IconData for the 'strokeRoundedShoppingBasketDone03' icon.
-  static const IconData strokeRoundedShoppingBasketDone03 = HugeIconData(0x4703);
+  static const IconData strokeRoundedShoppingBasketDone03 =
+      HugeIconData(0x4703);
 
   /// IconData for the 'strokeRoundedShoppingBasketFavorite01' icon.
-  static const IconData strokeRoundedShoppingBasketFavorite01 = HugeIconData(0x4704);
+  static const IconData strokeRoundedShoppingBasketFavorite01 =
+      HugeIconData(0x4704);
 
   /// IconData for the 'strokeRoundedShoppingBasketFavorite02' icon.
-  static const IconData strokeRoundedShoppingBasketFavorite02 = HugeIconData(0x4705);
+  static const IconData strokeRoundedShoppingBasketFavorite02 =
+      HugeIconData(0x4705);
 
   /// IconData for the 'strokeRoundedShoppingBasketFavorite03' icon.
-  static const IconData strokeRoundedShoppingBasketFavorite03 = HugeIconData(0x4706);
+  static const IconData strokeRoundedShoppingBasketFavorite03 =
+      HugeIconData(0x4706);
 
   /// IconData for the 'strokeRoundedShoppingBasketRemove01' icon.
-  static const IconData strokeRoundedShoppingBasketRemove01 = HugeIconData(0x4707);
+  static const IconData strokeRoundedShoppingBasketRemove01 =
+      HugeIconData(0x4707);
 
   /// IconData for the 'strokeRoundedShoppingBasketRemove02' icon.
-  static const IconData strokeRoundedShoppingBasketRemove02 = HugeIconData(0x4708);
+  static const IconData strokeRoundedShoppingBasketRemove02 =
+      HugeIconData(0x4708);
 
   /// IconData for the 'strokeRoundedShoppingBasketRemove03' icon.
-  static const IconData strokeRoundedShoppingBasketRemove03 = HugeIconData(0x4709);
+  static const IconData strokeRoundedShoppingBasketRemove03 =
+      HugeIconData(0x4709);
 
   /// IconData for the 'strokeRoundedShoppingBasketSecure01' icon.
-  static const IconData strokeRoundedShoppingBasketSecure01 = HugeIconData(0x470a);
+  static const IconData strokeRoundedShoppingBasketSecure01 =
+      HugeIconData(0x470a);
 
   /// IconData for the 'strokeRoundedShoppingBasketSecure02' icon.
-  static const IconData strokeRoundedShoppingBasketSecure02 = HugeIconData(0x470b);
+  static const IconData strokeRoundedShoppingBasketSecure02 =
+      HugeIconData(0x470b);
 
   /// IconData for the 'strokeRoundedShoppingBasketSecure03' icon.
-  static const IconData strokeRoundedShoppingBasketSecure03 = HugeIconData(0x470c);
+  static const IconData strokeRoundedShoppingBasketSecure03 =
+      HugeIconData(0x470c);
 
   /// IconData for the 'strokeRoundedShoppingCart01' icon.
   static const IconData strokeRoundedShoppingCart01 = HugeIconData(0x470d);
@@ -9602,28 +9734,36 @@ class Hi {
   static const IconData strokeRoundedShoppingCartCheck02 = HugeIconData(0x4712);
 
   /// IconData for the 'strokeRoundedShoppingCartCheckIn01' icon.
-  static const IconData strokeRoundedShoppingCartCheckIn01 = HugeIconData(0x4713);
+  static const IconData strokeRoundedShoppingCartCheckIn01 =
+      HugeIconData(0x4713);
 
   /// IconData for the 'strokeRoundedShoppingCartCheckIn02' icon.
-  static const IconData strokeRoundedShoppingCartCheckIn02 = HugeIconData(0x4714);
+  static const IconData strokeRoundedShoppingCartCheckIn02 =
+      HugeIconData(0x4714);
 
   /// IconData for the 'strokeRoundedShoppingCartCheckOut01' icon.
-  static const IconData strokeRoundedShoppingCartCheckOut01 = HugeIconData(0x4715);
+  static const IconData strokeRoundedShoppingCartCheckOut01 =
+      HugeIconData(0x4715);
 
   /// IconData for the 'strokeRoundedShoppingCartCheckOut02' icon.
-  static const IconData strokeRoundedShoppingCartCheckOut02 = HugeIconData(0x4716);
+  static const IconData strokeRoundedShoppingCartCheckOut02 =
+      HugeIconData(0x4716);
 
   /// IconData for the 'strokeRoundedShoppingCartFavorite01' icon.
-  static const IconData strokeRoundedShoppingCartFavorite01 = HugeIconData(0x4717);
+  static const IconData strokeRoundedShoppingCartFavorite01 =
+      HugeIconData(0x4717);
 
   /// IconData for the 'strokeRoundedShoppingCartFavorite02' icon.
-  static const IconData strokeRoundedShoppingCartFavorite02 = HugeIconData(0x4718);
+  static const IconData strokeRoundedShoppingCartFavorite02 =
+      HugeIconData(0x4718);
 
   /// IconData for the 'strokeRoundedShoppingCartRemove01' icon.
-  static const IconData strokeRoundedShoppingCartRemove01 = HugeIconData(0x4719);
+  static const IconData strokeRoundedShoppingCartRemove01 =
+      HugeIconData(0x4719);
 
   /// IconData for the 'strokeRoundedShoppingCartRemove02' icon.
-  static const IconData strokeRoundedShoppingCartRemove02 = HugeIconData(0x471a);
+  static const IconData strokeRoundedShoppingCartRemove02 =
+      HugeIconData(0x471a);
 
   /// IconData for the 'strokeRoundedShortsPants' icon.
   static const IconData strokeRoundedShortsPants = HugeIconData(0x471b);
@@ -9860,10 +10000,12 @@ class Hi {
   static const IconData strokeRoundedSoilMoistureGlobal = HugeIconData(0x4768);
 
   /// IconData for the 'strokeRoundedSoilTemperatureField' icon.
-  static const IconData strokeRoundedSoilTemperatureField = HugeIconData(0x4769);
+  static const IconData strokeRoundedSoilTemperatureField =
+      HugeIconData(0x4769);
 
   /// IconData for the 'strokeRoundedSoilTemperatureGlobal' icon.
-  static const IconData strokeRoundedSoilTemperatureGlobal = HugeIconData(0x476a);
+  static const IconData strokeRoundedSoilTemperatureGlobal =
+      HugeIconData(0x476a);
 
   /// IconData for the 'strokeRoundedSolarEnergy' icon.
   static const IconData strokeRoundedSolarEnergy = HugeIconData(0x476b);
@@ -10022,19 +10164,24 @@ class Hi {
   static const IconData strokeRoundedSquare01 = HugeIconData(0x479e);
 
   /// IconData for the 'strokeRoundedSquareArrowDataTransferDiagonal' icon.
-  static const IconData strokeRoundedSquareArrowDataTransferDiagonal = HugeIconData(0x479f);
+  static const IconData strokeRoundedSquareArrowDataTransferDiagonal =
+      HugeIconData(0x479f);
 
   /// IconData for the 'strokeRoundedSquareArrowDataTransferHorizontal' icon.
-  static const IconData strokeRoundedSquareArrowDataTransferHorizontal = HugeIconData(0x47a0);
+  static const IconData strokeRoundedSquareArrowDataTransferHorizontal =
+      HugeIconData(0x47a0);
 
   /// IconData for the 'strokeRoundedSquareArrowDataTransferVertical' icon.
-  static const IconData strokeRoundedSquareArrowDataTransferVertical = HugeIconData(0x47a1);
+  static const IconData strokeRoundedSquareArrowDataTransferVertical =
+      HugeIconData(0x47a1);
 
   /// IconData for the 'strokeRoundedSquareArrowDiagonal01' icon.
-  static const IconData strokeRoundedSquareArrowDiagonal01 = HugeIconData(0x47a2);
+  static const IconData strokeRoundedSquareArrowDiagonal01 =
+      HugeIconData(0x47a2);
 
   /// IconData for the 'strokeRoundedSquareArrowDiagonal02' icon.
-  static const IconData strokeRoundedSquareArrowDiagonal02 = HugeIconData(0x47a3);
+  static const IconData strokeRoundedSquareArrowDiagonal02 =
+      HugeIconData(0x47a3);
 
   /// IconData for the 'strokeRoundedSquareArrowDown01' icon.
   static const IconData strokeRoundedSquareArrowDown01 = HugeIconData(0x47a4);
@@ -10046,13 +10193,15 @@ class Hi {
   static const IconData strokeRoundedSquareArrowDown03 = HugeIconData(0x47a6);
 
   /// IconData for the 'strokeRoundedSquareArrowDownDouble' icon.
-  static const IconData strokeRoundedSquareArrowDownDouble = HugeIconData(0x47a7);
+  static const IconData strokeRoundedSquareArrowDownDouble =
+      HugeIconData(0x47a7);
 
   /// IconData for the 'strokeRoundedSquareArrowDownLeft' icon.
   static const IconData strokeRoundedSquareArrowDownLeft = HugeIconData(0x47a8);
 
   /// IconData for the 'strokeRoundedSquareArrowDownRight' icon.
-  static const IconData strokeRoundedSquareArrowDownRight = HugeIconData(0x47a9);
+  static const IconData strokeRoundedSquareArrowDownRight =
+      HugeIconData(0x47a9);
 
   /// IconData for the 'strokeRoundedSquareArrowExpand01' icon.
   static const IconData strokeRoundedSquareArrowExpand01 = HugeIconData(0x47aa);
@@ -10061,7 +10210,8 @@ class Hi {
   static const IconData strokeRoundedSquareArrowExpand02 = HugeIconData(0x47ab);
 
   /// IconData for the 'strokeRoundedSquareArrowHorizontal' icon.
-  static const IconData strokeRoundedSquareArrowHorizontal = HugeIconData(0x47ac);
+  static const IconData strokeRoundedSquareArrowHorizontal =
+      HugeIconData(0x47ac);
 
   /// IconData for the 'strokeRoundedSquareArrowLeft01' icon.
   static const IconData strokeRoundedSquareArrowLeft01 = HugeIconData(0x47ad);
@@ -10073,28 +10223,36 @@ class Hi {
   static const IconData strokeRoundedSquareArrowLeft03 = HugeIconData(0x47af);
 
   /// IconData for the 'strokeRoundedSquareArrowLeftDouble' icon.
-  static const IconData strokeRoundedSquareArrowLeftDouble = HugeIconData(0x47b0);
+  static const IconData strokeRoundedSquareArrowLeftDouble =
+      HugeIconData(0x47b0);
 
   /// IconData for the 'strokeRoundedSquareArrowLeftRight' icon.
-  static const IconData strokeRoundedSquareArrowLeftRight = HugeIconData(0x47b1);
+  static const IconData strokeRoundedSquareArrowLeftRight =
+      HugeIconData(0x47b1);
 
   /// IconData for the 'strokeRoundedSquareArrowMoveDownLeft' icon.
-  static const IconData strokeRoundedSquareArrowMoveDownLeft = HugeIconData(0x47b2);
+  static const IconData strokeRoundedSquareArrowMoveDownLeft =
+      HugeIconData(0x47b2);
 
   /// IconData for the 'strokeRoundedSquareArrowMoveDownRight' icon.
-  static const IconData strokeRoundedSquareArrowMoveDownRight = HugeIconData(0x47b3);
+  static const IconData strokeRoundedSquareArrowMoveDownRight =
+      HugeIconData(0x47b3);
 
   /// IconData for the 'strokeRoundedSquareArrowMoveLeftDown' icon.
-  static const IconData strokeRoundedSquareArrowMoveLeftDown = HugeIconData(0x47b4);
+  static const IconData strokeRoundedSquareArrowMoveLeftDown =
+      HugeIconData(0x47b4);
 
   /// IconData for the 'strokeRoundedSquareArrowMoveLeftUp' icon.
-  static const IconData strokeRoundedSquareArrowMoveLeftUp = HugeIconData(0x47b5);
+  static const IconData strokeRoundedSquareArrowMoveLeftUp =
+      HugeIconData(0x47b5);
 
   /// IconData for the 'strokeRoundedSquareArrowMoveRightDown' icon.
-  static const IconData strokeRoundedSquareArrowMoveRightDown = HugeIconData(0x47b6);
+  static const IconData strokeRoundedSquareArrowMoveRightDown =
+      HugeIconData(0x47b6);
 
   /// IconData for the 'strokeRoundedSquareArrowMoveRightUp' icon.
-  static const IconData strokeRoundedSquareArrowMoveRightUp = HugeIconData(0x47b7);
+  static const IconData strokeRoundedSquareArrowMoveRightUp =
+      HugeIconData(0x47b7);
 
   /// IconData for the 'strokeRoundedSquareArrowReload01' icon.
   static const IconData strokeRoundedSquareArrowReload01 = HugeIconData(0x47b8);
@@ -10112,7 +10270,8 @@ class Hi {
   static const IconData strokeRoundedSquareArrowRight03 = HugeIconData(0x47bc);
 
   /// IconData for the 'strokeRoundedSquareArrowRightDouble' icon.
-  static const IconData strokeRoundedSquareArrowRightDouble = HugeIconData(0x47bd);
+  static const IconData strokeRoundedSquareArrowRightDouble =
+      HugeIconData(0x47bd);
 
   /// IconData for the 'strokeRoundedSquareArrowShrink01' icon.
   static const IconData strokeRoundedSquareArrowShrink01 = HugeIconData(0x47be);
@@ -10361,7 +10520,8 @@ class Hi {
   static const IconData strokeRoundedStructureFail = HugeIconData(0x480f);
 
   /// IconData for the 'strokeRoundedStructureFolderCircle' icon.
-  static const IconData strokeRoundedStructureFolderCircle = HugeIconData(0x4810);
+  static const IconData strokeRoundedStructureFolderCircle =
+      HugeIconData(0x4810);
 
   /// IconData for the 'strokeRoundedStructureFolder' icon.
   static const IconData strokeRoundedStructureFolder = HugeIconData(0x4811);
@@ -10439,16 +10599,20 @@ class Hi {
   static const IconData strokeRoundedSunCloud02 = HugeIconData(0x4829);
 
   /// IconData for the 'strokeRoundedSunCloudAngledRain01' icon.
-  static const IconData strokeRoundedSunCloudAngledRain01 = HugeIconData(0x482a);
+  static const IconData strokeRoundedSunCloudAngledRain01 =
+      HugeIconData(0x482a);
 
   /// IconData for the 'strokeRoundedSunCloudAngledRain02' icon.
-  static const IconData strokeRoundedSunCloudAngledRain02 = HugeIconData(0x482b);
+  static const IconData strokeRoundedSunCloudAngledRain02 =
+      HugeIconData(0x482b);
 
   /// IconData for the 'strokeRoundedSunCloudAngledRainZap01' icon.
-  static const IconData strokeRoundedSunCloudAngledRainZap01 = HugeIconData(0x482c);
+  static const IconData strokeRoundedSunCloudAngledRainZap01 =
+      HugeIconData(0x482c);
 
   /// IconData for the 'strokeRoundedSunCloudAngledRainZap02' icon.
-  static const IconData strokeRoundedSunCloudAngledRainZap02 = HugeIconData(0x482d);
+  static const IconData strokeRoundedSunCloudAngledRainZap02 =
+      HugeIconData(0x482d);
 
   /// IconData for the 'strokeRoundedSunCloudAngledZap01' icon.
   static const IconData strokeRoundedSunCloudAngledZap01 = HugeIconData(0x482e);
@@ -10475,16 +10639,20 @@ class Hi {
   static const IconData strokeRoundedSunCloudHailstone02 = HugeIconData(0x4835);
 
   /// IconData for the 'strokeRoundedSunCloudLittleRain01' icon.
-  static const IconData strokeRoundedSunCloudLittleRain01 = HugeIconData(0x4836);
+  static const IconData strokeRoundedSunCloudLittleRain01 =
+      HugeIconData(0x4836);
 
   /// IconData for the 'strokeRoundedSunCloudLittleRain02' icon.
-  static const IconData strokeRoundedSunCloudLittleRain02 = HugeIconData(0x4837);
+  static const IconData strokeRoundedSunCloudLittleRain02 =
+      HugeIconData(0x4837);
 
   /// IconData for the 'strokeRoundedSunCloudLittleSnow01' icon.
-  static const IconData strokeRoundedSunCloudLittleSnow01 = HugeIconData(0x4838);
+  static const IconData strokeRoundedSunCloudLittleSnow01 =
+      HugeIconData(0x4838);
 
   /// IconData for the 'strokeRoundedSunCloudLittleSnow02' icon.
-  static const IconData strokeRoundedSunCloudLittleSnow02 = HugeIconData(0x4839);
+  static const IconData strokeRoundedSunCloudLittleSnow02 =
+      HugeIconData(0x4839);
 
   /// IconData for the 'strokeRoundedSunCloudMidRain01' icon.
   static const IconData strokeRoundedSunCloudMidRain01 = HugeIconData(0x483a);
@@ -10715,7 +10883,8 @@ class Hi {
   static const IconData strokeRoundedTablet02 = HugeIconData(0x4885);
 
   /// IconData for the 'strokeRoundedTabletConnectedBluetooth' icon.
-  static const IconData strokeRoundedTabletConnectedBluetooth = HugeIconData(0x4886);
+  static const IconData strokeRoundedTabletConnectedBluetooth =
+      HugeIconData(0x4886);
 
   /// IconData for the 'strokeRoundedTabletConnectedUsb' icon.
   static const IconData strokeRoundedTabletConnectedUsb = HugeIconData(0x4887);
@@ -10892,13 +11061,16 @@ class Hi {
   static const IconData strokeRoundedTextAlignCenter = HugeIconData(0x48c0);
 
   /// IconData for the 'strokeRoundedTextAlignJustifyCenter' icon.
-  static const IconData strokeRoundedTextAlignJustifyCenter = HugeIconData(0x48c1);
+  static const IconData strokeRoundedTextAlignJustifyCenter =
+      HugeIconData(0x48c1);
 
   /// IconData for the 'strokeRoundedTextAlignJustifyLeft' icon.
-  static const IconData strokeRoundedTextAlignJustifyLeft = HugeIconData(0x48c2);
+  static const IconData strokeRoundedTextAlignJustifyLeft =
+      HugeIconData(0x48c2);
 
   /// IconData for the 'strokeRoundedTextAlignJustifyRight' icon.
-  static const IconData strokeRoundedTextAlignJustifyRight = HugeIconData(0x48c3);
+  static const IconData strokeRoundedTextAlignJustifyRight =
+      HugeIconData(0x48c3);
 
   /// IconData for the 'strokeRoundedTextAlignLeft01' icon.
   static const IconData strokeRoundedTextAlignLeft01 = HugeIconData(0x48c4);
@@ -10919,13 +11091,15 @@ class Hi {
   static const IconData strokeRoundedTextBold = HugeIconData(0x48c9);
 
   /// IconData for the 'strokeRoundedTextCenterlineCenterTop' icon.
-  static const IconData strokeRoundedTextCenterlineCenterTop = HugeIconData(0x48ca);
+  static const IconData strokeRoundedTextCenterlineCenterTop =
+      HugeIconData(0x48ca);
 
   /// IconData for the 'strokeRoundedTextCenterlineLeft' icon.
   static const IconData strokeRoundedTextCenterlineLeft = HugeIconData(0x48cb);
 
   /// IconData for the 'strokeRoundedTextCenterlineMiddle' icon.
-  static const IconData strokeRoundedTextCenterlineMiddle = HugeIconData(0x48cc);
+  static const IconData strokeRoundedTextCenterlineMiddle =
+      HugeIconData(0x48cc);
 
   /// IconData for the 'strokeRoundedTextCenterlineRight' icon.
   static const IconData strokeRoundedTextCenterlineRight = HugeIconData(0x48cd);
@@ -11009,7 +11183,8 @@ class Hi {
   static const IconData strokeRoundedTextVariableFront = HugeIconData(0x48e7);
 
   /// IconData for the 'strokeRoundedTextVerticalAlignment' icon.
-  static const IconData strokeRoundedTextVerticalAlignment = HugeIconData(0x48e8);
+  static const IconData strokeRoundedTextVerticalAlignment =
+      HugeIconData(0x48e8);
 
   /// IconData for the 'strokeRoundedTextWrap' icon.
   static const IconData strokeRoundedTextWrap = HugeIconData(0x48e9);
@@ -11159,7 +11334,8 @@ class Hi {
   static const IconData strokeRoundedTimeHalfPass = HugeIconData(0x4919);
 
   /// IconData for the 'strokeRoundedTimeManagementCircle' icon.
-  static const IconData strokeRoundedTimeManagementCircle = HugeIconData(0x491a);
+  static const IconData strokeRoundedTimeManagementCircle =
+      HugeIconData(0x491a);
 
   /// IconData for the 'strokeRoundedTimeManagement' icon.
   static const IconData strokeRoundedTimeManagement = HugeIconData(0x491b);
@@ -11372,10 +11548,12 @@ class Hi {
   static const IconData strokeRoundedTransparency = HugeIconData(0x4960);
 
   /// IconData for the 'strokeRoundedTrapezoidLineHorizontal' icon.
-  static const IconData strokeRoundedTrapezoidLineHorizontal = HugeIconData(0x4961);
+  static const IconData strokeRoundedTrapezoidLineHorizontal =
+      HugeIconData(0x4961);
 
   /// IconData for the 'strokeRoundedTrapezoidLineVertical' icon.
-  static const IconData strokeRoundedTrapezoidLineVertical = HugeIconData(0x4962);
+  static const IconData strokeRoundedTrapezoidLineVertical =
+      HugeIconData(0x4962);
 
   /// IconData for the 'strokeRoundedTravelBag' icon.
   static const IconData strokeRoundedTravelBag = HugeIconData(0x4963);
@@ -11432,10 +11610,12 @@ class Hi {
   static const IconData strokeRoundedTrolley02 = HugeIconData(0x4974);
 
   /// IconData for the 'strokeRoundedTropicalStormTracks01' icon.
-  static const IconData strokeRoundedTropicalStormTracks01 = HugeIconData(0x4975);
+  static const IconData strokeRoundedTropicalStormTracks01 =
+      HugeIconData(0x4975);
 
   /// IconData for the 'strokeRoundedTropicalStormTracks02' icon.
-  static const IconData strokeRoundedTropicalStormTracks02 = HugeIconData(0x4976);
+  static const IconData strokeRoundedTropicalStormTracks02 =
+      HugeIconData(0x4976);
 
   /// IconData for the 'strokeRoundedTropicalStorm' icon.
   static const IconData strokeRoundedTropicalStorm = HugeIconData(0x4977);

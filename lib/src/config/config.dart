@@ -51,7 +51,8 @@ class LazyUi {
     }
 
     if (alwaysPortrait) {
-      Utils.orientation([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      Utils.orientation(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
     _defaultTextStyle = font ?? GoogleFonts.nunitoSans(fontSize: 15.5);
@@ -63,7 +64,8 @@ class LazyUi {
     // If the error occurs in the image resource service and is a 404 error (image not found),
     // it silently ignores the error. Otherwise, it presents the error to the user.
     FlutterError.onError = (FlutterErrorDetails details) {
-      if (details.library == 'image resource service' && details.exception.toString().contains('404')) {
+      if (details.library == 'image resource service' &&
+          details.exception.toString().contains('404')) {
         return;
       }
 
@@ -77,17 +79,21 @@ class LazyUi {
   /// - [child]: The child widget.
   /// - [maxScalingFontSize]: Maximum font scaling factor.
   /// - [useLzToast]: Whether to use LazyToast overlay.
-  static Widget builder(BuildContext context, Widget? child, {double? maxScalingFontSize, bool useLzToast = true}) {
+  static Widget builder(BuildContext context, Widget? child,
+      {double? maxScalingFontSize, bool useLzToast = true}) {
     _defaultTextStyle = _getFontStyle(context);
 
     double maxScalingFactor = MediaQuery.textScalerOf(context).scale(1);
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(
-              maxScalingFontSize != null ? maxScalingFactor : maxScalingFactor.clamp(1.0, maxScalingFontSize ?? 1))),
+          textScaler: TextScaler.linear(maxScalingFontSize != null
+              ? maxScalingFactor
+              : maxScalingFactor.clamp(1.0, maxScalingFontSize ?? 1))),
       child: useLzToast
-          ? LzToastOverlay(child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
+          ? LzToastOverlay(
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
           : child ?? const SizedBox.shrink(),
     );
   }

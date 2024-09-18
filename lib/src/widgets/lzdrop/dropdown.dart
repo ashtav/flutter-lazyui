@@ -26,7 +26,13 @@ class Dropdown extends StatelessWidget {
 
   /// Create widget
   const Dropdown(
-      {super.key, required this.target, this.box, this.options = const [], this.style, this.onSelect, this.child});
+      {super.key,
+      required this.target,
+      this.box,
+      this.options = const [],
+      this.style,
+      this.onSelect,
+      this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +51,20 @@ class Dropdown extends StatelessWidget {
     bool isBgHasColor = style?.backgroundColor != null;
 
     Color backgroundColor = isDarkMode ? '#222'.hex : Colors.white;
-    Color subBackgroundColor = isDarkMode ? '#222'.hex.darken(.2) : '#f5f5f5'.hex;
+    Color subBackgroundColor =
+        isDarkMode ? '#222'.hex.darken(.2) : '#f5f5f5'.hex;
 
-    Color textColor = style?.textColor ?? (backgroundColor.isDark() ? Colors.white : Colors.black87);
+    Color textColor = style?.textColor ??
+        (backgroundColor.isDark() ? Colors.white : Colors.black87);
     List separators = style?.separators ?? [];
     List<IconData?> icons = style?.icons ?? [];
     List critical = style?.critical ?? [];
     List disabled = style?.disabled ?? [];
 
     // get dropdown width size
-    double width = (style?.width ?? 230) > context.width ? context.width - 20 : (style?.width ?? 230);
+    double width = (style?.width ?? 230) > context.width
+        ? context.width - 20
+        : (style?.width ?? 230);
 
     // set dropdown position
     notifier.setPosition(target, box, context, width, dkey, hasChild);
@@ -78,9 +88,12 @@ class Dropdown extends StatelessWidget {
             GlobalKey ikey = keys[i];
             IconData? icon = icons.length > i ? icons[i] : null;
 
-            bool isSeparator = separators.contains(i) || separators.contains(item.label);
-            bool isDisabled = disabled.contains(i) || disabled.contains(item.label);
-            bool isCritical = critical.contains(i) || critical.contains(item.label);
+            bool isSeparator =
+                separators.contains(i) || separators.contains(item.label);
+            bool isDisabled =
+                disabled.contains(i) || disabled.contains(item.label);
+            bool isCritical =
+                critical.contains(i) || critical.contains(item.label);
 
             List<DropOption> subOptions = item.subOptions ?? [];
             bool hasSubOptions = subOptions.isNotEmpty;
@@ -98,29 +111,42 @@ class Dropdown extends StatelessWidget {
 
               Icon iconWidget(IconData icon) => Icon(
                     icon,
-                    color: isCritical ? Colors.redAccent : textColor.lighten(.6),
+                    color:
+                        isCritical ? Colors.redAccent : textColor.lighten(.6),
                     size: 18,
                   );
 
-              bool hasExpanded = hasSubOptions && state.subOptionsToggle[item.label] == true;
+              bool hasExpanded =
+                  hasSubOptions && state.subOptionsToggle[item.label] == true;
 
               return InkTouch(
                 key: key,
                 onTap: isDisabled ? null : () => onTap?.call(),
-                padding: isSubOption ? Ei.only(v: 12, r: 16, l: 30) : Ei.only(r: 16, v: 12, l: 16),
+                padding: isSubOption
+                    ? Ei.only(v: 12, r: 16, l: 30)
+                    : Ei.only(r: 16, v: 12, l: 16),
                 border: Br.only(['t'],
                     except: i == 0 && !isSubOption,
                     width: isSeparator ? 5 : .5,
-                    color: style?.separatorColor ?? (backgroundColor.isDark() ? Colors.white10 : Colors.black12)),
+                    color: style?.separatorColor ??
+                        (backgroundColor.isDark()
+                            ? Colors.white10
+                            : Colors.black12)),
                 color: isSubOption ? subBackgroundColor : backgroundColor,
                 child: Column(
                   children: [
                     Row(
                       children: [
-                        Text(label, style: font.fcolor(isCritical ? Colors.redAccent : textColor)).lz.flexible(),
+                        Text(label,
+                                style: font.fcolor(
+                                    isCritical ? Colors.redAccent : textColor))
+                            .lz
+                            .flexible(),
                         if (hasIcon) iconWidget(icon),
                         if (hasSubOptions && !hasIcon)
-                          Rotator(degree: hasExpanded ? 90 : 0, child: iconWidget(Ti.chevronRight))
+                          Rotator(
+                              degree: hasExpanded ? 90 : 0,
+                              child: iconWidget(Ti.chevronRight))
                       ],
                     ).between.lz.opacity(isDisabled ? .4 : 1),
                   ],
@@ -144,7 +170,8 @@ class Dropdown extends StatelessWidget {
                       state.toggleSubOptions(item.label, ikey);
                     } else {
                       context.lz.pop();
-                      onSelect?.call(DropValue(item.label, item.value, index: i));
+                      onSelect
+                          ?.call(DropValue(item.label, item.value, index: i));
                     }
                   }),
 
@@ -153,9 +180,12 @@ class Dropdown extends StatelessWidget {
                     show: state.subOptionsToggle[item.label] ?? false,
                     child: Column(
                       children: subOptions.generate((item, j) {
-                        return optionWidget(j, item.label, isDisabled: item.disabled, isSubOption: true, onTap: () {
+                        return optionWidget(j, item.label,
+                            isDisabled: item.disabled,
+                            isSubOption: true, onTap: () {
                           context.lz.pop();
-                          onSelect?.call(DropValue(item.label, item.value, index: '$i.$j'));
+                          onSelect?.call(DropValue(item.label, item.value,
+                              index: '$i.$j'));
                         });
                       }),
                     ),
@@ -175,12 +205,19 @@ class Dropdown extends StatelessWidget {
       return Stack(
         children: [
           // dropdown options
-          Positioned(left: xChildPosition, top: yChildPosition, child: child == null ? dropdownOption : child!),
+          Positioned(
+              left: xChildPosition,
+              top: yChildPosition,
+              child: child == null ? dropdownOption : child!),
 
           if (child != null)
             Positioned(
-                top: state.outOfScreen ? null : (state.targetHeight) + yChildPosition + 10,
-                bottom: state.outOfScreen ? (context.height - yChildPosition - (state.bar - 10)) : null,
+                top: state.outOfScreen
+                    ? null
+                    : (state.targetHeight) + yChildPosition + 10,
+                bottom: state.outOfScreen
+                    ? (context.height - yChildPosition - (state.bar - 10))
+                    : null,
                 left: xChildPosition,
                 child: dropdownOption)
         ],

@@ -13,7 +13,14 @@ class DropdownView extends StatelessWidget {
     final icons = [Ti.pencil, Ti.trash, null, Ti.map2, Ti.filter];
     final subOptions = {
       'Share to': ['Facebook', 'Instagram', 'Tiktok'],
-      'Filters': ['Price', 'Rating', 'Distance', 'Category', 'Open now', 'Sort by']
+      'Filters': [
+        'Price',
+        'Rating',
+        'Distance',
+        'Category',
+        'Open now',
+        'Sort by'
+      ]
     };
 
     void showDropdown(GlobalKey key) {
@@ -83,19 +90,32 @@ class DropdownView extends StatelessWidget {
             child: LzListView(
               children: tabs.generate((item, i) {
                 return LzDropItem(
-                    options: const ['Edit', 'Delete', 'Share to', 'Location', 'Filters'],
+                    options: const [
+                      'Edit',
+                      'Delete',
+                      'Share to',
+                      'Location',
+                      'Filters'
+                    ],
                     subOptions: subOptions,
-                    style:
-                        DropStyle(icons: icons, backBlur: true, disabled: [3], separators: ['Filters'], critical: [1]),
+                    style: DropStyle(
+                        icons: icons,
+                        backBlur: true,
+                        disabled: [3],
+                        separators: ['Filters'],
+                        critical: [1]),
                     builder: (action) {
                       return LzCard(
                         stacked: true,
                         onTap: () {
-                          action.show((value){
+                          action.show((value) {
                             logg(value.toMap());
                           });
                         },
-                        children: [Text(item, style: font.bold), Textr(Faker.words(15), margin: Ei.only(t: 5))],
+                        children: [
+                          Text(item, style: font.bold),
+                          Textr(Faker.words(15), margin: Ei.only(t: 5))
+                        ],
                       );
                     }).margin(b: 15);
               }),
@@ -104,7 +124,8 @@ class DropdownView extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white30.adaptWithTheme, border: Br.only(['t', 'b'])),
+        decoration: BoxDecoration(
+            color: Colors.white30.adaptWithTheme, border: Br.only(['t', 'b'])),
         padding: Ei.sym(h: 20),
         child: Row(
           children: [

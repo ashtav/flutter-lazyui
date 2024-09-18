@@ -22,10 +22,14 @@ class LzDrop {
       DropStyle? style,
       void Function(DropValue value)? onSelect}) {
     if (key is! BuildContext && key is! GlobalKey) {
-      return logg('Invalid key provided. Please use either BuildContext or GlobalKey.', name: 'LzDrop');
+      return logg(
+          'Invalid key provided. Please use either BuildContext or GlobalKey.',
+          name: 'LzDrop');
     }
 
-    BuildContext context = key.runtimeType is BuildContext ? key : (key as GlobalKey).currentContext!;
+    BuildContext context = key.runtimeType is BuildContext
+        ? key
+        : (key as GlobalKey).currentContext!;
 
     final box = context.findRenderObject() as RenderBox?;
     final o = box?.localToGlobal(Offset.zero);
@@ -38,8 +42,16 @@ class LzDrop {
       return DropOption(e, subOptions: dropSubOptions);
     }).toList();
 
-    context.dialog(Dropdown(target: target, box: box, options: dropOptions, style: style, onSelect: onSelect),
-        barrierColor: style?.barrierColor, backBlur: style?.backBlur ?? false, blur: 5);
+    context.dialog(
+        Dropdown(
+            target: target,
+            box: box,
+            options: dropOptions,
+            style: style,
+            onSelect: onSelect),
+        barrierColor: style?.barrierColor,
+        backBlur: style?.backBlur ?? false,
+        blur: 5);
   }
 }
 
@@ -57,7 +69,8 @@ abstract class LzDropView<T> extends StatelessWidget {
   /// [subOptions] is an optional map of sub-options for each option.
   /// [style] allows customizing the appearance of the dropdown.
   /// [onSelect] is a callback invoked when an option is selected.
-  void showDropdown(BuildContext context, String tag, GlobalKey key, Widget child,
+  void showDropdown(
+      BuildContext context, String tag, GlobalKey key, Widget child,
       {List<String> options = const [],
       Map<String, List<String>>? subOptions,
       DropStyle? style,
@@ -77,7 +90,10 @@ abstract class LzDropView<T> extends StatelessWidget {
             constraints: BoxConstraints(maxWidth: width),
             child: child)
         .lz
-        .clip(tlr: LazyUi.radius, bl: isLeftAlign ? 0 : LazyUi.radius, br: isLeftAlign ? LazyUi.radius : 0);
+        .clip(
+            tlr: LazyUi.radius,
+            bl: isLeftAlign ? 0 : LazyUi.radius,
+            br: isLeftAlign ? LazyUi.radius : 0);
 
     List<DropOption> dropOptions = options.map((e) {
       List<String> sub = subOptions?[e] ?? [];
@@ -88,7 +104,12 @@ abstract class LzDropView<T> extends StatelessWidget {
 
     context.dialog(
         Dropdown(
-            target: target, box: box, options: dropOptions, style: style, onSelect: onSelect, child: dropdownWidget),
+            target: target,
+            box: box,
+            options: dropOptions,
+            style: style,
+            onSelect: onSelect,
+            child: dropdownWidget),
         backBlur: style?.backBlur ?? false,
         barrierColor: style?.barrierColor);
   }
@@ -112,7 +133,12 @@ class LzDropItem extends LzDropView {
   final Widget Function(LzDropItemAction action) builder;
 
   /// Creates an instance of [LzDropItem].
-  const LzDropItem({super.key, required this.builder, this.options = const [], this.subOptions, this.style});
+  const LzDropItem(
+      {super.key,
+      required this.builder,
+      this.options = const [],
+      this.subOptions,
+      this.style});
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +148,11 @@ class LzDropItem extends LzDropView {
     Widget child = builder(LzDropItemAction((_) => {}));
 
     final action = LzDropItemAction((then) {
-      showDropdown(context, tag, key, child, options: options, subOptions: subOptions, style: style, onSelect: then);
+      showDropdown(context, tag, key, child,
+          options: options,
+          subOptions: subOptions,
+          style: style,
+          onSelect: then);
     });
 
     return Container(key: key, child: builder(action));
