@@ -49,7 +49,8 @@ class LzButton extends StatelessWidget {
 
     Color backgroundColor = isOutline
         ? Colors.transparent
-        : style?.backgroundColor ?? lzBackgroundColor.darken(.5);
+        : style?.backgroundColor ?? lzBackgroundColor;
+
     Color textColor = style?.textColor ??
         (isOutline
             ? (style?.backgroundColor ?? Colors.black87).adaptWithTheme

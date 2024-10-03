@@ -42,6 +42,7 @@ class ConfirmView extends StatelessWidget {
                   else {
                     LzConfirm.show(context,
                         title: 'Confirm Sheet',
+                        margin: 20,
                         message: Faker.words(13), onConfirm: () {
                       LzToast.show('Your action has been confirmed',
                           icon: Ti.checks);

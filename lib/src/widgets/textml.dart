@@ -70,8 +70,8 @@ class Textml extends StatelessWidget {
   /// Returns a list of [TextSpan] objects representing the stylized text.
 
   List<TextSpan> parseText(String text, {TextStyle? style}) {
-    final regex =
-        RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|([^<]+)');
+    final regex = RegExp(
+        r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|<br\s*\/?>|([^<]+)');
     final matches = regex.allMatches(text);
 
     final textSpans = <TextSpan>[];
@@ -81,17 +81,30 @@ class Textml extends StatelessWidget {
       String content = match.group(3) ?? match.group(4) ?? '';
 
       TextStyle updatedStyle = style ?? const TextStyle();
-      if (type == 'b') {
+      if (type == 'b' || type == 'strong') {
         updatedStyle = updatedStyle.copyWith(fontWeight: FontWeight.bold);
-      } else if (type == 'i') {
+      } else if (type == 'i' || type == 'em') {
         updatedStyle = updatedStyle.copyWith(fontStyle: FontStyle.italic);
       } else if (type == 'u') {
         updatedStyle =
             updatedStyle.copyWith(decoration: TextDecoration.underline);
+      } else if (type == 'del') {
+        updatedStyle =
+            updatedStyle.copyWith(decoration: TextDecoration.lineThrough);
+      } else if (type == 'mark') {
+        updatedStyle = updatedStyle.copyWith(
+            backgroundColor: Colors.yellow); // Highlight effect
       }
 
       if (color != null) {
         updatedStyle = updatedStyle.copyWith(color: Utils.hex(color));
+      }
+
+      // Handle <br> for line breaks
+      // Handle self-closing <br> tags
+      if (match.group(0)?.contains('<br') ?? false) {
+        textSpans.add(const TextSpan(text: '\n'));
+        continue;
       }
 
       if (content.contains('<') && content.contains('>')) {

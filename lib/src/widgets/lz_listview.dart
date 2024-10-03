@@ -44,6 +44,9 @@ class LzListView extends StatefulWidget {
   /// Whether to automatically cache the list height.
   final bool autoCache;
 
+  /// Reverse list view
+  final bool reverse;
+
   /// Optional callback when the list is refreshed.
   final void Function()? onRefresh;
 
@@ -67,6 +70,7 @@ class LzListView extends StatefulWidget {
       this.physics,
       this.onScroll,
       this.autoCache = false,
+      this.reverse = false,
       this.onRefresh,
       this.refreshType = RefrehtorType.bar,
       this.refreshStyle,
@@ -164,6 +168,7 @@ class _LzListViewState extends State<LzListView> {
     }
 
     Widget listView([double? cacheExtent]) => ListView(
+          reverse: widget.reverse,
           physics: widget.physics ?? BounceScroll(),
           controller: controller,
           padding: widget.padding ?? Ei.all(spacing),

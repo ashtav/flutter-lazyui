@@ -20,12 +20,25 @@ class TestView extends StatelessWidget {
             // forms.at(1).enable(forms.at(1).attr.disabled);
           }),
         ]),
-        body: Center(
-          child: TextButton(
-              onPressed: () {
-                context.dialog(const MyContent(), backBlur: true);
-              },
-              child: const Text('Show Dialog')),
+        body: Column(
+          mainAxisAlignment: Maa.center,
+          children: [
+            Container(
+              padding: Ei.all(20),
+              child: const Textml(
+                  '<b>Example of Textml</b> <br><br>Hello this is example of Textml usage, <b>bold</b> and <strong>strong</strong> with <u><i>italic i</i></u> and <em>italic em</em>, <del>strike</del> also <mark>mark</mark> <br><br>Break your sentences using br tag.'),
+            ),
+            Center(
+              child: TextButton(
+                  onPressed: () {
+                    context.dialog(const MyContent(), backBlur: true);
+                  },
+                  child: Textr(
+                    'Show Dialog',
+                    padding: Ei.sym(v: 5, h: 20),
+                  )),
+            ),
+          ],
         ),
         // body: LzListView(gap: 10, children: [
         //   const Text('Input'),

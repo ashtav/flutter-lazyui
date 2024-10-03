@@ -188,8 +188,8 @@ class LzModifiers {
   /// Widget().lz.shadowed(true);
   /// ```
   Widget shadowed(BuildContext context,
-      {double? spread, double? blur, Offset? offset}) {
-    Color backgroundColor = Theme.of(context).scaffoldBackgroundColor;
+      {double? spread, double? blur, Offset? offset, Color? color}) {
+    Color backgroundColor = color ?? Theme.of(context).scaffoldBackgroundColor;
 
     return Container(
       decoration: BoxDecoration(boxShadow: [

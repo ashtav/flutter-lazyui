@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lazyui/src/config/config.dart';
-import 'package:lazyui/src/constants/color.dart';
+import 'package:lazyui/lazyui.dart';
 
 /// Global variable referencing the default font style from LazyUi.
 TextStyle gfont = LazyUi.font;
@@ -77,7 +76,7 @@ class Gfont {
 
   /// Text style with muted color and normal font weight.
   static final TextStyle muted =
-      gfont.copyWith(fontWeight: FontWeight.normal, color: Colors.black54);
+      gfont.copyWith(color: Colors.black54.adaptWithTheme);
 
   /// Returns a text style with the specified [size].
   ///
@@ -145,7 +144,7 @@ extension TextStyleExtension on TextStyle {
   ///   style: myTextStyle.muted,
   /// )
   /// ```
-  TextStyle get muted => copyWith(color: color?.withOpacity(.6));
+  TextStyle get muted => copyWith(color: Colors.black54.adaptWithTheme);
 
   /// Creates a copy of the text style with a white font color.
   TextStyle get white => copyWith(color: Colors.white);
