@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget that displays an icon with various customization options.
 ///
@@ -85,7 +85,7 @@ class Iconr extends StatelessWidget {
   /// The [flip] determines whether to flip both horizontally and vertically (optional).
   const Iconr(
     this.icon, {
-    Key? key,
+    super.key,
     this.margin,
     this.padding,
     this.width,
@@ -99,7 +99,7 @@ class Iconr extends StatelessWidget {
     this.flipX = false,
     this.flipY = false,
     this.flip = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

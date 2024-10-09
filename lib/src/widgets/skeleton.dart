@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// Skeleton widget used for displaying loading or placeholder content.
 class Skeleton extends StatelessWidget {

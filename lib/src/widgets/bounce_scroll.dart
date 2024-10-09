@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// BounceScroll is a custom Flutter [ScrollPhysics] class that enhances scroll behavior
 /// by providing a bouncing effect when the scroll reaches its limits. It is particularly

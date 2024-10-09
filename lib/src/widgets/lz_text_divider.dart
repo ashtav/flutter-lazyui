@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A divider widget with text.
 class LzTextDivider extends StatelessWidget {

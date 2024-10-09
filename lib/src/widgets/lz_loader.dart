@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// `LzLoader` is a versatile Flutter widget that provides a loading indicator. It can be customized by specifying the size, stroke width, margin, and color.
 ///

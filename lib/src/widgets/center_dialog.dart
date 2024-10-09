@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget that displays a dialog centered within the screen.
 ///
@@ -30,11 +30,11 @@ class CenterDialog extends StatelessWidget {
   /// The [margin] specifies the margin around the dialog content (default is 15).
   /// The [borderRadius] defines the border radius of the dialog (default is zero).
   const CenterDialog({
-    Key? key,
+    super.key,
     required this.child,
     this.margin = 15,
     this.borderRadius = BorderRadius.zero,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

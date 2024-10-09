@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// Poslign is a Flutter widget that allows precise control over the positioning and alignment of its child widget within a container.
 /// It combines the power of Positioned, IgnorePointer, Align, and Container widgets to achieve this.

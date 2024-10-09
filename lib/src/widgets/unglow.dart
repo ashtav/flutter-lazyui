@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// Unglow is a Flutter [ScrollBehavior] that prevents the scroll glow effect
 /// typically seen when reaching the scroll limits. It allows you to create a scrollable
@@ -40,7 +40,7 @@ class ScrollGlowless extends StatelessWidget {
   /// Creates a widget that removes the scroll glow effect.
   ///
   /// [child]: The child widget to display within the scrollable area.
-  const ScrollGlowless({Key? key, required this.child}) : super(key: key);
+  const ScrollGlowless({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {

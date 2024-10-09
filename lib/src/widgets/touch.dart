@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// Touch is a convenient Flutter widget that simplifies the use of [GestureDetector]
 /// with translucent behavior. It allows you to add tap and double-tap gestures to your

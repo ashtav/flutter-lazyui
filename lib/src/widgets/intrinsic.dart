@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget that sizes its child to its intrinsic size, optionally allowing it to expand in a specific axis.
 class Intrinsic extends StatelessWidget {

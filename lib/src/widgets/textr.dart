@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// `Textr` is a versatile text widget in Flutter that supports custom styling, text alignment, and optional icon placement. It simplifies the creation of text with icons while providing extensive customization options.
 ///

@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A customizable text field widget.
 class LzTextField extends StatelessWidget {

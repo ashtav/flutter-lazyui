@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget displayed when there is no data.
 class LzNoData extends StatelessWidget {

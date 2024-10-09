@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget that displays a row of slide indicators with customizable properties.
 class LzSlideIndicator extends StatelessWidget {

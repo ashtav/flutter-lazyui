@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 // `LzListView` is a versatile Flutter widget that simplifies the creation of scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.
 ///

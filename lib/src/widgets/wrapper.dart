@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// Wrapper is a versatile Flutter widget that provides a convenient way to wrap child widgets.
 /// It includes features like handling background taps to dismiss the keyboard and controlling

@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// Represents a custom card widget with configurable properties.
 class LzCard extends StatelessWidget {

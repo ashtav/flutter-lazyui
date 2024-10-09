@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A badge widget to display textual or icon-based information.
 class LzBadge extends StatelessWidget {

@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// `Textml` is a Flutter widget for rendering rich text with custom formatting. It allows you to define text styles, alignment, text direction, and supports basic HTML-like formatting tags such as `b`, `i`, `u`, and `color`.
 ///

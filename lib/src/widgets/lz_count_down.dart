@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A countdown timer widget that displays the time remaining until a specified expiration time.
 class LzCountDown extends StatelessWidget {

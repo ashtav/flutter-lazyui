@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A custom dialog widget with optional header, footer, and scrollable content.
 ///

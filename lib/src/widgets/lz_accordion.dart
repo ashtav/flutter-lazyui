@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget that displays a list of collapsible panels, allowing users to expand or collapse content sections.
 class LzAccordion extends StatefulWidget {

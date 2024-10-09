@@ -1,4 +1,4 @@
-part of widget;
+part of 'widget.dart';
 
 /// A widget that simplifies the use of InkWell in Flutter with customizable options.
 ///
