@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A customizable linear progress indicator widget with animation support.
 ///
@@ -53,7 +53,7 @@ class LineProgressIndicator extends StatefulWidget {
   /// The [progressColor] defines the color of the progress indicator.
   /// The [initialProgress] sets the initial progress value (between 0.0 and 1.0).
   const LineProgressIndicator({
-    Key? key,
+    super.key,
     this.duration,
     this.onComplete,
     this.repeat = false,
@@ -61,7 +61,7 @@ class LineProgressIndicator extends StatefulWidget {
     this.initialProgress = 0.0,
     this.backgroundColor,
     this.progressColor,
-  }) : super(key: key);
+  });
 
   @override
   State<LineProgressIndicator> createState() => _LineProgressIndicatorState();

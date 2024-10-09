@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that animates the scaling and switching of its child widget.
 ///
@@ -30,11 +30,11 @@ class ScaleSwitched extends StatelessWidget {
   /// The [duration] specifies the total duration of the scaling animation.
   /// The [alignment] sets the alignment of the scaling transformation (default is centerLeft).
   const ScaleSwitched({
-    Key? key,
+    super.key,
     this.child,
     this.duration,
     this.alignment,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

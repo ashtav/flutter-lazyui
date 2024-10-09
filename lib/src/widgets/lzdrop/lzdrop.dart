@@ -58,7 +58,7 @@ class LzDrop {
 /// Abstract class that provides a structure for displaying dropdowns in custom views.
 abstract class LzDropView<T> extends StatelessWidget {
   /// Create component
-  const LzDropView({Key? key}) : super(key: key);
+  const LzDropView({super.key});
 
   /// Displays the dropdown menu in the provided [context].
   ///

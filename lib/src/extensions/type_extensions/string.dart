@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of the [String] class with additional methods.
 extension LzStringExtension on String {
@@ -146,13 +146,13 @@ extension LzNullableStringExtension on String? {
     try {
       String num = '0', digits = '';
 
-      switch (runtimeType) {
-        case int:
+      switch (runtimeType.toString()) {
+        case 'int':
           num = toString();
           break;
 
-        case double:
-        case String:
+        case 'double':
+        case 'String':
           if (toString().contains(separator)) {
             num = toString().split(separator)[0];
             digits = toString().split(separator)[1];

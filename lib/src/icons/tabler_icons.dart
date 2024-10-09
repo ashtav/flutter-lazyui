@@ -22,9 +22,8 @@ class TablerIconData extends IconData {
   ///
   /// Note: If you are using these icons in your application, ensure that the
   /// 'TablerIcons' font is included in your pubspec.yaml and properly bundled.
-  const TablerIconData(int codePoint)
+  const TablerIconData(super.codePoint)
       : super(
-          codePoint,
           fontFamily: 'packages/lazyui/TablerIcons',
           // The fontPackage can be uncommented and set appropriately if the icons are
           // included as part of a separate Dart package.

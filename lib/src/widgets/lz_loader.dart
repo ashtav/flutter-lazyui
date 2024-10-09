@@ -34,12 +34,12 @@ class LzLoader extends StatelessWidget {
   ///
   /// The [color] parameter is optional and allows you to specify a color for the loading indicator.
   const LzLoader({
-    Key? key,
+    super.key,
     this.size = 18,
     this.stroke = 2,
     this.margin,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

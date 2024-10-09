@@ -30,8 +30,7 @@ class Textml extends StatelessWidget {
 
   /// Create widget
   const Textml(this.text,
-      {Key? key, this.style, this.textAlign, this.textDirection, this.overflow})
-      : super(key: key);
+      {super.key, this.style, this.textAlign, this.textDirection, this.overflow});
 
   @override
   Widget build(BuildContext context) {

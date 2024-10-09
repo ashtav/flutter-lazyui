@@ -7,7 +7,7 @@ import 'package:lazyui/lazyui.dart';
 
 class AppIntroNotifier extends ChangeNotifier {
   int index = 0;
-  CarouselController carouselController = CarouselController();
+  CarouselSliderController carouselController = CarouselSliderController();
 
   void onChange(int value) {
     index = value;

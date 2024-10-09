@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension method on [Widget] to provide access to Lazuli UI modifiers.
 extension LzExtension on Widget {

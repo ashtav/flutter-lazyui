@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-part of forms;
+part of '../forms.dart';
 
 /// A slider widget for selecting a value within a specified range.
 class Slider extends StatelessWidget with LzFormMixin {

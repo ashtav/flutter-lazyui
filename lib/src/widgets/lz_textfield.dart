@@ -88,7 +88,7 @@ class LzTextField extends StatelessWidget {
 
   /// Create widget
   const LzTextField(
-      {Key? key,
+      {super.key,
       this.hint,
       this.keyboard,
       this.inputAction,
@@ -116,8 +116,7 @@ class LzTextField extends StatelessWidget {
       this.backgroundColor,
       this.border,
       this.borderRadius,
-      this.listenKeyboard})
-      : super(key: key);
+      this.listenKeyboard});
 
   @override
   Widget build(BuildContext context) {

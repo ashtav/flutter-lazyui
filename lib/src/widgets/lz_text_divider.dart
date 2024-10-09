@@ -27,13 +27,13 @@ class LzTextDivider extends StatelessWidget {
 
   const LzTextDivider(
     this.text, {
-    Key? key,
+    super.key,
     this.indent = 10,
     this.height,
     this.thickness,
     this.color,
     this.alignment,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

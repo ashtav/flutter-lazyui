@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of a map containing [TextEditingController] objects.
 extension LzMapTextEditingControllerExtension

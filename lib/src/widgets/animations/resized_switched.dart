@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that animates the resizing and switching of its child widget.
 ///
@@ -45,14 +45,14 @@ class ResizedSwitched extends StatelessWidget {
   /// The [axis] defines the axis of the size transition (vertical or horizontal).
   /// The [alignment] sets the alignment of the child within the parent.
   const ResizedSwitched({
-    Key? key,
+    super.key,
     this.child,
     this.duration,
     required this.show,
     this.useOpacity = true,
     this.axis = Axis.vertical,
     this.alignment = Alignment.centerLeft,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

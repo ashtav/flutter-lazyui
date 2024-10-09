@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// An extension on [Duration] to facilitate easy timer creation.
 extension LzDurationExtension on Duration {

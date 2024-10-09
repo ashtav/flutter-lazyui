@@ -19,8 +19,7 @@ class Wrapper extends StatelessWidget {
   ///
   /// [child]: The main child widget to display within this wrapper.
   /// [onBackPress]: Callback function triggered when a back press event occurs.
-  const Wrapper({Key? key, required this.child, this.onBackPress})
-      : super(key: key);
+  const Wrapper({super.key, required this.child, this.onBackPress});
 
   @override
   Widget build(BuildContext context) => GestureDetector(
@@ -28,7 +27,7 @@ class Wrapper extends StatelessWidget {
         behavior: HitTestBehavior.translucent,
         child: PopScope(
           canPop: false,
-          onPopInvoked: (didPop) async {
+          onPopInvokedWithResult: (didPop, _) async {
             if (didPop) {
               return;
             }

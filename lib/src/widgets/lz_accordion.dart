@@ -49,7 +49,7 @@ class LzAccordion extends StatefulWidget {
   /// The [children] parameter is required and must not be null.
 
   const LzAccordion({
-    Key? key,
+    super.key,
     this.children = const [],
     this.initValues = const [],
     this.multiple = false,
@@ -64,7 +64,7 @@ class LzAccordion extends StatefulWidget {
     this.radius,
     this.padding,
     this.controller,
-  }) : super(key: key);
+  });
 
   @override
   State<LzAccordion> createState() => _LzAccordionState();

@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that animates the sliding effect of its child widget with optional opacity transition.
 ///
@@ -35,12 +35,12 @@ class SlideSwitched extends StatelessWidget {
   /// The [direction] defines the direction of the slide animation (up or down).
   /// The [withOpacity] flag determines whether to apply opacity transition (default is false).
   const SlideSwitched({
-    Key? key,
+    super.key,
     this.child,
     this.duration,
     this.direction = SlideDirection.up,
     this.withOpacity = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

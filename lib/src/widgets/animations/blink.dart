@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that animates its child widget to blink.
 class BlinkAnimate extends StatefulWidget {
@@ -17,11 +17,11 @@ class BlinkAnimate extends StatefulWidget {
   /// [animate]: Whether the animation should be active (default is true).
   /// [duration]: The duration of the blink animation.
   const BlinkAnimate({
-    Key? key,
+    super.key,
     required this.child,
     this.animate = true,
     this.duration,
-  }) : super(key: key);
+  });
 
   @override
   State<BlinkAnimate> createState() => _BlinkAnimateState();

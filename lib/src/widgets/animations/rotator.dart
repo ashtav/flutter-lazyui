@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that rotates its child by a specified degree over a given duration.
 class Rotator extends StatefulWidget {
@@ -17,11 +17,11 @@ class Rotator extends StatefulWidget {
   /// [degree]: The degree by which to rotate the child. Default is 0.
   /// [duration]: The duration of the rotation animation. Default is 150 milliseconds.
   const Rotator({
-    Key? key,
+    super.key,
     required this.child,
     this.degree = 0,
     this.duration = const Duration(milliseconds: 150),
-  }) : super(key: key);
+  });
 
   @override
   State<Rotator> createState() => _RotatorState();

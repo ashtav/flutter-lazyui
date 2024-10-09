@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 /// The [Bindings] class provides helper methods for interacting with
 /// `WidgetsBinding`.

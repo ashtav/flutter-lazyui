@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// An extension on the [Color] class that provides additional functionality.
 ///

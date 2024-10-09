@@ -10,9 +10,9 @@ class LzToastOverlay extends StatefulWidget {
 
   /// Creates a LzToastOverlay widget.
   const LzToastOverlay({
-    Key? key,
+    super.key,
     required this.child,
-  }) : super(key: key);
+  });
 
   @override
   State<LzToastOverlay> createState() => _LzToastOverlayState();

@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// When you don't need to provide any [child], you can use any widget as the [child] parameter. If no [child] is needed, simply provide an empty Container().
 /// The [delay] parameter utilizes a [Timer] to delay the animation, and its default value is zero.
@@ -14,8 +14,8 @@ class RippleAnimation extends StatefulWidget {
     this.minRadius = 60,
     this.ripplesCount = 5,
     this.duration = const Duration(milliseconds: 2300),
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   ///[Widget] this widget will placed at center of the animation
   final Widget? child;

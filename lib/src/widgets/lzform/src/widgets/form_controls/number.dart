@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-part of forms;
+part of '../forms.dart';
 
 /// A number input widget for capturing numeric values.
 class Number extends StatelessWidget with LzFormMixin {

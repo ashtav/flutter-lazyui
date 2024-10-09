@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of the [List<T>] class with additional methods and properties.
 extension LzListExtension<T> on List<T> {

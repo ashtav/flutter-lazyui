@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension on [GlobalKey] providing convenience methods.
 extension LzGlobalKeyExtension on GlobalKey {

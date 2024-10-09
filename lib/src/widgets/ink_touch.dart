@@ -88,7 +88,7 @@ class InkTouch extends StatelessWidget {
 
   /// Create InkTouch
   const InkTouch(
-      {Key? key,
+      {super.key,
       this.child,
       this.elevation = 0,
       this.onTap,
@@ -108,8 +108,7 @@ class InkTouch extends StatelessWidget {
       this.splashByBaseColor = false,
       this.border,
       this.opacity = 1,
-      this.animationDuration})
-      : super(key: key);
+      this.animationDuration});
 
   @override
   Widget build(BuildContext context) {

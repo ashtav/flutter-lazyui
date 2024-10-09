@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-part of forms;
+part of '../forms.dart';
 
 /// A dropdown selection widget for choosing an option from a list.
 class Select extends StatelessWidget with LzFormMixin {

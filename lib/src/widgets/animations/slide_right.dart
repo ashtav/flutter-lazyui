@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that animates the sliding effect from the left to the right of its child widget.
 ///
@@ -34,12 +34,12 @@ class SlideRight extends StatefulWidget {
   /// The [speed] defines the animation speed (default is 0.50).
   /// The [animate] flag determines whether to animate the child widget (default is true).
   const SlideRight({
-    Key? key,
+    super.key,
     required this.child,
     this.delay,
     this.speed = 0.50,
     this.animate = true,
-  }) : super(key: key);
+  });
 
   @override
   State<SlideRight> createState() => _SlideRightState();

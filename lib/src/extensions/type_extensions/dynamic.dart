@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension method to provide a fallback value if the object is null or meets certain conditions.
 /// This extension can be applied to any data type.

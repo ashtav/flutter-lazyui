@@ -26,14 +26,14 @@ class LzNoData extends StatelessWidget {
   /// All other parameters are also optional.
 
   const LzNoData({
-    Key? key,
+    super.key,
     this.icon,
     this.message,
     this.onTapMessage,
     this.onTap,
     this.padding,
     this.textColor,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension on [Row] providing custom methods.
 extension CustomRowExtension on Row {

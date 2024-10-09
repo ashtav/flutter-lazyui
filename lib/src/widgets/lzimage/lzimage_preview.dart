@@ -10,8 +10,7 @@ class LzImageViewer<T> extends StatefulWidget {
   final Object tag;
 
   /// Creates a LzImageViewer widget.
-  const LzImageViewer(this.image, {Key? key, required this.tag})
-      : super(key: key);
+  const LzImageViewer(this.image, {super.key, required this.tag});
 
   @override
   State<LzImageViewer> createState() => _LzImageViewerState();

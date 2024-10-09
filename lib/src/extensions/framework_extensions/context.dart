@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension method on [BuildContext] to provide access to Lazuli UI context modifiers.
 extension LzContextModifierExtension on BuildContext {

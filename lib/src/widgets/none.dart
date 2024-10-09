@@ -5,7 +5,7 @@ part of 'widget.dart';
 
 class None extends StatelessWidget {
   /// Create widget
-  const None({Key? key}) : super(key: key);
+  const None({super.key});
 
   @override
   Widget build(BuildContext context) => SizedBox.shrink(key: key);

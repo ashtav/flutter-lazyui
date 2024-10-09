@@ -32,13 +32,13 @@ class Touch extends StatelessWidget {
 
   /// Creates a widget that responds to tap and double-tap events.
   const Touch({
-    Key? key,
+    super.key,
     this.child,
     this.onTap,
     this.onDoubleTap,
     this.margin,
     this.hoverable,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

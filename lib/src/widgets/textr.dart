@@ -68,7 +68,7 @@ class Textr extends StatelessWidget {
 
   /// Creates a customizable text widget.
   const Textr(this.text,
-      {Key? key,
+      {super.key,
       this.style,
       this.margin,
       this.padding,
@@ -83,8 +83,7 @@ class Textr extends StatelessWidget {
       this.border,
       this.color,
       this.icon,
-      this.iconStyle})
-      : super(key: key);
+      this.iconStyle});
 
   @override
   Widget build(BuildContext context) {

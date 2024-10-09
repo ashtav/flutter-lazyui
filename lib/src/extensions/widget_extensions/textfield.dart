@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension method on [LzTextField] to create a bordered version of the text field.
 extension LzTextFieldExtension on LzTextField {

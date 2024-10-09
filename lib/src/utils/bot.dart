@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 /// The `Bot` class provides a method for sending messages using the Telegram Bot API.
 ///

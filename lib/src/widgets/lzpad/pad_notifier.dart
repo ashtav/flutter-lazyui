@@ -58,12 +58,12 @@ class PadNotifier extends ChangeNotifier {
 
     onExpired(duration.inSeconds);
 
-    return Timer.periodic(1.s, (_) {
+    return Timer.periodic(1.s, (t) {
       Duration duration = expired.difference(DateTime.now());
       remainingDuration = duration;
 
       if (DateTime.now().isAfter(expired)) {
-        _.cancel();
+        t.cancel();
         onTimeout?.call();
       } else {
         onExpired(duration.inSeconds);

@@ -12,8 +12,7 @@ class CircularSlider extends StatefulWidget {
   final Color? color;
 
   /// Constructs a [CircularSlider] widget with the given [value] and optional [color].
-  const CircularSlider({Key? key, required this.value, this.color})
-      : super(key: key);
+  const CircularSlider({super.key, required this.value, this.color});
 
   @override
   State<CircularSlider> createState() => _CircularSliderState();

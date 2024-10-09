@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of the [DateTime?] class with additional methods.
 extension LzDateTimeNullableExtension on DateTime? {

@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 /// The `Faker` class provides methods for generating random text content.
 

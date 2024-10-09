@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of the [bool] class with additional methods.
 extension LzBoolExtension on bool {

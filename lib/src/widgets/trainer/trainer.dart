@@ -271,7 +271,7 @@ class _TrainerState extends State<Trainer> {
   Widget build(BuildContext context) {
     return PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, _) {
           if (didPop) {
             return;
           }

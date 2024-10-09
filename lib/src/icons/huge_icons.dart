@@ -16,9 +16,8 @@ class HugeIconData extends IconData {
   ///
   /// Note: If you are using these icons in your application, ensure that the
   /// 'HugeIcons' font is included in your pubspec.yaml and properly bundled.
-  const HugeIconData(int codePoint)
+  const HugeIconData(super.codePoint)
       : super(
-          codePoint,
           fontFamily: 'packages/lazyui/HgiStrokeRounded',
           // The fontPackage can be uncommented and set appropriately if the icons are
           // included as part of a separate Dart package.

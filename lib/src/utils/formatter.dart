@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 /// The `InputFormat` class provides a set of predefined input formatters for text input fields.
 ///

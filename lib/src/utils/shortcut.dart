@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 // Br Configuration
 

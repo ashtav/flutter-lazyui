@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 final Map<String, LzNotifier> _notifiers = {};
 
@@ -68,8 +68,7 @@ class LzListener<T> extends StatelessWidget {
   final dynamic initValue;
 
   /// Constructs a [LzListener] instance with the provided identifier, builder function, and initial value.
-  const LzListener(this.id, this.builder, {Key? key, this.initValue})
-      : super(key: key);
+  const LzListener(this.id, this.builder, {super.key, this.initValue});
 
   @override
   Widget build(BuildContext context) {

@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-part of forms;
+part of '../forms.dart';
 
 /// A checkbox widget that allows selecting multiple options from a list.
 class Checkbox extends StatelessWidget with LzFormMixin {

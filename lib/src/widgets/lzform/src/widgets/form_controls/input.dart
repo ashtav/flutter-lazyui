@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-part of forms;
+part of '../forms.dart';
 
 /// A text input widget for capturing user input.
 class Input extends StatelessWidget with LzFormMixin {

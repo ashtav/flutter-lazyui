@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 /// word list to generate random text
 List<String> words = [

@@ -1,4 +1,4 @@
-part of utils;
+part of 'util.dart';
 
 /// A class representing validation results for a technical validation.
 class TecValidation {

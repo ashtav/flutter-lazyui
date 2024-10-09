@@ -279,6 +279,6 @@ class FormNotifier extends ChangeNotifier {
 
   /// FormNotifier
   FormNotifier() {
-    logg('FormNotifier created', name: 'LzForm');
+    // logg('FormNotifier created', name: 'LzForm');
   }
 }

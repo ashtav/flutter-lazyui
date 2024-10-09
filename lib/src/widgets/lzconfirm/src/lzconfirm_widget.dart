@@ -35,7 +35,7 @@ class LzConfirmWidget extends StatelessWidget {
 
   /// Create widget
   const LzConfirmWidget({
-    Key? key,
+    super.key,
     this.title,
     this.message,
     this.icon = Icons.question_mark,
@@ -46,7 +46,7 @@ class LzConfirmWidget extends StatelessWidget {
     this.onConfirm,
     this.type = ConfirmType.dialog,
     this.margin,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

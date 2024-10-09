@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs
 
-part of utils;
+part of 'util.dart';
 
 /// Enum representing different log colors.
 /// @nodoc

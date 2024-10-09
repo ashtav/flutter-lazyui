@@ -1,4 +1,4 @@
-part of widget;
+part of '../widget.dart';
 
 /// A widget that animates the zoom-in effect of its child widget.
 ///
@@ -29,11 +29,11 @@ class ZoomIn extends StatefulWidget {
   /// The [delay] specifies the delay before the animation starts in milliseconds (optional).
   /// The [animate] flag determines whether to animate the child widget (default is true).
   const ZoomIn({
-    Key? key,
+    super.key,
     required this.child,
     this.delay,
     this.animate = true,
-  }) : super(key: key);
+  });
 
   @override
   State<ZoomIn> createState() => _ZoomInState();

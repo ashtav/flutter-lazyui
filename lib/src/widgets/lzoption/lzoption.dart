@@ -75,13 +75,12 @@ class LzOption extends StatelessWidget {
   ///
   /// [options] is required, all other parameters are optional.
   const LzOption(
-      {Key? key,
+      {super.key,
       this.title,
       this.options = const [],
       this.align,
       this.maxHeight,
-      this.width})
-      : super(key: key);
+      this.width});
 
   @override
   Widget build(BuildContext context) {

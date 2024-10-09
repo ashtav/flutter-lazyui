@@ -20,12 +20,12 @@ class LzPickerOption extends StatefulWidget {
 
   /// Create widget
   const LzPickerOption({
-    Key? key,
+    super.key,
     this.options = const [],
     this.initialValue,
     this.onSelect,
     this.style,
-  }) : super(key: key);
+  });
 
   @override
   State<LzPickerOption> createState() => _LzPickerOptionState();

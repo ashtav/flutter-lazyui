@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extension on [Column] providing custom methods.
 extension CustomColumnExtension on Column {

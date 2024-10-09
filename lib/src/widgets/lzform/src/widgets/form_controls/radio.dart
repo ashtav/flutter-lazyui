@@ -1,6 +1,6 @@
 // ignore_for_file: invalid_use_of_protected_member
 
-part of forms;
+part of '../forms.dart';
 
 /// A radio button group widget for selecting a single option from a list.
 class Radio extends StatelessWidget with LzFormMixin {

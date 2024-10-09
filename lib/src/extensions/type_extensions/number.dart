@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of the [int] class with additional methods.
 extension LzIntExtension on int {

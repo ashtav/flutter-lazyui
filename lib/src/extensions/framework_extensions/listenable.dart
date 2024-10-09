@@ -1,4 +1,4 @@
-part of extension;
+part of '../extension.dart';
 
 /// Extends the functionality of classes that extend [ChangeNotifier] with an additional method.
 extension LzListenableExtension<T extends ChangeNotifier> on T {
