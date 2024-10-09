@@ -89,7 +89,7 @@ class LzDialog extends StatelessWidget {
                     width: width,
                     margin: Ei.only(b: 7),
                     constraints: BoxConstraints(
-                        maxHeight: (maxHeight ?? context.height) * .7),
+                        maxHeight: scrollable ? ((maxHeight ?? context.height) * .7) : double.infinity),
                     decoration: BoxDecoration(
                         color: Colors.white, borderRadius: Br.radius(5)),
                     child: scrollable
