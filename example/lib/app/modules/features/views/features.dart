@@ -1,4 +1,5 @@
 import 'package:example/app/data/feature.dart';
+import 'package:example/app/modules/features/views/examples/widgets/popover.dart';
 import 'package:example/app/modules/settings/views/setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -114,6 +115,7 @@ class Actions {
       'LzBadge & LzCard': const BadgeNCardView(),
       'LzListView': const LzListViewExample(),
       'LzCountDown': const LzCountDownExample(),
+      'Popover': const PopoverView(),
     };
 
     final font = Gfont.style(context);

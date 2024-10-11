@@ -25,6 +25,7 @@ export 'refreshtor/refreshtor.dart';
 export 'trainer/trainer.dart';
 
 part 'animations/blink.dart';
+part 'animations/custom_transform.dart';
 part 'animations/line_progress_indicator.dart';
 part 'animations/resized_switched.dart';
 part 'animations/ripple.dart';
@@ -49,7 +50,9 @@ part 'lz_dialog.dart';
 part 'lz_listview.dart';
 part 'lz_loader.dart';
 part 'lz_no_data.dart';
+part 'lz_popover.dart';
 part 'lz_slide_indicator.dart';
+part 'lz_text_count.dart';
 part 'lz_text_divider.dart';
 part 'lz_textfield.dart';
 part 'none.dart';
