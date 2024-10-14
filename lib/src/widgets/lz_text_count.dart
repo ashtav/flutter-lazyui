@@ -117,7 +117,8 @@ class LzTextCount extends StatefulWidget {
   State<LzTextCount> createState() => _LzTextCountState();
 }
 
-class _LzTextCountState extends State<LzTextCount> with TickerProviderStateMixin {
+class _LzTextCountState extends State<LzTextCount>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   double? _latestBegin;
@@ -138,9 +139,29 @@ class _LzTextCountState extends State<LzTextCount> with TickerProviderStateMixin
   }
 
   @override
+  void didUpdateWidget(LzTextCount oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Update the duration if it has changed
+    if (oldWidget.duration != widget.duration) {
+      _controller.duration = widget.duration;
+    }
+
+    // Check if the begin or end values have changed, and reset the animation if necessary
+    if (widget.begin != _latestBegin || widget.end != _latestEnd) {
+      _controller.reset();
+      _latestBegin = widget.begin;
+      _latestEnd = widget.end;
+      _controller.forward();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    CurvedAnimation curvedAnimation = CurvedAnimation(parent: _controller, curve: widget.curve);
-    _animation = Tween<double>(begin: widget.begin, end: widget.end).animate(curvedAnimation);
+    CurvedAnimation curvedAnimation =
+        CurvedAnimation(parent: _controller, curve: widget.curve);
+    _animation = Tween<double>(begin: widget.begin, end: widget.end)
+        .animate(curvedAnimation);
 
     if (widget.begin != _latestBegin || widget.end != _latestEnd) {
       _controller.reset();
@@ -217,7 +238,8 @@ class _LzTextCountAnimatedText extends AnimatedWidget {
         locale: locale,
         softWrap: softWrap,
         overflow: overflow,
-        textScaler: TextScaler.linear(MediaQuery.textScalerOf(context).scale(textScaleFactor ?? 1)),
+        textScaler: TextScaler.linear(
+            MediaQuery.textScalerOf(context).scale(textScaleFactor ?? 1)),
         maxLines: maxLines,
         semanticsLabel: semanticsLabel,
       );

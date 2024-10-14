@@ -16,7 +16,10 @@ class Intrinsic extends StatelessWidget {
   /// The [children] parameter is required and must not be null.
 
   const Intrinsic(
-      {super.key, required this.children, this.axis = Axis.horizontal, this.gap});
+      {super.key,
+      required this.children,
+      this.axis = Axis.horizontal,
+      this.gap});
 
   @override
   Widget build(BuildContext context) {

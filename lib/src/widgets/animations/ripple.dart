@@ -11,6 +11,9 @@ class RippleAnimation extends StatefulWidget {
     this.color = Colors.black,
     this.delay = const Duration(),
     this.repeat = false,
+    this.bordered = false,
+    this.outlined = false,
+    this.strokeWidth,
     this.minRadius = 60,
     this.ripplesCount = 5,
     this.duration = const Duration(milliseconds: 2300),
@@ -38,6 +41,15 @@ class RippleAnimation extends StatefulWidget {
   /// [bool] provide true if u want repeat ani9mation
   final bool repeat;
 
+  /// [bool] if true, the circles will have a border.
+  final bool bordered;
+
+  /// [bool] if true, the circles will have an outline style only.
+  final bool outlined;
+
+  /// [double] stroke width of the animation
+  final double? strokeWidth;
+
   @override
   RippleAnimationState createState() => RippleAnimationState();
 }
@@ -63,13 +75,29 @@ class RippleAnimationState extends State<RippleAnimation>
   }
 
   @override
+  void didUpdateWidget(covariant RippleAnimation oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if the `repeat` property has changed
+    if (widget.repeat != oldWidget.repeat) {
+      // Reset the animation behavior based on the new `repeat` value
+      if (widget.repeat) {
+        _controller?.repeat();
+      } else {
+        _controller?.forward();
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) => CustomPaint(
-        painter: CirclePainter(
-          _controller,
-          color: widget.color,
-          minRadius: widget.minRadius,
-          wavesCount: widget.ripplesCount + 2,
-        ),
+        painter: CirclePainter(_controller,
+            color: widget.color,
+            minRadius: widget.minRadius,
+            wavesCount: widget.ripplesCount + 2,
+            outlined: widget.outlined,
+            width: widget.strokeWidth,
+            bordered: widget.bordered),
         child: widget.child ?? const SizedBox.shrink(),
       );
 
@@ -87,14 +115,26 @@ class CirclePainter extends CustomPainter {
     this._animation, {
     required this.wavesCount,
     required this.color,
+    this.bordered = false,
+    this.outlined = false,
+    this.width,
     this.minRadius,
   }) : super(repaint: _animation);
 
   ///[Color] of the painter
   final Color color;
 
+  /// [bool] to define if the circle should be bordered.
+  final bool bordered;
+
+  /// [bool] to define if the circle should be outlined.
+  final bool outlined;
+
   ///[double] minimum radius of the painter
   final double? minRadius;
+
+  ///[double] stroke width
+  final double? width;
 
   ///[int] number of wave count in the animation
   final int wavesCount;
@@ -122,8 +162,22 @@ class CirclePainter extends CustomPainter {
       color = color.withOpacity(opacity);
 
       radius = minRadius! * (1 + (wave * value)) * value;
-      final Paint paint = Paint()..color = color;
+      final Paint paint = Paint()
+        ..color = color
+        ..style =
+            outlined && bordered ? PaintingStyle.stroke : PaintingStyle.fill;
       canvas.drawCircle(rect.center, radius, paint);
+
+      // Paint for the border
+      if (bordered) {
+        final Paint borderPaint = Paint()
+          ..color = color.withOpacity(opacity)
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = (width ?? 1.0);
+
+        // Draw the circle's border
+        canvas.drawCircle(rect.center, radius, borderPaint);
+      }
     }
   }
 

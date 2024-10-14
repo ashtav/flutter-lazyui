@@ -237,7 +237,7 @@ class _PadWidgetState extends State<PadWidget> {
                                     Center(
                                       child: value.isEmpty
                                           ? const None()
-                                          : SlideUp(
+                                          : SlideAnimate(
                                               child: Text(value,
                                                   style: font.fs20.bold)),
                                     ),
@@ -266,7 +266,7 @@ class _PadWidgetState extends State<PadWidget> {
                                           width: (context.width - 160) /
                                               notifier.length,
                                           height: 2,
-                                        ).lz.blink(inFocus, 300.ms),
+                                        ).lz.animate.blink(inFocus, 300.ms),
                                       )
                                   ],
                                 ),
@@ -278,6 +278,7 @@ class _PadWidgetState extends State<PadWidget> {
                           return Textr('Expired in ${state.expired} seconds',
                                   style: font.red, margin: Ei.only(t: 25))
                               .lz
+                              .animate
                               .blink(!state.isPaused, 500.ms);
                         }),
                     ],

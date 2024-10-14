@@ -1,45 +1,46 @@
 part of '../widget.dart';
 
-/// A widget that animates the sliding effect of its child widget with optional opacity transition.
+/// A widget that applies a slide transition to its child when it changes.
 ///
-/// The `SlideSwitched` widget is used to create smooth sliding animations for its child widget.
-/// It animates the child widget's position either upwards or downwards based on the `direction`
-/// property, and optionally applies an opacity transition during the animation.
+/// The [SlideSwitched] widget uses an [AnimatedSwitcher] to animate its child
+/// when it changes, combining a sliding effect with a fade transition. The slide
+/// direction can be customized using the [direction] parameter.
 ///
-/// Example usage:
-/// ```dart
-/// SlideSwitched(
-///   duration: Duration(milliseconds: 500), // Animation duration (optional)
-///   direction: SlideDirection.up, // Slide direction (up or down)
-///   withOpacity: true, // Apply opacity transition (default is false)
-///   child: Text('Slide up animation with opacity'), // The child widget to be animated
-/// )
-/// ```
+/// * [child]: The widget to animate.
+/// * [duration]: The duration of the animation (default is 250 milliseconds).
+/// * [direction]: The direction of the slide (default is [SlideDirection.up]).
 class SlideSwitched extends StatelessWidget {
-  /// The child widget to be animated.
+  /// The widget to be animated when the switch occurs.
+  ///
+  /// This widget will slide in or out when the transition is triggered.
   final Widget? child;
 
-  /// The total duration of the animation (optional).
+  /// The duration of the slide and fade animation.
+  ///
+  /// Defaults to 250 milliseconds if not provided.
   final Duration? duration;
 
-  /// The direction of the slide animation (up or down).
+  /// The direction of the slide animation.
+  ///
+  /// You can specify the direction as either [SlideDirection.up] or [SlideDirection.down].
   final SlideDirection direction;
 
-  /// Whether to apply opacity transition during the animation (default is false).
-  final bool withOpacity;
-
-  /// Creates a `SlideSwitched` widget.
+  /// Creates a [SlideSwitched] widget with customizable slide transition.
   ///
-  /// The [child] is the widget to be animated with sliding animation.
-  /// The [duration] specifies the total duration of the animation (optional).
-  /// The [direction] defines the direction of the slide animation (up or down).
-  /// The [withOpacity] flag determines whether to apply opacity transition (default is false).
+  /// The [child], [duration], and [direction] can be configured. By default,
+  /// the [direction] is set to slide up, and [duration] defaults to 250 milliseconds.
+  ///
+  /// Example:
+  /// ```dart
+  /// notifier.watch((state) => SlideSwitched(
+  ///   duration: 150.ms,
+  ///   child: state.toggle ? Text('Hello World!', key: UniqueKey()) : Text('Slide up animation with opacity', key: UniqueKey()),
+  /// ));
   const SlideSwitched({
     super.key,
     this.child,
     this.duration,
     this.direction = SlideDirection.up,
-    this.withOpacity = false,
   });
 
   @override
@@ -57,14 +58,10 @@ class SlideSwitched extends StatelessWidget {
           child: child,
         );
 
-        if (withOpacity) {
-          return FadeTransition(
-            opacity: animation,
-            child: slideTransition,
-          );
-        } else {
-          return slideTransition;
-        }
+        return FadeTransition(
+          opacity: animation,
+          child: slideTransition,
+        );
       },
       child: child,
     );

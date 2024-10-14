@@ -65,15 +65,24 @@ class Touch extends StatelessWidget {
   }
 
   /// Creates a customizable button widget with the specified text and optional tap handler.
-  static Widget button(String text, {Function()? onTap}) {
+  static Widget button(String text,
+      {Function()? onTap,
+      IconData? icon,
+      Color? color,
+      BoxBorder? border,
+      BorderRadiusGeometry? radius}) {
     return Touch(
       onTap: onTap,
       hoverable: true,
       child: Container(
           padding: Ei.sym(v: 15, h: 35),
           decoration: BoxDecoration(
-              border: Br.all(color: lzBorderColor), borderRadius: Br.radius(7)),
-          child: Text(text, style: Gfont.bold)),
+              color: color,
+              border: border ?? Br.all(color: lzBorderColor),
+              borderRadius: Br.radius(7)),
+          child: Textr(text,
+              icon: icon,
+              style: Gfont.bold.fcolor((color ?? Colors.white).adaptColor))),
     );
   }
 }

@@ -19,6 +19,7 @@ part 'type_extensions/list.dart';
 part 'type_extensions/map.dart';
 part 'type_extensions/number.dart';
 part 'type_extensions/string.dart';
+part 'widget_extensions/animate.dart';
 part 'widget_extensions/column.dart';
 part 'widget_extensions/row.dart';
 part 'widget_extensions/textfield.dart';

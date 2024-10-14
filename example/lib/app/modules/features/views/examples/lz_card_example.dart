@@ -1,71 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-class BadgeNCardView extends StatelessWidget {
-  const BadgeNCardView({super.key});
+class LzCardExample extends StatelessWidget {
+  const LzCardExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     final font = Gfont.style(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Badge and Card'),
+        title: const Text('Card'),
       ),
       body: LzListView(
         gap: 15,
         children: [
           Column(
             children: [
-              const Textml(
-                      '<b>LzBadge</b> is a simple widget to create a badge with text and icon.')
-                  .margin(b: 15),
-
-              Row(
-                children: [
-                  const Column(
-                    children: [
-                      LzBadge(
-                        'Hello World',
-                        color: Colors.orange,
-                        icon: Ti.message2,
-                      ),
-                      LzBadge(
-                        'Verified',
-                        color: Colors.green,
-                        icon: Ti.checks,
-                        softColor: true,
-                      ),
-                    ],
-                  ).gap(5).start,
-                  Stack(
-                    children: [
-                      ZoomIn(
-                        delay: 100,
-                        child: const LzAvatar(
-                          clip: HexagonClip(stroke: 2, color: Colors.red),
-                          size: 90,
-                          child: LzImage(
-                              'https://www.headshotpro.com/avatar-results/danny-3.webp'),
-                        ).margin(l: 10),
-                      ),
-                      Poslign(
-                        alignment: Alignment.topLeft,
-                        child: SlideLeft(
-                          delay: 300,
-                          child: LzBadge('15',
-                              spacing: 0,
-                              color: Colors.red,
-                              boxShadow: Bx.shadow(Colors.red.withOpacity(.5),
-                                  x: 5, y: 3)),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ).between,
-
-              20.height,
-
               // see card example in tabler
               const Textml(
                   '<b>LzCard</b> is a simple widget to create a card with multiple children.'),

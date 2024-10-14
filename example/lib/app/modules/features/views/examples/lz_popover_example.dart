@@ -12,7 +12,8 @@ class PopoverView extends StatelessWidget {
             actions: [Ti.userCircle, Ti.infoCircle].generate((icon, i) {
               return LzPopover(
                   content: const Content(),
-                  builder: (_) => Iconr(icon, color: Colors.white, padding: Ei.sym(v: 10, h: 20)),
+                  builder: (_) => Iconr(icon,
+                      color: Colors.white, padding: Ei.sym(v: 10, h: 20)),
                   child: Iconr(icon, padding: Ei.sym(v: 10, h: 20)));
             })),
         body: LzListView(
@@ -22,8 +23,9 @@ class PopoverView extends StatelessWidget {
                 LzPopover(
                   content: Row(
                     mainAxisSize: Mas.min,
-                    children: [Ti.pencil, Ti.trash, Ti.share2, Ti.books].generate((icon, i) {
-                      return SlideUp(
+                    children: [Ti.pencil, Ti.trash, Ti.share2, Ti.books]
+                        .generate((icon, i) {
+                      return SlideAnimate(
                           delay: i * 100,
                           child: Iconr(
                             icon,

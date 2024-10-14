@@ -1,25 +1,29 @@
 import 'package:example/app/data/feature.dart';
-import 'package:example/app/modules/features/views/examples/widgets/popover.dart';
+import 'package:example/app/modules/features/views/examples/lz_popover_example.dart';
 import 'package:example/app/modules/settings/views/setting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import 'examples/button.dart';
-import 'examples/confirm.dart';
-import 'examples/dropdown.dart';
-import 'examples/forms.dart';
-import 'examples/picker.dart';
+import 'examples/lz_accordion_example.dart';
+import 'examples/lz_bagde_example.dart';
+import 'examples/lz_button_example.dart';
+import 'examples/lz_card_example.dart';
+import 'examples/lz_confirm_example.dart';
+import 'examples/lz_countdown_example.dart';
+import 'examples/lz_drop_example.dart';
+import 'examples/lz_forms_example.dart';
+import 'examples/lz_image_example.dart';
+import 'examples/lz_listview_example.dart';
+import 'examples/lz_picker_example.dart';
+import 'examples/lz_text_count_example.dart';
+import 'examples/lz_toast_example.dart';
+import 'examples/lz_transform_example.dart';
+import 'examples/lz_transition_example.dart';
 import 'examples/refreshtor.dart';
 import 'examples/trainer.dart';
-import 'examples/widgets/accordion.dart';
-import 'examples/widgets/bagde_n_card.dart';
-import 'examples/widgets/countdown.dart';
 import 'examples/widgets/customs.dart';
-import 'examples/widgets/image.dart';
-import 'examples/widgets/listview.dart';
 import 'examples/widgets/skeleton.dart';
 import 'examples/widgets/test_view.dart';
-import 'examples/widgets/toast.dart';
 
 bool isDarkMode = false;
 
@@ -49,15 +53,15 @@ class FeatureView extends StatelessWidget {
 
             return Column(
               children: [
-                Container(
-                  margin: Ei.only(t: i == 0 ? 0 : 35, b: 25),
-                  child: Column(
-                    children: [
-                      Textr(title, style: font.bold, margin: Ei.only(b: 5)),
-                      Text(description, style: font.muted)
-                    ],
-                  ).start,
-                ),
+                // title
+                Column(
+                  children: [
+                    Text(title, style: font.bold),
+                    Text(description, style: font.muted.fs14)
+                  ],
+                ).start.gap(5),
+
+                // children
                 Column(children: features.generate((feature, i) {
                   return InkTouch.space(
                     onTap: () => Actions.on(context, feature.title),
@@ -69,11 +73,11 @@ class FeatureView extends StatelessWidget {
                           children: [
                             Textr(
                               feature.title,
-                              style: font.bold,
+                              // style: font.bold,
                               icon: feature.icon,
                             ),
-                            Text(feature.description, style: font.muted)
-                                .margin(t: 5),
+                            // Text(feature.description, style: font.muted)
+                            //     .margin(t: 5),
                           ],
                         ).start.lz.flexible(),
                         Iconr(Ti.chevronRight,
@@ -89,9 +93,9 @@ class FeatureView extends StatelessWidget {
                     .lz
                     .border(Br.all(), radius: Br.radius(10))
               ],
-            ).start;
+            ).start.gap(25);
           }),
-        )
+        ).gap(50)
       ]),
     );
   }
@@ -112,10 +116,14 @@ class Actions {
       'Refreshtor': const RefreshtorView(),
       'Trainer': const TrainerView(),
       'Custom Widgets': const CustomWidgetView(),
-      'LzBadge & LzCard': const BadgeNCardView(),
+      'LzBadge': const LzBagdeExample(),
+      'LzCard': const LzCardExample(),
       'LzListView': const LzListViewExample(),
       'LzCountDown': const LzCountDownExample(),
-      'Popover': const PopoverView(),
+      'LzTextCount': const LzTextCountExample(),
+      'LzPopover': const PopoverView(),
+      'LzTransform': const LzTransformExample(),
+      'Animate': const LzTransitionExample(),
     };
 
     final font = Gfont.style(context);

@@ -144,8 +144,8 @@ class Dropdown extends StatelessWidget {
                             .flexible(),
                         if (hasIcon) iconWidget(icon),
                         if (hasSubOptions && !hasIcon)
-                          Rotator(
-                              degree: hasExpanded ? 90 : 0,
+                          LzTransform.rotate(
+                              angle: hasExpanded ? 1.6 : 0,
                               child: iconWidget(Ti.chevronRight))
                       ],
                     ).between.lz.opacity(isDisabled ? .4 : 1),
@@ -154,7 +154,7 @@ class Dropdown extends StatelessWidget {
               );
             }
 
-            return SlideUp(
+            return SlideAnimate(
               delay: (i + 1) * 100, // slide animation for option
               child: Column(
                 children: [

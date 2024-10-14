@@ -234,7 +234,7 @@ class ConfirmButton extends StatelessWidget {
         margin: Ei.only(b: 15),
         child: Row(
           children: 3.generate((i) {
-            return SlideUp(
+            return SlideAnimate(
                 delay: (i + 1) * 100,
                 child: i != 1
                     ? Iconr(La.times, padding: Ei.all(15), color: textColor)

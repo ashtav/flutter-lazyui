@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import 'nodata_view.dart';
-import 'slide_indicator.dart';
+import '../lz_nodata_example.dart';
+import '../lz_slide_indicator_example.dart';
+import '../lz_textfield_example.dart';
 import 'test_view.dart';
-import 'textfield.dart';
 import 'widget.dart';
 
 class CustomWidgetView extends StatelessWidget {
@@ -65,7 +65,7 @@ class CustomWidgetView extends StatelessWidget {
             border: Br.only(['t'], except: i == 0),
             child: Column(
               children: [
-                Textr(item, style: font.bold, margin: Ei.only(b: 5)),
+                Textr(item, style: font.bold.muted, margin: Ei.only(b: 5)),
                 Text(actionWidgetsDescription[i], style: font.muted)
               ],
             ).start,

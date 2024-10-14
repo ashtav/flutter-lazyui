@@ -48,7 +48,6 @@ class ArrowIndicator extends StatelessWidget {
                 children: [
                   SlideSwitched(
                       direction: SlideDirection.down,
-                      withOpacity: true,
                       child: value < .1
                           ? const None()
                           : Container(
@@ -63,7 +62,7 @@ class ArrowIndicator extends StatelessWidget {
                                   child: Iconr(
                                     isArmed ? Ti.arrowUp : Ti.arrowDown,
                                     color: indicatorColor,
-                                  ).lz.blink(isArmed, 300.ms),
+                                  ).lz.animate.blink(isArmed, 300.ms),
                                 ),
                               ),
                             )),

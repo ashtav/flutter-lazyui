@@ -27,9 +27,11 @@ class HomeView extends StatelessWidget {
                         padding: Ei.only(h: 35, t: 300)),
                   ],
                 ),
-                Touch.button('Explore More', onTap: () {
+                Touch.button('See Example',
+                    icon: Ti.library,
+                    border: Br.all(color: Colors.black54), onTap: () {
                   context.lz.push(const FeatureView());
-                }),
+                })
               ],
             ).gap(25),
           ),
@@ -49,7 +51,7 @@ class T4 extends StatelessWidget {
       children: [
         Text('4', style: Gfont.fsize(170)),
         Textr(
-          '.0.8',
+          '.1.0',
           style: Gfont.fsize(14),
           margin: Ei.only(l: 100, t: 100),
         ),

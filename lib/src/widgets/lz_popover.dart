@@ -150,7 +150,8 @@ class _PopoverContentState extends State<_PopoverContent> {
   double caretY = 0; // Position of the caret (arrow)
   double caretX = 0;
 
-  bool isAbove = true; // Determines whether the popover is above or below the trigger
+  bool isAbove =
+      true; // Determines whether the popover is above or below the trigger
   bool showCaret = true; // Determines whether the caret should be displayed
 
   @override
@@ -167,7 +168,8 @@ class _PopoverContentState extends State<_PopoverContent> {
   /// the popover and caret based on available space.
   void updateContentHeight() {
     if (keyContent.currentContext != null) {
-      final RenderBox renderBox = keyContent.currentContext!.findRenderObject() as RenderBox;
+      final RenderBox renderBox =
+          keyContent.currentContext!.findRenderObject() as RenderBox;
 
       setState(() {
         contentHeight = renderBox.size.height + 10; // Adjust for padding
@@ -180,7 +182,8 @@ class _PopoverContentState extends State<_PopoverContent> {
         caretY = (triggerY - caretHeight - 11) - (widget.offset?.dy ?? 0);
 
         // Set x caret position
-        double defaultCaretX = widget.position.dx + (widget.size.width / 2) - (caretWidth / 2);
+        double defaultCaretX =
+            widget.position.dx + (widget.size.width / 2) - (caretWidth / 2);
         double centeredCaretX = (contentWidth / 2) - (caretWidth / 2);
 
         // Ensure caret stays within the content bounds
@@ -192,8 +195,9 @@ class _PopoverContentState extends State<_PopoverContent> {
       });
 
       // Calculate available space below the trigger
-      double availableHeightBelow =
-          MediaQuery.of(context).size.height - (widget.position.dy + widget.size.height) - context.windowPadding.bottom;
+      double availableHeightBelow = MediaQuery.of(context).size.height -
+          (widget.position.dy + widget.size.height) -
+          context.windowPadding.bottom;
 
       // Check if the popover is out of bounds
       bool isOutOfBounds = (popoverY < 0);
@@ -204,16 +208,23 @@ class _PopoverContentState extends State<_PopoverContent> {
       }
 
       // Adjust popover position if there's not enough space
-      if (isOutOfBounds || (contentHeight + caretHeight > availableHeightBelow)) {
+      if (isOutOfBounds ||
+          (contentHeight + caretHeight > availableHeightBelow)) {
         setState(() {
           isAbove = false; // Show popover below the trigger
-          popoverY = triggerY + widget.size.height + caretHeight + (widget.offset?.dy ?? 0) + 10;
-          caretY = triggerY + widget.size.height + (widget.offset?.dy ?? 0) + 11;
+          popoverY = triggerY +
+              widget.size.height +
+              caretHeight +
+              (widget.offset?.dy ?? 0) +
+              10;
+          caretY =
+              triggerY + widget.size.height + (widget.offset?.dy ?? 0) + 11;
         });
       } else {
         setState(() {
           isAbove = true; // Show popover above the trigger
-          popoverY = ((triggerY - contentHeight) - 10) - (widget.offset?.dy ?? 0);
+          popoverY =
+              ((triggerY - contentHeight) - 10) - (widget.offset?.dy ?? 0);
           caretY = (triggerY - caretHeight - 11) - (widget.offset?.dy ?? 0);
         });
       }
@@ -231,8 +242,10 @@ class _PopoverContentState extends State<_PopoverContent> {
         margin: EdgeInsets.only(left: widget.offset?.dx ?? 20),
         key: keyContent,
         decoration: BoxDecoration(
-            borderRadius: widget.radius ?? BorderRadius.circular(10), color: widget.background ?? Colors.white),
-        constraints: BoxConstraints(maxWidth: context.width - ((widget.offset?.dx ?? 20) * 2)),
+            borderRadius: widget.radius ?? BorderRadius.circular(10),
+            color: widget.background ?? Colors.white),
+        constraints: BoxConstraints(
+            maxWidth: context.width - ((widget.offset?.dx ?? 20) * 2)),
         child: widget.content,
       ),
     );
@@ -242,7 +255,10 @@ class _PopoverContentState extends State<_PopoverContent> {
     return Stack(
       children: [
         // Keep the original widget in place
-        Positioned(left: widget.position.dx, top: triggerY, child: widget.builder?.call(trigger) ?? trigger),
+        Positioned(
+            left: widget.position.dx,
+            top: triggerY,
+            child: widget.builder?.call(trigger) ?? trigger),
 
         // The caret (arrow) pointing to the trigger widget
         Positioned(

@@ -237,7 +237,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                       children: [
                         const SizedBox(
                             width: 60), // empty space to center the button
-                        SlideUp(
+                        SlideAnimate(
                           delay: 300,
                           child: Container(
                             decoration: BoxDecoration(
@@ -266,7 +266,7 @@ class _LzPickerOptionState extends State<LzPickerOption> {
                             }),
                           ),
                         ),
-                        SlideUp(
+                        SlideAnimate(
                           delay: 400,
                           child: Iconr(
                             La.times,

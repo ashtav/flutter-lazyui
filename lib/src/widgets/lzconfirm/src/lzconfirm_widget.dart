@@ -119,7 +119,7 @@ class LzConfirmWidget extends StatelessWidget {
     );
 
     return isDialog
-        ? SlideUp(
+        ? SlideAnimate(
             child: CenterDialog(
             child: widget.lz.clip(all: LazyUi.radius),
           ))

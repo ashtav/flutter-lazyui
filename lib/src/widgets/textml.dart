@@ -28,9 +28,22 @@ class Textml extends StatelessWidget {
   /// Optional text overflow behavior.
   final TextOverflow? overflow;
 
-  /// Create widget
+  /// ```dart
+  /// // Example usage:
+  /// Textml(
+  ///   'This is <b>bold</b> and <i>italic</i> text with <u>underline</u> and <p color="FF5733">custom color</p>.',
+  ///   style: TextStyle(fontSize: 16, color: Colors.black),
+  ///   textAlign: TextAlign.center,
+  ///   textDirection: TextDirection.ltr,
+  ///   overflow: TextOverflow.ellipsis,
+  /// )
+  /// ```
   const Textml(this.text,
-      {super.key, this.style, this.textAlign, this.textDirection, this.overflow});
+      {super.key,
+      this.style,
+      this.textAlign,
+      this.textDirection,
+      this.overflow});
 
   @override
   Widget build(BuildContext context) {

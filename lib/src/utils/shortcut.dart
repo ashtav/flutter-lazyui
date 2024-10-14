@@ -25,61 +25,96 @@ class Br {
       BorderStyle style = BorderStyle.solid,
       double strokeAlign = BorderSide.strokeAlignInside}) {
     return Border.all(
-        color: color ?? lzBorderColor, width: width ?? _borderWidth, style: style, strokeAlign: strokeAlign);
+        color: color ?? lzBorderColor,
+        width: width ?? _borderWidth,
+        style: style,
+        strokeAlign: strokeAlign);
   }
 
   /// ``` dart
   /// border: Br.only(['t'])
   /// ```
   static BoxBorder only(List<String> only,
-      {Color? color, double? width, bool except = false, BorderStyle style = BorderStyle.solid}) {
+      {Color? color,
+      double? width,
+      bool except = false,
+      BorderStyle style = BorderStyle.solid}) {
     Color bcolor = color ?? lzBorderColor;
     double bwidth = width ?? _borderWidth;
 
     return Border(
-        top: !only.contains('t') || except ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style),
-        bottom: !only.contains('b') || except ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style),
-        left: !only.contains('l') || except ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style),
-        right: !only.contains('r') || except ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style));
+        top: !only.contains('t') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        bottom: !only.contains('b') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        left: !only.contains('l') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        right: !only.contains('r') || except
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style));
   }
 
   /// ``` dart
   /// border: Br.except(['t'])
   /// ```
-  static BoxBorder except(List<String> except, {Color? color, double? width, BorderStyle style = BorderStyle.solid}) {
+  static BoxBorder except(List<String> except,
+      {Color? color, double? width, BorderStyle style = BorderStyle.solid}) {
     Color bcolor = color ?? lzBorderColor;
     double bwidth = width ?? _borderWidth;
 
     return Border(
-        top: except.contains('t') ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style),
-        bottom: except.contains('b') ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style),
-        left: except.contains('l') ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style),
-        right: except.contains('r') ? BorderSide.none : Br.side(bcolor, width: bwidth, style: style));
+        top: except.contains('t')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        bottom: except.contains('b')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        left: except.contains('l')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style),
+        right: except.contains('r')
+            ? BorderSide.none
+            : Br.side(bcolor, width: bwidth, style: style));
   }
 
   /// ``` dart
   /// Border(left: Br.side(C.black1))
   /// ```
-  static BorderSide side(Color color, {double? width, BorderStyle style = BorderStyle.solid}) =>
+  static BorderSide side(Color color,
+          {double? width, BorderStyle style = BorderStyle.solid}) =>
       BorderSide(color: color, width: width ?? _borderWidth, style: style);
 
   /// ``` dart
   /// borderRadius: Br.radius(15)
   /// borderRadius: Br.radius(15, except: ['bl', 'br'])
   /// ```
-  static BorderRadius radius(double value, {List<String>? except}) => except == null
+  static BorderRadius radius(double value, {List<String>? except}) => except ==
+          null
       ? BorderRadius.circular(value)
       : BorderRadius.only(
           topLeft: except.contains('tl') ? Radius.zero : Radius.circular(value),
-          topRight: except.contains('tr') ? Radius.zero : Radius.circular(value),
-          bottomLeft: except.contains('bl') ? Radius.zero : Radius.circular(value),
-          bottomRight: except.contains('br') ? Radius.zero : Radius.circular(value));
+          topRight:
+              except.contains('tr') ? Radius.zero : Radius.circular(value),
+          bottomLeft:
+              except.contains('bl') ? Radius.zero : Radius.circular(value),
+          bottomRight:
+              except.contains('br') ? Radius.zero : Radius.circular(value));
 
   /// ``` dart
   /// borderRadius: Br.radiusOnly()
   /// ```
   static BorderRadius radiusOnly(
-          {double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? ltb, double? rtb}) =>
+          {double? tl,
+          double? tr,
+          double? bl,
+          double? br,
+          double? tlr,
+          double? blr,
+          double? ltb,
+          double? rtb}) =>
       BorderRadius.only(
           topLeft: Radius.circular(tl ?? tlr ?? ltb ?? 0),
           topRight: Radius.circular(tr ?? tlr ?? rtb ?? 0),
@@ -112,8 +147,19 @@ class Ei {
   /// ``` dart
   /// padding: Ei.only(b: 15)
   /// ```
-  static EdgeInsets only({double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) =>
-      EdgeInsets.only(bottom: v ?? b ?? others, top: v ?? t ?? others, left: h ?? l ?? others, right: h ?? r ?? others);
+  static EdgeInsets only(
+          {double? b,
+          double? t,
+          double? l,
+          double? r,
+          double? v,
+          double? h,
+          double others = 0}) =>
+      EdgeInsets.only(
+          bottom: v ?? b ?? others,
+          top: v ?? t ?? others,
+          left: h ?? l ?? others,
+          right: h ?? r ?? others);
 
   /// ``` dart
   /// padding: Ei.all(15)
@@ -129,22 +175,25 @@ class Ei {
   /// ``` dart
   /// padding: Ei.sym(v: 15)
   /// ```
-  static EdgeInsets sym({double v = 0, double h = 0}) => EdgeInsets.symmetric(vertical: v, horizontal: h);
+  static EdgeInsets sym({double v = 0, double h = 0}) =>
+      EdgeInsets.symmetric(vertical: v, horizontal: h);
 
   /// ``` dart
   /// padding: Ei.syms(15, 20) // vertical, horizontal
   /// ```
-  static EdgeInsets syms(double v, double h) => EdgeInsets.symmetric(vertical: v, horizontal: h);
+  static EdgeInsets syms(double v, double h) =>
+      EdgeInsets.symmetric(vertical: v, horizontal: h);
 
   /// ``` dart
   /// // set all values is 15 except top
   /// Ei.except(['t'], 15);
   /// ```
-  static EdgeInsets except(List<String> except, [double padding = 15]) => EdgeInsets.only(
-      bottom: !except.contains('b') ? padding : 0,
-      top: !except.contains('t') ? padding : 0,
-      left: !except.contains('l') ? padding : 0,
-      right: !except.contains('r') ? padding : 0);
+  static EdgeInsets except(List<String> except, [double padding = 15]) =>
+      EdgeInsets.only(
+          bottom: !except.contains('b') ? padding : 0,
+          top: !except.contains('t') ? padding : 0,
+          left: !except.contains('l') ? padding : 0,
+          right: !except.contains('r') ? padding : 0);
 }
 
 /// A class providing constants for main axis sizes.
@@ -342,7 +391,8 @@ class Ad {
   /// with the bottom edge of the available space, and the center of the
   /// widget with the center of the available space along the main axis
   /// (which depends on the reading direction).
-  static const AlignmentDirectional bottomCenter = AlignmentDirectional.bottomCenter;
+  static const AlignmentDirectional bottomCenter =
+      AlignmentDirectional.bottomCenter;
 
   /// The `bottomEnd` constant aligns the bottom edge of the widget with
   /// the bottom edge of the available space, and the trailing edge of the
@@ -352,7 +402,8 @@ class Ad {
   /// The `bottomStart` constant aligns the bottom edge of the widget with
   /// the bottom edge of the available space, and the leading edge of the
   /// widget with the leading edge of the available space along the main axis.
-  static const AlignmentDirectional bottomStart = AlignmentDirectional.bottomStart;
+  static const AlignmentDirectional bottomStart =
+      AlignmentDirectional.bottomStart;
 
   /// The `center` constant centers the widget both horizontally and
   /// vertically within the available space, considering the reading direction
@@ -367,7 +418,8 @@ class Ad {
   /// The `centerStart` constant aligns the center of the widget with the
   /// center of the available space vertically, and the leading edge of the
   /// widget with the leading edge of the available space along the main axis.
-  static const AlignmentDirectional centerStart = AlignmentDirectional.centerStart;
+  static const AlignmentDirectional centerStart =
+      AlignmentDirectional.centerStart;
 
   /// The `topCenter` constant aligns the top edge of the widget with the
   /// top edge of the available space, and the center of the widget with
@@ -396,8 +448,13 @@ class Bx {
   /// [y]: The vertical offset of the shadow. Default is 0.
   ///
   /// Returns a box shadow instance.
-  static BoxShadow shadow(Color color, {double? blur, double? spread, double? x, double? y}) {
-    return BoxShadow(color: color, blurRadius: blur ?? 5, spreadRadius: spread ?? 0, offset: Offset(x ?? 0, y ?? 0));
+  static BoxShadow shadow(Color color,
+      {double? blur, double? spread, double? x, double? y}) {
+    return BoxShadow(
+        color: color,
+        blurRadius: blur ?? 5,
+        spreadRadius: spread ?? 0,
+        offset: Offset(x ?? 0, y ?? 0));
   }
 
   /// Creates a linear gradient with the specified colors and optional start, end, stops, and tile mode parameters.
@@ -410,7 +467,10 @@ class Bx {
   ///
   /// Returns a [LinearGradient] instance.
   static gradient(List<Color> colors,
-      {AlignmentGeometry? begin, AlignmentGeometry? end, List<double>? stops = const [0.0, 1.0], TileMode? mode}) {
+      {AlignmentGeometry? begin,
+      AlignmentGeometry? end,
+      List<double>? stops = const [0.0, 1.0],
+      TileMode? mode}) {
     return LinearGradient(
         colors: colors,
         begin: begin ?? const FractionalOffset(0.0, 0.0),

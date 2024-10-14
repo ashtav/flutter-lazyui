@@ -170,7 +170,8 @@ class _TrainerState extends State<Trainer> {
                                 disabled = true;
                               }
 
-                              return SlideLeft(
+                              return SlideAnimate(
+                                axis: SlideAxis.rightToLeft,
                                 key: UniqueKey(),
                                 delay: (i + 1) * 200,
                                 child: Container(

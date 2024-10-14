@@ -9,81 +9,119 @@ class Feature {
   Feature(this.title, this.description, this.icon);
 }
 
-List<Map<String, dynamic>> _features = [
-  {
-    'title': 'Tools',
-    'description':
-        'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
-    'features': [
-      Feature(
-          'LzForm', 'Customizable form with validation, error handling and ease full control of your form.', Ti.forms),
-      Feature(
-          'LzPicker',
-          'Date picker, time picker and show a list of options in a bottom sheet, with search, disabled items, etc.',
-          Ti.alignBoxCenterBottom),
-      // 'App Intro',
-      // 'Widgets'
-    ]
-  },
-  {
-    'title': 'Interaction',
-    'description':
-        'Dynamic elements designed to facilitate user actions, confirmations, and navigation, enhancing overall interactivity.',
-    'features': [
-      Feature('LzButton', 'Customizable button with icon, type, loading, disabled, etc.', Ti.click),
-      Feature('LzDrop', 'Show dropdown options in any position, with icons, separators, etc.', Ti.dragDrop),
-      Feature('LzPad', 'Show an otp or pin input with a custom message, duration, input, etc.', Ti.number),
-      Feature('LzOption', 'Display dynamic menus with optional associated widgets triggered upon selection.', Ti.menu2),
-      Feature('LzConfirm', 'Show a confirmation dialog with a custom message, title, etc.', Ti.questionMark),
-      Feature('Refreshtor', 'Show a pull to refresh indicator with a custom color, size, etc.', Ti.refresh),
-      Feature('Trainer', 'Show guide to use your app with a custom message, title, etc.', Ti.books),
-    ]
-  },
-  {
-    'title': 'Widgets',
-    'description':
-        'A variety of visual components to display content, notifications, placeholders, and collapsible sections for a polished interface.',
-    'features': [
-      Feature('LzToast', 'Show a toast message with a custom icon, color, etc.', Ti.bell),
-      Feature('LzImage', 'Display image in any format such as network, asset, file, etc.', Ti.photo),
-      Feature('Skeleton', 'Show a skeleton loader with a custom color, animation, etc.', Ti.loader),
-      Feature('LzAccordion', 'Expandable widget with a custom header, body, etc.', Ti.layoutNavbarExpand),
-      Feature('LzBadge & LzCard', 'Show a badge or card with a custom color, size, etc.', Ti.creditCard),
-      Feature(
-          'LzListView',
-          'Scrollable lists with various features such as scroll limits, custom scroll controllers, and automatic caching.',
-          Ti.list),
-      Feature('LzCountDown',
-          'A countdown timer widget that displays the time remaining until a specified expiration time.', Ti.list),
-      Feature(
-          'Popover',
-          'A small overlay that displays additional content or interactions, typically triggered by a user action like hovering or clicking.',
-          Ti.squareMinus)
-    ]
-  },
-  {
-    'title': 'Custom Widgets',
-    'description': 'A collection of custom widgets that can be used to build your own custom UI components.',
-    'features': [
-      Feature('Custom Widgets', 'List of custom widgets that can be used to build your own custom UI components.',
-          Ti.category),
-    ]
-  },
-  {
-    'title': 'Utilities',
-    'description':
-        'A collection of utilities for efficient form management and streamlined data input, ensuring a smooth user experience.',
-    'features': [
-      Feature('Custom Utilities', 'List of custom utilities that can be used to build your own custom UI components.',
-          Ti.tools),
-    ]
-  },
-];
+List<Map<String, dynamic>> get _features => [
+      {
+        'title': 'Utilities',
+        'description':
+            'A collection of utilities for form management, input handling, and efficiency.',
+        'features': [
+          Feature(
+              'LzForm',
+              'Customizable form with validation, error handling, and full control.',
+              Ti.forms),
+          Feature(
+              'LzPicker',
+              'Date and time picker with list options, search, and disabled items.',
+              Ti.alignBoxCenterBottom),
+          Feature('Custom Utilities',
+              'Utilities for building custom UI components.', Ti.tools),
+        ]
+      },
+      {
+        'title': 'Interaction',
+        'description':
+            'Elements designed to facilitate user actions and navigation, enhancing interactivity.',
+        'features': [
+          Feature(
+              'LzButton',
+              'Customizable button with icons, loading, and disabled states.',
+              Ti.click),
+          Feature(
+              'LzDrop',
+              'Dropdown options with icons, separators, and positioning.',
+              Ti.dragDrop),
+          Feature(
+              'LzPad',
+              'OTP or pin input with customizable messages and timers.',
+              Ti.dialpad),
+          Feature(
+              'LzOption',
+              'Dynamic menus with associated widgets triggered on selection.',
+              Ti.menu2),
+          Feature(
+              'LzConfirm',
+              'Confirmation dialog with customizable messages and titles.',
+              Ti.questionMark),
+          Feature(
+              'Refreshtor',
+              'Pull to refresh indicator with custom colors and sizes.',
+              Ti.refresh),
+          Feature('Trainer', 'Interactive guide to help users learn your app.',
+              Ti.books),
+        ]
+      },
+      {
+        'title': 'Widgets',
+        'description':
+            'Visual components for displaying content, notifications, and interactive sections.',
+        'features': [
+          Feature(
+              'LzAccordion',
+              'Expandable widget with customizable headers and bodies.',
+              Ti.layoutNavbarExpand),
+          Feature(
+              'LzBadge',
+              'Customizable badges and cards for displaying notifications.',
+              Ti.boxAlignTop),
+          Feature('LzCard', '', Ti.id),
+          Feature('LzImage', 'Display images from network, assets, or files.',
+              Ti.photo),
+          Feature('LzListView',
+              'Scrollable lists with custom controllers and caching.', Ti.list),
+          Feature('LzToast',
+              'Customizable toast messages with icons and colors.', Ti.bell),
+          Feature('LzCountDown',
+              'Countdown timer displaying time until expiration.', Ti.list),
+          Feature(
+              'LzTextCount',
+              'Displays a text-based counter, counting from a start value to an end value (e.g., 0 to 25).',
+              Ti.squareNumber1),
+          Feature(
+              'LzPopover',
+              'Overlay displaying additional content on hover or click.',
+              Ti.library),
+          Feature(
+              'Skeleton',
+              'Skeleton loader with customizable color and animation.',
+              Ti.loader),
+          Feature('Custom Widgets', 'Build your own custom UI components.',
+              Ti.category),
+        ]
+      },
+      {
+        'title': 'Animations & Transformations',
+        'description':
+            'A collection of widgets to apply animations and transformations like rotation, scaling, and translation.',
+        'features': [
+          Feature('Animate', '', Ti.transitionBottom),
+          Feature('LzTransform', '', Ti.transform),
+        ]
+      },
+      {
+        'title': 'Experiments',
+        'description':
+            'A collection of examples and prototypes for custom widgets, animations, and various interactive features.',
+        'features': [
+          Feature('Test', '', Ti.flask),
+        ]
+      }
+    ];
 
 List<Map<String, dynamic>> get features {
   for (var featureMap in _features) {
     if (featureMap['features'] != null) {}
-    (featureMap['features'] as List<Feature>).sort((a, b) => a.title.compareTo(b.title));
+    (featureMap['features'] as List<Feature>)
+        .sort((a, b) => a.title.compareTo(b.title));
   }
 
   return _features;

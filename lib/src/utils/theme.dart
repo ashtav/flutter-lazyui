@@ -116,4 +116,9 @@ extension CustomColorExtension on Color {
   Color get adaptWithTheme {
     return lzDarkMode ? inverse() : this;
   }
+
+  /// check if color is dark or light then return color
+  Color get adaptColor {
+    return isDark() ? Colors.white : Colors.black87;
+  }
 }

@@ -37,7 +37,8 @@ class ImagePickerPreview extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              SlideDown(
+              SlideAnimate(
+                axis: SlideAxis.topToBottom,
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: Br.radius(7), color: Colors.white70),
