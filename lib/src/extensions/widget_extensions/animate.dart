@@ -125,10 +125,12 @@ extension LzAnimateExtension on Animate {
   Widget typing(
           {int length = 3,
           String character = '.',
-          Duration duration = const Duration(seconds: 2)}) =>
+          Duration duration = const Duration(seconds: 2),
+          Color? color}) =>
       TypingAnimate(
           length: length,
           character: character,
           duration: duration,
+          color: color,
           child: widget);
 }

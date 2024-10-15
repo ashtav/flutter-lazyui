@@ -7,6 +7,7 @@ class LzCardExample extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final font = Gfont.style(context);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Card'),
@@ -19,7 +20,7 @@ class LzCardExample extends StatelessWidget {
               // see card example in tabler
               const Textml(
                   '<b>LzCard</b> is a simple widget to create a card with multiple children.'),
-
+              15.height,
               LzCard(
                 gap: 5,
                 children: [
@@ -31,6 +32,7 @@ class LzCardExample extends StatelessWidget {
               LzCard(
                 gap: 5,
                 stacked: true,
+                color: Colors.orange.withOpacity(.1),
                 children: [
                   Text('Stacked Card', style: font.bold),
                   Text(Faker.words(12))
@@ -51,6 +53,10 @@ class LzCardExample extends StatelessWidget {
                 gap: 5,
                 background: BgCard(icon: Ti.cards),
                 stacked: true,
+                boxShadow: [
+                  Bx.shadow(Colors.blue.withOpacity(.2),
+                      y: 30, spread: 2, blur: 50)
+                ],
                 ribbon: Ribbon(icon: Ti.gift, color: Colors.blue),
                 children: [
                   Text('Ribbon Card', style: font.bold),

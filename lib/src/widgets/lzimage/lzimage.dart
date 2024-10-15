@@ -33,6 +33,12 @@ class LzImage<T> extends StatelessWidget {
   /// A widget to be displayed if the image fails to load.
   final Widget? errorWidget;
 
+  /// Size duration
+  final Duration? sizeChangeDuration;
+
+  /// Creates a container that animates its parameters implicitly.
+  final Curve curve;
+
   /// Creates a LzImage widget.
   const LzImage(this.image,
       {super.key,
@@ -42,7 +48,9 @@ class LzImage<T> extends StatelessWidget {
       this.alignment = Alignment.center,
       this.interactive = false,
       this.placeholder,
-      this.errorWidget});
+      this.errorWidget,
+      this.sizeChangeDuration,
+      this.curve = Curves.linear});
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +206,14 @@ class LzImage<T> extends StatelessWidget {
           }));
     }
 
-    return imageWidget;
+    return sizeChangeDuration != null
+        ? AnimatedContainer(
+            duration: sizeChangeDuration!,
+            curve: curve,
+            width: width,
+            height: height,
+            child: imageWidget)
+        : imageWidget;
   }
 }
 

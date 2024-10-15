@@ -75,4 +75,26 @@ class Tints {
   static Color hex(String code) {
     return Utils.hex(code);
   }
+
+  /// Converts the provided [color] into a new [Color] object by blending
+  /// it with a white background, effectively removing the transparency.
+  ///
+  /// The resulting color will look like how the original [color] would appear
+  /// on a white background, without any transparency.
+  ///
+  /// - [color]: The color to be converted, with its transparency blended out.
+  ///
+  /// Returns a [Color] that represents the original color blended with white.
+  static Color colorToHex(Color color) {
+    // Blend with white background (255, 255, 255)
+    int red =
+        ((color.red * color.alpha) ~/ 255) + (255 * (255 - color.alpha) ~/ 255);
+    int green = ((color.green * color.alpha) ~/ 255) +
+        (255 * (255 - color.alpha) ~/ 255);
+    int blue = ((color.blue * color.alpha) ~/ 255) +
+        (255 * (255 - color.alpha) ~/ 255);
+
+    // Return the blended color as a fully opaque color
+    return Color.fromARGB(255, red, green, blue);
+  }
 }

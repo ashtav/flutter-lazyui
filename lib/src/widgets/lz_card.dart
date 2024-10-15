@@ -35,6 +35,9 @@ class LzCard extends StatelessWidget {
   /// Optional ribbon widget to display on the card.
   final Ribbon? ribbon;
 
+  /// Card shadow
+  final List<BoxShadow>? boxShadow;
+
   /// Creates a [LzCard] widget.
   const LzCard(
       {super.key,
@@ -48,7 +51,8 @@ class LzCard extends StatelessWidget {
       this.stacked = false,
       this.stackAlign = StackAlign.top,
       this.background,
-      this.ribbon});
+      this.ribbon,
+      this.boxShadow});
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +92,8 @@ class LzCard extends StatelessWidget {
               onTap: onTap,
               border: border ?? Br.all(),
               radius: radius ?? Br.radius(5),
-              color: color ?? lzBackgroundColor,
+              color: Tints.colorToHex(color ?? lzBackgroundColor),
+              boxShadow: boxShadow,
               margin: Ei.only(
                   t: isMarginTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
               child: inktouch),
@@ -102,7 +107,7 @@ class LzCard extends StatelessWidget {
                     left: 0,
                     child: CustomPaint(
                             size: const Size(6, 6),
-                            painter: TrianglePainter(color: ribbon?.color))
+                            painter: _TrianglePainter(color: ribbon?.color))
                         .lz
                         .rotate(180),
                   ),
@@ -123,7 +128,8 @@ class LzCard extends StatelessWidget {
           onTap: onTap,
           border: border ?? Br.all(),
           radius: radius ?? Br.radius(5),
-          color: color ?? lzBackgroundColor,
+          color: Tints.colorToHex(color ?? lzBackgroundColor),
+          boxShadow: boxShadow,
           margin: Ei.only(
               t: isMarginTop ? 5 : 0, b: stacked && !isStackedTop ? 5 : 0),
           child: inktouch);
@@ -211,14 +217,14 @@ class Ribbon {
 }
 
 /// Custom painter for drawing a triangular shape.
-class TrianglePainter extends CustomPainter {
+class _TrianglePainter extends CustomPainter {
   /// Optional color of the triangle shape.
   final Color? color;
 
-  /// Creates a [TrianglePainter] instance.
+  /// Creates a [_TrianglePainter] instance.
   ///
   /// [color]: Optional color of the triangle shape.
-  TrianglePainter({this.color});
+  _TrianglePainter({this.color});
 
   @override
   void paint(Canvas canvas, Size size) {

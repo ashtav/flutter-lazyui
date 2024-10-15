@@ -27,27 +27,6 @@ class TestView extends StatelessWidget {
         ]),
         body: LzListView(
           children: [
-            Column(
-              children: [
-                RippleAnimation(
-                  repeat: true,
-                  bordered: true,
-                  color: Colors.blueAccent,
-                  child: Container(
-                    width: 70,
-                    height: 70,
-                    decoration: const BoxDecoration(
-                        color: Colors.blueAccent, shape: BoxShape.circle),
-                    child:
-                        const Center(child: Icon(Ti.user, color: Colors.white)),
-                  ),
-                ),
-              ],
-            ),
-            const Text('Typing')
-                .lz
-                .animate
-                .typing(length: 5, duration: 2.s, character: '. '),
             notifier.watch((state) => ResizedSwitched(
                   show: state.toggle,
                   duration: 150.ms,

@@ -33,6 +33,9 @@ class TypingAnimate extends StatefulWidget {
   /// The duration for each typing cycle (e.g., how long it takes to complete one cycle of animation).
   final Duration duration;
 
+  /// Add a color parameter to the TypingAnimate widget
+  final Color? color;
+
   /// Creates a [TypingAnimate] widget.
   ///
   /// * [child] is the widget to be displayed alongside the typing animation.
@@ -44,6 +47,7 @@ class TypingAnimate extends StatefulWidget {
     this.length = 3,
     this.character = '.',
     this.duration = const Duration(milliseconds: 500),
+    this.color,
   });
 
   @override
@@ -93,7 +97,7 @@ class _TypingAnimateState extends State<TypingAnimate>
           mainAxisSize: MainAxisSize.min,
           children: [
             widget.child,
-            Text(animatedText),
+            Text(animatedText, style: Gfont.color(widget.color ?? lzIconColor)),
           ],
         );
       },

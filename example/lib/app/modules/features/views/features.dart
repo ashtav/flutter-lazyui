@@ -128,8 +128,9 @@ class Actions {
 
     final font = Gfont.style(context);
     if (label == 'LzPad') {
-      LzPicker.picker(context, options: ['OTP Input', 'Passcode Input'],
-          onSelect: (value) {
+      LzPicker.picker(context,
+          options: ['OTP Input', 'Passcode Input'],
+          backBlur: true, onSelect: (value) {
         if (value == 'OTP Input') {
           LzPad.show(context,
               expired: 60.s,
@@ -253,10 +254,11 @@ class LzPicker extends StatelessWidget {
   static picker(BuildContext context,
       {List<String> options = const [],
       List<int> separator = const [],
+      bool backBlur = false,
       Function(String)? onSelect}) {
     context
         .bottomSheet(LzPicker(options: options, separator: separator),
-            draggable: true, safeArea: false)
+            draggable: true, safeArea: false, backBlur: backBlur)
         .then((value) =>
             value == null ? () {} : onSelect?.call(value.toString()));
   }

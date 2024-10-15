@@ -288,8 +288,11 @@ class _PadWidgetState extends State<PadWidget> {
             ],
           )),
           widget.footer ?? const None(),
+
+          // keyboard
           Container(
-            decoration: BoxDecoration(border: Br.only(['t'])),
+            decoration:
+                BoxDecoration(border: Br.only(['t']), color: lzBackgroundColor),
             child: notifier.watch((state) {
               return Wrap(
                 children: keyboards.generate((item, i) {
@@ -315,7 +318,7 @@ class _PadWidgetState extends State<PadWidget> {
                     color: lzBackgroundColor,
                     child: Container(
                         padding: Ei.sym(
-                            h: 15, v: ['<', 'x'].contains(item) ? 16.5 : 15),
+                            h: 15, v: ['<', 'x'].contains(item) ? 17 : 15),
                         width: (context.width - 2) / 3,
                         child: Center(
                                 child: item == '<'

@@ -86,6 +86,9 @@ class InkTouch extends StatelessWidget {
   /// The duration of the splash animation.
   final Duration? animationDuration;
 
+  /// Box shadow
+  final List<BoxShadow>? boxShadow;
+
   /// Create InkTouch
   const InkTouch(
       {super.key,
@@ -108,7 +111,8 @@ class InkTouch extends StatelessWidget {
       this.splashByBaseColor = false,
       this.border,
       this.opacity = 1,
-      this.animationDuration});
+      this.animationDuration,
+      this.boxShadow});
 
   @override
   Widget build(BuildContext context) {
@@ -133,6 +137,7 @@ class InkTouch extends StatelessWidget {
 
     return Container(
       margin: margin ?? Ei.all(0),
+      decoration: BoxDecoration(boxShadow: boxShadow),
       child: Material(
         elevation: elevation,
         color: color ?? Colors.transparent,

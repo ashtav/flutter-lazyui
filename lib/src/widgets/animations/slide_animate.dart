@@ -141,10 +141,20 @@ class _SlideAnimateState extends State<SlideAnimate>
       end: Offset.zero, // End at the center
     ).animate(curve);
 
-    if (widget.show) {
-      _animController?.forward(); // Show the widget by animating forward
+    if (widget.delay != null && widget.delay! > 0) {
+      timer = Timer(Duration(milliseconds: widget.delay!), () {
+        if (widget.show) {
+          _animController?.forward(); // Show the widget after delay
+        } else {
+          _animController?.reverse(); // Hide the widget after delay
+        }
+      });
     } else {
-      _animController?.reverse(); // Hide the widget by animating in reverse
+      if (widget.show) {
+        _animController?.forward(); // Show the widget without delay
+      } else {
+        _animController?.reverse(); // Hide the widget without delay
+      }
     }
   }
 
