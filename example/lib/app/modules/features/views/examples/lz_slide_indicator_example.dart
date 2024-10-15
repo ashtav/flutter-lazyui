@@ -20,7 +20,7 @@ class SlideIndicatorView extends StatelessWidget {
                 .margin(all: 20),
             Column(
               children: [
-                LzTextDivider(Text(names[active])).margin(b: 20),
+                LzTextDivider(child: Text(names[active])).margin(b: 20),
                 LzSlideIndicator(
                   length: names.length,
                   active: active,

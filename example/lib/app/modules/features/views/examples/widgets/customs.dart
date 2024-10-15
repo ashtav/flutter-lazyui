@@ -38,13 +38,7 @@ class CustomWidgetView extends StatelessWidget {
     ];
 
     // behavior
-    List<String> behaviorWidgets = [
-      'Wrapper',
-      'Intrinsic',
-      'BounceScroll',
-      'Unglow',
-      'Center Dialog'
-    ];
+    List<String> behaviorWidgets = ['Wrapper', 'Intrinsic', 'BounceScroll', 'Unglow', 'Center Dialog'];
     List<String> behaviorWidgetsDescription = [
       'Wrapper is a versatile Flutter widget that provides a convenient way to wrap child widgets. It includes features like handling background taps to dismiss the keyboard and controlling the back button press behavior. This widget simplifies common wrapping tasks in Flutter apps.',
       'A simplified version of the Flutter [IntrinsicHeight] widget. The `Intrinsic` widget provides an easier way to create an intrinsic height layout for a list of children. It simplifies the process of ensuring that all children have the same height based on the tallest child in either a horizontal or vertical layout.',
@@ -109,10 +103,7 @@ class CustomWidgetView extends StatelessWidget {
             border: Br.only(['t'], except: i == 0),
             child: Row(
               mainAxisAlignment: Maa.spaceBetween,
-              children: [
-                Text(item),
-                Icon(Ti.chevronRight, color: Colors.black45.adaptWithTheme)
-              ],
+              children: [Text(item), Icon(Ti.chevronRight, color: Colors.black45.adaptWithTheme)],
             ),
           );
         })
@@ -127,11 +118,11 @@ class Actions {
       'LzLoader': LzLoader.bar(message: 'Loading, please wait...'),
       'LzNoData': const NoDataView(),
       'LzTextField': const TextFieldView(),
-      'LzTextDivider': const Center(child: LzTextDivider(Text('Hello World!'))),
+      'LzTextDivider':  Center(child: LzTextDivider(
+        child: Text('Hello World!', style: Gfont.fs20))),
       'LzSlideIndicator': const SlideIndicatorView(),
     };
 
-    context.lz.push(
-        WidgetView(title: label, child: routes[label] ?? const TestView()));
+    context.lz.push(WidgetView(title: label, child: routes[label] ?? const TestView()));
   }
 }

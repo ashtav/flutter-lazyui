@@ -5,7 +5,7 @@ extension LzExtension on Widget {
   /// Returns an instance of [LzModifiers] for applying Lazuli UI modifiers to the widget.
   ///
   /// Returns an instance of [LzModifiers].
-  LzModifiers get lz => LzModifiers(this, Animate(this));
+  LzModifiers get lz => LzModifiers(this, LzAnimate(this));
 }
 
 /// A class for applying Lazuli UI modifiers to a widget.
@@ -14,7 +14,7 @@ class LzModifiers {
   final Widget widget;
 
   /// The widget to apply modifiers to.
-  final Animate animate;
+  final LzAnimate animate;
 
   /// Constructs a [LzModifiers] instance with the provided widget.
   ///

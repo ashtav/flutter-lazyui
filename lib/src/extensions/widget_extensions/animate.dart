@@ -2,16 +2,16 @@ part of '../extension.dart';
 
 /// A simple wrapper class for applying animations to a widget.
 ///
-/// The [Animate] class holds a widget that can be animated using the various
+/// The [LzAnimate] class holds a widget that can be animated using the various
 /// sliding animations provided by the [LzAnimateExtension]. This class is
 /// designed to work with the extension to easily apply different types of
 /// slide animations to any widget.
-class Animate {
+class LzAnimate {
   /// The widget that will be animated.
   final Widget widget;
 
-  /// Creates an [Animate] wrapper around the given [widget].
-  Animate(this.widget);
+  /// Creates an [LzAnimate] wrapper around the given [widget].
+  LzAnimate(this.widget);
 }
 
 /// Extension methods on [Animate] to provide sliding animations.
@@ -20,7 +20,7 @@ class Animate {
 /// animations (up, down, left, right) to the wrapped widget in the [Animate] class.
 /// Each method allows customization of the animation parameters such as
 /// [show], [delay], [speed], and [animate].
-extension LzAnimateExtension on Animate {
+extension LzAnimateExtension on LzAnimate {
   /// Animates the widget to slide up from the bottom.
   ///
   /// * [show]: Whether the widget should be shown or hidden (default is `true`).

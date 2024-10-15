@@ -32,6 +32,7 @@ class LzCardExample extends StatelessWidget {
               LzCard(
                 gap: 5,
                 stacked: true,
+                stackAlign : StackAlign.bottom,
                 color: Colors.orange.withOpacity(.1),
                 children: [
                   Text('Stacked Card', style: font.bold),

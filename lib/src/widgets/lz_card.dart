@@ -161,9 +161,6 @@ enum StackAlign {
   /// Aligns stacked content at the top.
   top,
 
-  /// Aligns stacked content at the center.
-  center,
-
   /// Aligns stacked content at the bottom.
   bottom,
 }

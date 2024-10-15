@@ -2,8 +2,8 @@ part of 'widget.dart';
 
 /// A divider widget with text.
 class LzTextDivider extends StatelessWidget {
-  /// The text displayed beside the divider.
-  final Text text;
+  /// The child displayed beside the divider.
+  final Widget child;
 
   /// The indentation between the text and the divider.
   final double indent;
@@ -25,8 +25,8 @@ class LzTextDivider extends StatelessWidget {
   /// The [text] parameter is required.
   /// All other parameters are optional.
 
-  const LzTextDivider(
-    this.text, {
+  const LzTextDivider({
+    required this.child,
     super.key,
     this.indent = 10,
     this.height,
@@ -47,7 +47,7 @@ class LzTextDivider extends StatelessWidget {
             thickness: thickness,
             color: color ?? Colors.black26.adaptWithTheme));
 
-    final children = [divider, text, divider];
+    final children = [divider, child, divider];
 
     if (alignment != Caa.center) {
       children.removeAt(alignment == Caa.start ? 0 : 2);
