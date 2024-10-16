@@ -27,7 +27,7 @@ class TestView extends StatelessWidget {
         ]),
         body: LzListView(
           children: [
-            notifier.watch((state) => ResizedSwitched(
+            notifier.watch((state) => ResizedSwitcher(
                   show: state.toggle,
                   duration: 150.ms,
                   child: state.toggle

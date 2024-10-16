@@ -2,13 +2,13 @@ part of '../widget.dart';
 
 /// A widget that animates the resizing and switching of its child widget.
 ///
-/// The `ResizedSwitched` widget is useful for creating smooth transitions
+/// The `ResizedSwitcher` widget is useful for creating smooth transitions
 /// when switching between different child widgets. It can animate the size
 /// and opacity of its child widget when the `show` property changes.
 ///
 /// Example usage:
 /// ```dart
-/// ResizedSwitched(
+/// ResizedSwitcher(
 ///   duration: Duration(milliseconds: 500), // Animation duration
 ///   show: isSwitched, // A boolean flag to control showing or hiding the child
 ///   useOpacity: true, // Apply opacity transition (default is true)
@@ -17,7 +17,7 @@ part of '../widget.dart';
 ///   child: Text("Hello, World!"), // The child widget to be animated
 /// )
 /// ```
-class ResizedSwitched extends StatelessWidget {
+class ResizedSwitcher extends StatelessWidget {
   /// The child widget to be animated.
   final Widget? child;
 
@@ -36,7 +36,7 @@ class ResizedSwitched extends StatelessWidget {
   /// The alignment of the child within the parent.
   final AlignmentGeometry alignment;
 
-  /// Creates a `ResizedSwitched` widget.
+  /// Creates a `ResizedSwitcher` widget.
   ///
   /// The [child] is the widget to be animated when switching.
   /// The [duration] specifies the total duration of the animation.
@@ -44,7 +44,7 @@ class ResizedSwitched extends StatelessWidget {
   /// The [useOpacity] flag controls whether to apply opacity transition (default is true).
   /// The [axis] defines the axis of the size transition (vertical or horizontal).
   /// The [alignment] sets the alignment of the child within the parent.
-  const ResizedSwitched({
+  const ResizedSwitcher({
     super.key,
     this.child,
     this.duration,

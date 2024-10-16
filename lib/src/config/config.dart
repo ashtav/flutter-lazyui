@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lazyui/src/constants/enum.dart';
-import 'package:lazyui/src/widgets/lztoast/src/loading.dart';
+import 'package:lazyui/src/widgets/feedback/lztoast/src/loading.dart';
 
 import '../utils/util.dart';
 
