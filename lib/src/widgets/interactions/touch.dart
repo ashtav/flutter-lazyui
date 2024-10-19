@@ -11,7 +11,7 @@ part of '../widget.dart';
 /// )
 /// ```
 
-bool _hoverable = false;
+bool _hoverable = true;
 
 /// A widget that responds to tap and double-tap events.
 class Touch extends StatelessWidget {
@@ -61,7 +61,7 @@ class Touch extends StatelessWidget {
 
   /// Configures the hoverable behavior for the widget.
   static config({bool? hoverable}) {
-    _hoverable = hoverable ?? false;
+    _hoverable = hoverable ?? true;
   }
 
   /// Creates a customizable button widget with the specified text and optional tap handler.

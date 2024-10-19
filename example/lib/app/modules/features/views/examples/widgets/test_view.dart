@@ -1,40 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-class Notifier extends ChangeNotifier {
-  bool toggle = false;
-
-  void doToggle() {
-    toggle = !toggle;
-    notifyListeners();
-  }
-}
+class Notifier extends ChangeNotifier {}
 
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final notifier = Notifier();
+    Utils.timer(() {
+      logg(Theme.of(context).scaffoldBackgroundColor);
+    }, 1.s);
 
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(title: const Text('Test View'), actions: [
           Press(Ti.toggleLeft, () {}),
-          Press(Ti.forbid, () {
-            notifier.doToggle();
-          }),
+          Press(Ti.forbid, () {}),
         ]),
-        body: LzListView(
-          children: [
-            notifier.watch((state) => ResizedSwitcher(
-                  show: state.toggle,
-                  duration: 150.ms,
-                  child: state.toggle
-                      ? Text('First Wdiget', key: UniqueKey())
-                      : Text('Second Widget', key: UniqueKey()),
-                ))
-          ],
+        body: const LzListView(
+          children: [],
         ),
       ),
     );

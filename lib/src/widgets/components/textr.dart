@@ -57,9 +57,6 @@ class Textr extends StatelessWidget {
   /// The width of the text widget.
   final double? width;
 
-  /// The alignment of the text widget within its parent widget.
-  final AlignmentGeometry? alignment;
-
   /// The icon to display alongside the text.
   final IconData? icon;
 
@@ -79,7 +76,6 @@ class Textr extends StatelessWidget {
       this.overflow,
       this.softwrap,
       this.maxLines,
-      this.alignment,
       this.border,
       this.color,
       this.icon,
@@ -87,8 +83,17 @@ class Textr extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textAlignment = {
+      TextAlign.center: Alignment.center,
+      TextAlign.end: Alignment.centerRight,
+      TextAlign.justify: Alignment.center,
+      TextAlign.left: Alignment.centerLeft,
+      TextAlign.right: Alignment.centerRight,
+      TextAlign.start: Alignment.centerLeft,
+    };
+
     Widget wrapper(Widget child) => Container(
-        alignment: alignment,
+        alignment: textAlignment[textAlign],
         padding: padding,
         margin: margin,
         width: width,

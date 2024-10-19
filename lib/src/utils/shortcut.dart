@@ -466,7 +466,7 @@ class Bx {
   /// [mode]: The tile mode that defines how the gradient is repeated. Default is [TileMode.clamp].
   ///
   /// Returns a [LinearGradient] instance.
-  static gradient(List<Color> colors,
+  static Gradient gradient(List<Color> colors,
       {AlignmentGeometry? begin,
       AlignmentGeometry? end,
       List<double>? stops = const [0.0, 1.0],
@@ -477,5 +477,52 @@ class Bx {
         end: end ?? const FractionalOffset(1.0, 0.0),
         stops: stops,
         tileMode: mode ?? TileMode.clamp);
+  }
+
+  /// Creates a radial gradient with the specified colors and optional center, radius, stops, and tile mode parameters.
+  ///
+  /// [colors]: A list of colors to be used in the radial gradient.
+  /// [center]: The center point of the gradient. Default is center (0.5, 0.5).
+  /// [radius]: The radius of the radial gradient. Default is 0.5.
+  /// [stops]: A list of positions for each color stop. Default is evenly distributed.
+  /// [mode]: The tile mode that defines how the gradient is repeated. Default is [TileMode.clamp].
+  ///
+  /// Returns a [RadialGradient] instance.
+  static Gradient radialGradient(List<Color> colors,
+      {AlignmentGeometry? center,
+      double radius = 0.5,
+      List<double>? stops,
+      TileMode mode = TileMode.clamp}) {
+    return RadialGradient(
+        colors: colors,
+        center: center ?? const Alignment(0.5, 0.5),
+        radius: radius,
+        stops: stops,
+        tileMode: mode);
+  }
+
+  /// Creates a sweep gradient with the specified colors and optional center, startAngle, endAngle, stops, and tile mode parameters.
+  ///
+  /// [colors]: A list of colors to be used in the sweep gradient.
+  /// [center]: The center point of the sweep gradient. Default is center (0.5, 0.5).
+  /// [startAngle]: The start angle of the sweep in radians. Default is 0.0.
+  /// [endAngle]: The end angle of the sweep in radians. Default is 2 * pi (full circle).
+  /// [stops]: A list of positions for each color stop. Default is evenly distributed.
+  /// [mode]: The tile mode that defines how the gradient is repeated. Default is [TileMode.clamp].
+  ///
+  /// Returns a [SweepGradient] instance.
+  static Gradient sweepGradient(List<Color> colors,
+      {AlignmentGeometry? center,
+      double startAngle = 0.0,
+      double endAngle = 2 * 3.141592653589793,
+      List<double>? stops,
+      TileMode mode = TileMode.clamp}) {
+    return SweepGradient(
+        colors: colors,
+        center: center ?? const Alignment(0.5, 0.5),
+        startAngle: startAngle,
+        endAngle: endAngle,
+        stops: stops,
+        tileMode: mode);
   }
 }

@@ -95,8 +95,8 @@ class LzTheme {
     lzDarkMode = darkMode;
 
     if (darkMode) {
-      lzBorderColor = Colors.black12.inverse();
-      lzIconColor = Colors.black45.inverse();
+      lzBorderColor = Colors.black12.invert();
+      lzIconColor = Colors.black45.invert();
       lzBackgroundColor = '1e1d21'.hex;
       gfont = gfont.copyWith(color: Colors.white);
     } else {
@@ -114,7 +114,7 @@ extension CustomColorExtension on Color {
   ///
   /// Returns the inverse of the color if [lzDarkMode] is `true`, otherwise returns the color itself.
   Color get adaptWithTheme {
-    return lzDarkMode ? inverse() : this;
+    return lzDarkMode ? invert() : this;
   }
 
   /// check if color is dark or light then return color

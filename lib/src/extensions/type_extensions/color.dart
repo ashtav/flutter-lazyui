@@ -33,11 +33,6 @@ extension LzColorExtension on Color {
   Color darken([double mixFactor = .5]) =>
       Tints.darken(this, mixFactor: mixFactor);
 
-  /// Inverts the color.
-  ///
-  /// @return A new [Color] object representing the inverted color.
-  Color inverse() => Tints.inverse(this);
-
   /// Returns the inverted color if [value] is true, otherwise returns the original color.
   ///
   /// If [value] is true, returns a new [Color] object representing the inverted color.
@@ -46,10 +41,10 @@ extension LzColorExtension on Color {
   /// Example:
   /// ```dart
   /// Color originalColor = Colors.black;
-  /// Color invertedColor = originalColor.inversed(true); // Inverted color
-  /// Color sameColor = originalColor.inversed(false); // Original color
+  /// Color invertedColor = originalColor.invert(true); // Inverted color
+  /// Color sameColor = originalColor.invert(false); // Original color
   /// ```
-  Color inversed(bool value) => value ? Tints.inverse(this) : this;
+  Color invert([bool value = true]) => value ? Tints.inverse(this) : this;
 
   /// Determines whether the color is considered "dark" based on its luminosity.
   ///

@@ -10,7 +10,7 @@ class RippleAnimation extends StatefulWidget {
     this.child,
     this.color = Colors.black,
     this.delay = const Duration(),
-    this.repeat = false,
+    this.repeat = true,
     this.bordered = false,
     this.outlined = false,
     this.strokeWidth,
@@ -77,6 +77,13 @@ class RippleAnimationState extends State<RippleAnimation>
   @override
   void didUpdateWidget(covariant RippleAnimation oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    // Check if the `duration` has changed
+    if (widget.duration != oldWidget.duration) {
+      _controller?.duration = widget.duration;
+      _controller?.reset(); // Reset the controller
+      widget.repeat ? _controller?.repeat() : _controller?.forward();
+    }
 
     // Check if the `repeat` property has changed
     if (widget.repeat != oldWidget.repeat) {

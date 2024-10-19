@@ -10,7 +10,7 @@ class SettingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = LzTheme.get(context);
-    Color borderColor = Colors.black12.inversed(theme.isDarkMode);
+    Color borderColor = Colors.black12.invert(theme.isDarkMode);
 
     return ThemeSwitchingArea(
       child: Scaffold(

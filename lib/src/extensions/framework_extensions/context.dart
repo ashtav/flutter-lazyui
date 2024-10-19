@@ -73,6 +73,24 @@ class LzContextModifiers {
 
 /// Extends the functionality of the [BuildContext] class with additional methods and properties.
 extension LzContextExtension on BuildContext {
+  /// Gets the scaffold color from the app's global theme.
+  ///
+  /// This method retrieves the `scaffoldBackgroundColor` defined in the
+  /// current theme using `Theme.of(context)`. It's important to note that
+  /// this does not reflect the color directly set on a specific `Scaffold`
+  /// instance. Instead, it returns the default scaffold background color
+  /// as defined in the app's global `ThemeData`.
+  ///
+  /// For example, if the app is using the default light theme, this color
+  /// might be `Color(0xfffafafa)`, which is a light grey commonly used in
+  /// material design for light backgrounds.
+  ///
+  /// If you are setting the `backgroundColor` directly on a `Scaffold` in
+  /// a particular view, it will not affect the color returned by this
+  /// method. To ensure consistency, you can either override the theme
+  /// globally, or directly pass the same color to other widgets.
+  Color get scaffoldColor => Theme.of(this).scaffoldBackgroundColor;
+
   /// Gets the height of the current screen.
   double get height => MediaQuery.of(this).size.height;
 
