@@ -1,6 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+extension GroupAnimate on Column {
+  Column animateGroup() {
+    return Column(
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textDirection: textDirection,
+      verticalDirection: verticalDirection,
+      textBaseline: textBaseline,
+      children: children.generate((child, i) {
+        if (child is SizedBox) {
+          return child;
+        }
+
+        return child.lz.animate.slideUp(delay: (i + 1) * 100);
+      }).toList(),
+    );
+  }
+}
+
 class Notifier extends ChangeNotifier {}
 
 class TestView extends StatelessWidget {
@@ -8,18 +28,31 @@ class TestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils.timer(() {
-      logg(Theme.of(context).scaffoldBackgroundColor);
-    }, 1.s);
-
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(title: const Text('Test View'), actions: [
           Press(Ti.toggleLeft, () {}),
           Press(Ti.forbid, () {}),
         ]),
-        body: const LzListView(
-          children: [],
+        body: LzListView(
+          children: [
+            Column(
+              children: [
+                const Text('Hello world!'),
+                Text('Lorem ipsum dolor sit amet', style: Gfont.bold),
+                10.height,
+                Text(Faker.words(25))
+              ],
+            ).start.gap(5).animateGroup(),
+
+            Column(
+              children: [
+                LzButton(
+                  text: 'Submit',
+                )
+              ],
+            )
+          ],
         ),
       ),
     );

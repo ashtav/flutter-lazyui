@@ -6,9 +6,9 @@ extension LzDateTimeNullableExtension on DateTime? {
   /// ```dart
   /// DateTime.now().format(); // 2022-11-05
   /// ```
-  String format([String format = 'yyyy-MM-dd', bool toLocal = false]) {
+  String format([String format = 'yyyy-MM-dd', bool toLocal = false, String? locale]) {
     final date = this ?? DateTime.now();
-    return DateFormat(format).format(toLocal ? date.toLocal() : date);
+    return DateFormat(format, locale).format(toLocal ? date.toLocal() : date);
   }
 }
 
