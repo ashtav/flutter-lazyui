@@ -74,7 +74,8 @@ class LazyUi {
 
     // Lock device orientation to portrait if alwaysPortrait is true
     if (alwaysPortrait) {
-      Utils.orientation([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      Utils.orientation(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
     // Set default values for font, icon, space, and radius if they are not provided
@@ -85,7 +86,8 @@ class LazyUi {
 
     // Override default Flutter error handler for specific cases (e.g., image resource errors)
     FlutterError.onError = (FlutterErrorDetails details) {
-      if (details.library == 'image resource service' || details.exception.toString().contains('404')) {
+      if (details.library == 'image resource service' ||
+          details.exception.toString().contains('404')) {
         return;
       }
 
@@ -102,7 +104,8 @@ class LazyUi {
   /// - [useLzToast]: Whether to use LazyUi's toast system, default is `true`.
   ///
   /// Returns a widget that applies media query adjustments and optional toast overlay.
-  static Widget builder(BuildContext context, Widget? child, {double? maxScalingFontSize, bool useLzToast = true}) {
+  static Widget builder(BuildContext context, Widget? child,
+      {double? maxScalingFontSize, bool useLzToast = true}) {
     _defaultTextStyle = _getFontStyle(context);
 
     // Get the text scaling factor based on device settings
@@ -110,10 +113,13 @@ class LazyUi {
 
     return MediaQuery(
       data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(
-              maxScalingFontSize != null ? maxScalingFactor : maxScalingFactor.clamp(1.0, maxScalingFontSize ?? 1))),
+          textScaler: TextScaler.linear(maxScalingFontSize != null
+              ? maxScalingFactor
+              : maxScalingFactor.clamp(1.0, maxScalingFontSize ?? 1))),
       child: useLzToast
-          ? LzToastOverlay(child: BackdropFilter(filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
+          ? LzToastOverlay(
+              child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), child: child))
           : child ?? const SizedBox.shrink(),
     );
   }

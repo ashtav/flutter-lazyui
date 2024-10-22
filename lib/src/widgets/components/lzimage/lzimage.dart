@@ -65,6 +65,8 @@ class LzImage<T> extends StatelessWidget {
     bool isUint8List = image is Uint8List;
     bool isImage = image is Image;
 
+    bool isValidImage = true;
+
     // logg('isPath: $isPath, isFile: $isFile');
 
     // get image size
@@ -95,6 +97,11 @@ class LzImage<T> extends StatelessWidget {
     // handle image url
     if (isString) {
       String image = this.image as String;
+
+      if (image.trim().isEmpty) {
+        imageWidget = errorWidget;
+        isValidImage = false;
+      }
 
       // Url
       // This section determines how the image should be loaded based on its url
@@ -195,7 +202,7 @@ class LzImage<T> extends StatelessWidget {
     imageWidget = imageWidget.lz.clip(all: radius ?? LazyUi.radius);
 
     // if interactive, image can be previewed by tapping on it
-    if (interactive) {
+    if (interactive && isValidImage) {
       final tag = DateTime.now().microsecond;
       return Hero(
           tag: tag,

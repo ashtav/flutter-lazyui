@@ -21,7 +21,22 @@ extension GroupAnimate on Column {
   }
 }
 
-class Notifier extends ChangeNotifier {}
+class Notifier extends ChangeNotifier {
+  List<String> users = ['@yohanes', '@gunawan'];
+  final comment = TextEditingController();
+
+  void addUser(String name) {
+    users.add('@$name');
+    notifyListeners();
+  }
+
+  void removeLast() {
+    users.removeLast();
+    logg('remove last');
+
+    notifyListeners();
+  }
+}
 
 class TestView extends StatelessWidget {
   const TestView({super.key});
@@ -34,24 +49,23 @@ class TestView extends StatelessWidget {
           Press(Ti.toggleLeft, () {}),
           Press(Ti.forbid, () {}),
         ]),
-        body: LzListView(
+        body: Column(
           children: [
-            Column(
-              children: [
-                const Text('Hello world!'),
-                Text('Lorem ipsum dolor sit amet', style: Gfont.bold),
-                10.height,
-                Text(Faker.words(25))
-              ],
-            ).start.gap(5).animateGroup(),
-
-            Column(
-              children: [
-                LzButton(
-                  text: 'Submit',
-                )
-              ],
-            )
+            Expanded(
+              child: LzListView(
+                children: [
+                  Column(
+                    children: [
+                      const Text('Hello world!'),
+                      Text('Lorem ipsum dolor sit amet', style: Gfont.bold),
+                      10.height,
+                      Text(Faker.words(25)),
+                      50.height,
+                    ],
+                  ).start.gap(5).animateGroup(),
+                ],
+              ),
+            ),
           ],
         ),
       ),

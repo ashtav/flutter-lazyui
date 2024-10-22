@@ -44,7 +44,7 @@ class Touch extends StatelessWidget {
   Widget build(BuildContext context) {
     bool hoverable = this.hoverable ?? _hoverable;
 
-    return hoverable
+    return hoverable && onTap != null
         ? _TouchHover(
             onTap: onTap,
             onDoubleTap: onDoubleTap,

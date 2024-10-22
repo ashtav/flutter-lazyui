@@ -63,37 +63,34 @@ class Textr extends StatelessWidget {
   /// The style of the icon.
   final IconStyle? iconStyle;
 
+  /// Container alignment
+  final AlignmentGeometry? alignment;
+
   /// Creates a customizable text widget.
-  const Textr(this.text,
-      {super.key,
-      this.style,
-      this.margin,
-      this.padding,
-      this.width,
-      this.textAlign,
-      this.radius,
-      this.textDecoration,
-      this.overflow,
-      this.softwrap,
-      this.maxLines,
-      this.border,
-      this.color,
-      this.icon,
-      this.iconStyle});
+  const Textr(
+    this.text, {
+    super.key,
+    this.style,
+    this.margin,
+    this.padding,
+    this.width,
+    this.textAlign,
+    this.radius,
+    this.textDecoration,
+    this.overflow,
+    this.softwrap,
+    this.maxLines,
+    this.border,
+    this.color,
+    this.icon,
+    this.iconStyle,
+    this.alignment,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final textAlignment = {
-      TextAlign.center: Alignment.center,
-      TextAlign.end: Alignment.centerRight,
-      TextAlign.justify: Alignment.center,
-      TextAlign.left: Alignment.centerLeft,
-      TextAlign.right: Alignment.centerRight,
-      TextAlign.start: Alignment.centerLeft,
-    };
-
     Widget wrapper(Widget child) => Container(
-        alignment: textAlignment[textAlign],
+        alignment: alignment,
         padding: padding,
         margin: margin,
         width: width,
