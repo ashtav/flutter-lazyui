@@ -140,6 +140,7 @@ class Input extends StatelessWidget with LzFormMixin {
 
     // get icon (tabler or line awesome)
     bool isTabler = LazyUi.iconType == IconType.tablerIcon;
+    bool isHugeIcon = LazyUi.iconType == IconType.hugeIcon;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
@@ -290,10 +291,14 @@ class Input extends StatelessWidget with LzFormMixin {
                 alignment: Alignment.centerRight,
                 child: Icon(
                   style?.suffixIcon ??
-                      (isTabler ? Ti.chevronDown : La.angleDown),
+                      (isTabler
+                          ? Ti.chevronDown
+                          : isHugeIcon
+                              ? Hi.strokeRoundedArrowDown01
+                              : La.angleDown),
                   color:
                       style?.suffixIconColor ?? Colors.black38.adaptWithTheme,
-                  size: 18,
+                  size: 20,
                 ).padding(r: 15, b: 1.5),
               ),
 
@@ -303,8 +308,16 @@ class Input extends StatelessWidget with LzFormMixin {
                 alignment: Alignment.centerRight,
                 child: notifier
                     .watch((state) {
-                      IconData iconView = isTabler ? Ti.eye : La.eye;
-                      IconData iconHide = isTabler ? Ti.eyeOff : La.eyeSlash;
+                      IconData iconView = isTabler
+                          ? Ti.eye
+                          : isHugeIcon
+                              ? Hi.strokeRoundedView
+                              : La.eye;
+                      IconData iconHide = isTabler
+                          ? Ti.eyeOff
+                          : isHugeIcon
+                              ? Hi.strokeRoundedViewOffSlash
+                              : La.eyeSlash;
 
                       return Iconr(notifier.obsecure ? iconView : iconHide,
                           color: Colors.black38.adaptWithTheme,

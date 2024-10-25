@@ -75,6 +75,7 @@ class Select extends StatelessWidget with LzFormMixin {
 
     // get icon (tabler or line awesome)
     bool isTabler = LazyUi.iconType == IconType.tablerIcon;
+    bool isHugeIcon = LazyUi.iconType == IconType.hugeIcon;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
@@ -87,7 +88,7 @@ class Select extends StatelessWidget with LzFormMixin {
 
     // check if label is available
     bool hasLabel = label != null && !attr.isGrouped;
-    bool hasOnTap = onTap != null;
+    // bool hasOnTap = onTap != null;
     bool hasPrefix = style?.prefix != null;
 
     // create label widget
@@ -123,8 +124,14 @@ class Select extends StatelessWidget with LzFormMixin {
                 ? Center(widthFactor: 1, child: style?.prefix).padding(h: 16)
                 : Icon(style?.prefixIcon, color: style?.prefixIconColor);
     Widget? suffixIconWidget = Icon(
-        style?.suffixIcon ?? (isTabler ? Ti.chevronDown : La.angleDown),
-        color: style?.suffixIconColor);
+        style?.suffixIcon ??
+            (isTabler
+                ? Ti.chevronDown
+                : isHugeIcon
+                    ? Hi.strokeRoundedArrowDown01
+                    : La.angleDown),
+        color: style?.suffixIconColor,
+        size: 20);
 
     // init select list
     notifier.selectList = options;
@@ -207,16 +214,16 @@ class Select extends StatelessWidget with LzFormMixin {
             ),
 
             // if onTap is not null, add icon
-            if (hasOnTap)
-              Poslign(
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  style?.suffixIcon ??
-                      (isTabler ? Ti.chevronDown : La.angleDown),
-                  color: style?.suffixIconColor ?? Colors.black38,
-                  size: 18,
-                ).padding(r: 15, b: 1.5),
-              ),
+            // if (hasOnTap)
+            //   Poslign(
+            //     alignment: Alignment.centerRight,
+            //     child: Icon(
+            //       style?.suffixIcon ??
+            //           (isTabler ? Ti.chevronDown : La.angleDown),
+            //       color: style?.suffixIconColor ?? Colors.black38,
+            //       size: 18,
+            //     ).padding(r: 15, b: 1.5),
+            //   ),
           ],
         ),
       );

@@ -17,6 +17,9 @@ enum IconType {
 
   /// Tabler icon set.
   tablerIcon,
+
+  /// Huge icon set
+  hugeIcon
 }
 
 /// Enum representing different slide directions.

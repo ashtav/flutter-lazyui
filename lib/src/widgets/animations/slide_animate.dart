@@ -88,6 +88,9 @@ class SlideAnimate extends StatefulWidget {
   /// Defaults to [SlideAxis.bottomToTop].
   final SlideAxis axis;
 
+  /// Animation duration
+  final Duration? duration;
+
   /// Creates a [SlideAnimate] widget.
   ///
   /// * [child] is required to be provided.
@@ -95,15 +98,15 @@ class SlideAnimate extends StatefulWidget {
   /// * [speed] defaults to `0.5`, controlling the speed of the slide.
   /// * [animate] defaults to `true`, meaning the animation is active by default.
 
-  const SlideAnimate({
-    super.key,
-    required this.child,
-    this.show = true,
-    this.delay,
-    this.speed = 0.50,
-    this.animate = true,
-    this.axis = SlideAxis.bottomToTop,
-  });
+  const SlideAnimate(
+      {super.key,
+      required this.child,
+      this.show = true,
+      this.delay,
+      this.speed = 0.50,
+      this.animate = true,
+      this.axis = SlideAxis.bottomToTop,
+      this.duration});
 
   @override
   State<SlideAnimate> createState() => _SlideAnimateState();
@@ -131,7 +134,8 @@ class _SlideAnimateState extends State<SlideAnimate>
 
   void init() {
     _animController = AnimationController(
-        vsync: this, duration: const Duration(milliseconds: 300));
+        vsync: this,
+        duration: widget.duration ?? const Duration(milliseconds: 300));
 
     final curve =
         CurvedAnimation(curve: Curves.decelerate, parent: _animController!);
@@ -169,7 +173,9 @@ class _SlideAnimateState extends State<SlideAnimate>
     super.didUpdateWidget(oldWidget);
 
     // Check if the axis or show status has changed
-    if (widget.axis != oldWidget.axis || widget.show != oldWidget.show) {
+    if (widget.axis != oldWidget.axis ||
+        widget.show != oldWidget.show ||
+        widget.duration != oldWidget.duration) {
       // Reset animation with the new axis
       _animOffset = Tween<Offset>(
         begin: _getBeginOffset(), // Recalculate based on new axis

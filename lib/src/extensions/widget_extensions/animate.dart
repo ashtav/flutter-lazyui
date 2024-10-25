@@ -31,12 +31,14 @@ extension LzAnimateExtension on LzAnimate {
           {bool show = true,
           int? delay,
           double speed = 0.5,
-          bool animate = true}) =>
+          bool animate = true,
+          Duration? duration}) =>
       SlideAnimate(
           show: show,
           delay: delay,
           speed: speed,
           animate: animate,
+          duration: duration,
           child: widget);
 
   /// Animates the widget to slide down from the top.
@@ -49,13 +51,15 @@ extension LzAnimateExtension on LzAnimate {
           {bool show = true,
           int? delay,
           double speed = 0.5,
-          bool animate = true}) =>
+          bool animate = true,
+          Duration? duration}) =>
       SlideAnimate(
           show: show,
           delay: delay,
           speed: speed,
           animate: animate,
           axis: SlideAxis.topToBottom,
+          duration: duration,
           child: widget);
 
   /// Animates the widget to slide left from the right.
@@ -68,13 +72,15 @@ extension LzAnimateExtension on LzAnimate {
           {bool show = true,
           int? delay,
           double speed = 0.5,
-          bool animate = true}) =>
+          bool animate = true,
+          Duration? duration}) =>
       SlideAnimate(
           show: show,
           delay: delay,
           speed: speed,
           animate: animate,
           axis: SlideAxis.rightToLeft,
+          duration: duration,
           child: widget);
 
   /// Animates the widget to slide right from the left.
@@ -87,13 +93,15 @@ extension LzAnimateExtension on LzAnimate {
           {bool show = true,
           int? delay,
           double speed = 0.5,
-          bool animate = true}) =>
+          bool animate = true,
+          Duration? duration}) =>
       SlideAnimate(
           show: show,
           delay: delay,
           speed: speed,
           animate: animate,
           axis: SlideAxis.leftToRight,
+          duration: duration,
           child: widget);
 
   /// Animates the widget to blink (fade in and out).

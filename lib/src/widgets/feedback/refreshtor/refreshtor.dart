@@ -1,5 +1,6 @@
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/widgets/feedback/refreshtor/src/arrow_indicator.dart';
 
@@ -36,6 +37,8 @@ class Refreshtor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool hasVibrated = false;
+
     return CustomRefreshIndicator(
         onRefresh: () async => onRefresh.call(),
         offsetToArmed: style?.offsetToArmed ?? 80,
@@ -52,6 +55,13 @@ class Refreshtor extends StatelessWidget {
 
                 if (builder != null) {
                   return builder!(controller, value);
+                }
+
+                if (controller.isArmed && !hasVibrated) {
+                  HapticFeedback.heavyImpact();
+                  hasVibrated = true;
+                } else if (!controller.isArmed) {
+                  hasVibrated = false;
                 }
 
                 Map<RefrehtorType, Widget> contents = {
