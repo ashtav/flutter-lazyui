@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/theme/colors.dart';
 
 /// A widget for displaying confirmation dialogs or sheets.
 class LzConfirmWidget extends StatelessWidget {
@@ -58,7 +59,7 @@ class LzConfirmWidget extends StatelessWidget {
 
     Color backgroundColor = isDarkMode ? '222'.hex : 'fff'.hex;
     Color textColor = isDarkMode ? 'fff'.hex : '555'.hex;
-    Color borderColor = isDarkMode ? '1e1d21'.hex : Colors.black12;
+    Color borderColor = isDarkMode ? lzBorderColor.invert() : lzBorderColor.adaptWithTheme;
 
     List<String> texts = [cancelText ?? 'Cancel', confirmText ?? 'Confirm'];
     final font = Gfont.style(context);

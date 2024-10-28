@@ -39,6 +39,9 @@ class LzImage<T> extends StatelessWidget {
   /// Creates a container that animates its parameters implicitly.
   final Curve curve;
 
+  /// The [context] parameter provides access to the current [BuildContext]
+  final BuildContext? context;
+
   /// Creates a LzImage widget.
   const LzImage(this.image,
       {super.key,
@@ -50,7 +53,7 @@ class LzImage<T> extends StatelessWidget {
       this.placeholder,
       this.errorWidget,
       this.sizeChangeDuration,
-      this.curve = Curves.linear});
+      this.curve = Curves.linear, this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +210,7 @@ class LzImage<T> extends StatelessWidget {
       return Hero(
           tag: tag,
           child: imageWidget.onTap(() {
-            Navigator.push(context, MaterialPageRoute(builder: (context) {
+            Navigator.push(this.context ?? context, MaterialPageRoute(builder: (context) {
               return LzImageViewer(image, tag: tag);
             }));
           }));
