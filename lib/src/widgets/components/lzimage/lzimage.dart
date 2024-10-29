@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -206,7 +207,7 @@ class LzImage<T> extends StatelessWidget {
 
     // if interactive, image can be previewed by tapping on it
     if (interactive && isValidImage) {
-      final tag = DateTime.now().microsecond;
+      final tag = '${DateTime.now().microsecondsSinceEpoch}_${Random().nextInt(10000)}';
       return Hero(
           tag: tag,
           child: imageWidget.onTap(() {
