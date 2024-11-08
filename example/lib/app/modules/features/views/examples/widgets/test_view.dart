@@ -38,17 +38,36 @@ class Notifier extends ChangeNotifier {
   }
 }
 
+class Press extends StatelessWidget {
+  final Function() onTap;
+  final IconData icon;
+  const Press(this.icon, this.onTap, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(onPressed: onTap, icon: Icon(icon));
+  }
+}
+
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final key = GlobalKey();
+    final key1 = GlobalKey();
+    final key2 = GlobalKey();
+    final key3 = GlobalKey();
 
     return Wrapper(
       child: Scaffold(
         appBar: AppBar(title: const Text('Test View'), actions: [
-          Press(Ti.toggleLeft, () {}),
-          Press(Ti.forbid, () {}),
+          Press(Ti.toggleLeft, () {
+            Overlay.open(context, key1);
+          }, key: key1),
+          Press(Ti.forbid, () {
+            Overlay.open(context, key2);
+          }, key: key2),
         ]),
         body: Column(
           children: [
@@ -64,23 +83,71 @@ class TestView extends StatelessWidget {
                       50.height,
                     ],
                   ).start.gap(5).animateGroup(),
+
+                  // sections
+                  Touch(
+                      onTap: () {
+                        Overlay.open(context, key);
+                      },
+                      child: Text('Show Something!', style: Gfont.orange, key: key))
                 ],
               ),
             ),
           ],
         ),
+        bottomNavigationBar: Container(
+            padding: Ei.all(20),
+            child: Touch(
+                onTap: () {
+                  Overlay.open(context, key3);
+                },
+                child: Text('Show Something!', style: Gfont.orange, key: key3))),
       ),
     );
   }
 }
 
-class Press extends StatelessWidget {
-  final Function() onTap;
-  final IconData icon;
-  const Press(this.icon, this.onTap, {super.key});
+class Overlay extends StatelessWidget {
+  final Offset target;
+  const Overlay({super.key, required this.target});
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: onTap, icon: Icon(icon));
+    return Stack(
+      children: [
+        Positioned(
+          left: target.dx,
+          top: target.dy,
+          child: Container(
+            width: 270,
+            child: Column(
+              children: ['Edit', 'Delete', 'Approve'].generate((label, i) {
+                final icons = [Hi.strokeRoundedPencil, Hi.strokeRoundedDelete02, Hi.strokeRoundedCheckmarkSquare01];
+
+                return InkTouch(
+                  onTap: () {},
+                  color: Colors.white,
+                  padding: Ei.sym(v: 13, h: 20),
+                  border: Br.only(['t'], except: i == 0),
+                  child: Row(
+                    children: [Text(label), Icon(icons[i])],
+                  ).between,
+                );
+              }),
+            ),
+          ).lz.clip(all: 7),
+        )
+      ],
+    );
+  }
+
+  static open(BuildContext context, GlobalKey key) {
+    final box = key.context!.findRenderObject() as RenderBox?;
+    final o = box?.localToGlobal(Offset.zero);
+    Offset target = o ?? Offset.zero;
+
+    logg(target);
+
+    context.dialog(Overlay(target: target));
   }
 }
