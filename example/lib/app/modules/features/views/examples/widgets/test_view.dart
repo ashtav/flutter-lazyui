@@ -21,22 +21,7 @@ extension GroupAnimate on Column {
   }
 }
 
-class Notifier extends ChangeNotifier {
-  List<String> users = ['@yohanes', '@gunawan'];
-  final comment = TextEditingController();
-
-  void addUser(String name) {
-    users.add('@$name');
-    notifyListeners();
-  }
-
-  void removeLast() {
-    users.removeLast();
-    logg('remove last');
-
-    notifyListeners();
-  }
-}
+class Notifier extends ChangeNotifier {}
 
 class Press extends StatelessWidget {
   final Function() onTap;
@@ -63,14 +48,37 @@ class TestView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: const Text('Test View'), actions: [
           Press(Ti.toggleLeft, () {
-            Overlay.open(context, key1);
+            context.dropdown(key1, child: Iconr(Ti.toggleLeft, padding: Ei.all(14), color: Colors.white));
           }, key: key1),
-          Press(Ti.forbid, () {
-            Overlay.open(context, key2);
-          }, key: key2),
+          Dropdown(builder: (context) {
+            return Press(Ti.forbid, () {
+              context.show();
+            });
+          }),
         ]),
         body: Column(
           children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              physics: BounceScroll(),
+              child: Row(
+                children: 15.generate((i) {
+                  final ikey = GlobalKey();
+
+                  return Center(
+                    key: ikey,
+                    child: InkTouch(
+                      onTap: () {
+                        context.dropdown(ikey);
+                      },
+                      padding: Ei.sym(v: 13, h: 20),
+                      border: Br.only(['l'], except: i == 0),
+                      child: Text(Faker.category()),
+                    ),
+                  );
+                }),
+              ),
+            ),
             Expanded(
               child: LzListView(
                 children: [
@@ -85,11 +93,19 @@ class TestView extends StatelessWidget {
                   ).start.gap(5).animateGroup(),
 
                   // sections
-                  Touch(
-                      onTap: () {
-                        Overlay.open(context, key);
-                      },
-                      child: Text('Show Something!', style: Gfont.orange, key: key))
+                  // if we want to show child when dropdown is opened, we should wrap it
+                  Dropdown(builder: (drop) {
+                    return Touch(
+                        onTap: () {
+                          drop.show();
+                        },
+                        child: Textr(
+                          'Show Something!',
+                          style: Gfont.orange,
+                          padding: Ei.sym(v: 13),
+                          border: Br.only(['t', 'b']),
+                        ));
+                  })
                 ],
               ),
             ),
@@ -99,7 +115,7 @@ class TestView extends StatelessWidget {
             padding: Ei.all(20),
             child: Touch(
                 onTap: () {
-                  Overlay.open(context, key3);
+                  context.dropdown(key3);
                 },
                 child: Text('Show Something!', style: Gfont.orange, key: key3))),
       ),
@@ -107,47 +123,171 @@ class TestView extends StatelessWidget {
   }
 }
 
-class Overlay extends StatelessWidget {
-  final Offset target;
-  const Overlay({super.key, required this.target});
+class DropdownController {
+  final BuildContext context;
+  final GlobalKey key;
+  final Widget child;
+
+  DropdownController(this.context, this.key, this.child);
+
+  void show() {
+    context.dropdown(key, child: child.lz.ignore());
+  }
+}
+
+class Dropdown extends StatelessWidget {
+  final Widget Function(DropdownController) builder;
+  const Dropdown({super.key, required this.builder});
 
   @override
   Widget build(BuildContext context) {
+    final key = GlobalKey();
+    Widget child = builder(DropdownController(context, key, const None()));
+
+    return SizedBox(key: key, child: builder(DropdownController(context, key, child)));
+  }
+}
+
+class DropWrap extends StatelessWidget {
+  final Widget child;
+  const DropWrap({super.key, required this.child});
+
+  @override
+  Widget build(BuildContext context) => child;
+}
+
+class Overlay extends StatelessWidget {
+  final Target target;
+  final Offset? space;
+  final Widget? targetWidget;
+  const Overlay({super.key, required this.target, this.space, this.targetWidget});
+
+  @override
+  Widget build(BuildContext context) {
+    final key = GlobalKey();
+    final notifier = DropdownNotifier(context, target, key, space);
+
     return Stack(
       children: [
-        Positioned(
-          left: target.dx,
-          top: target.dy,
-          child: Container(
-            width: 270,
-            child: Column(
-              children: ['Edit', 'Delete', 'Approve'].generate((label, i) {
-                final icons = [Hi.strokeRoundedPencil, Hi.strokeRoundedDelete02, Hi.strokeRoundedCheckmarkSquare01];
+        // target widget position
+        if (targetWidget != null)
+          Positioned(left: target.offset.dx, top: target.offset.dy - context.windowPadding.top, child: targetWidget!),
 
-                return InkTouch(
-                  onTap: () {},
-                  color: Colors.white,
-                  padding: Ei.sym(v: 13, h: 20),
-                  border: Br.only(['t'], except: i == 0),
-                  child: Row(
-                    children: [Text(label), Icon(icons[i])],
-                  ).between,
-                );
-              }),
-            ),
-          ).lz.clip(all: 7),
-        )
+        // dropdown position
+        notifier.watch((state) => Positioned(
+              left: notifier.offset.dx,
+              top: notifier.offset.dy,
+              child: SizedBox(
+                key: key,
+                width: 250,
+                child: Column(
+                  children: ['Edit', 'Delete', 'Approve'].generate((label, i) {
+                    final icons = [Hi.strokeRoundedPencil, Hi.strokeRoundedDelete02, Hi.strokeRoundedCheckmarkSquare01];
+
+                    return InkTouch(
+                      onTap: () {},
+                      color: Colors.white,
+                      padding: Ei.sym(v: 13, h: 20),
+                      border: Br.only(['t'], except: i == 0),
+                      child: Row(
+                        children: [Text(label), Icon(icons[i])],
+                      ).between,
+                    );
+                  }),
+                ),
+              ).lz.clip(all: 7),
+            ))
       ],
     );
   }
 
-  static open(BuildContext context, GlobalKey key) {
-    final box = key.context!.findRenderObject() as RenderBox?;
-    final o = box?.localToGlobal(Offset.zero);
-    Offset target = o ?? Offset.zero;
+  static open(BuildContext context, GlobalKey key, {Widget? child}) {
+    try {
+      final box = key.context!.findRenderObject() as RenderBox?;
+      final offset = box?.localToGlobal(Offset.zero);
 
-    logg(target);
+      Widget? targetWidget;
 
-    context.dialog(Overlay(target: target));
+      if (key.currentWidget is DropWrap) {
+        targetWidget = (key.currentWidget as DropWrap).child;
+      }
+
+      if (offset != null) {
+        context.dialog(Overlay(target: Target(offset, box?.size ?? Size.zero), targetWidget: child ?? targetWidget),
+            backBlur: true);
+      }
+    } catch (e, s) {
+      Errors.check(e, s);
+    }
+  }
+}
+
+extension BuildContextExtension on BuildContext {
+  void dropdown(GlobalKey key, {Widget? child}) {
+    Overlay.open(this, key, child: child);
+  }
+}
+
+class Target {
+  final Offset offset;
+  final Size size;
+
+  Target(this.offset, this.size);
+}
+
+class DropdownNotifier extends ChangeNotifier {
+  final BuildContext context;
+  final GlobalKey key;
+  final Target target;
+  final Offset? space;
+
+  Offset offset = Offset.zero;
+
+  DropdownNotifier(this.context, this.target, this.key, this.space) {
+    offset = target.offset;
+
+    double dx = offset.dx;
+    double dy = offset.dy + (context.windowPadding.top / 2);
+
+    // read dropdown size and position
+    Bindings.onRendered(() {
+      final box = key.context!.findRenderObject() as RenderBox?;
+      final o = box?.localToGlobal(Offset.zero);
+
+      // dropdown position
+      Offset dropdown = o ?? Offset.zero;
+
+      // dropdown size
+      Size size = box?.size ?? Size.zero;
+
+      // screen size
+      Size screen = Size(context.width, context.height);
+
+      // check if dropdown x position is out of the screen
+      double dropX = dropdown.dx + size.width;
+
+      if (dropX > screen.width) {
+        dx = screen.width - size.width - (space?.dx ?? 20);
+      } else if (dropdown.dx < (space?.dx ?? 20)) {
+        dx = 0 + (space?.dx ?? 20);
+      }
+
+      // check if dropdown y position is out of the screen
+      double dropY = dropdown.dy + size.height;
+
+      if (dropY > screen.height) {
+        dy = target.offset.dy - (size.height + (target.size.height * 2));
+      }
+
+      offset = Offset(dx, dy);
+
+      notifyListeners();
+
+      //
+      logg(
+          'dropdown pos: $dropdown, dropdown size: $size, screen: $screen, drop-x: $dropX, target pos: ${target.offset}, target size: ${target.size} final pos: $offset');
+    });
+
+    // logg('dropdown notifier has been initialized');
   }
 }
