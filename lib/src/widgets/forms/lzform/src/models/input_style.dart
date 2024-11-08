@@ -32,6 +32,9 @@ class InputStyle {
   /// The suffix widget to be displayed after the input field.
   final Widget? suffix;
 
+  /// The color of feedback backdround
+  final Color? feedbackBackgroundColor;
+
   /// Constructs an [InputStyle].
   ///
   /// [background] : The background color of the input field.
@@ -61,5 +64,5 @@ class InputStyle {
       this.suffixIconColor,
       this.textColor,
       this.prefix,
-      this.suffix});
+      this.suffix, this.feedbackBackgroundColor});
 }

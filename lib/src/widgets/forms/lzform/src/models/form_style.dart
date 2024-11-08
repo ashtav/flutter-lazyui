@@ -39,6 +39,9 @@ class FormStyle {
   /// The style properties for slides.
   final SlideStyle? slide;
 
+  /// The color of feedback backdround
+  final Color? feedbackBackgroundColor;
+
   /// Constructs a [FormStyle].
   // final bool allInStyle;
 
@@ -55,6 +58,7 @@ class FormStyle {
     this.radio,
     this.checkbox,
     this.slide,
+    this.feedbackBackgroundColor
     // this.allInStyle = false
   });
 }

@@ -20,6 +20,9 @@ class RadioStyle {
   /// The color when the radio button is inactive.
   final Color? inactiveColor;
 
+  /// The color of feedback backdround
+  final Color? feedbackBackgroundColor;
+
   /// Constructs a [RadioStyle].
   ///
   /// [background] : The background color of the radio button.
@@ -40,5 +43,6 @@ class RadioStyle {
     this.textColor,
     this.activeColor,
     this.inactiveColor,
+    this.feedbackBackgroundColor
   });
 }

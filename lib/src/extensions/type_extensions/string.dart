@@ -102,9 +102,7 @@ extension LzStringExtension on String {
 
     try {
       List<String> char = trim().split(' ');
-      char
-          .take(length)
-          .forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
+      char.take(length).forEach((e) => result += firstUppercase ? e[0].ucwords : e[0]);
       return result;
     } catch (e) {
       return '';
@@ -116,15 +114,14 @@ extension LzStringExtension on String {
 extension LzNullableStringExtension on String? {
   /// Formats the value as Indonesian Rupiah (IDR).
   ///
-  /// [symbol]: The currency symbol to use. Default is 'Rp'.
+  /// [prefix]: The currency prefix to use. Default is 'Rp'.
   /// [decimalDigits]: The number of decimal digits to display. Default is 0.
   /// [separator]: The separator to use for thousands. Default is '.'.
   ///
   /// Returns the formatted IDR string.
-  String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
-    return (this == null ? '0' : toString()).currency(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+  String idr({String prefix = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+    return (this == null ? '0' : toString())
+        .currency(prefix: prefix, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Format the given value as [currency] using the [NumberFormat] class.
@@ -141,8 +138,7 @@ extension LzNullableStringExtension on String? {
   /// String priceWithDecimal = currency(25000.50, decimalDigits: 2);
   /// print(priceWithDecimal); // $25,000.50
   /// ```
-  String currency(
-      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+  String currency({String prefix = '\$', int decimalDigits = 0, String separator = ','}) {
     try {
       String num = '0', digits = '';
 
@@ -153,35 +149,40 @@ extension LzNullableStringExtension on String? {
 
         case 'double':
         case 'String':
-          if (toString().contains(separator)) {
-            num = toString().split(separator)[0];
-            digits = toString().split(separator)[1];
+          if (toString().contains('.') || toString().contains(',')) {
+            // Identify the decimal separator dynamically
+            var decimalSeparator = toString().contains('.') ? '.' : ',';
+            num = toString().split(decimalSeparator)[0];
+            digits = toString().split(decimalSeparator)[1];
           } else {
             num = toString();
           }
           break;
 
         default:
-          return '${symbol}0';
+          return '${prefix}0';
       }
 
-      bool allowDecimal = runtimeType == int ||
-          (runtimeType == String && !toString().contains(separator));
+      // Clean only the integer part of non-numeric characters
+      num = num.replaceAll(RegExp(r'[^0-9]'), '');
 
       String result = NumberFormat.currency(
         locale: 'id_ID',
-        decimalDigits: allowDecimal ? decimalDigits : 0,
-        symbol: symbol,
+        decimalDigits: 0, // Only format the integer part to avoid rounding
+        symbol: prefix,
       ).format(int.parse(num));
 
-      result = result.replaceAll('.', separator);
+      result = result.replaceAll('.', separator); // Use the separator for thousands
+
+      // Determine the correct separator for the decimal part
+      String decimalSeparator = separator == ',' ? '.' : ',';
+
+      // Append the decimal part manually if it exists
       return digits.isEmpty
           ? result
-          : decimalDigits == 0
-              ? result
-              : '$result,${digits.split('').take(decimalDigits).join('')}';
+          : '$result$decimalSeparator${digits.padRight(decimalDigits, '0').substring(0, decimalDigits)}';
     } catch (e) {
-      return '${symbol}0';
+      return '${prefix}0';
     }
   }
 
@@ -217,8 +218,7 @@ extension LzNullableStringExtension on String? {
           RegExp? r = formatRegexMap[format];
 
           if (dateString.contains(' ')) {
-            dateString =
-                dateString.split(' ')[0]; // extract date portion of string
+            dateString = dateString.split(' ')[0]; // extract date portion of string
           } else {
             dateString = dateString;
           }
@@ -245,10 +245,7 @@ extension LzNullableStringExtension on String? {
 
         if (format != null && format == 'd-m-y') {
           RegExp regex = RegExp(r'^(\d{2})-(\d{2})-(\d{4})$');
-          List<String> dateParts =
-              (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ??
-                      [])
-                  .cast();
+          List<String> dateParts = (regex.firstMatch(dateString.split(' ')[0])?.groups([3, 2, 1]) ?? []).cast();
           String ymd = '${dateParts[0]}-${dateParts[1]}-${dateParts[2]}';
 
           if (fullDate.length > 1) {

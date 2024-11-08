@@ -110,13 +110,15 @@ extension CustomRowExtension on Row {
   /// [spacing]: The width of the space to add between children.
   ///
   /// Returns a [Row] widget with spacing added between its children.
-  Row gap(double spacing) {
+  Row gap(double spacing, {List<int> except = const []}) {
     List<Widget> newChildren = [];
 
     for (int i = 0; i < children.length; i++) {
       newChildren.add(children[i]);
       if (i != children.length - 1) {
-        newChildren.add(SizedBox(width: spacing));
+        if (!except.contains(i)) {
+          newChildren.add(SizedBox(width: spacing));
+        }
       }
     }
 

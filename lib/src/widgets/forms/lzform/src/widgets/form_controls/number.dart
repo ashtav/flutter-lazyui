@@ -287,7 +287,7 @@ class Number extends StatelessWidget with LzFormMixin {
           notifier.watch((state) => FormFeedbackMessage(
               show: !state.isValid,
               message: state.errorMessage,
-              attribute: attr))
+              attribute: attr, backgroundColor: style?.feedbackBackgroundColor))
         ],
       ).start,
     );

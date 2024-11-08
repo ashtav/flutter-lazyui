@@ -41,37 +41,48 @@ class LzAccordion extends StatefulWidget {
   /// The padding around the accordion.
   final EdgeInsetsGeometry? padding;
 
-  /// The controller for managing the state of the accordion.
+  /// Manages the state of the accordion, allowing programmatic control.
   final AccordionController? controller;
+
+  /// Callback triggered when a section in the accordion is expanded or collapsed.
+  /// [i] is the index of the toggled section.
+  final void Function(int i)? onExpand;
+
+  /// Specifies chunk sizes for grouping accordion sections.
+  final List<int> chunk;
+
+  /// The spacing between chunks in the accordion.
+  final double chunkSpace;
 
   /// Creates an [LzAccordion] widget.
   ///
   /// The [children] parameter is required and must not be null.
 
-  const LzAccordion({
-    super.key,
-    this.children = const [],
-    this.initValues = const [],
-    this.multiple = false,
-    this.titleEllipsis = false,
-    this.scrollToExpanded = true,
-    this.curve,
-    this.duration,
-    this.border,
-    this.borderColor,
-    this.backgroundColor,
-    this.textColor,
-    this.radius,
-    this.padding,
-    this.controller,
-  });
+  const LzAccordion(
+      {super.key,
+      this.children = const [],
+      this.initValues = const [],
+      this.multiple = false,
+      this.titleEllipsis = false,
+      this.scrollToExpanded = true,
+      this.curve,
+      this.duration,
+      this.border,
+      this.borderColor,
+      this.backgroundColor,
+      this.textColor,
+      this.radius,
+      this.padding,
+      this.controller,
+      this.onExpand,
+      this.chunk = const [],
+      this.chunkSpace = 10});
 
   @override
   State<LzAccordion> createState() => _LzAccordionState();
 }
 
-class _LzAccordionState extends State<LzAccordion>
-    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -93,10 +104,7 @@ class _LzAccordionState extends State<LzAccordion>
 
     controllers = List.generate(length, (i) {
       bool isExpanded = widget.initValues.contains(i);
-      return AnimationController(
-          vsync: this,
-          duration: widget.duration ?? 300.ms,
-          value: isExpanded ? 1 : 0);
+      return AnimationController(vsync: this, duration: widget.duration ?? 300.ms, value: isExpanded ? 1 : 0);
     });
     animations = List.generate(
         length,
@@ -123,6 +131,7 @@ class _LzAccordionState extends State<LzAccordion>
 
   void onTap(int i) {
     AnimationController controller = controllers[i];
+    widget.onExpand?.call(i);
 
     void setForward() {
       if (!widget.multiple) {
@@ -202,100 +211,107 @@ class _LzAccordionState extends State<LzAccordion>
     super.build(context);
 
     double radius = LazyUi.radius;
-    bool isTi = LazyUi.iconType == IconType.tablerIcon;
+    bool isTabler = LazyUi.iconType == IconType.tablerIcon;
+    bool isHuge = LazyUi.iconType == IconType.hugeIcon;
 
     Color backgroundColor = widget.backgroundColor ?? lzBackgroundColor;
-    Color borderColor = widget.borderColor ??
-        (backgroundColor.isDark()
-            ? backgroundColor.lighten(.9)
-            : lzBorderColor);
+    Color borderColor = widget.borderColor ?? (backgroundColor.isDark() ? backgroundColor.lighten(.9) : lzBorderColor);
+    int currentIndex = 0;
 
-    return Container(
-      decoration: BoxDecoration(
-          border: widget.border ??
-              Br.all(color: widget.borderColor ?? lzBorderColor),
-          borderRadius: Br.radius(widget.radius ?? radius)),
-      child: ClipRRect(
-        borderRadius: Br.radius((widget.radius ?? radius) - 1),
-        child: Column(
-          crossAxisAlignment: Caa.start,
-          mainAxisSize: Mas.min,
-          children: List.generate(length, (i) {
-            String title = widget.children[i].title;
-            Widget child = widget.children[i].child;
-            Widget? suffix = widget.children[i].suffix;
+    // accordion widget
+    Widget accordion(List<LzAccordionContent> children, {int from = 0}) => Container(
+          decoration: BoxDecoration(
+              border: widget.border ?? Br.all(color: widget.borderColor ?? lzBorderColor),
+              borderRadius: Br.radius(widget.radius ?? radius)),
+          child: ClipRRect(
+            borderRadius: Br.radius((widget.radius ?? radius) - 1),
+            child: Column(
+              crossAxisAlignment: Caa.start,
+              mainAxisSize: Mas.min,
+              children: children.generate((item, i) {
+                String title = item.title;
+                Widget child = item.child;
+                Widget? suffix = item.suffix;
 
-            final controller = controllers[i];
+                int index = currentIndex++;
+                final controller = controllers[index];
 
-            final gkey = GlobalKey();
+                final gkey = GlobalKey();
 
-            return Container(
-              decoration: BoxDecoration(
-                  border: Br.only(['t'], except: i == 0, color: borderColor)),
-              child: Column(
-                crossAxisAlignment: Caa.start,
-                mainAxisSize: Mas.min,
-                children: [
-                  AnimatedBuilder(
-                      animation: controller,
-                      builder: (_, __) => InkTouch(
-                          key: gkey,
-                          onTap: () async {
-                            onTap(i);
+                return Container(
+                  decoration: BoxDecoration(border: Br.only(['t'], except: i == 0, color: borderColor)),
+                  child: Column(
+                    crossAxisAlignment: Caa.start,
+                    mainAxisSize: Mas.min,
+                    children: [
+                      AnimatedBuilder(
+                          animation: controller,
+                          builder: (_, __) => InkTouch(
+                              key: gkey,
+                              onTap: () async {
+                                onTap(index);
 
-                            // scroll to this widget
-                            if (gkey.currentContext != null &&
-                                widget.scrollToExpanded &&
-                                controller.value <= 0) {
-                              await Future.delayed(300.ms);
-                              Scrollable.ensureVisible(gkey.currentContext!,
-                                  duration: 250.ms);
-                            }
-                          },
-                          padding: Ei.all(20),
-                          color: widget.backgroundColor ?? lzBackgroundColor,
-                          border: Br.only([controller.value > .01 ? 'b' : ''],
-                              color: borderColor),
-                          child: Row(
-                            mainAxisAlignment: Maa.spaceBetween,
-                            children: [
-                              Flexible(
-                                  child: Textr(
-                                title,
-                                style: LazyUi.font
-                                    .copyWith(color: widget.textColor),
-                                margin: Ei.only(r: 15),
-                                overflow: widget.titleEllipsis
-                                    ? Tof.ellipsis
-                                    : Tof.visible,
-                              )),
-                              suffix ??
-                                  RotationTransition(
-                                      turns: turnsTween.animate(controller),
-                                      child: Icon(
-                                          isTi
-                                              ? Ti.chevronRight
-                                              : La.angleRight,
-                                          color: Colors.black45.adaptWithTheme))
-                            ],
-                          ))),
-                  SizeTransition(
-                      axisAlignment: 1.0,
-                      sizeFactor: animations[i],
-                      child: Container(
-                        width: context.width,
-                        padding: widget.padding ?? Ei.all(20),
-                        color: backgroundColor
-                            .darken(backgroundColor.isDark() ? .09 : .03),
-                        child: child,
-                      )),
-                ],
-              ),
-            );
-          }),
-        ),
-      ),
-    );
+                                // scroll to this widget
+                                if (gkey.currentContext != null && widget.scrollToExpanded && controller.value <= 0) {
+                                  await Future.delayed(300.ms);
+                                  Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
+                                }
+                              },
+                              padding: Ei.all(20),
+                              color: widget.backgroundColor ?? lzBackgroundColor,
+                              border: Br.only([controller.value > .01 ? 'b' : ''], color: borderColor),
+                              child: Row(
+                                mainAxisAlignment: Maa.spaceBetween,
+                                children: [
+                                  Flexible(
+                                      child: Textr(
+                                    title,
+                                    style: LazyUi.font.copyWith(color: widget.textColor),
+                                    margin: Ei.only(r: 15),
+                                    overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
+                                  )),
+                                  suffix ??
+                                      RotationTransition(
+                                          turns: turnsTween.animate(controller),
+                                          child: Icon(
+                                              isTabler
+                                                  ? Ti.chevronRight
+                                                  : isHuge
+                                                      ? Hi.strokeRoundedArrowRight01
+                                                      : La.angleRight,
+                                              color: Colors.black45.adaptWithTheme))
+                                ],
+                              ))),
+
+                      // expanded or collapsed content
+                      SizeTransition(
+                          axisAlignment: 1.0,
+                          sizeFactor: animations[index],
+                          child: Container(
+                            width: context.width,
+                            padding: widget.padding ?? Ei.all(20),
+                            color: backgroundColor.darken(backgroundColor.isDark() ? .09 : .03),
+                            child: child,
+                          )),
+                    ],
+                  ),
+                );
+              }),
+            ),
+          ),
+        );
+
+    if (widget.chunk.isNotEmpty) {
+      List<List<LzAccordionContent>> children = widget.children.chunk(widget.chunk);
+
+      return Column(
+        children: children.generate((data, i) {
+          return Container(margin: Ei.only(t: i == 0 ? 0 : widget.chunkSpace), child: accordion(data, from: (i + 1)));
+        }),
+      );
+    }
+
+    return accordion(widget.children);
   }
 }
 

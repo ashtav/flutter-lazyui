@@ -13,8 +13,7 @@ class AccordionView extends StatelessWidget {
         appBar: AppBar(title: const Text('Accordion'), actions: [
           const Icon(Ti.layoutNavbarCollapse).onPressed(() {
             controller.collapse();
-            LzToast.show('All accordions collapsed!!',
-                placement: ToastPlacement.bottom);
+            LzToast.show('All accordions collapsed!!', placement: ToastPlacement.bottom);
           })
         ]),
         body: LzListView(
@@ -22,6 +21,8 @@ class AccordionView extends StatelessWidget {
             LzAccordion(
               border: Br.all(width: 2),
               initValues: const [0],
+              chunk: const [2, 3],
+              chunkSpace: 7,
               controller: controller,
               children: [
                 const LzAccordionContent(
@@ -34,33 +35,36 @@ class AccordionView extends StatelessWidget {
                   title: 'Why do we use it?',
                   child: const Text(
                       'Accordions streamline content presentation, enhancing user engagement by minimizing distractions and focusing on layout readability.'),
-                )
-              ],
-            ).margin(b: 15),
-            LzAccordion(
-              children: [
+                ),
                 LzAccordionContent(
-                  title: 'Expand And Focus',
+                  title: 'Separate List',
                   child: Text(Faker.words(35, 3)),
                 ),
                 LzAccordionContent(
-                  title: 'List 2',
+                  title: 'Lorem Ipsum Dolor',
                   child: Text(Faker.words(35)),
-                )
-              ],
-            ).margin(b: 15),
-            LzAccordion(
-              backgroundColor: '1e1d21'.hex,
-              textColor: Colors.white,
-              border: Br.none,
-              children: [
+                ),
                 LzAccordionContent(
-                  title: 'Dark Mode',
-                  child: Text(Faker.words(35, 3),
-                      style: font.fcolor(Colors.white70)),
+                  title: 'Sit Amet Consectetur',
+                  child: Text(Faker.words(35, 3)),
                 ),
               ],
-            )
+            ).margin(b: 15),
+            // LzAccordion(
+            //   onExpand: (i) {
+            //     controller.collapse();
+            //   },
+            //   children: [
+            //     LzAccordionContent(
+            //       title: 'Expand And Focus',
+            //       child: Text(Faker.words(35, 3)),
+            //     ),
+            //     LzAccordionContent(
+            //       title: 'List 2',
+            //       child: Text(Faker.words(35)),
+            //     )
+            //   ],
+            // ).margin(b: 15),
           ],
         ));
   }

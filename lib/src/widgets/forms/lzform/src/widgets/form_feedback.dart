@@ -14,9 +14,12 @@ class FormFeedbackMessage extends StatelessWidget {
   /// Additional styling attributes for the message.
   final Attribute? attribute;
 
+  /// Feedback background color
+  final Color? backgroundColor;
+
   /// Create widget
   const FormFeedbackMessage(
-      {super.key, this.show = true, this.message = '', this.attribute});
+      {super.key, this.show = true, this.message = '', this.attribute, this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +33,7 @@ class FormFeedbackMessage extends StatelessWidget {
         width: context.width,
         child: Textr(
           message,
+          color: backgroundColor ?? Colors.orange.withOpacity(.05),
           style: style?.copyWith(fontSize: 14, color: Colors.redAccent),
           padding: Ei.only(v: 5, l: isGrouped ? 16 : 0),
         ),

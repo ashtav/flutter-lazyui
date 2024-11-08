@@ -12,6 +12,9 @@ class FormMessage {
   /// Messages for email format validation.
   final Map<String, dynamic>? email;
 
+  /// Messages for match field validation.
+  final Map<String, dynamic>? match;
+
   /// Constructs a [FormMessage].
   ///
   /// [required] : Messages for required field validation.
@@ -21,7 +24,7 @@ class FormMessage {
   /// [max] : Messages for maximum value validation.
   ///
   /// [email] : Messages for email format validation.
-  FormMessage({this.required, this.min, this.max, this.email});
+  FormMessage({this.required, this.min, this.max, this.email, this.match});
 
   /// Retrieves a message based on the type of validation and the key.
   ///
@@ -40,6 +43,9 @@ class FormMessage {
         return max?[key];
       case 'email':
         return email?[key];
+
+      case 'match':
+        return match?[key];
       default:
         return null;
     }

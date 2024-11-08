@@ -60,9 +60,9 @@ extension LzIntNullableExtension on int? {
   ///
   /// Returns the formatted currency string.
   String currency(
-      {String symbol = '\$', int decimalDigits = 0, String separator = ','}) {
+      {String prefix = '\$', int decimalDigits = 0, String separator = ','}) {
     return (this == null ? '0' : toString()).currency(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+        prefix: prefix, decimalDigits: decimalDigits, separator: separator);
   }
 
   /// Formats the value as Indonesian Rupiah (IDR).
@@ -73,9 +73,9 @@ extension LzIntNullableExtension on int? {
   ///
   /// Returns the formatted IDR string.
   String idr(
-      {String symbol = 'Rp', int decimalDigits = 0, String separator = '.'}) {
+      {String prefix = 'Rp', int decimalDigits = 0, String separator = '.'}) {
     return (this == null ? '0' : toString()).idr(
-        symbol: symbol, decimalDigits: decimalDigits, separator: separator);
+        prefix: prefix, decimalDigits: decimalDigits, separator: separator);
   }
 }
 
@@ -86,4 +86,20 @@ extension LzDoubleExtension on double {
 
   /// Returns a SizedBox with the specified height.
   SizedBox get height => SizedBox(height: this);
+}
+
+/// Extends the functionality of the [double] class with additional methods.
+extension LzNullableDoubleExtension on double? {
+  /// Formats the value as Indonesian Rupiah (IDR).
+  ///
+  /// [symbol]: The currency symbol to use.
+  /// [decimalDigits]: The number of decimal digits to display.
+  /// [separator]: The separator to use for thousands.
+  ///
+  /// Returns the formatted IDR string.
+  String idr(
+      {String prefix = 'Rp', int decimalDigits = 1, String separator = '.'}) {
+    return (this == null ? '0' : toString()).idr(
+        prefix: prefix, decimalDigits: decimalDigits, separator: separator);
+  }
 }

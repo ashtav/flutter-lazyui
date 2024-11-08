@@ -20,6 +20,9 @@ class CheckboxStyle {
   /// The color when the checkbox is inactive.
   final Color? inactiveColor;
 
+  /// The color of feedback backdround
+  final Color? feedbackBackgroundColor;
+
   /// Constructs a [CheckboxStyle].
   ///
   /// [background] : The background color of the checkbox.
@@ -40,5 +43,6 @@ class CheckboxStyle {
     this.textColor,
     this.activeColor,
     this.inactiveColor,
+    this.feedbackBackgroundColor
   });
 }

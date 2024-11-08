@@ -99,13 +99,15 @@ extension CustomColumnExtension on Column {
   /// [spacing]: The height of the space to add between children.
   ///
   /// Returns a [Column] widget with spacing added between its children.
-  Column gap(double spacing) {
+  Column gap(double spacing, {List<int> except = const []}) {
     List<Widget> newChildren = [];
 
     for (int i = 0; i < children.length; i++) {
       newChildren.add(children[i]);
       if (i != children.length - 1) {
-        newChildren.add(SizedBox(height: spacing));
+        if (!except.contains(i)) {
+          newChildren.add(SizedBox(height: spacing));
+        }
       }
     }
 
