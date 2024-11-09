@@ -191,12 +191,13 @@ class TestView extends StatelessWidget {
                           ).end;
                         }),
 
-        25.height,
+                    25.height,
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       physics: BounceScroll(),
                       child: Row(
-                        children: ['Transportation', 'Photography', 'Illustration', 'Reading', 'Sport Games', 'Editing'].generate((item, i) {
+                        children: ['Transportation', 'Photography', 'Illustration', 'Reading', 'Sport Games', 'Editing']
+                            .generate((item, i) {
                           return LzDropdown(
                               options: options,
                               builder: (action) {
