@@ -132,4 +132,29 @@ extension CustomRowExtension on Row {
       children: newChildren,
     );
   }
+
+  /// An extension on [Row] to reverse the order of its children.
+  ///
+  /// This extension provides a `reversed` getter, which returns a new [Row]
+  /// with the same properties as the original, but with its children in reverse order.
+  ///
+  /// Usage:
+  /// ```dart
+  /// Row(
+  ///   children: [Text('One'), Text('Two'), Text('Three')],
+  /// ).reversed
+  /// ```
+  ///
+  /// This will display the children in reverse order: 'Three', 'Two', 'One'.
+  Row get reversed {
+    return Row(
+      mainAxisAlignment: mainAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textDirection: textDirection,
+      verticalDirection: verticalDirection,
+      textBaseline: textBaseline,
+      children: children.reversed.toList(),
+    );
+  }
 }

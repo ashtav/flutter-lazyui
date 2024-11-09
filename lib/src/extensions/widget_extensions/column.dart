@@ -121,4 +121,14 @@ extension CustomColumnExtension on Column {
       children: newChildren,
     );
   }
+
+  /// Returns a new [Column] with children in reverse order.
+  Column get reversed {
+    return Column(
+      mainAxisAlignment: mainAxisAlignment,
+      crossAxisAlignment: crossAxisAlignment,
+      mainAxisSize: mainAxisSize,
+      children: children.reversed.toList(),
+    );
+  }
 }

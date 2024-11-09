@@ -51,6 +51,7 @@ part 'feedback/lz_no_data.dart';
 part 'feedback/skeleton.dart';
 part 'forms/lz_textfield.dart';
 part 'interactions/bounce_scroll.dart';
+part 'interactions/dropbox.dart';
 part 'interactions/ink_touch.dart';
 part 'interactions/touch.dart';
 part 'interactions/unglow.dart';
