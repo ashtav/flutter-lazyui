@@ -34,6 +34,70 @@ class Press extends StatelessWidget {
   }
 }
 
+class ScrollRow extends StatelessWidget {
+  final List<Widget> children;
+  const ScrollRow({super.key, this.children = const []});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      physics: BounceScroll(),
+      child: Row(children: children),
+    );
+  }
+
+  static Widget item({Function()? onTap, Key? key}) {
+    return InkTouch(
+      onTap: onTap,
+      key: key,
+      padding: Ei.sym(v: 13, h: 20),
+      border: Br.only(['l']),
+      child: Text(Faker.category()),
+    );
+  }
+}
+
+class SnapRow extends StatefulWidget {
+  final List<String> children;
+  final bool snap;
+  final Function(GlobalKey key)? onTap;
+  const SnapRow({super.key, this.children = const [], this.snap = false, this.onTap});
+
+  @override
+  State<SnapRow> createState() => _SnapRowState();
+}
+
+class _SnapRowState extends State<SnapRow> {
+  final controller = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      controller: controller,
+      physics: BounceScroll(),
+      child: Row(children: widget.children.generate((label, i) {
+        final key = GlobalKey();
+
+        return InkTouch(
+          onTap: () {
+            if (widget.snap) {
+              Utils.scrollToWidget(key, controller, context.width);
+            }
+
+            widget.onTap?.call(key);
+          },
+          key: key,
+          padding: Ei.sym(v: 13, h: 20),
+          border: Br.only(['l'], except: i == 0),
+          child: Text(label),
+        );
+      })),
+    );
+  }
+}
+
 class TestView extends StatelessWidget {
   const TestView({super.key});
 
@@ -67,27 +131,24 @@ class TestView extends StatelessWidget {
           ]),
           body: Column(
             children: [
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                physics: BounceScroll(),
-                child: Row(
-                  children: 15.generate((i) {
-                    final ikey = GlobalKey();
-
-                    return Center(
-                      key: ikey,
-                      child: InkTouch(
-                        onTap: () {
-                          context.dropdown(ikey, options: options);
-                        },
-                        padding: Ei.sym(v: 13, h: 20),
-                        border: Br.only(['l'], except: i == 0),
-                        child: Text(Faker.category()),
-                      ),
-                    );
-                  }),
-                ),
+              SnapRow(
+                // snap: true,
+                onTap: (key) {
+                  context.dropdown(key, options: options);
+                },
+                children: [...15.generate((o) => Faker.category())],
               ),
+              // ScrollRow(
+              //   children: 15.generate((i) {
+              //     final ikey = GlobalKey();
+
+              //     return ScrollRow.item(
+              //         key: ikey,
+              //         onTap: () {
+              //           context.dropdown(ikey, options: options);
+              //         });
+              //   }),
+              // ),
               Expanded(
                 child: LzListView(
                   children: [

@@ -101,9 +101,9 @@ class _Overlay extends StatelessWidget {
           Positioned(
               left: target.offset.dx,
               top: target.offset.dy - context.windowPadding.top,
-              right: 20,
+              // right: 20,
               child: SizedBox(
-                width: context.width,
+                // width: context.width,
                 child: targetWidget,
               )),
 
