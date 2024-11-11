@@ -10,6 +10,7 @@ extension CustomRowExtension on Row {
   /// ).end,
   /// ```
   Row get end => Row(
+        key: key,
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: Maa.end,
         mainAxisSize: mainAxisSize,
@@ -27,6 +28,7 @@ extension CustomRowExtension on Row {
   /// ).start,
   /// ```
   Row get between => Row(
+        key: key,
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: Maa.spaceBetween,
         mainAxisSize: mainAxisSize,
@@ -44,6 +46,7 @@ extension CustomRowExtension on Row {
   /// ).around,
   /// ```
   Row get around => Row(
+        key: key,
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: Maa.spaceAround,
         mainAxisSize: mainAxisSize,
@@ -61,6 +64,7 @@ extension CustomRowExtension on Row {
   /// ).evenly,
   /// ```
   Row get evenly => Row(
+        key: key,
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: Maa.spaceEvenly,
         mainAxisSize: mainAxisSize,
@@ -78,6 +82,7 @@ extension CustomRowExtension on Row {
   /// ).center,
   /// ```
   Row get center => Row(
+        key: key,
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: Maa.center,
         mainAxisSize: mainAxisSize,
@@ -96,6 +101,7 @@ extension CustomRowExtension on Row {
   /// ).min,
 
   Row get min => Row(
+        key: key,
         crossAxisAlignment: crossAxisAlignment,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: MainAxisSize.min,
@@ -123,6 +129,7 @@ extension CustomRowExtension on Row {
     }
 
     return Row(
+      key: key,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
@@ -148,6 +155,7 @@ extension CustomRowExtension on Row {
   /// This will display the children in reverse order: 'Three', 'Two', 'One'.
   Row get reversed {
     return Row(
+      key: key,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,

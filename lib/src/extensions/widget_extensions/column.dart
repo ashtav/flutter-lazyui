@@ -11,6 +11,7 @@ extension CustomColumnExtension on Column {
   /// ```
 
   Column get start => Column(
+        key: key,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: Caa.start,
@@ -29,6 +30,7 @@ extension CustomColumnExtension on Column {
   /// ```
 
   Column get end => Column(
+        key: key,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: Caa.end,
@@ -47,6 +49,7 @@ extension CustomColumnExtension on Column {
   /// ```
 
   Column get stretch => Column(
+        key: key,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: Caa.stretch,
@@ -64,6 +67,7 @@ extension CustomColumnExtension on Column {
   /// ).min,
   /// ```
   Column get min => Column(
+        key: key,
         mainAxisAlignment: mainAxisAlignment,
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: crossAxisAlignment,
@@ -85,6 +89,7 @@ extension CustomColumnExtension on Column {
   ///
   /// Returns a [Column] widget with the specified parameters.
   Column get center => Column(
+        key: key,
         mainAxisAlignment: Maa.center,
         mainAxisSize: mainAxisSize,
         crossAxisAlignment: crossAxisAlignment,
@@ -112,6 +117,7 @@ extension CustomColumnExtension on Column {
     }
 
     return Column(
+      key: key,
       mainAxisAlignment: mainAxisAlignment,
       mainAxisSize: mainAxisSize,
       crossAxisAlignment: crossAxisAlignment,
@@ -125,9 +131,13 @@ extension CustomColumnExtension on Column {
   /// Returns a new [Column] with children in reverse order.
   Column get reversed {
     return Column(
+      key: key,
       mainAxisAlignment: mainAxisAlignment,
-      crossAxisAlignment: crossAxisAlignment,
       mainAxisSize: mainAxisSize,
+      crossAxisAlignment: crossAxisAlignment,
+      textDirection: textDirection,
+      verticalDirection: verticalDirection,
+      textBaseline: textBaseline,
       children: children.reversed.toList(),
     );
   }
