@@ -84,35 +84,51 @@ class TestView extends StatelessWidget {
                 child: const Icon(Hi.strokeRoundedMenu02, color: Colors.white)),
           ],
         ),
-        body: LzListView(
+        body: Column(
           children: [
-            LzDropdown(
-                options: LzDropdown.of([
-                  'Details',
-                  'Edit',
-                  'Delete'
-                ], icons: [
-                  Hi.strokeRoundedInformationCircle,
-                  Hi.strokeRoundedPencil,
-                  Hi.strokeRoundedDelete01
-                ]),
-                dropBuilder: (options) => DropBuilder(options),
-                builder: (key, action) {
-                  return Touch(
-                    key: key,
-                    onTap: () {
-                      action.show();
-                    },
-                    child: const Column(
-                      children: [
-                        SizedBox(
-                            width: 230,
-                            child: Text(
-                                'Programmer is the person who write code to solve problem!')),
-                      ],
-                    ).start,
-                  );
-                })
+            LzTabView(
+              tabs: 15.generate((i) => Faker.category()),
+              onTap: (key, i) {},
+              builder: (label, i) {
+                return Textr(label,
+                    padding: Ei.sym(v: 13, h: 25),
+                    border: Br.only(['b'],
+                        color: i == 0 ? Colors.black87 : Colors.white));
+              },
+            ),
+            Expanded(
+              child: LzListView(
+                children: [
+                  LzDropdown(
+                      options: LzDropdown.of([
+                        'Details',
+                        'Edit',
+                        'Delete'
+                      ], icons: [
+                        Hi.strokeRoundedInformationCircle,
+                        Hi.strokeRoundedPencil,
+                        Hi.strokeRoundedDelete01
+                      ]),
+                      dropBuilder: (options) => DropBuilder(options),
+                      builder: (key, action) {
+                        return Touch(
+                          key: key,
+                          onTap: () {
+                            action.show();
+                          },
+                          child: const Column(
+                            children: [
+                              SizedBox(
+                                  width: 230,
+                                  child: Text(
+                                      'Programmer is the person who write code to solve problem!')),
+                            ],
+                          ).start,
+                        );
+                      })
+                ],
+              ),
+            ),
           ],
         ),
       ),
