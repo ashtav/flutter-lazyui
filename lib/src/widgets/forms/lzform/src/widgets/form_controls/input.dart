@@ -361,9 +361,11 @@ class Input extends StatelessWidget with LzFormMixin {
                 : textFieldWidget),
 
           notifier.watch((state) => FormFeedbackMessage(
-              show: !state.isValid,
-              message: state.errorMessage,
-              attribute: attr, backgroundColor: style?.feedbackBackgroundColor,))
+                show: !state.isValid,
+                message: state.errorMessage,
+                attribute: attr,
+                backgroundColor: style?.feedbackBackgroundColor,
+              ))
         ],
       ).start,
     );

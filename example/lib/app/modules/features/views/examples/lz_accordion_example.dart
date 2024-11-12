@@ -13,7 +13,8 @@ class AccordionView extends StatelessWidget {
         appBar: AppBar(title: const Text('Accordion'), actions: [
           const Icon(Ti.layoutNavbarCollapse).onPressed(() {
             controller.collapse();
-            LzToast.show('All accordions collapsed!!', placement: ToastPlacement.bottom);
+            LzToast.show('All accordions collapsed!!',
+                placement: ToastPlacement.bottom);
           })
         ]),
         body: LzListView(

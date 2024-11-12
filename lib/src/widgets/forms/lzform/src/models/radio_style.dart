@@ -36,13 +36,12 @@ class RadioStyle {
   /// [activeColor] : The color when the radio button is active.
   ///
   /// [inactiveColor] : The color when the radio button is inactive.
-  RadioStyle({
-    this.background,
-    this.borderColor,
-    this.radius,
-    this.textColor,
-    this.activeColor,
-    this.inactiveColor,
-    this.feedbackBackgroundColor
-  });
+  RadioStyle(
+      {this.background,
+      this.borderColor,
+      this.radius,
+      this.textColor,
+      this.activeColor,
+      this.inactiveColor,
+      this.feedbackBackgroundColor});
 }

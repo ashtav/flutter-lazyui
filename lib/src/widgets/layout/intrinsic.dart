@@ -76,7 +76,10 @@ class Intrinsic extends StatelessWidget {
 
     for (int i = 0; i < children.length; i++) {
       if (i % 2 == 1 && (gap != null || spacer != null)) {
-        children.insert(i, _Spacer(SizedBox(width: gap, child: Center(child: spacer ?? const None()))));
+        children.insert(
+            i,
+            _Spacer(SizedBox(
+                width: gap, child: Center(child: spacer ?? const None()))));
       }
     }
 
@@ -84,7 +87,9 @@ class Intrinsic extends StatelessWidget {
       return IntrinsicHeight(
         child: Row(
           children: children.generate((widget, i) {
-            return widget is _Spacer ? children[i] : Expanded(child: children[i]);
+            return widget is _Spacer
+                ? children[i]
+                : Expanded(child: children[i]);
           }),
         ),
       );

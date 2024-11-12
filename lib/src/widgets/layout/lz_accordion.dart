@@ -82,7 +82,8 @@ class LzAccordion extends StatefulWidget {
   State<LzAccordion> createState() => _LzAccordionState();
 }
 
-class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _LzAccordionState extends State<LzAccordion>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -104,7 +105,10 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
 
     controllers = List.generate(length, (i) {
       bool isExpanded = widget.initValues.contains(i);
-      return AnimationController(vsync: this, duration: widget.duration ?? 300.ms, value: isExpanded ? 1 : 0);
+      return AnimationController(
+          vsync: this,
+          duration: widget.duration ?? 300.ms,
+          value: isExpanded ? 1 : 0);
     });
     animations = List.generate(
         length,
@@ -215,13 +219,18 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
     bool isHuge = LazyUi.iconType == IconType.hugeIcon;
 
     Color backgroundColor = widget.backgroundColor ?? lzBackgroundColor;
-    Color borderColor = widget.borderColor ?? (backgroundColor.isDark() ? backgroundColor.lighten(.9) : lzBorderColor);
+    Color borderColor = widget.borderColor ??
+        (backgroundColor.isDark()
+            ? backgroundColor.lighten(.9)
+            : lzBorderColor);
     int currentIndex = 0;
 
     // accordion widget
-    Widget accordion(List<LzAccordionContent> children, {int from = 0}) => Container(
+    Widget accordion(List<LzAccordionContent> children, {int from = 0}) =>
+        Container(
           decoration: BoxDecoration(
-              border: widget.border ?? Br.all(color: widget.borderColor ?? lzBorderColor),
+              border: widget.border ??
+                  Br.all(color: widget.borderColor ?? lzBorderColor),
               borderRadius: Br.radius(widget.radius ?? radius)),
           child: ClipRRect(
             borderRadius: Br.radius((widget.radius ?? radius) - 1),
@@ -239,7 +248,9 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
                 final gkey = GlobalKey();
 
                 return Container(
-                  decoration: BoxDecoration(border: Br.only(['t'], except: i == 0, color: borderColor)),
+                  decoration: BoxDecoration(
+                      border:
+                          Br.only(['t'], except: i == 0, color: borderColor)),
                   child: Column(
                     crossAxisAlignment: Caa.start,
                     mainAxisSize: Mas.min,
@@ -252,23 +263,32 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
                                 onTap(index);
 
                                 // scroll to this widget
-                                if (gkey.currentContext != null && widget.scrollToExpanded && controller.value <= 0) {
+                                if (gkey.currentContext != null &&
+                                    widget.scrollToExpanded &&
+                                    controller.value <= 0) {
                                   await Future.delayed(300.ms);
-                                  Scrollable.ensureVisible(gkey.currentContext!, duration: 250.ms);
+                                  Scrollable.ensureVisible(gkey.currentContext!,
+                                      duration: 250.ms);
                                 }
                               },
                               padding: Ei.all(20),
-                              color: widget.backgroundColor ?? lzBackgroundColor,
-                              border: Br.only([controller.value > .01 ? 'b' : ''], color: borderColor),
+                              color:
+                                  widget.backgroundColor ?? lzBackgroundColor,
+                              border: Br.only(
+                                  [controller.value > .01 ? 'b' : ''],
+                                  color: borderColor),
                               child: Row(
                                 mainAxisAlignment: Maa.spaceBetween,
                                 children: [
                                   Flexible(
                                       child: Textr(
                                     title,
-                                    style: LazyUi.font.copyWith(color: widget.textColor),
+                                    style: LazyUi.font
+                                        .copyWith(color: widget.textColor),
                                     margin: Ei.only(r: 15),
-                                    overflow: widget.titleEllipsis ? Tof.ellipsis : Tof.visible,
+                                    overflow: widget.titleEllipsis
+                                        ? Tof.ellipsis
+                                        : Tof.visible,
                                   )),
                                   suffix ??
                                       RotationTransition(
@@ -277,9 +297,11 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
                                               isTabler
                                                   ? Ti.chevronRight
                                                   : isHuge
-                                                      ? Hi.strokeRoundedArrowRight01
+                                                      ? Hi
+                                                          .strokeRoundedArrowRight01
                                                       : La.angleRight,
-                                              color: Colors.black45.adaptWithTheme))
+                                              color: Colors
+                                                  .black45.adaptWithTheme))
                                 ],
                               ))),
 
@@ -290,7 +312,8 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
                           child: Container(
                             width: context.width,
                             padding: widget.padding ?? Ei.all(20),
-                            color: backgroundColor.darken(backgroundColor.isDark() ? .09 : .03),
+                            color: backgroundColor
+                                .darken(backgroundColor.isDark() ? .09 : .03),
                             child: child,
                           )),
                     ],
@@ -302,11 +325,14 @@ class _LzAccordionState extends State<LzAccordion> with TickerProviderStateMixin
         );
 
     if (widget.chunk.isNotEmpty) {
-      List<List<LzAccordionContent>> children = widget.children.chunk(widget.chunk);
+      List<List<LzAccordionContent>> children =
+          widget.children.chunk(widget.chunk);
 
       return Column(
         children: children.generate((data, i) {
-          return Container(margin: Ei.only(t: i == 0 ? 0 : widget.chunkSpace), child: accordion(data, from: (i + 1)));
+          return Container(
+              margin: Ei.only(t: i == 0 ? 0 : widget.chunkSpace),
+              child: accordion(data, from: (i + 1)));
         }),
       );
     }

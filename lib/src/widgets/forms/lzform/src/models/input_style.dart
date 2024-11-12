@@ -64,5 +64,6 @@ class InputStyle {
       this.suffixIconColor,
       this.textColor,
       this.prefix,
-      this.suffix, this.feedbackBackgroundColor});
+      this.suffix,
+      this.feedbackBackgroundColor});
 }

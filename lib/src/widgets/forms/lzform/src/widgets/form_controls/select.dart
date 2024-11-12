@@ -258,7 +258,8 @@ class Select extends StatelessWidget with LzFormMixin {
           notifier.watch((state) => FormFeedbackMessage(
               show: !state.isValid,
               message: state.errorMessage,
-              attribute: attr, backgroundColor: style?.feedbackBackgroundColor))
+              attribute: attr,
+              backgroundColor: style?.feedbackBackgroundColor))
         ],
       ).start,
     );

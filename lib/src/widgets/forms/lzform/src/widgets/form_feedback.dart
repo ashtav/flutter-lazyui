@@ -19,7 +19,11 @@ class FormFeedbackMessage extends StatelessWidget {
 
   /// Create widget
   const FormFeedbackMessage(
-      {super.key, this.show = true, this.message = '', this.attribute, this.backgroundColor});
+      {super.key,
+      this.show = true,
+      this.message = '',
+      this.attribute,
+      this.backgroundColor});
 
   @override
   Widget build(BuildContext context) {

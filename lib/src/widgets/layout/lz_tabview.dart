@@ -29,11 +29,14 @@ part of '../widget.dart';
 /// ```
 class LzTabView extends StatefulWidget {
   /// The list of tab labels to display.
-  final List<String> children;
+  final List<String> tabs;
 
   /// Whether to snap the selected tab into view when tapped.
   /// If `true`, the tapped tab will scroll to be fully visible.
   final bool snap;
+
+  /// Expand the tab view to fill the available space.
+  final bool expanded;
 
   /// A callback that is triggered when a tab is tapped.
   /// It provides the [key] of the tapped tab and its [index].
@@ -53,16 +56,33 @@ class LzTabView extends StatefulWidget {
   /// The scroll physics
   final ScrollPhysics? physics;
 
+  /// Text align
+  final TextAlign? textAlign;
+
+  /// The text style for the tab
+  final TextStyle? style;
+
+  /// Icon for the text
+  final List<IconData>? icons;
+
+  /// The scroll padding
+  final EdgeInsetsGeometry? scrollPadding;
+
   /// Creates a horizontally scrollable tab view with customizable options.
   const LzTabView(
       {super.key,
-      this.children = const [],
+      this.tabs = const [],
       this.snap = false,
+      this.expanded = false,
       this.onTap,
       this.padding,
       this.border,
       this.color,
-      this.physics});
+      this.physics,
+      this.textAlign,
+      this.style,
+      this.icons,
+      this.scrollPadding});
 
   @override
   State<LzTabView> createState() => _LzTabViewState();
@@ -73,28 +93,44 @@ class _LzTabViewState extends State<LzTabView> {
 
   @override
   Widget build(BuildContext context) {
+    final icons = widget.icons ?? [];
+
+    Widget item(String label, GlobalKey key, int i, bool snap) {
+      return InkTouch(
+        onTap: () {
+          if (widget.snap) {
+            Utils.scrollToWidget(key, controller, context.width);
+          }
+
+          widget.onTap?.call(key, i);
+        },
+        key: key,
+        color: widget.color,
+        padding: widget.padding ?? Ei.sym(v: 13, h: 20),
+        border: widget.border ?? Br.only(['l'], except: i == 0),
+        child: Textr(label,
+            textAlign: widget.textAlign,
+            style: widget.style,
+            icon: icons.length - 1 < i ? null : icons[i]),
+      );
+    }
+
+    if (widget.expanded) {
+      return Intrinsic(children: widget.tabs.generate((label, i) {
+        final key = GlobalKey();
+        return item(label, key, i, false);
+      }));
+    }
+
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       controller: controller,
       physics: widget.physics ?? BounceScroll(),
+      padding: widget.scrollPadding,
       child: Row(
-        children: widget.children.generate((label, i) {
+        children: widget.tabs.generate((label, i) {
           final key = GlobalKey();
-
-          return InkTouch(
-            onTap: () {
-              if (widget.snap) {
-                Utils.scrollToWidget(key, controller, context.width);
-              }
-
-              widget.onTap?.call(key, i);
-            },
-            key: key,
-            color: widget.color,
-            padding: widget.padding ?? Ei.sym(v: 13, h: 20),
-            border: widget.border ?? Br.only(['l'], except: i == 0),
-            child: Text(label),
-          );
+          return item(label, key, i, widget.snap);
         }),
       ),
     );

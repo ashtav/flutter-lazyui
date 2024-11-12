@@ -54,7 +54,8 @@ class LzImage<T> extends StatelessWidget {
       this.placeholder,
       this.errorWidget,
       this.sizeChangeDuration,
-      this.curve = Curves.linear, this.context});
+      this.curve = Curves.linear,
+      this.context});
 
   @override
   Widget build(BuildContext context) {
@@ -207,11 +208,13 @@ class LzImage<T> extends StatelessWidget {
 
     // if interactive, image can be previewed by tapping on it
     if (interactive && isValidImage) {
-      final tag = '${DateTime.now().microsecondsSinceEpoch}_${Random().nextInt(10000)}';
+      final tag =
+          '${DateTime.now().microsecondsSinceEpoch}_${Random().nextInt(10000)}';
       return Hero(
           tag: tag,
           child: imageWidget.onTap(() {
-            Navigator.push(this.context ?? context, MaterialPageRoute(builder: (context) {
+            Navigator.push(this.context ?? context,
+                MaterialPageRoute(builder: (context) {
               return LzImageViewer(image, tag: tag);
             }));
           }));

@@ -39,7 +39,11 @@ class LzForm {
   final Map<String, dynamic> extra;
 
   /// Creates a new `LzForm` instance.
-  LzForm({this.ok = false, this.error, this.value = const {}, this.extra = const {}});
+  LzForm(
+      {this.ok = false,
+      this.error,
+      this.value = const {},
+      this.extra = const {}});
 
   /// Creates a mapping of form keys to `FormModel` instances.
   ///
@@ -75,7 +79,11 @@ class LzForm {
     }
 
     return Map.fromIterables(
-        keys, List.generate(keys.length, (i) => FormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
+        keys,
+        List.generate(
+            keys.length,
+            (i) =>
+                FormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
   }
 
   /// Fills the provided form models with data.
@@ -107,7 +115,8 @@ class LzForm {
   /// [except] Optional list of string keys to exclude from filling.
   /// Returns the updated map of `FormModel` objects.
 
-  static Map<String, FormModel> fill(Map<String, FormModel> forms, Map<String, dynamic> data,
+  static Map<String, FormModel> fill(
+      Map<String, FormModel> forms, Map<String, dynamic> data,
       {List<String> except = const []}) {
     for (var e in data.keys) {
       if (forms.containsKey(e) && !except.contains(e)) {
@@ -150,7 +159,8 @@ class LzForm {
   /// [only] Optional list of string keys to exclusively reset.
   /// [except] Optional list of string keys to exclude from resetting.
 
-  static void reset(Map<String, FormModel> forms, {List<String> only = const [], List<String> except = const []}) {
+  static void reset(Map<String, FormModel> forms,
+      {List<String> only = const [], List<String> except = const []}) {
     for (var e in forms.keys) {
       if (only.isNotEmpty && only.contains(e)) {
         forms[e]!.controller.text = '';
@@ -202,8 +212,10 @@ class LzForm {
     try {
       Map<String, TextEditingController> controllers =
           Map.fromIterables(forms.keys, forms.values.map((e) => e.controller));
-      Map<String, FormNotifier> notifiers = Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
-      Map<String, GlobalKey> globalKeys = Map.fromIterables(forms.keys, forms.values.map((e) => e.key));
+      Map<String, FormNotifier> notifiers =
+          Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier));
+      Map<String, GlobalKey> globalKeys =
+          Map.fromIterables(forms.keys, forms.values.map((e) => e.key));
       Map<String, dynamic> extra = {};
 
       List<Map<String, dynamic>> errorFields = [];
@@ -215,7 +227,8 @@ class LzForm {
         required = controllers.keys.toList();
       } else if (isRequiredAllExcept) {
         required.remove('*');
-        required = controllers.keys.toList()..removeWhere((e) => required.contains(e));
+        required = controllers.keys.toList()
+          ..removeWhere((e) => required.contains(e));
       }
 
       List<String> formKeys = controllers.keys.toList();
@@ -237,8 +250,14 @@ class LzForm {
         | Required
         | */
 
-        if (controllers[key] != null && controllers[key]!.text.trim().isEmpty && required.contains(key)) {
-          errorFields.add({'key': key, 'type': 'required', 'message': 'The field $key is required'});
+        if (controllers[key] != null &&
+            controllers[key]!.text.trim().isEmpty &&
+            required.contains(key)) {
+          errorFields.add({
+            'key': key,
+            'type': 'required',
+            'message': 'The field $key is required'
+          });
         }
 
         /* ------------------------------------------------------------------------
@@ -247,9 +266,15 @@ class LzForm {
 
         for (var e in min) {
           List split = splitter(e);
-          if (controllers[key] != null && controllers[key]!.text.trim().length < split[1] && split[0] == key) {
-            errorFields
-                .add({'key': key, 'type': 'min', 'message': 'The field $key must be at least ${split[1]} characters'});
+          if (controllers[key] != null &&
+              controllers[key]!.text.trim().length < split[1] &&
+              split[0] == key) {
+            errorFields.add({
+              'key': key,
+              'type': 'min',
+              'message':
+                  'The field $key must be at least ${split[1]} characters'
+            });
           }
         }
 
@@ -259,9 +284,14 @@ class LzForm {
 
         for (var e in max) {
           List split = splitter(e);
-          if (controllers[key] != null && controllers[key]!.text.trim().length > split[1] && split[0] == key) {
-            errorFields
-                .add({'key': key, 'type': 'max', 'message': 'The field $key must be at most ${split[1]} characters'});
+          if (controllers[key] != null &&
+              controllers[key]!.text.trim().length > split[1] &&
+              split[0] == key) {
+            errorFields.add({
+              'key': key,
+              'type': 'max',
+              'message': 'The field $key must be at most ${split[1]} characters'
+            });
           }
         }
 
@@ -269,8 +299,14 @@ class LzForm {
         | Email
         | */
 
-        if (controllers[key] != null && !controllers[key]!.text.trim().toString().isEmail && email.contains(key)) {
-          errorFields.add({'key': key, 'type': 'email', 'message': 'The field $key is not a valid email'});
+        if (controllers[key] != null &&
+            !controllers[key]!.text.trim().toString().isEmail &&
+            email.contains(key)) {
+          errorFields.add({
+            'key': key,
+            'type': 'email',
+            'message': 'The field $key is not a valid email'
+          });
         }
 
         /* ------------------------------------------------------------------------
@@ -283,8 +319,11 @@ class LzForm {
             String k1 = split[0], k2 = split[1];
 
             if (controllers[k1]?.text != controllers[k2]?.text) {
-              errorFields.add(
-                  {'key': k2, 'type': 'match', 'message': 'The field $k2 does not match with the field $k1.'});
+              errorFields.add({
+                'key': k2,
+                'type': 'match',
+                'message': 'The field $k2 does not match with the field $k1.'
+              });
             }
           }
         }
@@ -295,7 +334,8 @@ class LzForm {
       | */
 
       // Get keys that are not contained in the errorFields
-      List<String> keys = controllers.keys.toList()..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
+      List<String> keys = controllers.keys.toList()
+        ..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
 
       // Clear all notifiers
       for (String k in keys) {
@@ -312,7 +352,8 @@ class LzForm {
         }
 
         if (alert == FormAlert.toast) {
-          LzToast.show(errorMessage, placement: toastPlacement ?? LzToast.config.placement);
+          LzToast.show(errorMessage,
+              placement: toastPlacement ?? LzToast.config.placement);
         } else if (alert == FormAlert.text) {
           if (singleNotifier) {
             notifiers[errorKey]?.setMessage(errorMessage, false);
@@ -338,12 +379,14 @@ class LzForm {
         // scroll to the error field
         GlobalKey? key = globalKeys[errorKey];
         if (key != null && key.currentContext != null) {
-          Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+          Scrollable.ensureVisible(key.currentContext!,
+              duration: const Duration(milliseconds: 300), alignment: .09);
         }
 
         return LzForm(
             ok: false,
-            error: FormError(key: errorKey, type: errorType, message: errorMessage),
+            error: FormError(
+                key: errorKey, type: errorType, message: errorMessage),
             value: controllers.toMap(),
             extra: extra);
       }
@@ -352,7 +395,10 @@ class LzForm {
     }
 
     return LzForm(
-        ok: true, value: Map.fromIterables(forms.keys, forms.values.map((e) => e.notifier.controller)).toMap());
+        ok: true,
+        value: Map.fromIterables(
+                forms.keys, forms.values.map((e) => e.notifier.controller))
+            .toMap());
   }
 
   /// input form-controls with statefull
@@ -455,7 +501,12 @@ class LzForm {
           dynamic Function(bool)? onChange,
           bool initValue = false,
           bool reversed = false}) =>
-      Switches(label: label, style: style, onChange: onChange, initValue: initValue, reversed: reversed);
+      Switches(
+          label: label,
+          style: style,
+          onChange: onChange,
+          initValue: initValue,
+          reversed: reversed);
 
   /// select form-controls
   static Select select(

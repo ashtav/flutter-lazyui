@@ -45,20 +45,20 @@ class FormStyle {
   /// Constructs a [FormStyle].
   // final bool allInStyle;
 
-  FormStyle({
-    this.background,
-    this.borderColor,
-    this.radius,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.prefixIconColor,
-    this.suffixIconColor,
-    this.prefix,
-    this.textColor,
-    this.radio,
-    this.checkbox,
-    this.slide,
-    this.feedbackBackgroundColor
-    // this.allInStyle = false
-  });
+  FormStyle(
+      {this.background,
+      this.borderColor,
+      this.radius,
+      this.prefixIcon,
+      this.suffixIcon,
+      this.prefixIconColor,
+      this.suffixIconColor,
+      this.prefix,
+      this.textColor,
+      this.radio,
+      this.checkbox,
+      this.slide,
+      this.feedbackBackgroundColor
+      // this.allInStyle = false
+      });
 }

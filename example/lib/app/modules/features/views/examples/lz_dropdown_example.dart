@@ -9,8 +9,13 @@ class LzDropdownExample extends StatelessWidget {
     final key1 = GlobalKey();
     final key2 = GlobalKey();
 
-    final icons = [Hi.strokeRoundedFilterVertical, Hi.strokeRoundedSortingAZ02, Hi.strokeRoundedSettings01];
-    final options = LzDropdown.of(['Filter', 'Sort AZ', 'Settings'], icons: icons, separated: [2]);
+    final icons = [
+      Hi.strokeRoundedFilterVertical,
+      Hi.strokeRoundedSortingAZ02,
+      Hi.strokeRoundedSettings01
+    ];
+    final options = LzDropdown.of(['Filter', 'Sort AZ', 'Settings'],
+        icons: icons, separated: [2]);
 
     return Wrapper(
       child: Scaffold(
@@ -24,7 +29,9 @@ class LzDropdownExample extends StatelessWidget {
           IconButton(
               onPressed: () {
                 context.dropdown(key2,
-                    options: options, overlay: const Icon(Hi.strokeRoundedNotification01, color: Colors.white));
+                    options: options,
+                    overlay: const Icon(Hi.strokeRoundedNotification01,
+                        color: Colors.white));
               },
               icon: Icon(Hi.strokeRoundedNotification01, key: key2)),
 
@@ -32,7 +39,9 @@ class LzDropdownExample extends StatelessWidget {
           LzDropdown(
               options: options,
               builder: (key, action) {
-                return IconButton(onPressed: () => action.show(), icon: Icon(Hi.strokeRoundedMenu02, key: key));
+                return IconButton(
+                    onPressed: () => action.show(),
+                    icon: Icon(Hi.strokeRoundedMenu02, key: key));
               },
               child: const Icon(Hi.strokeRoundedMenu02, color: Colors.white)),
         ]),
@@ -41,7 +50,7 @@ class LzDropdownExample extends StatelessWidget {
             // using dropdown in tab view
             LzTabView(
               onTap: (key, i) => context.dropdown(key, options: options),
-              children: [...15.generate((o) => Faker.category())],
+              tabs: [...15.generate((o) => Faker.category())],
             ),
 
             // another example and implementation
@@ -127,24 +136,33 @@ class LzDropdownExample extends StatelessWidget {
                     children: [
                       LzDropdown(
                           options: options,
-                          child: Iconr(Hi.strokeRoundedUser, padding: Ei.all(20), color: Colors.white),
+                          child: Iconr(Hi.strokeRoundedUser,
+                              padding: Ei.all(20), color: Colors.white),
                           builder: (key, action) {
                             return Touch(
                                 key: key,
                                 onTap: () {
                                   action.show();
                                 },
-                                child: Iconr(Hi.strokeRoundedUser, padding: Ei.all(20)));
+                                child: Iconr(Hi.strokeRoundedUser,
+                                    padding: Ei.all(20)));
                           }),
-                      Touch(onTap: () {}, child: Iconr(Hi.strokeRoundedGift, padding: Ei.all(20)))
+                      Touch(
+                          onTap: () {},
+                          child:
+                              Iconr(Hi.strokeRoundedGift, padding: Ei.all(20)))
                     ],
                   ),
 
                   // intrinsic
                   Intrinsic(
-                    spacer: Container(width: 1, height: 30, color: Colors.black12),
-                    children:
-                        [Hi.strokeRoundedPencil, Hi.strokeRoundedEraser, Hi.strokeRoundedScissor].generate((icon, i) {
+                    spacer:
+                        Container(width: 1, height: 30, color: Colors.black12),
+                    children: [
+                      Hi.strokeRoundedPencil,
+                      Hi.strokeRoundedEraser,
+                      Hi.strokeRoundedScissor
+                    ].generate((icon, i) {
                       return LzDropdown(
                           options: options,
                           builder: (key, action) {
@@ -181,14 +199,21 @@ class LzDropdownExample extends StatelessWidget {
                       }),
 
                   25.height,
-                  Textr('# Example dropdown with LzDropWrap', padding: Ei.all(20), style: Gfont.muted),
+                  Textr('# Example dropdown with LzDropWrap',
+                      padding: Ei.all(20), style: Gfont.muted),
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     padding: Ei.sym(h: 20),
                     physics: BounceScroll(),
                     child: Row(
-                      children: ['Transportation', 'Photography', 'Illustration', 'Reading', 'Sport Games', 'Editing']
-                          .generate((item, i) {
+                      children: [
+                        'Transportation',
+                        'Photography',
+                        'Illustration',
+                        'Reading',
+                        'Sport Games',
+                        'Editing'
+                      ].generate((item, i) {
                         return LzDropdown(
                             options: options,
                             align: LzDropAlign.right,

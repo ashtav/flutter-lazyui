@@ -16,7 +16,8 @@ extension LzListExtension<T> on List<T> {
   /// ``` dart
   /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')
   /// ```
-  void updateWhere(bool Function(T e) condition, dynamic data, {Function()? onFail}) {
+  void updateWhere(bool Function(T e) condition, dynamic data,
+      {Function()? onFail}) {
     int i = indexWhere(condition);
     if (i >= 0) {
       this[i] = data;
@@ -96,7 +97,8 @@ extension LzListMapExtension on List<Map> {
   /// ```
 
   List<Map<String, dynamic>> groupBy<T>(String key,
-      {String? groupKey, List<T> Function(List<Map<String, dynamic>> value)? wrap}) {
+      {String? groupKey,
+      List<T> Function(List<Map<String, dynamic>> value)? wrap}) {
     try {
       List<Map<String, dynamic>> result = [];
       List<String> values = [];
@@ -113,7 +115,8 @@ extension LzListMapExtension on List<Map> {
 
       // loop unique values and get data where key is equal to value
       for (var k in values.toSet()) {
-        final data = List<Map<String, dynamic>>.from([...where((e) => e[key] == k)]);
+        final data =
+            List<Map<String, dynamic>>.from([...where((e) => e[key] == k)]);
         final wrapped = wrap?.call(data) ?? data as T;
         result.add({groupKey ?? 'group_by': k, k: wrapped});
       }
@@ -158,7 +161,9 @@ extension LzListStringExtension on List<String> {
     String date1 = map[0]['date']!, date2 = map[1]['date']!;
     String time1 = map[0]['time']!, time2 = map[1]['time']!;
 
-    return date1 == date2 ? '$date1, $time1 - $time2' : '$date1 $time1 - $date2 $time2';
+    return date1 == date2
+        ? '$date1, $time1 - $time2'
+        : '$date1 $time1 - $date2 $time2';
   }
 }
 
@@ -193,7 +198,9 @@ extension LzRangeIteration on List<int> {
   int get randomize {
     if (isEmpty) return 0;
     int start = this[0], end = length > 1 ? this[1] : start;
-    List<int> numbers = length > 1 ? List.generate(end, (i) => i + start) : List.generate(start, (i) => i + 1);
+    List<int> numbers = length > 1
+        ? List.generate(end, (i) => i + start)
+        : List.generate(start, (i) => i + 1);
     return numbers.getRandom().first;
   }
 }

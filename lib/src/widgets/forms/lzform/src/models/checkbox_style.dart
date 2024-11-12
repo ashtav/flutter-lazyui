@@ -36,13 +36,12 @@ class CheckboxStyle {
   /// [activeColor] : The color when the checkbox is active.
   ///
   /// [inactiveColor] : The color when the checkbox is inactive.
-  CheckboxStyle({
-    this.background,
-    this.borderColor,
-    this.radius,
-    this.textColor,
-    this.activeColor,
-    this.inactiveColor,
-    this.feedbackBackgroundColor
-  });
+  CheckboxStyle(
+      {this.background,
+      this.borderColor,
+      this.radius,
+      this.textColor,
+      this.activeColor,
+      this.inactiveColor,
+      this.feedbackBackgroundColor});
 }
