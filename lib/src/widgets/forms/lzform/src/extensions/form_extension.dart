@@ -13,13 +13,19 @@ extension LzFormExtension on Map<String, FormModel> {
   /// forms.fill({'name': 'John Doe'});
   /// ```
   Map<String, FormModel> fill(Map<String, dynamic> data,
-      {List<String> except = const [], bool when = true}) {
+      {Map<String, dynamic> extra = const {},
+      List<String> except = const [],
+      bool when = true}) {
     Bindings.onRendered(() {
       if (when) {
         for (var e in data.keys) {
           if (containsKey(e) && !except.contains(e)) {
             final notifier = this[e]!.notifier;
             dynamic value = data[e];
+
+            if (extra.containsKey(e)) {
+              notifier.extra = extra[e];
+            }
 
             if (notifier.isRadio) {
               notifier.setOptionFindBy(value);

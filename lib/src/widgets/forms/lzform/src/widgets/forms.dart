@@ -86,92 +86,6 @@ class LzForm {
                 FormModel(forms[keys[i]]!, notifiers[keys[i]]!, GlobalKey())));
   }
 
-  /// Fills the provided form models with data.
-  ///
-  /// This static function takes a map of `FormModel` objects and a data map, then
-  /// populates the `TextEditingController` of each form model with the corresponding
-  /// value from the data map. If a key in the data map matches a key in the form
-  /// models map, and is not listed in the `except` list, its value will be used to
-  /// set the text of the associated `TextEditingController`.
-  ///
-  /// This is useful for pre-filling form fields with existing data, such as when
-  /// editing information that was previously saved.
-  ///
-  /// The function returns the updated map of `FormModel` objects with their
-  /// controllers' text set according to the provided data.
-  ///
-  /// Example:
-  /// ```dart
-  /// var formModels = {
-  ///   'name': FormModel(...),
-  ///   'email': FormModel(...),
-  /// };
-  /// var data = {'name': 'John Doe', 'email': 'johndoe@example.com'};
-  /// formModels = FormModel.fill(formModels, data);
-  /// ```
-  ///
-  /// [forms] Map of `FormModel` objects, keyed by string.
-  /// [data] Map of data used to fill the form models, keyed by string.
-  /// [except] Optional list of string keys to exclude from filling.
-  /// Returns the updated map of `FormModel` objects.
-
-  static Map<String, FormModel> fill(
-      Map<String, FormModel> forms, Map<String, dynamic> data,
-      {List<String> except = const []}) {
-    for (var e in data.keys) {
-      if (forms.containsKey(e) && !except.contains(e)) {
-        forms[e]!.controller.text = data[e] == null ? '' : data[e].toString();
-      }
-    }
-
-    return forms;
-  }
-
-  /// Resets the text of form controllers in the provided map of `FormModel` objects.
-  ///
-  /// This static function allows for selectively resetting the text of form field
-  /// controllers. It can reset all forms, only specific forms, or all forms except
-  /// for a specified few, based on the `only` and `except` parameters.
-  ///
-  /// The function iterates over the keys in the provided `forms` map. If `only` is
-  /// not empty, only the forms whose keys are in the `only` list are reset. If
-  /// `except` is not empty, all forms except those whose keys are in the `except`
-  /// list are reset. If both `only` and `except` are empty, all forms are reset.
-  ///
-  /// This is particularly useful in scenarios where you need to clear form fields,
-  /// such as after submission or when initiating a new data entry process.
-  ///
-  /// Example:
-  /// ```dart
-  /// var formModels = {
-  ///   'name': FormModel(...),
-  ///   'email': FormModel(...),
-  /// };
-  /// // Reset only 'name' field
-  /// FormModel.reset(formModels, only: ['name']);
-  /// // Reset all except 'email'
-  /// FormModel.reset(formModels, except: ['email']);
-  /// // Reset all fields
-  /// FormModel.reset(formModels);
-  /// ```
-  ///
-  /// [forms] Map of `FormModel` objects, keyed by string.
-  /// [only] Optional list of string keys to exclusively reset.
-  /// [except] Optional list of string keys to exclude from resetting.
-
-  static void reset(Map<String, FormModel> forms,
-      {List<String> only = const [], List<String> except = const []}) {
-    for (var e in forms.keys) {
-      if (only.isNotEmpty && only.contains(e)) {
-        forms[e]!.controller.text = '';
-      } else if (except.isNotEmpty && !except.contains(e)) {
-        forms[e]!.controller.text = '';
-      } else if (only.isEmpty && except.isEmpty) {
-        forms[e]!.controller.text = '';
-      }
-    }
-  }
-
   /// Validates a map of form fields against user input.
   ///
   /// This static method takes a map of `FormModel` objects and performs validation
@@ -199,6 +113,7 @@ class LzForm {
   /// email: ['email']
   ///
   /// ```
+
   static LzForm validate(Map<String, FormModel> forms,
       {List<String> required = const [],
       List<String> min = const [],

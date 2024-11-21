@@ -165,6 +165,9 @@ class Select extends StatelessWidget with LzFormMixin {
           notifier.isSelectShow = false;
           notifier.onSelected?.call(notifier.selectedSelect!);
 
+          // set extra automatically
+          notifier.extra = value.value;
+
           // hide error message
           if (!notifier.isValid) {
             notifier.setMessage('', true);

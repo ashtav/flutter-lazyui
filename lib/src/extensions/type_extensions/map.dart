@@ -97,16 +97,16 @@ extension MapStringExtension on Map<String, dynamic> {
   Map<String, dynamic> currency(
       [List<String> keys = const [],
       String prefix = '',
-      String locale = 'id_ID']) {
+      String separator = ',']) {
     return map((key, value) {
       if (keys.contains(key)) {
         String result = NumberFormat.currency(
-          locale: locale,
+          locale: 'id_ID',
           decimalDigits: 0,
           symbol: prefix,
         ).format(int.parse(value.toString()));
 
-        return MapEntry(key, result);
+        return MapEntry(key, result.replaceAll('.', separator));
       } else {
         return MapEntry(key, value);
       }

@@ -35,6 +35,7 @@ class FormsView extends StatelessWidget {
         'hobby': ['Coding', 'Swimming'],
         'province': Option('Jakarta', value: 2)
       });
+
       // forms.setValue('province', Option('Jakarta', value: 2)); // or like this
     });
 
@@ -346,7 +347,7 @@ class FormsView extends StatelessWidget {
                         'I am sory, we need to know your name, so please provide your valid information.'
                   }));
 
-              final payload = form.value;
+              final payload = form.value.currency(['phone']);
               forms.setFromExtra(payload, ['province', 'city']);
 
               logg('-- form value: $payload');
