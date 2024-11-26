@@ -215,8 +215,8 @@ class _LzAccordionState extends State<LzAccordion>
     super.build(context);
 
     double radius = LazyUi.radius;
-    bool isTabler = LazyUi.iconType == IconType.tablerIcon;
-    bool isHuge = LazyUi.iconType == IconType.hugeIcon;
+    bool isTabler = LazyUi.iconType == IconType.tabler;
+    bool isHuge = LazyUi.iconType == IconType.huge;
 
     Color backgroundColor = widget.backgroundColor ?? lzBackgroundColor;
     Color borderColor = widget.borderColor ??
@@ -297,8 +297,7 @@ class _LzAccordionState extends State<LzAccordion>
                                               isTabler
                                                   ? Ti.chevronRight
                                                   : isHuge
-                                                      ? Hi
-                                                          .strokeRoundedArrowRight01
+                                                      ? Hi.arrowRight01
                                                       : La.angleRight,
                                               color: Colors
                                                   .black45.adaptWithTheme))

@@ -10,36 +10,34 @@ class SlideIndicatorView extends StatelessWidget {
 
     return Scaffold(
       body: Center(
-          child: LzState.watch(
-        '#slide',
-        0,
-        (active) => Column(
+        child: Column(
           children: [
-            Textml('Make a simple slide indicator with <b>LzSlideIndicator</b> widget. <p color="09f">LzSlideIndicator(length: 5, active: $active, size: (active) => [active ? 20 : 5, 5])</p>',
+            const Textml(
+                    'Make a simple slide indicator with <b>LzSlideIndicator</b> widget. <p color="09f">LzSlideIndicator(length: 5, active: false, size: (active) => [active ? 20 : 5, 5])</p>',
                     textAlign: Ta.center)
                 .margin(all: 20),
             Column(
               children: [
-                LzTextDivider(child: Text(names[active])).margin(b: 20),
+                LzTextDivider(child: Text(names[1])).margin(b: 20),
                 LzSlideIndicator(
                   length: names.length,
-                  active: active,
+                  active: 1,
                   size: (active) => [active ? 20 : 5, 5],
                 ),
               ],
             ).center,
           ],
         ).center,
-      )),
+      ),
       bottomNavigationBar: Intrinsic(
         children: [Ti.arrowLeft, Ti.arrowRight].generate((icon, i) {
           return InkTouch(
             onTap: () {
-              int active = LzState.get('#slide') ?? 0;
-              active += i == 0 ? -1 : 1;
-              active = active.clamp(0, names.length - 1);
+              // int active = LzState.get('#slide') ?? 0;
+              // active += i == 0 ? -1 : 1;
+              // active = active.clamp(0, names.length - 1);
 
-              LzState.set('#slide', active);
+              // LzState.set('#slide', active);
             },
             padding: Ei.all(20),
             border: Br.only(['l'], except: i == 0),

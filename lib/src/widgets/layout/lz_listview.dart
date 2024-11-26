@@ -151,8 +151,6 @@ class _LzListViewState extends State<LzListView> {
 
   @override
   Widget build(BuildContext context) {
-    double spacing = LazyUi.space;
-
     List<Widget> children = widget.children;
     List<Widget> newChildren = [];
 
@@ -171,7 +169,7 @@ class _LzListViewState extends State<LzListView> {
           reverse: widget.reverse,
           physics: widget.physics ?? BounceScroll(),
           controller: controller,
-          padding: widget.padding ?? Ei.all(spacing),
+          padding: widget.padding ?? Ei.all(20),
           shrinkWrap: widget.shrinkWrap,
           cacheExtent: cacheExtent,
           children: widget.gap == null ? children : newChildren,

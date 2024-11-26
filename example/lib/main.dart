@@ -5,7 +5,7 @@ import 'package:lazyui/lazyui.dart';
 
 void main() async {
   // initialize lazyui
-  LazyUi.init(locale: 'id_ID', icon: IconType.hugeIcon);
+  LazyUi.init(locale: 'id_ID', icon: IconType.huge);
 
   runApp(const MyApp());
 }

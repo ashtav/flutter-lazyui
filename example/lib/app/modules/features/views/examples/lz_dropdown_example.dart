@@ -9,11 +9,7 @@ class LzDropdownExample extends StatelessWidget {
     final key1 = GlobalKey();
     final key2 = GlobalKey();
 
-    final icons = [
-      Hi.strokeRoundedFilterVertical,
-      Hi.strokeRoundedSortingAZ02,
-      Hi.strokeRoundedSettings01
-    ];
+    final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
     final options = LzDropdown.of(['Filter', 'Sort AZ', 'Settings'],
         icons: icons, separated: [2]);
 
@@ -23,17 +19,17 @@ class LzDropdownExample extends StatelessWidget {
           // show dropdown using context
           IconButton(
               onPressed: () => context.dropdown(key1, options: options),
-              icon: Icon(Hi.strokeRoundedSettings01, key: key1)),
+              icon: Icon(Hi.settings01, key: key1)),
 
           // show dropdown using context with overlay
           IconButton(
               onPressed: () {
                 context.dropdown(key2,
                     options: options,
-                    overlay: const Icon(Hi.strokeRoundedNotification01,
-                        color: Colors.white));
+                    overlay:
+                        const Icon(Hi.notification01, color: Colors.white));
               },
-              icon: Icon(Hi.strokeRoundedNotification01, key: key2)),
+              icon: Icon(Hi.notification01, key: key2)),
 
           // show dropdown using LzDropdown widget
           LzDropdown(
@@ -41,9 +37,9 @@ class LzDropdownExample extends StatelessWidget {
               builder: (key, action) {
                 return IconButton(
                     onPressed: () => action.show(),
-                    icon: Icon(Hi.strokeRoundedMenu02, key: key));
+                    icon: Icon(Hi.menu02, key: key));
               },
-              child: const Icon(Hi.strokeRoundedMenu02, color: Colors.white)),
+              child: const Icon(Hi.menu02, color: Colors.white)),
         ]),
         body: Column(
           children: [
@@ -136,7 +132,7 @@ class LzDropdownExample extends StatelessWidget {
                     children: [
                       LzDropdown(
                           options: options,
-                          child: Iconr(Hi.strokeRoundedUser,
+                          child: Iconr(Hi.user,
                               padding: Ei.all(20), color: Colors.white),
                           builder: (key, action) {
                             return Touch(
@@ -144,13 +140,11 @@ class LzDropdownExample extends StatelessWidget {
                                 onTap: () {
                                   action.show();
                                 },
-                                child: Iconr(Hi.strokeRoundedUser,
-                                    padding: Ei.all(20)));
+                                child: Iconr(Hi.user, padding: Ei.all(20)));
                           }),
                       Touch(
                           onTap: () {},
-                          child:
-                              Iconr(Hi.strokeRoundedGift, padding: Ei.all(20)))
+                          child: Iconr(Hi.gift, padding: Ei.all(20)))
                     ],
                   ),
 
@@ -158,11 +152,8 @@ class LzDropdownExample extends StatelessWidget {
                   Intrinsic(
                     spacer:
                         Container(width: 1, height: 30, color: Colors.black12),
-                    children: [
-                      Hi.strokeRoundedPencil,
-                      Hi.strokeRoundedEraser,
-                      Hi.strokeRoundedScissor
-                    ].generate((icon, i) {
+                    children:
+                        [Hi.pencil, Hi.eraser, Hi.scissor].generate((icon, i) {
                       return LzDropdown(
                           options: options,
                           builder: (key, action) {

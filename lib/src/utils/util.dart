@@ -24,6 +24,5 @@ part 'formatter.dart';
 part 'lipsum.dart';
 part 'log.dart';
 part 'shortcut.dart';
-part 'state.dart';
 part 'text_editing_controller.dart';
 part 'utilities.dart';

@@ -25,7 +25,7 @@ class LzModifiers {
   /// YourWidget().sized(100, 100)
   /// ```
   Widget sized([double width = 0, double? height]) =>
-      SizedBox(width: width, height: height ?? width, child: widget);
+      SizedBox(width: width, height: height, child: widget);
 
   /// ``` dart
   /// YourWidget().lz.clip()

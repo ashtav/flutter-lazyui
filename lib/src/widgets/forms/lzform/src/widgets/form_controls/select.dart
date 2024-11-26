@@ -74,8 +74,8 @@ class Select extends StatelessWidget with LzFormMixin {
     bool isTopInner = formType == FormType.topInner;
 
     // get icon (tabler or line awesome)
-    bool isTabler = LazyUi.iconType == IconType.tablerIcon;
-    bool isHugeIcon = LazyUi.iconType == IconType.hugeIcon;
+    bool isTabler = LazyUi.iconType == IconType.tabler;
+    bool isHugeIcon = LazyUi.iconType == IconType.huge;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
@@ -128,7 +128,7 @@ class Select extends StatelessWidget with LzFormMixin {
             (isTabler
                 ? Ti.chevronDown
                 : isHugeIcon
-                    ? Hi.strokeRoundedArrowDown01
+                    ? Hi.arrowDown01
                     : La.angleDown),
         color: style?.suffixIconColor,
         size: 20);

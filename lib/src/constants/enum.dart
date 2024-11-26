@@ -16,10 +16,10 @@ enum IconType {
   lineAwesome,
 
   /// Tabler icon set.
-  tablerIcon,
+  tabler,
 
   /// Huge icon set
-  hugeIcon
+  huge
 }
 
 /// Enum representing different slide directions.

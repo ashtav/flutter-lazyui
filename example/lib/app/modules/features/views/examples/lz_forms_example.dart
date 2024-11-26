@@ -299,20 +299,14 @@ class FormsView extends StatelessWidget {
                       divisions: 7,
                       indicator: (double value) => Text('\$${value.toInt()}'),
                       model: forms['distance'],
-                      onChange: (value) {
-                        LzState.set('#distance', value);
-                      }),
+                      onChange: (value) {}),
                 ]).margin(t: 25, b: 0),
 
-            LzState.watch(
-                '#distance',
-                29.0,
-                (value) => Row(
-                      children: [
-                        Text('Your distance is $value Km',
-                            style: font.fs14.muted),
-                      ],
-                    ).end),
+            Row(
+              children: [
+                Text('Your distance is 1 Km', style: font.fs14.muted),
+              ],
+            ).end,
 
             // example of using input (obsecureToggle)
             LzFormWrap(

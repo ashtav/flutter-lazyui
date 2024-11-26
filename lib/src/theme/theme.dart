@@ -32,6 +32,8 @@ bool lzDarkMode = false;
 class LzTheme {
   /// Returns the light theme configuration.
   static ThemeData get light {
+    Utils.setSystemUI(navBarColor: Colors.white);
+
     return ThemeData.light().copyWith(
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
@@ -52,6 +54,8 @@ class LzTheme {
 
   /// Returns the dark theme configuration.
   static ThemeData get dark {
+    Utils.setSystemUI(navBarColor: Colors.black);
+
     return ThemeData.dark().copyWith(
       brightness: Brightness.dark,
       appBarTheme: AppBarTheme(
@@ -82,6 +86,8 @@ class LzTheme {
   ///
   /// Returns the system's current theme, either light or dark.
   static ThemeData system() {
+    Utils.setSystemUI();
+
     Brightness brightness =
         SchedulerBinding.instance.platformDispatcher.platformBrightness;
     bool isDarkMode = brightness == Brightness.dark;
@@ -105,20 +111,5 @@ class LzTheme {
       lzBackgroundColor = Colors.white;
       gfont = gfont.copyWith(color: Colors.black87);
     }
-  }
-}
-
-/// Extension on [Color] providing a method to adapt color based on the current theme.
-extension CustomColorExtension on Color {
-  /// Adapts the color based on the current application theme.
-  ///
-  /// Returns the inverse of the color if [lzDarkMode] is `true`, otherwise returns the color itself.
-  Color get adaptWithTheme {
-    return lzDarkMode ? invert() : this;
-  }
-
-  /// check if color is dark or light then return color
-  Color get adaptColor {
-    return isDark() ? Colors.white : Colors.black87;
   }
 }

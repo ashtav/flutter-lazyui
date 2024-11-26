@@ -64,7 +64,7 @@ class LzCard extends StatelessWidget {
     ).start;
 
     Widget inktouch = Container(
-      padding: padding ?? Ei.all(LazyUi.space),
+      padding: padding ?? Ei.all(20),
       width: context.width,
       child: gap == null ? child : child.gap(gap!),
     );

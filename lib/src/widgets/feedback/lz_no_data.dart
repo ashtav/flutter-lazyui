@@ -40,7 +40,7 @@ class LzNoData extends StatelessWidget {
     String message = this.message ?? 'No Data';
     String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
-    bool isTi = LazyUi.iconType == IconType.tablerIcon;
+    bool isTi = LazyUi.iconType == IconType.tabler;
 
     return Container(
       padding: padding ?? Ei.sym(v: 15, h: 35),

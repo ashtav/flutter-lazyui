@@ -1,4 +1,3 @@
-## 4.1.8
+## 4.2.0
 
 * improvement and fix some bugs
-* add some widgets

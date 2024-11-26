@@ -193,7 +193,7 @@ class InkTouch extends StatelessWidget {
 
     return InkTouch(
       onTap: onTap,
-      padding: Ei.all(LazyUi.space),
+      padding: Ei.all(20),
       border: border,
       color: color ?? defaultColor,
       radius: radius,

@@ -30,9 +30,21 @@ class DropdownConfig {
   /// A custom function to build the dropdown content.
   final Widget Function(List<LzDropOption> options)? dropBuilder;
 
+  /// Dropdown width
+  final double? width;
+
   /// Constructor to initialize a [DropdownConfig].
-  DropdownConfig(this.context, this.key, this.options, this.onSelect,
-      this.position, this.align, this.space, this.child, this.dropBuilder);
+  DropdownConfig(
+      this.context,
+      this.key,
+      this.options,
+      this.onSelect,
+      this.position,
+      this.align,
+      this.space,
+      this.child,
+      this.dropBuilder,
+      this.width);
 }
 
 /// Controller class that manages the dropdown behavior.
@@ -54,7 +66,8 @@ class DropdownController {
           position: data!.position,
           align: data!.align,
           overlay: data!.child,
-          dropBuilder: data!.dropBuilder);
+          dropBuilder: data!.dropBuilder,
+          width: data!.width);
     }
   }
 }
@@ -82,6 +95,9 @@ class LzDropdown extends StatelessWidget {
   /// The offset that controls the space between the dropdown and the trigger widget.
   final Offset? space;
 
+  /// Dropdown width
+  final double? width;
+
   /// The widget to display as the dropdown's child.
   final Widget? child;
 
@@ -95,6 +111,7 @@ class LzDropdown extends StatelessWidget {
       this.position,
       this.align,
       this.space,
+      this.width,
       this.child});
 
   @override
@@ -106,7 +123,7 @@ class LzDropdown extends StatelessWidget {
         key,
         DropdownController(
             data: DropdownConfig(context, key, options, onSelect, position,
-                align, space, childOverlay, dropBuilder)));
+                align, space, childOverlay, dropBuilder, width)));
 
     if (child is LzDropWrap) {
       child = child.child;
@@ -122,19 +139,22 @@ class LzDropdown extends StatelessWidget {
       bool asPrefix = false,
       List separated = const [],
       List critical = const [],
-      List disabled = const []}) {
+      List disabled = const [],
+      List focused = const []}) {
     return options.map((e) {
       int i = options.indexOf(e);
       bool isSeparated = separated.contains(i) || separated.contains(e);
       bool isCritical = critical.contains(i) || critical.contains(e);
       bool isDisabled = disabled.contains(i) || disabled.contains(e);
+      bool isFocus = focused.contains(i) || focused.contains(e);
 
       return LzDropOption(e,
           icon: icons.length < i + 1 ? null : icons[i],
           asPrefix: asPrefix,
           separated: isSeparated,
           critical: isCritical,
-          disabled: isDisabled);
+          disabled: isDisabled,
+          focused: isFocus);
     }).toList();
   }
 }
@@ -159,13 +179,17 @@ class LzDropOption {
   /// Whether the option is disabled and cannot be selected.
   final bool disabled;
 
+  /// Whether the option is focused.
+  final bool focused;
+
   /// Constructor to initialize a [LzDropOption].
   LzDropOption(this.label,
       {this.icon,
       this.asPrefix = false,
       this.separated = false,
       this.critical = false,
-      this.disabled = false});
+      this.disabled = false,
+      this.focused = false});
 }
 
 /// Represents the value of a selected dropdown option.
@@ -246,6 +270,9 @@ class _Overlay extends StatelessWidget {
   /// A custom function to build the dropdown options.
   final Widget Function(List<LzDropOption> options)? dropBuilder;
 
+  /// Dropdown width
+  final double? width;
+
   /// Constructor to initialize an [Overlay] widget with required and optional properties.
   const _Overlay(
       {required this.target,
@@ -254,7 +281,8 @@ class _Overlay extends StatelessWidget {
       this.options = const [],
       this.position,
       this.align,
-      this.dropBuilder});
+      this.dropBuilder,
+      this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -282,7 +310,7 @@ class _Overlay extends StatelessWidget {
                 opacity: state.visible ? 1 : 0,
                 child: dropBuilder?.call(options) ??
                     SizedBox(
-                      width: 250,
+                      width: (width ?? 250).clamp(150, context.width),
                       child: Column(
                         children: options.generate((option, i) {
                           bool asPrefix = option.asPrefix;
@@ -292,7 +320,9 @@ class _Overlay extends StatelessWidget {
                               : Colors.black87.adaptWithTheme;
 
                           List<Widget> children = [
-                            Text(option.label, style: Gfont.color(color)),
+                            Text(option.label,
+                                style:
+                                    Gfont.color(color).fbold(option.focused)),
 
                             // If an icon is provided, display it alongside the label
                             if (option.icon != null)
@@ -339,7 +369,8 @@ class _Overlay extends StatelessWidget {
       Function(LzDropValue)? onSelect,
       LzDropPosition? position,
       LzDropAlign? align,
-      Widget Function(List<LzDropOption> options)? dropBuilder}) {
+      Widget Function(List<LzDropOption> options)? dropBuilder,
+      double? width}) {
     try {
       // If no options are provided, log an error.
       if (options.isEmpty) {
@@ -367,7 +398,8 @@ class _Overlay extends StatelessWidget {
                     position: position,
                     align: align,
                     targetWidget: overlay,
-                    dropBuilder: dropBuilder),
+                    dropBuilder: dropBuilder,
+                    width: width),
                 backBlur: true)
             .then((value) {
           // If an option is selected, call the onSelect callback.
@@ -403,7 +435,8 @@ extension LzDropdownContextExtension on BuildContext {
       LzDropPosition? position,
       LzDropAlign? align,
       Widget? overlay,
-      Widget Function(List<LzDropOption> options)? dropBuilder}) {
+      Widget Function(List<LzDropOption> options)? dropBuilder,
+      double? width}) {
     // Opens the dropdown using the provided configurations
     _Overlay.open(this, key,
         options: options,
@@ -412,7 +445,8 @@ extension LzDropdownContextExtension on BuildContext {
         position: position,
         align: align,
         overlay: overlay,
-        dropBuilder: dropBuilder);
+        dropBuilder: dropBuilder,
+        width: width);
   }
 }
 

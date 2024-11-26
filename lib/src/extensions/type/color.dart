@@ -50,6 +50,18 @@ extension LzColorExtension on Color {
   ///
   /// @return A boolean value that is true if the color is dark and false otherwise.
   bool isDark() => Tints.isDark(this);
+
+  /// Adapts the color based on the current application theme.
+  ///
+  /// Returns the inverse of the color if [lzDarkMode] is `true`, otherwise returns the color itself.
+  Color get adaptWithTheme {
+    return lzDarkMode ? invert() : this;
+  }
+
+  /// check if color is dark or light then return color
+  Color get adaptColor {
+    return isDark() ? Colors.white : Colors.black87;
+  }
 }
 
 // extension LzNullableColorExtension on Color? {

@@ -61,13 +61,9 @@ class TestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final icons = [
-      Hi.strokeRoundedFilterVertical,
-      Hi.strokeRoundedSortingAZ02,
-      Hi.strokeRoundedSettings01
-    ];
+    final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
     final options = LzDropdown.of(['Filter', 'Sort AZ', 'Settings'],
-        icons: icons, separated: [2]);
+        icons: icons, separated: [2], focused: [2]);
 
     return Wrapper(
       child: Scaffold(
@@ -79,9 +75,9 @@ class TestView extends StatelessWidget {
                 builder: (key, action) {
                   return IconButton(
                       onPressed: () => action.show(),
-                      icon: Icon(Hi.strokeRoundedMenu02, key: key));
+                      icon: Icon(Hi.menu02, key: key));
                 },
-                child: const Icon(Hi.strokeRoundedMenu02, color: Colors.white)),
+                child: const Icon(Hi.menu02, color: Colors.white)),
           ],
         ),
         body: Column(
@@ -105,9 +101,9 @@ class TestView extends StatelessWidget {
                         'Edit',
                         'Delete'
                       ], icons: [
-                        Hi.strokeRoundedInformationCircle,
-                        Hi.strokeRoundedPencil,
-                        Hi.strokeRoundedDelete01
+                        Hi.informationCircle,
+                        Hi.pencil,
+                        Hi.delete01
                       ]),
                       dropBuilder: (options) => DropBuilder(options),
                       builder: (key, action) {

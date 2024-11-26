@@ -51,8 +51,8 @@ class T4 extends StatelessWidget {
       children: [
         Text('4', style: Gfont.fsize(170)),
         Textr(
-          '.1.0',
-          style: Gfont.fsize(14),
+          '.2.0',
+          style: Gfont.fsize(15),
           margin: Ei.only(l: 100, t: 100),
         ),
       ],

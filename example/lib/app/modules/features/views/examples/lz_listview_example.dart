@@ -13,7 +13,6 @@ class LzListViewExample extends StatelessWidget {
         body: LzListView(
           onScroll: (scroll) {
             double pixels = scroll.pixels;
-            LzState.set('#pixel', pixels);
 
             bool isMaxScrolled = (pixels + 150) >= scroll.max;
             if (isMaxScrolled) {
@@ -38,11 +37,8 @@ class LzListViewExample extends StatelessWidget {
                 .margin(b: 25),
 
             const Text('Scroll limit, top: 50, bottom: 100'),
-            LzState.watch(
-                '#pixel',
-                0.0,
-                (value) =>
-                    Text('Scroll pixels: $value')), // watch scroll pixels
+
+            const Text('Scroll pixels: 1'), // watch scroll pixels
 
             Textr(Faker.words(25, 10),
                 border: Br.only(['t']),

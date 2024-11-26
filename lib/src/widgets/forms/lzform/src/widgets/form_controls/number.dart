@@ -96,8 +96,8 @@ class Number extends StatelessWidget with LzFormMixin {
     bool isTopInner = formType == FormType.topInner;
 
     // get icon (tabler or line awesome)
-    bool isTabler = LazyUi.iconType == IconType.tablerIcon;
-    bool isHugeIcon = LazyUi.iconType == IconType.hugeIcon;
+    bool isTabler = LazyUi.iconType == IconType.tabler;
+    bool isHugeIcon = LazyUi.iconType == IconType.huge;
 
     // get radius
     double radius = style?.radius ?? LazyUi.radius;
@@ -213,12 +213,12 @@ class Number extends StatelessWidget with LzFormMixin {
                       IconData iconPlus = isTabler
                           ? Ti.plus
                           : isHugeIcon
-                              ? Hi.strokeRoundedPlusSign
+                              ? Hi.plusSign
                               : La.plus;
                       IconData iconMin = isTabler
                           ? Ti.minus
                           : isHugeIcon
-                              ? Hi.strokeRoundedMinusSign
+                              ? Hi.minusSign
                               : La.minus;
 
                       if (iconControls != null && iconControls!.length == 2) {
