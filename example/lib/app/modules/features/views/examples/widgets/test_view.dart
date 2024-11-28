@@ -63,7 +63,7 @@ class TestView extends StatelessWidget {
   Widget build(BuildContext context) {
     final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
     final options = LzDropdown.of(['Filter', 'Sort AZ', 'Settings'],
-        icons: icons, separated: [2], focused: [2]);
+        icons: icons, separated: [2], focused: ['Settings']);
 
     return Wrapper(
       child: Scaffold(
