@@ -34,8 +34,17 @@ class DropdownConfig {
   final double? width;
 
   /// Constructor to initialize a [DropdownConfig].
-  DropdownConfig(this.context, this.key, this.options, this.onSelect, this.position, this.align, this.space, this.child,
-      this.dropBuilder, this.width);
+  DropdownConfig(
+      this.context,
+      this.key,
+      this.options,
+      this.onSelect,
+      this.position,
+      this.align,
+      this.space,
+      this.child,
+      this.dropBuilder,
+      this.width);
 }
 
 /// Controller class that manages the dropdown behavior.
@@ -108,12 +117,13 @@ class LzDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final key = GlobalKey();
-    Widget childOverlay = this.child ?? builder(GlobalKey(), DropdownController()).lz.ignore();
+    Widget childOverlay =
+        this.child ?? builder(GlobalKey(), DropdownController()).lz.ignore();
     Widget child = builder(
         key,
         DropdownController(
-            data: DropdownConfig(
-                context, key, options, onSelect, position, align, space, childOverlay, dropBuilder, width)));
+            data: DropdownConfig(context, key, options, onSelect, position,
+                align, space, childOverlay, dropBuilder, width)));
 
     if (child is LzDropWrap) {
       child = child.child;
@@ -133,7 +143,9 @@ class LzDropdown extends StatelessWidget {
       List focused = const []}) {
     return options.map((e) {
       bool isContain(List array, dynamic value) {
-        return array.map((e) => e.toString().toLowerCase()).contains('$value'.toLowerCase());
+        return array
+            .map((e) => e.toString().toLowerCase())
+            .contains('$value'.toLowerCase());
       }
 
       int i = options.indexOf(e);
@@ -281,8 +293,8 @@ class _Overlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final key = GlobalKey();
-    final notifier =
-        _DropdownNotifier(context, target, key, space, position ?? LzDropPosition.auto, align ?? LzDropAlign.left);
+    final notifier = _DropdownNotifier(context, target, key, space,
+        position ?? LzDropPosition.auto, align ?? LzDropAlign.left);
 
     return Stack(
       children: [
@@ -309,13 +321,18 @@ class _Overlay extends StatelessWidget {
                         children: options.generate((option, i) {
                           bool asPrefix = option.asPrefix;
 
-                          Color color = option.critical ? Colors.redAccent : Colors.black87.adaptWithTheme;
+                          Color color = option.critical
+                              ? Colors.redAccent
+                              : Colors.black87.adaptWithTheme;
 
                           List<Widget> children = [
-                            Text(option.label, style: Gfont.color(color).fbold(option.focused)),
+                            Text(option.label,
+                                style:
+                                    Gfont.color(color).fbold(option.focused)),
 
                             // If an icon is provided, display it alongside the label
-                            if (option.icon != null) Icon(option.icon, color: color)
+                            if (option.icon != null)
+                              Icon(option.icon, color: color)
                           ];
 
                           if (asPrefix) {
@@ -326,12 +343,17 @@ class _Overlay extends StatelessWidget {
                             onTap: option.disabled
                                 ? null
                                 : () {
-                                    context.lz.pop(LzDropValue(option.label, i));
+                                    context.lz
+                                        .pop(LzDropValue(option.label, i));
                                   },
                             color: lzBackgroundColor,
                             padding: Ei.sym(v: 13, h: 20),
-                            border: Br.only(['t'], except: i == 0, width: option.separated ? 3 : .7),
-                            child: (asPrefix ? Row(children: children).gap(10) : Row(children: children).between)
+                            border: Br.only(['t'],
+                                except: i == 0,
+                                width: option.separated ? 3 : .7),
+                            child: (asPrefix
+                                    ? Row(children: children).gap(10)
+                                    : Row(children: children).between)
                                 .lz
                                 .opacity(option.disabled ? .5 : 1),
                           );
@@ -458,7 +480,8 @@ class _DropdownNotifier extends ChangeNotifier {
   Offset offset = Offset.zero;
   bool visible = false;
 
-  _DropdownNotifier(this.context, this.target, this.key, this.space, this.position, this.align) {
+  _DropdownNotifier(this.context, this.target, this.key, this.space,
+      this.position, this.align) {
     offset = target.offset;
 
     double dx = offset.dx;
@@ -508,8 +531,14 @@ class _DropdownNotifier extends ChangeNotifier {
 
       // Set up the dropdown vertical position based on available screen space
       void setUpPosition() {
-        double dropY = dropdownOffset().dy + size.height + context.windowPadding.top + (space?.dy ?? 20);
-        double topPosition = dropdown.dy - size.height - (space?.dy ?? 40) - (context.windowPadding.top * 2);
+        double dropY = dropdownOffset().dy +
+            size.height +
+            context.windowPadding.top +
+            (space?.dy ?? 20);
+        double topPosition = dropdown.dy -
+            size.height -
+            (space?.dy ?? 40) -
+            (context.windowPadding.top * 2);
         bool isOutOfY = dropY > screen.height;
 
         if ([LzDropPosition.auto, LzDropPosition.top].contains(position)) {
