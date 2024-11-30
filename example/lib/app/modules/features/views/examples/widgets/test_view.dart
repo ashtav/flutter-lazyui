@@ -74,7 +74,9 @@ class TestView extends StatelessWidget {
                 options: options,
                 builder: (key, action) {
                   return IconButton(
-                      onPressed: () => action.show(),
+                      onPressed: () => action.show().then((value) {
+                            logg(value?.index == 0);
+                          }),
                       icon: Icon(Hi.menu02, key: key));
                 },
                 child: const Icon(Hi.menu02, color: Colors.white)),

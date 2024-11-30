@@ -57,9 +57,9 @@ class DropdownController {
   DropdownController({this.data});
 
   /// Shows the dropdown with the provided configuration.
-  void show() {
+  Future<LzDropValue?> show() async {
     if (data != null) {
-      data!.context.dropdown(data!.key,
+      return data!.context.dropdown(data!.key,
           options: data!.options,
           onSelect: data!.onSelect,
           space: data!.space,
@@ -69,6 +69,8 @@ class DropdownController {
           dropBuilder: data!.dropBuilder,
           width: data!.width);
     }
+
+    return null;
   }
 }
 
@@ -368,7 +370,7 @@ class _Overlay extends StatelessWidget {
 
   /// A method to open the dropdown overlay on the screen.
   /// It handles the position, options, and displays the dropdown.
-  static open(BuildContext context, GlobalKey key,
+  static Future<LzDropValue?> open(BuildContext context, GlobalKey key,
       {Widget? overlay,
       List<LzDropOption> options = const [],
       Offset? space,
@@ -376,18 +378,20 @@ class _Overlay extends StatelessWidget {
       LzDropPosition? position,
       LzDropAlign? align,
       Widget Function(List<LzDropOption> options)? dropBuilder,
-      double? width}) {
+      double? width}) async {
     try {
       // If no options are provided, log an error.
       if (options.isEmpty) {
-        return logg('Options is empty...', name: 'LzDropdown');
+        logg('Options is empty...', name: 'LzDropdown');
+        return null;
       }
 
       final targetContext = key.context;
 
       // Check if the target context is available.
       if (targetContext == null) {
-        return logg('Target context is undefined.', name: 'LzDropdown');
+        logg('Target context is undefined.', name: 'LzDropdown');
+        return null;
       }
 
       final box = targetContext.findRenderObject() as RenderBox?;
@@ -395,7 +399,7 @@ class _Overlay extends StatelessWidget {
 
       if (offset != null) {
         // Display the dropdown overlay in the dialog
-        context
+        return await context
             .dialog(
                 _Overlay(
                     target: _Target(offset, box?.size ?? Size.zero),
@@ -411,11 +415,17 @@ class _Overlay extends StatelessWidget {
           // If an option is selected, call the onSelect callback.
           if (value != null && value is LzDropValue) {
             onSelect?.call(value);
+            return value;
           }
+
+          return null;
         });
       }
+
+      return null;
     } catch (e, s) {
       Errors.check(e, s);
+      return null;
     }
   }
 }
@@ -434,7 +444,7 @@ extension LzDropdownContextExtension on BuildContext {
   /// - [align]: The alignment of the dropdown relative to the target widget (default is `left`).
   /// - [overlay]: An optional widget to display as the overlay instead of the default dropdown.
   /// - [dropBuilder]: A custom builder function to render the dropdown options.
-  void dropdown(GlobalKey key,
+  Future<LzDropValue?> dropdown(GlobalKey key,
       {List<LzDropOption> options = const [],
       void Function(LzDropValue)? onSelect,
       Offset? space,
@@ -442,9 +452,9 @@ extension LzDropdownContextExtension on BuildContext {
       LzDropAlign? align,
       Widget? overlay,
       Widget Function(List<LzDropOption> options)? dropBuilder,
-      double? width}) {
+      double? width}) async {
     // Opens the dropdown using the provided configurations
-    _Overlay.open(this, key,
+    return await _Overlay.open(this, key,
         options: options,
         onSelect: onSelect,
         space: space,
