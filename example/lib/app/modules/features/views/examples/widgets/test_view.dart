@@ -157,7 +157,9 @@ class TestView extends StatelessWidget {
           children: [
             LzTabView(
               tabs: 15.generate((i) => Faker.category()),
-              onTap: (key, i) {},
+              onTap: (key, i) {
+                context.bottomSheet(const TestView1());
+              },
               builder: (label, i) {
                 return Textr(label,
                     padding: Ei.sym(v: 13, h: 25),
@@ -199,6 +201,26 @@ class TestView extends StatelessWidget {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class TestView1 extends StatelessWidget {
+  const TestView1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Hello'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: Maa.center,
+          spacing: 15,
+          children: [LzAvatar()],
         ),
       ),
     );

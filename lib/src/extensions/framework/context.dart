@@ -227,7 +227,11 @@ extension LzContextExtension on BuildContext {
                   : 0),
           decoration: BoxDecoration(
               color: backgroundColor ??
-                  (safeArea ? Colors.white : Colors.transparent)),
+                  (safeArea
+                      ? lzDarkMode
+                          ? scaffoldColor
+                          : Colors.white
+                      : Colors.transparent)),
           child: child,
         );
 

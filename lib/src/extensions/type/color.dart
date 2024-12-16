@@ -62,6 +62,11 @@ extension LzColorExtension on Color {
   Color get adaptColor {
     return isDark() ? Colors.white : Colors.black87;
   }
+
+  /// returns color with opactiy value
+  Color setOpacity([double value = .5]) {
+    return withValues(alpha: value);
+  }
 }
 
 // extension LzNullableColorExtension on Color? {

@@ -34,6 +34,7 @@ part 'animations/typing.dart';
 part 'animations/zoom_in.dart';
 part 'components/data_tile.dart';
 part 'components/iconr.dart';
+part 'components/lz_avatar.dart';
 part 'components/lz_card.dart';
 part 'components/lz_slide_indicator.dart';
 part 'components/lz_text_count.dart';

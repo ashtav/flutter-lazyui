@@ -35,15 +35,15 @@ class LzTheme {
     return ThemeData.light().copyWith(
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
-        titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.black87),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.white,
-        shadowColor: Colors.black38,
-        elevation: .7,
-        scrolledUnderElevation: .7,
-        surfaceTintColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black87, size: 20),
-      ),
+          titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.black87),
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.white,
+          shadowColor: Colors.black38,
+          elevation: 0,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.black87, size: 20),
+          shape: Border(bottom: BorderSide(color: lzBorderColor, width: .5))),
       scaffoldBackgroundColor: 'fafafa'.hex,
       textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.black87)),
       iconTheme: const IconThemeData(size: 20, color: Colors.black87),
@@ -57,9 +57,9 @@ class LzTheme {
     return ThemeData.dark().copyWith(
       brightness: Brightness.dark,
       appBarTheme: AppBarTheme(
-        titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.white),
-        iconTheme: const IconThemeData(color: Colors.white, size: 20),
-      ),
+          titleTextStyle: gfont.copyWith(fontSize: 20, color: Colors.white),
+          iconTheme: const IconThemeData(color: Colors.white, size: 20),
+          shape: Border(bottom: BorderSide(color: Colors.white12, width: .5))),
       textTheme: TextTheme(bodyMedium: gfont.copyWith(color: Colors.white)),
       iconTheme: const IconThemeData(size: 20, color: Colors.white),
     );
