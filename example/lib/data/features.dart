@@ -30,9 +30,9 @@ List<FeatureGroup> get features => [
       FeatureGroup(
         label: 'Forms & Inputs',
         features: [
-          Feature(label: 'Form', icon: Hi.pencilEdit02),
-          Feature(label: 'Pad', icon: Hi.dialpadCircle01),
-          Feature(label: 'Picker', icon: Hi.colorPicker),
+          Feature(label: 'LzForm', icon: Hi.pencilEdit02),
+          Feature(label: 'LzPad', icon: Hi.dialpadCircle01),
+          Feature(label: 'LzPicker', icon: Hi.colorPicker),
         ],
       ),
       FeatureGroup(

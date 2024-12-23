@@ -30,7 +30,7 @@ class DropdownView extends StatelessWidget {
                   options: options,
                   builder: (key, action) {
                     return LzButton(
-                      key: key,
+                        key: key,
                         text: 'Open!',
                         icon: Hi.menu02,
                         onTap: () {

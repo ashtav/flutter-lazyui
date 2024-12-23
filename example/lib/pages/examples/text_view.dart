@@ -15,11 +15,10 @@ class TextView extends StatelessWidget {
       body: ListView(
         padding: Ei.all(20),
         children: [
-          Text(
-            'Textr is combination of Text and Container widgets, allowing you to easily add text with icon, spacing, border, etc.',
-            style: Gfont.muted.theme(context, '777'.hex),
+          const ExampleLabel(
+            description:
+                'Textr is combination of Text and Container widgets, allowing you to easily add text with icon, spacing, border, etc.',
           ),
-          const ExampleLabel(),
           Wrap(
             spacing: 20,
             runSpacing: 20,
