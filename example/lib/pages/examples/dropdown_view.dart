@@ -1,0 +1,48 @@
+import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
+
+import '../widgets/dark_mode_widget.dart';
+import '../widgets/example_label_widget.dart';
+
+class DropdownView extends StatelessWidget {
+  const DropdownView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
+    final options =
+        LzDropdown.of(['Filter', 'Sort AZ', 'Settings'], icons: icons, separated: [2], focused: ['Settings']);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Dropdown'),
+      ),
+      body: ListView(
+        padding: Ei.all(20),
+        children: [
+          const ExampleLabel(
+            description:
+                'LzDropdown is a customizable widget for selecting options from a dropdown list, supporting icons, labels, and flexible styling for various use cases.',
+          ),
+          Column(
+            children: [
+              LzDropdown(
+                  options: options,
+                  builder: (key, action) {
+                    return LzButton(
+                      key: key,
+                        text: 'Open!',
+                        icon: Hi.menu02,
+                        onTap: () {
+                          action.show();
+                        });
+                  },
+                  child: const Icon(Hi.menu02, color: Colors.white)),
+            ],
+          ).start,
+        ],
+      ),
+      bottomNavigationBar: DarkModeWidget(),
+    );
+  }
+}
