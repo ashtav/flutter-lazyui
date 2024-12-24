@@ -85,6 +85,7 @@ class LzTheme extends StatelessWidget {
     _applyTheme(false);
 
     return ThemeData.light().copyWith(
+      
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
           titleTextStyle: config.font.copyWith(fontSize: 20, color: Colors.black87),
@@ -119,6 +120,11 @@ class LzTheme extends StatelessWidget {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(textStyle: config.font.copyWith(color: Colors.white)),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.black87,
+        selectionColor: Colors.black12,
+        selectionHandleColor: Colors.black87,
       ),
     );
   }
@@ -165,6 +171,11 @@ class LzTheme extends StatelessWidget {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(textStyle: config.font.copyWith(color: Colors.black)),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: Colors.white70,
+        selectionColor: Colors.white10,
+        selectionHandleColor: Colors.white70,
       ),
     );
   }
