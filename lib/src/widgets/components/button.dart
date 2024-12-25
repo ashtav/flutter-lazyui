@@ -39,7 +39,7 @@ class LzButton extends StatelessWidget {
       border: border,
       child: iconOnly
           ? Icon(icon, color: textColor)
-          : Textr(text ?? '', icon: icon, iconStyle: iconStyle, style: textStyle),
+          : Textr(text ?? '', icon: icon, iconStyle: iconStyle, style: textStyle, textAlign: Ta.center),
     );
   }
 }

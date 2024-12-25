@@ -150,7 +150,7 @@ class LzTextField extends StatelessWidget {
           focusedBorder: border,
           enabledBorder: border,
           errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
+          disabledBorder: border,
         ),
       ),
     );

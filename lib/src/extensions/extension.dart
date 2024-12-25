@@ -12,6 +12,7 @@ part 'types/context.dart';
 part 'types/globalkey.dart';
 part 'types/int.dart';
 part 'types/list.dart';
+part 'types/datetime.dart';
 part 'types/string.dart';
 part 'widgets/column.dart';
 part 'widgets/listview.dart';

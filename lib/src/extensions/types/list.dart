@@ -166,6 +166,7 @@ extension LzRangeIteration on List<int> {
   /// ```dart
   /// [1, 5].iterate() // [1, 2, 3, 4, 5]
   /// [1, 5].iterate(reversed: true) // [5, 4, 3, 2, 1]
+  /// [1, 5].iterate(fill: 3) // [3, 3, 3, 3, 3]
   /// ```
   List<int> iterate({bool reversed = false, int? fill}) {
     final start = this[0];

@@ -35,6 +35,75 @@ extension CustomContextExtension on BuildContext {
     return showDialog(
         context: this, barrierColor: barrierColor, builder: (_) => backBlur ? blurWrapper(widget) : widget);
   }
+
+  /// Show a bottom sheet on top of the current screen.
+  ///
+  /// The [widget] parameter is the widget representing the bottom sheet content.
+  /// The optional [dismiss] parameter specifies whether the bottom sheet can be dismissed by swiping (default: true).
+  /// The optional [safeArea] parameter specifies whether to use safe area insets for padding (default: true).
+  /// The optional [draggable] parameter specifies whether the bottom sheet can be dragged up and down (default: false).
+  /// The optional [backgroundColor] parameter sets the background color of the bottom sheet.
+  /// The optional [isScrollControlled] parameter specifies whether the bottom sheet should take up the entire screen height (default: true).
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Future<void> showBottomSheet() async {
+  ///   await showModalBottomSheet<String>(context: context, builder: (_) => MyBottomSheet());
+  /// }
+  /// ```
+  Future<T?> bottomSheet<T extends Object?>(Widget widget,
+      {bool dismiss = true,
+      bool safeArea = true,
+      bool draggable = false,
+      bool backBlur = false,
+      double blur = 7,
+      Color? backgroundColor,
+      Color? barrierColor,
+      bool isScrollControlled = true}) async {
+    /// Wraps a given child widget with a `Container` that provides optional padding
+    /// and background color customization.
+    ///
+    /// This function is primarily used to wrap widgets in a consistent style, such as
+    /// adding top padding to accommodate safe areas in the UI, and setting a background
+    /// color.
+
+    /// Parameters:
+    ///   [child] (`Widget`) - The child widget that will be wrapped by the `Container`.
+    ///
+    /// Returns:
+    ///   A `Container` widget wrapping the provided [child].
+    ///
+    /// The function applies top padding based on the `useSafeArea` flag which adjusts
+    /// padding to avoid UI elements like the notch on iPhones. The background color
+    /// of the container can be customized; if not specified, it defaults to white with
+    /// safe area and transparent without safe area.
+    Widget wrapper(Widget child) => Container(
+          padding: EdgeInsets.only(top: safeArea ? MediaQueryData.fromView(View.of(this)).padding.top : 0),
+          decoration: BoxDecoration(
+              color: backgroundColor ??
+                  (safeArea
+                      ? isDarkMode
+                          ? scaffoldColor
+                          : Colors.white
+                      : Colors.transparent)),
+          child: child,
+        );
+
+    // If the `backBlur` flag is set, the background of the bottom sheet is blurred.
+    Widget blurWrapper(Widget child) =>
+        BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+
+    // Show the bottom sheet.
+    return showModalBottomSheet<T>(
+      context: this,
+      backgroundColor: Colors.transparent,
+      isDismissible: dismiss,
+      isScrollControlled: isScrollControlled,
+      enableDrag: draggable,
+      barrierColor: barrierColor,
+      builder: ((context) => backBlur ? blurWrapper(widget) : wrapper(widget)),
+    );
+  }
 }
 
 class ContextUtils {

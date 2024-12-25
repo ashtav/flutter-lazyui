@@ -165,26 +165,25 @@ extension LzNullableStringExtension on String? {
           }
         }
 
-        return 'Invalid format'; // If no matching format is found
+        return dateString; // If no matching format is found
       }
 
       if (['', null].contains(this)) {
         return DateTime.now();
       }
 
-      // check if string contains :
-      List<String> dates = this!.split(':');
+      // check if string contains
+      List<String> dates = this!.trim().split(' ');
 
       String date = dates[0];
 
       if (dates.length > 1) {
-        date = '${dates[0]} ${dates[1]}';
+        date = '${detectAndFormatDate(dates[0])} ${dates[1]}';
       }
 
-      DateTime result = DateTime.parse(detectAndFormatDate(date));
+      DateTime result = DateTime.parse(date);
       return toLocal ? result.toLocal() : result;
-    } catch (e, s) {
-      Print.error('Error $e, $s');
+    } catch (e) {
       return DateTime.now();
     }
   }

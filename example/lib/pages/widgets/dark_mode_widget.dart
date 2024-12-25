@@ -15,13 +15,25 @@ class DarkModeWidget extends StatelessWidget {
           spacing: 10,
           children: [
             Transform.scale(
-                scale: 0.8, alignment: Alignment.center, child: Switch(value: isDarkMode, onChanged: (value) {
-                  LzTheme.set(value ? ThemeMode.dark : ThemeMode.light);
-                })),
+                scale: 0.8,
+                alignment: Alignment.center,
+                child: Switch(
+                    value: isDarkMode,
+                    onChanged: (value) {
+                      LzTheme.set(value ? ThemeMode.dark : ThemeMode.light);
+                    })),
             Text('Switch to ${isDarkMode ? 'Light' : 'Dark'} Mode'),
           ],
         );
       }),
     );
+  }
+
+  static Widget icon() {
+    return LzTheme.watch((theme) => IconButton(
+        onPressed: () {
+          LzTheme.toggle();
+        },
+        icon: Icon(theme.isDark ? Hi.sun03 : Hi.moon02)));
   }
 }
