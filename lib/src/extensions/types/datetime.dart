@@ -90,7 +90,7 @@ extension DateTimeExtension on DateTime {
   List<String> months([String format = 'MMMM', String? locale]) {
     return [1, 12].iterate().map((month) {
       final date = DateTime(0, month, 1);
-      return DateFormat(format, locale).format(date);
+      return DateFormat(format, locale ?? config.locale).format(date);
     }).toList();
   }
 }

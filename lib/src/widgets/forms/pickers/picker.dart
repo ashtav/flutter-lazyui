@@ -3,9 +3,13 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/widgets/forms/pickers/time/time_picker.dart';
 
 import 'date/date_picker.dart';
+import 'date_range/date_range_picker.dart';
+import 'option/option_picker.dart';
+import 'option/option_picker_style.dart';
 import 'time/time.dart';
 
 export 'picker_style.dart';
+export '../../../models/option.dart';
 
 class LzPicker {
   /// Displays a customizable date picker using a bottom sheet.
@@ -66,7 +70,65 @@ class LzPicker {
     if (result != null && onSelect != null) onSelect(result);
   }
 
-  static void dateRange({String fomat = 'y-m-d', bool time = false}) {}
+  /// Opens a date range picker dialog and returns the selected date range.
+  static void dateRange(BuildContext context,
+      {List<DateTime>? initDate,
+      DateTime? minDate,
+      DateTime? maxDate,
+      PickerStyle? style,
+      String? format,
+      String? rangeFormat,
+      bool withTime = false,
+      Function(List<DateTime> value)? onSelect}) async {
+    List<DateTime> initDateValue = initDate ?? [DateTime.now(), DateTime.now().add(1.d)];
+
+    if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
+      Print.log('Min date must be smaller than max date.');
+      return null;
+    }
+
+    // check valid initDate
+    else if (initDate != null && initDate.length < 2) {
+      initDateValue = [DateTime.now(), DateTime.now().add(1.d)];
+    }
+
+    // check valid minDate and maxDate
+    else if (minDate != null && initDateValue[0].isBefore(minDate)) {
+      initDateValue[0] = minDate;
+    } else if (maxDate != null && initDateValue[1].isAfter(maxDate)) {
+      initDateValue[1] = maxDate;
+    }
+
+    format = format ?? 'd/m/y';
+
+    // check valid format
+    List<String> validFormat = ['d', 'm', 'mm', 'mmm', 'y'];
+    List<String> formatList = format.split('/').toSet().toList();
+
+    // if format is not contain d or m or y then return null
+    if (!formatList.every((element) => validFormat.contains(element))) {
+      Print.log('Invalid format, please use d/m/y');
+      return null;
+    }
+
+    format = formatList.join('/');
+
+    List<DateTime>? result = await context.bottomSheet(
+        DateRangePickerWidget(
+          initDate: initDateValue,
+          minDate: minDate,
+          maxDate: maxDate,
+          style: style,
+          format: format,
+          rangeFormat: rangeFormat,
+          withTime: withTime,
+        ),
+        draggable: true,
+        safeArea: false,
+        isScrollControlled: true);
+
+    if (result != null && onSelect != null) onSelect(result);
+  }
 
   /// Displays a time picker.
   ///
@@ -88,5 +150,29 @@ class LzPicker {
     if (result != null && onSelect != null) onSelect(result);
   }
 
-  static void option() {}
+  /// Displays a picker with options.
+  ///
+  /// Parameters:
+  ///   - `context`: The build context.
+  ///   - `options`: A list of options to display in the picker.
+  ///   - `initialValue`: The initial value selected in the picker.
+  ///   - `onSelect`: A function called when an option is selected in the picker.
+  ///   - `style`: The style configuration for the picker.
+  static void option(BuildContext context,
+      {List<Option> options = const [], Option? initialValue, Function(Option)? onSelect, OptionPickerStyle? style}) {
+    if (options.isEmpty) {
+      Print.log('The options list is empty, please provide a list of options.');
+      return;
+    }
+
+    context.bottomSheet(
+        PickerOptionWidget(
+          initialValue: initialValue,
+          options: options,
+          onSelect: onSelect,
+          style: style,
+        ),
+        backgroundColor: Colors.transparent,
+        safeArea: !(style?.fullScreen ?? false));
+  }
 }

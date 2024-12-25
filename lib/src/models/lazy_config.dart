@@ -11,6 +11,7 @@ class LazyConfig {
   final Color backgroundColor;
   final Color surfaceColor;
   final IconType icon;
+  final String? locale;
 
   LazyConfig(
       {TextStyle? font,
@@ -20,7 +21,8 @@ class LazyConfig {
       this.theme = ThemeMode.light,
       this.backgroundColor = Colors.white,
       this.surfaceColor = Colors.white,
-      this.icon = IconType.tabler})
+      this.icon = IconType.tabler,
+      this.locale})
       : font = font ?? GoogleFonts.nunito(fontSize: 15);
 
   LazyConfig copyWith(
@@ -31,7 +33,8 @@ class LazyConfig {
       ThemeMode? theme,
       Color? backgroundColor,
       Color? surfaceColor,
-      IconType? icon}) {
+      IconType? icon,
+      String? locale}) {
     return LazyConfig(
       font: font ?? this.font,
       borderColor: borderColor ?? this.borderColor,
@@ -41,6 +44,7 @@ class LazyConfig {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       surfaceColor: surfaceColor ?? this.surfaceColor,
       icon: icon ?? this.icon,
+      locale: locale ?? this.locale,
     );
   }
 }

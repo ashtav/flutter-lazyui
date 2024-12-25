@@ -4,6 +4,7 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/theme/color.dart';
 
+import '../date/date_picker.dart';
 import 'notifier.dart';
 import 'time.dart';
 
@@ -51,17 +52,18 @@ class TimePickerWidget extends StatelessWidget {
             SizedBox(
               height: height,
               child: Intrinsic(
-                children: formats.generate((f, i) {
-                  final items = notifier.generateDate(f);
+                children: formats.generate((format, i) {
+                  final items = notifier.generateDate(format);
                   return Container(
                       decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
-                      child: CupertinoPickerWidget(notifier, type: f, items: items, style: style));
+                      child: CupertinoPickerWidget(notifier, format: format, items: items, style: style));
                 }),
               ),
             ),
 
             // confirm button
-            ConfirmButton(notifier, style: style),
+            ConfirmButton(
+                style: style, onConfirm: () => context.lz.pop(notifier.value), onCancel: () => context.lz.pop()),
           ],
         ),
       ).lz.clip(tlr: config.borderRadius),
@@ -70,13 +72,12 @@ class TimePickerWidget extends StatelessWidget {
 }
 
 /// A widget representing a single column in the date picker using the Cupertino style.
-
 class CupertinoPickerWidget extends StatelessWidget {
   /// Reference to the `TimePickerNotifier` object providing data and state updates.
   final TimePickerNotifier notifier;
 
   /// Identifier for the date format part (e.g., 'd', 'm', 'y').
-  final String type;
+  final String format;
 
   /// List of items displayed in the picker column (e.g., days, months, years).
   final List<String> items;
@@ -105,7 +106,7 @@ class CupertinoPickerWidget extends StatelessWidget {
   /// Creates a new instance of `CupertinoPickerWidget`.
   const CupertinoPickerWidget(this.notifier,
       {super.key,
-      required this.type,
+      required this.format,
       this.items = const [],
       this.magnification,
       this.itemExtent,
@@ -123,12 +124,12 @@ class CupertinoPickerWidget extends StatelessWidget {
         itemExtent: 35,
         diameterRatio: .9,
         squeeze: .9,
-        scrollController: notifier.controller[type] ?? FixedExtentScrollController(initialItem: 0),
+        scrollController: notifier.controller[format] ?? FixedExtentScrollController(initialItem: 0),
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
           decoration: BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
         ),
-        onSelectedItemChanged: (int i) => notifier.onChange(i, type),
+        onSelectedItemChanged: (int i) => notifier.onChange(i, format),
         children: items.generate((item, i) {
           return Align(
             alignment: Alignment.center,
@@ -141,69 +142,5 @@ class CupertinoPickerWidget extends StatelessWidget {
             ),
           );
         })));
-  }
-}
-
-/// A customizable confirm button for use with time pickers.
-class ConfirmButton extends StatelessWidget {
-  /// The `TimePickerNotifier` object providing data and state updates.
-  /// The button's behavior is likely tied to actions within the notifier.
-  final TimePickerNotifier notifier;
-
-  /// Optional style customizations for the confirm button.
-  /// These might influence appearance (colors, font, etc.) based on the
-  /// chosen button widget implementation.
-  final PickerStyle? style;
-
-  /// Creates a new instance of `ConfirmButton`.
-  const ConfirmButton(this.notifier, {super.key, this.style});
-
-  @override
-  Widget build(BuildContext context) {
-    Color buttonColor = style?.buttonColor ?? (context.isDarkMode ? darkBackgroundColor : backgroundColor);
-    Color confirmTextColor = style?.confirmTextColor ?? (buttonColor.isDark ? Colors.white : Colors.black87);
-
-    return Poslign(
-        alignment: Alignment.bottomCenter,
-        margin: Ei.only(b: 15),
-        child: Row(
-          spacing: 5,
-          children: 3.generate((i) {
-            return i != 1
-                ? Touch(
-                    type: TouchType.none,
-                    onTap: i != 0
-                        ? null
-                        : () {
-                            context.lz.pop();
-                          },
-                    child: Iconr(La.times,
-                        padding: Ei.all(15), color: i != 0 ? Colors.transparent : Colors.black54.themeify),
-                  )
-                : Container(
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: (context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
-                          spreadRadius: 25,
-                          blurRadius: 35,
-                          offset: const Offset(0, -5),
-                        ),
-                      ],
-                    ),
-                    child: Touch(
-                      onTap: () {
-                        context.lz.pop(notifier.value);
-                      },
-                      padding: Ei.sym(v: 12, h: 45),
-                      border: Br.all(),
-                      color: buttonColor,
-                      borderRadius: Br.radius(50),
-                      child: Text(style?.confirmText ?? 'Confirm',
-                          style: config.font.copyWith(fontWeight: Fw.bold, color: confirmTextColor)),
-                    ),
-                  );
-          }),
-        ).center);
   }
 }

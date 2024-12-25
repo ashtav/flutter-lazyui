@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 import '../widgets/dark_mode_widget.dart';
+import '../widgets/example_label_widget.dart';
 
 class PickerView extends StatelessWidget {
   const PickerView({super.key});
@@ -16,25 +17,52 @@ class PickerView extends StatelessWidget {
       body: ListView(
         padding: Ei.all(20),
         children: [
+          const ExampleLabel(
+            description:
+                'LzPicker is a flexible tool for selecting dates, times, date ranges, or options, offering a seamless and user-friendly interface for various input needs.',
+          ),
           Wrap(
             spacing: 15,
+            runSpacing: 15,
             children: [
               LzButton(
                 text: 'Date Picker',
+                icon: Hi.calendar01,
                 color: Colors.blue,
                 onTap: () {
-                  LzPicker.date(context, minDate: now, maxDate: now.add(1.y), withTime: true, onSelect: (value) {
+                  LzPicker.date(context, withTime: true, onSelect: (value) {
                     logg(value);
                   });
                 },
               ),
               LzButton(
                 text: 'Time Picker',
-                border: Br.all(color: Colors.black45),
+                icon: Hi.clock01,
+                color: context.isDarkMode ? '161616'.hex : Colors.white,
+                border: Br.all(color: Colors.black45.themeify),
                 onTap: () {
                   LzPicker.time(context, onSelect: (value) {
                     logg(value);
                   });
+                },
+              ),
+              LzButton(
+                text: 'Date Range Picker',
+                icon: Hi.calendarCheckOut01,
+                border: Br.all(color: Colors.black45),
+                onTap: () {
+                  LzPicker.dateRange(context, withTime: true, onSelect: (value) {
+                    logg(value);
+                  });
+                },
+              ),
+              LzButton(
+                text: 'Option Picker',
+                icon: Hi.searchList01,
+                border: Br.all(color: Colors.black45),
+                onTap: () {
+                  List<String> options = [1, 10].iterate().generate((_, __) => Faker.category());
+                  LzPicker.option(context, options: options.option());
                 },
               ),
             ],

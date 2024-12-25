@@ -20,10 +20,10 @@ class Lz {
 }
 
 class LazyUi {
-  static void init({TextStyle? font, IconType? icon}) {
+  static void init({TextStyle? font, IconType? icon, String? locale}) {
     WidgetsFlutterBinding.ensureInitialized();
 
     // set configuration
-    config = LazyConfig(font: font);
+    config = LazyConfig(font: font, locale: locale);
   }
 }

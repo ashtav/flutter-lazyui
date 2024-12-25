@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 
 part 'notifiers/listenable.dart';
 part 'types/color.dart';

@@ -67,7 +67,27 @@ class DatePickerWidget extends StatelessWidget {
             ),
 
             // confirm button
-            ConfirmButton(notifier, style: style),
+            ConfirmButton(
+                style: style,
+                onConfirm: () {
+                  if (notifier.openTimePicker) {
+                    notifier.time = Time(notifier.values['h']!, notifier.values['i']!);
+                    notifier.toggleTimePicker();
+                    return;
+                  }
+
+                  context.lz.pop(notifier.value);
+                },
+                onCancel: () {
+                  if (notifier.openTimePicker) {
+                    notifier.values['h'] = notifier.time.hour;
+                    notifier.values['i'] = notifier.time.minute;
+                    notifier.toggleTimePicker();
+                    return;
+                  }
+
+                  context.lz.pop();
+                }),
 
             // time picker
             if (withTime) TimePicker(notifier, style: style)
@@ -200,17 +220,19 @@ class CupertinoPickerWidget extends StatelessWidget {
 
 /// A customizable confirm button for use with date pickers.
 class ConfirmButton extends StatelessWidget {
-  /// The `DatePickerNotifier` object providing data and state updates.
-  /// The button's behavior is likely tied to actions within the notifier.
-  final DatePickerNotifier notifier;
-
   /// Optional style customizations for the confirm button.
   /// These might influence appearance (colors, font, etc.) based on the
   /// chosen button widget implementation.
   final PickerStyle? style;
 
+  /// Confirm action
+  final Function()? onConfirm;
+
+  /// Cancel action
+  final Function()? onCancel;
+
   /// Creates a new instance of `ConfirmButton`.
-  const ConfirmButton(this.notifier, {super.key, this.style});
+  const ConfirmButton({super.key, this.style, required this.onConfirm, required this.onCancel});
 
   @override
   Widget build(BuildContext context) {
@@ -226,18 +248,7 @@ class ConfirmButton extends StatelessWidget {
             return i != 1
                 ? Touch(
                     type: TouchType.none,
-                    onTap: i != 0
-                        ? null
-                        : () {
-                            if (notifier.openTimePicker) {
-                              notifier.values['h'] = notifier.time.hour;
-                              notifier.values['i'] = notifier.time.minute;
-                              notifier.toggleTimePicker();
-                              return;
-                            }
-
-                            context.lz.pop();
-                          },
+                    onTap: i != 0 ? null : onCancel,
                     child: Iconr(La.times,
                         padding: Ei.all(15), color: i != 0 ? Colors.transparent : Colors.black54.themeify),
                   )
@@ -253,15 +264,7 @@ class ConfirmButton extends StatelessWidget {
                       ],
                     ),
                     child: Touch(
-                      onTap: () {
-                        if (notifier.openTimePicker) {
-                          notifier.time = Time(notifier.values['h']!, notifier.values['i']!);
-                          notifier.toggleTimePicker();
-                          return;
-                        }
-
-                        context.lz.pop(notifier.value);
-                      },
+                      onTap: onConfirm,
                       padding: Ei.sym(v: 12, h: 45),
                       border: Br.all(),
                       color: buttonColor,
