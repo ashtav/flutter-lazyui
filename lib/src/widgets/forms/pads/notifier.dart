@@ -6,26 +6,35 @@ import 'package:lazyui/lazyui.dart';
 /// This class serves as a notifier for a numeric keypad input.
 class PadNotifier extends ChangeNotifier {
   /// The current length of the input.
+  /// Defaults to 6.
   int length = 6;
 
   /// The maximum allowed length for the input.
+  /// Used to validate the input length.
   int max = 6;
 
   /// The number of expired inputs.
+  /// Tracks how many inputs have expired.
   int expired = 0;
 
-  /// The remaining duration until expiration.
+  /// The remaining time until the input expires.
+  /// This value is null if expiration is not set.
   Duration? remainingDuration;
 
-  /// List of input values.
+  /// A list containing the input values.
+  /// Represents the current input entered by the user.
   List<String> values = [];
 
-  /// Boolean flag indicating if the input is paused.
+  /// Indicates whether the input process is paused.
+  /// If true, the input handling is temporarily stopped.
   bool isPaused = false;
 
-  /// Empty message
+  /// A message to display additional information or feedback.
+  /// Defaults to an empty string.
   String message = '';
 
+  /// A timer instance to handle expiration or time-based actions.
+  /// This value is null if no timer is set.
   Timer? timer;
 
   /// Handles the input action.
@@ -58,7 +67,7 @@ class PadNotifier extends ChangeNotifier {
   /// Starts a timer with the specified duration.
   ///
   /// The [onTimeout] function is called when the timer expires.
-  startTimer(Duration dur, {Function()? onTimeout}) {
+  void startTimer(Duration dur, {void Function()? onTimeout}) {
     DateTime expired = DateTime.now().add(dur);
     Duration duration = expired.difference(DateTime.now());
 
@@ -67,10 +76,9 @@ class PadNotifier extends ChangeNotifier {
     timer = Timer.periodic(1.s, (t) {
       Duration duration = expired.difference(DateTime.now());
       remainingDuration = duration;
-      logg(remainingDuration);
 
       if (DateTime.now().isAfter(expired)) {
-        t.cancel();
+        timer?.cancel();
         onTimeout?.call();
       } else {
         onExpired(duration.inSeconds);
@@ -87,6 +95,7 @@ class PadNotifier extends ChangeNotifier {
   /// Sets the pause state of the input.
   void setPaused(bool value) {
     isPaused = value;
+    timer?.cancel();
     notifyListeners();
   }
 

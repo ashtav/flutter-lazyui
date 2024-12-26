@@ -1,13 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
+import 'package:lazyui/src/theme/color.dart';
 import 'package:lazyui/src/widgets/forms/pads/notifier.dart';
 
 class PadWidget extends StatelessWidget {
   final PadNotifier notifier;
   final int length;
+  final bool passcode;
   final Duration? expired;
-  const PadWidget(this.notifier, {super.key, this.length = 6, this.expired});
+  final String? title;
+  final String? message;
+  final Function(PadController controller)? onCompleted;
+
+  const PadWidget(
+    this.notifier, {
+    super.key,
+    this.length = 6,
+    this.passcode = false,
+    this.expired,
+    this.title,
+    this.message,
+    this.onCompleted,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +33,17 @@ class PadWidget extends StatelessWidget {
       '<'
     ];
 
-    if (expired != null && context.mounted) {
+    if (expired != null && context.mounted && notifier.remainingDuration == null) {
       notifier.startTimer(expired!, onTimeout: () {
         context.lz.pop();
       });
     }
+
+    String defaultTitle = 'Please enter your OTP Code.';
+    String detaultMessage = 'Otp code sent to your number, please enter the code below to reset your password.';
+
+    String defaultTitlePasscode = 'Please enter your Passcode.';
+    String defaultMessagePasscode = 'Your passcode is required to proceed. Enter the code below to unlock access.';
 
     return Scaffold(
         appBar: TransAppBar(
@@ -32,7 +53,7 @@ class PadWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Column(
-                spacing: 20,
+                spacing: 30,
                 children: [
                   // header
                   Padding(
@@ -40,9 +61,9 @@ class PadWidget extends StatelessWidget {
                     child: Column(
                       spacing: 10,
                       children: [
-                        Text('Please enter your OTP Code.', style: Gfont.bold, textAlign: Ta.center),
-                        Text('Otp code sent to +62000000, please enter the code below to reset your password.',
-                            textAlign: Ta.center),
+                        Text(title ?? (passcode ? defaultTitlePasscode : defaultTitle),
+                            style: Gfont.bold, textAlign: Ta.center),
+                        Text(message ?? (passcode ? defaultMessagePasscode : detaultMessage), textAlign: Ta.center),
                       ],
                     ),
                   ),
@@ -51,11 +72,11 @@ class PadWidget extends StatelessWidget {
                   notifier.watch((state) => Row(
                         mainAxisAlignment: Maa.center,
                         spacing: 10,
-                        children: length.generate((i) {
+                        children: (length > 6 || length < 1 ? 6 : length).generate((i) {
                           return PadInput(
                             state.values.length < (i + 1) ? null : state.values[i],
                             active: i == state.values.length,
-                            obsecure: true,
+                            obsecure: passcode,
                           );
                         }),
                       )),
@@ -64,12 +85,14 @@ class PadWidget extends StatelessWidget {
             ),
 
             // timer
-            notifier.watch((state) {
-              return BlinkAnimate(
-                  isAnimated: !state.isPaused,
-                  duration: 500.ms,
-                  child: Textr('Expired in ${state.expired} seconds', style: config.font.red, padding: Ei.sym(v: 20)));
-            }),
+            if (expired != null)
+              notifier.watch((state) {
+                return BlinkAnimate(
+                    isAnimated: !state.isPaused,
+                    duration: 500.ms,
+                    child:
+                        Textr('Expired in ${state.expired} seconds', style: config.font.red, padding: Ei.sym(v: 20)));
+              }),
 
             // custom keypad
             Wrap(
@@ -80,9 +103,16 @@ class PadWidget extends StatelessWidget {
                 final key = maps[k] ?? k;
 
                 return Touch(
-                  onTap: () => notifier.onInput(k),
+                  onTap: () {
+                    bool isCompleted = notifier.onInput(k);
+                    if (isCompleted) {
+                      onCompleted?.call(PadController(context, notifier));
+                    }
+                  },
                   padding: Ei.all(20),
-                  color: i % 2 == 0 ? 'f5f5f5'.hex : Colors.white,
+                  color: i % 2 == 0
+                      ? (context.isDarkMode ? '161616'.hex : 'f5f5f5'.hex)
+                      : (context.isDarkMode ? '202020'.hex : Colors.white),
                   child: Container(
                       alignment: Alignment.centerLeft,
                       decoration: BoxDecoration(),
@@ -113,20 +143,31 @@ class PadInput extends StatelessWidget {
         margin: Ei.sym(h: 5, v: 20),
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: context.isDarkMode ? darkAppbarColor.lighten(.05) : Colors.white,
             border: Br.all(color: Colors.green, width: value == null ? 0.5 : 5)),
       );
     }
 
-    return BlinkAnimate(
-      isAnimated: value == null && active,
-      child: Container(
-        padding: Ei.sym(v: 20),
-        width: 40,
-        decoration:
-            BoxDecoration(border: Br.only(['b'], color: value == null ? Colors.black12 : Colors.black54, width: 2)),
-        child: Text(value == null ? '' : value!, textAlign: Ta.center),
-      ),
+    return Stack(
+      alignment: Ad.center,
+      children: [
+        BlinkAnimate(
+          isAnimated: value == null && active,
+          child: Container(
+            padding: Ei.sym(v: 20),
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+                border:
+                    Br.only(['b'], color: value == null ? Colors.black12.themeify : Colors.black54.themeify, width: 2)),
+          ),
+        ),
+        AnimatedPositioned(
+            duration: 300.ms,
+            curve: value == null ? Curves.fastEaseInToSlowEaseOut : Curves.elasticOut,
+            bottom: value == null ? -15 : 15,
+            child: Text(value == null ? '.' : value!, textAlign: Ta.center, style: Gfont.bold))
+      ],
     );
   }
 }

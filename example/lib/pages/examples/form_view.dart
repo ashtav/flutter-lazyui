@@ -41,7 +41,9 @@ class FormView extends StatelessWidget {
                 suffix: Hi.calendar01,
                 enabled: true,
                 onTap: () {
-                  logg('it works!');
+                  LzPicker.date(context, onSelect: (value) {
+                    logg(value);
+                  });
                 }),
           ],
         ),
