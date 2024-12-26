@@ -56,6 +56,11 @@ class Option {
   static List<Option> list(List<String> options, {List<dynamic> values = const [], List<dynamic> disabled = const []}) {
     return options.option(values: values, disabled: disabled);
   }
+
+  @override
+  String toString() {
+    return 'label: $label value: $value disabled: $disabled';
+  }
 }
 
 /// Extension methods for working with lists of strings to generate options.

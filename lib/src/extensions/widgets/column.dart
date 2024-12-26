@@ -37,4 +37,18 @@ extension CustomColumnExtension on Column {
         spacing: spacing,
         children: children,
       );
+
+  Center get centered => Center(
+        child: Column(
+          key: key,
+          mainAxisAlignment: Maa.center,
+          mainAxisSize: mainAxisSize,
+          crossAxisAlignment: crossAxisAlignment,
+          textDirection: textDirection,
+          verticalDirection: verticalDirection,
+          textBaseline: textBaseline,
+          spacing: spacing,
+          children: children,
+        ),
+      );
 }

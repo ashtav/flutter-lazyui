@@ -80,7 +80,9 @@ class DateRangePickerWidget extends StatelessWidget {
 
             // confirm button
             ConfirmButton(
-              style: style,
+              confirmText: style?.confirmText,
+              confirmTextColor: style?.confirmTextColor,
+              buttonColor: style?.buttonColor,
               onConfirm: () {
                 if (notifier.openTimePicker) {
                   notifier.times[notifier.dateIndex] = Time(notifier.values['h']!, notifier.values['i']!);
@@ -317,30 +319,33 @@ class StartEndDate extends StatelessWidget {
               String start = state.initDate[0].format(format ?? 'yyyy-MM-dd');
               String end = state.initDate[1].format(format ?? 'yyyy-MM-dd');
 
-              return IntrinsicHeight(
-                child: Row(
-                    children: [start, '-', end].generate((text, i) {
-                  int ii = i == 0 ? 0 : 1;
+              return Opacity(
+                opacity: state.openTimePicker ? .2 : 1,
+                child: IntrinsicHeight(
+                  child: Row(
+                      children: [start, '-', end].generate((text, i) {
+                    int ii = i == 0 ? 0 : 1;
 
-                  bool isFirstDate = state.dateIndex == 0;
-                  bool isTo = i == 1;
+                    bool isFirstDate = state.dateIndex == 0;
+                    bool isTo = i == 1;
 
-                  IconData arrow = isFirstDate ? Ti.arrowLeft : Ti.arrowRight;
-                  Color textColor = state.dateIndex == ii ? Colors.orange : Colors.black54.themeify;
+                    IconData arrow = isFirstDate ? Ti.arrowLeft : Ti.arrowRight;
+                    Color textColor = state.dateIndex == ii ? Colors.orange : Colors.black54.themeify;
 
-                  return Expanded(
-                    flex: isTo ? 0 : 1,
-                    child: Touch(
-                      onTap: isTo ? null : () => state.onSelectDate(ii),
-                      padding: Ei.sym(v: 7, h: 15),
-                      borderRadius: Br.radius(4),
-                      child: Center(
-                          child: isTo
-                              ? Icon(arrow, color: Colors.black38.themeify)
-                              : Text(text, style: config.font.fcolor(textColor).fbold(state.dateIndex == ii))),
-                    ),
-                  );
-                })),
+                    return Expanded(
+                      flex: isTo ? 0 : 1,
+                      child: Touch(
+                        onTap: isTo ? null : () => state.onSelectDate(ii),
+                        padding: Ei.sym(v: 7, h: 15),
+                        borderRadius: Br.radius(4),
+                        child: Center(
+                            child: isTo
+                                ? Icon(arrow, color: Colors.black38.themeify)
+                                : Text(text, style: config.font.fcolor(textColor).fbold(state.dateIndex == ii))),
+                      ),
+                    );
+                  })),
+                ),
               );
             },
           ),

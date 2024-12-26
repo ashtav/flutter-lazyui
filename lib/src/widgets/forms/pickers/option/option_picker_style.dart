@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+
 /// Represents the style configuration for a picker.
 class OptionPickerStyle {
-  /// The title of the picker.
-  final String? title;
-
-  /// The description of the picker.
-  final String? description;
-
   /// The text to display on the confirm button.
   final String? confirmText;
+
+  /// Color of the confirm button text.
+  final Color? confirmTextColor;
+
+  /// Color of the date picker button.
+  final Color? buttonColor;
 
   /// Determines whether the picker should occupy the full screen.
   final bool fullScreen;
@@ -23,9 +25,9 @@ class OptionPickerStyle {
 
   /// Constructs a PickerStyle instance with the specified parameters.
   const OptionPickerStyle({
-    this.title,
-    this.description,
     this.confirmText,
+    this.confirmTextColor,
+    this.buttonColor,
     this.fullScreen = false,
     this.withSearch = false,
     this.height,

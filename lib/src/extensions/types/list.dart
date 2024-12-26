@@ -196,6 +196,36 @@ extension LzRangeIteration on List<int> {
     List<int> numbers = length > 1 ? List.generate(end, (i) => i + start) : List.generate(start, (i) => i + 1);
     return numbers.getRandom().first;
   }
+
+  /// Generates a list of unique random integers within a range.
+  ///
+  /// [length] specifies the number of integers, and the range is from [first]
+  /// to [last] (inclusive). Returns an empty list if the range is too small
+  /// or [length] < 2.
+  ///
+  /// Example:
+  /// ```dart
+  /// final result = randomInRange(5, 1, 10);
+  /// print(result); // Example: [2, 8, 5, 1, 3]
+  /// ```
+  List<int> randomInRange(int length) {
+    if (length < 2) {
+      return [];
+    }
+
+    if (last - first + 1 < length) {
+      return [];
+    }
+
+    final random = Random();
+    final numbers = <int>{};
+
+    while (numbers.length < length) {
+      numbers.add(first + random.nextInt(last - first + 1));
+    }
+
+    return numbers.toList();
+  }
 }
 
 /// Extension on [List<IconData>] providing convenience methods for generating icon buttons.

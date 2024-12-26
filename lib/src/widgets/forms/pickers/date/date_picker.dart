@@ -4,8 +4,8 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/theme/color.dart';
 
-import 'notifier.dart';
 import '../time/time.dart';
+import 'notifier.dart';
 
 /// A date picker widget for selecting dates.
 class DatePickerWidget extends StatelessWidget {
@@ -68,7 +68,9 @@ class DatePickerWidget extends StatelessWidget {
 
             // confirm button
             ConfirmButton(
-                style: style,
+                confirmText: style?.confirmText,
+                confirmTextColor: style?.confirmTextColor,
+                buttonColor: style?.buttonColor,
                 onConfirm: () {
                   if (notifier.openTimePicker) {
                     notifier.time = Time(notifier.values['h']!, notifier.values['i']!);
@@ -218,26 +220,52 @@ class CupertinoPickerWidget extends StatelessWidget {
   }
 }
 
-/// A customizable confirm button for use with date pickers.
+/// A customizable confirm button designed for date pickers.
+///
+/// This button allows users to confirm or cancel an action, with options to
+/// configure its appearance and behavior.
+///
+/// Parameters:
+/// - [onConfirm]: Callback function triggered when the button is confirmed.
+/// - [onCancel]: Callback function triggered when the button is canceled.
+/// - [disabled]: Whether the button is disabled (default is `false`).
+/// - [confirmText]: Text to display on the confirm button.
+/// - [buttonColor]: Custom background color for the button.
+/// - [confirmTextColor]: Custom text color for the confirm button.
 class ConfirmButton extends StatelessWidget {
-  /// Optional style customizations for the confirm button.
-  /// These might influence appearance (colors, font, etc.) based on the
-  /// chosen button widget implementation.
-  final PickerStyle? style;
-
-  /// Confirm action
+  /// Callback function triggered when the button is confirmed.
   final Function()? onConfirm;
 
-  /// Cancel action
+  /// Callback function triggered when the button is canceled.
   final Function()? onCancel;
 
-  /// Creates a new instance of `ConfirmButton`.
-  const ConfirmButton({super.key, this.style, required this.onConfirm, required this.onCancel});
+  /// Whether the button is disabled.
+  final bool disabled;
+
+  /// Text to display on the confirm button.
+  final String? confirmText;
+
+  /// Custom background color for the button.
+  final Color? buttonColor;
+
+  /// Custom text color for the confirm button.
+  final Color? confirmTextColor;
+
+  /// Creates a new `ConfirmButton` widget.
+  const ConfirmButton({
+    super.key,
+    required this.onConfirm,
+    required this.onCancel,
+    this.disabled = false,
+    this.confirmText,
+    this.buttonColor,
+    this.confirmTextColor,
+  });
 
   @override
   Widget build(BuildContext context) {
-    Color buttonColor = style?.buttonColor ?? (context.isDarkMode ? darkBackgroundColor : backgroundColor);
-    Color confirmTextColor = style?.confirmTextColor ?? (buttonColor.isDark ? Colors.white : Colors.black87);
+    Color buttonColor = this.buttonColor ?? (context.isDarkMode ? darkBackgroundColor : backgroundColor);
+    Color confirmTextColor = this.confirmTextColor ?? (buttonColor.isDark ? Colors.white : Colors.black87);
 
     return Poslign(
         alignment: Alignment.bottomCenter,
@@ -264,13 +292,14 @@ class ConfirmButton extends StatelessWidget {
                       ],
                     ),
                     child: Touch(
-                      onTap: onConfirm,
+                      onTap: disabled ? null : onConfirm,
                       padding: Ei.sym(v: 12, h: 45),
                       border: Br.all(),
                       color: buttonColor,
                       borderRadius: Br.radius(50),
-                      child: Text(style?.confirmText ?? 'Confirm',
-                          style: config.font.copyWith(fontWeight: Fw.bold, color: confirmTextColor)),
+                      child: Text(confirmText ?? 'Confirm',
+                          style: config.font
+                              .copyWith(fontWeight: Fw.bold, color: confirmTextColor.applyOpacity(disabled ? .2 : 1))),
                     ),
                   );
           }),

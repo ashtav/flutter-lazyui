@@ -61,8 +61,12 @@ class PickerView extends StatelessWidget {
                 icon: Hi.searchList01,
                 border: Br.all(color: Colors.black45),
                 onTap: () {
-                  List<String> options = [1, 10].iterate().generate((_, __) => Faker.category());
-                  LzPicker.option(context, options: options.option());
+                  List<String> options = [1, 10].iterate().generate((_, __) => Faker.name());
+                  final disabled = [0, 9].randomInRange(5).generate((i, _) => options[i]);
+
+                  LzPicker.option(context, options: options.option(disabled: disabled), onSelect: (value) {
+                    logg(value);
+                  });
                 },
               ),
             ],

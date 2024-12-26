@@ -63,7 +63,11 @@ class TimePickerWidget extends StatelessWidget {
 
             // confirm button
             ConfirmButton(
-                style: style, onConfirm: () => context.lz.pop(notifier.value), onCancel: () => context.lz.pop()),
+                confirmText: style?.confirmText,
+                confirmTextColor: style?.confirmTextColor,
+                buttonColor: style?.buttonColor,
+                onConfirm: () => context.lz.pop(notifier.value),
+                onCancel: () => context.lz.pop()),
           ],
         ),
       ).lz.clip(tlr: config.borderRadius),
