@@ -7,6 +7,16 @@ class FormNotifier extends ChangeNotifier {
   final controller = TextEditingController();
 
   bool enabled = true;
+  bool obsecure = false;
+
+  void toggleObsecure() {
+    obsecure = !obsecure;
+    notifyListeners();
+  }
+
+  void notify() {
+    notifyListeners();
+  }
 
   @override
   void dispose() {

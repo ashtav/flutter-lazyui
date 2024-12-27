@@ -4,8 +4,8 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/icons/icons_map.dart';
 import 'package:lazyui/src/theme/color.dart';
-import 'package:lazyui/src/widgets/forms/form_model.dart';
 
+import '../form_model.dart';
 import '../notifier.dart';
 
 class Input extends StatefulWidget {
@@ -20,11 +20,13 @@ class Input extends StatefulWidget {
   final void Function(bool value)? onFocus;
 
   // Appearance properties
-  final IconData? suffix;
+  final IconData? suffixIcon;
+  final Widget? suffix;
 
   // Control properties
   final bool enabled;
   final bool autofocus;
+  final bool obsecure;
   final FormModel? model;
 
   // Input properties
@@ -41,9 +43,11 @@ class Input extends StatefulWidget {
     this.onChange,
     this.onSubmit,
     this.onFocus,
+    this.suffixIcon,
     this.suffix,
     this.enabled = true,
     this.autofocus = false,
+    this.obsecure = false,
     this.model,
     this.keyboard,
     this.formatters = const [],
@@ -66,6 +70,11 @@ class _InputState extends State<Input> {
     }
 
     notifier.enabled = widget.enabled;
+    notifier.obsecure = widget.obsecure;
+
+    if (widget.suffix is Obsecure) {
+      notifier.obsecure = true;
+    }
   }
 
   @override
@@ -82,7 +91,7 @@ class _InputState extends State<Input> {
 
   @override
   void didUpdateWidget(covariant Input old) {
-    if (widget.enabled != old.enabled || widget.model != old.model) {
+    if (widget.enabled != old.enabled || widget.model != old.model || widget.suffix != old.suffix) {
       onInit();
     }
 
@@ -116,8 +125,26 @@ class _InputState extends State<Input> {
         // textfield
         notifier.watch((state) {
           Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor).darken(state.enabled ? 0 : .05);
-          Widget? suffix =
-              hasOnTap ? (widget.suffix == null ? Icon(ConfigIcon.get(IconSet.chevron)) : Icon(widget.suffix)) : null;
+          Widget? suffixIcon = hasOnTap
+              ? (widget.suffixIcon == null ? Icon(ConfigIcon.get(IconSet.chevron)) : Icon(widget.suffixIcon))
+              : null;
+
+          // Defines a `suffix` widget, which can optionally be of type `Obsecure`.
+          // If `suffix` is an `Obsecure`, it wraps the widget in a `Touch` for interactivity.
+          // When tapped, it toggles the `obsecure` state using `state.toggleObsecure`.
+          // Depending on the state, it displays either the `hide` icon or the `show` icon.
+          // If custom icons (`hide` or `show`) are not provided, default icons are fetched using `ConfigIcon.get`.
+          Widget? suffix = widget.suffix;
+
+          if (suffix is Obsecure) {
+            suffix = Touch(
+              onTap: state.toggleObsecure,
+              type: TouchType.fade,
+              child: Icon(state.obsecure
+                  ? suffix.hide ?? ConfigIcon.get(IconSet.eyeOff)
+                  : suffix.show ?? ConfigIcon.get(IconSet.eye)),
+            );
+          }
 
           TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
 
@@ -135,10 +162,11 @@ class _InputState extends State<Input> {
                   maxLength: maxLength,
                   maxLines: widget.maxLines,
                   enabled: state.enabled && !hasOnTap,
+                  obsecure: state.obsecure,
                   onChange: widget.onChange,
                   onSubmit: widget.onSubmit,
                   onFocus: widget.onFocus,
-                  suffixIcon: suffix));
+                  suffixIcon: suffix ?? suffixIcon));
         })
       ],
     ).start;

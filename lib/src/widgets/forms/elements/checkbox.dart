@@ -1,0 +1,138 @@
+import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
+import 'package:lazyui/src/theme/color.dart';
+
+import '../form_model.dart';
+import '../notifier.dart';
+
+class Checkbox extends StatefulWidget {
+  // Text properties
+  final String? label;
+
+  // Event handlers
+  final void Function(String value)? onChange;
+
+  // Control properties
+  final FormModel? model;
+
+  // Input properties
+  final List<String> options;
+
+  const Checkbox({super.key, this.label, this.onChange, this.model, this.options = const []});
+
+  @override
+  State<Checkbox> createState() => _CheckboxState();
+}
+
+class _CheckboxState extends State<Checkbox> {
+  FormNotifier notifier = FormNotifier();
+  List<String> selected = [];
+
+  void onInit() {
+    if (widget.model != null) {
+      // ignore: invalid_use_of_protected_member
+      notifier = widget.model!.notifier;
+    }
+  }
+
+  @override
+  void initState() {
+    onInit();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    notifier.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant Checkbox old) {
+    if (widget.model != old.model) {
+      onInit();
+    }
+
+    super.didUpdateWidget(old);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final label = widget.label;
+    bool hasLabel = ![null, ''].contains(label);
+
+    return Column(
+      spacing: 10,
+      children: [
+        if (hasLabel) Text(label!, style: Gfont.fs14),
+        notifier.watch((state) {
+          return Wrap(
+            alignment: Wa.start,
+            spacing: 20,
+            runSpacing: 10,
+            children: widget.options.generate((option, i) {
+              bool isSelected = selected.contains(option);
+
+              return _Square(
+                  option: option,
+                  active: isSelected,
+                  onTap: () {
+                    if (isSelected) {
+                      selected.remove(option);
+                    } else {
+                      selected.add(option);
+                    }
+
+                    state.controller.text = selected.join(', ').trim();
+                    state.notify();
+
+                    widget.onChange?.call(option);
+                  });
+            }),
+          );
+        })
+      ],
+    ).start;
+  }
+}
+
+class _Square extends StatelessWidget {
+  final String option;
+  final bool active;
+  final void Function()? onTap;
+  const _Square({required this.option, this.active = false, this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Touch(
+      type: TouchType.none,
+      onTap: onTap,
+      child: Row(
+        mainAxisSize: Mas.min,
+        spacing: 15,
+        children: [
+          Stack(
+            children: [
+              AnimatedContainer(
+                width: 22,
+                height: 22,
+                duration: 100.ms,
+                decoration: BoxDecoration(
+                    borderRadius: Br.radius(config.borderRadius),
+                    color: context.isDarkMode ? darkAppbarColor.lighten(.05) : backgroundColor,
+                    border: Br.all(color: Colors.black45.themeify, width: active && context.isDarkMode ? 11 : .5)),
+              ),
+              Poslign.center(
+                  child: AnimatedOpacity(
+                      duration: 150.ms,
+                      opacity: active ? 1 : 0,
+                      child: Icon(Hi.tick02, size: 18, color: Colors.black87.themeify)))
+            ],
+          ),
+          Text(option)
+        ],
+      ),
+    );
+  }
+}
