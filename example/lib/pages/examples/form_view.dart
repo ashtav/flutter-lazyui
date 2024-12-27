@@ -1,4 +1,3 @@
-import 'package:example/pages/widgets/example_label_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -26,23 +25,16 @@ class FormView extends StatelessWidget {
           padding: Ei.all(20),
           gap: 25,
           children: [
-            LzTextField(
-              hint: 'Enter your name',
-            ),
-            LzTextField(
-              hint: 'Enter your address',
-              prefixIcon: Icon(Hi.mapsLocation01),
-            ),
-            ExampleLabel(),
-            LzForm.input(label: 'Full Name', hint: 'Type your name', model: forms['name']), // forms.get('name')
+            LzForm.input(label: 'Full Name', hint: 'Type your name', model: forms.key('name')),
             LzForm.input(
                 label: 'Birthdate',
                 hint: 'Enter your birthdate',
                 suffix: Hi.calendar01,
                 enabled: true,
+                model: forms.key('birthdate'),
                 onTap: () {
-                  LzPicker.date(context, onSelect: (value) {
-                    logg(value);
+                  LzPicker.date(context, initDate: forms.get('birthdate').toString().toDate(), onSelect: (value) {
+                    forms.set('birthdate', value.format());
                   });
                 }),
           ],
@@ -53,7 +45,7 @@ class FormView extends StatelessWidget {
             text: 'Submit',
             color: '212121'.hex,
             onTap: () {
-              logg(forms.value);
+              logg(forms.get('name'));
             },
           ),
         ),

@@ -9,6 +9,7 @@ import 'examples/button_view.dart';
 import 'examples/card_view.dart';
 import 'examples/dropdown_view.dart';
 import 'examples/form_view.dart';
+import 'examples/icon_view.dart';
 import 'examples/pad_view.dart';
 import 'examples/picker_view.dart';
 import 'examples/text_view.dart';
@@ -66,6 +67,7 @@ class FeatureView extends StatelessWidget {
       'LzCard': const CardView(),
       'LzDropdown': const DropdownView(),
       'Textr': const TextView(),
+      'Iconr': const IconView(),
       'LzForm': const FormView(),
       'LzPicker': const PickerView(),
       'LzPad': const PadView()

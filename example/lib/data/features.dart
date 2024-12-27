@@ -25,6 +25,7 @@ List<FeatureGroup> get features => [
           Feature(label: 'LzCard', icon: Hi.creditCardPos),
           Feature(label: 'LzDropdown', icon: Hi.menu02),
           Feature(label: 'Textr', icon: Hi.textFont),
+          Feature(label: 'Iconr', icon: Hi.informationSquare),
         ],
       ),
       FeatureGroup(

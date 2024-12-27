@@ -9,9 +9,10 @@ class DropdownView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final key = GlobalKey();
     final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
     final options =
-        LzDropdown.of(['Filter', 'Sort AZ', 'Settings'], icons: icons, separated: [2], focused: ['Settings']);
+        DropOption.of(['Filter', 'Sort AZ', 'Settings'], icons: icons, separated: [2], focused: ['Settings']);
 
     return Scaffold(
       appBar: AppBar(
@@ -24,22 +25,37 @@ class DropdownView extends StatelessWidget {
             description:
                 'LzDropdown is a customizable widget for selecting options from a dropdown list, supporting icons, labels, and flexible styling for various use cases.',
           ),
-          Column(
+          Wrap(
+            spacing: 15,
+            runSpacing: 15,
             children: [
               LzDropdown(
-                  options: options,
-                  builder: (key, action) {
-                    return LzButton(
-                        key: key,
-                        text: 'Open!',
-                        icon: Hi.menu02,
-                        onTap: () {
-                          action.show();
-                        });
-                  },
-                  child: const Icon(Hi.menu02, color: Colors.white)),
+                options: options,
+                builder: (key, action) {
+                  return LzButton(
+                    key: key,
+                    text: 'Open!',
+                    icon: Hi.menu02,
+                    outlined: true,
+                    onTap: () {
+                      action.show().then((value) {
+                        logg(value);
+                      });
+                    }
+                  );
+                }
+              ),
+
+              // open dropdown with context
+              LzButton(
+                text: 'Open from Context',
+                key: key,
+                onTap: () {
+                  context.dropdown(key, options: options);
+                },
+              )
             ],
-          ).start,
+          )
         ],
       ),
       bottomNavigationBar: DarkModeWidget(),

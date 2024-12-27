@@ -119,12 +119,15 @@ class _InputState extends State<Input> {
           Widget? suffix =
               hasOnTap ? (widget.suffix == null ? Icon(ConfigIcon.get(IconSet.chevron)) : Icon(widget.suffix)) : null;
 
+          TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
+
           return Touch(
               onTap: state.enabled ? widget.onTap : null,
               color: background,
               borderRadius: Br.radius(config.borderRadius),
               child: LzTextField(
                   hint: hint,
+                  textStyle: textStyle,
                   controller: state.controller,
                   autofocus: widget.autofocus,
                   keyboard: widget.keyboard,

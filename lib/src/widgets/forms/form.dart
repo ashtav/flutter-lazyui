@@ -10,17 +10,44 @@ part 'extension.dart';
 
 enum LzFormType { blank, topAligned, underlined, topInner }
 
+class Foo {
+  @protected
+  final Map<String, FormModel> models;
+  const Foo(this.models);
+
+  FormModel key(String key) {
+    return models[key] ?? FormModel(FormNotifier(), GlobalKey());
+  }
+
+  dynamic get(String key) {
+    if (!models.containsKey(key)) {
+      return null;
+    }
+
+    // ignore: invalid_use_of_protected_member
+    return models[key]!.notifier.controller.text;
+  }
+
+  void set(String key, dynamic value) {
+    // ignore: invalid_use_of_protected_member
+    final notifier = models[key]!.notifier;
+    notifier.controller.text = value.toString();
+  }
+}
+
 class LzForm {
   static generate() {}
 
-  static Map<String, FormModel> make(List<String> keys) {
+  static Foo make(List<String> keys) {
     Map<String, FormNotifier> notifiers = {};
 
     for (var e in keys) {
       notifiers[e] = FormNotifier();
     }
 
-    return Map.fromIterables(keys, List.generate(keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())));
+    final mdoels =
+        Map.fromIterables(keys, List.generate(keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())));
+    return Foo(mdoels);
   }
 
   static Input input({

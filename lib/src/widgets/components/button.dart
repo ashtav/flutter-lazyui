@@ -10,6 +10,7 @@ class LzButton extends StatelessWidget {
   final IconStyle? iconStyle;
   final BoxBorder? border;
   final BorderRadius? borderRadius;
+  final bool outlined;
 
   const LzButton(
       {super.key,
@@ -21,15 +22,22 @@ class LzButton extends StatelessWidget {
       this.textStyle,
       this.iconStyle,
       this.border,
-      this.borderRadius});
+      this.borderRadius,
+      this.outlined = false});
 
   @override
   Widget build(BuildContext context) {
     bool iconOnly = text == null && icon != null;
-    Color backgroundColor = color ?? Colors.white;
+    Color backgroundColor = color ?? (context.isDarkMode ? darkAppbarColor : Colors.white);
 
     Color textColor = backgroundColor.isDark ? Colors.white : Colors.black;
     final textStyle = (this.textStyle ?? Gfont.black).copyWith(color: textColor);
+
+    BoxBorder? border = this.border;
+
+    if (outlined) {
+      border = Br.all();
+    }
 
     return Touch(
       onTap: onTap,

@@ -10,7 +10,7 @@ class TestView extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Test'),
       ),
-      body: ListView(
+      body: LzListView(
         children: [
           
         ],
