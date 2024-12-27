@@ -124,6 +124,38 @@ extension LzListMapExtension on List<Map> {
       return [];
     }
   }
+
+  /// Extracts a list of values associated with a specific key from a collection of maps.
+  ///
+  /// The [key] specifies the key whose values are to be extracted from each map in the list.
+  /// If [where] is provided, only maps that satisfy the given condition will be considered.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final provinces = [
+  ///   {'id': 1, 'name': 'Bali'},
+  ///   {'id': 2, 'name': 'Jakarta'}
+  /// ];
+  ///
+  /// // Extract all names
+  /// final names = provinces.extract<String>('name');
+  /// // Output: ['Bali', 'Jakarta']
+  ///
+  /// // Extract names where id is 1
+  /// final filteredNames = provinces.extract<String>('name', where: (e) => e['id'] == 1);
+  /// // Output: ['Bali']
+  /// ```
+  ///
+  /// - [T] is the type of the extracted values.
+  /// - [key] specifies the map key to extract values for.
+  /// - [where] is an optional condition to filter the maps before extracting values.
+  ///
+  /// Returns a list of values associated with the specified [key].
+  List<T> extract<T>(String key, {bool Function(Map)? where}) {
+    return where == null
+        ? map((e) => e[key] as T).toList()
+        : this.where((e) => where(e)).map((e) => e[key] as T).toList();
+  }
 }
 
 /* --------------------------------------------------------------------------

@@ -5,6 +5,7 @@ class FormNotifier extends ChangeNotifier {
   String? label;
 
   final controller = TextEditingController();
+  dynamic extra;
 
   bool enabled = true;
   bool obsecure = false;
@@ -15,6 +16,15 @@ class FormNotifier extends ChangeNotifier {
   }
 
   void notify() {
+    notifyListeners();
+  }
+
+  // this section is for select input
+  List<String> options = [];
+  List values = [];
+
+  void setOption(List<String> options) {
+    this.options = options;
     notifyListeners();
   }
 

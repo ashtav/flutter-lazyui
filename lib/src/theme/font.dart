@@ -47,7 +47,7 @@ extension CustomTextStyleExtension on TextStyle {
   TextStyle get red => copyWith(color: Colors.redAccent);
   TextStyle get orange => copyWith(color: Colors.orange);
   TextStyle get green => copyWith(color: Colors.green);
-  TextStyle get muted => copyWith(color: '404040'.hex);
+  TextStyle get muted => copyWith(color: '707070'.hex);
   TextStyle fcolor(Color color) => copyWith(color: color);
 
   // font size

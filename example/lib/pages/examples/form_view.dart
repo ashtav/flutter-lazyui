@@ -4,7 +4,8 @@ import 'package:lazyui/lazyui.dart';
 import '../widgets/dark_mode_widget.dart';
 
 class Notifier extends ChangeNotifier {
-  final forms = LzForm.make(['name', 'birthdate', 'password', 'gender', 'hobby', 'ticket']);
+  final forms =
+      LzForm.make(['name', 'phone', 'birthdate', 'password', 'gender', 'hobby', 'ticket', 'province', 'city']);
 }
 
 class FormView extends StatelessWidget {
@@ -15,6 +16,28 @@ class FormView extends StatelessWidget {
     final notifier = Notifier();
     final forms = notifier.forms;
 
+    // Example data of provinces and cities
+    final provinces = [
+      {'id': 1, 'name': 'Bali'},
+      {'id': 2, 'name': 'Jakarta'}
+    ];
+
+    final cities = [
+      // Cities in Bali
+      {'id': 1, 'province_id': 1, 'name': 'Denpasar'},
+      {'id': 2, 'province_id': 1, 'name': 'Ubud'},
+      {'id': 3, 'province_id': 1, 'name': 'Kuta'},
+      {'id': 4, 'province_id': 1, 'name': 'Singaraja'},
+      {'id': 5, 'province_id': 1, 'name': 'Canggu'},
+
+      // Cities in Jakarta
+      {'id': 6, 'province_id': 2, 'name': 'Central Jakarta'},
+      {'id': 7, 'province_id': 2, 'name': 'West Jakarta'},
+      {'id': 8, 'province_id': 2, 'name': 'South Jakarta'},
+      {'id': 9, 'province_id': 2, 'name': 'East Jakarta'},
+      {'id': 10, 'province_id': 2, 'name': 'North Jakarta'}
+    ];
+
     return Unfocuser(
       child: Scaffold(
         appBar: AppBar(
@@ -22,12 +45,19 @@ class FormView extends StatelessWidget {
           actions: [DarkModeWidget.icon()],
         ),
         body: LzListView(
-          padding: Ei.all(20),
-          gap: 25,
+          padding: Ei.only(b: 100, others: 20),
+          gap: 35,
           children: [
             /// An example of using a simple input field for a [label] and [hint].
             /// The [model] binds the value, allowing you to manage and retrieve the input.
             LzForm.input(label: 'Full Name', hint: 'Type your name', model: forms.key('name')),
+            LzForm.input(
+              label: 'Phone Number',
+              hint: 'Type your phone number',
+              model: forms.key('phone'),
+              keyboard: Tit.number,
+              prefix: Text('+62'),
+            ),
 
             /// An example of using an input field with a [suffixIcon] for the [label] and [hint].
             /// The [onTap] handler is used to open a date picker, updating the [model] with the selected date.
@@ -68,7 +98,36 @@ class FormView extends StatelessWidget {
 
             /// An example of using a number input field with buttons for incrementing and decrementing the value.
             /// The [label] provides a description for the field, and [model] manages the input value.
-            LzForm.number(label: 'Ticket', hint: 'Type number of ticket', model: forms.key('ticket')),
+            Column(
+              children: [
+                LzForm.number(
+                    label: 'Ticket',
+                    hint: 'Type number of ticket',
+                    model: forms.key('ticket'),
+                    onChange: (value) {
+                      forms.enable('province', value > 2);
+                    }),
+                Text('Add at least 3 tickets to enable province.', style: Gfont.fs14.muted)
+              ],
+            ).start.gap(2),
+
+            /// An example of using a dropdown/select input field.
+            /// The [label] describes the purpose of the field, while the [hint] guides the user to select an option.
+            LzForm.select(
+                label: 'Province',
+                hint: 'Select province',
+                options: provinces.extract('name'),
+                values: provinces.extract('id'),
+                model: forms.key('province'),
+                enabled: false,
+                onChange: (value) {
+                  /// Sets the 'city' field based on the selected 'province'.
+                  /// Filters the [cities] by [province_id] matching the selected province from [forms.extra('province')].
+                  /// Uses 'name' for the display value and 'id' as the underlying value for the city options.
+                  forms.set('city', OptionSet(cities, 'name', 'id', {'province_id': forms.extra('province')}));
+                }),
+
+            LzForm.select(label: 'City', hint: 'Select city', model: forms.key('city'))
           ],
         ),
         bottomNavigationBar: Padding(
@@ -78,6 +137,8 @@ class FormView extends StatelessWidget {
             color: '212121'.hex,
             onTap: () {
               logg(forms.value);
+              logg(forms.extra('province'));
+              logg(forms.extra('city'));
             },
           ),
         ),

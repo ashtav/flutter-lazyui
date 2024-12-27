@@ -22,6 +22,8 @@ class Input extends StatefulWidget {
   // Appearance properties
   final IconData? suffixIcon;
   final Widget? suffix;
+  final IconData? prefixIcon;
+  final Widget? prefix;
 
   // Control properties
   final bool enabled;
@@ -45,6 +47,8 @@ class Input extends StatefulWidget {
     this.onFocus,
     this.suffixIcon,
     this.suffix,
+    this.prefixIcon,
+    this.prefix,
     this.enabled = true,
     this.autofocus = false,
     this.obsecure = false,
@@ -129,6 +133,12 @@ class _InputState extends State<Input> {
               ? (widget.suffixIcon == null ? Icon(ConfigIcon.get(IconSet.chevron)) : Icon(widget.suffixIcon))
               : null;
 
+          Widget? prefixIcon = widget.prefix == null && widget.prefixIcon == null
+              ? null
+              : widget.prefix != null
+                  ? Center(widthFactor: 1, child: Container(padding: Ei.only(l: 16, r: 14, b: 2), child: widget.prefix))
+                  : Icon(widget.prefixIcon);
+
           // Defines a `suffix` widget, which can optionally be of type `Obsecure`.
           // If `suffix` is an `Obsecure`, it wraps the widget in a `Touch` for interactivity.
           // When tapped, it toggles the `obsecure` state using `state.toggleObsecure`.
@@ -147,6 +157,12 @@ class _InputState extends State<Input> {
           }
 
           TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
+          InputBorder? border = hasOnTap && state.enabled
+              ? OutlineInputBorder(
+                  borderRadius: Br.radius(config.borderRadius),
+                  borderSide:
+                      BorderSide(color: context.isDarkMode ? Colors.black26.themeify : Colors.black45, width: .5))
+              : null;
 
           return Touch(
               onTap: state.enabled ? widget.onTap : null,
@@ -166,7 +182,9 @@ class _InputState extends State<Input> {
                   onChange: widget.onChange,
                   onSubmit: widget.onSubmit,
                   onFocus: widget.onFocus,
-                  suffixIcon: suffix ?? suffixIcon));
+                  prefixIcon: prefixIcon,
+                  suffixIcon: suffix ?? suffixIcon,
+                  border: border));
         })
       ],
     ).start;

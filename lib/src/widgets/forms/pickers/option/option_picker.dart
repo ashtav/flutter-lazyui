@@ -19,7 +19,7 @@ class PickerOptionWidget extends StatefulWidget {
   final Option? initialValue;
 
   /// A function called when an option is selected.
-  final Function(Option)? onSelect;
+  final void Function(Option)? onSelect;
 
   /// The style configuration for the picker.
   final OptionPickerStyle? style;
@@ -228,7 +228,8 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
                   alignment: Alignment.topLeft,
                   child: notifier.watch((state) => AnimatedContainer(
                         duration: 250.ms,
-                        padding: Ei.only(t: state.isExpanded || widget.style?.fullScreen == true ? context.windowPadding.top : 0),
+                        padding: Ei.only(
+                            t: state.isExpanded || widget.style?.fullScreen == true ? context.windowPadding.top : 0),
                         child: LzTextField(
                           hint: 'Type to search',
                           border: InputBorder.none,

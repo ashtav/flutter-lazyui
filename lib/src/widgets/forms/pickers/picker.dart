@@ -223,7 +223,7 @@ class LzPicker {
     BuildContext context, {
     List<Option> options = const [],
     Option? initialValue,
-    Function(Option)? onSelect,
+    void Function(Option)? onSelect,
     OptionPickerStyle? style,
   }) {
     if (options.isEmpty) {

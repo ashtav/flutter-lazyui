@@ -49,6 +49,7 @@ class _LzListViewState extends State<LzListView> {
   Widget build(BuildContext context) {
     return ListView(
       padding: widget.padding,
+      cacheExtent: 1000,
       children: children,
     );
   }

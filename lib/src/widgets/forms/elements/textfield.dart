@@ -112,10 +112,16 @@ class LzTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color darkBorderColor = Colors.black26.themeify;
+
     final border = this.border ??
         OutlineInputBorder(
             borderRadius: Br.radius(config.borderRadius),
-            borderSide: BorderSide(color: context.isDarkMode ? Colors.white12 : Colors.black45, width: .5));
+            borderSide: BorderSide(
+                color: context.isDarkMode
+                    ? darkBorderColor.darken(enabled ? 0 : .7)
+                    : Colors.black45.lighten(enabled ? 0 : .7),
+                width: .5));
 
     return Focus(
       onFocusChange: onFocus,

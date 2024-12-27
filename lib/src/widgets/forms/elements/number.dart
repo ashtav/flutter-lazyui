@@ -12,7 +12,7 @@ class Number extends StatefulWidget {
   final String? hint;
 
   // Event handlers
-  final void Function(String value)? onChange;
+  final void Function(int value)? onChange;
   final void Function(String value)? onSubmit;
   final void Function(bool value)? onFocus;
 
@@ -92,9 +92,29 @@ class _NumberState extends State<Number> {
               : value;
 
       notifier.controller.text = value.toString();
+      widget.onChange?.call(value);
     } catch (e, s) {
       Print.error('Error $e $s');
     }
+  }
+
+  void onChange(String text) {
+    if (text.trim().isEmpty || text == '-') {
+      return;
+    }
+
+    int value = text.trim().isEmpty ? 0 : text.numeric;
+    int min = widget.min, max = widget.max;
+
+    // validate
+    value = value < min
+        ? min
+        : value > max
+            ? max
+            : value;
+
+    notifier.controller.text = value.toString();
+    widget.onChange?.call(value);
   }
 
   @override
@@ -150,7 +170,7 @@ class _NumberState extends State<Number> {
               maxLength: 11,
               enabled: state.enabled,
               obsecure: state.obsecure,
-              onChange: widget.onChange,
+              onChange: onChange,
               onSubmit: widget.onSubmit,
               onFocus: widget.onFocus,
               backgroundColor: background,
@@ -161,7 +181,7 @@ class _NumberState extends State<Number> {
                     return Container(
                       width: .5,
                       height: 30,
-                      color: Colors.black12,
+                      color: Colors.black12.themeify,
                     );
                   }
 
