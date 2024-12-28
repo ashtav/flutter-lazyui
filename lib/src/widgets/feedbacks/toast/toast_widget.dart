@@ -1,15 +1,15 @@
 part of 'toast.dart';
 
-class LzToastOverlay extends StatefulWidget {
+class _LzToastOverlay extends StatefulWidget {
   final Widget? child;
 
-  const LzToastOverlay({super.key, this.child});
+  const _LzToastOverlay({this.child});
 
   @override
-  State<LzToastOverlay> createState() => _LzToastOverlayState();
+  State<_LzToastOverlay> createState() => _LzToastOverlayState();
 }
 
-class _LzToastOverlayState extends State<LzToastOverlay> {
+class _LzToastOverlayState extends State<_LzToastOverlay> {
   late _LzToastOverlayEntry overlayEntry;
 
   @override

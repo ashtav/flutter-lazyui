@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
               theme: theme,
               home: const HomeView(),
               builder: (context, child) {
-                return LzToastOverlay(child: child);
+                return LzToast.builder(context, child);
               },
             ));
   }

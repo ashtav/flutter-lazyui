@@ -12,32 +12,25 @@ class HomeView extends StatelessWidget {
         padding: Ei.sym(h: 20),
         child: Column(
           children: [
-            Text('Welcome to LazyUi', style: Gfont.bold),
+            Textr(
+              'LazyUi 4.3',
+              style: Gfont.fs20.bold,
+              padding: Ei.sym(v: 5),
+            ),
             Text(
                 'LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter.',
                 textAlign: Ta.center),
-            Touch(
-              onTap: () {
-                context.lz.push(const FeatureView());
-              },
+
+            // go to example
+            LzButton(
+              onTap: () => context.lz.push(const FeatureView()),
+              text: 'See Example',
+              icon: Hi.bookOpen02,
+              outlined: true,
               padding: Ei.sym(v: 15, h: 30),
-              borderRadius: Br.radius(7),
-              border: Br.all(),
-              child: Textr('See Example', icon: Hi.bookOpen02),
             )
           ],
-        ).gap(25, except: [0]).center,
-      ),
-    );
-  }
-}
-
-extension CustomColumnExtension on Column {
-  Center get center {
-    return Center(
-      child: Column(
-        mainAxisAlignment: Maa.center,
-        children: children,
+        ).gap(35, except: [0]).centered,
       ),
     );
   }

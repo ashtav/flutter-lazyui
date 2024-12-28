@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -9,6 +11,22 @@ class ToastView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Timer? timer;
+    double progress = 0;
+
+    void uploading() {
+      progress = 0;
+      timer?.cancel();
+
+      timer = Timer.periodic(150.ms, (_) {
+        progress += [3, 50].iterate().randomize;
+
+        if (progress > 100) {
+          timer?.cancel();
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Toast'),
@@ -24,6 +42,7 @@ class ToastView extends StatelessWidget {
           Wrap(spacing: 15, runSpacing: 15, children: [
             LzButton(
               text: 'Show Toast',
+              icon: Hi.informationCircle,
               outlined: true,
               onTap: () {
                 LzToast.show(Faker.words(5));
@@ -34,7 +53,16 @@ class ToastView extends StatelessWidget {
               icon: Hi.loading03,
               outlined: true,
               onTap: () {
-                LzToast.overlay('Loading...', duration: 30.s);
+                LzToast.overlay('Loading...', duration: 5.s);
+              },
+            ),
+            LzButton(
+              text: 'Show Overlay Progress',
+              icon: Hi.percent,
+              outlined: true,
+              onTap: () {
+                uploading();
+                LzToast.progress('Uploading...', () => progress);
               },
             )
           ])
