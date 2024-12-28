@@ -19,6 +19,9 @@ class MyApp extends StatelessWidget {
               title: 'LazyUi',
               theme: theme,
               home: const HomeView(),
+              builder: (context, child) {
+                return LzToastOverlay(child: child);
+              },
             ));
   }
 }

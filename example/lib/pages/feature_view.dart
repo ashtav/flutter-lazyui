@@ -13,6 +13,7 @@ import 'examples/icon_view.dart';
 import 'examples/pad_view.dart';
 import 'examples/picker_view.dart';
 import 'examples/text_view.dart';
+import 'examples/toast_view.dart';
 
 class FeatureView extends StatelessWidget {
   const FeatureView({super.key});
@@ -70,7 +71,8 @@ class FeatureView extends StatelessWidget {
       'Iconr': const IconView(),
       'LzForm': const FormView(),
       'LzPicker': const PickerView(),
-      'LzPad': const PadView()
+      'LzPad': const PadView(),
+      'LzToast': const ToastView()
     };
 
     context.lz.push(pages[feature] ?? const TestView());

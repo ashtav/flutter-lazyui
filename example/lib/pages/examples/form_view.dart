@@ -4,8 +4,8 @@ import 'package:lazyui/lazyui.dart';
 import '../widgets/dark_mode_widget.dart';
 
 class Notifier extends ChangeNotifier {
-  final forms =
-      LzForm.make(['name', 'phone', 'birthdate', 'password', 'gender', 'hobby', 'ticket', 'province', 'city']);
+  final forms = LzForm.make(
+      ['name', 'phone', 'birthdate', 'password', 'gender', 'hobby', 'ticket', 'province', 'city', 'height', 'terms']);
 }
 
 class FormView extends StatelessWidget {
@@ -127,7 +127,17 @@ class FormView extends StatelessWidget {
                   forms.set('city', OptionSet(cities, 'name', 'id', {'province_id': forms.extra('province')}));
                 }),
 
-            LzForm.select(label: 'City', hint: 'Select city', model: forms.key('city'))
+            LzForm.select(label: 'City', hint: 'Select city', model: forms.key('city')),
+
+            /// An example of using a slider input with a [label] to specify the purpose of the slider.
+            /// The [initValue] sets the initial value of the slider, while [max] determines the upper limit.
+            /// The [model] binds the slider value to a key, allowing for data binding and easy management.
+            LzForm.slider(label: 'Height', initValue: 165, max: 250, model: forms.key('height')),
+
+            /// An example of using a switch with two states, [Agree] and [Disagree].
+            /// The [label] specifies the text for both states, separated by a "|".
+            /// The [onChange] callback is triggered whenever the switch state changes, passing the new [value].
+            LzForm.switches(label: 'Agree|Disagree', onChange: (value) {})
           ],
         ),
         bottomNavigationBar: Padding(

@@ -121,13 +121,13 @@ class _Square extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: Br.radius(config.borderRadius),
                     color: context.isDarkMode ? darkAppbarColor.lighten(.05) : backgroundColor,
-                    border: Br.all(color: Colors.black45.themeify, width: active && context.isDarkMode ? 11 : .5)),
+                    border: Br.all(color: Colors.black45.themeify, width: active ? 11 : .5)),
               ),
               Poslign.center(
                   child: AnimatedOpacity(
                       duration: 150.ms,
                       opacity: active ? 1 : 0,
-                      child: Icon(Hi.tick02, size: 18, color: Colors.black87.themeify)))
+                      child: Icon(Hi.tick02, size: 18, color: Colors.white)))
             ],
           ),
           Text(option)

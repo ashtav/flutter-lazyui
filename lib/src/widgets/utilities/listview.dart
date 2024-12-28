@@ -18,15 +18,18 @@ class _LzListViewState extends State<LzListView> {
     children = [];
 
     if (widget.gap != null && widget.children.length > 1) {
-      widget.children.generate((child, i) {
+      for (int i = 0; i < widget.children.length; i++) {
         if (i != 0) {
-          children.add(SizedBox(height: widget.gap));
+          children.add(SizedBox(key: ValueKey('gap_$i'), height: widget.gap));
         }
-
-        children.add(child);
-      });
+        children.add(KeyedSubtree(key: ValueKey('child_$i'), child: widget.children[i]));
+      }
     } else {
-      children = widget.children;
+      children = widget.children
+          .asMap()
+          .entries
+          .map((entry) => KeyedSubtree(key: ValueKey('child_${entry.key}'), child: entry.value))
+          .toList();
     }
   }
 
@@ -38,10 +41,9 @@ class _LzListViewState extends State<LzListView> {
 
   @override
   void didUpdateWidget(covariant LzListView oldWidget) {
-    if (widget.children != oldWidget.children) {
+    if (widget.children != oldWidget.children || widget.gap != oldWidget.gap) {
       initChildren();
     }
-
     super.didUpdateWidget(oldWidget);
   }
 
@@ -49,7 +51,7 @@ class _LzListViewState extends State<LzListView> {
   Widget build(BuildContext context) {
     return ListView(
       padding: widget.padding,
-      cacheExtent: 1000,
+      cacheExtent: 2500,
       children: children,
     );
   }

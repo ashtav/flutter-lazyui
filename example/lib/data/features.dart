@@ -39,16 +39,16 @@ List<FeatureGroup> get features => [
       FeatureGroup(
         label: 'Feedback & Notifications',
         features: [
-          Feature(label: 'Confirm', icon: Hi.helpSquare),
-          Feature(label: 'Skeleton', icon: Hi.loading03),
-          Feature(label: 'Toast', icon: Hi.notification03),
+          Feature(label: 'LzConfirm', icon: Hi.helpSquare),
+          Feature(label: 'Shimmer', icon: Hi.loading03),
+          Feature(label: 'LzToast', icon: Hi.notification03),
         ],
       ),
       FeatureGroup(
         label: 'Themes & Display',
         features: [
-          Feature(label: 'Image', icon: Hi.image02),
-          Feature(label: 'Theme', icon: Hi.paintBrush04),
+          Feature(label: 'LzImage', icon: Hi.image02),
+          Feature(label: 'LzTheme', icon: Hi.paintBrush04),
         ],
       ),
       FeatureGroup(

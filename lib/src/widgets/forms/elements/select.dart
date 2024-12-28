@@ -101,7 +101,7 @@ class _SelectState extends State<Select> {
     bool hasLabel = ![null, ''].contains(label);
 
     return Column(
-      spacing: hasLabel ? 10 : 0,
+      spacing: 10,
       children: [
         // label & indicator
         Row(

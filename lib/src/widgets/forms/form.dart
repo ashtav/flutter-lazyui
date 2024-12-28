@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart' hide Radio, Checkbox;
+import 'package:flutter/material.dart' hide Radio, Checkbox, Slider;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -7,6 +7,8 @@ import 'elements/input.dart';
 import 'elements/number.dart';
 import 'elements/radio.dart';
 import 'elements/select.dart';
+import 'elements/slider.dart';
+import 'elements/switches.dart';
 import 'form_model.dart';
 import 'notifier.dart';
 
@@ -331,5 +333,43 @@ class LzForm {
         model: model,
         options: options,
         values: values);
+  }
+
+  static Slider slider({
+    String? label,
+    double? initValue,
+    double min = 0,
+    double max = 100,
+    int? divisions,
+    bool enabled = true,
+    FormModel? model,
+    void Function(double value)? onChange,
+  }) {
+    return Slider(
+      label: label,
+      initValue: initValue,
+      min: min,
+      max: max,
+      divisions: divisions,
+      enabled: enabled,
+      model: model,
+      onChange: onChange,
+    );
+  }
+
+  static Switches switches({
+    Key? key,
+    String? label,
+    void Function(bool)? onChange,
+    bool initValue = false,
+    bool reversed = false,
+  }) {
+    return Switches(
+      key: key,
+      label: label,
+      onChange: onChange,
+      initValue: initValue,
+      reversed: reversed,
+    );
   }
 }

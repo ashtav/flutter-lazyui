@@ -90,7 +90,7 @@ class Poslign extends StatelessWidget {
     bool ignoring = false,
   }) {
     return Poslign(
-      alignment: Alignment.topCenter,
+      alignment: Alignment.bottomCenter,
       margin: margin,
       ignoring: ignoring,
       child: child,

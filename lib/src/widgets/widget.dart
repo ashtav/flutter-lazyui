@@ -9,6 +9,7 @@ import 'package:lazyui/src/theme/color.dart';
 
 import '../icons/icons_map.dart';
 
+export 'feedbacks/toast/toast.dart';
 export 'forms/form.dart';
 export 'forms/pads/pad.dart';
 export 'forms/pickers/picker.dart';
@@ -21,6 +22,7 @@ part 'components/button.dart';
 part 'components/card.dart';
 part 'components/dropdown.dart';
 part 'components/iconr.dart';
+part 'components/loader.dart';
 part 'components/trans_appbar.dart';
 part 'forms/elements/textfield.dart';
 part 'gestures/touch.dart';

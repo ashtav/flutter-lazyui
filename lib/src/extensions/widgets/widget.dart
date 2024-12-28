@@ -23,4 +23,6 @@ class WidgettUtils {
   T ignore<T extends Widget>([bool ignore = true]) => IgnorePointer(ignoring: ignore, child: child) as T;
 
   T opacity<T extends Widget>(double opacity) => Opacity(opacity: opacity, child: child) as T;
+
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: child);
 }
