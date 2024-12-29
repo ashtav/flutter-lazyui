@@ -1,5 +1,4 @@
 import 'package:example/data/features.dart';
-import 'package:example/pages/examples/test_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -7,13 +6,17 @@ import 'examples/accordion_view.dart';
 import 'examples/badge_view.dart';
 import 'examples/button_view.dart';
 import 'examples/card_view.dart';
+import 'examples/confirm_view.dart';
 import 'examples/dropdown_view.dart';
 import 'examples/form_view.dart';
 import 'examples/icon_view.dart';
+import 'examples/image_view.dart';
 import 'examples/pad_view.dart';
 import 'examples/picker_view.dart';
 import 'examples/shimmer_view.dart';
+import 'examples/test_view.dart';
 import 'examples/text_view.dart';
+import 'examples/theme_view.dart';
 import 'examples/toast_view.dart';
 
 class FeatureView extends StatelessWidget {
@@ -71,10 +74,13 @@ class FeatureView extends StatelessWidget {
       'Textr': const TextView(),
       'Iconr': const IconView(),
       'LzForm': const FormView(),
-      'LzPicker': const PickerView(),
       'LzPad': const PadView(),
+      'LzPicker': const PickerView(),
+      'LzConfirm': const ConfirmView(),
+      'Shimmer': const ShimmerView(),
       'LzToast': const ToastView(),
-      'Shimmer': const ShimmerView()
+      'LzTheme': const ThemeView(),
+      'LzImage': const ImageView()
     };
 
     context.lz.push(pages[feature] ?? const TestView());

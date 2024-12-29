@@ -11,6 +11,7 @@ import '../icons/icons_map.dart';
 
 export 'feedbacks/toast/toast.dart';
 export 'feedbacks/shimmer/shimmer.dart';
+export 'feedbacks/dialogs/confirmation.dart';
 export 'forms/form.dart';
 export 'forms/pads/pad.dart';
 export 'forms/pickers/picker.dart';
