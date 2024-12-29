@@ -12,6 +12,7 @@ import 'examples/form_view.dart';
 import 'examples/icon_view.dart';
 import 'examples/pad_view.dart';
 import 'examples/picker_view.dart';
+import 'examples/shimmer_view.dart';
 import 'examples/text_view.dart';
 import 'examples/toast_view.dart';
 
@@ -72,7 +73,8 @@ class FeatureView extends StatelessWidget {
       'LzForm': const FormView(),
       'LzPicker': const PickerView(),
       'LzPad': const PadView(),
-      'LzToast': const ToastView()
+      'LzToast': const ToastView(),
+      'Shimmer': const ShimmerView()
     };
 
     context.lz.push(pages[feature] ?? const TestView());

@@ -21,7 +21,7 @@ extension CustomColumnExtension on Column {
       textDirection: textDirection,
       verticalDirection: verticalDirection,
       textBaseline: textBaseline,
-      spacing: spacing,
+      // spacing: spacing,
       children: newChildren,
     );
   }
