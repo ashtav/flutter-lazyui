@@ -17,7 +17,6 @@ extension CustomRowExtension on Row {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        spacing: spacing,
         children: children,
       );
 
@@ -36,7 +35,6 @@ extension CustomRowExtension on Row {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        spacing: spacing,
         children: children,
       );
 
@@ -55,7 +53,6 @@ extension CustomRowExtension on Row {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        spacing: spacing,
         children: children,
       );
 
@@ -74,7 +71,6 @@ extension CustomRowExtension on Row {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        spacing: spacing,
         children: children,
       );
 
@@ -93,7 +89,6 @@ extension CustomRowExtension on Row {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        spacing: spacing,
         children: children,
       );
 
@@ -113,7 +108,6 @@ extension CustomRowExtension on Row {
         textDirection: textDirection,
         verticalDirection: verticalDirection,
         textBaseline: textBaseline,
-        spacing: spacing,
         children: children,
       );
 
@@ -142,7 +136,6 @@ extension CustomRowExtension on Row {
       textDirection: textDirection,
       verticalDirection: verticalDirection,
       textBaseline: textBaseline,
-      spacing: spacing,
       children: newChildren,
     );
   }

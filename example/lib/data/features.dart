@@ -54,10 +54,10 @@ List<FeatureGroup> get features => [
       FeatureGroup(
         label: 'Utilities',
         features: [
-          Feature(label: 'CountDown', icon: Hi.timeQuarterPass),
-          Feature(label: 'ListView', icon: Hi.rightToLeftListBullet),
+          Feature(label: 'LzCountDown', icon: Hi.timeQuarterPass),
+          Feature(label: 'LzListView', icon: Hi.rightToLeftListBullet),
           Feature(label: 'Refreshtor', icon: Hi.refresh),
-          Feature(label: 'TextCount', icon: Hi.arrangeByNumbers19),
+          Feature(label: 'LzTextCount', icon: Hi.arrangeByNumbers19),
           Feature(label: 'Trainer', icon: Hi.bookOpen02),
         ],
       ),

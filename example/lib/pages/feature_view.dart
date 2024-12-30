@@ -7,14 +7,18 @@ import 'examples/badge_view.dart';
 import 'examples/button_view.dart';
 import 'examples/card_view.dart';
 import 'examples/confirm_view.dart';
+import 'examples/countdown_view.dart';
 import 'examples/dropdown_view.dart';
 import 'examples/form_view.dart';
 import 'examples/icon_view.dart';
 import 'examples/image_view.dart';
+import 'examples/listview_view.dart';
 import 'examples/pad_view.dart';
 import 'examples/picker_view.dart';
+import 'examples/refreshtor_view.dart';
 import 'examples/shimmer_view.dart';
 import 'examples/test_view.dart';
+import 'examples/text_count_view.dart';
 import 'examples/text_view.dart';
 import 'examples/theme_view.dart';
 import 'examples/toast_view.dart';
@@ -80,7 +84,11 @@ class FeatureView extends StatelessWidget {
       'Shimmer': const ShimmerView(),
       'LzToast': const ToastView(),
       'LzTheme': const ThemeView(),
-      'LzImage': const ImageView()
+      'LzImage': const ImageView(),
+      'Refreshtor': const RefreshtorView(),
+      'LzCountDown': const CountdownView(),
+      'LzTextCount': const TextCountView(),
+      'LzListView': const ListViewView(),
     };
 
     context.lz.push(pages[feature] ?? const TestView());

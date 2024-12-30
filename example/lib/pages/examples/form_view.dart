@@ -46,6 +46,7 @@ class FormView extends StatelessWidget {
         ),
         body: LzListView(
           padding: Ei.only(b: 100, others: 20),
+          autoCache: true,
           gap: 35,
           children: [
             /// An example of using a simple input field for a [label] and [hint].
