@@ -1,7 +1,6 @@
 // source code: https://github.com/RafaelBarbosatec/tutorial_coach_mark.git
 // author: https://github.com/RafaelBarbosatec
 
-
 import 'dart:async';
 import 'dart:ui';
 
@@ -13,8 +12,7 @@ import 'widget.dart';
 class TutorialCoachMark {
   final List<TargetFocus> targets;
   final FutureOr<void> Function(TargetFocus)? onClickTarget;
-  final FutureOr<void> Function(TargetFocus, TapDownDetails)?
-      onClickTargetWithTapPosition;
+  final FutureOr<void> Function(TargetFocus, TapDownDetails)? onClickTargetWithTapPosition;
   final FutureOr<void> Function(TargetFocus)? onClickOverlay;
   final Function()? onFinish;
   final double paddingFocus;
