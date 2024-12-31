@@ -2,6 +2,7 @@ import 'package:example/data/features.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+import 'about_widget.dart';
 import 'examples/accordion_view.dart';
 import 'examples/badge_view.dart';
 import 'examples/button_view.dart';
@@ -37,7 +38,11 @@ class FeatureView extends StatelessWidget {
                 LzTheme.toggle();
               },
               icon: Icon(theme.isDark ? Hi.sun03 : Hi.moon02))),
-          ...[Hi.paintBrush04, Hi.informationCircle].iconButton((i) {}),
+          ...[Hi.paintBrush04, Hi.informationCircle].iconButton((i) {
+            if(i == 1){
+              context.bottomSheet(const AboutLazyUi());
+            }
+          }),
         ],
       ),
       body: ListView(

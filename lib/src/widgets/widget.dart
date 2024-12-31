@@ -1,9 +1,12 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/theme/color.dart';
@@ -27,12 +30,14 @@ part 'components/card.dart';
 part 'components/countdown.dart';
 part 'components/dropdown.dart';
 part 'components/iconr.dart';
+part 'components/image.dart';
 part 'components/loader.dart';
 part 'components/text_count.dart';
 part 'components/trans_appbar.dart';
 part 'forms/elements/textfield.dart';
 part 'gestures/scroll_physics.dart';
 part 'gestures/touch.dart';
+part 'typography/textml.dart';
 part 'typography/textr.dart';
 part 'utilities/glowless.dart';
 part 'utilities/intrinsic.dart';

@@ -57,6 +57,39 @@ extension CustomStringExtension on String {
       return false;
     }
   }
+
+  bool get isURL {
+    final urlRegex = RegExp(r'^(https?:\/\/|www\.)' // Requires "http://", "https://", or "www." at the start
+        r'(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})' // Valid domain
+        r'(:\d+)?' // Optional port
+        r'(\/[^\s]*)?$' // Optional path
+        );
+
+    return urlRegex.hasMatch(this);
+  }
+
+  bool get isPath {
+    final pathRegex = RegExp(r'^(\/|file:\/\/|[a-zA-Z]:\\|assets\/)' // Matches start of a path
+        r'[\w\/\-\.]+$' // Matches the rest of the path
+        );
+
+    return pathRegex.hasMatch(this);
+  }
+
+  /// Check if the path is a file path (absolute or file:// based)
+  bool get isFilePath {
+    final filePathRegex = RegExp(r'^(\/|file:\/\/|[a-zA-Z]:\\)' // Matches absolute paths and file:// paths
+        r'[\w\/\-\.]+\.\w+$' // Ensures a file extension exists
+        );
+    return filePathRegex.hasMatch(this);
+  }
+
+  /// Check if the path is for local assets (starting with "assets/")
+  bool get isLocalAssetPath {
+    final assetPathRegex = RegExp(r'^assets\/[\w\/\-\.]+$' // Matches paths starting with "assets/"
+        );
+    return assetPathRegex.hasMatch(this);
+  }
 }
 
 extension LzNullableStringExtension on String? {

@@ -8,10 +8,14 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  cached_network_image: ^3.4.1
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.16
   google_fonts: ^6.2.1
   intl: ^0.20.1
+  stack_trace: ^1.12.0
+  teledart: ^0.6.1
 
 dev_dependencies:
   flutter_lints: ^5.0.0
