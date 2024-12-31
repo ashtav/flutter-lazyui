@@ -33,10 +33,14 @@ class PadView extends StatelessWidget {
                     logg(controller.value);
 
                     controller.pause();
+                    LzToast.overlay('Validating...');
                     // request api...
 
                     Timer(2.s, () {
+                      LzToast.dismiss();
+
                       if (controller.value == '123456') {
+                        context.lz.pop();
                         Print.info('Your OTP is valid');
                       } else {
                         controller.reset().resume();

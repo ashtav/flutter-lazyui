@@ -194,6 +194,10 @@ class LzToast {
     _notifier.setProgressValue(value);
   }
 
+  static void dismiss(){
+    _notifier.cancel();
+  }
+
   /// Integrates the toast system into the widget tree.
   ///
   /// The [context] parameter is the current `BuildContext`.

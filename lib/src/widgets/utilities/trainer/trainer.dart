@@ -1,0 +1,169 @@
+// source code: https://github.com/RafaelBarbosatec/tutorial_coach_mark.git
+// author: https://github.com/RafaelBarbosatec
+
+
+import 'dart:async';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+import 'util.dart';
+import 'widget.dart';
+
+class TutorialCoachMark {
+  final List<TargetFocus> targets;
+  final FutureOr<void> Function(TargetFocus)? onClickTarget;
+  final FutureOr<void> Function(TargetFocus, TapDownDetails)?
+      onClickTargetWithTapPosition;
+  final FutureOr<void> Function(TargetFocus)? onClickOverlay;
+  final Function()? onFinish;
+  final double paddingFocus;
+
+  // if onSkip return false, the overlay will not be dismissed and call `next`
+  final bool Function()? onSkip;
+  final AlignmentGeometry alignSkip;
+  final String textSkip;
+  final TextStyle textStyleSkip;
+  final bool hideSkip;
+  final bool useSafeArea;
+  final Color colorShadow;
+  final double opacityShadow;
+  final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
+  final Duration focusAnimationDuration;
+  final Duration unFocusAnimationDuration;
+  final Duration pulseAnimationDuration;
+  final bool pulseEnable;
+  final Widget? skipWidget;
+  final bool showSkipInLastTarget;
+  final ImageFilter? imageFilter;
+  final String? backgroundSemanticLabel;
+  final int initialFocus;
+
+  OverlayEntry? _overlayEntry;
+
+  TutorialCoachMark({
+    required this.targets,
+    this.colorShadow = Colors.black,
+    this.onClickTarget,
+    this.onClickTargetWithTapPosition,
+    this.onClickOverlay,
+    this.onFinish,
+    this.paddingFocus = 10,
+    this.onSkip,
+    this.alignSkip = Alignment.bottomRight,
+    this.textSkip = "SKIP",
+    this.textStyleSkip = const TextStyle(color: Colors.white),
+    this.hideSkip = false,
+    this.useSafeArea = true,
+    this.opacityShadow = 0.8,
+    this.focusAnimationDuration = const Duration(milliseconds: 600),
+    this.unFocusAnimationDuration = const Duration(milliseconds: 600),
+    this.pulseAnimationDuration = const Duration(milliseconds: 500),
+    this.pulseEnable = true,
+    this.skipWidget,
+    this.showSkipInLastTarget = true,
+    this.imageFilter,
+    this.initialFocus = 0,
+    this.backgroundSemanticLabel,
+  }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
+
+  OverlayEntry _buildOverlay({bool rootOverlay = false}) {
+    return OverlayEntry(
+      builder: (context) {
+        return TutorialCoachMarkWidget(
+          key: _widgetKey,
+          targets: targets,
+          clickTarget: onClickTarget,
+          onClickTargetWithTapPosition: onClickTargetWithTapPosition,
+          clickOverlay: onClickOverlay,
+          paddingFocus: paddingFocus,
+          onClickSkip: skip,
+          alignSkip: alignSkip,
+          skipWidget: skipWidget,
+          textSkip: textSkip,
+          textStyleSkip: textStyleSkip,
+          hideSkip: hideSkip,
+          useSafeArea: useSafeArea,
+          colorShadow: colorShadow,
+          opacityShadow: opacityShadow,
+          focusAnimationDuration: focusAnimationDuration,
+          unFocusAnimationDuration: unFocusAnimationDuration,
+          pulseAnimationDuration: pulseAnimationDuration,
+          pulseEnable: pulseEnable,
+          finish: finish,
+          rootOverlay: rootOverlay,
+          showSkipInLastTarget: showSkipInLastTarget,
+          imageFilter: imageFilter,
+          initialFocus: initialFocus,
+          backgroundSemanticLabel: backgroundSemanticLabel,
+        );
+      },
+    );
+  }
+
+  void show({required BuildContext context, bool rootOverlay = false}) {
+    OverlayState? overlay = Overlay.of(context, rootOverlay: rootOverlay);
+    overlay.let((it) {
+      showWithOverlayState(overlay: it, rootOverlay: rootOverlay);
+    });
+  }
+
+  // `navigatorKey` needs to be the one that you passed to MaterialApp.navigatorKey
+  void showWithNavigatorStateKey({
+    required GlobalKey<NavigatorState> navigatorKey,
+    bool rootOverlay = false,
+  }) {
+    navigatorKey.currentState?.overlay.let((it) {
+      showWithOverlayState(
+        overlay: it,
+        rootOverlay: rootOverlay,
+      );
+    });
+  }
+
+  void showWithOverlayState({
+    required OverlayState overlay,
+    bool rootOverlay = false,
+  }) {
+    postFrame(() => _createAndShow(overlay, rootOverlay: rootOverlay));
+  }
+
+  void _createAndShow(
+    OverlayState overlay, {
+    bool rootOverlay = false,
+  }) {
+    if (_overlayEntry == null) {
+      _overlayEntry = _buildOverlay(rootOverlay: rootOverlay);
+      overlay.insert(_overlayEntry!);
+    }
+  }
+
+  void finish() {
+    onFinish?.call();
+    _removeOverlay();
+  }
+
+  void skip() {
+    bool removeOverlay = onSkip?.call() ?? true;
+    if (removeOverlay) {
+      _removeOverlay();
+    } else {
+      next();
+    }
+  }
+
+  bool get isShowing => _overlayEntry != null;
+
+  GlobalKey<TutorialCoachMarkWidgetState> get widgetKey => _widgetKey;
+
+  void next() => _widgetKey.currentState?.next();
+
+  void previous() => _widgetKey.currentState?.previous();
+
+  void goTo(int index) => _widgetKey.currentState?.goTo(index);
+
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+}

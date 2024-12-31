@@ -23,6 +23,7 @@ import 'examples/text_count_view.dart';
 import 'examples/text_view.dart';
 import 'examples/theme_view.dart';
 import 'examples/toast_view.dart';
+import 'examples/trainer_view.dart';
 
 class FeatureView extends StatelessWidget {
   const FeatureView({super.key});
@@ -39,7 +40,7 @@ class FeatureView extends StatelessWidget {
               },
               icon: Icon(theme.isDark ? Hi.sun03 : Hi.moon02))),
           ...[Hi.paintBrush04, Hi.informationCircle].iconButton((i) {
-            if(i == 1){
+            if (i == 1) {
               context.bottomSheet(const AboutLazyUi());
             }
           }),
@@ -94,6 +95,7 @@ class FeatureView extends StatelessWidget {
       'LzCountDown': const CountdownView(),
       'LzTextCount': const TextCountView(),
       'LzListView': const ListViewView(),
+      'Trainer': const TrainerView()
     };
 
     context.lz.push(pages[feature] ?? const TestView());

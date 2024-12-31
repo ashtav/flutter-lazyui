@@ -30,4 +30,8 @@ class LzColor {
     int alpha = (color.a * 255).toInt();
     return Color.fromARGB(alpha, invertedRed, invertedGreen, invertedBlue);
   }
+
+  Color random(int index) {
+    return Colors.primaries[index % Colors.primaries.length];
+  }
 }

@@ -35,23 +35,17 @@ class AboutLazyUi extends StatelessWidget {
               Text(
                 'With LazyUi, you get ready-made components like buttons, cards, grids, and utilities for tasks like spacing and alignment. It’s designed to make development faster while maintaining flexibility.',
               ),
-              Column(
-                spacing: 15,
-                children: [
-                  Text('Features (${featuress().length})'),
-                  Wrap(
-                    spacing: 5,
-                    runSpacing: 5,
-                    children: featuress().generate((e, i) {
-                      return LzBadge(
-                        text: e,
-                        color: Colors.primaries[i % Colors.primaries.length],
-                        soft: true,
-                      );
-                    }),
-                  )
-                ],
-              ).start,
+              Wrap(
+                spacing: 5,
+                runSpacing: 5,
+                children: featuress().generate((e, i) {
+                  return LzBadge(
+                    text: e,
+                    color: Lz.color.random(i),
+                    soft: true,
+                  );
+                }),
+              )
             ],
           )
         ],
