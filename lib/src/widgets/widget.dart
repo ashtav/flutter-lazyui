@@ -20,6 +20,7 @@ export 'forms/form.dart';
 export 'forms/pads/pad.dart';
 export 'forms/pickers/picker.dart';
 export 'utilities/refreshtor/refreshtor.dart';
+export 'utilities/trainer/trainer.dart';
 
 part 'animations/blink_animate.dart';
 part 'animations/zoom.dart';

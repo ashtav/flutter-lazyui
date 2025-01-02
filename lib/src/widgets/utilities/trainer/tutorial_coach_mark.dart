@@ -1,10 +1,96 @@
-import 'dart:async';
+// source code: https://github.com/RafaelBarbosatec/tutorial_coach_mark.git
+// author: https://github.com/RafaelBarbosatec
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
 import 'animated.dart';
-import 'util.dart';
+
+class TutorialCoachMark {
+  final List<TargetFocus> targets;
+  final Function()? onFinish;
+  final double paddingFocus;
+  final bool Function()? onSkip;
+  final bool useSafeArea;
+  final Color colorShadow;
+  final double opacityShadow;
+  final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
+  final Duration duration;
+  final ImageFilter? imageFilter;
+
+  OverlayEntry? _overlayEntry;
+
+  TutorialCoachMark({
+    required this.targets,
+    this.colorShadow = Colors.black,
+    this.onFinish,
+    this.paddingFocus = 10,
+    this.onSkip,
+    this.useSafeArea = true,
+    this.opacityShadow = 0.8,
+    this.duration = const Duration(milliseconds: 600),
+    this.imageFilter,
+  }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
+
+  OverlayEntry _buildOverlay() {
+    return OverlayEntry(
+      builder: (context) {
+        return TutorialCoachMarkWidget(
+          key: _widgetKey,
+          targets: targets,
+          paddingFocus: paddingFocus,
+          onClickSkip: skip,
+          useSafeArea: useSafeArea,
+          colorShadow: colorShadow,
+          opacityShadow: opacityShadow,
+          duration: duration,
+          finish: finish,
+          imageFilter: imageFilter,
+        );
+      },
+    );
+  }
+
+  void show(BuildContext context) {
+    OverlayState overlay = Overlay.of(context);
+
+    if (_overlayEntry == null) {
+      _overlayEntry = _buildOverlay();
+      overlay.insert(_overlayEntry!);
+    }
+  }
+
+  void finish() {
+    onFinish?.call();
+    _removeOverlay();
+  }
+
+  void skip() {
+    bool removeOverlay = onSkip?.call() ?? true;
+    if (removeOverlay) {
+      _removeOverlay();
+    } else {
+      next();
+    }
+  }
+
+  bool get isShowing => _overlayEntry != null;
+
+  GlobalKey<TutorialCoachMarkWidgetState> get widgetKey => _widgetKey;
+
+  void next() => _widgetKey.currentState?.next();
+
+  void previous() => _widgetKey.currentState?.previous();
+
+  void goTo(int index) => _widgetKey.currentState?.goTo(index);
+
+  void _removeOverlay() {
+    _overlayEntry?.remove();
+    _overlayEntry = null;
+  }
+}
 
 class TutorialCoachMarkWidget extends StatefulWidget {
   const TutorialCoachMarkWidget({
@@ -12,55 +98,23 @@ class TutorialCoachMarkWidget extends StatefulWidget {
     required this.targets,
     this.finish,
     this.paddingFocus = 10,
-    this.clickTarget,
-    this.onClickTargetWithTapPosition,
-    this.clickOverlay,
-    this.alignSkip = Alignment.bottomRight,
-    this.textSkip = "SKIP",
     this.onClickSkip,
     this.colorShadow = Colors.black,
     this.opacityShadow = 0.8,
-    this.textStyleSkip = const TextStyle(color: Colors.white),
-    this.hideSkip = false,
     this.useSafeArea = true,
-    this.focusAnimationDuration,
-    this.unFocusAnimationDuration,
-    this.pulseAnimationDuration,
-    this.pulseVariation,
-    this.pulseEnable = true,
-    this.skipWidget,
-    this.rootOverlay = false,
-    this.showSkipInLastTarget = false,
+    this.duration,
     this.imageFilter,
-    this.backgroundSemanticLabel,
-    this.initialFocus = 0,
   }) : assert(targets.length > 0);
 
   final List<TargetFocus> targets;
-  final FutureOr Function(TargetFocus)? clickTarget;
-  final FutureOr Function(TargetFocus, TapDownDetails)? onClickTargetWithTapPosition;
-  final FutureOr Function(TargetFocus)? clickOverlay;
   final Function()? finish;
   final Color colorShadow;
   final double opacityShadow;
   final double paddingFocus;
   final Function()? onClickSkip;
-  final AlignmentGeometry alignSkip;
-  final String textSkip;
-  final TextStyle textStyleSkip;
-  final bool hideSkip;
   final bool useSafeArea;
-  final Duration? focusAnimationDuration;
-  final Duration? unFocusAnimationDuration;
-  final Duration? pulseAnimationDuration;
-  final Tween<double>? pulseVariation;
-  final bool pulseEnable;
-  final Widget? skipWidget;
-  final bool rootOverlay;
-  final bool showSkipInLastTarget;
+  final Duration? duration;
   final ImageFilter? imageFilter;
-  final int initialFocus;
-  final String? backgroundSemanticLabel;
 
   @override
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();
@@ -79,29 +133,13 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
         children: <Widget>[
           AnimatedFocusLight(
             key: _focusLightKey,
-            initialFocus: widget.initialFocus,
             targets: widget.targets,
             finish: widget.finish,
             paddingFocus: widget.paddingFocus,
             colorShadow: widget.colorShadow,
             opacityShadow: widget.opacityShadow,
-            focusAnimationDuration: widget.focusAnimationDuration,
-            unFocusAnimationDuration: widget.unFocusAnimationDuration,
-            pulseAnimationDuration: widget.pulseAnimationDuration,
-            pulseVariation: widget.pulseVariation,
-            pulseEnable: widget.pulseEnable,
-            rootOverlay: widget.rootOverlay,
+            duration: widget.duration,
             imageFilter: widget.imageFilter,
-            backgroundSemanticLabel: widget.backgroundSemanticLabel,
-            clickTarget: (target) {
-              return widget.clickTarget?.call(target);
-            },
-            clickTargetWithTapPosition: (target, tapDetails) {
-              return widget.onClickTargetWithTapPosition?.call(target, tapDetails);
-            },
-            clickOverlay: (target) {
-              return widget.clickOverlay?.call(target);
-            },
             focus: (target) {
               setState(() {
                 currentTarget = target;
@@ -119,7 +157,6 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
             duration: const Duration(milliseconds: 300),
             child: _buildContents(),
           ),
-          _buildSkip()
         ],
       ),
     );
@@ -131,13 +168,10 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
     }
 
     List<Widget> children = <Widget>[];
-
     TargetPosition? target;
+
     try {
-      target = getTargetCurrent(
-        currentTarget!,
-        rootOverlay: widget.rootOverlay,
-      );
+      target = getTargetCurrent(currentTarget!);
     } on NotFoundTargetException catch (e, s) {
       debugPrint(e.toString());
       debugPrintStack(stackTrace: s);
@@ -155,7 +189,7 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
     double haloWidth;
     double haloHeight;
 
-    if (currentTarget!.shape == ShapeLightFocus.Circle) {
+    if (currentTarget!.shape == ShapeLightFocus.circle) {
       haloWidth = target.size.width > target.size.height ? target.size.width : target.size.height;
       haloHeight = haloWidth;
     } else {
@@ -208,15 +242,6 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
             width = ancestorBox.size.width - left!;
           }
           break;
-        case ContentAlign.custom:
-          {
-            left = i.customPosition!.left;
-            right = i.customPosition!.right;
-            top = i.customPosition!.top;
-            bottom = i.customPosition!.bottom;
-            width = ancestorBox.size.width;
-          }
-          break;
       }
 
       return Positioned(
@@ -228,50 +253,13 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
           width: width,
           child: Padding(
             padding: i.padding,
-            child: i.builder?.call(context, this) ?? (i.child ?? const SizedBox.shrink()),
+            child: i.builder.call(context, this),
           ),
         ),
       );
     }).toList();
 
-    return Stack(
-      children: children,
-    );
-  }
-
-  Widget _buildSkip() {
-    bool isLastTarget = false;
-
-    if (currentTarget != null) {
-      isLastTarget = widget.targets.indexOf(currentTarget!) == widget.targets.length - 1;
-    }
-
-    if (widget.hideSkip || (isLastTarget && !widget.showSkipInLastTarget)) {
-      return const SizedBox.shrink();
-    }
-
-    Widget animatedWidget = AnimatedOpacity(
-      opacity: showContent ? 1 : 0,
-      duration: const Duration(milliseconds: 300),
-      child: InkWell(
-        onTap: skip,
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: IgnorePointer(
-            child: widget.skipWidget ??
-                Text(
-                  widget.textSkip,
-                  style: widget.textStyleSkip,
-                ),
-          ),
-        ),
-      ),
-    );
-
-    return Align(
-      alignment: currentTarget?.alignSkip ?? widget.alignSkip,
-      child: (widget.useSafeArea) ? SafeArea(child: animatedWidget) : animatedWidget,
-    );
+    return Stack(children: children);
   }
 
   @override

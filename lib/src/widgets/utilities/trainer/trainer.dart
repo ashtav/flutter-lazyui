@@ -1,167 +1,142 @@
-// source code: https://github.com/RafaelBarbosatec/tutorial_coach_mark.git
-// author: https://github.com/RafaelBarbosatec
-
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:lazyui/lazyui.dart';
 
-import 'util.dart';
-import 'widget.dart';
+import 'tutorial_coach_mark.dart';
 
-class TutorialCoachMark {
-  final List<TargetFocus> targets;
-  final FutureOr<void> Function(TargetFocus)? onClickTarget;
-  final FutureOr<void> Function(TargetFocus, TapDownDetails)? onClickTargetWithTapPosition;
-  final FutureOr<void> Function(TargetFocus)? onClickOverlay;
-  final Function()? onFinish;
-  final double paddingFocus;
+export 'controller.dart';
+export 'enums.dart';
+export 'target.dart';
 
-  // if onSkip return false, the overlay will not be dismissed and call `next`
-  final bool Function()? onSkip;
-  final AlignmentGeometry alignSkip;
-  final String textSkip;
-  final TextStyle textStyleSkip;
-  final bool hideSkip;
-  final bool useSafeArea;
-  final Color colorShadow;
-  final double opacityShadow;
-  final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
-  final Duration focusAnimationDuration;
-  final Duration unFocusAnimationDuration;
-  final Duration pulseAnimationDuration;
-  final bool pulseEnable;
-  final Widget? skipWidget;
-  final bool showSkipInLastTarget;
-  final ImageFilter? imageFilter;
-  final String? backgroundSemanticLabel;
-  final int initialFocus;
+class Trainer extends StatefulWidget {
+  final Widget Function(List<GlobalKey> keys) builder;
+  final List<Target> targets;
+  final TrainerController? controller;
+  final Duration duration;
+  const Trainer(
+      {super.key,
+      required this.builder,
+      this.targets = const [],
+      this.controller,
+      this.duration = const Duration(milliseconds: 600)});
 
-  OverlayEntry? _overlayEntry;
+  @override
+  State<Trainer> createState() => _TrainerState();
+}
 
-  TutorialCoachMark({
-    required this.targets,
-    this.colorShadow = Colors.black,
-    this.onClickTarget,
-    this.onClickTargetWithTapPosition,
-    this.onClickOverlay,
-    this.onFinish,
-    this.paddingFocus = 10,
-    this.onSkip,
-    this.alignSkip = Alignment.bottomRight,
-    this.textSkip = "SKIP",
-    this.textStyleSkip = const TextStyle(color: Colors.white),
-    this.hideSkip = false,
-    this.useSafeArea = true,
-    this.opacityShadow = 0.8,
-    this.focusAnimationDuration = const Duration(milliseconds: 600),
-    this.unFocusAnimationDuration = const Duration(milliseconds: 600),
-    this.pulseAnimationDuration = const Duration(milliseconds: 500),
-    this.pulseEnable = true,
-    this.skipWidget,
-    this.showSkipInLastTarget = true,
-    this.imageFilter,
-    this.initialFocus = 0,
-    this.backgroundSemanticLabel,
-  }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
+class _TrainerState extends State<Trainer> {
+  List<TargetFocus> targets = [];
+  List<GlobalKey> keys = [];
+  TutorialCoachMarkController? _controller;
 
-  OverlayEntry _buildOverlay({bool rootOverlay = false}) {
-    return OverlayEntry(
-      builder: (context) {
-        return TutorialCoachMarkWidget(
-          key: _widgetKey,
-          targets: targets,
-          clickTarget: onClickTarget,
-          onClickTargetWithTapPosition: onClickTargetWithTapPosition,
-          clickOverlay: onClickOverlay,
-          paddingFocus: paddingFocus,
-          onClickSkip: skip,
-          alignSkip: alignSkip,
-          skipWidget: skipWidget,
-          textSkip: textSkip,
-          textStyleSkip: textStyleSkip,
-          hideSkip: hideSkip,
-          useSafeArea: useSafeArea,
-          colorShadow: colorShadow,
-          opacityShadow: opacityShadow,
-          focusAnimationDuration: focusAnimationDuration,
-          unFocusAnimationDuration: unFocusAnimationDuration,
-          pulseAnimationDuration: pulseAnimationDuration,
-          pulseEnable: pulseEnable,
-          finish: finish,
-          rootOverlay: rootOverlay,
-          showSkipInLastTarget: showSkipInLastTarget,
-          imageFilter: imageFilter,
-          initialFocus: initialFocus,
-          backgroundSemanticLabel: backgroundSemanticLabel,
-        );
-      },
-    );
-  }
+  void showTrainer([int? index]) {
+    final trainer = TutorialCoachMark(
+        targets: targets,
+        opacityShadow: .5,
+        duration: widget.duration,
+        imageFilter: ImageFilter.blur(sigmaX: 7, sigmaY: 7));
 
-  void show({required BuildContext context, bool rootOverlay = false}) {
-    OverlayState? overlay = Overlay.of(context, rootOverlay: rootOverlay);
-    overlay.let((it) {
-      showWithOverlayState(overlay: it, rootOverlay: rootOverlay);
-    });
-  }
-
-  // `navigatorKey` needs to be the one that you passed to MaterialApp.navigatorKey
-  void showWithNavigatorStateKey({
-    required GlobalKey<NavigatorState> navigatorKey,
-    bool rootOverlay = false,
-  }) {
-    navigatorKey.currentState?.overlay.let((it) {
-      showWithOverlayState(
-        overlay: it,
-        rootOverlay: rootOverlay,
-      );
-    });
-  }
-
-  void showWithOverlayState({
-    required OverlayState overlay,
-    bool rootOverlay = false,
-  }) {
-    postFrame(() => _createAndShow(overlay, rootOverlay: rootOverlay));
-  }
-
-  void _createAndShow(
-    OverlayState overlay, {
-    bool rootOverlay = false,
-  }) {
-    if (_overlayEntry == null) {
-      _overlayEntry = _buildOverlay(rootOverlay: rootOverlay);
-      overlay.insert(_overlayEntry!);
+    if (index != null) {
+      trainer.goTo(index);
+      return;
     }
+
+    trainer.show(context);
   }
 
-  void finish() {
-    onFinish?.call();
-    _removeOverlay();
-  }
+  void initialized() {
+    _controller?.skip();
 
-  void skip() {
-    bool removeOverlay = onSkip?.call() ?? true;
-    if (removeOverlay) {
-      _removeOverlay();
+    targets = [];
+    keys = [];
+
+    int length = widget.targets.length;
+
+    widget.targets.generate((target, i) {
+      final key = GlobalKey();
+      keys.add(key);
+
+      targets.add(TargetFocus(keyTarget: key, shape: target.shape, contents: [
+        TargetContent(
+            align: target.align,
+            padding: target.padding ?? Ei.all(50),
+            builder: (_, controller) {
+              _controller = controller;
+
+              return _TargetContent(controller, target, i, ['Skip', i == length - 1 ? 'Finish' : 'Next'], (action) {
+                if (action == 0) {
+                  controller.skip();
+                } else {
+                  controller.next();
+                }
+              });
+            })
+      ]));
+    });
+
+    // fill the controller
+    if (widget.controller != null) {
+      widget.controller!.showTrainer = showTrainer;
     } else {
-      next();
+      // toggle the trainer
+      Bindings.onRendered(() {
+        showTrainer();
+      });
     }
   }
 
-  bool get isShowing => _overlayEntry != null;
+  @override
+  void initState() {
+    super.initState();
+    initialized();
+  }
 
-  GlobalKey<TutorialCoachMarkWidgetState> get widgetKey => _widgetKey;
+  @override
+  void didUpdateWidget(Trainer oldWidget) {
+    super.didUpdateWidget(oldWidget);
 
-  void next() => _widgetKey.currentState?.next();
+    if (oldWidget.targets != widget.targets) {
+      initialized();
+    }
+  }
 
-  void previous() => _widgetKey.currentState?.previous();
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder(keys);
+  }
+}
 
-  void goTo(int index) => _widgetKey.currentState?.goTo(index);
+class _TargetContent extends StatelessWidget {
+  final TutorialCoachMarkController controller;
+  final Target target;
+  final int index;
+  final List<String> actions;
+  final Function(int action) onTap;
 
-  void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+  const _TargetContent(this.controller, this.target, this.index, this.actions, this.onTap);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: Caa.start,
+      spacing: 25,
+      children: [
+        Text(
+          target.description ?? '',
+          style: Gfont.white,
+        ),
+
+        // trainer controls
+        Row(
+            spacing: 35,
+            children: actions.generate((label, i) {
+              return Touch(
+                  type: TouchType.fade,
+                  onTap: () => onTap(i),
+                  child: Textr(label, style: Gfont.white, padding: Ei.sym(v: 13)));
+            }))
+      ],
+    );
   }
 }
