@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 import '../widgets/example_label_widget.dart';
 
 class PickerView extends StatelessWidget {
@@ -12,7 +11,7 @@ class PickerView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Picker'),
-        actions: [DarkModeWidget.icon()],
+        actions: [LzThemeAction()],
       ),
       body: ListView(
         padding: Ei.all(20),

@@ -6,49 +6,53 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import 'animated.dart';
+import 'animations.dart';
+import 'controller.dart';
+import 'target.dart';
 
 class TutorialCoachMark {
   final List<TargetFocus> targets;
-  final Function()? onFinish;
+  final void Function()? onFinish;
+  final void Function()? onSkip;
   final double paddingFocus;
-  final bool Function()? onSkip;
   final bool useSafeArea;
   final Color colorShadow;
   final double opacityShadow;
   final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
   final Duration duration;
   final ImageFilter? imageFilter;
+  final int? initFocus;
 
   OverlayEntry? _overlayEntry;
 
-  TutorialCoachMark({
-    required this.targets,
-    this.colorShadow = Colors.black,
-    this.onFinish,
-    this.paddingFocus = 10,
-    this.onSkip,
-    this.useSafeArea = true,
-    this.opacityShadow = 0.8,
-    this.duration = const Duration(milliseconds: 600),
-    this.imageFilter,
-  }) : assert(opacityShadow >= 0 && opacityShadow <= 1);
+  TutorialCoachMark(
+      {required this.targets,
+      this.colorShadow = Colors.black,
+      this.onFinish,
+      this.onSkip,
+      this.paddingFocus = 10,
+      this.useSafeArea = true,
+      this.opacityShadow = 0.8,
+      this.duration = const Duration(milliseconds: 600),
+      this.imageFilter,
+      this.initFocus})
+      : assert(opacityShadow >= 0 && opacityShadow <= 1);
 
   OverlayEntry _buildOverlay() {
     return OverlayEntry(
       builder: (context) {
         return TutorialCoachMarkWidget(
-          key: _widgetKey,
-          targets: targets,
-          paddingFocus: paddingFocus,
-          onClickSkip: skip,
-          useSafeArea: useSafeArea,
-          colorShadow: colorShadow,
-          opacityShadow: opacityShadow,
-          duration: duration,
-          finish: finish,
-          imageFilter: imageFilter,
-        );
+            key: _widgetKey,
+            targets: targets,
+            paddingFocus: paddingFocus,
+            onClickSkip: skip,
+            useSafeArea: useSafeArea,
+            colorShadow: colorShadow,
+            opacityShadow: opacityShadow,
+            duration: duration,
+            finish: finish,
+            imageFilter: imageFilter,
+            initFocus: initFocus);
       },
     );
   }
@@ -68,23 +72,13 @@ class TutorialCoachMark {
   }
 
   void skip() {
-    bool removeOverlay = onSkip?.call() ?? true;
-    if (removeOverlay) {
-      _removeOverlay();
-    } else {
-      next();
-    }
+    onSkip?.call();
+    _removeOverlay();
   }
-
-  bool get isShowing => _overlayEntry != null;
-
-  GlobalKey<TutorialCoachMarkWidgetState> get widgetKey => _widgetKey;
 
   void next() => _widgetKey.currentState?.next();
 
   void previous() => _widgetKey.currentState?.previous();
-
-  void goTo(int index) => _widgetKey.currentState?.goTo(index);
 
   void _removeOverlay() {
     _overlayEntry?.remove();
@@ -93,28 +87,30 @@ class TutorialCoachMark {
 }
 
 class TutorialCoachMarkWidget extends StatefulWidget {
-  const TutorialCoachMarkWidget({
-    super.key,
-    required this.targets,
-    this.finish,
-    this.paddingFocus = 10,
-    this.onClickSkip,
-    this.colorShadow = Colors.black,
-    this.opacityShadow = 0.8,
-    this.useSafeArea = true,
-    this.duration,
-    this.imageFilter,
-  }) : assert(targets.length > 0);
+  const TutorialCoachMarkWidget(
+      {super.key,
+      required this.targets,
+      this.finish,
+      this.paddingFocus = 10,
+      this.onClickSkip,
+      this.colorShadow = Colors.black,
+      this.opacityShadow = 0.8,
+      this.useSafeArea = true,
+      this.duration,
+      this.imageFilter,
+      this.initFocus = 0})
+      : assert(targets.length > 0);
 
   final List<TargetFocus> targets;
-  final Function()? finish;
+  final void Function()? finish;
   final Color colorShadow;
   final double opacityShadow;
   final double paddingFocus;
-  final Function()? onClickSkip;
+  final void Function()? onClickSkip;
   final bool useSafeArea;
   final Duration? duration;
   final ImageFilter? imageFilter;
+  final int? initFocus;
 
   @override
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();
@@ -140,6 +136,7 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
             opacityShadow: widget.opacityShadow,
             duration: widget.duration,
             imageFilter: widget.imageFilter,
+            initFocus: widget.initFocus,
             focus: (target) {
               setState(() {
                 currentTarget = target;
@@ -270,6 +267,4 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
 
   @override
   void previous() => _focusLightKey.currentState?.previous();
-
-  void goTo(int index) => _focusLightKey.currentState?.goTo(index);
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 import '../widgets/example_label_widget.dart';
 
 class ListViewView extends StatelessWidget {
@@ -15,7 +14,7 @@ class ListViewView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('ListView'),
-          actions: [DarkModeWidget.icon()],
+          actions: [LzThemeAction()],
         ),
         body: LzListView(
           gap: 25,

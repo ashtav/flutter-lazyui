@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
-
 class Notifier extends ChangeNotifier {
   final forms = LzForm.make(
       ['name', 'phone', 'birthdate', 'password', 'gender', 'hobby', 'ticket', 'province', 'city', 'height', 'terms']);
@@ -42,7 +40,7 @@ class FormView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Form'),
-          actions: [DarkModeWidget.icon()],
+          actions: [LzThemeAction()],
         ),
         body: LzListView(
           padding: Ei.only(b: 100, others: 20),

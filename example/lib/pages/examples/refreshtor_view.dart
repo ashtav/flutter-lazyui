@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 import '../widgets/example_label_widget.dart';
 
 class RefreshtorView extends StatelessWidget {
@@ -12,7 +11,7 @@ class RefreshtorView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Refreshtor'),
-        actions: [DarkModeWidget.icon()],
+        actions: [LzThemeAction()],
       ),
       body: Refreshtor(
         onRefresh: () async {

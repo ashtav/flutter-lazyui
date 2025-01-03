@@ -2,8 +2,6 @@ import 'package:example/pages/widgets/example_label_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
-
 class ShimmerView extends StatelessWidget {
   const ShimmerView({super.key});
 
@@ -13,7 +11,7 @@ class ShimmerView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Shimmer'),
-          actions: [DarkModeWidget.icon()],
+          actions: [LzThemeAction()],
         ),
         body: LzListView(
           padding: Ei.all(20),

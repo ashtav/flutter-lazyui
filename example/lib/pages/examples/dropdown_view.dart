@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 import '../widgets/example_label_widget.dart';
 
 class DropdownView extends StatelessWidget {
@@ -58,7 +57,6 @@ class DropdownView extends StatelessWidget {
           )
         ],
       ),
-      bottomNavigationBar: DarkModeWidget(),
     );
   }
 }

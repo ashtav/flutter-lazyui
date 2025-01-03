@@ -11,6 +11,7 @@ class ThemeView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Theme'),
+        actions: [LzThemeAction()],
       ),
       body: ListView(
         padding: Ei.all(20),
@@ -30,7 +31,15 @@ class ThemeView extends StatelessWidget {
                   }),
               Text('Use LzTheme.toggle(); to switch between light and dark themes dynamically.', style: Gfont.fs14),
             ],
-          ).start
+          ).start,
+          35.height,
+          Column(
+            spacing: 5,
+            children: [
+              Text('LzThemeAction()', style: Gfont.orange),
+              Text('Use LzThemeAction() to display the icon widget toggle in the app bar actions.', style: Gfont.fs14),
+            ],
+          ).start,
         ],
       ),
     );

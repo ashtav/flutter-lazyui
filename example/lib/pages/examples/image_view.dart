@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 import '../widgets/example_label_widget.dart';
 
 class ImageView extends StatelessWidget {
@@ -24,7 +23,7 @@ class ImageView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Image'),
-        actions: [DarkModeWidget.icon()],
+        actions: [LzThemeAction()],
       ),
       body: LzListView(
         padding: Ei.zero,

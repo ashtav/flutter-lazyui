@@ -12,6 +12,7 @@ class LazyConfig {
   final Color surfaceColor;
   final IconType icon;
   final String? locale;
+  final bool backBlur;
 
   LazyConfig(
       {TextStyle? font,
@@ -21,8 +22,9 @@ class LazyConfig {
       this.theme = ThemeMode.light,
       this.backgroundColor = Colors.white,
       this.surfaceColor = Colors.white,
-      this.icon = IconType.tabler,
-      this.locale})
+      this.icon = IconType.huge,
+      this.locale,
+      this.backBlur = true})
       : font = font ?? GoogleFonts.nunito(fontSize: 15);
 
   LazyConfig copyWith(

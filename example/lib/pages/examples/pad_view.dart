@@ -4,7 +4,6 @@ import 'package:example/pages/widgets/example_label_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 
 class PadView extends StatelessWidget {
   const PadView({super.key});
@@ -15,7 +14,7 @@ class PadView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Pad'),
-          actions: [DarkModeWidget.icon()],
+          actions: [LzThemeAction()],
         ),
         body: LzListView(
           padding: Ei.all(20),

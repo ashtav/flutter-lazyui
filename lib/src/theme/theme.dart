@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/icons/icons_map.dart';
 import 'package:lazyui/src/theme/color.dart';
 
 import '../config/config.dart';
@@ -85,7 +86,6 @@ class LzTheme extends StatelessWidget {
     _applyTheme(false);
 
     return ThemeData.light().copyWith(
-      
       brightness: Brightness.light,
       appBarTheme: AppBarTheme(
           titleTextStyle: config.font.copyWith(fontSize: 20, color: Colors.black87),
@@ -184,4 +184,18 @@ class LzTheme extends StatelessWidget {
 extension CustomThemeModeExtension on ThemeMode {
   bool get isDark => this == ThemeMode.dark;
   bool get isLight => this == ThemeMode.light;
+}
+
+class LzThemeAction extends StatelessWidget {
+  final IconData? light;
+  final IconData? dark;
+
+  const LzThemeAction({super.key, this.light, this.dark});
+
+  @override
+  Widget build(BuildContext context) {
+    return LzTheme.watch((theme) => IconButton(
+        onPressed: () => LzTheme.toggle(),
+        icon: Icon(theme.isDark ? (light ?? ConfigIcon.get(IconSet.sun)) : (dark ?? ConfigIcon.get(IconSet.moon)))));
+  }
 }

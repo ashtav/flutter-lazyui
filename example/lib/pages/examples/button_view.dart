@@ -1,4 +1,3 @@
-import 'package:example/pages/widgets/dark_mode_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -75,7 +74,6 @@ class ButtonView extends StatelessWidget {
           ),
         ],
       ),
-      bottomNavigationBar: DarkModeWidget(),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
 
 import 'clipper_painter.dart';
+import 'target.dart';
 
 extension StateExt on State {
   void safeSetState(VoidCallback call) {
@@ -26,19 +27,21 @@ class AnimatedFocusLight extends StatefulWidget {
   final double opacityShadow;
   final Duration? duration;
   final ImageFilter? imageFilter;
+  final int? initFocus;
 
-  const AnimatedFocusLight({
-    super.key,
-    required this.targets,
-    this.focus,
-    this.finish,
-    this.removeFocus,
-    this.paddingFocus = 10,
-    this.colorShadow = Colors.black,
-    this.opacityShadow = 0.8,
-    this.duration,
-    this.imageFilter,
-  }) : assert(targets.length > 0);
+  const AnimatedFocusLight(
+      {super.key,
+      required this.targets,
+      this.focus,
+      this.finish,
+      this.removeFocus,
+      this.paddingFocus = 10,
+      this.colorShadow = Colors.black,
+      this.opacityShadow = 0.8,
+      this.duration,
+      this.imageFilter,
+      this.initFocus})
+      : assert(targets.length > 0);
 
   @override
   AnimatedFocusLightState createState() => AnimatedStaticFocusLightState();
@@ -64,6 +67,8 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight> with Ti
   @override
   void initState() {
     super.initState();
+    _currentFocus = widget.initFocus ?? 0;
+    nextIndex = widget.initFocus ?? 0;
 
     _targetFocus = widget.targets[_currentFocus];
     _controller = AnimationController(
@@ -86,11 +91,6 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight> with Ti
 
   void previous() {
     nextIndex--;
-    _revertAnimation();
-  }
-
-  void goTo(int index) {
-    nextIndex = index;
     _revertAnimation();
   }
 

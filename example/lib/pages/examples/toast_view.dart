@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-import '../widgets/dark_mode_widget.dart';
 import '../widgets/example_label_widget.dart';
 
 class ToastView extends StatelessWidget {
@@ -30,7 +29,7 @@ class ToastView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Toast'),
-        actions: [DarkModeWidget.icon()],
+        actions: [LzThemeAction()],
       ),
       body: ListView(
         padding: Ei.all(20),
