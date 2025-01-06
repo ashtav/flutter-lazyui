@@ -44,7 +44,7 @@ class ToastView extends StatelessWidget {
               icon: Hi.informationCircle,
               outlined: true,
               onTap: () {
-                LzToast.show(Faker.words(5));
+                LzToast.error(Faker.words(5), icon: Hi.informationSquare);
               },
             ),
             LzButton(

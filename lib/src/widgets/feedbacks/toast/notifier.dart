@@ -24,6 +24,10 @@ class ToastNotifier extends ChangeNotifier {
 
   double? progressValue = 0;
 
+  Alignment align = Alignment.center;
+  Color? color;
+  IconData? icon;
+
   void _visible([Type type = Type.toast, Duration? duration]) {
     Map<Type, void Function()?> cancel = {
       Type.toast: toastTimer?.cancel,
@@ -36,7 +40,7 @@ class ToastNotifier extends ChangeNotifier {
     types.add(type);
 
     Timer timer() {
-      return Timer(duration ?? 3.s, () {
+      return Timer(duration ?? 2.s, () {
         types.remove(type);
         notifyListeners();
       });
@@ -50,10 +54,13 @@ class ToastNotifier extends ChangeNotifier {
     clear[type]?.call();
   }
 
-  void show(String message, {Duration? duration}) {
+  void show(String message, {Duration? duration, Alignment? align, Color? color, IconData? icon}) {
     _visible(Type.toast, duration);
 
     this.message.toast = message;
+    this.align = align ?? Alignment.center;
+    this.color = color;
+    this.icon = icon;
     notifyListeners();
   }
 

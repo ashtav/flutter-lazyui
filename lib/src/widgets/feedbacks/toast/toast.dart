@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
@@ -8,7 +10,15 @@ import 'toast_progress_widget.dart';
 
 part 'toast_widget.dart';
 
+class _Config {
+  final Duration? duration;
+  final Alignment? align;
+
+  _Config({this.duration, this.align});
+}
+
 final _notifier = ToastNotifier();
+_Config _config = _Config();
 
 class _Switcher extends StatelessWidget {
   final bool visible;
@@ -48,19 +58,22 @@ class _ToastWidget extends StatelessWidget {
       String messageOverlay = state.message.overlay;
       String messageProgress = state.message.progress;
 
-      Color background = context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor;
+      Color background = state.color ?? (context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor);
       Decoration decoration = BoxDecoration(color: background, borderRadius: Br.radius(config.borderRadius));
 
       // toast widget
-      Widget toastWidget = Poslign.bottom(
-        margin: Ei.only(b: 25),
+      Widget toastWidget = Poslign(
+        alignment: _config.align ?? state.align,
+        margin: Ei.only(t: context.windowPadding.top + 25, b: 25, h: 20),
         child: _Switcher(
             visible: visible,
-            child: Container(
+            child: IgnorePointer(
               key: ValueKey(message.isEmpty ? Faker.words() : message),
-              padding: Ei.sym(v: 12, h: 18),
-              decoration: decoration,
-              child: Text(message, style: Gfont.fs14.white),
+              child: Container(
+                padding: Ei.sym(v: 12, h: 18),
+                decoration: decoration,
+                child: Textr(message, style: Gfont.fs14.white, icon: state.icon),
+              ),
             )),
       );
 
@@ -110,19 +123,21 @@ class _ToastWidget extends StatelessWidget {
                 ),
               )));
 
+      Widget blurWrapper(Widget child) => BackdropFilter(filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
+
+      Widget backdropWidget = Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.black.withValues(alpha: .5),
+      );
+
       return Stack(
         fit: StackFit.expand,
         children: [
           // backdrop
           backdrop
               ? AnimatedOpacity(
-                  duration: 150.ms,
-                  opacity: 1,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: Colors.black.withValues(alpha: .5),
-                  ))
+                  duration: 150.ms, opacity: 1, child: config.backBlur ? blurWrapper(backdropWidget) : backdropWidget)
               : const None(),
 
           // cancel
@@ -160,6 +175,13 @@ class _ToastWidget extends StatelessWidget {
 ///
 /// This example integrates `LzToast` into the app by using the `builder` method in `MaterialApp`.
 /// This allows toast messages to overlay on top of the app's content.
+/// 
+/// Sets the default configuration for displaying toast messages.
+/// 
+/// Example usage:
+/// ```dart
+/// LzToast.config(align: Alignment.bottomCenter, duration: 5.s);
+/// ```
 class LzToast {
   /// Displays a toast message.
   ///
@@ -169,8 +191,20 @@ class LzToast {
   /// ```dart
   /// LzToast.show('Hello, World!');
   /// ```
-  static void show(String message) {
-    _notifier.show(message);
+  static void show(String message, {Alignment? align, IconData? icon}) {
+    _notifier.show(message, duration: _config.duration, align: align, color: null, icon: icon);
+  }
+
+  static void success(String message, {Alignment? align, IconData? icon}) {
+    _notifier.show(message, duration: _config.duration, align: align, color: Colors.green, icon: icon);
+  }
+
+  static void warning(String message, {Alignment? align, IconData? icon}) {
+    _notifier.show(message, duration: _config.duration, align: align, color: Colors.orange, icon: icon);
+  }
+
+  static void error(String message, {Alignment? align, IconData? icon}) {
+    _notifier.show(message, duration: _config.duration, align: align, color: Colors.redAccent.lighten(.05), icon: icon);
   }
 
   /// Displays a toast message with an optional duration.
@@ -190,11 +224,7 @@ class LzToast {
     _notifier.progress(message, progress);
   }
 
-  void setProgressValue(double value) {
-    _notifier.setProgressValue(value);
-  }
-
-  static void dismiss(){
+  static void dismiss() {
     _notifier.cancel();
   }
 
@@ -216,5 +246,9 @@ class LzToast {
   /// ```
   static Widget builder(BuildContext context, Widget? child) {
     return _LzToastOverlay(child: child);
+  }
+
+  static void config({Duration? duration, Alignment? align}) {
+    _config = _Config(duration: duration, align: align);
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/widgets/forms/pickers/time/time_picker.dart';
 
 import 'date/date_picker.dart';
@@ -65,6 +66,7 @@ class LzPicker {
             initDate: initDate, minDate: minDate, maxDate: maxDate, style: style, format: format, withTime: withTime),
         draggable: true,
         safeArea: false,
+        backBlur: config.backBlur,
         isScrollControlled: true);
 
     if (result != null && onSelect != null) onSelect(result);
@@ -150,6 +152,7 @@ class LzPicker {
         ),
         draggable: true,
         safeArea: false,
+        backBlur: config.backBlur,
         isScrollControlled: true);
 
     if (result != null && onSelect != null) onSelect(result);
@@ -184,6 +187,7 @@ class LzPicker {
         TimePickerWidget(initTime: initTime, minTime: minTime, maxTime: maxTime, style: style),
         draggable: true,
         safeArea: false,
+        backBlur: config.backBlur,
         isScrollControlled: true);
 
     if (result != null && onSelect != null) onSelect(result);
@@ -239,8 +243,9 @@ class LzPicker {
         style: style,
       ),
       backgroundColor: Colors.transparent,
-      isScrollControlled: true,
       safeArea: false,
+      backBlur: config.backBlur,
+      isScrollControlled: true,
     );
   }
 }
