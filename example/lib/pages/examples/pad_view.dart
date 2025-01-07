@@ -40,10 +40,10 @@ class PadView extends StatelessWidget {
 
                       if (controller.value == '123456') {
                         context.lz.pop();
-                        Print.info('Your OTP is valid');
+                        LzToast.success('Nice! you have been confirmed!.', icon: Hi.checkmarkSquare01);
                       } else {
                         controller.reset().resume();
-                        Print.error('Your OTP is invalid');
+                        LzToast.error('Your otp is invalid.', icon: Hi.alertSquare);
                       }
                     });
                   });

@@ -10,3 +10,10 @@ class FormModel {
 
   const FormModel(this.notifier, this.key);
 }
+
+class FormValidation {
+  final bool ok;
+  
+
+  const FormValidation(this.ok);
+}

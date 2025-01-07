@@ -27,12 +27,12 @@ class Checkbox extends StatefulWidget {
 
 class _CheckboxState extends State<Checkbox> {
   FormNotifier notifier = FormNotifier();
-  List<String> selected = [];
 
   void onInit() {
     if (widget.model != null) {
       // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
+      notifier.type = 'checkbox';
     }
   }
 
@@ -67,6 +67,8 @@ class _CheckboxState extends State<Checkbox> {
       children: [
         if (hasLabel) Text(label!, style: Gfont.fs14),
         notifier.watch((state) {
+          final selected = state.selected;
+
           return Wrap(
             alignment: Wa.start,
             spacing: 20,
@@ -125,9 +127,7 @@ class _Square extends StatelessWidget {
               ),
               Poslign.center(
                   child: AnimatedOpacity(
-                      duration: 150.ms,
-                      opacity: active ? 1 : 0,
-                      child: Icon(Hi.tick02, size: 18, color: Colors.white)))
+                      duration: 150.ms, opacity: active ? 1 : 0, child: Icon(Hi.tick02, size: 18, color: Colors.white)))
             ],
           ),
           Text(option)

@@ -27,6 +27,8 @@ class ToastNotifier extends ChangeNotifier {
   Alignment align = Alignment.center;
   Color? color;
   IconData? icon;
+  int maxLength = 35;
+  Function()? onCancel;
 
   void _visible([Type type = Type.toast, Duration? duration]) {
     Map<Type, void Function()?> cancel = {
@@ -48,33 +50,40 @@ class ToastNotifier extends ChangeNotifier {
 
     Map<Type, void Function()?> clear = {
       Type.toast: () => toastTimer = timer(),
-      Type.overlay: () => overlayTimer = timer(),
+      Type.overlay: () => duration == null ? {} : overlayTimer = timer(),
     };
 
     clear[type]?.call();
   }
 
-  void show(String message, {Duration? duration, Alignment? align, Color? color, IconData? icon}) {
+  void show(String message, {Duration? duration, Alignment? align, Color? color, IconData? icon, int? maxLength}) {
     _visible(Type.toast, duration);
 
     this.message.toast = message;
     this.align = align ?? Alignment.center;
     this.color = color;
     this.icon = icon;
+    this.maxLength = maxLength ?? 35;
     notifyListeners();
   }
 
-  void overlay(String message, {Duration? duration}) {
+  void overlay(String message, {Duration? duration, Function()? onCancel}) {
+    toastTimer?.cancel();
+    types.remove(Type.toast);
+
     _visible(Type.overlay, duration);
 
     this.message.overlay = message;
+    this.onCancel = onCancel;
     notifyListeners();
   }
 
-  void progress(String message, double Function() progress) {
+  void progress(String message, double Function() progress, {Function()? onCancel}) {
     progressValue = 0;
     progressTimer?.cancel();
+    toastTimer?.cancel();
 
+    types.remove(Type.toast);
     types.remove(Type.progress);
     types.add(Type.progress);
     notifyListeners();
@@ -102,6 +111,7 @@ class ToastNotifier extends ChangeNotifier {
     });
 
     this.message.progress = message;
+    this.onCancel = onCancel;
     notifyListeners();
   }
 

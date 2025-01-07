@@ -59,7 +59,7 @@ class Option {
 
   @override
   String toString() {
-    return 'label: $label value: $value disabled: $disabled';
+    return 'label: $label, value: $value, disabled: $disabled';
   }
 }
 

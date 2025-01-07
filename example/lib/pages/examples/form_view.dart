@@ -36,6 +36,19 @@ class FormView extends StatelessWidget {
       {'id': 10, 'province_id': 2, 'name': 'North Jakarta'}
     ];
 
+    // fill the forms
+    forms.fill({
+      'name': 'John Doe',
+      'phone': 812300000,
+      'birthdate': '2000-10-10',
+      'password': 'secret',
+      'gender': 'Male',
+      'hobby': 'Football, Cooking, Swimming',
+      'ticket': 5,
+    });
+
+    forms.set('province', Option('Jakarta', value: 2));
+
     return Unfocuser(
       child: Scaffold(
         appBar: AppBar(
@@ -67,7 +80,10 @@ class FormView extends StatelessWidget {
                 enabled: true,
                 model: forms.key('birthdate'),
                 onTap: () {
-                  LzPicker.date(context, initDate: forms.get('birthdate').toString().toDate(), onSelect: (value) {
+                  LzPicker.date(context,
+                      initDate: forms.get('birthdate').toString().toDate(),
+                      minDate: now.subtract(50.y),
+                      maxDate: now, onSelect: (value) {
                     forms.set('birthdate', value.format());
                   });
                 }),
@@ -148,6 +164,13 @@ class FormView extends StatelessWidget {
               logg(forms.value);
               logg(forms.extra('province'));
               logg(forms.extra('city'));
+
+              // do validation
+              final FormValidation form = forms.validate(required: ['*']);
+
+              if (!form.ok) {
+                logg('Invalid form');
+              }
             },
           ),
         ),

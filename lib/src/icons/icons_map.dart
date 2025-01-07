@@ -3,7 +3,7 @@ import 'package:lazyui/src/config/config.dart';
 
 import 'icons.dart';
 
-enum IconSet { chevron, search, eye, eyeOff, sun, moon }
+enum IconSet { chevron, search, eye, eyeOff, sun, moon, eraser, backspace }
 
 Map<IconType, IconData> chevrons = {
   IconType.huge: Hi.arrowDown01,
@@ -25,16 +25,20 @@ Map<IconType, IconData> eyesOff = {
   IconType.lineAwesome: La.eyeSlash
 };
 
-Map<IconType, IconData> suns = {
-  IconType.huge: Hi.sun02,
-  IconType.tabler: Ti.sun,
-  IconType.lineAwesome: La.sun
+Map<IconType, IconData> suns = {IconType.huge: Hi.sun02, IconType.tabler: Ti.sun, IconType.lineAwesome: La.sun};
+
+Map<IconType, IconData> moons = {IconType.huge: Hi.moon02, IconType.tabler: Ti.moon, IconType.lineAwesome: La.moon};
+
+Map<IconType, IconData> erasers = {
+  IconType.huge: Hi.eraser,
+  IconType.tabler: Ti.eraser,
+  IconType.lineAwesome: La.eraser
 };
 
-Map<IconType, IconData> moons = {
-  IconType.huge: Hi.moon02,
-  IconType.tabler: Ti.moon,
-  IconType.lineAwesome: La.moon
+Map<IconType, IconData> backspaces = {
+  IconType.huge: Hi.eraser01,
+  IconType.tabler: Ti.backspace,
+  IconType.lineAwesome: La.backspace
 };
 
 Map<IconSet, IconData?> icons = {
@@ -44,6 +48,8 @@ Map<IconSet, IconData?> icons = {
   IconSet.eyeOff: eyesOff[config.icon],
   IconSet.sun: suns[config.icon],
   IconSet.moon: moons[config.icon],
+  IconSet.eraser: erasers[config.icon],
+  IconSet.backspace: backspaces[config.icon],
 };
 
 class ConfigIcon {

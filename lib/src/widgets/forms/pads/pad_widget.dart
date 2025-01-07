@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
+import 'package:lazyui/src/icons/icons_map.dart';
 import 'package:lazyui/src/theme/color.dart';
 import 'package:lazyui/src/widgets/forms/pads/notifier.dart';
 
@@ -99,7 +100,7 @@ class PadWidget extends StatelessWidget {
               children: keys.generate((k, i) {
                 double width = context.width / 3;
 
-                final maps = {'x': Hi.eraser, '<': Hi.eraser01};
+                final maps = {'x': ConfigIcon.get(IconSet.eraser), '<': ConfigIcon.get(IconSet.backspace)};
                 final key = maps[k] ?? k;
 
                 return Touch(
@@ -110,15 +111,18 @@ class PadWidget extends StatelessWidget {
                     }
                   },
                   padding: Ei.all(20),
-                  color: i % 2 == 0
-                      ? (context.isDarkMode ? '161616'.hex : 'f5f5f5'.hex)
-                      : (context.isDarkMode ? '202020'.hex : Colors.white),
+                  color: Colors.white,
+                  border: Br.only(['b', i % 3 == 0 ? '' : 'l'], width: .5),
+                  // color: i % 2 == 0
+                  //     ? (context.isDarkMode ? '161616'.hex : 'f5f5f5'.hex)
+                  //     : (context.isDarkMode ? '202020'.hex : Colors.white),
                   child: Container(
-                      alignment: Alignment.centerLeft,
+                      alignment: Alignment.center,
                       decoration: BoxDecoration(),
-                      width: width - 40,
+                      width: width - (40 + .5),
                       height: 20,
-                      child: key is String ? Text(key, style: Gfont.fs16) : Icon(key as IconData)),
+                      child:
+                          key is String ? Text(key, style: Gfont.fs16, textAlign: Ta.center) : Icon(key as IconData)),
                 );
               }),
             )

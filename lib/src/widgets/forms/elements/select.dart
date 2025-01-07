@@ -52,6 +52,7 @@ class _SelectState extends State<Select> {
     if (widget.model != null) {
       // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
+      notifier.type = 'select';
     }
 
     notifier.options = widget.options;
@@ -130,7 +131,7 @@ class _SelectState extends State<Select> {
               onTap: !state.enabled || state.options.isEmpty
                   ? null
                   : () {
-                      Option value = Option(state.controller.text, value: extra);
+                      Option value = Option(state.controller.text, value: state.extra);
                       LzPicker.option(context,
                           initialValue: value,
                           options: Option.list(state.options, values: state.values),

@@ -58,8 +58,11 @@ class _ToastWidget extends StatelessWidget {
       String messageOverlay = state.message.overlay;
       String messageProgress = state.message.progress;
 
-      Color background = state.color ?? (context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor);
+      Color toastBackground = state.color ?? (context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor);
+      Color background = context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor;
+
       Decoration decoration = BoxDecoration(color: background, borderRadius: Br.radius(config.borderRadius));
+      Decoration toastDecoration = BoxDecoration(color: toastBackground, borderRadius: Br.radius(config.borderRadius));
 
       // toast widget
       Widget toastWidget = Poslign(
@@ -71,8 +74,11 @@ class _ToastWidget extends StatelessWidget {
               key: ValueKey(message.isEmpty ? Faker.words() : message),
               child: Container(
                 padding: Ei.sym(v: 12, h: 18),
-                decoration: decoration,
-                child: Textr(message, style: Gfont.fs14.white, icon: state.icon),
+                decoration: toastDecoration,
+                child: Textr(
+                    message.length < state.maxLength ? message : '${message.safeSubstring(0, state.maxLength)}...',
+                    style: Gfont.fs14.white,
+                    icon: state.icon),
               ),
             )),
       );
@@ -85,12 +91,14 @@ class _ToastWidget extends StatelessWidget {
                 key: ValueKey(messageOverlay),
                 padding: Ei.sym(v: 20, h: 20),
                 decoration: decoration,
+                constraints: BoxConstraints(maxWidth: 200),
                 child: Column(
                   spacing: 20,
                   mainAxisSize: Mas.min,
                   children: [
-                    LzLoader(color: Colors.white, size: 40),
-                    Text(messageOverlay, style: Gfont.fs14.white),
+                    // CupertinoActivityIndicator(color: Colors.white, radius: 22,),
+                    Container(padding: Ei.sym(v: 10), child: LzLoader(color: Colors.white, size: 40)),
+                    Text(messageOverlay, style: Gfont.fs14.white, textAlign: Ta.center),
                   ],
                 ),
               )));
@@ -103,6 +111,7 @@ class _ToastWidget extends StatelessWidget {
                 key: ValueKey(messageProgress),
                 padding: Ei.sym(v: 20, h: 20),
                 decoration: decoration,
+                constraints: BoxConstraints(maxWidth: 200),
                 child: Column(
                   spacing: 20,
                   mainAxisSize: Mas.min,
@@ -116,9 +125,10 @@ class _ToastWidget extends StatelessWidget {
                             color: [Colors.white, Colors.white12][index],
                           );
                         }),
+                        Text(state.progressValue!.toStringAsFixed(0), style: Gfont.white)
                       ],
                     ),
-                    Text(messageProgress, style: Gfont.fs14.white),
+                    Text(messageProgress, style: Gfont.fs14.white, textAlign: Ta.center),
                   ],
                 ),
               )));
@@ -141,10 +151,13 @@ class _ToastWidget extends StatelessWidget {
               : const None(),
 
           // cancel
-          backdrop
+          backdrop && state.onCancel != null
               ? Poslign.bottom(
                   child: Touch(
-                      onTap: () => state.cancel(),
+                      onTap: () {
+                        state.cancel();
+                        state.onCancel?.call();
+                      },
                       type: TouchType.none,
                       child: Textr('Cancel', style: Gfont.white, padding: Ei.all(20))))
               : const None(),
@@ -175,9 +188,9 @@ class _ToastWidget extends StatelessWidget {
 ///
 /// This example integrates `LzToast` into the app by using the `builder` method in `MaterialApp`.
 /// This allows toast messages to overlay on top of the app's content.
-/// 
+///
 /// Sets the default configuration for displaying toast messages.
-/// 
+///
 /// Example usage:
 /// ```dart
 /// LzToast.config(align: Alignment.bottomCenter, duration: 5.s);
@@ -191,20 +204,27 @@ class LzToast {
   /// ```dart
   /// LzToast.show('Hello, World!');
   /// ```
-  static void show(String message, {Alignment? align, IconData? icon}) {
-    _notifier.show(message, duration: _config.duration, align: align, color: null, icon: icon);
+  static void show(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+    _notifier.show(message, duration: _config.duration, align: align, color: null, icon: icon, maxLength: maxLength);
   }
 
-  static void success(String message, {Alignment? align, IconData? icon}) {
-    _notifier.show(message, duration: _config.duration, align: align, color: Colors.green, icon: icon);
+  static void success(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+    _notifier.show(message,
+        duration: _config.duration, align: align, color: Colors.green, icon: icon, maxLength: maxLength);
   }
 
-  static void warning(String message, {Alignment? align, IconData? icon}) {
-    _notifier.show(message, duration: _config.duration, align: align, color: Colors.orange, icon: icon);
+  static void warning(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+    _notifier.show(message,
+        duration: _config.duration, align: align, color: Colors.orange, icon: icon, maxLength: maxLength);
   }
 
-  static void error(String message, {Alignment? align, IconData? icon}) {
-    _notifier.show(message, duration: _config.duration, align: align, color: Colors.redAccent.lighten(.05), icon: icon);
+  static void error(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+    _notifier.show(message,
+        duration: _config.duration,
+        align: align,
+        color: Colors.redAccent.lighten(.05),
+        icon: icon,
+        maxLength: maxLength);
   }
 
   /// Displays a toast message with an optional duration.
@@ -216,12 +236,12 @@ class LzToast {
   /// ```dart
   /// LzToast.overlay('Hello, World!', duration: Duration(seconds: 3));
   /// ```
-  static void overlay(String message, {Duration? duration}) {
-    _notifier.overlay(message, duration: duration);
+  static void overlay(String message, {Duration? duration, void Function()? onCancel}) {
+    _notifier.overlay(message, duration: duration, onCancel: onCancel);
   }
 
-  static void progress(String message, double Function() progress) {
-    _notifier.progress(message, progress);
+  static void progress(String message, double Function() progress, {void Function()? onCancel}) {
+    _notifier.progress(message, progress, onCancel: onCancel);
   }
 
   static void dismiss() {

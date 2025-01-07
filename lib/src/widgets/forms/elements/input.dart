@@ -71,6 +71,7 @@ class _InputState extends State<Input> {
     if (widget.model != null) {
       // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
+      notifier.type = 'input';
     }
 
     notifier.enabled = widget.enabled;

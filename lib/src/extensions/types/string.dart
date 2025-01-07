@@ -1,6 +1,12 @@
 part of '../extension.dart';
 
 extension CustomStringExtension on String {
+  String safeSubstring(int start, int end) {
+    int validStart = start.clamp(0, length);
+    int validEnd = end.clamp(validStart, length);
+    return substring(validStart, validEnd);
+  }
+
   Color get hex {
     String color = replaceAll('#', '');
     if (color.length == 3) {

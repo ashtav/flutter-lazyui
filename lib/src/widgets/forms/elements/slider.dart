@@ -40,6 +40,7 @@ class _SliderState extends State<Slider> {
     if (widget.model != null) {
       // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
+      notifier.type = 'slider';
     }
 
     notifier.controller.text = (widget.initValue ?? 0).toString();

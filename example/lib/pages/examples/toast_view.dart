@@ -44,7 +44,7 @@ class ToastView extends StatelessWidget {
               icon: Hi.informationCircle,
               outlined: true,
               onTap: () {
-                LzToast.error(Faker.words(5), icon: Hi.informationSquare);
+                LzToast.success(Faker.words(15), icon: Hi.informationSquare, align: Alignment.bottomLeft, maxLength: 25);
               },
             ),
             LzButton(
@@ -52,7 +52,9 @@ class ToastView extends StatelessWidget {
               icon: Hi.loading03,
               outlined: true,
               onTap: () {
-                LzToast.overlay('Loading...', duration: 5.s);
+                LzToast.overlay('Loading...', onCancel: (){
+                  LzToast.show('Progrss is cancelled!');
+                });
               },
             ),
             LzButton(

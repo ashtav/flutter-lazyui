@@ -59,6 +59,7 @@ class _NumberState extends State<Number> {
     if (widget.model != null) {
       // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
+      notifier.type = 'number';
     }
 
     notifier.enabled = widget.enabled;

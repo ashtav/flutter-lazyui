@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart' hide Radio, Checkbox, Slider;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -11,6 +13,8 @@ import 'elements/slider.dart';
 import 'elements/switches.dart';
 import 'form_model.dart';
 import 'notifier.dart';
+
+export 'form_model.dart' hide FormModel;
 
 part 'extension.dart';
 
@@ -84,45 +88,61 @@ class FormManager {
       return null;
     }
 
-    // ignore: invalid_use_of_protected_member
     return models[key]!.notifier.controller.text;
   }
 
   void set(String key, dynamic value) {
-    // ignore: invalid_use_of_protected_member
-    final notifier = models[key]!.notifier;
+    Bindings.onRendered(() {
+      final notifier = models[key]!.notifier;
+      final type = notifier.type;
 
-    if (value is List) {
-      notifier.setOption(value.map((e) => e.toString()).toList());
-      return;
-    }
+      notifier.controller.text = value.toString();
 
-    if (value is OptionSet) {
-      notifier.controller.clear(); // Clear text controller
+      if (type == 'checkbox') {
+        List<String> options = value.toString().replaceAll(', ', ',').split(',');
+        notifier.setSelectedBox(options);
+      }
 
-      // Apply filter if provided
-      final filteredData = value.filter == null
-          ? value.data
-          : value.data
-              .where((item) =>
-                  item.containsKey(value.filter!.keys.first) &&
-                  item[value.filter!.keys.first] == value.filter!.values.first)
-              .toList();
+      // radio input
+      else if (type == 'radio') {
+        notifier.notify();
+      }
 
-      // Extract options and values
-      notifier.options = filteredData.extract<String>(value.labelKey);
-      notifier.values = value.valueKey != null ? filteredData.extract(value.valueKey!) : [];
-      notifier.enabled = notifier.options.isNotEmpty;
+      // select input
+      else if (type == 'select' && value is Option) {
+        notifier.controller.text = value.label;
+        notifier.extra = value.value;
+      }
 
-      notifier.notify(); // Notify listeners
-      return;
-    }
+      if (value is List) {
+        notifier.setOption(value.map((e) => e.toString()).toList());
+        return;
+      }
 
-    notifier.controller.text = value.toString();
+      if (value is OptionSet) {
+        notifier.controller.clear(); // Clear text controller
+
+        // Apply filter if provided
+        final filteredData = value.filter == null
+            ? value.data
+            : value.data
+                .where((item) =>
+                    item.containsKey(value.filter!.keys.first) &&
+                    item[value.filter!.keys.first] == value.filter!.values.first)
+                .toList();
+
+        // Extract options and values
+        notifier.options = filteredData.extract<String>(value.labelKey);
+        notifier.values = value.valueKey != null ? filteredData.extract(value.valueKey!) : [];
+        notifier.enabled = notifier.options.isNotEmpty;
+
+        notifier.notify(); // Notify listeners
+        return;
+      }
+    });
   }
 
   void enable(String key, bool value) {
-    // ignore: invalid_use_of_protected_member
     final notifier = models[key]!.notifier;
     notifier.enabled = value;
     notifier.notify();
@@ -130,14 +150,70 @@ class FormManager {
 
   Map<String, dynamic> get value {
     final keys = models.keys.toList();
-    // ignore: invalid_use_of_protected_member
     return Map.fromIterables(keys, List.generate(keys.length, (i) => models[keys[i]]!.notifier.controller.text));
   }
 
   dynamic extra(String key) {
-    // ignore: invalid_use_of_protected_member
     final notifier = models[key]!.notifier;
     return notifier.extra;
+  }
+
+  void fill(Map<String, dynamic> data) {
+    Bindings.onRendered(() {
+      List<String> keys = data.keys.toList();
+
+      for (String key in keys) {
+        set(key, data[key] ?? '');
+      }
+    });
+  }
+
+  FormValidation validate({List<String> required = const []}) {
+    bool isValid = true;
+
+    Map<String, TextEditingController> controllers =
+        Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
+
+    Map<String, GlobalKey> globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
+
+    bool isRequiredAll = required.length == 1 && required.contains('*');
+    bool isRequiredAllExcept = required.length > 1 && required.contains('*');
+
+    if (isRequiredAll) {
+      required = controllers.keys.toList();
+    } else if (isRequiredAllExcept) {
+      required.remove('*');
+      required = controllers.keys.toList()..removeWhere((e) => required.contains(e));
+    }
+
+    List<String> formKeys = controllers.keys.toList();
+    List<Map<String, dynamic>> errorFields = [];
+
+    // check keys (required, min, max, email) if they are in the forms
+    for (String key in formKeys) {
+      if (controllers[key] != null && controllers[key]!.text.trim().isEmpty && required.contains(key)) {
+        errorFields.add({'key': key, 'type': 'required', 'message': 'The field $key is required'});
+      }
+    }
+
+    List<String> keys = controllers.keys.toList()..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
+
+    if (errorFields.isNotEmpty) {
+      String errorKey = errorFields.first['key'];
+      String errorType = errorFields.first['type'];
+      String errorMessage = errorFields.first['message'];
+
+      // scroll to the error field
+      GlobalKey? key = globalKeys[errorKey];
+      if (key != null && key.currentContext != null) {
+        Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+      }
+
+      isValid = false;
+      logg(errorFields);
+    }
+
+    return FormValidation(isValid);
   }
 }
 

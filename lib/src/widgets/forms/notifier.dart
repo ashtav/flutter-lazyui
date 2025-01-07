@@ -3,6 +3,7 @@ import 'package:lazyui/lazyui.dart';
 
 class FormNotifier extends ChangeNotifier {
   String? label;
+  String type = 'input';
 
   final controller = TextEditingController();
   dynamic extra;
@@ -25,6 +26,14 @@ class FormNotifier extends ChangeNotifier {
 
   void setOption(List<String> options) {
     this.options = options;
+    notifyListeners();
+  }
+
+  // checkbox section
+  List<String> selected = [];
+
+  void setSelectedBox(List<String> values) {
+    selected = values;
     notifyListeners();
   }
 
