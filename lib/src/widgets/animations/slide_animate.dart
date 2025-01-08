@@ -1,55 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:lazyui/lazyui.dart';
+part of '../widget.dart';
 
-class Notifier extends ChangeNotifier {
-  bool show = false;
-
-  void toggle() {
-    show = !show;
-    notifyListeners();
-  }
-}
-
-class TestView extends StatelessWidget {
-  const TestView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final notifier = Notifier();
-
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Labs'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                notifier.toggle();
-              },
-              icon: Icon(Hi.gift))
-        ],
-      ),
-      body: LzListView(
-        children: [
-          notifier.watch((state) => SlideShow(
-              show: state.show,
-              child: Textr(
-                'Hello world',
-                padding: Ei.all(20),
-                color: Colors.red,
-              ))),
-          Text(Faker.words(15)),
-        ],
-      ),
-    );
-  }
-}
-
-class SlideShow extends StatefulWidget {
+class SlideAnimate extends StatefulWidget {
   final bool show;
   final Duration duration;
   final Widget child;
 
-  const SlideShow({
+  const SlideAnimate({
     super.key,
     this.show = false,
     this.duration = const Duration(milliseconds: 250),
@@ -57,10 +13,10 @@ class SlideShow extends StatefulWidget {
   });
 
   @override
-  State<SlideShow> createState() => _SlideShowState();
+  State<SlideAnimate> createState() => _SlideShowState();
 }
 
-class _SlideShowState extends State<SlideShow> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _SlideShowState extends State<SlideAnimate> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -80,7 +36,7 @@ class _SlideShowState extends State<SlideShow> with TickerProviderStateMixin, Au
   }
 
   @override
-  void didUpdateWidget(SlideShow oldWidget) {
+  void didUpdateWidget(SlideAnimate oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.show != oldWidget.show) {

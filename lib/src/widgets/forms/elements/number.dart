@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -150,6 +152,7 @@ class _NumberState extends State<Number> {
 
     return Column(
       spacing: 10,
+      key: widget.model?.key,
       children: [
         // label & indicator
         Row(

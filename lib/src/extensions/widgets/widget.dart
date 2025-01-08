@@ -25,4 +25,22 @@ class WidgettUtils {
   T opacity<T extends Widget>(double opacity) => Opacity(opacity: opacity, child: child) as T;
 
   Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: child);
+
+  /// ``` dart
+  /// Widget().lz.shadowed(true);
+  /// ```
+  Widget shadowed(BuildContext context, {double? spread, double? blur, Offset? offset, Color? color}) {
+    Color backgroundColor = color ?? context.scaffoldColor;
+
+    return Container(
+      decoration: BoxDecoration(boxShadow: [
+        BoxShadow(
+            color: backgroundColor,
+            spreadRadius: spread ?? 30,
+            blurRadius: blur ?? 25,
+            offset: offset ?? const Offset(0, 0))
+      ]),
+      child: child,
+    );
+  }
 }

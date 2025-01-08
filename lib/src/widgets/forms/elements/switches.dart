@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 
 import '../notifier.dart';
 
@@ -34,9 +35,9 @@ class Switches extends StatelessWidget {
     return notifier.watch((state) {
       bool switched = state.controller.text == 'true';
 
-      Color activeColor = Colors.green.lighten();
+      Color activeColor = config.primaryColor;
       Color trackColor = context.isDarkMode ? Colors.white12 : Colors.black12;
-      Color thumbColor = Colors.green;
+      Color thumbColor = switched ? Colors.white : config.primaryColor;
 
       List<Widget> children = [
         SizedBox(

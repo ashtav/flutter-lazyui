@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' as m;
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 
 import '../form_model.dart';
 import '../notifier.dart';
@@ -80,12 +81,12 @@ class _SliderState extends State<Slider> {
     final label = widget.label;
     bool hasLabel = ![null, ''].contains(label);
 
-    Color activeColor = Colors.green;
+    Color activeColor = config.primaryColor;
     Color inactiveColor = context.isDarkMode ? Colors.white12 : Colors.black12;
-    Color activeTickMarkColor = Colors.green;
+    Color activeTickMarkColor = config.primaryColor;
     Color inactiveTickMarkColor = context.isDarkMode ? Colors.white12 : Colors.black12;
-    Color valueIndicatorColor = Colors.green;
-    Color thumbColor = Colors.green;
+    Color valueIndicatorColor = config.primaryColor;
+    Color thumbColor = config.primaryColor;
 
     return notifier.watch((state) {
       double getValue(value) {

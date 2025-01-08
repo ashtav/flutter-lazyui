@@ -104,7 +104,7 @@ class FormManager {
       }
 
       // radio input
-      else if (type == 'radio') {
+      else if (['radio', 'slider'].contains(type)) {
         notifier.notify();
       }
 
@@ -112,6 +112,11 @@ class FormManager {
       else if (type == 'select' && value is Option) {
         notifier.controller.text = value.label;
         notifier.extra = value.value;
+      }
+
+      // input (with onTap is not null)
+      else if (type == 'input-2' && value.toString().trim().isNotEmpty) {
+        notifier.toggleInvalid(false);
       }
 
       if (value is List) {
@@ -143,9 +148,11 @@ class FormManager {
   }
 
   void enable(String key, bool value) {
-    final notifier = models[key]!.notifier;
-    notifier.enabled = value;
-    notifier.notify();
+    Bindings.onRendered(() {
+      final notifier = models[key]!.notifier;
+      notifier.enabled = value;
+      notifier.notify();
+    });
   }
 
   Map<String, dynamic> get value {
@@ -168,13 +175,16 @@ class FormManager {
     });
   }
 
-  FormValidation validate({List<String> required = const []}) {
-    bool isValid = true;
-
-    Map<String, TextEditingController> controllers =
-        Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
-
-    Map<String, GlobalKey> globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
+  FormValidation validate({
+    List<String> required = const [],
+    List<String> min = const [],
+    List<String> max = const [],
+    List<String> email = const [],
+    List<String> match = const [],
+  }) {
+    final controllers = Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
+    final notifiers = Map.fromIterables(models.keys, models.values.map((e) => e.notifier));
+    final globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
 
     bool isRequiredAll = required.length == 1 && required.contains('*');
     bool isRequiredAllExcept = required.length > 1 && required.contains('*');
@@ -189,14 +199,72 @@ class FormManager {
     List<String> formKeys = controllers.keys.toList();
     List<Map<String, dynamic>> errorFields = [];
 
+    // index 0 and 1 will always be there, if index 1 is not a number, it will be 0
+    List splitter(String str) {
+      List<String> split = str.split(':');
+      return [split[0], split.length < 2 ? 0 : split[1].numeric];
+    }
+
     // check keys (required, min, max, email) if they are in the forms
     for (String key in formKeys) {
+      /* ------------------------------------------------------------------------
+        | Required
+        | */
       if (controllers[key] != null && controllers[key]!.text.trim().isEmpty && required.contains(key)) {
         errorFields.add({'key': key, 'type': 'required', 'message': 'The field $key is required'});
       }
-    }
 
-    List<String> keys = controllers.keys.toList()..removeWhere((e) => errorFields.map((e) => e['key']).contains(e));
+      /* ------------------------------------------------------------------------
+        | Minimum Length
+        | */
+
+      for (var e in min) {
+        List split = splitter(e);
+        if (controllers[key] != null && controllers[key]!.text.trim().length < split[1] && split[0] == key) {
+          errorFields
+              .add({'key': key, 'type': 'min', 'message': 'The field $key must be at least ${split[1]} characters'});
+          notifiers[key]!.invalidType = 'min';
+        }
+      }
+
+      /* ------------------------------------------------------------------------
+        | Maximum Length
+        | */
+
+      for (var e in max) {
+        List split = splitter(e);
+        if (controllers[key] != null && controllers[key]!.text.trim().length > split[1] && split[0] == key) {
+          errorFields
+              .add({'key': key, 'type': 'max', 'message': 'The field $key must be at most ${split[1]} characters'});
+        }
+      }
+
+      /* ------------------------------------------------------------------------
+        | Email
+        | */
+
+      bool isEmail(String email) => RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
+
+      if (controllers[key] != null && !(isEmail(controllers[key]!.text.trim().toString())) && email.contains(key)) {
+        errorFields.add({'key': key, 'type': 'email', 'message': 'The field $key is not a valid email'});
+      }
+
+      /* ------------------------------------------------------------------------
+        | Match
+        | */
+
+      for (var e in match) {
+        List<String> split = e.split(':');
+        if (controllers[key] != null && split.length == 2) {
+          String k1 = split[0], k2 = split[1];
+
+          if (controllers[k1]?.text != controllers[k2]?.text) {
+            errorFields
+                .add({'key': k2, 'type': 'match', 'message': 'The field $k2 does not match with the field $k1.'});
+          }
+        }
+      }
+    }
 
     if (errorFields.isNotEmpty) {
       String errorKey = errorFields.first['key'];
@@ -209,11 +277,18 @@ class FormManager {
         Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
       }
 
-      isValid = false;
-      logg(errorFields);
+      for (var e in errorFields) {
+        String key = e['key'];
+        String message = e['message'];
+
+        notifiers[key]!.invalidMessage = message;
+        notifiers[key]!.toggleInvalid(true);
+      }
+
+      return FormValidation(false, error: FormError(errorKey, errorType, errorMessage));
     }
 
-    return FormValidation(isValid);
+    return FormValidation(true);
   }
 }
 

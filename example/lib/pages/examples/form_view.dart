@@ -38,16 +38,18 @@ class FormView extends StatelessWidget {
 
     // fill the forms
     forms.fill({
-      'name': 'John Doe',
-      'phone': 812300000,
-      'birthdate': '2000-10-10',
-      'password': 'secret',
+      // 'name': 'John Doe',
+      // 'phone': 812300000,
+      // 'birthdate': '2000-10-10',
+      // 'password': 'secret',
       'gender': 'Male',
       'hobby': 'Football, Cooking, Swimming',
       'ticket': 5,
+      'height': 10,
     });
 
     forms.set('province', Option('Jakarta', value: 2));
+    forms.enable('province', true);
 
     return Unfocuser(
       child: Scaffold(
@@ -58,7 +60,7 @@ class FormView extends StatelessWidget {
         body: LzListView(
           padding: Ei.only(b: 100, others: 20),
           autoCache: true,
-          gap: 35,
+          gap: 25,
           children: [
             /// An example of using a simple input field for a [label] and [hint].
             /// The [model] binds the value, allowing you to manage and retrieve the input.
@@ -124,7 +126,7 @@ class FormView extends StatelessWidget {
                     }),
                 Text('Add at least 3 tickets to enable province.', style: Gfont.fs14.muted)
               ],
-            ).start.gap(2),
+            ).start.gap(5),
 
             /// An example of using a dropdown/select input field.
             /// The [label] describes the purpose of the field, while the [hint] guides the user to select an option.
@@ -156,23 +158,23 @@ class FormView extends StatelessWidget {
           ],
         ),
         bottomNavigationBar: Padding(
-          padding: const EdgeInsets.all(20),
+          padding: Ei.only(h: 20, b: 20),
           child: LzButton(
             text: 'Submit',
             color: '212121'.hex,
             onTap: () {
               logg(forms.value);
-              logg(forms.extra('province'));
-              logg(forms.extra('city'));
+              // logg(forms.extra('province'));
+              // logg(forms.extra('city'));
 
               // do validation
-              final FormValidation form = forms.validate(required: ['*']);
+              final form = forms.validate(required: ['*', 'terms'], min: ['phone:8'], max: ['phone: 10']);
 
               if (!form.ok) {
-                logg('Invalid form');
+                logg(form.error);
               }
             },
-          ),
+          ).lz.shadowed(context),
         ),
       ),
     );

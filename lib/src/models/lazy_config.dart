@@ -10,6 +10,7 @@ class LazyConfig {
   final ThemeMode theme;
   final Color backgroundColor;
   final Color surfaceColor;
+  final Color primaryColor;
   final IconType icon;
   final String? locale;
   final bool backBlur;
@@ -22,6 +23,7 @@ class LazyConfig {
       this.theme = ThemeMode.light,
       this.backgroundColor = Colors.white,
       this.surfaceColor = Colors.white,
+      this.primaryColor = Colors.blueAccent,
       this.icon = IconType.huge,
       this.locale,
       this.backBlur = true})

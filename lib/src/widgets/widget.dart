@@ -23,6 +23,7 @@ export 'utilities/refreshtor/refreshtor.dart';
 export 'utilities/trainer/trainer.dart';
 
 part 'animations/blink_animate.dart';
+part 'animations/slide_animate.dart';
 part 'animations/zoom.dart';
 part 'components/accordion.dart';
 part 'components/badge.dart';

@@ -126,6 +126,7 @@ class LzTheme extends StatelessWidget {
         selectionColor: Colors.black12,
         selectionHandleColor: Colors.black87,
       ),
+      primaryColor: config.primaryColor
     );
   }
 
@@ -177,6 +178,7 @@ class LzTheme extends StatelessWidget {
         selectionColor: Colors.white10,
         selectionHandleColor: Colors.white70,
       ),
+      primaryColor: config.primaryColor
     );
   }
 }

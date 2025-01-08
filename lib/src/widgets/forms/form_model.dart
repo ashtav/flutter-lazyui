@@ -13,7 +13,20 @@ class FormModel {
 
 class FormValidation {
   final bool ok;
-  
+  final FormError error;
 
-  const FormValidation(this.ok);
+  const FormValidation(this.ok, {this.error = const FormError('', '', '')});
+}
+
+class FormError {
+  final String key;
+  final String type;
+  final String message;
+
+  const FormError(this.key, this.type, this.message);
+
+  @override
+  String toString() {
+    return 'key: $key, type: $type, message: $message';
+  }
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -69,9 +71,8 @@ class _InputState extends State<Input> {
   void onInit() {
     // if model is not null set notifier from model
     if (widget.model != null) {
-      // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
-      notifier.type = 'input';
+      notifier.type = widget.onTap != null ? 'input-2' : 'input';
     }
 
     notifier.enabled = widget.enabled;
@@ -79,6 +80,14 @@ class _InputState extends State<Input> {
 
     if (widget.suffix is Obsecure) {
       notifier.obsecure = true;
+    }
+  }
+
+  void onFocus(bool value) {
+    widget.onFocus?.call(value);
+
+    if (!value && notifier.invalid && notifier.isValid) {
+      notifier.toggleInvalid(false);
     }
   }
 
@@ -118,7 +127,8 @@ class _InputState extends State<Input> {
     ];
 
     return Column(
-      spacing: hasLabel ? 10 : 0,
+      spacing: 10,
+      key: widget.model?.key,
       children: [
         // label & indicator
         Row(
@@ -157,35 +167,51 @@ class _InputState extends State<Input> {
             );
           }
 
+          Color borderColor = state.invalid
+              ? Colors.red
+              : context.isDarkMode
+                  ? Colors.black26.themeify
+                  : Colors.black45;
+
+          final outlineBorder = OutlineInputBorder(
+              borderRadius: Br.radius(config.borderRadius), borderSide: BorderSide(color: borderColor, width: .5));
+
           TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
           InputBorder? border = hasOnTap && state.enabled
-              ? OutlineInputBorder(
-                  borderRadius: Br.radius(config.borderRadius),
-                  borderSide:
-                      BorderSide(color: context.isDarkMode ? Colors.black26.themeify : Colors.black45, width: .5))
-              : null;
+              ? outlineBorder
+              : state.invalid
+                  ? outlineBorder
+                  : null;
 
-          return Touch(
-              onTap: state.enabled ? widget.onTap : null,
-              color: background,
-              borderRadius: Br.radius(config.borderRadius),
-              child: LzTextField(
-                  hint: hint,
-                  textStyle: textStyle,
-                  controller: state.controller,
-                  autofocus: widget.autofocus,
-                  keyboard: widget.keyboard,
-                  formatters: formatters,
-                  maxLength: maxLength,
-                  maxLines: widget.maxLines,
-                  enabled: state.enabled && !hasOnTap,
-                  obsecure: state.obsecure,
-                  onChange: widget.onChange,
-                  onSubmit: widget.onSubmit,
-                  onFocus: widget.onFocus,
-                  prefixIcon: prefixIcon,
-                  suffixIcon: suffix ?? suffixIcon,
-                  border: border));
+          return Column(
+            spacing: 7,
+            children: [
+              Touch(
+                  onTap: state.enabled ? widget.onTap : null,
+                  color: background,
+                  borderRadius: Br.radius(config.borderRadius),
+                  child: LzTextField(
+                      hint: hint,
+                      textStyle: textStyle,
+                      controller: state.controller,
+                      autofocus: widget.autofocus,
+                      keyboard: widget.keyboard,
+                      formatters: formatters,
+                      maxLength: maxLength,
+                      maxLines: widget.maxLines,
+                      enabled: state.enabled && !hasOnTap,
+                      obsecure: state.obsecure,
+                      onChange: widget.onChange,
+                      onSubmit: widget.onSubmit,
+                      onFocus: onFocus,
+                      prefixIcon: prefixIcon,
+                      suffixIcon: suffix ?? suffixIcon,
+                      border: border)),
+
+              // error message
+              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+            ],
+          ).start;
         })
       ],
     ).start;

@@ -39,9 +39,11 @@ class FeatureView extends StatelessWidget {
                 LzTheme.toggle();
               },
               icon: Icon(theme.isDark ? Hi.sun03 : Hi.moon02))),
-          ...[Hi.paintBrush04, Hi.informationCircle].iconButton((i) {
+          ...[Hi.testTube01, Hi.informationCircle].iconButton((i) {
             if (i == 1) {
               context.bottomSheet(const AboutLazyUi());
+            } else {
+              context.lz.push(const TestView());
             }
           }),
         ],

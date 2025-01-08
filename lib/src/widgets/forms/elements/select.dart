@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
@@ -50,7 +52,6 @@ class _SelectState extends State<Select> {
   void onInit() {
     // if model is not null set notifier from model
     if (widget.model != null) {
-      // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
       notifier.type = 'select';
     }
@@ -103,6 +104,7 @@ class _SelectState extends State<Select> {
 
     return Column(
       spacing: 10,
+      key: widget.model?.key,
       children: [
         // label & indicator
         Row(
@@ -122,9 +124,11 @@ class _SelectState extends State<Select> {
           InputBorder? border = OutlineInputBorder(
               borderRadius: Br.radius(config.borderRadius),
               borderSide: BorderSide(
-                  color: context.isDarkMode
-                      ? Colors.black26.themeify.darken(state.enabled ? 0 : .7)
-                      : Colors.black45.lighten(state.enabled ? 0 : .7),
+                  color: state.invalid && state.enabled
+                      ? Colors.red
+                      : context.isDarkMode
+                          ? Colors.black26.themeify.darken(state.enabled ? 0 : .7)
+                          : Colors.black45.lighten(state.enabled ? 0 : .7),
                   width: .5));
 
           return Touch(

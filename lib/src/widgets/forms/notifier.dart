@@ -10,9 +10,19 @@ class FormNotifier extends ChangeNotifier {
 
   bool enabled = true;
   bool obsecure = false;
+  bool invalid = false;
+
+  String invalidMessage = '';
+  String invalidType = '';
+  List<Map<String, dynamic>> rules = [];
 
   void toggleObsecure() {
     obsecure = !obsecure;
+    notifyListeners();
+  }
+
+  void toggleInvalid(bool value) {
+    invalid = value;
     notifyListeners();
   }
 
@@ -41,5 +51,26 @@ class FormNotifier extends ChangeNotifier {
   void dispose() {
     Print.info('Notifier has been disposed.');
     super.dispose();
+  }
+
+  bool get isValid {
+    logg('type: $invalidType, text: ${controller.text}');
+
+    // switch (invalidType) {
+    //   case 'required':
+    //     return controller.text.trim().isNotEmpty;
+
+    //   case 'min':
+    //     int value = controller.text.toString().length;
+    //     int min = rules['value'].toString().numeric;
+    //     return value >= min;
+
+    //   case 'max':
+    //     int value = controller.text.toString().length;
+    //     int max = rules['value'].toString().numeric;
+    //     return value <= max;
+    // }
+
+    return false;
   }
 }

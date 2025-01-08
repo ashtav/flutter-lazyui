@@ -1,3 +1,5 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
@@ -64,6 +66,7 @@ class _CheckboxState extends State<Checkbox> {
 
     return Column(
       spacing: 10,
+      key: widget.model?.key,
       children: [
         if (hasLabel) Text(label!, style: Gfont.fs14),
         notifier.watch((state) {
@@ -123,7 +126,7 @@ class _Square extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: Br.radius(config.borderRadius),
                     color: context.isDarkMode ? darkAppbarColor.lighten(.05) : backgroundColor,
-                    border: Br.all(color: Colors.black45.themeify, width: active ? 11 : .5)),
+                    border: Br.all(color: config.primaryColor, width: active ? 11 : .5)),
               ),
               Poslign.center(
                   child: AnimatedOpacity(

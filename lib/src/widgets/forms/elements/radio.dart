@@ -1,5 +1,8 @@
+// ignore_for_file: invalid_use_of_protected_member
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/theme/color.dart';
 
 import '../form_model.dart';
@@ -63,6 +66,7 @@ class _RadioState extends State<Radio> {
 
     return Column(
       spacing: 10,
+      key: widget.model?.key,
       children: [
         if (hasLabel) Text(label!, style: Gfont.fs14),
         notifier.watch((state) {
@@ -110,7 +114,7 @@ class _Bullet extends StatelessWidget {
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: context.isDarkMode ? darkAppbarColor.lighten(.05) : backgroundColor,
-                  border: Br.all(color: Colors.black45.themeify, width: active ? 5 : .5))),
+                  border: Br.all(color: config.primaryColor, width: active ? 5 : .5))),
           Text(option)
         ],
       ),

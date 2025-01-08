@@ -25,11 +25,11 @@ class LazyUi {
       IconType icon = IconType.huge,
       String? locale,
       bool alwaysPortrait = true,
-      bool backBlur = true}) {
+      bool backBlur = true, Color? primaryColor}) {
     WidgetsFlutterBinding.ensureInitialized();
 
     // Set configuration
-    config = LazyConfig(font: font, icon: icon, locale: locale, backBlur: backBlur);
+    config = LazyConfig(font: font, icon: icon, locale: locale, backBlur: backBlur, primaryColor: primaryColor ?? Colors.blueAccent);
 
     // Initialize locale for date formatting if provided
     if (locale != null) {
