@@ -53,24 +53,48 @@ class FormNotifier extends ChangeNotifier {
     super.dispose();
   }
 
-  bool get isValid {
-    logg('type: $invalidType, text: ${controller.text}');
+  void validate() {
+    List<String> errors = [];
+    invalid = false;
 
-    // switch (invalidType) {
-    //   case 'required':
-    //     return controller.text.trim().isNotEmpty;
+    for (var rule in rules) {
+      String type = rule['type'];
+      dynamic value = rule['value'];
+      String message = rule['message'];
 
-    //   case 'min':
-    //     int value = controller.text.toString().length;
-    //     int min = rules['value'].toString().numeric;
-    //     return value >= min;
+      String text = controller.text;
 
-    //   case 'max':
-    //     int value = controller.text.toString().length;
-    //     int max = rules['value'].toString().numeric;
-    //     return value <= max;
-    // }
+      // required
+      if (type == 'required' && text.trim().isEmpty) {
+        errors.add(message);
+      }
 
-    return false;
+      // min
+      else if (type == 'min' && text.length < value) {
+        errors.add(message);
+      }
+
+      // max
+      else if (type == 'max' && text.length > value) {
+        errors.add(message);
+      }
+
+      // email
+      else if (type == 'email' && !text.trim().isEmail) {
+        errors.add(message);
+      }
+
+      // match
+      else if (type == 'match' && text != value) {
+        errors.add(message);
+      }
+    }
+
+    if (errors.isNotEmpty) {
+      invalid = true;
+      invalidMessage = errors.first;
+    }
+
+    notifyListeners();
   }
 }

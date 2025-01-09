@@ -168,7 +168,7 @@ class FormView extends StatelessWidget {
               // logg(forms.extra('city'));
 
               // do validation
-              final form = forms.validate(required: ['*', 'terms'], min: ['phone:8'], max: ['phone: 10']);
+              final form = forms.validate(required: ['*', 'terms'], min: ['phone:5'], max: ['phone: 8']);
 
               if (!form.ok) {
                 logg(form.error);

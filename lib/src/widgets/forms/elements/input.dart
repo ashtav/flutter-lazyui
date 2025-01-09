@@ -83,11 +83,11 @@ class _InputState extends State<Input> {
     }
   }
 
-  void onFocus(bool value) {
-    widget.onFocus?.call(value);
+  void onFocus(bool focus) {
+    widget.onFocus?.call(focus);
 
-    if (!value && notifier.invalid && notifier.isValid) {
-      notifier.toggleInvalid(false);
+    if (!focus && notifier.rules.isNotEmpty) {
+      notifier.validate();
     }
   }
 

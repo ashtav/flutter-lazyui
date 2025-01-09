@@ -96,6 +96,9 @@ extension CustomStringExtension on String {
         );
     return assetPathRegex.hasMatch(this);
   }
+
+  /// Check if string is valid email
+  bool get isEmail => RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(this);
 }
 
 extension LzNullableStringExtension on String? {
