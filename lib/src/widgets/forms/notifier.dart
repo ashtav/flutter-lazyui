@@ -15,6 +15,7 @@ class FormNotifier extends ChangeNotifier {
   String invalidMessage = '';
   String invalidType = '';
   List<Map<String, dynamic>> rules = [];
+  List<String> valids = [];
 
   void toggleObsecure() {
     obsecure = !obsecure;
@@ -57,7 +58,15 @@ class FormNotifier extends ChangeNotifier {
     List<String> errors = [];
     invalid = false;
 
+    void markError(String key, String type, Map<String, dynamic> rule, String message) {
+      if (enabled) {
+        rules.updateWhere((e) => e['key'] == key && e['type'] == type, {...rule, 'invalid': true});
+        errors.add(message);
+      }
+    }
+
     for (var rule in rules) {
+      String key = rule['key'];
       String type = rule['type'];
       dynamic value = rule['value'];
       String message = rule['message'];
@@ -66,31 +75,31 @@ class FormNotifier extends ChangeNotifier {
 
       // required
       if (type == 'required' && text.trim().isEmpty) {
-        errors.add(message);
+        markError(key, type, rule, message);
       }
 
       // min
       else if (type == 'min' && text.length < value) {
-        errors.add(message);
+        markError(key, type, rule, message);
       }
 
       // max
       else if (type == 'max' && text.length > value) {
-        errors.add(message);
+        markError(key, type, rule, message);
       }
 
       // email
       else if (type == 'email' && !text.trim().isEmail) {
-        errors.add(message);
+        markError(key, type, rule, message);
       }
 
       // match
       else if (type == 'match' && text != value) {
-        errors.add(message);
+        markError(key, type, rule, message);
       }
     }
 
-    if (errors.isNotEmpty) {
+    if (errors.isNotEmpty && enabled) {
       invalid = true;
       invalidMessage = errors.first;
     }

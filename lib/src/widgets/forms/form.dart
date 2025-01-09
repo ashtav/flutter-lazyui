@@ -215,8 +215,6 @@ class FormManager {
       return e.notifier;
     }));
 
-    final globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
-
     bool isRequiredAll = required.length == 1 && required.contains('*');
     bool isRequiredAllExcept = required.length > 1 && required.contains('*');
 
@@ -319,41 +317,36 @@ class FormManager {
       }
     }
 
-    List<String> errors = [];
+    List<Map<String, dynamic>> errors = [];
+
     for (var key in models.keys) {
       if (exist(key)) {
         final notifier = notifiers[key]!;
 
         for (var rule in notifier.rules) {
-          String message = rule['message'];
-          errors.add(message);
+          if (rule['invalid'] == true) {
+            String message = rule['message'];
+            errors.add({'key': key, 'message': message});
+          }
         }
       }
     }
 
-    logg(errors);
+    if (errors.isNotEmpty) {
+      final map = errors.first;
+      final globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
 
-    // if (errorFields.isNotEmpty) {
-    //   String errorKey = errorFields.first['key'];
-    //   String errorType = errorFields.first['type'];
-    //   String errorMessage = errorFields.first['message'];
+      String key = map['key'];
+      String message = map['message'];
 
-    //   // scroll to the error field
-    //   GlobalKey? key = globalKeys[errorKey];
-    //   if (key != null && key.currentContext != null) {
-    //     Scrollable.ensureVisible(key.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
-    //   }
+      // scroll to input position
+      GlobalKey? gkey = globalKeys[key];
+      if (gkey != null && gkey.currentContext != null) {
+        Scrollable.ensureVisible(gkey.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
+      }
 
-    //   for (var e in errorFields) {
-    //     String key = e['key'];
-    //     String message = e['message'];
-
-    //     notifiers[key]!.invalidMessage = message;
-    //     notifiers[key]!.toggleInvalid(true);
-    //   }
-
-    //   return FormValidation(false, error: FormError(errorKey, errorType, errorMessage));
-    // }
+      return FormValidation(false, error: FormError(key, message));
+    }
 
     return FormValidation(true);
   }
