@@ -14,6 +14,7 @@ import 'elements/switches.dart';
 import 'form_model.dart';
 import 'notifier.dart';
 
+export 'form_group.dart';
 export 'form_model.dart' hide FormModel;
 
 part 'extension.dart';
@@ -62,11 +63,11 @@ class OptionSet {
   const OptionSet(this.data, this.labelKey, [this.valueKey, this.filter]);
 }
 
-class Obsecure extends StatelessWidget {
+class Obscure extends StatelessWidget {
   final IconData? hide;
   final IconData? show;
 
-  const Obsecure({super.key, this.hide, this.show});
+  const Obscure({super.key, this.hide, this.show});
 
   @override
   Widget build(BuildContext context) {
@@ -202,16 +203,19 @@ class FormManager {
   /// match: ['password:confirm_password']
   ///
   /// ```
-  FormValidation validate({
-    List<String> required = const [],
-    List<String> min = const [],
-    List<String> max = const [],
-    List<String> email = const [],
-    List<String> match = const [],
-  }) {
+  FormValidation validate(
+      {List<String> required = const [],
+      List<String> min = const [],
+      List<String> max = const [],
+      List<String> email = const [],
+      List<String> match = const [],
+      Map<String, String>? message,
+      FormFeedback feedback = FormFeedback.text}) {
     final controllers = Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
     final notifiers = Map.fromIterables(models.keys, models.values.map((e) {
       e.notifier.rules = [];
+      e.notifier.feedback = feedback;
+
       return e.notifier;
     }));
 
@@ -231,7 +235,12 @@ class FormManager {
       if (exist(key)) {
         String value = controllers[key]!.text;
 
-        final error = {'key': key, 'type': 'required', 'value': value, 'message': 'The field $key is required'};
+        final error = {
+          'key': key,
+          'type': 'required',
+          'value': value,
+          'message': message?[key] ?? 'The field $key is required'
+        };
         notifiers[key]!.rules.add(error);
       }
     }
@@ -250,7 +259,7 @@ class FormManager {
             'key': key,
             'type': 'min',
             'value': min,
-            'message': 'The field $key must be at least ${split[1]} characters'
+            'message': message?['$key:min'] ?? 'The field $key must be at least ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -272,7 +281,7 @@ class FormManager {
             'key': key,
             'type': 'max',
             'value': max,
-            'message': 'The field $key must be at most ${split[1]} characters'
+            'message': message?['$key:max'] ?? 'The field $key must be at most ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -283,7 +292,11 @@ class FormManager {
     // email
     for (var key in email) {
       if (exist(key)) {
-        final error = {'key': key, 'type': 'email', 'message': 'The field $key is not a valid email'};
+        final error = {
+          'key': key,
+          'type': 'email',
+          'message': message?['$key:email'] ?? 'The field $key is not a valid email'
+        };
         notifiers[key]!.rules.add(error);
       }
     }
@@ -300,7 +313,7 @@ class FormManager {
             'key': key,
             'type': 'match',
             'value': controllers[k1]!.text,
-            'message': 'The field $k2 does not match with the field $k1.'
+            'message': message?['$key:match'] ?? 'The field $k2 does not match with the field $k1.'
           };
 
           notifiers[k2]!.rules.add(error);
@@ -345,10 +358,14 @@ class FormManager {
         Scrollable.ensureVisible(gkey.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
       }
 
+      if (feedback == FormFeedback.toast) {
+        LzToast.show(message);
+      }
+
       return FormValidation(false, error: FormError(key, message));
     }
 
-    return FormValidation(true);
+    return FormValidation(true, value: models.value);
   }
 }
 
@@ -367,34 +384,58 @@ class LzForm {
     return FormManager(mdoels);
   }
 
-  /// Creates a customizable input field with optional label, hint, events,
-  /// appearance, and control properties. Supports validation and formatting.
+  /// Creates a customizable input field with support for labels, hints, events,
+  /// appearance customization, and control options. Includes validation and formatting.
   static Input input({
-    // Text properties
+    /// The label text displayed above the input field.
     String? label,
+
+    /// The hint text displayed inside the input field when it is empty.
     String? hint,
 
-    // Event handlers
+    /// Called when the input field is tapped.
     void Function()? onTap,
+
+    /// Called when the value of the input field changes.
     void Function(String value)? onChange,
+
+    /// Called when the user submits the input value (e.g., by pressing "Enter").
     void Function(String value)? onSubmit,
+
+    /// Called when the focus state of the input field changes.
     void Function(bool value)? onFocus,
 
-    // Appearance properties
+    /// The icon displayed at the end of the input field.
     IconData? suffixIcon,
+
+    /// A custom widget displayed at the end of the input field.
     Widget? suffix,
+
+    /// The icon displayed at the beginning of the input field.
     IconData? prefixIcon,
+
+    /// A custom widget displayed at the beginning of the input field.
     Widget? prefix,
 
-    // Control properties
+    /// Whether the input field is enabled or disabled.
     bool enabled = true,
+
+    /// Whether the input field should gain focus automatically when the widget is built.
     bool autofocus = false,
+
+    /// A form model for managing input values and validation.
     FormModel? model,
 
-    // Input properties
+    /// The type of keyboard to use for the input field.
     TextInputType? keyboard,
+
+    /// A list of input formatters to apply to the input field.
     List<TextInputFormatter> formatters = const [],
+
+    /// The maximum number of characters allowed in the input field.
     int maxLength = 255,
+
+    /// The maximum number of lines allowed in the input field.
     int? maxLines,
   }) {
     return Input(
@@ -427,41 +468,59 @@ class LzForm {
     );
   }
 
+  /// Creates a customizable number input field with optional label, hint, events,
+  /// appearance, and control properties. Supports validation and formatting.
   static Number number({
-    // Text properties
+    /// The label displayed above the input field.
     String? label,
+
+    /// The hint text displayed inside the input field when it's empty.
     String? hint,
 
-    // Event handlers
-    void Function()? onTap,
+    // Event Handlers
+    /// Callback when the input value changes.
     void Function(int value)? onChange,
+
+    /// Callback when the input is submitted.
     void Function(String value)? onSubmit,
+
+    /// Callback when the input gains or loses focus.
     void Function(bool value)? onFocus,
 
-    // Appearance properties
+    // Appearance Properties
+    /// The icon displayed before the input field.
     IconData? prefixIcon,
+
+    /// Custom widget displayed before the input field.
     Widget? prefix,
 
-    // Control properties
+    // Control Properties
+    /// Determines if the input is enabled or disabled.
     bool enabled = true,
+
+    /// If true, the input gains focus automatically when the widget is built.
     bool autofocus = false,
+
+    /// The model that controls form validation and submission.
     FormModel? model,
 
-    // Input properties
+    // Input Properties
+    /// Defines the keyboard type for the input field.
     TextInputType? keyboard,
+
+    /// List of input formatters to modify the input value.
     List<TextInputFormatter> formatters = const [],
+
+    /// The maximum value allowed for the input.
     int max = 255,
+
+    /// The minimum value allowed for the input.
     int min = 1,
   }) {
     return Number(
       // Text properties
       label: label,
       hint: hint,
-
-      // Event handlers
-      onChange: onChange,
-      onSubmit: onSubmit,
-      onFocus: onFocus,
 
       // Appearance properties
       prefixIcon: prefixIcon,
@@ -476,109 +535,205 @@ class LzForm {
       formatters: formatters,
       max: max,
       min: min,
+
+      // Event handlers
+      onChange: onChange,
+      onSubmit: onSubmit,
+      onFocus: onFocus,
     );
   }
 
+  /// Creates a customizable radio button group with optional label, events,
+  /// and control properties.
   static Radio radio({
+    /// The label displayed above the radio group.
     String? label,
+
+    /// Callback when a radio button value changes.
     void Function(String value)? onChange,
+
+    /// The model that controls form validation and submission.
     FormModel? model,
+
+    /// List of options available for the radio buttons.
     List<String> options = const [],
   }) {
     return Radio(
-      label: label,
+      // Event handlers
       onChange: onChange,
+
+      // Control properties
       model: model,
+
+      // Input properties
       options: options,
+
+      // Text properties
+      label: label,
     );
   }
 
+  /// Creates a customizable checkbox group with optional label, events,
+  /// and control properties.
   static Checkbox checkbox({
+    /// The label displayed above the checkbox group.
     String? label,
+
+    /// Callback when a checkbox value changes.
     void Function(String value)? onChange,
+
+    /// The model that controls form validation and submission.
     FormModel? model,
+
+    /// List of options available for the checkboxes.
     List<String> options = const [],
   }) {
     return Checkbox(
-      label: label,
+      // Event handlers
       onChange: onChange,
+
+      // Control properties
       model: model,
+
+      // Input properties
       options: options,
+
+      // Text properties
+      label: label,
     );
   }
 
-  static Select select(
-      {
+  /// Creates a customizable select dropdown with optional label, hint, events,
+  /// appearance, and control properties.
+  static Select select({
+    /// The label displayed above the select dropdown.
+    String? label,
+
+    /// The hint text displayed inside the select dropdown when empty.
+    String? hint,
+
+    /// Callback when the select dropdown is tapped.
+    void Function()? onTap,
+
+    /// Callback when a value is selected.
+    void Function(String value)? onChange,
+
+    /// Icon displayed at the end of the input field.
+    IconData? suffixIcon,
+
+    /// Custom widget displayed at the end of the input field.
+    Widget? suffix,
+
+    /// Whether the select dropdown is enabled or not.
+    bool enabled = true,
+
+    /// The model that controls form validation and submission.
+    FormModel? model,
+
+    /// List of options available in the dropdown.
+    List<String> options = const [],
+
+    /// List of selected values.
+    List values = const [],
+  }) {
+    return Select(
       // Text properties
-      String? label,
-      String? hint,
+      label: label,
+      hint: hint,
 
       // Event handlers
-      void Function()? onTap,
-      void Function(String value)? onChange,
+      onTap: onTap,
+      onChange: onChange,
 
       // Appearance properties
-      IconData? suffixIcon,
-      Widget? suffix,
+      suffixIcon: suffixIcon,
+      suffix: suffix,
 
       // Control properties
-      bool enabled = true,
-      FormModel? model,
-      List<String> options = const [],
-      List values = const []}) {
-    return Select(
-        // Text properties
-        label: label,
-        hint: hint,
+      enabled: enabled,
+      model: model,
 
-        // Event handlers
-        onTap: onTap,
-        onChange: onChange,
-
-        // Appearance properties
-        suffixIcon: suffixIcon,
-        suffix: suffix,
-
-        // Control properties
-        enabled: enabled,
-        model: model,
-        options: options,
-        values: values);
+      // Input properties
+      options: options,
+      values: values,
+    );
   }
 
+  /// Creates a customizable slider with optional label, initial value,
+  /// min/max range, and event handling properties.
   static Slider slider({
+    /// The label displayed above the slider.
     String? label,
+
+    /// The initial value of the slider.
     double? initValue,
+
+    /// The minimum value of the slider.
     double min = 0,
+
+    /// The maximum value of the slider.
     double max = 100,
+
+    /// The number of discrete divisions for the slider.
     int? divisions,
+
+    /// Whether the slider is enabled or not.
     bool enabled = true,
+
+    /// The model that controls form validation and submission.
     FormModel? model,
+
+    /// Callback when the slider value changes.
     void Function(double value)? onChange,
   }) {
     return Slider(
+      // Text properties
       label: label,
+
+      // Input properties
       initValue: initValue,
       min: min,
       max: max,
       divisions: divisions,
+
+      // Control properties
       enabled: enabled,
       model: model,
+
+      // Event handlers
       onChange: onChange,
     );
   }
 
+  /// Creates a customizable switch with optional label, initial value,
+  /// event handling, and reversed appearance properties.
   static Switches switches({
+    /// The key for the widget, useful for managing widget state.
     Key? key,
+
+    /// The label displayed next to the switch.
     String? label,
+
+    /// Callback when the switch value changes.
     void Function(bool)? onChange,
+
+    /// The initial value of the switch (on or off).
     bool initValue = false,
+
+    /// Whether the switch's appearance is reversed (i.e., on/off labels).
     bool reversed = false,
   }) {
     return Switches(
+      // Widget properties
       key: key,
+
+      // Text properties
       label: label,
+
+      // Event handlers
       onChange: onChange,
+
+      // Control properties
       initValue: initValue,
       reversed: reversed,
     );

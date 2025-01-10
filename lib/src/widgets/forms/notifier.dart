@@ -9,16 +9,19 @@ class FormNotifier extends ChangeNotifier {
   dynamic extra;
 
   bool enabled = true;
-  bool obsecure = false;
+  bool obscure = false;
   bool invalid = false;
 
   String invalidMessage = '';
   String invalidType = '';
   List<Map<String, dynamic>> rules = [];
   List<String> valids = [];
+  FormFeedback feedback = FormFeedback.text;
+
+  FormGroupNotifier? groupNotifier;
 
   void toggleObsecure() {
-    obsecure = !obsecure;
+    obscure = !obscure;
     notifyListeners();
   }
 
@@ -99,11 +102,26 @@ class FormNotifier extends ChangeNotifier {
       }
     }
 
-    if (errors.isNotEmpty && enabled) {
+    if (errors.isNotEmpty && enabled && feedback == FormFeedback.text) {
       invalid = true;
       invalidMessage = errors.first;
+
+      if (groupNotifier != null) {
+        groupNotifier!.toggleInvalid(true, invalidMessage);
+      }
     }
 
+    notifyListeners();
+  }
+}
+
+class FormGroupNotifier extends ChangeNotifier {
+  bool invalid = false;
+  String invalidMessage = '';
+
+  void toggleInvalid(bool value, [String message = '']) {
+    invalid = value;
+    invalidMessage = message;
     notifyListeners();
   }
 }

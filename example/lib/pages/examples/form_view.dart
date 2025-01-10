@@ -40,15 +40,15 @@ class FormView extends StatelessWidget {
     forms.fill({
       // 'name': 'John Doe',
       // 'phone': 812300000,
-      // 'birthdate': '2000-10-10',
-      // 'password': 'secret',
-      'gender': 'Male',
+      'birthdate': '2000-10-10',
+      'password': 'secret',
+      // 'gender': 'Female',
       'hobby': 'Football, Cooking, Swimming',
-      'ticket': 5,
-      'height': 10,
+      // 'ticket': 5,
+      'height': 150,
     });
 
-    forms.set('province', Option('Jakarta', value: 2));
+    // forms.set('province', Option('Jakarta', value: 2));
     forms.enable('province', true);
 
     return Unfocuser(
@@ -96,7 +96,7 @@ class FormView extends StatelessWidget {
               label: 'Password',
               hint: 'Type your password',
               model: forms.key('password'),
-              suffix: Obsecure(
+              suffix: Obscure(
                 hide: Hi.lockPassword,
                 show: Hi.squareUnlock01,
               ),
@@ -163,15 +163,27 @@ class FormView extends StatelessWidget {
             text: 'Submit',
             color: '212121'.hex,
             onTap: () {
-              logg(forms.value);
               // logg(forms.extra('province'));
               // logg(forms.extra('city'));
 
               // do validation
-              final form = forms.validate(required: ['*', 'terms'], min: ['phone:5'], max: ['phone: 8']);
+              final form = forms.validate(required: [
+                '*',
+                'terms'
+              ], min: [
+                'name:3',
+                'phone:5'
+              ], max: [
+                'phone:10'
+              ], message: {
+                'name': 'Name\'s missing? C\'mon, give me something!',
+                'phone': 'No phone number? Are you for real?',
+                'phone:min': 'Bruh, 5 digits, not a joke!',
+                'phone:max': 'That\'s a phone number, not a book. No more than 10!'
+              });
 
-              if (!form.ok) {
-                logg(form.error);
+              if (form.ok) {
+                logg(form.value);
               }
             },
           ).lz.shadowed(context),

@@ -9,44 +9,75 @@ import '../form_model.dart';
 import '../notifier.dart';
 
 class Number extends StatefulWidget {
-  // Text properties
+  /// The label text displayed above the number input.
   final String? label;
+
+  /// The hint text displayed inside the number input.
   final String? hint;
 
-  // Event handlers
-  final void Function(int value)? onChange;
-  final void Function(String value)? onSubmit;
-  final void Function(bool value)? onFocus;
+  /// The initial value for the number input.
+  final int? initValue;
 
-  // Appearance properties
-  final IconData? prefixIcon;
-  final Widget? prefix;
-
-  // Control properties
-  final bool enabled;
-  final bool autofocus;
-  final FormModel? model;
-
-  // Input properties
-  final List<TextInputFormatter> formatters;
+  /// The maximum allowable value for the number input.
   final int max;
+
+  /// The minimum allowable value for the number input.
   final int min;
 
+  /// A list of input formatters applied to the number input (e.g., restrictions on input).
+  final List<TextInputFormatter> formatters;
+
+  /// Called when the value of the number input changes.
+  final void Function(int value)? onChange;
+
+  /// Called when the value is submitted (e.g., via the Enter key).
+  final void Function(String value)? onSubmit;
+
+  /// Called when the focus state of the input changes.
+  final void Function(bool value)? onFocus;
+
+  /// Icon displayed at the start of the number input field.
+  final IconData? prefixIcon;
+
+  /// Widget displayed at the start of the number input field (overrides [prefixIcon]).
+  final Widget? prefix;
+
+  /// Whether the number input is enabled or disabled.
+  final bool enabled;
+
+  /// Whether the number input should gain focus automatically.
+  final bool autofocus;
+
+  /// A [FormModel] instance for managing the input value and validation.
+  final FormModel? model;
+
+  /// Constructor for [Number].
   const Number({
     super.key,
+
+    // Text properties
     this.label,
     this.hint,
+    this.initValue,
+
+    // Input properties
+    this.max = 255,
+    this.min = 1,
+    this.formatters = const [],
+
+    // Event handlers
     this.onChange,
     this.onSubmit,
     this.onFocus,
+
+    // Appearance properties
     this.prefixIcon,
     this.prefix,
+
+    // Control properties
     this.enabled = true,
     this.autofocus = false,
     this.model,
-    this.formatters = const [],
-    this.max = 255,
-    this.min = 1,
   });
 
   @override
@@ -59,9 +90,9 @@ class _NumberState extends State<Number> {
   void onInit() {
     // if model is not null set notifier from model
     if (widget.model != null) {
-      // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
       notifier.type = 'number';
+      notifier.controller.text = (widget.initValue ?? widget.min).toString();
     }
 
     notifier.enabled = widget.enabled;
@@ -95,6 +126,8 @@ class _NumberState extends State<Number> {
               : value;
 
       notifier.controller.text = value.toString();
+      notifier.validate();
+
       widget.onChange?.call(value);
     } catch (e, s) {
       Print.error('Error $e $s');
@@ -117,6 +150,7 @@ class _NumberState extends State<Number> {
             : value;
 
     notifier.controller.text = value.toString();
+    notifier.validate();
     widget.onChange?.call(value);
   }
 
@@ -134,7 +168,7 @@ class _NumberState extends State<Number> {
 
   @override
   void didUpdateWidget(covariant Number old) {
-    if (widget.enabled != old.enabled || widget.model != old.model || widget.prefix != old.prefix) {
+    if (widget.enabled != old.enabled || widget.model != old.model || widget.initValue != old.initValue) {
       onInit();
     }
 
@@ -165,37 +199,44 @@ class _NumberState extends State<Number> {
         notifier.watch((state) {
           Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor).darken(state.enabled ? 0 : .05);
 
-          return LzTextField(
-              hint: hint,
-              controller: state.controller,
-              autofocus: widget.autofocus,
-              keyboard: Tit.number,
-              formatters: formatters,
-              maxLength: 11,
-              enabled: state.enabled,
-              obsecure: state.obsecure,
-              onChange: onChange,
-              onSubmit: widget.onSubmit,
-              onFocus: widget.onFocus,
-              backgroundColor: background,
-              suffixIcon: Row(
-                mainAxisSize: Mas.min,
-                children: [Hi.minusSign, Hi.id, Hi.plusSign].generate((icon, i) {
-                  if (i == 1) {
-                    return Container(
-                      width: .5,
-                      height: 30,
-                      color: Colors.black12.themeify,
-                    );
-                  }
+          return Column(
+            spacing: 7,
+            children: [
+              LzTextField(
+                  hint: hint,
+                  controller: state.controller,
+                  autofocus: widget.autofocus,
+                  keyboard: Tit.number,
+                  formatters: formatters,
+                  maxLength: 11,
+                  enabled: state.enabled,
+                  onChange: onChange,
+                  onSubmit: widget.onSubmit,
+                  onFocus: widget.onFocus,
+                  backgroundColor: background,
+                  suffixIcon: Row(
+                    mainAxisSize: Mas.min,
+                    children: [Hi.minusSign, Hi.id, Hi.plusSign].generate((icon, i) {
+                      if (i == 1) {
+                        return Container(
+                          width: .5,
+                          height: 30,
+                          color: Colors.black12.themeify,
+                        );
+                      }
 
-                  return Touch(
-                    onTap: () => adjustValue(i),
-                    type: TouchType.fade,
-                    child: Iconr(icon, padding: Ei.only(h: 20, v: 15)),
-                  );
-                }),
-              ));
+                      return Touch(
+                        onTap: () => adjustValue(i),
+                        type: TouchType.fade,
+                        child: Iconr(icon, padding: Ei.only(h: 20, v: 15)),
+                      );
+                    }),
+                  )),
+
+              // error message
+              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+            ],
+          ).start;
         })
       ],
     ).start;

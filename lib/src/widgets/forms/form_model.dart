@@ -14,8 +14,9 @@ class FormModel {
 class FormValidation {
   final bool ok;
   final FormError error;
+  final Map<String, dynamic> value;
 
-  const FormValidation(this.ok, {this.error = const FormError('', '')});
+  const FormValidation(this.ok, {this.error = const FormError('', ''), this.value = const {}});
 }
 
 class FormError {
@@ -28,4 +29,12 @@ class FormError {
   String toString() {
     return 'key: $key, message: $message';
   }
+}
+
+enum FormFeedback { none, toast, text }
+
+/// A class representing attributes for UI components.
+class Attribute {
+  final bool isGrouped;
+  const Attribute({this.isGrouped = true});
 }

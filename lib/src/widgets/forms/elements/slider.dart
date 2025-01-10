@@ -7,27 +7,56 @@ import '../form_model.dart';
 import '../notifier.dart';
 
 class Slider extends StatefulWidget {
+  /// The label text displayed above the slider.
   final String? label;
+
+  /// The initial value for the slider.
   final double? initValue;
+
+  /// The minimum value of the slider.
   final double min;
+
+  /// The maximum value of the slider.
   final double max;
+
+  /// The number of discrete divisions on the slider.
   final int? divisions;
-  final bool enabled;
-  final FormModel? model;
+
+  /// Called when the slider value changes.
   final Function(double value)? onChange;
+
+  /// A widget builder for displaying a custom indicator for the current slider value.
   final Widget Function(double value)? indicator;
 
-  const Slider(
-      {super.key,
-      this.label,
-      this.initValue,
-      this.min = 0,
-      this.max = 100,
-      this.divisions,
-      this.enabled = false,
-      this.model,
-      this.onChange,
-      this.indicator});
+  /// Whether the slider is enabled or disabled.
+  final bool enabled;
+
+  /// A [FormModel] instance for managing the slider state and validation.
+  final FormModel? model;
+
+  /// Constructor for [Slider].
+  const Slider({
+    super.key,
+
+    // Text properties
+    this.label,
+
+    // Input properties
+    this.initValue,
+    this.min = 0,
+    this.max = 100,
+    this.divisions,
+
+    // Event handlers
+    this.onChange,
+
+    // Appearance properties
+    this.indicator,
+
+    // Control properties
+    this.enabled = false,
+    this.model,
+  });
 
   @override
   State<Slider> createState() => _SliderState();
@@ -69,7 +98,7 @@ class _SliderState extends State<Slider> {
 
   @override
   void didUpdateWidget(covariant Slider old) {
-    if(widget.model != old.model){
+    if (widget.model != old.model) {
       onInit();
     }
 

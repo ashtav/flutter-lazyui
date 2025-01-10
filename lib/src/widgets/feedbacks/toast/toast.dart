@@ -58,8 +58,8 @@ class _ToastWidget extends StatelessWidget {
       String messageOverlay = state.message.overlay;
       String messageProgress = state.message.progress;
 
-      Color toastBackground = state.color ?? (context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor);
-      Color background = context.isDarkMode ? darkAppbarColor.lighten(.02) : darkAppbarColor;
+      Color toastBackground = state.color ?? (context.isDarkMode ? darkAppbarColor.lighten(.08) : darkAppbarColor);
+      Color background = context.isDarkMode ? darkAppbarColor.lighten(.08) : darkAppbarColor;
 
       Decoration decoration = BoxDecoration(color: background, borderRadius: Br.radius(config.borderRadius));
       Decoration toastDecoration = BoxDecoration(color: toastBackground, borderRadius: Br.radius(config.borderRadius));

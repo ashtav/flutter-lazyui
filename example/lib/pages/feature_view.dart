@@ -1,4 +1,5 @@
 import 'package:example/data/features.dart';
+import 'package:example/pages/examples/form_group_view.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
@@ -86,6 +87,7 @@ class FeatureView extends StatelessWidget {
       'Textr': const TextView(),
       'Iconr': const IconView(),
       'LzForm': const FormView(),
+      'LzFormGroup': const FormGroupView(),
       'LzPad': const PadView(),
       'LzPicker': const PickerView(),
       'LzConfirm': const ConfirmView(),

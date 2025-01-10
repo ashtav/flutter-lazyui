@@ -9,19 +9,38 @@ import '../form_model.dart';
 import '../notifier.dart';
 
 class Radio extends StatefulWidget {
-  // Text properties
+  /// The label text displayed above the radio group.
   final String? label;
 
-  // Event handlers
-  final void Function(String value)? onChange;
-
-  // Control properties
-  final FormModel? model;
-
-  // Input properties
+  /// The list of options available for the radio group.
   final List<String> options;
 
-  const Radio({super.key, this.label, this.onChange, this.model, this.options = const []});
+  /// The initial value for the radio input.
+  final String? initValue;
+
+  /// Called when the selected value changes.
+  final void Function(String value)? onChange;
+
+  /// A [FormModel] instance for managing the radio group state and validation.
+  final FormModel? model;
+
+  /// Constructor for [Radio].
+  const Radio({
+    super.key,
+
+    // Text properties
+    this.label,
+
+    // Input properties
+    this.options = const [],
+    this.initValue,
+
+    // Event handlers
+    this.onChange,
+
+    // Control properties
+    this.model,
+  });
 
   @override
   State<Radio> createState() => _RadioState();
@@ -32,10 +51,15 @@ class _RadioState extends State<Radio> {
 
   void onInit() {
     if (widget.model != null) {
-      // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
       notifier.type = 'radio';
+      initValue();
     }
+  }
+
+  void initValue() {
+    notifier.controller.text =
+        widget.initValue == null && widget.options.isNotEmpty ? widget.options.first : widget.initValue.toString();
   }
 
   @override
@@ -56,6 +80,11 @@ class _RadioState extends State<Radio> {
       onInit();
     }
 
+    if (widget.initValue != old.initValue) {
+      initValue();
+      notifier.notify();
+    }
+
     super.didUpdateWidget(old);
   }
 
@@ -70,22 +99,30 @@ class _RadioState extends State<Radio> {
       children: [
         if (hasLabel) Text(label!, style: Gfont.fs14),
         notifier.watch((state) {
-          return Wrap(
-            alignment: Wa.start,
-            spacing: 20,
-            runSpacing: 10,
-            children: widget.options.generate((option, i) {
-              return _Bullet(
-                  option: option,
-                  active: state.controller.text == option,
-                  onTap: () {
-                    state.controller.text = option;
-                    state.notify();
+          return Column(
+            spacing: 7,
+            children: [
+              Wrap(
+                alignment: Wa.start,
+                spacing: 20,
+                runSpacing: 10,
+                children: widget.options.generate((option, i) {
+                  return _Bullet(
+                      option: option,
+                      active: state.controller.text == option,
+                      onTap: () {
+                        state.controller.text = option;
+                        state.validate();
 
-                    widget.onChange?.call(option);
-                  });
-            }),
-          );
+                        widget.onChange?.call(option);
+                      });
+                }),
+              ),
+
+              // error message
+              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+            ],
+          ).start;
         })
       ],
     ).start;

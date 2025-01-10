@@ -132,4 +132,10 @@ class ContextUtils {
 
     return route;
   }
+
+  /// Focuses on the specified [node] within the current [context].
+  ///
+  /// If [node] is not provided, a new [FocusNode] will be created and focused.
+  void focus([FocusNode? node]) =>
+      FocusScope.of(context).requestFocus(node ?? FocusNode());
 }

@@ -6,12 +6,32 @@ import 'package:lazyui/src/config/config.dart';
 import '../notifier.dart';
 
 class Switches extends StatelessWidget {
+  /// The label text displayed alongside the switch.
   final String? label;
-  final void Function(bool)? onChange;
+
+  /// The initial value of the switch (on/off).
   final bool initValue;
+
+  /// If `true`, the switch will have its on/off behavior reversed.
   final bool reversed;
 
-  const Switches({super.key, this.label, this.onChange, this.initValue = false, this.reversed = false});
+  /// Called when the switch value changes.
+  final void Function(bool)? onChange;
+
+  /// Constructor for [Switches].
+  const Switches({
+    super.key,
+
+    // Text properties
+    this.label,
+
+    // Input properties
+    this.initValue = false,
+    this.reversed = false,
+
+    // Event handlers
+    this.onChange,
+  });
 
   @override
   Widget build(BuildContext context) {

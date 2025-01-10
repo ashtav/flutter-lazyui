@@ -1,5 +1,13 @@
 part of '../../widget.dart';
 
+OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled, {double? radius}) => OutlineInputBorder(
+    borderRadius: Br.radius(radius ?? config.borderRadius),
+    borderSide: BorderSide(
+        color: context.isDarkMode
+            ? Colors.black26.themeify.darken(enabled ? 0 : .7)
+            : Colors.black45.lighten(enabled ? 0 : .7),
+        width: .5));
+
 /// A customizable text field widget.
 class LzTextField extends StatelessWidget {
   /// Placeholder text to display when the field is empty.
@@ -27,7 +35,7 @@ class LzTextField extends StatelessWidget {
   final bool enabled;
 
   /// Whether the text input should be obscured (e.g., for passwords).
-  final bool obsecure;
+  final bool obscure;
 
   /// Whether to show the maximum length indicator for the text input.
   final bool showMaxLength;
@@ -87,7 +95,7 @@ class LzTextField extends StatelessWidget {
       this.keyboard,
       this.inputAction,
       this.onSubmit,
-      this.obsecure = false,
+      this.obscure = false,
       this.onChange,
       this.onFocus,
       this.autofocus = false,
@@ -112,16 +120,7 @@ class LzTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color darkBorderColor = Colors.black26.themeify;
-
-    final border = this.border ??
-        OutlineInputBorder(
-            borderRadius: Br.radius(config.borderRadius),
-            borderSide: BorderSide(
-                color: context.isDarkMode
-                    ? darkBorderColor.darken(enabled ? 0 : .7)
-                    : Colors.black45.lighten(enabled ? 0 : .7),
-                width: .5));
+    final border = this.border ?? textFieldDefaultBorder(context, enabled);
 
     return Focus(
       onFocusChange: onFocus,
@@ -133,7 +132,7 @@ class LzTextField extends StatelessWidget {
         onChanged: onChange,
         autofocus: autofocus,
         focusNode: node,
-        obscureText: obsecure,
+        obscureText: obscure,
         enabled: enabled,
         textAlign: textAlign ?? TextAlign.start,
         controller: controller,

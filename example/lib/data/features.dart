@@ -32,6 +32,7 @@ List<FeatureGroup> get features => [
         label: 'Forms & Inputs',
         features: [
           Feature(label: 'LzForm', icon: Hi.pencilEdit02),
+          Feature(label: 'LzFormGroup', icon: Hi.pencilEdit02),
           Feature(label: 'LzPad', icon: Hi.dialpadCircle01),
           Feature(label: 'LzPicker', icon: Hi.colorPicker),
         ],

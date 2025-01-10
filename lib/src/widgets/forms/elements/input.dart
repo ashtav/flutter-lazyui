@@ -10,35 +10,62 @@ import 'package:lazyui/src/theme/color.dart';
 import '../form_model.dart';
 import '../notifier.dart';
 
-class Input extends StatefulWidget {
-  // Text properties
+class Input extends StatefulWidget with FormMixin {
+  /// The label text displayed above the input field.
   final String? label;
+
+  /// The hint text displayed inside the input field.
   final String? hint;
 
-  // Event handlers
+  /// Called when the input field is tapped.
   final void Function()? onTap;
+
+  /// Called when the value of the input field changes.
   final void Function(String value)? onChange;
+
+  /// Called when the value is submitted (e.g., via the Enter key).
   final void Function(String value)? onSubmit;
+
+  /// Called when the focus state of the input changes.
   final void Function(bool value)? onFocus;
 
-  // Appearance properties
+  /// Icon displayed at the end of the input field.
   final IconData? suffixIcon;
+
+  /// Widget displayed at the end of the input field (overrides [suffixIcon]).
   final Widget? suffix;
+
+  /// Icon displayed at the start of the input field.
   final IconData? prefixIcon;
+
+  /// Widget displayed at the start of the input field (overrides [prefixIcon]).
   final Widget? prefix;
 
-  // Control properties
+  /// Whether the input field is enabled or disabled.
   final bool enabled;
+
+  /// Whether the input field should gain focus automatically.
   final bool autofocus;
-  final bool obsecure;
+
+  /// Whether the input field should obscure the text (e.g., for passwords).
+  final bool obscure;
+
+  /// A [FormModel] instance for managing the input value and validation.
   final FormModel? model;
 
-  // Input properties
+  /// The type of keyboard to use for the input field (e.g., numeric, text).
   final TextInputType? keyboard;
+
+  /// A list of input formatters applied to the input field (e.g., character restrictions).
   final List<TextInputFormatter> formatters;
+
+  /// The maximum number of characters allowed in the input field.
   final int maxLength;
+
+  /// The maximum number of lines allowed in the input field.
   final int? maxLines;
 
+  /// Constructor for [Input].
   const Input({
     super.key,
     this.label,
@@ -53,7 +80,7 @@ class Input extends StatefulWidget {
     this.prefix,
     this.enabled = true,
     this.autofocus = false,
-    this.obsecure = false,
+    this.obscure = false,
     this.model,
     this.keyboard,
     this.formatters = const [],
@@ -76,11 +103,16 @@ class _InputState extends State<Input> {
     }
 
     notifier.enabled = widget.enabled;
-    notifier.obsecure = widget.obsecure;
+    notifier.obscure = widget.obscure;
 
-    if (widget.suffix is Obsecure) {
-      notifier.obsecure = true;
+    if (widget.suffix is Obscure) {
+      notifier.obscure = true;
     }
+  }
+
+  void onTap() {
+    widget.onTap?.call();
+    context.lz.focus(); // set unfocus
   }
 
   void onFocus(bool focus) {
@@ -126,16 +158,22 @@ class _InputState extends State<Input> {
       ...widget.formatters
     ];
 
+    // check if widget is wrapped with FormGroup
+    final attr = widget.getAttribute(context);
+
+    bool isGrouped = attr.isGrouped;
+
     return Column(
       spacing: 10,
       key: widget.model?.key,
       children: [
         // label & indicator
-        Row(
-          children: [
-            if (hasLabel) Text(label!, style: Gfont.fs14),
-          ],
-        ),
+        if (!isGrouped)
+          Row(
+            children: [
+              if (hasLabel) Text(label!, style: Gfont.fs14),
+            ],
+          ),
 
         // textfield
         notifier.watch((state) {
@@ -157,11 +195,11 @@ class _InputState extends State<Input> {
           // If custom icons (`hide` or `show`) are not provided, default icons are fetched using `ConfigIcon.get`.
           Widget? suffix = widget.suffix;
 
-          if (suffix is Obsecure) {
+          if (suffix is Obscure) {
             suffix = Touch(
               onTap: state.toggleObsecure,
               type: TouchType.fade,
-              child: Icon(state.obsecure
+              child: Icon(state.obscure
                   ? suffix.hide ?? ConfigIcon.get(IconSet.eyeOff)
                   : suffix.show ?? ConfigIcon.get(IconSet.eye)),
             );
@@ -173,23 +211,25 @@ class _InputState extends State<Input> {
                   ? Colors.black26.themeify
                   : Colors.black45;
 
+          double radiusValue = isGrouped ? 0 : config.borderRadius;
+
           final outlineBorder = OutlineInputBorder(
-              borderRadius: Br.radius(config.borderRadius), borderSide: BorderSide(color: borderColor, width: .5));
+              borderRadius: Br.radius(radiusValue), borderSide: BorderSide(color: borderColor, width: .5));
 
           TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
           InputBorder? border = hasOnTap && state.enabled
               ? outlineBorder
-              : state.invalid
+              : state.invalid && !isGrouped
                   ? outlineBorder
-                  : null;
+                  : isGrouped ? InputBorder.none : null;
 
           return Column(
             spacing: 7,
             children: [
               Touch(
-                  onTap: state.enabled ? widget.onTap : null,
+                  onTap: state.enabled ? onTap : null,
                   color: background,
-                  borderRadius: Br.radius(config.borderRadius),
+                  borderRadius: Br.radius(radiusValue),
                   child: LzTextField(
                       hint: hint,
                       textStyle: textStyle,
@@ -200,7 +240,7 @@ class _InputState extends State<Input> {
                       maxLength: maxLength,
                       maxLines: widget.maxLines,
                       enabled: state.enabled && !hasOnTap,
-                      obsecure: state.obsecure,
+                      obscure: state.obscure,
                       onChange: widget.onChange,
                       onSubmit: widget.onSubmit,
                       onFocus: onFocus,
@@ -209,7 +249,8 @@ class _InputState extends State<Input> {
                       border: border)),
 
               // error message
-              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+              if (!isGrouped)
+                SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })

@@ -9,19 +9,26 @@ import '../form_model.dart';
 import '../notifier.dart';
 
 class Checkbox extends StatefulWidget {
-  // Text properties
+  /// The label text displayed above the checkbox group.
   final String? label;
 
-  // Event handlers
+  /// Called when the value of the checkbox group changes.
   final void Function(String value)? onChange;
 
-  // Control properties
+  /// A [FormModel] instance for managing the checkbox state and validation.
   final FormModel? model;
 
-  // Input properties
+  /// The list of options available for the checkbox group.
   final List<String> options;
 
-  const Checkbox({super.key, this.label, this.onChange, this.model, this.options = const []});
+  /// Constructor for [Checkbox].
+  const Checkbox({
+    super.key,
+    this.label,
+    this.onChange,
+    this.model,
+    this.options = const [],
+  });
 
   @override
   State<Checkbox> createState() => _CheckboxState();
@@ -32,7 +39,6 @@ class _CheckboxState extends State<Checkbox> {
 
   void onInit() {
     if (widget.model != null) {
-      // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
       notifier.type = 'checkbox';
     }
@@ -72,30 +78,38 @@ class _CheckboxState extends State<Checkbox> {
         notifier.watch((state) {
           final selected = state.selected;
 
-          return Wrap(
-            alignment: Wa.start,
-            spacing: 20,
-            runSpacing: 10,
-            children: widget.options.generate((option, i) {
-              bool isSelected = selected.contains(option);
+          return Column(
+            spacing: 7,
+            children: [
+              Wrap(
+                alignment: Wa.start,
+                spacing: 20,
+                runSpacing: 10,
+                children: widget.options.generate((option, i) {
+                  bool isSelected = selected.contains(option);
 
-              return _Square(
-                  option: option,
-                  active: isSelected,
-                  onTap: () {
-                    if (isSelected) {
-                      selected.remove(option);
-                    } else {
-                      selected.add(option);
-                    }
+                  return _Square(
+                      option: option,
+                      active: isSelected,
+                      onTap: () {
+                        if (isSelected) {
+                          selected.remove(option);
+                        } else {
+                          selected.add(option);
+                        }
 
-                    state.controller.text = selected.join(', ').trim();
-                    state.notify();
+                        state.controller.text = selected.join(', ').trim();
+                        state.validate();
 
-                    widget.onChange?.call(option);
-                  });
-            }),
-          );
+                        widget.onChange?.call(option);
+                      });
+                }),
+              ),
+
+              // error message
+              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+            ],
+          ).start;
         })
       ],
     ).start;
