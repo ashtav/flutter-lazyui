@@ -215,6 +215,7 @@ class FormManager {
     final notifiers = Map.fromIterables(models.keys, models.values.map((e) {
       e.notifier.rules = [];
       e.notifier.feedback = feedback;
+      e.notifier.groupNotifier?.clear();
 
       return e.notifier;
     }));

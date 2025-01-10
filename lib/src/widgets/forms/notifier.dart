@@ -107,7 +107,7 @@ class FormNotifier extends ChangeNotifier {
       invalidMessage = errors.first;
 
       if (groupNotifier != null) {
-        groupNotifier!.toggleInvalid(true, invalidMessage);
+        groupNotifier!.toggleInvalid(invalidMessage);
       }
     }
 
@@ -117,11 +117,17 @@ class FormNotifier extends ChangeNotifier {
 
 class FormGroupNotifier extends ChangeNotifier {
   bool invalid = false;
-  String invalidMessage = '';
+  List<String> messages = [];
 
-  void toggleInvalid(bool value, [String message = '']) {
-    invalid = value;
-    invalidMessage = message;
+  void toggleInvalid(String message) {
+    messages.add(message);
+    invalid = message.isNotEmpty;
+    notifyListeners();
+  }
+
+  void clear() {
+    invalid = false;
+    messages = [];
     notifyListeners();
   }
 }

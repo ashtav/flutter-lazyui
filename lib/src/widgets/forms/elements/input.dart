@@ -221,13 +221,15 @@ class _InputState extends State<Input> {
               ? outlineBorder
               : state.invalid && !isGrouped
                   ? outlineBorder
-                  : isGrouped ? InputBorder.none : null;
+                  : isGrouped
+                      ? InputBorder.none
+                      : null;
 
           return Column(
             spacing: 7,
             children: [
               Touch(
-                  onTap: state.enabled ? onTap : null,
+                  onTap: state.enabled && widget.onTap != null ? onTap : null,
                   color: background,
                   borderRadius: Br.radius(radiusValue),
                   child: LzTextField(
