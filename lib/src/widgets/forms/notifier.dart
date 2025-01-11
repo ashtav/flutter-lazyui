@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormNotifier extends ChangeNotifier {
-  String? label;
+  String? key;
   String type = 'input';
 
   final controller = TextEditingController();
@@ -58,13 +58,33 @@ class FormNotifier extends ChangeNotifier {
   }
 
   void validate() {
-    List<String> errors = [];
+    List<Map<String, dynamic>> errors = [];
     invalid = false;
 
     void markError(String key, String type, Map<String, dynamic> rule, String message) {
       if (enabled) {
         rules.updateWhere((e) => e['key'] == key && e['type'] == type, {...rule, 'invalid': true});
-        errors.add(message);
+        errors.add({'key': '$key:$type', 'message': message});
+      }
+    }
+
+    for (var rule in rules) {
+      String key = rule['key'];
+      String type = rule['type'];
+      dynamic value = rule['value'];
+
+      String text = controller.text;
+
+      final validators = {
+        'required': () => text.trim().isNotEmpty,
+        'min': () => text.length >= value,
+        'max': () => text.length <= value,
+        'email': () => text.trim().isEmail,
+        'match': () => text == (value as FormNotifier).controller.text,
+      };
+
+      if (validators.containsKey(type) && validators[type]!()) {
+        groupNotifier?.removeBy('$key:$type');
       }
     }
 
@@ -97,18 +117,23 @@ class FormNotifier extends ChangeNotifier {
       }
 
       // match
-      else if (type == 'match' && text != value) {
-        markError(key, type, rule, message);
+      else if (type == 'match') {
+        // in match, value is FormNotifier
+        final notifier = value as FormNotifier;
+
+        if (text != notifier.controller.text) {
+          markError(key, type, rule, message);
+        }
       }
     }
 
     if (errors.isNotEmpty && enabled && feedback == FormFeedback.text) {
       invalid = true;
-      invalidMessage = errors.first;
+      invalidMessage = errors.first['message'];
+    }
 
-      if (groupNotifier != null) {
-        groupNotifier!.toggleInvalid(invalidMessage);
-      }
+    if (groupNotifier != null) {
+      groupNotifier!.addError(errors);
     }
 
     notifyListeners();
@@ -116,18 +141,39 @@ class FormNotifier extends ChangeNotifier {
 }
 
 class FormGroupNotifier extends ChangeNotifier {
-  bool invalid = false;
-  List<String> messages = [];
+  final List<Widget> children;
+  FormGroupNotifier(this.children);
 
-  void toggleInvalid(String message) {
-    messages.add(message);
-    invalid = message.isNotEmpty;
+  bool invalid = false;
+  String message = '';
+  List<Map<String, dynamic>> errors = [];
+
+  void addError(List<Map<String, dynamic>> errors) {
+    this.errors.addAll(errors);
+
+    if (this.errors.isNotEmpty) {
+      invalid = true;
+      message = this.errors.first['message'];
+    } else {
+      invalid = false;
+    }
+
     notifyListeners();
+  }
+
+  void removeBy(String key) {
+    errors.removeWhere((e) => e['key'] == key);
+
+    if (errors.isNotEmpty) {
+      invalid = true;
+      message = errors.first['message'];
+      notifyListeners();
+    }
   }
 
   void clear() {
     invalid = false;
-    messages = [];
+    errors = [];
     notifyListeners();
   }
 }

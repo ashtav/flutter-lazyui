@@ -313,7 +313,7 @@ class FormManager {
           final error = {
             'key': key,
             'type': 'match',
-            'value': controllers[k1]!.text,
+            'value': notifiers[k1],
             'message': message?['$key:match'] ?? 'The field $k2 does not match with the field $k1.'
           };
 
@@ -378,6 +378,7 @@ class LzForm {
 
     for (var e in keys) {
       notifiers[e] = FormNotifier();
+      notifiers[e]?.key = e;
     }
 
     final mdoels =

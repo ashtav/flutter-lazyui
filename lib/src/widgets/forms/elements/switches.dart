@@ -38,7 +38,6 @@ class Switches extends StatelessWidget {
     final notifier = FormNotifier();
 
     notifier.controller.text = initValue.toString();
-    notifier.label = label;
 
     void onChange(bool value) {
       notifier.controller.text = value.toString();

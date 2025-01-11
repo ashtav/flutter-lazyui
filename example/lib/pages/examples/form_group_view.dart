@@ -51,6 +51,8 @@ class FormGroupView extends StatelessWidget {
             onTap: () {
               final form = forms.validate(required: [
                 '*',
+              ], email: [
+                'email'
               ], match: [
                 'password:confirm_password',
               ], message: {

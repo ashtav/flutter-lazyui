@@ -21,7 +21,6 @@ class FormGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final notifier = FormGroupNotifier();
     Color borderColor = context.isDarkMode ? Colors.black26.themeify : Colors.black45;
 
     List<Widget> modifiedChildren(List<Widget> children, bool invalid) {
@@ -38,6 +37,7 @@ class FormGroup extends StatelessWidget {
       ];
     }
 
+    final notifier = FormGroupNotifier(children);
     children.generate((child, i) {
       if (child is Input) {
         child.model?.notifier.groupNotifier = notifier;
@@ -59,7 +59,7 @@ class FormGroup extends StatelessWidget {
             // error message
             SlideAnimate(
                 show: state.invalid,
-                child: Text(state.messages.isEmpty ? '' : state.messages.first, style: Gfont.fs14.red))
+                child: Text(state.message, style: Gfont.fs14.red))
           ],
         ).start);
   }
