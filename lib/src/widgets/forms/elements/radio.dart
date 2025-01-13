@@ -53,8 +53,9 @@ class _RadioState extends State<Radio> {
     if (widget.model != null) {
       notifier = widget.model!.notifier;
       notifier.type = 'radio';
-      initValue();
     }
+
+    initValue();
   }
 
   void initValue() {
