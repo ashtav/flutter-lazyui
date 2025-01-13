@@ -7,8 +7,9 @@ import 'package:lazyui/src/theme/color.dart';
 
 import '../form_model.dart';
 import '../notifier.dart';
+import 'input.dart';
 
-class Number extends StatefulWidget {
+class Number extends StatefulWidget with FormMixin {
   /// The label text displayed above the number input.
   final String? label;
 
@@ -184,20 +185,33 @@ class _NumberState extends State<Number> {
 
     List<TextInputFormatter> formatters = [LengthLimitingTextInputFormatter(11), ...widget.formatters];
 
+    // check if widget is wrapped with FormGroup
+    final attr = widget.getAttribute(context);
+
+    bool isGrouped = attr.isGrouped;
+
     return Column(
       spacing: 10,
       key: widget.model?.key,
       children: [
         // label & indicator
-        Row(
-          children: [
-            if (hasLabel) Text(label!, style: Gfont.fs14),
-          ],
-        ),
+        if (!isGrouped)
+          Row(
+            children: [
+              if (hasLabel) Text(label!, style: Gfont.fs14),
+            ],
+          ),
 
         // textfield
         notifier.watch((state) {
           Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor).darken(state.enabled ? 0 : .05);
+          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped);
+
+          InputBorder? border = state.invalid && !isGrouped
+              ? outlineBorder
+              : isGrouped
+                  ? InputBorder.none
+                  : null;
 
           return Column(
             spacing: 7,
@@ -214,6 +228,7 @@ class _NumberState extends State<Number> {
                   onSubmit: widget.onSubmit,
                   onFocus: widget.onFocus,
                   backgroundColor: background,
+                  border: border,
                   suffixIcon: Row(
                     mainAxisSize: Mas.min,
                     children: [Hi.minusSign, Hi.id, Hi.plusSign].generate((icon, i) {
@@ -234,7 +249,8 @@ class _NumberState extends State<Number> {
                   )),
 
               // error message
-              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+              if (!isGrouped)
+                SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })

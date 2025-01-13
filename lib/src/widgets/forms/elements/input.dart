@@ -205,16 +205,8 @@ class _InputState extends State<Input> {
             );
           }
 
-          Color borderColor = state.invalid
-              ? Colors.red
-              : context.isDarkMode
-                  ? Colors.black26.themeify
-                  : Colors.black45;
-
           double radiusValue = isGrouped ? 0 : config.borderRadius;
-
-          final outlineBorder = OutlineInputBorder(
-              borderRadius: Br.radius(radiusValue), borderSide: BorderSide(color: borderColor, width: .5));
+          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped);
 
           TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
           InputBorder? border = hasOnTap && state.enabled
@@ -258,5 +250,20 @@ class _InputState extends State<Input> {
         })
       ],
     ).start;
+  }
+}
+
+class FormUtils {
+  static OutlineInputBorder getBorder(BuildContext context, bool invalid, bool isGrouped) {
+    Color borderColor = invalid
+        ? Colors.red
+        : context.isDarkMode
+            ? Colors.black26.themeify
+            : Colors.black45;
+
+    double radiusValue = isGrouped ? 0 : config.borderRadius;
+
+    return OutlineInputBorder(
+        borderRadius: Br.radius(radiusValue), borderSide: BorderSide(color: borderColor, width: .5));
   }
 }

@@ -6,7 +6,7 @@ class FormGroupView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final forms = LzForm.make(['email', 'password', 'confirm_password']);
+    final forms = LzForm.make(['email', 'password', 'confirm_password', 'name', 'ticket', 'province', 'city']);
 
     final obscure = Obscure(
       hide: Hi.lockPassword,
@@ -25,6 +25,7 @@ class FormGroupView extends StatelessWidget {
           gap: 25,
           children: [
             FormGroup(
+              label: 'Email & Password',
               children: [
                 LzForm.input(label: 'Email', hint: 'Input email address', model: forms.key('email')),
                 LzForm.input(
@@ -40,6 +41,20 @@ class FormGroupView extends StatelessWidget {
               hint: 'Type password confirmation',
               model: forms.key('confirm_password'),
               suffix: obscure,
+            ),
+            FormGroup(
+              children: [
+                LzForm.input(label: 'Your Name', hint: 'Type your name', model: forms.key('name')),
+                LzForm.number(label: 'Ticket', hint: 'Enter ticket number', model: forms.key('ticket')),
+              ],
+            ),
+            FormGroup(
+              children: [
+                LzForm.select(
+                    label: 'Province', hint: 'Select province', model: forms.key('province'), options: ['Bali']),
+                LzForm.select(
+                    label: 'City', hint: 'Select city', model: forms.key('city'), options: ['Denpasar', 'Tabanan']),
+              ],
             ),
           ],
         ),

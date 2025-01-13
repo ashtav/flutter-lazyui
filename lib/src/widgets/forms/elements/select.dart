@@ -8,8 +8,9 @@ import 'package:lazyui/src/theme/color.dart';
 
 import '../form_model.dart';
 import '../notifier.dart';
+import 'input.dart';
 
-class Select extends StatefulWidget {
+class Select extends StatefulWidget with FormMixin {
   /// The label text displayed above the select input.
   final String? label;
 
@@ -129,16 +130,22 @@ class _SelectState extends State<Select> {
 
     bool hasLabel = ![null, ''].contains(label);
 
+    // check if widget is wrapped with FormGroup
+    final attr = widget.getAttribute(context);
+
+    bool isGrouped = attr.isGrouped;
+
     return Column(
       spacing: 10,
       key: widget.model?.key,
       children: [
         // label & indicator
-        Row(
-          children: [
-            if (hasLabel) Text(label!, style: Gfont.fs14),
-          ],
-        ),
+        if (!isGrouped)
+          Row(
+            children: [
+              if (hasLabel) Text(label!, style: Gfont.fs14),
+            ],
+          ),
 
         // textfield
         notifier.watch((state) {
@@ -147,16 +154,25 @@ class _SelectState extends State<Select> {
           Widget suffixIcon = widget.suffix ?? Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
 
           TextStyle? textStyle = state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
+          double radiusValue = isGrouped ? 0 : config.borderRadius;
 
-          InputBorder? border = OutlineInputBorder(
-              borderRadius: Br.radius(config.borderRadius),
-              borderSide: BorderSide(
-                  color: state.invalid && state.enabled
-                      ? Colors.red
-                      : context.isDarkMode
-                          ? Colors.black26.themeify.darken(state.enabled ? 0 : .7)
-                          : Colors.black45.lighten(state.enabled ? 0 : .7),
-                  width: .5));
+          // InputBorder? border = OutlineInputBorder(
+          //     borderRadius: Br.radius(radiusValue),
+          //     borderSide: BorderSide(
+          //         color: state.invalid && state.enabled
+          //             ? Colors.red
+          //             : context.isDarkMode
+          //                 ? Colors.black26.themeify.darken(state.enabled ? 0 : .7)
+          //                 : Colors.black45.lighten(state.enabled ? 0 : .7),
+          //         width: .5));
+
+          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped);
+
+          InputBorder? border = state.invalid && !isGrouped
+              ? outlineBorder
+              : isGrouped
+                  ? InputBorder.none
+                  : outlineBorder;
 
           return Column(
             spacing: 7,
@@ -172,7 +188,7 @@ class _SelectState extends State<Select> {
                               onSelect: onChange);
                         },
                   color: background,
-                  borderRadius: Br.radius(config.borderRadius),
+                  borderRadius: Br.radius(radiusValue),
                   child: LzTextField(
                       hint: hint,
                       textStyle: textStyle,
@@ -182,7 +198,8 @@ class _SelectState extends State<Select> {
                       border: border)),
 
               // error message
-              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+              if (!isGrouped)
+                SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })

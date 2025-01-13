@@ -132,7 +132,7 @@ class FormNotifier extends ChangeNotifier {
       invalidMessage = errors.first['message'];
     }
 
-    if (groupNotifier != null) {
+    if (groupNotifier != null && feedback == FormFeedback.text) {
       groupNotifier!.addError(errors);
     }
 
