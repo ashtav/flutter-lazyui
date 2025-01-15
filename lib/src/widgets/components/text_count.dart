@@ -31,7 +31,7 @@ part of '../widget.dart';
 ///
 /// This widget is useful for animating counts such as scores, financial data,
 /// or any numeric value that changes over time.
-class LzTextCount extends StatefulWidget {
+class TextCounter extends StatefulWidget {
   /// The starting value of the count animation.
   final double begin;
 
@@ -88,11 +88,11 @@ class LzTextCount extends StatefulWidget {
   /// Defaults to an empty string.
   final String suffix;
 
-  /// Creates a [LzTextCount] widget.
+  /// Creates a [TextCounter] widget.
   ///
   /// The [end] value is required, while other parameters such as [begin],
   /// [precision], [curve], and [duration] have default values.
-  const LzTextCount({
+  const TextCounter({
     super.key,
     this.begin = 0,
     required this.end,
@@ -114,10 +114,10 @@ class LzTextCount extends StatefulWidget {
   });
 
   @override
-  State<LzTextCount> createState() => _LzTextCountState();
+  State<TextCounter> createState() => _TextCounterState();
 }
 
-class _LzTextCountState extends State<LzTextCount> with TickerProviderStateMixin {
+class _TextCounterState extends State<TextCounter> with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   double? _latestBegin;
@@ -138,7 +138,7 @@ class _LzTextCountState extends State<LzTextCount> with TickerProviderStateMixin
   }
 
   @override
-  void didUpdateWidget(LzTextCount oldWidget) {
+  void didUpdateWidget(TextCounter oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     // Update the duration if it has changed
@@ -168,7 +168,7 @@ class _LzTextCountState extends State<LzTextCount> with TickerProviderStateMixin
     _latestEnd = widget.end;
     _controller.forward();
 
-    return _LzTextCountAnimatedText(
+    return _TextCounterAnimatedText(
       key: UniqueKey(),
       animation: _animation,
       precision: widget.precision,
@@ -188,7 +188,7 @@ class _LzTextCountState extends State<LzTextCount> with TickerProviderStateMixin
   }
 }
 
-class _LzTextCountAnimatedText extends AnimatedWidget {
+class _TextCounterAnimatedText extends AnimatedWidget {
   final RegExp reg = RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))');
 
   final Animation<double> animation;
@@ -206,7 +206,7 @@ class _LzTextCountAnimatedText extends AnimatedWidget {
   final String? prefix;
   final String? suffix;
 
-  _LzTextCountAnimatedText({
+  _TextCounterAnimatedText({
     super.key,
     required this.animation,
     required this.precision,

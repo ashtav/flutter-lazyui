@@ -1,7 +1,7 @@
 part of '../widget.dart';
 
 /// A countdown timer widget that displays the time remaining until a specified expiration time.
-class LzCountDown extends StatelessWidget {
+class TimerCountDown extends StatelessWidget {
   /// The time when the countdown expires.
   final DateTime expiredTime;
 
@@ -12,12 +12,12 @@ class LzCountDown extends StatelessWidget {
   /// formatted as a two-digit string.
   final Widget Function(String d, String h, String m, String s) builder;
 
-  /// Creates an [LzCountDown] widget.
+  /// Creates an [TimerCountDown] widget.
   ///
   /// The [expiredTime] parameter specifies the time when the countdown expires and
   /// must not be null. The [builder] parameter is a required callback function that
   /// must not be null.
-  const LzCountDown(
+  const TimerCountDown(
     this.expiredTime, {
     super.key,
     required this.builder,

@@ -28,7 +28,7 @@ class TextCountView extends StatelessWidget {
                 Row(
                   children: [
                     Text('Count from 0 to $end = '),
-                    LzTextCount(
+                    TextCounter(
                       begin: 0,
                       end: end,
                       duration: 7.s,

@@ -101,7 +101,7 @@ extension CustomStringExtension on String {
   bool get isEmail => RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(this);
 }
 
-extension LzNullableStringExtension on String? {
+extension CustomNullableStringExtension on String? {
   /// Formats the value as Indonesian Rupiah (IDR).
   ///
   /// Example:

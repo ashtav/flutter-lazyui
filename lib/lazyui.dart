@@ -6,6 +6,8 @@ import 'src/colors/color.dart';
 import 'src/config/config.dart';
 import 'src/icons/icons.dart';
 import 'src/models/lazy_config.dart';
+import 'src/utilities/lz/file.dart';
+import 'src/utilities/utilities.dart';
 
 export 'src/extensions/extension.dart';
 export 'src/icons/icons.dart';
@@ -17,6 +19,8 @@ export 'src/widgets/widget.dart';
 
 class Lz {
   static LzColor get color => LzColor();
+  static Files get file => Files();
+  static Utils get utils => Utils();
 }
 
 class LazyUi {

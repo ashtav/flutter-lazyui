@@ -1,7 +1,7 @@
 part of '../extension.dart';
 
 /// Extends the functionality of the [DateTime?] class with additional methods.
-extension LzDateTimeNullableExtension on DateTime? {
+extension CustomDateTimeNullableExtension on DateTime? {
   /// https://api.flutter.dev/flutter/intl/DateFormat-class.html
   /// ```dart
   /// DateTime.now().format(); // 2022-11-05
@@ -13,7 +13,7 @@ extension LzDateTimeNullableExtension on DateTime? {
 }
 
 /// Extends the functionality of the [DateTime] class with additional methods.
-extension DateTimeExtension on DateTime {
+extension CustomDateTimeExtension on DateTime {
   /// https://api.flutter.dev/flutter/intl/DateFormat-class.html
   /// ```dart
   /// DateTime.now().format(); // 2022-11-05

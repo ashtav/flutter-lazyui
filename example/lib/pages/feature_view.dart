@@ -96,8 +96,8 @@ class FeatureView extends StatelessWidget {
       'LzTheme': const ThemeView(),
       'LzImage': const ImageView(),
       'Refreshtor': const RefreshtorView(),
-      'LzCountDown': const CountdownView(),
-      'LzTextCount': const TextCountView(),
+      'TimerCountDown': const CountdownView(),
+      'TextCounter': const TextCountView(),
       'LzListView': const ListViewView(),
       'Trainer': const TrainerView()
     };

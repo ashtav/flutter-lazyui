@@ -101,7 +101,7 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+      if (Lz.utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
         controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
       }
     }

@@ -1,7 +1,7 @@
 part of '../extension.dart';
 
 /// Extends the functionality of the [List<T>] class with additional methods and properties.
-extension LzListExtension<T> on List<T> {
+extension CustomListExtension<T> on List<T> {
   /// ```dart
   /// ['a', 'b', '4', 'e', '1'].getRandom() // ['e']
   /// ```
@@ -261,7 +261,7 @@ extension LzRangeIteration on List<int> {
 }
 
 /// Extension on [List<IconData>] providing convenience methods for generating icon buttons.
-extension LzIconButtonExtension on List<IconData> {
+extension CustomIconButtonExtension on List<IconData> {
   /// Generates a list of [IconButton] widgets based on the list of [IconData].
   ///
   /// [onTap]: Callback function triggered when an icon button is tapped. Receives the index of the tapped icon.

@@ -3,7 +3,7 @@ import 'package:lazyui/src/config/config.dart';
 
 import 'icons.dart';
 
-enum IconSet { chevron, search, eye, eyeOff, sun, moon, eraser, backspace }
+enum IconSet { chevron, search, eye, eyeOff, sun, moon, eraser, backspace, info }
 
 Map<IconType, IconData> chevrons = {
   IconType.huge: Hi.arrowDown01,
@@ -41,6 +41,12 @@ Map<IconType, IconData> backspaces = {
   IconType.lineAwesome: La.backspace
 };
 
+Map<IconType, IconData> infos = {
+  IconType.huge: Hi.informationCircle,
+  IconType.tabler: Ti.infoCircle,
+  IconType.lineAwesome: La.infoCircle
+};
+
 Map<IconSet, IconData?> icons = {
   IconSet.chevron: chevrons[config.icon],
   IconSet.search: searches[config.icon],
@@ -50,6 +56,7 @@ Map<IconSet, IconData?> icons = {
   IconSet.moon: moons[config.icon],
   IconSet.eraser: erasers[config.icon],
   IconSet.backspace: backspaces[config.icon],
+  IconSet.info: infos[config.icon],
 };
 
 class ConfigIcon {

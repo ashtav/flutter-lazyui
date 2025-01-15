@@ -114,7 +114,7 @@ class LzImage<T> extends StatelessWidget {
       // image path local asset
       else {
         // local assets path
-        src = 'assets/images/$src';
+        src = src.contains(':') ? src.replaceAll(':', '') : 'assets/images/$src';
 
         // svg asset image
         if (src.endsWith('.svg')) {
