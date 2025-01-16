@@ -38,10 +38,7 @@ class TestView extends StatelessWidget {
         ),
         body: Column(
           children: [
-            LzTabView(
-              tabs: Faker.list.category(15, unique: true),
-            ),
           ],
-        ));
+        ).start.gap(25).margin(all: 20));
   }
 }

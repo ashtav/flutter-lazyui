@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/config/config.dart';
+
 import 'shimmer_package.dart' as shimmer;
 
 /// A customizable widget for creating shimmer effects, typically used as
@@ -44,8 +45,7 @@ class Shimmer extends StatelessWidget {
     Color color = context.isDarkMode ? '212121'.hex : 'E0E0E0'.hex;
     Color highlight = context.isDarkMode ? '2F2F2F'.hex : 'F5F5F5'.hex;
 
-    BorderRadiusGeometry? radius =
-        this.radius ?? Br.radius(config.borderRadius);
+    BorderRadiusGeometry? radius = this.radius ?? Br.radius(config.borderRadius);
 
     return shimmer.Shimmer.fromColors(
       baseColor: color,
@@ -58,6 +58,33 @@ class Shimmer extends StatelessWidget {
           borderRadius: radius,
         ),
       ),
+    );
+  }
+
+  static Column iterate(int length, dynamic size,
+      {CrossAxisAlignment alignment = CrossAxisAlignment.start, double gap = 5}) {
+    return Column(
+      crossAxisAlignment: alignment,
+      children: length.generate((i) => Shimmer(size: size)),
+    ).start.gap(gap);
+  }
+
+  /// Ready-to-use skeleton with card style
+  static Widget card({bool thumbnail = false, BoxBorder? border}) {
+    return Container(
+      padding: Ei.all(20),
+      decoration: BoxDecoration(border: border, color: Colors.white, borderRadius: Br.radius(config.borderRadius)),
+      child: Row(
+        children: [
+          if (thumbnail)
+            const Shimmer(
+              size: 50,
+            ),
+          Shimmer.iterate(2, [
+            [100, 200]
+          ])
+        ],
+      ).gap(15),
     );
   }
 }

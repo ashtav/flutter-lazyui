@@ -150,15 +150,11 @@ class _LzListViewState extends State<LzListView> {
     List<Widget> children = widget.children;
     List<Widget> newChildren = [];
 
-    final ignore = [SizedBox, None];
-
     if (widget.gap != null && children.length > 1) {
       for (int i = 0; i < children.length; i++) {
-        final child = children[i];
+        newChildren.add(children[i]);
 
-        newChildren.add(child);
-
-        if (i != children.length - 1 && ignore.contains(child.runtimeType)) {
+        if (i != children.length - 1) {
           newChildren.add(SizedBox(height: widget.gap!));
         }
       }
