@@ -339,7 +339,9 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
   void _calculateDragOffset(double containerExtent) {
     if (controller.state.isCanceling ||
         controller.state.isFinalizing ||
-        controller.state.isLoading) return;
+        controller.state.isLoading) {
+      return;
+    }
 
     double newValue;
 

@@ -23,7 +23,10 @@ export 'utilities/refreshtor/refreshtor.dart';
 export 'utilities/trainer/trainer.dart';
 
 part 'animations/blink_animate.dart';
+part 'animations/ripple.dart';
 part 'animations/slide_animate.dart';
+part 'animations/switcher.dart';
+part 'animations/typing.dart';
 part 'animations/zoom.dart';
 part 'components/accordion.dart';
 part 'components/avatar.dart';

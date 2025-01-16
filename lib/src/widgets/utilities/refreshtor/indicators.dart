@@ -34,10 +34,12 @@ class IndicatorStateChange {
   /// Checks if a state change matches the given conditions.
   bool didChange({IndicatorState? from, IndicatorState? to}) {
     if (from == null && to == null) return currentState != newState;
-    if (from != null && to == null)
+    if (from != null && to == null) {
       return currentState == from && currentState != newState;
-    if (from == null && to != null)
+    }
+    if (from == null && to != null) {
       return newState == to && currentState != newState;
+    }
     return currentState == from && newState == to;
   }
 

@@ -1,39 +1,39 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# LazyUi
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+LazyUi is a collection of widgets and utilities designed to simplify and speed up the app development process with Flutter. It's an essential tool for developers seeking cleaner code and quicker results.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+> [!IMPORTANT]
+> This project is a collection of functions and widgets created based on personal needs with the aim of free customization. There may still be many bugs and shortcomings when used.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+To use this plugin, add `lazyui` as a [dependency in your pubspec.yaml file](https://flutter.dev/platform-plugins/).
+
+## Get Started
+In your `main.dart` file, initialize LazyUi by calling the init method:
 
 ```dart
-const like = 'sample';
+void main() {
+    // init lazyui
+    LazyUi.init();
+
+    runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+    const MyApp({super.key});
+
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            title: 'App',
+            theme: LzTheme.light,
+            home: const HomeView()
+        );
+    }
+}
 ```
 
-## Additional information
+This personal project provides documentation in the form of code examples, which can be found in the example section for more information and usage demos.
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+For more information and examples, see the [example](https://github.com/ashtav/flutter-lazyui/tree/master/example).

@@ -3,6 +3,7 @@ import 'package:lazyui/lazyui.dart';
 
 class Notifier extends ChangeNotifier {
   int active = 0;
+  bool show = false;
 
   void toggle() {
     active++;
@@ -11,6 +12,7 @@ class Notifier extends ChangeNotifier {
       active = 0;
     }
 
+    show = !show;
     notifyListeners();
   }
 }
@@ -39,11 +41,6 @@ class TestView extends StatelessWidget {
             LzTabView(
               tabs: Faker.list.category(15, unique: true),
             ),
-            Expanded(
-                child: LzListView(
-              gap: 25,
-              children: [Text(Faker.words(15))],
-            ))
           ],
         ));
   }
