@@ -56,7 +56,12 @@ class ToastNotifier extends ChangeNotifier {
     clear[type]?.call();
   }
 
-  void show(String message, {Duration? duration, Alignment? align, Color? color, IconData? icon, int? maxLength}) {
+  void show(String message,
+      {Duration? duration,
+      Alignment? align,
+      Color? color,
+      IconData? icon,
+      int? maxLength}) {
     _visible(Type.toast, duration);
 
     this.message.toast = message;
@@ -78,7 +83,8 @@ class ToastNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void progress(String message, double Function() progress, {Function()? onCancel}) {
+  void progress(String message, double Function() progress,
+      {Function()? onCancel}) {
     progressValue = 0;
     progressTimer?.cancel();
     toastTimer?.cancel();

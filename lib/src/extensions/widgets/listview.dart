@@ -1,5 +1,3 @@
 part of '../extension.dart';
 
-extension CustomListViewExtension on ListView {
-  
-}
+extension CustomListViewExtension on ListView {}

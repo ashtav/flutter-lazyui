@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// Clamps the value of a parent animation within a specified range.
-class ClampedAnimation extends Animation<double> with AnimationWithParentMixin<double> {
+class ClampedAnimation extends Animation<double>
+    with AnimationWithParentMixin<double> {
   const ClampedAnimation({
     required this.parent,
     required this.min,
@@ -20,7 +21,8 @@ class ClampedAnimation extends Animation<double> with AnimationWithParentMixin<d
 }
 
 /// Transforms the value of a parent animation from one range to another.
-class TransformedAnimation extends Animation<double> with AnimationWithParentMixin<double> {
+class TransformedAnimation extends Animation<double>
+    with AnimationWithParentMixin<double> {
   const TransformedAnimation({
     required this.parent,
     required this.fromMin,
@@ -36,7 +38,8 @@ class TransformedAnimation extends Animation<double> with AnimationWithParentMix
 
   @override
   double get value {
-    return (parent.value - fromMin) / (fromMax - fromMin) * (toMax - toMin) + toMin;
+    return (parent.value - fromMin) / (fromMax - fromMin) * (toMax - toMin) +
+        toMin;
   }
 
   @override

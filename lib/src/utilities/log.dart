@@ -25,7 +25,8 @@ Map<LogColor, String> _colors = {
 /// String coloredValue = colorize('Hello', LogColor.red);
 /// print(coloredValue); // Prints the value 'Hello' in red color.
 /// ```
-String _colorize(String value, LogColor color) => '\x1B[${_colors[color]}$value\x1B[0m';
+String _colorize(String value, LogColor color) =>
+    '\x1B[${_colors[color]}$value\x1B[0m';
 
 /// Prints a log message with optional color, length limit, and name.
 ///
@@ -39,7 +40,11 @@ String _colorize(String value, LogColor color) => '\x1B[${_colors[color]}$value\
 /// ```dart
 /// logg('lorem ipsum', color: LogColor.red, limit: 3000);
 /// ```
-void logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, String? name, bool nolimit = false}) {
+void logg(dynamic value,
+    {LogColor color = LogColor.yellow,
+    int limit = 500,
+    String? name,
+    bool nolimit = false}) {
   // Get the string representation of the value
   String valueString = '$value';
 
@@ -56,7 +61,8 @@ void logg(dynamic value, {LogColor color = LogColor.yellow, int limit = 500, Str
   String message = _colorize(subStr, color);
 
   // Add ellipsis if the substring is shorter than the original value
-  String logMessage = subStr.length < valueString.length ? '$message.....' : message;
+  String logMessage =
+      subStr.length < valueString.length ? '$message.....' : message;
 
   // Print the log message on the debug console
   log(logMessage, name: name ?? 'LOG');

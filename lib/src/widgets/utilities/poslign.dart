@@ -26,7 +26,12 @@ class Poslign extends StatelessWidget {
   final bool ignoring;
 
   /// Creates a new instance of `Poslign`.
-  const Poslign({super.key, required this.alignment, this.child, this.ignoring = false, this.margin});
+  const Poslign(
+      {super.key,
+      required this.alignment,
+      this.child,
+      this.ignoring = false,
+      this.margin});
 
   @override
   Widget build(BuildContext context) {

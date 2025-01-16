@@ -29,11 +29,16 @@ class _BarIndicator extends StatelessWidget {
               padding: Ei.sym(v: 5, h: 15),
               child: BlinkAnimate(
                 isAnimated: isArmed,
-                child: Text(isArmed ? 'Release to refresh' : 'Pull down to refresh',
-                    textAlign: Ta.center, style: Gfont.fbold(isArmed).fs13),
+                child: Text(
+                    isArmed ? 'Release to refresh' : 'Pull down to refresh',
+                    textAlign: Ta.center,
+                    style: Gfont.fbold(isArmed).fs13),
               )),
         ),
-        Container(height: .3, width: context.width * value, color: Colors.black.themeify.applyOpacity(value.clamp(0, 1))),
+        Container(
+            height: .3,
+            width: context.width * value,
+            color: Colors.black.themeify.applyOpacity(value.clamp(0, 1))),
       ],
     );
   }
@@ -56,7 +61,8 @@ class _CurvedShapePainter extends CustomPainter {
     final path = Path();
     path.moveTo(0, 0);
     path.lineTo(0, size.height);
-    path.quadraticBezierTo(size.width / 2, size.height + (150 * value), size.width, size.height);
+    path.quadraticBezierTo(
+        size.width / 2, size.height + (150 * value), size.width, size.height);
     path.lineTo(size.width, 0);
     path.close();
 
@@ -99,8 +105,12 @@ class _CurveIndicator extends StatelessWidget {
                     opacity: value > .4 ? 1 : 0,
                     child: BlinkAnimate(
                       isAnimated: isArmed,
-                      child: Text(isArmed ? 'Release to refresh' : 'Pull down to refresh',
-                          style: Gfont.fs13.fbold(isArmed), textAlign: Ta.center),
+                      child: Text(
+                          isArmed
+                              ? 'Release to refresh'
+                              : 'Pull down to refresh',
+                          style: Gfont.fs13.fbold(isArmed),
+                          textAlign: Ta.center),
                     )),
               ),
             ))
@@ -132,8 +142,12 @@ class _ArrowIndicator extends StatelessWidget {
       child: Container(
         margin: Ei.only(t: 35 * value),
         padding: Ei.all(10),
-        decoration: BoxDecoration(shape: BoxShape.circle, color: context.isDarkMode ? darkAppbarColor : Colors.white),
-        child: BlinkAnimate(isAnimated: isArmed, child: Icon(isArmed ? Ti.arrowUp : Ti.arrowDown)),
+        decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: context.isDarkMode ? darkAppbarColor : Colors.white),
+        child: BlinkAnimate(
+            isAnimated: isArmed,
+            child: Icon(isArmed ? Ti.arrowUp : Ti.arrowDown)),
       ),
     );
   }

@@ -63,7 +63,8 @@ class Touch extends StatelessWidget {
               borderRadius: borderRadius,
               child: Container(
                   padding: padding,
-                  decoration: BoxDecoration(border: border, borderRadius: borderRadius),
+                  decoration:
+                      BoxDecoration(border: border, borderRadius: borderRadius),
                   child: child),
             );
           }),
@@ -82,7 +83,10 @@ class Touch extends StatelessWidget {
         child: Container(
             padding: padding,
             margin: margin,
-            decoration: BoxDecoration(color: backgroundColor, border: border, borderRadius: borderRadius),
+            decoration: BoxDecoration(
+                color: backgroundColor,
+                border: border,
+                borderRadius: borderRadius),
             child: child));
   }
 }

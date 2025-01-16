@@ -21,8 +21,11 @@ class AccordionView extends StatelessWidget {
           ),
           LzAccordion(
             children: [
-              LzAccordionContent(title: 'What is Flutter?', child: Text(Faker.words(20))),
-              LzAccordionContent(title: 'How to become flutter developer?', child: Text(Faker.words(20))),
+              LzAccordionContent(
+                  title: 'What is Flutter?', child: Text(Faker.words(20))),
+              LzAccordionContent(
+                  title: 'How to become flutter developer?',
+                  child: Text(Faker.words(20))),
             ],
           )
         ],

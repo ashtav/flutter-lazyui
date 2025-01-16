@@ -107,7 +107,9 @@ class _CheckboxState extends State<Checkbox> {
               ),
 
               // error message
-              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+              SlideAnimate(
+                  show: state.invalid,
+                  child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })
@@ -139,12 +141,17 @@ class _Square extends StatelessWidget {
                 duration: 100.ms,
                 decoration: BoxDecoration(
                     borderRadius: Br.radius(config.borderRadius),
-                    color: context.isDarkMode ? darkAppbarColor.lighten(.05) : backgroundColor,
-                    border: Br.all(color: config.primaryColor, width: active ? 11 : .5)),
+                    color: context.isDarkMode
+                        ? darkAppbarColor.lighten(.05)
+                        : backgroundColor,
+                    border: Br.all(
+                        color: config.primaryColor, width: active ? 11 : .5)),
               ),
               Poslign.center(
                   child: AnimatedOpacity(
-                      duration: 150.ms, opacity: active ? 1 : 0, child: Icon(Hi.tick02, size: 18, color: Colors.white)))
+                      duration: 150.ms,
+                      opacity: active ? 1 : 0,
+                      child: Icon(Hi.tick02, size: 18, color: Colors.white)))
             ],
           ),
           Text(option)

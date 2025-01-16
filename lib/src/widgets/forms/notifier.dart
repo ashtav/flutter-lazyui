@@ -61,9 +61,11 @@ class FormNotifier extends ChangeNotifier {
     List<Map<String, dynamic>> errors = [];
     invalid = false;
 
-    void markError(String key, String type, Map<String, dynamic> rule, String message) {
+    void markError(
+        String key, String type, Map<String, dynamic> rule, String message) {
       if (enabled) {
-        rules.updateWhere((e) => e['key'] == key && e['type'] == type, {...rule, 'invalid': true});
+        rules.updateWhere((e) => e['key'] == key && e['type'] == type,
+            {...rule, 'invalid': true});
         errors.add({'key': '$key:$type', 'message': message});
       }
     }

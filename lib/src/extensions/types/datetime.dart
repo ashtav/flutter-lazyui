@@ -6,7 +6,8 @@ extension CustomDateTimeNullableExtension on DateTime? {
   /// ```dart
   /// DateTime.now().format(); // 2022-11-05
   /// ```
-  String format([String format = 'yyyy-MM-dd', bool toLocal = false, String? locale]) {
+  String format(
+      [String format = 'yyyy-MM-dd', bool toLocal = false, String? locale]) {
     final date = this ?? DateTime.now();
     return DateFormat(format, locale).format(toLocal ? date.toLocal() : date);
   }
@@ -73,7 +74,10 @@ extension CustomDateTimeExtension on DateTime {
   /// ```
   /// The optional [format] parameter allows for custom date formatting.
   List<String> monthRange([String format = 'yyyy-MM-dd']) {
-    return [DateTime(year, month, 1).format(format), DateTime(year, month, daysInMonth).format(format)];
+    return [
+      DateTime(year, month, 1).format(format),
+      DateTime(year, month, daysInMonth).format(format)
+    ];
   }
 
   /// Returns a list of full month names, formatted according to the specified format and locale.

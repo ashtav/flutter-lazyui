@@ -47,7 +47,8 @@ class DateRangePickerWidget extends StatelessWidget {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
     final notifier = DateRangePickerNotifier();
-    notifier.onInitialized(formats, initDate: initDate, minDate: minDate, maxDate: maxDate);
+    notifier.onInitialized(formats,
+        initDate: initDate, minDate: minDate, maxDate: maxDate);
 
     double height = context.height * .5;
 
@@ -57,7 +58,9 @@ class DateRangePickerWidget extends StatelessWidget {
 
     return ScrollGlowless(
       child: Container(
-        decoration: BoxDecoration(color: context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
+        decoration: BoxDecoration(
+            color:
+                context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
         child: Stack(
           children: [
             Container(
@@ -68,8 +71,10 @@ class DateRangePickerWidget extends StatelessWidget {
                   children: formats.generate((format, i) {
                     final items = notifier.generateDate(format);
                     return Container(
-                        decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
-                        child: CupertinoPickerWidget(notifier, format: format, items: items, style: style));
+                        decoration: BoxDecoration(
+                            border: Br.only(['l'], except: i == 0)),
+                        child: CupertinoPickerWidget(notifier,
+                            format: format, items: items, style: style));
                   }),
                 ),
               ),
@@ -85,7 +90,8 @@ class DateRangePickerWidget extends StatelessWidget {
               buttonColor: style?.buttonColor,
               onConfirm: () {
                 if (notifier.openTimePicker) {
-                  notifier.times[notifier.dateIndex] = Time(notifier.values['h']!, notifier.values['i']!);
+                  notifier.times[notifier.dateIndex] =
+                      Time(notifier.values['h']!, notifier.values['i']!);
                   notifier.updateDateTime();
                   notifier.toggleTimePicker();
                   return;
@@ -95,8 +101,10 @@ class DateRangePickerWidget extends StatelessWidget {
               },
               onCancel: () {
                 if (notifier.openTimePicker) {
-                  notifier.values['h'] = notifier.times[notifier.dateIndex].hour;
-                  notifier.values['i'] = notifier.times[notifier.dateIndex].minute;
+                  notifier.values['h'] =
+                      notifier.times[notifier.dateIndex].hour;
+                  notifier.values['i'] =
+                      notifier.times[notifier.dateIndex].minute;
                   notifier.toggleTimePicker();
                   return;
                 }
@@ -168,7 +176,8 @@ class CupertinoPickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int length = notifier.controller.keys.length;
-    bool isYearOnly = notifier.controller.keys.toList().contains('y') && length == 1;
+    bool isYearOnly =
+        notifier.controller.keys.toList().contains('y') && length == 1;
 
     double magnification = this.magnification ?? (isYearOnly ? 1.5 : 1);
     double itemExtent = this.itemExtent ?? (isYearOnly ? 45 : 40);
@@ -183,10 +192,12 @@ class CupertinoPickerWidget extends StatelessWidget {
         itemExtent: itemExtent,
         diameterRatio: diameterRatio,
         squeeze: squeeze,
-        scrollController: notifier.controller[format] ?? FixedExtentScrollController(initialItem: 0),
+        scrollController: notifier.controller[format] ??
+            FixedExtentScrollController(initialItem: 0),
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
-          decoration: BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
+          decoration:
+              BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
         ),
         onSelectedItemChanged: (int i) => notifier.onChange(i, format),
         children: items.generate((item, i) {
@@ -240,7 +251,9 @@ class TimePicker extends StatelessWidget {
               borderRadius: Br.radius(config.borderRadius),
               child: AnimatedContainer(
                 duration: 350.ms,
-                curve: isOpened ? Curves.easeInOutBack : Curves.fastEaseInToSlowEaseOut,
+                curve: isOpened
+                    ? Curves.easeInOutBack
+                    : Curves.fastEaseInToSlowEaseOut,
                 height: isOpened ? 250 : 35,
                 width: isOpened ? context.width - 40 : 120,
                 child: Center(
@@ -252,7 +265,8 @@ class TimePicker extends StatelessWidget {
                             final items = notifier.generateDate(format);
 
                             return Container(
-                              decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
+                              decoration: BoxDecoration(
+                                  border: Br.only(['l'], except: i == 0)),
                               child: CupertinoPickerWidget(notifier,
                                   format: format,
                                   items: items,
@@ -307,7 +321,9 @@ class StartEndDate extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: (context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
+                color: (context.isDarkMode
+                    ? darkAppbarColor
+                    : scaffoldBackgroundColor),
                 spreadRadius: 25,
                 blurRadius: 35,
                 offset: const Offset(0, -5),
@@ -330,7 +346,9 @@ class StartEndDate extends StatelessWidget {
                     bool isTo = i == 1;
 
                     IconData arrow = isFirstDate ? Ti.arrowLeft : Ti.arrowRight;
-                    Color textColor = state.dateIndex == ii ? Colors.orange : Colors.black54.themeify;
+                    Color textColor = state.dateIndex == ii
+                        ? Colors.orange
+                        : Colors.black54.themeify;
 
                     return Expanded(
                       flex: isTo ? 0 : 1,
@@ -341,7 +359,10 @@ class StartEndDate extends StatelessWidget {
                         child: Center(
                             child: isTo
                                 ? Icon(arrow, color: Colors.black38.themeify)
-                                : Text(text, style: config.font.fcolor(textColor).fbold(state.dateIndex == ii))),
+                                : Text(text,
+                                    style: config.font
+                                        .fcolor(textColor)
+                                        .fbold(state.dateIndex == ii))),
                       ),
                     );
                   })),

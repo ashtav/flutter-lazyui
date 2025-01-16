@@ -21,7 +21,6 @@ mixin OverscrollState {
   void clearOverscroll() {
     _overscroll = 0;
   }
-  
 }
 
 /// Scroll physics that handle overscroll by clamping the scroll offset to

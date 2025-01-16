@@ -25,7 +25,9 @@ class _LzToastOverlayState extends State<_LzToastOverlay> {
     return Material(
       child: Overlay(
         initialEntries: [
-          _LzToastOverlayEntry(overlayBuilder: (BuildContext context) => widget.child ?? const SizedBox()),
+          _LzToastOverlayEntry(
+              overlayBuilder: (BuildContext context) =>
+                  widget.child ?? const SizedBox()),
           overlayEntry,
         ],
       ),
@@ -36,5 +38,6 @@ class _LzToastOverlayState extends State<_LzToastOverlay> {
 class _LzToastOverlayEntry extends OverlayEntry {
   final WidgetBuilder overlayBuilder;
 
-  _LzToastOverlayEntry({required this.overlayBuilder}) : super(builder: overlayBuilder);
+  _LzToastOverlayEntry({required this.overlayBuilder})
+      : super(builder: overlayBuilder);
 }

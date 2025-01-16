@@ -113,7 +113,8 @@ class _SliderState extends State<Slider> {
     Color activeColor = config.primaryColor;
     Color inactiveColor = context.isDarkMode ? Colors.white12 : Colors.black12;
     Color activeTickMarkColor = config.primaryColor;
-    Color inactiveTickMarkColor = context.isDarkMode ? Colors.white12 : Colors.black12;
+    Color inactiveTickMarkColor =
+        context.isDarkMode ? Colors.white12 : Colors.black12;
     Color valueIndicatorColor = config.primaryColor;
     Color thumbColor = config.primaryColor;
 
@@ -195,13 +196,16 @@ class _SlideLiner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Poslign(
-        alignment: alignment == 'l' ? Alignment.centerLeft : Alignment.centerRight,
+        alignment:
+            alignment == 'l' ? Alignment.centerLeft : Alignment.centerRight,
         child: Container(
           height: height,
           width: 10.1,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: alignment == 'l' ? Br.radiusOnly(ltb: 5) : Br.radiusOnly(rtb: 5),
+            borderRadius: alignment == 'l'
+                ? Br.radiusOnly(ltb: 5)
+                : Br.radiusOnly(rtb: 5),
           ),
         ));
   }

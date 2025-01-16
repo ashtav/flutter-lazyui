@@ -8,17 +8,11 @@ class ImageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String imageURL = 'https://cdn3.pixelcut.app/7/20/uncrop_hero_bdf08a8ca6.jpg';
-    String imageGIF = 'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/893964104784767.5f6aa6e12f6cf.gif';
+    String imageURL = Faker.image(Fit.random, 5);
+    String imageGIF =
+        'https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/893964104784767.5f6aa6e12f6cf.gif';
 
-    final images = [
-      'https://wallpapers.com/images/featured/aesthetic-pictures-hv6f88paqtseqh92.jpg',
-      'https://cdn.thewirecutter.com/wp-content/media/2021/09/pencils-2048px-6614.jpg',
-      'https://i.pinimg.com/736x/06/b7/2e/06b72e74b9542bf98911bdb09203f5d6.jpg',
-      'https://images.squarespace-cdn.com/content/v1/63dde481bbabc6724d988548/52305290-a32b-495c-b8ef-12732dcc5384/_d9ce6864-762e-405a-bbbc-c8277cc0c946.jpg',
-      'https://d2bzx2vuetkzse.cloudfront.net/fit-in/0x450/unshoppable_producs/f5d32129-3b0b-4abb-997e-2a2a03c21a77.png',
-      'https://st.depositphotos.com/7595566/53720/i/450/depositphotos_537204930-stock-photo-delicate-beige-peony-flower-aesthetic.jpg'
-    ];
+    final images = Faker.list.image(6, Fit.random);
 
     return Scaffold(
       appBar: AppBar(
@@ -92,7 +86,9 @@ class ImageList extends StatelessWidget {
           spacing: 3,
           children: col.generate((image, j) {
             return Expanded(
-                flex: (i + j) == 2 ? 2 : 1, child: LzImage(image, size: [context.width, 100], previewable: true));
+                flex: (i + j) == 2 ? 2 : 1,
+                child: LzImage(image,
+                    size: [context.width, 100], previewable: true));
           }),
         );
       }),
@@ -107,7 +103,8 @@ List<List<T>> _chunk<T>(List<T> array, int chunkSize) {
 
   List<List<T>> chunks = [];
   for (int i = 0; i < array.length; i += chunkSize) {
-    chunks.add(array.sublist(i, i + chunkSize > array.length ? array.length : i + chunkSize));
+    chunks.add(array.sublist(
+        i, i + chunkSize > array.length ? array.length : i + chunkSize));
   }
   return chunks;
 }

@@ -34,8 +34,9 @@ class Files {
   /// ```
   Future uint8ListToFile(Uint8List value, {String? filename}) async {
     final Directory tempDir = await getTemporaryDirectory();
-    File file =
-        await File('${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png').create();
+    File file = await File(
+            '${tempDir.path}/${filename ?? DateTime.now().millisecondsSinceEpoch.toString()}.png')
+        .create();
     file.writeAsBytesSync(value);
 
     return file;
@@ -87,6 +88,7 @@ class Files {
     ByteData bytes = await rootBundle.load('assets/$path');
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/$fileName.png');
-    return await file.writeAsBytes(bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
+    return await file.writeAsBytes(
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes));
   }
 }

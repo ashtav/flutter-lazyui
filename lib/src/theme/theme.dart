@@ -10,7 +10,8 @@ import '../config/config.dart';
 void _applyTheme(bool isDarkMode) {
   config = config.copyWith(
       theme: isDarkMode ? ThemeMode.dark : ThemeMode.light,
-      backgroundColor: isDarkMode ? darkBackgroundColor : scaffoldBackgroundColor,
+      backgroundColor:
+          isDarkMode ? darkBackgroundColor : scaffoldBackgroundColor,
       borderColor: isDarkMode ? Colors.white10 : Colors.black12);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -18,7 +19,8 @@ void _applyTheme(bool isDarkMode) {
     statusBarIconBrightness: null,
     statusBarColor: Colors.transparent,
     systemNavigationBarDividerColor: null,
-    systemNavigationBarColor: isDarkMode ? darkBackgroundColor : backgroundColor,
+    systemNavigationBarColor:
+        isDarkMode ? darkBackgroundColor : backgroundColor,
   ));
 }
 
@@ -35,7 +37,8 @@ class _ThemeNotifier extends ChangeNotifier {
 
     if (mode == null) {
       // check system settings
-      Brightness brightness = SchedulerBinding.instance.platformDispatcher.platformBrightness;
+      Brightness brightness =
+          SchedulerBinding.instance.platformDispatcher.platformBrightness;
       isDarkMode = brightness == Brightness.dark;
     }
 
@@ -66,7 +69,9 @@ class LzTheme extends StatelessWidget {
 
   /// toggle between dark and light theme
   static void toggle() {
-    _themeNotifier.setTheme(_themeNotifier.theme.brightness == Brightness.dark ? ThemeMode.light : ThemeMode.dark);
+    _themeNotifier.setTheme(_themeNotifier.theme.brightness == Brightness.dark
+        ? ThemeMode.light
+        : ThemeMode.dark);
   }
 
   static Widget watch(Widget Function(ThemeMode) builder) {
@@ -86,19 +91,75 @@ class LzTheme extends StatelessWidget {
     _applyTheme(false);
 
     return ThemeData.light().copyWith(
-      brightness: Brightness.light,
-      appBarTheme: AppBarTheme(
-          titleTextStyle: config.font.copyWith(fontSize: 20, color: Colors.black87),
-          backgroundColor: backgroundColor,
-          foregroundColor: Colors.white,
+        brightness: Brightness.light,
+        appBarTheme: AppBarTheme(
+            titleTextStyle:
+                config.font.copyWith(fontSize: 20, color: Colors.black87),
+            backgroundColor: backgroundColor,
+            foregroundColor: Colors.white,
+            shadowColor: Colors.black38,
+            elevation: 0,
+            scrolledUnderElevation: 0,
+            surfaceTintColor: Colors.white,
+            iconTheme: const IconThemeData(color: Colors.black87, size: 20),
+            shape: Border(
+                bottom: BorderSide(color: config.borderColor, width: .5))),
+        scaffoldBackgroundColor: Lz.color.hex('fafafa'),
+        textTheme: TextTheme(
+            displayLarge: font.copyWith(fontSize: 32),
+            displayMedium: font.copyWith(fontSize: 28),
+            displaySmall: font.copyWith(fontSize: 24),
+            headlineLarge: font.copyWith(fontSize: 20),
+            headlineMedium: font.copyWith(fontSize: 18),
+            headlineSmall: font.copyWith(fontSize: 16),
+            titleLarge: font.copyWith(fontSize: 18),
+            titleMedium: font.copyWith(fontSize: 16),
+            titleSmall: font.copyWith(fontSize: 14),
+            bodyLarge: font,
+            bodyMedium: font,
+            bodySmall: font,
+            labelLarge: font,
+            labelMedium: font,
+            labelSmall: font),
+        iconTheme: const IconThemeData(size: 20, color: Colors.black87),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+              textStyle: config.font.copyWith(color: Colors.black87)),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              textStyle: config.font.copyWith(color: Colors.white)),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.black87,
+          selectionColor: Colors.black12,
+          selectionHandleColor: Colors.black87,
+        ),
+        primaryColor: config.primaryColor);
+  }
+
+  static ThemeData get dark {
+    final font = config.font.copyWith(color: Colors.white70);
+
+    _applyTheme(true);
+
+    return ThemeData.dark().copyWith(
+        brightness: Brightness.dark,
+        appBarTheme: AppBarTheme(
+          titleTextStyle:
+              config.font.copyWith(fontSize: 20, color: Colors.white70),
+          backgroundColor: darkAppbarColor,
+          foregroundColor: Colors.white70,
           shadowColor: Colors.black38,
           elevation: 0,
           scrolledUnderElevation: 0,
-          surfaceTintColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.black87, size: 20),
-          shape: Border(bottom: BorderSide(color: config.borderColor, width: .5))),
-      scaffoldBackgroundColor: Lz.color.hex('fafafa'),
-      textTheme: TextTheme(
+          surfaceTintColor: Colors.black,
+          iconTheme: const IconThemeData(color: Colors.white70, size: 20),
+          shape:
+              Border(bottom: BorderSide(color: config.borderColor, width: .5)),
+        ),
+        scaffoldBackgroundColor: darkBackgroundColor,
+        textTheme: TextTheme(
           displayLarge: font.copyWith(fontSize: 32),
           displayMedium: font.copyWith(fontSize: 28),
           displaySmall: font.copyWith(fontSize: 24),
@@ -113,73 +174,23 @@ class LzTheme extends StatelessWidget {
           bodySmall: font,
           labelLarge: font,
           labelMedium: font,
-          labelSmall: font),
-      iconTheme: const IconThemeData(size: 20, color: Colors.black87),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(textStyle: config.font.copyWith(color: Colors.black87)),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(textStyle: config.font.copyWith(color: Colors.white)),
-      ),
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: Colors.black87,
-        selectionColor: Colors.black12,
-        selectionHandleColor: Colors.black87,
-      ),
-      primaryColor: config.primaryColor
-    );
-  }
-
-  static ThemeData get dark {
-    final font = config.font.copyWith(color: Colors.white70);
-
-    _applyTheme(true);
-
-    return ThemeData.dark().copyWith(
-      brightness: Brightness.dark,
-      appBarTheme: AppBarTheme(
-        titleTextStyle: config.font.copyWith(fontSize: 20, color: Colors.white70),
-        backgroundColor: darkAppbarColor,
-        foregroundColor: Colors.white70,
-        shadowColor: Colors.black38,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        surfaceTintColor: Colors.black,
-        iconTheme: const IconThemeData(color: Colors.white70, size: 20),
-        shape: Border(bottom: BorderSide(color: config.borderColor, width: .5)),
-      ),
-      scaffoldBackgroundColor: darkBackgroundColor,
-      textTheme: TextTheme(
-        displayLarge: font.copyWith(fontSize: 32),
-        displayMedium: font.copyWith(fontSize: 28),
-        displaySmall: font.copyWith(fontSize: 24),
-        headlineLarge: font.copyWith(fontSize: 20),
-        headlineMedium: font.copyWith(fontSize: 18),
-        headlineSmall: font.copyWith(fontSize: 16),
-        titleLarge: font.copyWith(fontSize: 18),
-        titleMedium: font.copyWith(fontSize: 16),
-        titleSmall: font.copyWith(fontSize: 14),
-        bodyLarge: font,
-        bodyMedium: font,
-        bodySmall: font,
-        labelLarge: font,
-        labelMedium: font,
-        labelSmall: font,
-      ),
-      iconTheme: const IconThemeData(size: 20, color: Colors.white70),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(textStyle: config.font.copyWith(color: Colors.white70)),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(textStyle: config.font.copyWith(color: Colors.black)),
-      ),
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: Colors.white70,
-        selectionColor: Colors.white10,
-        selectionHandleColor: Colors.white70,
-      ),
-      primaryColor: config.primaryColor
-    );
+          labelSmall: font,
+        ),
+        iconTheme: const IconThemeData(size: 20, color: Colors.white70),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+              textStyle: config.font.copyWith(color: Colors.white70)),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+              textStyle: config.font.copyWith(color: Colors.black)),
+        ),
+        textSelectionTheme: TextSelectionThemeData(
+          cursorColor: Colors.white70,
+          selectionColor: Colors.white10,
+          selectionHandleColor: Colors.white70,
+        ),
+        primaryColor: config.primaryColor);
   }
 }
 
@@ -198,6 +209,8 @@ class LzThemeAction extends StatelessWidget {
   Widget build(BuildContext context) {
     return LzTheme.watch((theme) => IconButton(
         onPressed: () => LzTheme.toggle(),
-        icon: Icon(theme.isDark ? (light ?? ConfigIcon.get(IconSet.sun)) : (dark ?? ConfigIcon.get(IconSet.moon)))));
+        icon: Icon(theme.isDark
+            ? (light ?? ConfigIcon.get(IconSet.sun))
+            : (dark ?? ConfigIcon.get(IconSet.moon)))));
   }
 }

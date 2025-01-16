@@ -58,9 +58,11 @@ void main() {
     expect('10/02/2023 00:00:00'.toDate(), DateTime(2023, 2, 10, 0, 0, 0));
 
     // Invalid date format
-    expect('invalid date'.toDate(), DateTime.now()); // Should return current date on error
+    expect('invalid date'.toDate(),
+        DateTime.now()); // Should return current date on error
 
     // Null value
-    expect(null.toDate(), DateTime.now()); // Should return current date for null
+    expect(
+        null.toDate(), DateTime.now()); // Should return current date for null
   });
 }

@@ -20,7 +20,8 @@ class Trainer extends StatefulWidget {
   final Duration duration;
   final bool allowSkip;
   final TrainerLabels labels;
-  final Widget Function(String content, TrainerController controller)? contentBuilder;
+  final Widget Function(String content, TrainerController controller)?
+      contentBuilder;
   final void Function(int index)? onNext;
   final void Function()? onSkip;
   final void Function()? onFinish;
@@ -116,7 +117,8 @@ class _TrainerState extends State<Trainer> {
               }
 
               if (widget.contentBuilder != null) {
-                return widget.contentBuilder!(target.content ?? '', _controller);
+                return widget.contentBuilder!(
+                    target.content ?? '', _controller);
               }
 
               return _TargetContent(controller, target, i, actions, (action) {
@@ -185,7 +187,8 @@ class _TargetContent extends StatelessWidget {
   final List<_Label> actions;
   final Function(_Label action) onTap;
 
-  const _TargetContent(this.controller, this.target, this.index, this.actions, this.onTap);
+  const _TargetContent(
+      this.controller, this.target, this.index, this.actions, this.onTap);
 
   @override
   Widget build(BuildContext context) {
@@ -216,7 +219,8 @@ class _TargetContent extends StatelessWidget {
               type: TouchType.fade,
               onTap: () => onTap(label),
               child: Textr(label.label,
-                  style: Gfont.white.bold, padding: Ei.only(v: 13, r: space, l: i == 0 ? 0 : space)));
+                  style: Gfont.white.bold,
+                  padding: Ei.only(v: 13, r: space, l: i == 0 ? 0 : space)));
         }))
       ],
     );
@@ -228,7 +232,8 @@ class TrainerLabels {
   final String next;
   final String finish;
 
-  const TrainerLabels({this.skip = 'Skip', this.next = 'Next', this.finish = 'Finish'});
+  const TrainerLabels(
+      {this.skip = 'Skip', this.next = 'Next', this.finish = 'Finish'});
 }
 
 class _Label {

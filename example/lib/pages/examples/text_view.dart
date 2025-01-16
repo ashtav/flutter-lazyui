@@ -31,8 +31,12 @@ class TextView extends StatelessWidget {
                 padding: Ei.sym(v: 10, h: 20),
               ),
               Textr(Faker.words(10),
-                  width: 250, icon: Hi.alertSquare, color: Colors.blue.applyOpacity(.1), padding: Ei.all(20)),
-              Textr(Faker.words(30), color: Colors.orange.applyOpacity(.1), padding: Ei.all(20))
+                  width: 250,
+                  icon: Hi.alertSquare,
+                  color: Colors.blue.applyOpacity(.1),
+                  padding: Ei.all(20)),
+              Textr(Faker.words(30),
+                  color: Colors.orange.applyOpacity(.1), padding: Ei.all(20))
             ],
           ),
         ],

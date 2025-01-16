@@ -15,7 +15,11 @@ class ExampleLabel extends StatelessWidget {
         ),
         const SizedBox(height: 30),
         Textr('Overview',
-            style: Gfont.green, icon: Hi.file01, border: Br.only(['b']), width: context.width, padding: Ei.sym(v: 10)),
+            style: Gfont.green,
+            icon: Hi.file01,
+            border: Br.only(['b']),
+            width: context.width,
+            padding: Ei.sym(v: 10)),
         const SizedBox(height: 25),
       ],
     ).start;

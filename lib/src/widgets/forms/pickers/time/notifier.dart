@@ -18,7 +18,8 @@ class TimePickerNotifier extends ChangeNotifier {
   Time get value => Time(values['h'] ?? 0, values['i'] ?? 0);
 
   /// Handles initialization logic for a time picker or similar component.
-  void onInitialized(List<String> formats, {Time? initTime, Time? minTime, Time? maxTime}) {
+  void onInitialized(List<String> formats,
+      {Time? initTime, Time? minTime, Time? maxTime}) {
     final now = DateTime.now();
 
     this.initTime = initTime ?? Time(now.hour, now.minute);
@@ -93,6 +94,7 @@ class TimePickerNotifier extends ChangeNotifier {
 
   /// Scrolls a list associated with the given `type` to the item at the specified `index`.
   void scrollTo(String type, int index, {Duration? duration}) {
-    controller[type]?.animateToItem(index, duration: duration ?? 100.ms, curve: Curves.easeInOut);
+    controller[type]?.animateToItem(index,
+        duration: duration ?? 100.ms, curve: Curves.easeInOut);
   }
 }

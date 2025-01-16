@@ -15,19 +15,30 @@ class LzPad {
 
     context
         .bottomSheet(PadWidget(notifier,
-            length: length, expired: expired, title: title, message: message, onCompleted: onCompleted))
+            length: length,
+            expired: expired,
+            title: title,
+            message: message,
+            onCompleted: onCompleted))
         .then((_) {
       notifier.dispose();
     });
   }
 
   static passcode(BuildContext context,
-      {int length = 6, String? title, String? message, void Function(PadController controller)? onCompleted}) {
+      {int length = 6,
+      String? title,
+      String? message,
+      void Function(PadController controller)? onCompleted}) {
     final notifier = PadNotifier();
 
     context
         .bottomSheet(PadWidget(notifier,
-            length: length, title: title, message: message, onCompleted: onCompleted, passcode: true))
+            length: length,
+            title: title,
+            message: message,
+            onCompleted: onCompleted,
+            passcode: true))
         .then((_) {
       notifier.dispose();
     });

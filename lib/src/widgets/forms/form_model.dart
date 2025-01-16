@@ -16,7 +16,8 @@ class FormValidation {
   final FormError error;
   final Map<String, dynamic> value;
 
-  const FormValidation(this.ok, {this.error = const FormError('', ''), this.value = const {}});
+  const FormValidation(this.ok,
+      {this.error = const FormError('', ''), this.value = const {}});
 }
 
 class FormError {

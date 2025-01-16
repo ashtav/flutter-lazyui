@@ -27,7 +27,8 @@ class IconView extends StatelessWidget {
                   padding: Ei.all(15),
                   backgroundColor: Colors.green.applyOpacity(.1),
                   radius: Br.radius(10)),
-              Iconr(La.mapMarked, border: Br.all(), padding: Ei.all(15), radius: Br.radius(10)),
+              Iconr(La.mapMarked,
+                  border: Br.all(), padding: Ei.all(15), radius: Br.radius(10)),
               Iconr(La.user),
               Iconr(La.search, flipX: true),
               Iconr(La.search, rotate: .8)
@@ -42,7 +43,8 @@ class IconView extends StatelessWidget {
                   padding: Ei.all(15),
                   backgroundColor: Colors.blue.applyOpacity(.1),
                   radius: Br.radius(10)),
-              Iconr(Ti.map2, border: Br.all(), padding: Ei.all(15), radius: Br.radius(10)),
+              Iconr(Ti.map2,
+                  border: Br.all(), padding: Ei.all(15), radius: Br.radius(10)),
               Iconr(Ti.user),
               Iconr(Ti.search, flipX: true),
               Iconr(Ti.search, rotate: .8)
@@ -57,7 +59,8 @@ class IconView extends StatelessWidget {
                   padding: Ei.all(15),
                   backgroundColor: Colors.orange.applyOpacity(.1),
                   radius: Br.radius(10)),
-              Iconr(Hi.mapsLocation01, border: Br.all(), padding: Ei.all(15), radius: Br.radius(10)),
+              Iconr(Hi.mapsLocation01,
+                  border: Br.all(), padding: Ei.all(15), radius: Br.radius(10)),
               Iconr(Hi.user),
               Iconr(Hi.search01, flipX: true),
               Iconr(Hi.search01, rotate: .8)

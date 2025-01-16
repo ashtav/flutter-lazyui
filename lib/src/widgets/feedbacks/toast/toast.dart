@@ -58,11 +58,15 @@ class _ToastWidget extends StatelessWidget {
       String messageOverlay = state.message.overlay;
       String messageProgress = state.message.progress;
 
-      Color toastBackground = state.color ?? (context.isDarkMode ? darkAppbarColor.lighten(.08) : darkAppbarColor);
-      Color background = context.isDarkMode ? darkAppbarColor.lighten(.08) : darkAppbarColor;
+      Color toastBackground = state.color ??
+          (context.isDarkMode ? darkAppbarColor.lighten(.08) : darkAppbarColor);
+      Color background =
+          context.isDarkMode ? darkAppbarColor.lighten(.08) : darkAppbarColor;
 
-      Decoration decoration = BoxDecoration(color: background, borderRadius: Br.radius(config.borderRadius));
-      Decoration toastDecoration = BoxDecoration(color: toastBackground, borderRadius: Br.radius(config.borderRadius));
+      Decoration decoration = BoxDecoration(
+          color: background, borderRadius: Br.radius(config.borderRadius));
+      Decoration toastDecoration = BoxDecoration(
+          color: toastBackground, borderRadius: Br.radius(config.borderRadius));
 
       // toast widget
       Widget toastWidget = Poslign(
@@ -76,7 +80,9 @@ class _ToastWidget extends StatelessWidget {
                 padding: Ei.sym(v: 12, h: 18),
                 decoration: toastDecoration,
                 child: Textr(
-                    message.length < state.maxLength ? message : '${message.safeSubstring(0, state.maxLength)}...',
+                    message.length < state.maxLength
+                        ? message
+                        : '${message.safeSubstring(0, state.maxLength)}...',
                     style: Gfont.fs14.white,
                     icon: state.icon),
               ),
@@ -97,8 +103,11 @@ class _ToastWidget extends StatelessWidget {
                   mainAxisSize: Mas.min,
                   children: [
                     // CupertinoActivityIndicator(color: Colors.white, radius: 22,),
-                    Container(padding: Ei.sym(v: 10), child: LzLoader(color: Colors.white, size: 40)),
-                    Text(messageOverlay, style: Gfont.fs14.white, textAlign: Ta.center),
+                    Container(
+                        padding: Ei.sym(v: 10),
+                        child: LzLoader(color: Colors.white, size: 40)),
+                    Text(messageOverlay,
+                        style: Gfont.fs14.white, textAlign: Ta.center),
                   ],
                 ),
               )));
@@ -125,15 +134,18 @@ class _ToastWidget extends StatelessWidget {
                             color: [Colors.white, Colors.white12][index],
                           );
                         }),
-                        Text(state.progressValue!.toStringAsFixed(0), style: Gfont.white)
+                        Text(state.progressValue!.toStringAsFixed(0),
+                            style: Gfont.white)
                       ],
                     ),
-                    Text(messageProgress, style: Gfont.fs14.white, textAlign: Ta.center),
+                    Text(messageProgress,
+                        style: Gfont.fs14.white, textAlign: Ta.center),
                   ],
                 ),
               )));
 
-      Widget blurWrapper(Widget child) => BackdropFilter(filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
+      Widget blurWrapper(Widget child) => BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
 
       Widget backdropWidget = Container(
         width: double.infinity,
@@ -147,7 +159,11 @@ class _ToastWidget extends StatelessWidget {
           // backdrop
           backdrop
               ? AnimatedOpacity(
-                  duration: 150.ms, opacity: 1, child: config.backBlur ? blurWrapper(backdropWidget) : backdropWidget)
+                  duration: 150.ms,
+                  opacity: 1,
+                  child: config.backBlur
+                      ? blurWrapper(backdropWidget)
+                      : backdropWidget)
               : const None(),
 
           // cancel
@@ -159,7 +175,8 @@ class _ToastWidget extends StatelessWidget {
                         state.onCancel?.call();
                       },
                       type: TouchType.none,
-                      child: Textr('Cancel', style: Gfont.white, padding: Ei.all(20))))
+                      child: Textr('Cancel',
+                          style: Gfont.white, padding: Ei.all(20))))
               : const None(),
 
           progressWidget, overlayWidget, toastWidget,
@@ -204,21 +221,38 @@ class LzToast {
   /// ```dart
   /// LzToast.show('Hello, World!');
   /// ```
-  static void show(String message, {Alignment? align, IconData? icon, int? maxLength}) {
-    _notifier.show(message, duration: _config.duration, align: align, color: null, icon: icon, maxLength: maxLength);
-  }
-
-  static void success(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+  static void show(String message,
+      {Alignment? align, IconData? icon, int? maxLength}) {
     _notifier.show(message,
-        duration: _config.duration, align: align, color: Colors.green, icon: icon, maxLength: maxLength);
+        duration: _config.duration,
+        align: align,
+        color: null,
+        icon: icon,
+        maxLength: maxLength);
   }
 
-  static void warning(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+  static void success(String message,
+      {Alignment? align, IconData? icon, int? maxLength}) {
     _notifier.show(message,
-        duration: _config.duration, align: align, color: Colors.orange, icon: icon, maxLength: maxLength);
+        duration: _config.duration,
+        align: align,
+        color: Colors.green,
+        icon: icon,
+        maxLength: maxLength);
   }
 
-  static void error(String message, {Alignment? align, IconData? icon, int? maxLength}) {
+  static void warning(String message,
+      {Alignment? align, IconData? icon, int? maxLength}) {
+    _notifier.show(message,
+        duration: _config.duration,
+        align: align,
+        color: Colors.orange,
+        icon: icon,
+        maxLength: maxLength);
+  }
+
+  static void error(String message,
+      {Alignment? align, IconData? icon, int? maxLength}) {
     _notifier.show(message,
         duration: _config.duration,
         align: align,
@@ -236,11 +270,13 @@ class LzToast {
   /// ```dart
   /// LzToast.overlay('Hello, World!', duration: Duration(seconds: 3));
   /// ```
-  static void overlay(String message, {Duration? duration, void Function()? onCancel}) {
+  static void overlay(String message,
+      {Duration? duration, void Function()? onCancel}) {
     _notifier.overlay(message, duration: duration, onCancel: onCancel);
   }
 
-  static void progress(String message, double Function() progress, {void Function()? onCancel}) {
+  static void progress(String message, double Function() progress,
+      {void Function()? onCancel}) {
     _notifier.progress(message, progress, onCancel: onCancel);
   }
 

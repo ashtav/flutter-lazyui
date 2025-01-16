@@ -110,7 +110,8 @@ class Iconr extends StatelessWidget {
         : flipX || flipY
             ? Transform(
                 alignment: Alignment.center,
-                transform: flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
+                transform:
+                    flipX ? Matrix4.rotationY(pi) : Matrix4.rotationX(pi),
                 child: iconWidget)
             : iconWidget;
 
@@ -119,8 +120,11 @@ class Iconr extends StatelessWidget {
       padding: padding,
       margin: margin,
       width: width,
-      decoration: BoxDecoration(border: border, borderRadius: radius, color: backgroundColor),
-      child: rotate == null ? flipWidget : Transform.rotate(angle: rotate!, child: flipWidget),
+      decoration: BoxDecoration(
+          border: border, borderRadius: radius, color: backgroundColor),
+      child: rotate == null
+          ? flipWidget
+          : Transform.rotate(angle: rotate!, child: flipWidget),
     );
   }
 }

@@ -36,7 +36,8 @@ class TimePickerWidget extends StatelessWidget {
     List<String> formats = ['h', 'i'];
 
     final notifier = TimePickerNotifier();
-    notifier.onInitialized(formats, initTime: initTime, minTime: minTime, maxTime: maxTime);
+    notifier.onInitialized(formats,
+        initTime: initTime, minTime: minTime, maxTime: maxTime);
 
     double height = context.height * .5;
 
@@ -46,7 +47,9 @@ class TimePickerWidget extends StatelessWidget {
 
     return ScrollGlowless(
       child: Container(
-        decoration: BoxDecoration(color: context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
+        decoration: BoxDecoration(
+            color:
+                context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
         child: Stack(
           children: [
             SizedBox(
@@ -55,8 +58,10 @@ class TimePickerWidget extends StatelessWidget {
                 children: formats.generate((format, i) {
                   final items = notifier.generateDate(format);
                   return Container(
-                      decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
-                      child: CupertinoPickerWidget(notifier, format: format, items: items, style: style));
+                      decoration:
+                          BoxDecoration(border: Br.only(['l'], except: i == 0)),
+                      child: CupertinoPickerWidget(notifier,
+                          format: format, items: items, style: style));
                 }),
               ),
             ),
@@ -128,10 +133,12 @@ class CupertinoPickerWidget extends StatelessWidget {
         itemExtent: 35,
         diameterRatio: .9,
         squeeze: .9,
-        scrollController: notifier.controller[format] ?? FixedExtentScrollController(initialItem: 0),
+        scrollController: notifier.controller[format] ??
+            FixedExtentScrollController(initialItem: 0),
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
-          decoration: BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
+          decoration:
+              BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
         ),
         onSelectedItemChanged: (int i) => notifier.onChange(i, format),
         children: items.generate((item, i) {

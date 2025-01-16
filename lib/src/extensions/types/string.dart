@@ -23,7 +23,10 @@ extension CustomStringExtension on String {
   /// ```
   String get ucwords => isEmpty
       ? ''
-      : split(' ').map((word) => word.isNotEmpty ? word[0].toUpperCase() + word.substring(1) : '').join(' ');
+      : split(' ')
+          .map((word) =>
+              word.isNotEmpty ? word[0].toUpperCase() + word.substring(1) : '')
+          .join(' ');
 
   /// Capitalizes the first letter of the string.
   ///
@@ -47,7 +50,8 @@ extension CustomStringExtension on String {
   /// ```dart
   /// print('<p>Test</p>'.removeHtml); // Test
   /// ```
-  String get removeHtml => replaceAll(RegExp(r'<[^>]*>'), '').replaceAll('&nbsp;', '');
+  String get removeHtml =>
+      replaceAll(RegExp(r'<[^>]*>'), '').replaceAll('&nbsp;', '');
 
   /// Checks if the string is a valid JSON.
   ///
@@ -58,14 +62,16 @@ extension CustomStringExtension on String {
   bool get isJson {
     try {
       final decoded = json.decode(this);
-      return decoded is Map || decoded is List; // Checks if it's a valid Map or List
+      return decoded is Map ||
+          decoded is List; // Checks if it's a valid Map or List
     } catch (e) {
       return false;
     }
   }
 
   bool get isURL {
-    final urlRegex = RegExp(r'^(https?:\/\/|www\.)' // Requires "http://", "https://", or "www." at the start
+    final urlRegex = RegExp(
+        r'^(https?:\/\/|www\.)' // Requires "http://", "https://", or "www." at the start
         r'(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})' // Valid domain
         r'(:\d+)?' // Optional port
         r'(\/[^\s]*)?$' // Optional path
@@ -75,7 +81,8 @@ extension CustomStringExtension on String {
   }
 
   bool get isPath {
-    final pathRegex = RegExp(r'^(\/|file:\/\/|[a-zA-Z]:\\|assets\/)' // Matches start of a path
+    final pathRegex = RegExp(
+        r'^(\/|file:\/\/|[a-zA-Z]:\\|assets\/)' // Matches start of a path
         r'[\w\/\-\.]+$' // Matches the rest of the path
         );
 
@@ -84,7 +91,8 @@ extension CustomStringExtension on String {
 
   /// Check if the path is a file path (absolute or file:// based)
   bool get isFilePath {
-    final filePathRegex = RegExp(r'^(\/|file:\/\/|[a-zA-Z]:\\)' // Matches absolute paths and file:// paths
+    final filePathRegex = RegExp(
+        r'^(\/|file:\/\/|[a-zA-Z]:\\)' // Matches absolute paths and file:// paths
         r'[\w\/\-\.]+\.\w+$' // Ensures a file extension exists
         );
     return filePathRegex.hasMatch(this);
@@ -92,8 +100,9 @@ extension CustomStringExtension on String {
 
   /// Check if the path is for local assets (starting with "assets/")
   bool get isLocalAssetPath {
-    final assetPathRegex = RegExp(r'^assets\/[\w\/\-\.]+$' // Matches paths starting with "assets/"
-        );
+    final assetPathRegex =
+        RegExp(r'^assets\/[\w\/\-\.]+$' // Matches paths starting with "assets/"
+            );
     return assetPathRegex.hasMatch(this);
   }
 
@@ -108,8 +117,12 @@ extension CustomNullableStringExtension on String? {
   /// ```dart
   /// '1000'.idr(); // Rp1.000
   /// ```
-  String idr({String prefix = 'Rp', int decimalDigits = 0, String separator = '.'}) =>
-      (this ?? '0').currency(prefix: prefix, decimalDigits: decimalDigits, separator: separator);
+  String idr(
+          {String prefix = 'Rp',
+          int decimalDigits = 0,
+          String separator = '.'}) =>
+      (this ?? '0').currency(
+          prefix: prefix, decimalDigits: decimalDigits, separator: separator);
 
   /// Formats the string value as currency.
   ///
@@ -118,7 +131,8 @@ extension CustomNullableStringExtension on String? {
   /// String price = '15000'.currency(); // $15,000
   /// String priceWithDecimal = '25000.50'.currency(decimalDigits: 2); // $25,000.50
   /// ```
-  String currency({String prefix = '\$', int decimalDigits = 0, String separator = ','}) {
+  String currency(
+      {String prefix = '\$', int decimalDigits = 0, String separator = ','}) {
     try {
       String num = '0', digits = '';
 
@@ -152,7 +166,8 @@ extension CustomNullableStringExtension on String? {
         symbol: prefix,
       ).format(int.parse(num));
 
-      result = result.replaceAll('.', separator); // Use the separator for thousands
+      result =
+          result.replaceAll('.', separator); // Use the separator for thousands
 
       // Determine the correct separator for the decimal part
       String decimalSeparator = separator == ',' ? '.' : ',';
@@ -191,7 +206,8 @@ extension CustomNullableStringExtension on String? {
           RegExp regex = formatRegexMap[format]!;
           if (regex.hasMatch(dateString)) {
             // Replace delimiters with '-' and split the date string into parts
-            List<String> parts = dateString.replaceAll(RegExp(r'[^\d]'), '-').split('-');
+            List<String> parts =
+                dateString.replaceAll(RegExp(r'[^\d]'), '-').split('-');
 
             // Check if month is greater than 12, if so, set it to 12
             if (int.parse(parts[1]) > 12) {

@@ -33,7 +33,8 @@ class Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String message = this.message ?? 'No data available. Please try again later.';
+    String message =
+        this.message ?? 'No data available. Please try again later.';
     String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
     return Container(

@@ -34,17 +34,29 @@ class Textr extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool doWrap = [icon, margin, padding, border, borderRadius, color, width, height].any((e) => e != null);
+    bool doWrap = [
+      icon,
+      margin,
+      padding,
+      border,
+      borderRadius,
+      color,
+      width,
+      height
+    ].any((e) => e != null);
 
-    Widget textWidget = Text(text, style: style, textAlign: textAlign, overflow: overflow);
+    Widget textWidget =
+        Text(text, style: style, textAlign: textAlign, overflow: overflow);
     double iconSize = iconStyle?.size ?? (style?.fontSize ?? 15) + 2;
     bool asSufix = iconStyle?.asSuffix ?? false;
 
     final children = [
       Flexible(child: textWidget),
-      if (icon != null) Container(
-        margin: Ei.only(t: 2),
-        child: Icon(icon, size: iconSize, color: iconStyle?.color ?? style?.color))
+      if (icon != null)
+        Container(
+            margin: Ei.only(t: 2),
+            child: Icon(icon,
+                size: iconSize, color: iconStyle?.color ?? style?.color))
     ];
 
     return doWrap
@@ -53,7 +65,8 @@ class Textr extends StatelessWidget {
             padding: padding,
             width: width,
             height: height,
-            decoration: BoxDecoration(border: border, borderRadius: borderRadius, color: color),
+            decoration: BoxDecoration(
+                border: border, borderRadius: borderRadius, color: color),
             child: Row(
               spacing: 10,
               mainAxisSize: Mas.min,

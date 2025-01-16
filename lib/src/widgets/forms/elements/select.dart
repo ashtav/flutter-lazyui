@@ -149,11 +149,15 @@ class _SelectState extends State<Select> {
 
         // textfield
         notifier.watch((state) {
-          Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor)
-              .darken(state.enabled && state.options.isNotEmpty ? 0 : .09);
-          Widget suffixIcon = widget.suffix ?? Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
+          Color background =
+              (context.isDarkMode ? darkAppbarColor : backgroundColor)
+                  .darken(state.enabled && state.options.isNotEmpty ? 0 : .09);
+          Widget suffixIcon = widget.suffix ??
+              Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
 
-          TextStyle? textStyle = state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
+          TextStyle? textStyle = state.enabled
+              ? config.font.copyWith(color: '444'.hex.themeify)
+              : null;
           double radiusValue = isGrouped ? 0 : config.borderRadius;
 
           // InputBorder? border = OutlineInputBorder(
@@ -166,7 +170,8 @@ class _SelectState extends State<Select> {
           //                 : Colors.black45.lighten(state.enabled ? 0 : .7),
           //         width: .5));
 
-          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped);
+          final outlineBorder =
+              FormUtils.getBorder(context, state.invalid, isGrouped);
 
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder
@@ -181,10 +186,12 @@ class _SelectState extends State<Select> {
                   onTap: !state.enabled || state.options.isEmpty
                       ? null
                       : () {
-                          Option value = Option(state.controller.text, value: state.extra);
+                          Option value =
+                              Option(state.controller.text, value: state.extra);
                           LzPicker.option(context,
                               initialValue: value,
-                              options: Option.list(state.options, values: state.values),
+                              options: Option.list(state.options,
+                                  values: state.values),
                               onSelect: onChange);
                         },
                   color: background,
@@ -199,7 +206,9 @@ class _SelectState extends State<Select> {
 
               // error message
               if (!isGrouped)
-                SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+                SlideAnimate(
+                    show: state.invalid,
+                    child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })

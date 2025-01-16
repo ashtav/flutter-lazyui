@@ -117,8 +117,7 @@ class Errors {
       String errorMessage = '-';
 
       if (failsNetwork.any((n) => e.toString().contains(n))) {
-      Print.error('Network error, $e');
-
+        Print.error('Network error, $e');
       } else {
         // ---------------------------------------------------------------------
         // Check Errors Caused by Code, Etc
@@ -181,13 +180,16 @@ Try to check [$member]''';
             botToken.isNotEmpty &&
             chatId.isNotEmpty &&
             !disabledBot) {
-
           final device = await Lz.utils.getDevice();
 
           // clear message from space, \n
           errorMessage = errorMessage.replaceAll('\n', ' ').trim();
 
-          List<String> messages = [errorMessage, '\n<b>Details</b>', device.value];
+          List<String> messages = [
+            errorMessage,
+            '\n<b>Details</b>',
+            device.value
+          ];
 
           if (networkError != null) {
             String baseUrl = networkError.baseUrl ?? '';

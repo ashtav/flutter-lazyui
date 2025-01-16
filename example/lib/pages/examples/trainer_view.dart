@@ -12,7 +12,10 @@ class TrainerView extends StatelessWidget {
       Target(content: Faker.words(20)),
       Target(content: Faker.words(20)),
       Target(content: Faker.words(20), align: ContentAlign.top),
-      Target(content: Faker.words(20), align: ContentAlign.top, shape: ShapeLightFocus.rRect),
+      Target(
+          content: Faker.words(20),
+          align: ContentAlign.top,
+          shape: ShapeLightFocus.rRect),
     ];
 
     final trainer = TrainerController();
@@ -26,7 +29,8 @@ class TrainerView extends StatelessWidget {
             title: const Text('Trainer'),
             actions: [
               LzThemeAction(),
-              IconButton(key: keys[1], onPressed: () {}, icon: Icon(Hi.archive)),
+              IconButton(
+                  key: keys[1], onPressed: () {}, icon: Icon(Hi.archive)),
               IconButton(key: keys[0], onPressed: () {}, icon: Icon(Hi.gift))
             ],
           ),

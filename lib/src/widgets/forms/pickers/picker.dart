@@ -63,7 +63,12 @@ class LzPicker {
 
     DateTime? result = await context.bottomSheet(
         DatePickerWidget(
-            initDate: initDate, minDate: minDate, maxDate: maxDate, style: style, format: format, withTime: withTime),
+            initDate: initDate,
+            minDate: minDate,
+            maxDate: maxDate,
+            style: style,
+            format: format,
+            withTime: withTime),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,
@@ -107,7 +112,8 @@ class LzPicker {
       String? rangeFormat,
       bool withTime = false,
       Function(List<DateTime> value)? onSelect}) async {
-    List<DateTime> initDateValue = initDate ?? [DateTime.now(), DateTime.now().add(1.d)];
+    List<DateTime> initDateValue =
+        initDate ?? [DateTime.now(), DateTime.now().add(1.d)];
 
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       Print.log('Min date must be smaller than max date.');
@@ -182,9 +188,17 @@ class LzPicker {
   ///   },
   /// );
   static void time(BuildContext context,
-      {Time? initTime, Time? minTime, Time? maxTime, PickerStyle? style, Function(Time value)? onSelect}) async {
+      {Time? initTime,
+      Time? minTime,
+      Time? maxTime,
+      PickerStyle? style,
+      Function(Time value)? onSelect}) async {
     Time? result = await context.bottomSheet(
-        TimePickerWidget(initTime: initTime, minTime: minTime, maxTime: maxTime, style: style),
+        TimePickerWidget(
+            initTime: initTime,
+            minTime: minTime,
+            maxTime: maxTime,
+            style: style),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,

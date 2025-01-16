@@ -18,7 +18,8 @@ class CircularSlider extends StatefulWidget {
   State<CircularSlider> createState() => _CircularSliderState();
 }
 
-class _CircularSliderState extends State<CircularSlider> with SingleTickerProviderStateMixin {
+class _CircularSliderState extends State<CircularSlider>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -35,7 +36,8 @@ class _CircularSliderState extends State<CircularSlider> with SingleTickerProvid
   void didUpdateWidget(covariant CircularSlider oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.value != widget.value) {
-      _controller.animateTo(widget.value / 100, duration: 150.ms, curve: Curves.easeInOut);
+      _controller.animateTo(widget.value / 100,
+          duration: 150.ms, curve: Curves.easeInOut);
     }
   }
 
@@ -47,7 +49,9 @@ class _CircularSliderState extends State<CircularSlider> with SingleTickerProvid
         return CustomPaint(
           size: const Size(110, 110),
           key: UniqueKey(),
-          painter: CircularSliderPainter(value: _controller.value * 100, color: widget.color ?? Colors.white),
+          painter: CircularSliderPainter(
+              value: _controller.value * 100,
+              color: widget.color ?? Colors.white),
         );
       },
     );

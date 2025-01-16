@@ -29,7 +29,9 @@ class ThemeView extends StatelessWidget {
                   onChange: (value) {
                     LzTheme.toggle();
                   }),
-              Text('Use LzTheme.toggle(); to switch between light and dark themes dynamically.', style: Gfont.fs14),
+              Text(
+                  'Use LzTheme.toggle(); to switch between light and dark themes dynamically.',
+                  style: Gfont.fs14),
             ],
           ).start,
           35.height,
@@ -37,7 +39,9 @@ class ThemeView extends StatelessWidget {
             spacing: 5,
             children: [
               Text('LzThemeAction()', style: Gfont.orange),
-              Text('Use LzThemeAction() to display the icon widget toggle in the app bar actions.', style: Gfont.fs14),
+              Text(
+                  'Use LzThemeAction() to display the icon widget toggle in the app bar actions.',
+                  style: Gfont.fs14),
             ],
           ).start,
         ],

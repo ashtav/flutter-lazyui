@@ -4,7 +4,6 @@ import 'package:example/pages/widgets/example_label_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
-
 class PadView extends StatelessWidget {
   const PadView({super.key});
 
@@ -40,10 +39,12 @@ class PadView extends StatelessWidget {
 
                       if (controller.value == '123456') {
                         context.lz.pop();
-                        LzToast.success('Nice! you have been confirmed!.', icon: Hi.checkmarkSquare01);
+                        LzToast.success('Nice! you have been confirmed!.',
+                            icon: Hi.checkmarkSquare01);
                       } else {
                         controller.reset().resume();
-                        LzToast.error('Your otp is invalid.', icon: Hi.alertSquare);
+                        LzToast.error('Your otp is invalid.',
+                            icon: Hi.alertSquare);
                       }
                     });
                   });

@@ -36,6 +36,8 @@ part 'components/empty.dart';
 part 'components/iconr.dart';
 part 'components/image.dart';
 part 'components/loader.dart';
+part 'components/slide_indicator.dart';
+part 'components/tabbar.dart';
 part 'components/text_count.dart';
 part 'components/trans_appbar.dart';
 part 'forms/elements/textfield.dart';

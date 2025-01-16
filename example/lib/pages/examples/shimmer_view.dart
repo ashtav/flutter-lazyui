@@ -34,7 +34,8 @@ class ShimmerView extends StatelessWidget {
                 //
                 Column(
                   children: [
-                    Text('Shimmer with width and height set to 100', style: Gfont.fs14),
+                    Text('Shimmer with width and height set to 100',
+                        style: Gfont.fs14),
                     Text('Shimmer(size: 100)', style: Gfont.fs14.orange),
                     Shimmer(size: 100),
                   ],
@@ -43,7 +44,9 @@ class ShimmerView extends StatelessWidget {
                 //
                 Column(
                   children: [
-                    Text('Shimmer with width set to 100, height is default (15)', style: Gfont.fs14),
+                    Text(
+                        'Shimmer with width set to 100, height is default (15)',
+                        style: Gfont.fs14),
                     Text('Shimmer(size: [100])', style: Gfont.fs14.orange),
                     Shimmer(size: [100]),
                   ],
@@ -52,7 +55,8 @@ class ShimmerView extends StatelessWidget {
                 //
                 Column(
                   children: [
-                    Text('Shimmer with width 100 and height 35', style: Gfont.fs14),
+                    Text('Shimmer with width 100 and height 35',
+                        style: Gfont.fs14),
                     Text('Shimmer(size: [100, 35])', style: Gfont.fs14.orange),
                     Shimmer(size: [100, 35]),
                   ],
@@ -61,8 +65,11 @@ class ShimmerView extends StatelessWidget {
                 //
                 Column(
                   children: [
-                    Text('Shimmer with width randomized between 50 and 300, height is default (15)', style: Gfont.fs14),
-                    Text('Shimmer(size: [[50, 300]])', style: Gfont.fs14.orange),
+                    Text(
+                        'Shimmer with width randomized between 50 and 300, height is default (15)',
+                        style: Gfont.fs14),
+                    Text('Shimmer(size: [[50, 300]])',
+                        style: Gfont.fs14.orange),
                     Shimmer(size: [
                       [50, 300]
                     ]),

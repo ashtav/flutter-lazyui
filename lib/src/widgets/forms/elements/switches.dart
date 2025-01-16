@@ -72,7 +72,8 @@ class Switches extends StatelessWidget {
                 onChanged: onChange),
           ),
         ),
-        if (labels.isNotEmpty) Textr(switched ? labels[0] : labels[1], padding: Ei.only(v: 5))
+        if (labels.isNotEmpty)
+          Textr(switched ? labels[0] : labels[1], padding: Ei.only(v: 5))
       ];
 
       return Row(

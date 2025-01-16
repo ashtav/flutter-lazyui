@@ -6,11 +6,13 @@ import '../config/config.dart';
 class Gfont {
   static TextStyle get(BuildContext context) {
     TextStyle? style = Theme.of(context).textTheme.bodyMedium;
-    return style!.copyWith(color: LzTheme.isDarkMode ? '888888'.hex : '404040'.hex);
+    return style!
+        .copyWith(color: LzTheme.isDarkMode ? '888888'.hex : '404040'.hex);
   }
 
   // font color
-  static final TextStyle black = config.font.copyWith(color: Lz.color.hex('1A1A1A'));
+  static final TextStyle black =
+      config.font.copyWith(color: Lz.color.hex('1A1A1A'));
   static final TextStyle white = config.font.copyWith(color: Colors.white);
   static final TextStyle red = config.font.copyWith(color: Colors.redAccent);
   static final TextStyle orange = config.font.copyWith(color: Colors.orange);
@@ -34,10 +36,14 @@ class Gfont {
 
   // font style
   static final TextStyle bold = config.font.copyWith(fontWeight: Fw.bold);
-  static final TextStyle italic = config.font.copyWith(fontStyle: FontStyle.italic);
-  static final TextStyle underline = config.font.copyWith(decoration: TextDecoration.underline);
-  static final TextStyle strike = config.font.copyWith(decoration: TextDecoration.lineThrough);
-  static TextStyle fbold(bool value) => config.font.copyWith(fontWeight: value ? Fw.bold : Fw.normal);
+  static final TextStyle italic =
+      config.font.copyWith(fontStyle: FontStyle.italic);
+  static final TextStyle underline =
+      config.font.copyWith(decoration: TextDecoration.underline);
+  static final TextStyle strike =
+      config.font.copyWith(decoration: TextDecoration.lineThrough);
+  static TextStyle fbold(bool value) =>
+      config.font.copyWith(fontWeight: value ? Fw.bold : Fw.normal);
 }
 
 extension CustomTextStyleExtension on TextStyle {
@@ -70,7 +76,8 @@ extension CustomTextStyleExtension on TextStyle {
   TextStyle get italic => copyWith(fontStyle: FontStyle.italic);
   TextStyle get underline => copyWith(decoration: TextDecoration.underline);
   TextStyle get strike => copyWith(decoration: TextDecoration.lineThrough);
-  TextStyle fbold(bool value) => copyWith(fontWeight: value ? Fw.bold : Fw.normal);
+  TextStyle fbold(bool value) =>
+      copyWith(fontWeight: value ? Fw.bold : Fw.normal);
 
   // set font color based on theme
   TextStyle theme(BuildContext context, Color color) {

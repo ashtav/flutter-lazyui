@@ -66,7 +66,10 @@ class FeatureView extends StatelessWidget {
                   onTap: () => FeatureView.action(context, f.label),
                   padding: Ei.all(20),
                   child: Row(
-                    children: [Textr(f.label, icon: f.icon), Icon(Hi.arrowRight01)],
+                    children: [
+                      Textr(f.label, icon: f.icon),
+                      Icon(Hi.arrowRight01)
+                    ],
                   ).between,
                 );
               }),

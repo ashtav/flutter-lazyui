@@ -38,7 +38,12 @@ class Textml extends StatelessWidget {
   ///   overflow: TextOverflow.ellipsis,
   /// )
   /// ```
-  const Textml(this.text, {super.key, this.style, this.textAlign, this.textDirection, this.overflow});
+  const Textml(this.text,
+      {super.key,
+      this.style,
+      this.textAlign,
+      this.textDirection,
+      this.overflow});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +82,8 @@ class Textml extends StatelessWidget {
   /// Returns a list of [TextSpan] objects representing the stylized text.
 
   List<TextSpan> parseText(String text, {TextStyle? style}) {
-    final regex = RegExp(r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|<br\s*\/?>|([^<]+)');
+    final regex = RegExp(
+        r'<(\w+)(?: color="([0-9a-fA-F]{3,6})")?>(.*?)<\/\1>|<br\s*\/?>|([^<]+)');
     final matches = regex.allMatches(text);
 
     final textSpans = <TextSpan>[];
@@ -92,11 +98,14 @@ class Textml extends StatelessWidget {
       } else if (type == 'i' || type == 'em') {
         updatedStyle = updatedStyle.copyWith(fontStyle: FontStyle.italic);
       } else if (type == 'u') {
-        updatedStyle = updatedStyle.copyWith(decoration: TextDecoration.underline);
+        updatedStyle =
+            updatedStyle.copyWith(decoration: TextDecoration.underline);
       } else if (type == 'del') {
-        updatedStyle = updatedStyle.copyWith(decoration: TextDecoration.lineThrough);
+        updatedStyle =
+            updatedStyle.copyWith(decoration: TextDecoration.lineThrough);
       } else if (type == 'mark') {
-        updatedStyle = updatedStyle.copyWith(backgroundColor: Colors.yellow); // Highlight effect
+        updatedStyle = updatedStyle.copyWith(
+            backgroundColor: Colors.yellow); // Highlight effect
       }
 
       if (color != null) {

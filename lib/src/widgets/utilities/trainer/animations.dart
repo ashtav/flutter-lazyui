@@ -47,7 +47,8 @@ class AnimatedFocusLight extends StatefulWidget {
   AnimatedFocusLightState createState() => AnimatedStaticFocusLightState();
 }
 
-abstract class AnimatedFocusLightState extends State<AnimatedFocusLight> with TickerProviderStateMixin {
+abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
+    with TickerProviderStateMixin {
   final defaultFocusAnimationDuration = const Duration(milliseconds: 600);
   late AnimationController _controller;
   late CurvedAnimation _curvedAnimation;
@@ -215,7 +216,8 @@ class AnimatedStaticFocusLightState extends AnimatedFocusLightState {
   double get left => (_targetPosition?.offset.dx ?? 0) - _getPaddingFocus * 2;
   double get top => (_targetPosition?.offset.dy ?? 0) - _getPaddingFocus * 2;
   double get width => (_targetPosition?.size.width ?? 0) + _getPaddingFocus * 4;
-  double get height => (_targetPosition?.size.height ?? 0) + _getPaddingFocus * 4;
+  double get height =>
+      (_targetPosition?.size.height ?? 0) + _getPaddingFocus * 4;
 
   @override
   Widget build(BuildContext context) {

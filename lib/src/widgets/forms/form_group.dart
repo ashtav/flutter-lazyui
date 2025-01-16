@@ -24,7 +24,8 @@ class FormGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color borderColor = context.isDarkMode ? Colors.black26.themeify : Colors.black45;
+    Color borderColor =
+        context.isDarkMode ? Colors.black26.themeify : Colors.black45;
 
     bool hasInvalidChild() {
       final allowedTypes = [Input, Number, Select];
@@ -64,7 +65,9 @@ class FormGroup extends StatelessWidget {
             if (label != null) Text(label!, style: Gfont.fs14),
             Container(
               decoration: BoxDecoration(
-                  border: hasInvalidChild() ? null : Br.all(color: state.invalid ? Colors.red : borderColor),
+                  border: hasInvalidChild()
+                      ? null
+                      : Br.all(color: state.invalid ? Colors.red : borderColor),
                   borderRadius: Br.radius(config.borderRadius)),
               child: Column(
                 children: modifiedChildren(children, state.invalid),
@@ -72,7 +75,9 @@ class FormGroup extends StatelessWidget {
             ),
 
             // error message
-            SlideAnimate(show: state.invalid, child: Text(state.message, style: Gfont.fs14.red))
+            SlideAnimate(
+                show: state.invalid,
+                child: Text(state.message, style: Gfont.fs14.red))
           ],
         ).start);
   }

@@ -44,7 +44,8 @@ class Shimmer extends StatelessWidget {
     Color color = context.isDarkMode ? '212121'.hex : 'E0E0E0'.hex;
     Color highlight = context.isDarkMode ? '2F2F2F'.hex : 'F5F5F5'.hex;
 
-    BorderRadiusGeometry? radius = this.radius ?? Br.radius(config.borderRadius);
+    BorderRadiusGeometry? radius =
+        this.radius ?? Br.radius(config.borderRadius);
 
     return shimmer.Shimmer.fromColors(
       baseColor: color,

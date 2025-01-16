@@ -1,12 +1,14 @@
 part of '../../widget.dart';
 
-OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled, {double? radius}) => OutlineInputBorder(
-    borderRadius: Br.radius(radius ?? config.borderRadius),
-    borderSide: BorderSide(
-        color: context.isDarkMode
-            ? Colors.black26.themeify.darken(enabled ? 0 : .7)
-            : Colors.black45.lighten(enabled ? 0 : .7),
-        width: .5));
+OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled,
+        {double? radius}) =>
+    OutlineInputBorder(
+        borderRadius: Br.radius(radius ?? config.borderRadius),
+        borderSide: BorderSide(
+            color: context.isDarkMode
+                ? Colors.black26.themeify.darken(enabled ? 0 : .7)
+                : Colors.black45.lighten(enabled ? 0 : .7),
+            width: .5));
 
 /// A customizable text field widget.
 class LzTextField extends StatelessWidget {
@@ -138,7 +140,10 @@ class LzTextField extends StatelessWidget {
         controller: controller,
         maxLines: maxLines ?? 1,
         minLines: 1,
-        inputFormatters: [LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength), ...formatters],
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(maxLength < 1 ? 1 : maxLength),
+          ...formatters
+        ],
         selectionControls: selectionControls,
         decoration: InputDecoration(
           filled: true,
@@ -150,7 +155,8 @@ class LzTextField extends StatelessWidget {
           isDense: true,
           contentPadding: padding ?? Ei.sym(v: 13.5, h: 20),
           hintText: hint,
-          hintStyle: hintStyle ?? config.font.copyWith(color: Colors.black38.themeify),
+          hintStyle:
+              hintStyle ?? config.font.copyWith(color: Colors.black38.themeify),
           border: border,
           focusedBorder: border,
           enabledBorder: border,

@@ -142,10 +142,12 @@ class LzDropdown extends StatelessWidget {
     final key = GlobalKey();
 
     // Determine the child widget to use inside the dropdown.
-    Widget childOverlay = this.child ?? builder(GlobalKey(), DropController()).lz.ignore();
+    Widget childOverlay =
+        this.child ?? builder(GlobalKey(), DropController()).lz.ignore();
 
     // Initialize the dropdown configuration.
-    _config = _DropConfig(context, key, options, onSelect, position, align, space, childOverlay, dropBuilder, width);
+    _config = _DropConfig(context, key, options, onSelect, position, align,
+        space, childOverlay, dropBuilder, width);
 
     // Build the child widget using the provided builder.
     Widget child = builder(key, DropController());
@@ -210,7 +212,9 @@ class DropOption {
   }) {
     return options.map((e) {
       bool isContain(List array, dynamic value) {
-        return array.map((e) => e.toString().toLowerCase()).contains('$value'.toLowerCase());
+        return array
+            .map((e) => e.toString().toLowerCase())
+            .contains('$value'.toLowerCase());
       }
 
       int i = options.indexOf(e);
@@ -369,12 +373,18 @@ class _Overlay extends StatelessWidget {
                         children: options.generate((option, i) {
                           bool asPrefix = option.asPrefix;
 
-                          Color color =
-                              option.critical ? Colors.redAccent : (context.isDarkMode ? Colors.white : Colors.black87);
+                          Color color = option.critical
+                              ? Colors.redAccent
+                              : (context.isDarkMode
+                                  ? Colors.white
+                                  : Colors.black87);
 
                           List<Widget> children = [
-                            Text(option.label, style: Gfont.color(color).fbold(option.focused)),
-                            if (option.icon != null) Icon(option.icon, color: color),
+                            Text(option.label,
+                                style:
+                                    Gfont.color(color).fbold(option.focused)),
+                            if (option.icon != null)
+                              Icon(option.icon, color: color),
                           ];
 
                           if (asPrefix) {
@@ -387,10 +397,16 @@ class _Overlay extends StatelessWidget {
                                 : () {
                                     context.lz.pop(DropValue(option.label, i));
                                   },
-                            color: context.isDarkMode ? darkAppbarColor : backgroundColor,
+                            color: context.isDarkMode
+                                ? darkAppbarColor
+                                : backgroundColor,
                             padding: Ei.sym(v: 13, h: 20),
-                            border: Br.only(['t'], except: i == 0, width: option.separated ? 3 : .7),
-                            child: (asPrefix ? Row(children: children).gap(10) : Row(children: children).between)
+                            border: Br.only(['t'],
+                                except: i == 0,
+                                width: option.separated ? 3 : .7),
+                            child: (asPrefix
+                                    ? Row(children: children).gap(10)
+                                    : Row(children: children).between)
                                 .lz
                                 .opacity(option.disabled ? .5 : 1),
                           );
@@ -493,7 +509,7 @@ extension LzDropdownContextExtension on BuildContext {
   /// ```dart
   /// final key = GlobalKey();
   /// final options = DropOption.of(['Edit', 'Delete']);
-  /// 
+  ///
   /// LzButton(
   ///   text: 'Open from Context',
   ///   key: key,
@@ -565,7 +581,8 @@ class _DropdownNotifier extends ChangeNotifier {
   ///
   /// Handles positioning logic for the dropdown based on the target widget,
   /// preferred position, alignment, and screen boundaries.
-  _DropdownNotifier(this.context, this.target, this.key, this.space, this.position, this.align) {
+  _DropdownNotifier(this.context, this.target, this.key, this.space,
+      this.position, this.align) {
     offset = target.offset;
 
     double dx = offset.dx;
@@ -610,8 +627,14 @@ class _DropdownNotifier extends ChangeNotifier {
       }
 
       void setUpPosition() {
-        double dropY = dropdownOffset().dy + size.height + context.windowPadding.top + (space?.dy ?? 20);
-        double topPosition = dropdown.dy - size.height - (space?.dy ?? 40) - (context.windowPadding.top * 2);
+        double dropY = dropdownOffset().dy +
+            size.height +
+            context.windowPadding.top +
+            (space?.dy ?? 20);
+        double topPosition = dropdown.dy -
+            size.height -
+            (space?.dy ?? 40) -
+            (context.windowPadding.top * 2);
         bool isOutOfY = dropY > screen.height;
 
         if ([DropPosition.auto, DropPosition.top].contains(position)) {

@@ -10,7 +10,8 @@ class AboutLazyUi extends StatelessWidget {
   Widget build(BuildContext context) {
     List<String> featuress() {
       return features
-          .expand((group) => group.features) // Flatten all features into a single iterable
+          .expand((group) =>
+              group.features) // Flatten all features into a single iterable
           .map((feature) => feature.label) // Extract the labels
           .toList(); // Convert to a list
     }

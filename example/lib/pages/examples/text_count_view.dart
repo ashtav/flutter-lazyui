@@ -37,7 +37,8 @@ class TextCountView extends StatelessWidget {
                     )
                   ],
                 ),
-                Text('LzTextCount(begin: 0, end: $end, separator: \',\')', style: Gfont.fs14.orange)
+                Text('LzTextCount(begin: 0, end: $end, separator: \',\')',
+                    style: Gfont.fs14.orange)
               ],
             ).start
           ],

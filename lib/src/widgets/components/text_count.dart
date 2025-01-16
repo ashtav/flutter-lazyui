@@ -117,7 +117,8 @@ class TextCounter extends StatefulWidget {
   State<TextCounter> createState() => _TextCounterState();
 }
 
-class _TextCounterState extends State<TextCounter> with TickerProviderStateMixin {
+class _TextCounterState extends State<TextCounter>
+    with TickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
   double? _latestBegin;
@@ -157,8 +158,10 @@ class _TextCounterState extends State<TextCounter> with TickerProviderStateMixin
 
   @override
   Widget build(BuildContext context) {
-    CurvedAnimation curvedAnimation = CurvedAnimation(parent: _controller, curve: widget.curve);
-    _animation = Tween<double>(begin: widget.begin, end: widget.end).animate(curvedAnimation);
+    CurvedAnimation curvedAnimation =
+        CurvedAnimation(parent: _controller, curve: widget.curve);
+    _animation = Tween<double>(begin: widget.begin, end: widget.end)
+        .animate(curvedAnimation);
 
     if (widget.begin != _latestBegin || widget.end != _latestEnd) {
       _controller.reset();
@@ -235,7 +238,8 @@ class _TextCounterAnimatedText extends AnimatedWidget {
         locale: locale,
         softWrap: softWrap,
         overflow: overflow,
-        textScaler: TextScaler.linear(MediaQuery.textScalerOf(context).scale(textScaleFactor ?? 1)),
+        textScaler: TextScaler.linear(
+            MediaQuery.textScalerOf(context).scale(textScaleFactor ?? 1)),
         maxLines: maxLines,
         semanticsLabel: semanticsLabel,
       );

@@ -34,21 +34,26 @@ class PadWidget extends StatelessWidget {
       '<'
     ];
 
-    if (expired != null && context.mounted && notifier.remainingDuration == null) {
+    if (expired != null &&
+        context.mounted &&
+        notifier.remainingDuration == null) {
       notifier.startTimer(expired!, onTimeout: () {
         context.lz.pop();
       });
     }
 
     String defaultTitle = 'Please enter your OTP Code.';
-    String detaultMessage = 'Otp code sent to your number, please enter the code below to reset your password.';
+    String detaultMessage =
+        'Otp code sent to your number, please enter the code below to reset your password.';
 
     String defaultTitlePasscode = 'Please enter your Passcode.';
-    String defaultMessagePasscode = 'Your passcode is required to proceed. Enter the code below to unlock access.';
+    String defaultMessagePasscode =
+        'Your passcode is required to proceed. Enter the code below to unlock access.';
 
     return Scaffold(
         appBar: TransAppBar(
-          leading: IconButton(onPressed: () => context.lz.pop(), icon: Icon(Hi.cancel01)),
+          leading: IconButton(
+              onPressed: () => context.lz.pop(), icon: Icon(Hi.cancel01)),
         ),
         body: Column(
           children: [
@@ -62,9 +67,19 @@ class PadWidget extends StatelessWidget {
                     child: Column(
                       spacing: 10,
                       children: [
-                        Text(title ?? (passcode ? defaultTitlePasscode : defaultTitle),
-                            style: Gfont.bold, textAlign: Ta.center),
-                        Text(message ?? (passcode ? defaultMessagePasscode : detaultMessage), textAlign: Ta.center),
+                        Text(
+                            title ??
+                                (passcode
+                                    ? defaultTitlePasscode
+                                    : defaultTitle),
+                            style: Gfont.bold,
+                            textAlign: Ta.center),
+                        Text(
+                            message ??
+                                (passcode
+                                    ? defaultMessagePasscode
+                                    : detaultMessage),
+                            textAlign: Ta.center),
                       ],
                     ),
                   ),
@@ -73,9 +88,12 @@ class PadWidget extends StatelessWidget {
                   notifier.watch((state) => Row(
                         mainAxisAlignment: Maa.center,
                         spacing: 10,
-                        children: (length > 6 || length < 1 ? 6 : length).generate((i) {
+                        children: (length > 6 || length < 1 ? 6 : length)
+                            .generate((i) {
                           return PadInput(
-                            state.values.length < (i + 1) ? null : state.values[i],
+                            state.values.length < (i + 1)
+                                ? null
+                                : state.values[i],
                             active: i == state.values.length,
                             obsecure: passcode,
                           );
@@ -91,8 +109,8 @@ class PadWidget extends StatelessWidget {
                 return BlinkAnimate(
                     isAnimated: !state.isPaused,
                     duration: 500.ms,
-                    child:
-                        Textr('Expired in ${state.expired} seconds', style: config.font.red, padding: Ei.sym(v: 20)));
+                    child: Textr('Expired in ${state.expired} seconds',
+                        style: config.font.red, padding: Ei.sym(v: 20)));
               }),
 
             // custom keypad
@@ -100,7 +118,10 @@ class PadWidget extends StatelessWidget {
               children: keys.generate((k, i) {
                 double width = context.width / 3;
 
-                final maps = {'x': ConfigIcon.get(IconSet.eraser), '<': ConfigIcon.get(IconSet.backspace)};
+                final maps = {
+                  'x': ConfigIcon.get(IconSet.eraser),
+                  '<': ConfigIcon.get(IconSet.backspace)
+                };
                 final key = maps[k] ?? k;
 
                 return Touch(
@@ -121,8 +142,9 @@ class PadWidget extends StatelessWidget {
                       decoration: BoxDecoration(),
                       width: width - (40 + .5),
                       height: 20,
-                      child:
-                          key is String ? Text(key, style: Gfont.fs16, textAlign: Ta.center) : Icon(key as IconData)),
+                      child: key is String
+                          ? Text(key, style: Gfont.fs16, textAlign: Ta.center)
+                          : Icon(key as IconData)),
                 );
               }),
             )
@@ -135,7 +157,8 @@ class PadInput extends StatelessWidget {
   final String? value;
   final bool active;
   final bool obsecure;
-  const PadInput(this.value, {super.key, this.active = false, this.obsecure = false});
+  const PadInput(this.value,
+      {super.key, this.active = false, this.obsecure = false});
 
   @override
   Widget build(BuildContext context) {
@@ -147,8 +170,11 @@ class PadInput extends StatelessWidget {
         margin: Ei.sym(h: 5, v: 20),
         decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: context.isDarkMode ? darkAppbarColor.lighten(.05) : Colors.white,
-            border: Br.all(color: Colors.green, width: value == null ? 0.5 : 5)),
+            color: context.isDarkMode
+                ? darkAppbarColor.lighten(.05)
+                : Colors.white,
+            border:
+                Br.all(color: Colors.green, width: value == null ? 0.5 : 5)),
       );
     }
 
@@ -162,15 +188,21 @@ class PadInput extends StatelessWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-                border:
-                    Br.only(['b'], color: value == null ? Colors.black12.themeify : Colors.black54.themeify, width: 2)),
+                border: Br.only(['b'],
+                    color: value == null
+                        ? Colors.black12.themeify
+                        : Colors.black54.themeify,
+                    width: 2)),
           ),
         ),
         AnimatedPositioned(
             duration: 300.ms,
-            curve: value == null ? Curves.fastEaseInToSlowEaseOut : Curves.elasticOut,
+            curve: value == null
+                ? Curves.fastEaseInToSlowEaseOut
+                : Curves.elasticOut,
             bottom: value == null ? -15 : 15,
-            child: Text(value == null ? '.' : value!, textAlign: Ta.center, style: Gfont.bold))
+            child: Text(value == null ? '.' : value!,
+                textAlign: Ta.center, style: Gfont.bold))
       ],
     );
   }

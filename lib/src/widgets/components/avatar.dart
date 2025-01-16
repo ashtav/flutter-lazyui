@@ -27,12 +27,18 @@ class LzAvatar<T> extends StatelessWidget {
     double radius = size * (this.radius ?? .5);
 
     Widget imageWidget = LzImage(image ?? _asset(':default_avatar.png'),
-        size: size, radius: radius, fit: fit, alignment: alignment, previewable: previewable, context: context);
+        size: size,
+        radius: radius,
+        fit: fit,
+        alignment: alignment,
+        previewable: previewable,
+        context: context);
 
     return border == null
         ? imageWidget
         : Container(
-            decoration: BoxDecoration(borderRadius: Br.radius(radius * 2), border: border),
+            decoration: BoxDecoration(
+                borderRadius: Br.radius(radius * 2), border: border),
             child: imageWidget,
           );
   }

@@ -31,7 +31,8 @@ class Faker {
   }
 
   /// generate random price based on length
-  static String price({int length = 5, String locale = 'id_ID', String prefix = ''}) {
+  static String price(
+      {int length = 5, String locale = 'id_ID', String prefix = ''}) {
     int randomInt = Random().nextInt(pow(10, length) as int);
     String price = randomInt.toString();
 
@@ -61,7 +62,8 @@ class Faker {
     String result = name().toLowerCase().replaceAll(' ', '');
 
     if (addNumber) {
-      result += '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
+      result +=
+          '${DateTime.now().microsecond.toString().padLeft(3, '0').substring(0, 3)}@$domain';
     } else {
       result += '@$domain';
     }
@@ -154,18 +156,86 @@ class Faker {
   /// ``` dart
   /// Faker.image('avatar'); // for avatar, you can use avatar, food, or null
   /// ```
-  static String image([String? type]) {
+  static String image([Fit? type, int? filename]) {
     String github = 'https://raw.githubusercontent.com/ashtav/assets/master';
 
-    // for avatar is 1 - 16 (.jpg)
-    // for food is 1 - 12 (.jpg)
+    final avalable = {
+      Fit.avatar: 12,
+      Fit.food: 9,
+      Fit.drink: 8,
+      Fit.random: 10,
+    };
+
+    int length = avalable[type]!;
+
+    if (filename != null && filename > length) {
+      filename = length;
+    }
 
     switch (type) {
-      case 'avatar':
-        return '$github/avatar/${Random().nextInt(16) + 1}.jpg';
+      case Fit.avatar:
+        return '$github/avatar/${filename ?? Random().nextInt(length) + 1}.jpg';
+      case Fit.food:
+        return '$github/food/${filename ?? Random().nextInt(length) + 1}.jpg';
+      case Fit.drink:
+        return '$github/food/${filename ?? Random().nextInt(length) + 1}.jpg';
       default:
-        return '$github/food/${Random().nextInt(12) + 1}.jpg';
+        return '$github/random/${filename ?? Random().nextInt(length) + 1}.jpg';
     }
+  }
+
+  static FakerList get list => FakerList();
+}
+
+class FakerList {
+  List<String> name(int length) {
+    return length.generate((i) => Faker.name());
+  }
+
+  List<String> address(int length) {
+    return length.generate((i) => Faker.address());
+  }
+
+  List<String> category(int length, {bool unique = false}) {
+    if (unique && length < _Dummies.categories.length) {
+      Set<String> usedCategories = {};
+
+      return List.generate(length, (_) {
+        String category;
+
+        do {
+          category =
+              _Dummies.categories[Random().nextInt(_Dummies.categories.length)];
+        } while (usedCategories.contains(category));
+        usedCategories.add(category);
+        return category;
+      });
+    }
+
+    return length.generate((i) => Faker.category());
+  }
+
+  List<String> date(int length) {
+    return length.generate((i) => Faker.date());
+  }
+
+  List<String> email(int length) {
+    return length.generate((i) => Faker.email());
+  }
+
+  List<String> gender(int length) {
+    return length.generate((i) => Faker.gender());
+  }
+
+  List<String> image(int length, [Fit type = Fit.avatar]) {
+    final images = length.generate((i) => Faker.image(type, i + 1));
+    images.shuffle();
+
+    return images;
+  }
+
+  List<String> invoice(int length, [String prefix = 'INV-']) {
+    return length.generate((i) => Faker.invoice(prefix: prefix));
   }
 }
 
@@ -254,3 +324,6 @@ class _Dummies {
     'Jl. Padang Tegal, Gang Sabtu, No. 11, Ubud, Bali'
   ];
 }
+
+/// Faker Image Type
+enum Fit { avatar, food, drink, random }

@@ -10,8 +10,8 @@ class DropdownView extends StatelessWidget {
   Widget build(BuildContext context) {
     final key = GlobalKey();
     final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
-    final options =
-        DropOption.of(['Filter', 'Sort AZ', 'Settings'], icons: icons, separated: [2], focused: ['Settings']);
+    final options = DropOption.of(['Filter', 'Sort AZ', 'Settings'],
+        icons: icons, separated: [2], focused: ['Settings']);
 
     return Scaffold(
       appBar: AppBar(
@@ -29,21 +29,19 @@ class DropdownView extends StatelessWidget {
             runSpacing: 15,
             children: [
               LzDropdown(
-                options: options,
-                builder: (key, action) {
-                  return LzButton(
-                    key: key,
-                    text: 'Open!',
-                    icon: Hi.menu02,
-                    outlined: true,
-                    onTap: () {
-                      action.show().then((value) {
-                        logg(value);
-                      });
-                    }
-                  );
-                }
-              ),
+                  options: options,
+                  builder: (key, action) {
+                    return LzButton(
+                        key: key,
+                        text: 'Open!',
+                        icon: Hi.menu02,
+                        outlined: true,
+                        onTap: () {
+                          action.show().then((value) {
+                            logg(value);
+                          });
+                        });
+                  }),
 
               // open dropdown with context
               LzButton(

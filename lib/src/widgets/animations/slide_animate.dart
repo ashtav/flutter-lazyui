@@ -16,7 +16,8 @@ class SlideAnimate extends StatefulWidget {
   State<SlideAnimate> createState() => _SlideShowState();
 }
 
-class _SlideShowState extends State<SlideAnimate> with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
+class _SlideShowState extends State<SlideAnimate>
+    with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
@@ -24,8 +25,10 @@ class _SlideShowState extends State<SlideAnimate> with TickerProviderStateMixin,
   late Animation<double> animation;
 
   void initializeAnimation() {
-    controller = AnimationController(vsync: this, duration: widget.duration, value: widget.show ? 1 : 0);
-    animation = CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+    controller = AnimationController(
+        vsync: this, duration: widget.duration, value: widget.show ? 1 : 0);
+    animation =
+        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
 
     // Trigger the appropriate animation state
     if (widget.show) {
@@ -71,6 +74,8 @@ class _SlideShowState extends State<SlideAnimate> with TickerProviderStateMixin,
   Widget build(BuildContext context) {
     super.build(context);
     return SizeTransition(
-        axisAlignment: 1.0, sizeFactor: animation, child: FadeTransition(opacity: animation, child: widget.child));
+        axisAlignment: 1.0,
+        sizeFactor: animation,
+        child: FadeTransition(opacity: animation, child: widget.child));
   }
 }

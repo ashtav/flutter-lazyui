@@ -3,7 +3,17 @@ import 'package:lazyui/src/config/config.dart';
 
 import 'icons.dart';
 
-enum IconSet { chevron, search, eye, eyeOff, sun, moon, eraser, backspace, info }
+enum IconSet {
+  chevron,
+  search,
+  eye,
+  eyeOff,
+  sun,
+  moon,
+  eraser,
+  backspace,
+  info
+}
 
 Map<IconType, IconData> chevrons = {
   IconType.huge: Hi.arrowDown01,
@@ -17,7 +27,11 @@ Map<IconType, IconData> searches = {
   IconType.lineAwesome: La.search
 };
 
-Map<IconType, IconData> eyes = {IconType.huge: Hi.view, IconType.tabler: Ti.eye, IconType.lineAwesome: La.eye};
+Map<IconType, IconData> eyes = {
+  IconType.huge: Hi.view,
+  IconType.tabler: Ti.eye,
+  IconType.lineAwesome: La.eye
+};
 
 Map<IconType, IconData> eyesOff = {
   IconType.huge: Hi.viewOff,
@@ -25,9 +39,17 @@ Map<IconType, IconData> eyesOff = {
   IconType.lineAwesome: La.eyeSlash
 };
 
-Map<IconType, IconData> suns = {IconType.huge: Hi.sun02, IconType.tabler: Ti.sun, IconType.lineAwesome: La.sun};
+Map<IconType, IconData> suns = {
+  IconType.huge: Hi.sun02,
+  IconType.tabler: Ti.sun,
+  IconType.lineAwesome: La.sun
+};
 
-Map<IconType, IconData> moons = {IconType.huge: Hi.moon02, IconType.tabler: Ti.moon, IconType.lineAwesome: La.moon};
+Map<IconType, IconData> moons = {
+  IconType.huge: Hi.moon02,
+  IconType.tabler: Ti.moon,
+  IconType.lineAwesome: La.moon
+};
 
 Map<IconType, IconData> erasers = {
   IconType.huge: Hi.eraser,

@@ -60,7 +60,9 @@ class _RadioState extends State<Radio> {
 
   void initValue() {
     notifier.controller.text =
-        widget.initValue == null && widget.options.isNotEmpty ? widget.options.first : widget.initValue.toString();
+        widget.initValue == null && widget.options.isNotEmpty
+            ? widget.options.first
+            : widget.initValue.toString();
   }
 
   @override
@@ -121,7 +123,9 @@ class _RadioState extends State<Radio> {
               ),
 
               // error message
-              SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+              SlideAnimate(
+                  show: state.invalid,
+                  child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })
@@ -151,8 +155,11 @@ class _Bullet extends StatelessWidget {
               duration: 100.ms,
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: context.isDarkMode ? darkAppbarColor.lighten(.05) : backgroundColor,
-                  border: Br.all(color: config.primaryColor, width: active ? 5 : .5))),
+                  color: context.isDarkMode
+                      ? darkAppbarColor.lighten(.05)
+                      : backgroundColor,
+                  border: Br.all(
+                      color: config.primaryColor, width: active ? 5 : .5))),
           Text(option)
         ],
       ),

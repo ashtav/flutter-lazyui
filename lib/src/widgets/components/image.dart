@@ -65,7 +65,10 @@ class LzImage<T> extends StatelessWidget {
 
     // error
     Widget errorWidget = Container(
-        width: width, height: height, color: Colors.black12, child: const Center(child: Icon(Hi.alertSquare)));
+        width: width,
+        height: height,
+        color: Colors.black12,
+        child: const Center(child: Icon(Hi.alertSquare)));
 
     // image string
     if (src is String && ![''].contains('$src'.trim())) {
@@ -91,7 +94,8 @@ class LzImage<T> extends StatelessWidget {
             width: width,
             height: height,
             alignment: alignment,
-            progressIndicatorBuilder: (context, url, downloadProgress) => placeholder,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                placeholder,
             errorWidget: (context, url, error) => errorWidget,
           );
         }
@@ -106,7 +110,8 @@ class LzImage<T> extends StatelessWidget {
               width: width,
               height: height,
               alignment: alignment,
-              frameBuilder: (context, child, __, ok) => ok ? child : placeholder,
+              frameBuilder: (context, child, __, ok) =>
+                  ok ? child : placeholder,
               errorBuilder: (_, e, s) => errorWidget);
         }
       }
@@ -114,12 +119,17 @@ class LzImage<T> extends StatelessWidget {
       // image path local asset
       else {
         // local assets path
-        src = src.contains(':') ? src.replaceAll(':', '') : 'assets/images/$src';
+        src =
+            src.contains(':') ? src.replaceAll(':', '') : 'assets/images/$src';
 
         // svg asset image
         if (src.endsWith('.svg')) {
           image = SvgPicture.asset(src,
-              fit: fit, width: width, height: height, alignment: alignment, placeholderBuilder: (_) => placeholder);
+              fit: fit,
+              width: width,
+              height: height,
+              alignment: alignment,
+              placeholderBuilder: (_) => placeholder);
         }
 
         // jpg, jpeg, png, gif, etc..
@@ -169,7 +179,8 @@ class LzImage<T> extends StatelessWidget {
     image = image.lz.clip(all: radius ?? config.borderRadius);
 
     if (previewable) {
-      final tag = '${DateTime.now().microsecondsSinceEpoch}_${Random().nextInt(10000)}';
+      final tag =
+          '${DateTime.now().microsecondsSinceEpoch}_${Random().nextInt(10000)}';
 
       return Hero(
           tag: tag,
@@ -247,7 +258,8 @@ class LzImageViewer<T> extends StatefulWidget {
   State<LzImageViewer> createState() => _LzImageViewerState();
 }
 
-class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProviderStateMixin {
+class _LzImageViewerState extends State<LzImageViewer>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<Matrix4> _animation;
   late TransformationController controller;
@@ -323,7 +335,9 @@ class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProvider
                       onDoubleTapDown: (details) => _doubleTapDetails = details,
                       onDoubleTap: () => _handleDoubleTap(),
                       child: LzImage(widget.image,
-                          radius: 0, fit: BoxFit.contain, size: [context.width, context.height]))),
+                          radius: 0,
+                          fit: BoxFit.contain,
+                          size: [context.width, context.height]))),
             ),
 
             // close button
@@ -334,7 +348,12 @@ class _LzImageViewerState extends State<LzImageViewer> with SingleTickerProvider
                     padding: Ei.all(20),
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 25, spreadRadius: 7)],
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.black26,
+                            blurRadius: 25,
+                            spreadRadius: 7)
+                      ],
                     ),
                     child: Touch(
                       type: TouchType.fade,

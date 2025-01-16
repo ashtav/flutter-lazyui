@@ -50,7 +50,8 @@ class PickerView extends StatelessWidget {
                 icon: Hi.calendarCheckOut01,
                 border: Br.all(color: Colors.black45),
                 onTap: () {
-                  LzPicker.dateRange(context, withTime: true, onSelect: (value) {
+                  LzPicker.dateRange(context, withTime: true,
+                      onSelect: (value) {
                     logg(value);
                   });
                 },
@@ -60,10 +61,14 @@ class PickerView extends StatelessWidget {
                 icon: Hi.searchList01,
                 border: Br.all(color: Colors.black45),
                 onTap: () {
-                  List<String> options = [1, 10].iterate().generate((_, __) => Faker.name());
-                  final disabled = [0, 9].randomInRange(5).generate((i, _) => options[i]);
+                  List<String> options =
+                      [1, 10].iterate().generate((_, __) => Faker.name());
+                  final disabled =
+                      [0, 9].randomInRange(5).generate((i, _) => options[i]);
 
-                  LzPicker.option(context, options: options.option(disabled: disabled), onSelect: (value) {
+                  LzPicker.option(context,
+                      options: options.option(disabled: disabled),
+                      onSelect: (value) {
                     logg(value);
                   });
                 },

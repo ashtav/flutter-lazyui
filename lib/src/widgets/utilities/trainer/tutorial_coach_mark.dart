@@ -116,7 +116,8 @@ class TutorialCoachMarkWidget extends StatefulWidget {
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();
 }
 
-class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implements TutorialCoachMarkController {
+class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget>
+    implements TutorialCoachMarkController {
   final GlobalKey<AnimatedFocusLightState> _focusLightKey = GlobalKey();
   bool showContent = false;
   TargetFocus? currentTarget;
@@ -187,7 +188,9 @@ class TutorialCoachMarkWidgetState extends State<TutorialCoachMarkWidget> implem
     double haloHeight;
 
     if (currentTarget!.shape == ShapeLightFocus.circle) {
-      haloWidth = target.size.width > target.size.height ? target.size.width : target.size.height;
+      haloWidth = target.size.width > target.size.height
+          ? target.size.width
+          : target.size.height;
       haloHeight = haloWidth;
     } else {
       haloWidth = target.size.width;

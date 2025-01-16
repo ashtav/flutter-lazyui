@@ -24,13 +24,15 @@ class LzCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final radius = this.radius ?? Br.radius(config.borderRadius);
-    Color color = this.color ?? (context.isDarkMode ? darkAppbarColor : backgroundColor);
+    Color color =
+        this.color ?? (context.isDarkMode ? darkAppbarColor : backgroundColor);
 
     bool stacked = style?.stacked ?? false;
     bool isTopAlign = style?.stackAlign == StackAlign.top;
 
     Widget card = Container(
-      margin: Ei.only(b: stacked && !isTopAlign ? 5 : 0, t: stacked && isTopAlign ? 5 : 0),
+      margin: Ei.only(
+          b: stacked && !isTopAlign ? 5 : 0, t: stacked && isTopAlign ? 5 : 0),
       child: Stack(
         children: [
           Touch(
@@ -47,7 +49,10 @@ class LzCard extends StatelessWidget {
             Positioned(
               top: style?.iconOffset?.dy ?? 20,
               right: style?.iconOffset?.dx ?? 20,
-              child: Transform.rotate(angle: style?.iconAngle ?? .5, child: style?.icon!).lz.ignore(),
+              child: Transform.rotate(
+                      angle: style?.iconAngle ?? .5, child: style?.icon!)
+                  .lz
+                  .ignore(),
             )
         ],
       ).lz.clip(),
@@ -60,8 +65,11 @@ class LzCard extends StatelessWidget {
           width: context.width * .85,
           height: 10,
           decoration: BoxDecoration(
-            border: border ?? Br.all(),
-            color: context.isDarkMode ? darkAppbarColor.darken(.3) : 'f9f9f9'.hex, borderRadius: radius),
+              border: border ?? Br.all(),
+              color: context.isDarkMode
+                  ? darkAppbarColor.darken(.3)
+                  : 'f9f9f9'.hex,
+              borderRadius: radius),
         ),
         card
       ],
@@ -79,5 +87,9 @@ class LzCardStyle {
   final double? iconAngle;
 
   const LzCardStyle(
-      {this.stacked = false, this.stackAlign = StackAlign.bottom, this.icon, this.iconOffset, this.iconAngle});
+      {this.stacked = false,
+      this.stackAlign = StackAlign.bottom,
+      this.icon,
+      this.iconOffset,
+      this.iconAngle});
 }

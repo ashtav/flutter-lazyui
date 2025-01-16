@@ -79,15 +79,18 @@ class RectClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     if (target.offset == Offset.zero) return Path();
 
-    var maxSize =
-        max(size.width, size.height) + max(target.size.width, target.size.height) + target.getBiggerSpaceBorder(size);
+    var maxSize = max(size.width, size.height) +
+        max(target.size.width, target.size.height) +
+        target.getBiggerSpaceBorder(size);
 
     double x = -maxSize / 2 * (1 - progress) + target.offset.dx - offset / 2;
     double y = -maxSize / 2 * (1 - progress) + target.offset.dy - offset / 2;
     double w = maxSize * (1 - progress) + target.size.width + offset;
     double h = maxSize * (1 - progress) + target.size.height + offset;
 
-    return radius > 0 ? rRectHolePath(size, x, y, w, h, radius) : rectHolePath(size, x, y, w, h);
+    return radius > 0
+        ? rRectHolePath(size, x, y, w, h, radius)
+        : rectHolePath(size, x, y, w, h);
   }
 
   @override
@@ -240,8 +243,9 @@ class LightPaintRect extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     if (target.offset == Offset.zero) return;
 
-    var maxSize =
-        max(size.width, size.height) + max(target.size.width, target.size.height) + target.getBiggerSpaceBorder(size);
+    var maxSize = max(size.width, size.height) +
+        max(target.size.width, target.size.height) +
+        target.getBiggerSpaceBorder(size);
 
     double x = -maxSize / 2 * (1 - progress) + target.offset.dx - offset / 2;
 
@@ -252,7 +256,9 @@ class LightPaintRect extends CustomPainter {
     double h = maxSize * (1 - progress) + target.size.height + offset;
 
     canvas.drawPath(
-      radius > 0 ? RectClipper.rRectHolePath(size, x, y, w, h, radius) : RectClipper.rectHolePath(size, x, y, w, h),
+      radius > 0
+          ? RectClipper.rRectHolePath(size, x, y, w, h, radius)
+          : RectClipper.rectHolePath(size, x, y, w, h),
       Paint()
         ..style = PaintingStyle.fill
         ..color = colorShadow.withValues(alpha: opacityShadow)
@@ -260,7 +266,9 @@ class LightPaintRect extends CustomPainter {
     );
     if (borderSide != null && borderSide?.style != BorderStyle.none) {
       canvas.drawPath(
-        radius > 0 ? _drawJustRHole(size, x, y, w, h, radius) : _drawJustHole(size, x, y, w, h),
+        radius > 0
+            ? _drawJustRHole(size, x, y, w, h, radius)
+            : _drawJustHole(size, x, y, w, h),
         Paint()
           ..style = PaintingStyle.stroke
           ..color = borderSide!.color

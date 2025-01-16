@@ -29,11 +29,17 @@ class LazyUi {
       IconType icon = IconType.huge,
       String? locale,
       bool alwaysPortrait = true,
-      bool backBlur = true, Color? primaryColor}) {
+      bool backBlur = true,
+      Color? primaryColor}) {
     WidgetsFlutterBinding.ensureInitialized();
 
     // Set configuration
-    config = LazyConfig(font: font, icon: icon, locale: locale, backBlur: backBlur, primaryColor: primaryColor ?? Colors.blueAccent);
+    config = LazyConfig(
+        font: font,
+        icon: icon,
+        locale: locale,
+        backBlur: backBlur,
+        primaryColor: primaryColor ?? Colors.blueAccent);
 
     // Initialize locale for date formatting if provided
     if (locale != null) {
@@ -42,12 +48,14 @@ class LazyUi {
 
     // Lock device orientation to portrait if alwaysPortrait is true
     if (alwaysPortrait) {
-      SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     }
 
     // Override default Flutter error handler for specific cases (e.g., image resource errors)
     FlutterError.onError = (FlutterErrorDetails details) {
-      if (details.library == 'image resource service' || details.exception.toString().contains('404')) {
+      if (details.library == 'image resource service' ||
+          details.exception.toString().contains('404')) {
         return;
       }
 

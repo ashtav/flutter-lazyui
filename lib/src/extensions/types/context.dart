@@ -23,7 +23,8 @@ extension CustomContextExtension on BuildContext {
   EdgeInsets get viewInsets => MediaQuery.of(this).viewInsets;
 
   /// Gets the padding of the current window.
-  EdgeInsets get windowPadding => MediaQueryData.fromView(View.of(this)).padding;
+  EdgeInsets get windowPadding =>
+      MediaQueryData.fromView(View.of(this)).padding;
 
   /// Checks if the current theme is dark mode.
   bool get isDarkMode => Theme.of(this).brightness == Brightness.dark;
@@ -31,9 +32,12 @@ extension CustomContextExtension on BuildContext {
   /// Shows a dialog with the specified [widget].
   Future<T?> dialog<T extends Object?>(Widget widget,
       {bool dismiss = true, bool backBlur = true, Color? barrierColor}) {
-    Widget blurWrapper(Widget child) => BackdropFilter(filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
+    Widget blurWrapper(Widget child) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
     return showDialog(
-        context: this, barrierColor: barrierColor, builder: (_) => backBlur ? blurWrapper(widget) : widget);
+        context: this,
+        barrierColor: barrierColor,
+        builder: (_) => backBlur ? blurWrapper(widget) : widget);
   }
 
   /// Show a bottom sheet on top of the current screen.
@@ -78,7 +82,10 @@ extension CustomContextExtension on BuildContext {
     /// of the container can be customized; if not specified, it defaults to white with
     /// safe area and transparent without safe area.
     Widget wrapper(Widget child) => Container(
-          padding: EdgeInsets.only(top: safeArea ? MediaQueryData.fromView(View.of(this)).padding.top : 0),
+          padding: EdgeInsets.only(
+              top: safeArea
+                  ? MediaQueryData.fromView(View.of(this)).padding.top
+                  : 0),
           decoration: BoxDecoration(
               color: backgroundColor ??
                   (safeArea
@@ -90,8 +97,8 @@ extension CustomContextExtension on BuildContext {
         );
 
     // If the `backBlur` flag is set, the background of the bottom sheet is blurred.
-    Widget blurWrapper(Widget child) =>
-        BackdropFilter(filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
+    Widget blurWrapper(Widget child) => BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur), child: child);
 
     // Show the bottom sheet.
     return showModalBottomSheet<T>(
@@ -120,15 +127,20 @@ class ContextUtils {
   ///
   /// Optionally, [arguments] can be passed to the destination.
   /// If [clean] is true, removes all previous routes from the stack.
-  Future<T?> push<T extends Object?>(Object destination, {Object? arguments, bool clean = false}) {
+  Future<T?> push<T extends Object?>(Object destination,
+      {Object? arguments, bool clean = false}) {
     final route = destination is String
         ? clean
-            ? Navigator.pushNamedAndRemoveUntil<T>(context, destination, (_) => false, arguments: arguments)
+            ? Navigator.pushNamedAndRemoveUntil<T>(
+                context, destination, (_) => false, arguments: arguments)
             : Navigator.pushNamed<T>(context, destination, arguments: arguments)
         : clean
             ? Navigator.pushAndRemoveUntil<T>(
-                context, MaterialPageRoute(builder: (_) => destination as Widget), (_) => false)
-            : Navigator.push<T>(context, MaterialPageRoute(builder: (_) => destination as Widget));
+                context,
+                MaterialPageRoute(builder: (_) => destination as Widget),
+                (_) => false)
+            : Navigator.push<T>(context,
+                MaterialPageRoute(builder: (_) => destination as Widget));
 
     return route;
   }

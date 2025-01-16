@@ -20,13 +20,19 @@ class CardView extends StatelessWidget {
                 'LzCard is a customizable widget for displaying content in a card-like layout with rounded corners, padding, and elevation for a clean, structured design.',
           ),
           LzCard(
-            children: [Text('Simple Card', style: Gfont.bold), Text(Faker.words(10))],
+            children: [
+              Text('Simple Card', style: Gfont.bold),
+              Text(Faker.words(10))
+            ],
           ),
           const SizedBox(height: 15),
           LzCard(
             onTap: () {},
             style: LzCardStyle(stacked: true, stackAlign: StackAlign.top),
-            children: [Text('Stacked Card', style: Gfont.bold), Text(Faker.words(10))],
+            children: [
+              Text('Stacked Card', style: Gfont.bold),
+              Text(Faker.words(10))
+            ],
           ),
           const SizedBox(height: 15),
           LzCard(
@@ -39,7 +45,10 @@ class CardView extends StatelessWidget {
                   color: context.isDarkMode ? Colors.white10 : Colors.black12,
                   size: 70,
                 )),
-            children: [Text('Background Icon', style: Gfont.bold), Text(Faker.words(10))],
+            children: [
+              Text('Background Icon', style: Gfont.bold),
+              Text(Faker.words(10))
+            ],
           )
         ],
       ),

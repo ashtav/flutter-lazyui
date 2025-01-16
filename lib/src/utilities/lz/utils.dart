@@ -58,7 +58,8 @@ class Utils {
   /// ```dart
   /// scrollToWidget(myKey, myController, MediaQuery.of(context).size.width);
   /// ```
-  void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
+  void scrollToWidget(
+      GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 
@@ -102,14 +103,18 @@ class Utils {
   /// Utils.scrollTo(controller, duration: 500, delay: 100, to: AxisDirection.down);
   /// ```
   scrollTo(ScrollController scrollController,
-      {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
+      {int duration = 300,
+      int delay = 50,
+      AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
+            to == AxisDirection.down
+                ? scrollController.position.maxScrollExtent
+                : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );

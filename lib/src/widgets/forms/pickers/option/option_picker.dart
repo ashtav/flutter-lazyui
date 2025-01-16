@@ -43,7 +43,11 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
 
   double radius = config.borderRadius;
   BorderRadiusGeometry borderRadius = Br.radiusOnly(tl: 0, tr: 0);
-  double magnification = 1, diameterRatio = 1, squeeze = 1, itemExtent = 40, maxLines = 1;
+  double magnification = 1,
+      diameterRatio = 1,
+      squeeze = 1,
+      itemExtent = 40,
+      maxLines = 1;
   bool fullScreen = false, withSearch = false;
   String confirmText = 'Select';
 
@@ -59,7 +63,8 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
 
     borderRadius = Br.radiusOnly(tl: radius, tr: radius);
 
-    int i = widget.options.indexWhere((e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
+    int i = widget.options.indexWhere(
+        (e) => e.toMap().toString() == widget.initialValue?.toMap().toString());
     i = (i == -1 ? 0 : i);
 
     // set initial index
@@ -151,9 +156,13 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
               ScrollGlowless(
                 child: notifier.watch((state) => AnimatedContainer(
                       duration: 150.ms,
-                      decoration: BoxDecoration(color: context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
+                      decoration: BoxDecoration(
+                          color: context.isDarkMode
+                              ? darkAppbarColor
+                              : scaffoldBackgroundColor),
                       height: state.height,
-                      padding: Ei.only(b: state.isExpanded ? state.height / 4 : 0),
+                      padding:
+                          Ei.only(b: state.isExpanded ? state.height / 4 : 0),
                       child: SafeArea(
                         top: false,
                         child: CupertinoPicker(
@@ -166,7 +175,9 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
                             scrollController: notifier.scroll,
                             selectionOverlay: Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
+                              decoration: BoxDecoration(
+                                  color:
+                                      Colors.black.applyOpacity(.03).themeify),
                             ),
 
                             // This is called when selected item is changed.
@@ -178,30 +189,39 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
                                 if (notifier.values.isNotEmpty) {
                                   notifier.result = {
                                     'label': notifier.options[i],
-                                    'value': notifier.values.length < i ? null : notifier.values[i]
+                                    'value': notifier.values.length < i
+                                        ? null
+                                        : notifier.values[i]
                                   };
                                 } else {
-                                  notifier.result = {'label': notifier.options[i]};
+                                  notifier.result = {
+                                    'label': notifier.options[i]
+                                  };
                                 }
                               }
 
-                              notifier.setDisabled(widget.options[selectedItem].disabled);
+                              notifier.setDisabled(
+                                  widget.options[selectedItem].disabled);
                             },
                             children: notifier.options.generate((item, i) {
                               final option = widget.options[i];
                               bool disabled = option.disabled;
 
-                              Color textColor =
-                                  (context.isDarkMode ? Colors.white : Colors.black).applyOpacity(disabled ? .2 : 1);
+                              Color textColor = (context.isDarkMode
+                                      ? Colors.white
+                                      : Colors.black)
+                                  .applyOpacity(disabled ? .2 : 1);
 
                               return Center(
                                 child: Container(
-                                  constraints: BoxConstraints(maxWidth: context.width * .75),
+                                  constraints: BoxConstraints(
+                                      maxWidth: context.width * .75),
                                   child: Text(item,
                                       overflow: Tof.ellipsis,
                                       textAlign: Ta.center,
                                       maxLines: maxLines.toInt(),
-                                      style: config.font.copyWith(color: textColor)),
+                                      style: config.font
+                                          .copyWith(color: textColor)),
                                 ),
                               );
                             })),
@@ -229,13 +249,18 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
                   child: notifier.watch((state) => AnimatedContainer(
                         duration: 250.ms,
                         padding: Ei.only(
-                            t: state.isExpanded || widget.style?.fullScreen == true ? context.windowPadding.top : 0),
+                            t: state.isExpanded ||
+                                    widget.style?.fullScreen == true
+                                ? context.windowPadding.top
+                                : 0),
                         child: LzTextField(
                           hint: 'Type to search',
                           border: InputBorder.none,
                           controller: notifier.keyword,
                           onFocus: (value) {
-                            double newHeight = value ? (context.height) : notifier.defaultHeight;
+                            double newHeight = value
+                                ? (context.height)
+                                : notifier.defaultHeight;
                             notifier.setHeight(newHeight);
                           },
                           onChange: (keyword) {

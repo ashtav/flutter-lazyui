@@ -29,7 +29,8 @@ class TimerCountDown extends StatelessWidget {
         stream: Stream.periodic(1.s, (i) => i),
         builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
           int now = DateTime.now().millisecondsSinceEpoch;
-          Duration duration = Duration(milliseconds: expiredTime.millisecondsSinceEpoch - now);
+          Duration duration =
+              Duration(milliseconds: expiredTime.millisecondsSinceEpoch - now);
 
           // Prevent negative duration
           if (duration.isNegative) {

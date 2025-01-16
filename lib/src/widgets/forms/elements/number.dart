@@ -169,7 +169,9 @@ class _NumberState extends State<Number> {
 
   @override
   void didUpdateWidget(covariant Number old) {
-    if (widget.enabled != old.enabled || widget.model != old.model || widget.initValue != old.initValue) {
+    if (widget.enabled != old.enabled ||
+        widget.model != old.model ||
+        widget.initValue != old.initValue) {
       onInit();
     }
 
@@ -183,7 +185,10 @@ class _NumberState extends State<Number> {
 
     bool hasLabel = ![null, ''].contains(label);
 
-    List<TextInputFormatter> formatters = [LengthLimitingTextInputFormatter(11), ...widget.formatters];
+    List<TextInputFormatter> formatters = [
+      LengthLimitingTextInputFormatter(11),
+      ...widget.formatters
+    ];
 
     // check if widget is wrapped with FormGroup
     final attr = widget.getAttribute(context);
@@ -204,8 +209,11 @@ class _NumberState extends State<Number> {
 
         // textfield
         notifier.watch((state) {
-          Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor).darken(state.enabled ? 0 : .05);
-          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped);
+          Color background =
+              (context.isDarkMode ? darkAppbarColor : backgroundColor)
+                  .darken(state.enabled ? 0 : .05);
+          final outlineBorder =
+              FormUtils.getBorder(context, state.invalid, isGrouped);
 
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder
@@ -231,7 +239,8 @@ class _NumberState extends State<Number> {
                   border: border,
                   suffixIcon: Row(
                     mainAxisSize: Mas.min,
-                    children: [Hi.minusSign, Hi.id, Hi.plusSign].generate((icon, i) {
+                    children:
+                        [Hi.minusSign, Hi.id, Hi.plusSign].generate((icon, i) {
                       if (i == 1) {
                         return Container(
                           width: .5,
@@ -250,7 +259,9 @@ class _NumberState extends State<Number> {
 
               // error message
               if (!isGrouped)
-                SlideAnimate(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+                SlideAnimate(
+                    show: state.invalid,
+                    child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })

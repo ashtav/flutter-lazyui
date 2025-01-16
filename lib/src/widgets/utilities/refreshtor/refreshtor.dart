@@ -88,7 +88,8 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
   IndicatorController _internalIndicatorController = IndicatorController();
 
   /// Current [IndicatorController]
-  IndicatorController get controller => widget.controller ?? _internalIndicatorController;
+  IndicatorController get controller =>
+      widget.controller ?? _internalIndicatorController;
 
   static const double _kPositionLimit = 1.5;
   static const double _kInitialValue = 0.0;
@@ -111,7 +112,8 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
   @override
   void didUpdateWidget(covariant Refreshtor oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != widget.controller && widget.controller != null) {
+    if (oldWidget.controller != widget.controller &&
+        widget.controller != null) {
       // Dispose and remove the current internal controller, if it exists
       _internalIndicatorController.dispose();
     }
@@ -134,9 +136,11 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
   }
 
   /// Notifies the listeners of the controller
-  void _updateCustomRefreshIndicatorValue() => controller.setValue(_animationController.value);
+  void _updateCustomRefreshIndicatorValue() =>
+      controller.setValue(_animationController.value);
 
-  bool _handleScrollIndicatorNotification(OverscrollIndicatorNotification notification) {
+  bool _handleScrollIndicatorNotification(
+      OverscrollIndicatorNotification notification) {
     if (notification.depth != 0) return false;
     if (notification.leading) {
       notification.disallowIndicator();
@@ -155,7 +159,8 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
       case IndicatorTrigger.trailingEdge:
         return notification.metrics.extentAfter == 0;
       case IndicatorTrigger.bothEdges:
-        return notification.metrics.extentBefore == 0 || notification.metrics.extentAfter == 0;
+        return notification.metrics.extentBefore == 0 ||
+            notification.metrics.extentAfter == 0;
     }
   }
 
@@ -188,12 +193,14 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
     // Calculate the edge if not defined and possible.
     // This may apply to two-way lists on the iOS platform with bouncing physics.
     if (!controller.hasEdge && notification.scrollDelta != null) {
-      if (notification.metrics.extentBefore == 0 && notification.scrollDelta!.isNegative) {
+      if (notification.metrics.extentBefore == 0 &&
+          notification.scrollDelta!.isNegative) {
         controller
           ..setIndicatorDragDetails(notification.dragDetails)
           ..setIndicatorEdge(IndicatorEdge.leading);
         setIndicatorState(IndicatorState.dragging);
-      } else if (notification.metrics.extentAfter == 0 && !notification.scrollDelta!.isNegative) {
+      } else if (notification.metrics.extentAfter == 0 &&
+          !notification.scrollDelta!.isNegative) {
         controller
           ..setIndicatorDragDetails(notification.dragDetails)
           ..setIndicatorEdge(IndicatorEdge.trailing);
@@ -228,7 +235,9 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
 
     if (!controller.hasEdge) {
       controller.setIndicatorEdge(
-        notification.overscroll.isNegative ? IndicatorEdge.leading : IndicatorEdge.trailing,
+        notification.overscroll.isNegative
+            ? IndicatorEdge.leading
+            : IndicatorEdge.trailing,
       );
       // Inform indicator widget of edge change
       _update();
@@ -328,7 +337,9 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
   }
 
   void _calculateDragOffset(double containerExtent) {
-    if (controller.state.isCanceling || controller.state.isFinalizing || controller.state.isLoading) return;
+    if (controller.state.isCanceling ||
+        controller.state.isFinalizing ||
+        controller.state.isLoading) return;
 
     double newValue;
 
@@ -427,7 +438,8 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
 
     if (!mounted) return;
     setIndicatorState(IndicatorState.finalizing);
-    await _animationController.animateTo(0.0, duration: durations.finalizeDuration);
+    await _animationController.animateTo(0.0,
+        duration: durations.finalizeDuration);
 
     if (!mounted) return;
     controller.setIndicatorEdge(null);
@@ -479,7 +491,10 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
 
         return Stack(
           alignment: Ad.topCenter,
-          children: [child, widget.builder?.call(controller) ?? indicators[widget.type]!],
+          children: [
+            child,
+            widget.builder?.call(controller) ?? indicators[widget.type]!
+          ],
         );
       },
     );

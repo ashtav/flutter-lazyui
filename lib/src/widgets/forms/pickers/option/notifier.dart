@@ -7,7 +7,8 @@ class OptionPickerNotifier extends ChangeNotifier {
   TextEditingController keyword = TextEditingController();
 
   /// A controller for handling scrolling within the picker.
-  FixedExtentScrollController scroll = FixedExtentScrollController(initialItem: 0);
+  FixedExtentScrollController scroll =
+      FixedExtentScrollController(initialItem: 0);
 
   /// A list of options available for selection.
   List<String> options = [];
@@ -74,8 +75,13 @@ class OptionPickerNotifier extends ChangeNotifier {
       //     : {'option': options.isEmpty ? null : options[index], 'value': values.isEmpty ? null : values[index]};
 
       // more efficient is to use this
-      found = value.trim().isEmpty ? 0 : options.where((e) => e.toLowerCase().contains(value.toLowerCase())).length;
-      index = options.indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
+      found = value.trim().isEmpty
+          ? 0
+          : options
+              .where((e) => e.toLowerCase().contains(value.toLowerCase()))
+              .length;
+      index = options
+          .indexWhere((e) => e.toLowerCase().contains(value.toLowerCase()));
       scroll.animateToItem(index, duration: 250.ms, curve: Curves.easeInOut);
 
       notifyListeners();

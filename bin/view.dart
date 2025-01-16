@@ -4,7 +4,8 @@ import 'utils.dart';
 
 void main(List<String> args) {
   if (args.isNotEmpty) {
-    String path = args[args.indexWhere((e) => e.contains('-'))].replaceAll('-', '');
+    String path =
+        args[args.indexWhere((e) => e.contains('-'))].replaceAll('-', '');
     String filename = args[args.indexWhere((e) => !e.contains('-'))];
 
     String content = '''

@@ -28,10 +28,12 @@ class LzButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool iconOnly = text == null && icon != null;
-    Color backgroundColor = color ?? (context.isDarkMode ? darkAppbarColor : Colors.white);
+    Color backgroundColor =
+        color ?? (context.isDarkMode ? darkAppbarColor : Colors.white);
 
     Color textColor = backgroundColor.isDark ? Colors.white : Colors.black;
-    final textStyle = (this.textStyle ?? Gfont.black).copyWith(color: textColor);
+    final textStyle =
+        (this.textStyle ?? Gfont.black).copyWith(color: textColor);
 
     BoxBorder? border = this.border;
 
@@ -47,7 +49,11 @@ class LzButton extends StatelessWidget {
       border: border,
       child: iconOnly
           ? Icon(icon, color: textColor)
-          : Textr(text ?? '', icon: icon, iconStyle: iconStyle, style: textStyle, textAlign: Ta.center),
+          : Textr(text ?? '',
+              icon: icon,
+              iconStyle: iconStyle,
+              style: textStyle,
+              textAlign: Ta.center),
     );
   }
 }

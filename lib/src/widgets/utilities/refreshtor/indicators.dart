@@ -34,14 +34,18 @@ class IndicatorStateChange {
   /// Checks if a state change matches the given conditions.
   bool didChange({IndicatorState? from, IndicatorState? to}) {
     if (from == null && to == null) return currentState != newState;
-    if (from != null && to == null) return currentState == from && currentState != newState;
-    if (from == null && to != null) return newState == to && currentState != newState;
+    if (from != null && to == null)
+      return currentState == from && currentState != newState;
+    if (from == null && to != null)
+      return newState == to && currentState != newState;
     return currentState == from && newState == to;
   }
 
   @override
   bool operator ==(Object other) =>
-      other is IndicatorStateChange && currentState == other.currentState && newState == other.newState;
+      other is IndicatorStateChange &&
+      currentState == other.currentState &&
+      newState == other.newState;
 
   @override
   int get hashCode => Object.hash(currentState, newState);

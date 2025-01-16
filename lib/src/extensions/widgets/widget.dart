@@ -8,7 +8,14 @@ class WidgettUtils {
   final Widget child;
   WidgettUtils(this.child);
 
-  T clip<T extends Widget>({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? all}) =>
+  T clip<T extends Widget>(
+          {double? tl,
+          double? tr,
+          double? bl,
+          double? br,
+          double? tlr,
+          double? blr,
+          double? all}) =>
       ClipRRect(
         borderRadius: all != null
             ? BorderRadius.all(Radius.circular(all))
@@ -20,16 +27,20 @@ class WidgettUtils {
         child: child,
       ) as T;
 
-  T ignore<T extends Widget>([bool ignore = true]) => IgnorePointer(ignoring: ignore, child: child) as T;
+  T ignore<T extends Widget>([bool ignore = true]) =>
+      IgnorePointer(ignoring: ignore, child: child) as T;
 
-  T opacity<T extends Widget>(double opacity) => Opacity(opacity: opacity, child: child) as T;
+  T opacity<T extends Widget>(double opacity) =>
+      Opacity(opacity: opacity, child: child) as T;
 
-  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: child);
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) =>
+      Flexible(flex: flex, fit: fit, child: child);
 
   /// ``` dart
   /// Widget().lz.shadowed(true);
   /// ```
-  Widget shadowed(BuildContext context, {double? spread, double? blur, Offset? offset, Color? color}) {
+  Widget shadowed(BuildContext context,
+      {double? spread, double? blur, Offset? offset, Color? color}) {
     Color backgroundColor = color ?? context.scaffoldColor;
 
     return Container(
