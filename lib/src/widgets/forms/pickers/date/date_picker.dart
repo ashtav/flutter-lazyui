@@ -29,21 +29,14 @@ class DatePickerWidget extends StatelessWidget {
 
   /// Constructs a [DatePickerWidget] widget with optional parameters.
   const DatePickerWidget(
-      {super.key,
-      this.initDate,
-      this.minDate,
-      this.maxDate,
-      this.style,
-      this.format,
-      this.withTime = false});
+      {super.key, this.initDate, this.minDate, this.maxDate, this.style, this.format, this.withTime = false});
 
   @override
   Widget build(BuildContext context) {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
     final notifier = DatePickerNotifier();
-    notifier.onInitialized(formats,
-        initDate: initDate, minDate: minDate, maxDate: maxDate);
+    notifier.onInitialized(formats, initDate: initDate, minDate: minDate, maxDate: maxDate);
 
     double height = context.height * .5;
 
@@ -53,29 +46,37 @@ class DatePickerWidget extends StatelessWidget {
 
     return ScrollGlowless(
       child: Container(
-        decoration: BoxDecoration(
-            color:
-                context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
+        decoration: BoxDecoration(color: context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
         child: Stack(
           children: [
-            SizedBox(
-              height: height,
-              child: Intrinsic(
-                children: formats.generate((format, i) {
-                  final items = notifier.generateDate(format);
-                  return Container(
-                      decoration: BoxDecoration(
-                          border: Br.only(['l'],
-                              except: i == 0, color: Colors.black12.themeify)),
-                      child: CupertinoPickerWidget(
-                        notifier,
-                        format: format,
-                        items: items,
-                        style: style,
-                      ));
+            FutureBuilder(
+                future: Future.delayed(240.ms),
+                builder: (context, snap) {
+                  if (snap.connectionState == ConnectionState.waiting) {
+                    return SizedBox(
+                      height: height,
+                      width: context.width,
+                    );
+                  }
+
+                  return SizedBox(
+                    height: height,
+                    child: Intrinsic(
+                      children: formats.generate((format, i) {
+                        final items = notifier.generateDate(format);
+                        return Container(
+                            decoration:
+                                BoxDecoration(border: Br.only(['l'], except: i == 0, color: Colors.black12.themeify)),
+                            child: CupertinoPickerWidget(
+                              notifier,
+                              format: format,
+                              items: items,
+                              style: style,
+                            ));
+                      }),
+                    ),
+                  );
                 }),
-              ),
-            ),
 
             // confirm button
             ConfirmButton(
@@ -84,8 +85,7 @@ class DatePickerWidget extends StatelessWidget {
                 buttonColor: style?.buttonColor,
                 onConfirm: () {
                   if (notifier.openTimePicker) {
-                    notifier.time =
-                        Time(notifier.values['h']!, notifier.values['i']!);
+                    notifier.time = Time(notifier.values['h']!, notifier.values['i']!);
                     notifier.toggleTimePicker();
                     return;
                   }
@@ -123,8 +123,7 @@ class DatePickerWidget extends StatelessWidget {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
     final notifier = DatePickerNotifier();
-    notifier.onInitialized(formats,
-        initDate: initDate, minDate: minDate, maxDate: maxDate);
+    notifier.onInitialized(formats, initDate: initDate, minDate: minDate, maxDate: maxDate);
     notifier.onChangeForWidget = onChange;
 
     return ScrollGlowless(
@@ -134,11 +133,8 @@ class DatePickerWidget extends StatelessWidget {
           children: formats.generate((format, i) {
             final items = notifier.generateDate(format);
             return Container(
-                decoration: BoxDecoration(
-                    border: Br.only(['l'],
-                        except: i == 0, color: Colors.black12.themeify)),
-                child: CupertinoPickerWidget(notifier,
-                    format: format, items: items, style: style));
+                decoration: BoxDecoration(border: Br.only(['l'], except: i == 0, color: Colors.black12.themeify)),
+                child: CupertinoPickerWidget(notifier, format: format, items: items, style: style));
           }),
         ),
       ),
@@ -200,8 +196,7 @@ class CupertinoPickerWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int length = notifier.controller.keys.length;
-    bool isYearOnly =
-        notifier.controller.keys.toList().contains('y') && length == 1;
+    bool isYearOnly = notifier.controller.keys.toList().contains('y') && length == 1;
 
     double magnification = this.magnification ?? (isYearOnly ? 1.5 : 1);
     double itemExtent = this.itemExtent ?? (isYearOnly ? 45 : 40);
@@ -216,12 +211,10 @@ class CupertinoPickerWidget extends StatelessWidget {
         itemExtent: itemExtent,
         diameterRatio: diameterRatio,
         squeeze: squeeze,
-        scrollController: notifier.controller[format] ??
-            FixedExtentScrollController(initialItem: 0),
+        scrollController: notifier.controller[format] ?? FixedExtentScrollController(initialItem: 0),
         selectionOverlay: Container(
           alignment: Alignment.centerRight,
-          decoration:
-              BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
+          decoration: BoxDecoration(color: Colors.black.applyOpacity(.03).themeify),
         ),
         onSelectedItemChanged: (int i) => notifier.onChange(i, format),
         children: items.generate((item, i) {
@@ -230,8 +223,7 @@ class CupertinoPickerWidget extends StatelessWidget {
             child: ZoomIn(
               child: Textr(
                 item,
-                style: config.font.copyWith(
-                    letterSpacing: letterSpacing, overflow: Tof.ellipsis),
+                style: config.font.copyWith(letterSpacing: letterSpacing, overflow: Tof.ellipsis),
                 padding: Ei.sym(h: 15),
               ),
             ),
@@ -284,10 +276,8 @@ class ConfirmButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color buttonColor = this.buttonColor ??
-        (context.isDarkMode ? darkBackgroundColor : backgroundColor);
-    Color confirmTextColor = this.confirmTextColor ??
-        (buttonColor.isDark ? Colors.white : Colors.black87);
+    Color buttonColor = this.buttonColor ?? (context.isDarkMode ? darkBackgroundColor : backgroundColor);
+    Color confirmTextColor = this.confirmTextColor ?? (buttonColor.isDark ? Colors.white : Colors.black87);
 
     return Poslign(
         alignment: Alignment.bottomCenter,
@@ -300,18 +290,13 @@ class ConfirmButton extends StatelessWidget {
                     type: TouchType.none,
                     onTap: i != 0 ? null : onCancel,
                     child: Iconr(La.times,
-                        padding: Ei.all(15),
-                        color: i != 0
-                            ? Colors.transparent
-                            : Colors.black54.themeify),
+                        padding: Ei.all(15), color: i != 0 ? Colors.transparent : Colors.black54.themeify),
                   )
                 : Container(
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
-                          color: (context.isDarkMode
-                              ? darkAppbarColor
-                              : scaffoldBackgroundColor),
+                          color: (context.isDarkMode ? darkAppbarColor : scaffoldBackgroundColor),
                           spreadRadius: 25,
                           blurRadius: 45,
                           offset: const Offset(0, -5),
@@ -325,10 +310,8 @@ class ConfirmButton extends StatelessWidget {
                       color: buttonColor,
                       borderRadius: Br.radius(50),
                       child: Text(confirmText ?? 'Confirm',
-                          style: config.font.copyWith(
-                              fontWeight: Fw.bold,
-                              color: confirmTextColor
-                                  .applyOpacity(disabled ? .2 : 1))),
+                          style: config.font
+                              .copyWith(fontWeight: Fw.bold, color: confirmTextColor.applyOpacity(disabled ? .2 : 1))),
                     ),
                   );
           }),
@@ -369,9 +352,7 @@ class TimePicker extends StatelessWidget {
               borderRadius: Br.radius(config.borderRadius),
               child: AnimatedContainer(
                 duration: 350.ms,
-                curve: isOpened
-                    ? Curves.easeInOutBack
-                    : Curves.fastEaseInToSlowEaseOut,
+                curve: isOpened ? Curves.easeInOutBack : Curves.fastEaseInToSlowEaseOut,
                 height: isOpened ? 250 : 35,
                 width: isOpened ? context.width - 40 : 120,
                 child: Center(
@@ -383,8 +364,7 @@ class TimePicker extends StatelessWidget {
                             final items = notifier.generateDate(format);
 
                             return Container(
-                              decoration: BoxDecoration(
-                                  border: Br.only(['l'], except: i == 0)),
+                              decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
                               child: CupertinoPickerWidget(notifier,
                                   format: format,
                                   items: items,

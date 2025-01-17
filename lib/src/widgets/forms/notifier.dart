@@ -45,6 +45,7 @@ class FormNotifier extends ChangeNotifier {
 
   // checkbox section
   List<String> selected = [];
+  List<String> disabled = [];
 
   void setSelectedBox(List<String> values) {
     selected = values;

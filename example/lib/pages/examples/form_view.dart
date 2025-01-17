@@ -77,8 +77,10 @@ class FormView extends StatelessWidget {
             /// The [model] binds the value, allowing you to manage and retrieve the input.
             LzForm.input(
                 label: 'Full Name',
-                hint: 'Type your name',
+                hint: 'Type your name', 
                 model: forms.key('name')),
+
+            /// An example of using prefix for input
             LzForm.input(
               label: 'Phone Number',
               hint: 'Type your phone number',

@@ -213,7 +213,7 @@ class _NumberState extends State<Number> {
               (context.isDarkMode ? darkAppbarColor : backgroundColor)
                   .darken(state.enabled ? 0 : .05);
           final outlineBorder =
-              FormUtils.getBorder(context, state.invalid, isGrouped);
+              FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
 
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder

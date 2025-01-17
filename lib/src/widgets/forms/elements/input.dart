@@ -218,7 +218,7 @@ class _InputState extends State<Input> {
 
           double radiusValue = isGrouped ? 0 : config.borderRadius;
           final outlineBorder =
-              FormUtils.getBorder(context, state.invalid, isGrouped);
+              FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
 
           TextStyle? textStyle = hasOnTap && state.enabled
               ? config.font.copyWith(color: '444'.hex.themeify)
@@ -271,12 +271,12 @@ class _InputState extends State<Input> {
 
 class FormUtils {
   static OutlineInputBorder getBorder(
-      BuildContext context, bool invalid, bool isGrouped) {
+      BuildContext context, bool invalid, bool isGrouped, bool enabled) {
     Color borderColor = invalid
         ? Colors.red
         : context.isDarkMode
             ? Colors.black26.themeify
-            : Colors.black45;
+            : enabled ? Colors.black45 : Colors.black12;
 
     double radiusValue = isGrouped ? 0 : config.borderRadius;
 

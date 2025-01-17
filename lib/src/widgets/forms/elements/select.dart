@@ -151,7 +151,7 @@ class _SelectState extends State<Select> {
         notifier.watch((state) {
           Color background =
               (context.isDarkMode ? darkAppbarColor : backgroundColor)
-                  .darken(state.enabled && state.options.isNotEmpty ? 0 : .09);
+                  .darken(state.enabled && state.options.isNotEmpty ? 0 : .05);
           Widget suffixIcon = widget.suffix ??
               Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
 
@@ -171,7 +171,7 @@ class _SelectState extends State<Select> {
           //         width: .5));
 
           final outlineBorder =
-              FormUtils.getBorder(context, state.invalid, isGrouped);
+              FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
 
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder

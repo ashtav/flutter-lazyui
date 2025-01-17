@@ -87,10 +87,12 @@ class _CheckboxState extends State<Checkbox> {
                 runSpacing: 10,
                 children: widget.options.generate((option, i) {
                   bool isSelected = selected.contains(option);
+                  bool disabled = state.disabled.contains(option);
 
                   return _Square(
                       option: option,
                       active: isSelected,
+                      enabled: !disabled,
                       onTap: () {
                         if (isSelected) {
                           selected.remove(option);
@@ -122,13 +124,14 @@ class _Square extends StatelessWidget {
   final String option;
   final bool active;
   final void Function()? onTap;
-  const _Square({required this.option, this.active = false, this.onTap});
+  final bool enabled;
+  const _Square({required this.option, this.active = false, this.onTap, this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
     return Touch(
       type: TouchType.none,
-      onTap: onTap,
+      onTap: !enabled ? null : onTap,
       child: Row(
         mainAxisSize: Mas.min,
         spacing: 15,
@@ -145,7 +148,7 @@ class _Square extends StatelessWidget {
                         ? darkAppbarColor.lighten(.05)
                         : backgroundColor,
                     border: Br.all(
-                        color: config.primaryColor, width: active ? 11 : .5)),
+                        color: enabled ? config.primaryColor : Colors.black38.themeify, width: active ? 11 : .5)),
               ),
               Poslign.center(
                   child: AnimatedOpacity(
@@ -156,7 +159,7 @@ class _Square extends StatelessWidget {
           ),
           Text(option)
         ],
-      ),
+      ).lz.opacity(enabled ? 1 : .3),
     );
   }
 }

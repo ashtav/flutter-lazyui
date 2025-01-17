@@ -63,8 +63,7 @@ class Touch extends StatelessWidget {
               borderRadius: borderRadius,
               child: Container(
                   padding: padding,
-                  decoration:
-                      BoxDecoration(border: border, borderRadius: borderRadius),
+                  decoration: BoxDecoration(border: border, borderRadius: borderRadius),
                   child: child),
             );
           }),
@@ -83,11 +82,39 @@ class Touch extends StatelessWidget {
         child: Container(
             padding: padding,
             margin: margin,
-            decoration: BoxDecoration(
-                color: backgroundColor,
-                border: border,
-                borderRadius: borderRadius),
+            decoration: BoxDecoration(color: backgroundColor, border: border, borderRadius: borderRadius),
             child: child));
+  }
+
+  static Touch fade({
+    Widget? child,
+    BorderRadius? borderRadius,
+    BoxBorder? border,
+    Color? color,
+    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? margin,
+    void Function()? onTap,
+    void Function()? onDoubleTap,
+    void Function()? onLongPress,
+    void Function()? onTapCancel,
+    void Function(TapDownDetails? details)? onTapDown,
+    void Function(TapUpDetails? details)? onTapUp,
+  }) {
+    return Touch(
+      type: TouchType.fade,
+      borderRadius: borderRadius,
+      border: border,
+      color: color,
+      padding: padding,
+      margin: margin,
+      onTap: onTap,
+      onDoubleTap: onDoubleTap,
+      onLongPress: onLongPress,
+      onTapCancel: onTapCancel,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
+      child: child,
+    );
   }
 }
 

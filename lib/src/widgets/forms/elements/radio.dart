@@ -110,9 +110,12 @@ class _RadioState extends State<Radio> {
                 spacing: 20,
                 runSpacing: 10,
                 children: widget.options.generate((option, i) {
+                  bool disabled = state.disabled.contains(option);
+
                   return _Bullet(
                       option: option,
                       active: state.controller.text == option,
+                      enabled: !disabled,
                       onTap: () {
                         state.controller.text = option;
                         state.validate();
@@ -138,13 +141,14 @@ class _Bullet extends StatelessWidget {
   final String option;
   final bool active;
   final void Function()? onTap;
-  const _Bullet({required this.option, this.active = false, this.onTap});
+  final bool enabled;
+  const _Bullet({required this.option, this.active = false, this.onTap, this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
     return Touch(
       type: TouchType.none,
-      onTap: onTap,
+      onTap: !enabled ? null : onTap,
       child: Row(
         mainAxisSize: Mas.min,
         spacing: 15,
@@ -159,10 +163,10 @@ class _Bullet extends StatelessWidget {
                       ? darkAppbarColor.lighten(.05)
                       : backgroundColor,
                   border: Br.all(
-                      color: config.primaryColor, width: active ? 5 : .5))),
+                      color: enabled ? config.primaryColor : Colors.black38.themeify, width: active ? 5 : .5))),
           Text(option)
         ],
-      ),
+      ).lz.opacity(enabled ? 1 : .3),
     );
   }
 }

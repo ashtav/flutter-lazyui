@@ -4,12 +4,14 @@ class SlideAnimate extends StatefulWidget {
   final bool show;
   final Duration duration;
   final Widget child;
+  final Curve curve;
 
   const SlideAnimate({
     super.key,
     this.show = false,
     this.duration = const Duration(milliseconds: 250),
     required this.child,
+    this.curve = Curves.easeIn
   });
 
   @override
@@ -28,7 +30,7 @@ class _SlideShowState extends State<SlideAnimate>
     controller = AnimationController(
         vsync: this, duration: widget.duration, value: widget.show ? 1 : 0);
     animation =
-        CurvedAnimation(parent: controller, curve: Curves.fastOutSlowIn);
+        CurvedAnimation(parent: controller, curve: widget.curve);
 
     // Trigger the appropriate animation state
     if (widget.show) {
