@@ -6,16 +6,16 @@ import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/theme/color.dart';
 
 class LzConfirm {
-  static void show(BuildContext context,
-      {String? title, String? message, void Function()? onConfirm}) async {
-    Widget blurWrapper(Widget child) => BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
+  static void show(BuildContext context, {String? title, String? message, String? confirmText, String? cancelText, void Function()? onConfirm}) async {
+    Widget blurWrapper(Widget child) => BackdropFilter(filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7), child: child);
 
     showDialog(
         context: context,
         builder: (_) => blurWrapper(_ConfirmDialogWidget(
               title: title,
               message: message,
+              confirmText: confirmText,
+              cancelText: cancelText
             ))).then((value) {
       if (value == true) {
         onConfirm?.call();
@@ -49,8 +49,10 @@ class _Switcher extends StatelessWidget {
 class _ConfirmDialogWidget extends StatefulWidget {
   final String? title;
   final String? message;
+  final String? confirmText;
+  final String? cancelText;
 
-  const _ConfirmDialogWidget({this.title, this.message});
+  const _ConfirmDialogWidget({this.title, this.message, this.confirmText, this.cancelText});
 
   @override
   State<_ConfirmDialogWidget> createState() => __ConfirmDialogWidgetState();
@@ -72,8 +74,7 @@ class __ConfirmDialogWidgetState extends State<_ConfirmDialogWidget> {
 
   @override
   Widget build(BuildContext context) {
-    Color background =
-        context.isDarkMode ? darkAppbarColor.lighten(.02) : Colors.white;
+    Color background = context.isDarkMode ? darkAppbarColor.lighten(.02) : Colors.white;
 
     return Center(
       child: Column(
@@ -91,16 +92,12 @@ class __ConfirmDialogWidgetState extends State<_ConfirmDialogWidget> {
                   child: Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 30),
+                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
                         child: Column(
                           spacing: 10,
                           children: [
-                            Text(widget.title ?? 'Delete Data',
-                                style: TextStyle(fontWeight: FontWeight.bold)),
-                            Text(
-                                widget.message ??
-                                    'Are you sure want to delete this data?',
+                            Text(widget.title ?? 'Delete Data', style: TextStyle(fontWeight: FontWeight.bold)),
+                            Text(widget.message ?? 'Are you sure want to delete this data?',
                                 textAlign: TextAlign.center),
                           ],
                         ),
@@ -110,19 +107,15 @@ class __ConfirmDialogWidgetState extends State<_ConfirmDialogWidget> {
                         child: IntrinsicHeight(
                           child: Row(
                             children:
-                                ['Cancel', 'Confirm'].generate((label, i) {
+                                [widget.cancelText ?? 'Cancel', widget.confirmText ?? 'Confirm'].generate((label, i) {
                               return Expanded(
                                 child: Touch(
                                   onTap: () => context.lz.pop(i == 1),
                                   borderRadius: Br.zero,
                                   child: Container(
-                                      decoration: BoxDecoration(
-                                          border:
-                                              Br.only(['l'], except: i == 0)),
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15, horizontal: 10),
-                                      child: Text(label,
-                                          textAlign: TextAlign.center)),
+                                      decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
+                                      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                                      child: Text(label, textAlign: TextAlign.center)),
                                 ),
                               );
                             }),

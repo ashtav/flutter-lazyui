@@ -28,7 +28,7 @@ class HomeView extends StatelessWidget {
               icon: Hi.bookOpen02,
               outlined: true,
               padding: Ei.sym(v: 15, h: 30),
-            )
+            ),
           ],
         ).gap(35, except: [0]).centered,
       ),

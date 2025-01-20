@@ -180,7 +180,7 @@ Try to check [$member]''';
             botToken.isNotEmpty &&
             chatId.isNotEmpty &&
             !disabledBot) {
-          final device = await Lz.utils.getDevice();
+          final device = await Utils.getDevice();
 
           // clear message from space, \n
           errorMessage = errorMessage.replaceAll('\n', ' ').trim();

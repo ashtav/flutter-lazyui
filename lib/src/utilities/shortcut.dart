@@ -402,3 +402,93 @@ class Ad {
   /// with the leading edge of the available space along the main axis.
   static const AlignmentDirectional topStart = AlignmentDirectional.topStart;
 }
+
+/// A class providing a utility method for creating box shadows.
+class Bx {
+  /// Creates a box shadow with the specified color and optional blur, spread, x, and y parameters.
+  ///
+  /// [color]: The color of the shadow.
+  /// [blur]: The blur radius of the shadow. Default is 5.
+  /// [spread]: The spread radius of the shadow. Default is 0.
+  /// [x]: The horizontal offset of the shadow. Default is 0.
+  /// [y]: The vertical offset of the shadow. Default is 0.
+  ///
+  /// Returns a box shadow instance.
+  static BoxShadow shadow(Color color,
+      {double? blur, double? spread, double? x, double? y}) {
+    return BoxShadow(
+        color: color,
+        blurRadius: blur ?? 5,
+        spreadRadius: spread ?? 0,
+        offset: Offset(x ?? 0, y ?? 0));
+  }
+
+  /// Creates a linear gradient with the specified colors and optional start, end, stops, and tile mode parameters.
+  ///
+  /// [colors]: A list of colors to be used in the gradient.
+  /// [begin]: The starting point of the gradient. Default is top-left (0.0, 0.0).
+  /// [end]: The ending point of the gradient. Default is top-right (1.0, 0.0).
+  /// [stops]: A list of positions for each color stop. Default is [0.0, 1.0].
+  /// [mode]: The tile mode that defines how the gradient is repeated. Default is [TileMode.clamp].
+  ///
+  /// Returns a [LinearGradient] instance.
+  static Gradient gradient(List<Color> colors,
+      {AlignmentGeometry? begin,
+      AlignmentGeometry? end,
+      List<double>? stops = const [0.0, 1.0],
+      TileMode? mode}) {
+    return LinearGradient(
+        colors: colors,
+        begin: begin ?? const FractionalOffset(0.0, 0.0),
+        end: end ?? const FractionalOffset(1.0, 0.0),
+        stops: stops,
+        tileMode: mode ?? TileMode.clamp);
+  }
+
+  /// Creates a radial gradient with the specified colors and optional center, radius, stops, and tile mode parameters.
+  ///
+  /// [colors]: A list of colors to be used in the radial gradient.
+  /// [center]: The center point of the gradient. Default is center (0.5, 0.5).
+  /// [radius]: The radius of the radial gradient. Default is 0.5.
+  /// [stops]: A list of positions for each color stop. Default is evenly distributed.
+  /// [mode]: The tile mode that defines how the gradient is repeated. Default is [TileMode.clamp].
+  ///
+  /// Returns a [RadialGradient] instance.
+  static Gradient radialGradient(List<Color> colors,
+      {AlignmentGeometry? center,
+      double radius = 0.5,
+      List<double>? stops,
+      TileMode mode = TileMode.clamp}) {
+    return RadialGradient(
+        colors: colors,
+        center: center ?? const Alignment(0.5, 0.5),
+        radius: radius,
+        stops: stops,
+        tileMode: mode);
+  }
+
+  /// Creates a sweep gradient with the specified colors and optional center, startAngle, endAngle, stops, and tile mode parameters.
+  ///
+  /// [colors]: A list of colors to be used in the sweep gradient.
+  /// [center]: The center point of the sweep gradient. Default is center (0.5, 0.5).
+  /// [startAngle]: The start angle of the sweep in radians. Default is 0.0.
+  /// [endAngle]: The end angle of the sweep in radians. Default is 2 * pi (full circle).
+  /// [stops]: A list of positions for each color stop. Default is evenly distributed.
+  /// [mode]: The tile mode that defines how the gradient is repeated. Default is [TileMode.clamp].
+  ///
+  /// Returns a [SweepGradient] instance.
+  static Gradient sweepGradient(List<Color> colors,
+      {AlignmentGeometry? center,
+      double startAngle = 0.0,
+      double endAngle = 2 * 3.141592653589793,
+      List<double>? stops,
+      TileMode mode = TileMode.clamp}) {
+    return SweepGradient(
+        colors: colors,
+        center: center ?? const Alignment(0.5, 0.5),
+        startAngle: startAngle,
+        endAngle: endAngle,
+        stops: stops,
+        tileMode: mode);
+  }
+}

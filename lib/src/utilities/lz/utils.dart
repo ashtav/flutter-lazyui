@@ -1,8 +1,20 @@
-part of '../utilities.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:math';
+
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:lazyui/lazyui.dart';
+
+import '../../models/device.dart';
 
 DateTime get now => DateTime.now();
 
 class Utils {
+  Utils._();
+  static final Utils instance = Utils._();
+
   /// Checks if the scroll position of the given [scrollController] has reached a specified maximum position.
   ///
   /// This method determines whether the current scroll position is at or beyond a defined maximum threshold.
@@ -22,7 +34,7 @@ class Utils {
   ///
   /// The method interprets a single value as the threshold for both ends, and a list of two values
   /// as individual thresholds for the top (first value) and bottom (second value) of the scroll view.
-  bool scrollHasMax(ScrollController scrollController, dynamic max) {
+  static bool scrollHasMax(ScrollController scrollController, dynamic max) {
     bool isMaxList = max is List;
 
     // If max is integer or double
@@ -58,8 +70,7 @@ class Utils {
   /// ```dart
   /// scrollToWidget(myKey, myController, MediaQuery.of(context).size.width);
   /// ```
-  void scrollToWidget(
-      GlobalKey key, ScrollController controller, double screenWidth) {
+  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 
@@ -102,19 +113,15 @@ class Utils {
   /// ScrollController controller = ScrollController();
   /// Utils.scrollTo(controller, duration: 500, delay: 100, to: AxisDirection.down);
   /// ```
-  scrollTo(ScrollController scrollController,
-      {int duration = 300,
-      int delay = 50,
-      AxisDirection to = AxisDirection.up}) {
+  static scrollTo(ScrollController scrollController,
+      {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down
-                ? scrollController.position.maxScrollExtent
-                : 0,
+            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -152,7 +159,7 @@ class Utils {
   /// - On iOS, it uses the `identifierForVendor` field from `IosDeviceInfo`.
   ///
   /// Note: On iOS, the `identifierForVendor` will change if all apps from the same vendor are uninstalled.
-  Future<Device> getDevice() async {
+  static Future<Device> getDevice() async {
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     String? brand, model, system, sdk, id;
 
@@ -178,7 +185,7 @@ class Utils {
   }
 
   /// Converts a local phone number to an international format with the specified prefix.
-  String prefixPhone(String? phone, {String prefix = '62'}) {
+  static String prefixPhone(String? phone, {String prefix = '62'}) {
     final cleanedPhone = phone?.replaceAll(RegExp(r'\D'), '') ?? '';
     return cleanedPhone.startsWith('0')
         ? '$prefix${cleanedPhone.substring(1)}'
@@ -196,7 +203,7 @@ class Utils {
   /// int randomInt = Utils.rangeOf(1, 10);
   /// double randomDouble = Utils.rangeOf<double>(1.0, 10.0);
   /// ```
-  T rangeOf<T>(T min, T max) {
+  static T rangeOf<T>(T min, T max) {
     if (min is int && max is int) {
       return Random().nextInt(max - min) + min as T;
     } else if (min is double && max is double) {
@@ -216,7 +223,7 @@ class Utils {
   /// TextEditingController name = TextEditingController();
   /// Utils.setCursorToLastPosition(name);
   /// ```
-  setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
+  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
     Timer(
       Duration(milliseconds: time),
       () => controller.selection = TextSelection.fromPosition(
@@ -233,12 +240,24 @@ class Utils {
   /// ```dart
   /// Utils.copy('YOUR TEXT');
   /// ```
-
-  Future<void> copy(String text, [String? message]) async {
+  static Future<void> copy(String text, [String? message]) async {
     await Clipboard.setData(ClipboardData(text: text));
 
     if (message != null) {
       LzToast.show(message);
     }
   }
+
+  /// Create a timer that invokes the specified [then] function after the specified [duration].
+  ///
+  /// The [then] parameter is a callback function that will be called when the timer expires.
+  /// The [duration] parameter sets the duration of the timer (default: 100 milliseconds).
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Timer timer = Utils.timer((){
+  ///   // do something...
+  /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
+  /// ```
+  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
 }

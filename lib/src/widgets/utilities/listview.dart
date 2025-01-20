@@ -87,11 +87,9 @@ class _LzListViewState extends State<LzListView> {
     // detect scroll direction
     double currentScrollPosition = controller.position.pixels;
 
-    if (currentScrollPosition > previousScrollPosition &&
-        currentScrollPosition > 0) {
+    if (currentScrollPosition > previousScrollPosition && currentScrollPosition > 0) {
       direction = ScrollDirection.forward;
-    } else if (currentScrollPosition < previousScrollPosition &&
-        currentScrollPosition >= 0) {
+    } else if (currentScrollPosition < previousScrollPosition && currentScrollPosition >= 0) {
       direction = ScrollDirection.reverse;
     } else {
       direction = ScrollDirection.idle;
@@ -103,15 +101,12 @@ class _LzListViewState extends State<LzListView> {
     if (widget.scrollLimit != null) {
       final limit = widget.scrollLimit ?? [0, 0];
 
-      if (Lz.utils.scrollHasMax(
-          controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
-        controller.animateTo(controller.position.pixels,
-            duration: 250.ms, curve: Curves.easeIn);
+      if (Utils.scrollHasMax(controller, limit.length == 1 ? [limit[0], limit[0]] : limit)) {
+        controller.animateTo(controller.position.pixels, duration: 250.ms, curve: Curves.easeIn);
       }
     }
 
-    widget.onScroll
-        ?.call(Scroller(controller: controller, direction: direction));
+    widget.onScroll?.call(Scroller(controller: controller, direction: direction));
   }
 
   Future onInitials() async {
@@ -175,15 +170,11 @@ class _LzListViewState extends State<LzListView> {
     Widget content({double? cacheExtent}) => widget.onRefresh == null
         ? listView(cacheExtent)
         : Refreshtor(
-            onRefresh: () async => widget.onRefresh?.call(),
-            type: widget.refreshType,
-            child: listView(cacheExtent));
+            onRefresh: () async => widget.onRefresh?.call(), type: widget.refreshType, child: listView(cacheExtent));
 
     return widget.autoCache
         ? StreamBuilder<double>(
-            stream: streamController.stream,
-            builder: (BuildContext context, snap) =>
-                content(cacheExtent: snap.data))
+            stream: streamController.stream, builder: (BuildContext context, snap) => content(cacheExtent: snap.data))
         : content();
   }
 }
@@ -204,8 +195,7 @@ class Scroller {
   /// Returns true if the current scroll position plus [offset] is greater than or equal to
   /// the maximum scroll extent of the list.
   bool atBottom([double offset = 0]) {
-    return controller.position.pixels + offset >=
-        controller.position.maxScrollExtent;
+    return controller.position.pixels + offset >= controller.position.maxScrollExtent;
   }
 
   /// Calculates the opacity value based on the current scroll position.
@@ -245,8 +235,7 @@ class Scroller {
   ///
   /// [factor] defaults to 100 if not provided.
   /// [type] defaults to [ScrollOpacity.top01] if not provided.
-  double opacity(
-      [double factor = 100, ScrollOpacity type = ScrollOpacity.top01]) {
+  double opacity([double factor = 100, ScrollOpacity type = ScrollOpacity.top01]) {
     double pixels = controller.position.pixels;
     double value = (pixels / (factor < 1 ? 1 : factor));
 

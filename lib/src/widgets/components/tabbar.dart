@@ -146,7 +146,7 @@ class _LzTabViewState extends State<LzTabView> {
       return Touch(
         onTap: () {
           if (widget.snapped) {
-            Lz.utils.scrollToWidget(key, controller, context.width);
+            Utils.scrollToWidget(key, controller, context.width);
           }
 
           widget.onTap?.call(key, i);

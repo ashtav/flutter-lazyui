@@ -36,6 +36,12 @@ class LzImage<T> extends StatelessWidget {
   /// provided, the nearest context will be used.
   final BuildContext? context;
 
+  /// A placeholder widget to be displayed while the image is loading.
+  final Widget? placeholder;
+
+  /// A widget to be displayed if the image fails to load.
+  final Widget? errorWidget;
+
   /// Creates an [LzImage] widget.
   const LzImage(
     this.src, {
@@ -47,6 +53,7 @@ class LzImage<T> extends StatelessWidget {
     this.radius,
     this.previewable = false,
     this.context,
+    this.placeholder, this.errorWidget
   });
 
   @override
@@ -58,13 +65,13 @@ class LzImage<T> extends StatelessWidget {
     double? height = _getImageSize(size, 'height');
 
     // loading
-    Widget placeholder = Shimmer(
+    Widget placeholder = this.placeholder ?? Shimmer(
       size: [width ?? 50, height ?? 50],
       radius: Br.radius(radius ?? config.borderRadius),
     );
 
     // error
-    Widget errorWidget = Container(
+    Widget errorWidget = this.errorWidget ??Container(
         width: width,
         height: height,
         color: Colors.black12,
