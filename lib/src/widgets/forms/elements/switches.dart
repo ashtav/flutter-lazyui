@@ -55,7 +55,9 @@ class Switches extends StatelessWidget {
       bool switched = state.controller.text == 'true';
 
       Color activeColor = config.primaryColor;
-      Color trackColor = context.isDarkMode ? Colors.white12 : Colors.black12.applyOpacity(.05);
+      Color trackColor = context.isDarkMode
+          ? Colors.white12
+          : Colors.black12.applyOpacity(.05);
       Color thumbColor = switched ? Colors.white : config.primaryColor;
 
       List<Widget> children = [

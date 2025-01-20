@@ -1,24 +1,23 @@
 part of '../widget.dart';
 
-class SlideAnimate extends StatefulWidget {
+class AccordionAnimated extends StatefulWidget {
   final bool show;
   final Duration duration;
   final Widget child;
   final Curve curve;
 
-  const SlideAnimate({
-    super.key,
-    this.show = false,
-    this.duration = const Duration(milliseconds: 250),
-    required this.child,
-    this.curve = Curves.easeIn
-  });
+  const AccordionAnimated(
+      {super.key,
+      this.show = false,
+      this.duration = const Duration(milliseconds: 250),
+      required this.child,
+      this.curve = Curves.easeIn});
 
   @override
-  State<SlideAnimate> createState() => _SlideShowState();
+  State<AccordionAnimated> createState() => _SlideShowState();
 }
 
-class _SlideShowState extends State<SlideAnimate>
+class _SlideShowState extends State<AccordionAnimated>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
@@ -29,8 +28,7 @@ class _SlideShowState extends State<SlideAnimate>
   void initializeAnimation() {
     controller = AnimationController(
         vsync: this, duration: widget.duration, value: widget.show ? 1 : 0);
-    animation =
-        CurvedAnimation(parent: controller, curve: widget.curve);
+    animation = CurvedAnimation(parent: controller, curve: widget.curve);
 
     // Trigger the appropriate animation state
     if (widget.show) {
@@ -41,7 +39,7 @@ class _SlideShowState extends State<SlideAnimate>
   }
 
   @override
-  void didUpdateWidget(SlideAnimate oldWidget) {
+  void didUpdateWidget(AccordionAnimated oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.show != oldWidget.show) {

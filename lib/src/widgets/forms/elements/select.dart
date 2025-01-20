@@ -170,8 +170,8 @@ class _SelectState extends State<Select> {
           //                 : Colors.black45.lighten(state.enabled ? 0 : .7),
           //         width: .5));
 
-          final outlineBorder =
-              FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
+          final outlineBorder = FormUtils.getBorder(
+              context, state.invalid, isGrouped, state.enabled);
 
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder
@@ -206,7 +206,7 @@ class _SelectState extends State<Select> {
 
               // error message
               if (!isGrouped)
-                SlideAnimate(
+                AccordionAnimated(
                     show: state.invalid,
                     child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],

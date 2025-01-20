@@ -126,7 +126,7 @@ class _RadioState extends State<Radio> {
               ),
 
               // error message
-              SlideAnimate(
+              AccordionAnimated(
                   show: state.invalid,
                   child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
@@ -142,7 +142,11 @@ class _Bullet extends StatelessWidget {
   final bool active;
   final void Function()? onTap;
   final bool enabled;
-  const _Bullet({required this.option, this.active = false, this.onTap, this.enabled = true});
+  const _Bullet(
+      {required this.option,
+      this.active = false,
+      this.onTap,
+      this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
@@ -163,7 +167,10 @@ class _Bullet extends StatelessWidget {
                       ? darkAppbarColor.lighten(.05)
                       : backgroundColor,
                   border: Br.all(
-                      color: enabled ? config.primaryColor : Colors.black38.themeify, width: active ? 5 : .5))),
+                      color: enabled
+                          ? config.primaryColor
+                          : Colors.black38.themeify,
+                      width: active ? 5 : .5))),
           Text(option)
         ],
       ).lz.opacity(enabled ? 1 : .3),

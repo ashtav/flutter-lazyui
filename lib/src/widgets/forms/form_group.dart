@@ -75,7 +75,7 @@ class FormGroup extends StatelessWidget {
             ),
 
             // error message
-            SlideAnimate(
+            AccordionAnimated(
                 show: state.invalid,
                 child: Text(state.message, style: Gfont.fs14.red))
           ],

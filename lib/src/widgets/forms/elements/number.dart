@@ -212,8 +212,8 @@ class _NumberState extends State<Number> {
           Color background =
               (context.isDarkMode ? darkAppbarColor : backgroundColor)
                   .darken(state.enabled ? 0 : .05);
-          final outlineBorder =
-              FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
+          final outlineBorder = FormUtils.getBorder(
+              context, state.invalid, isGrouped, state.enabled);
 
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder
@@ -259,7 +259,7 @@ class _NumberState extends State<Number> {
 
               // error message
               if (!isGrouped)
-                SlideAnimate(
+                AccordionAnimated(
                     show: state.invalid,
                     child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],

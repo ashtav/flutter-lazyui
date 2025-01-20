@@ -111,7 +111,8 @@ class _SliderState extends State<Slider> {
     bool hasLabel = ![null, ''].contains(label);
 
     Color activeColor = config.primaryColor;
-    Color inactiveColor = context.isDarkMode ? Colors.white12 : Colors.black12.applyOpacity(.05);
+    Color inactiveColor =
+        context.isDarkMode ? Colors.white12 : Colors.black12.applyOpacity(.05);
     Color activeTickMarkColor = config.primaryColor;
     Color inactiveTickMarkColor =
         context.isDarkMode ? Colors.white12 : Colors.black12;

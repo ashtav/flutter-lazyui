@@ -1,11 +1,21 @@
 part of '../extension.dart';
 
 extension CustomWidgetExtension<T> on Widget {
-  WidgettUtils get lz => WidgettUtils(this);
+  WidgettUtils get lz => WidgettUtils(this, LzAnimate(this));
 
-  T margin({double? all, double? b, double? t, double? l, double? r, double? v, double? h, double others = 0}) {
+  T margin(
+      {double? all,
+      double? b,
+      double? t,
+      double? l,
+      double? r,
+      double? v,
+      double? h,
+      double others = 0}) {
     return Container(
-      margin: all != null ? Ei.all(all) : Ei.only(b: b, t: t, l: l, r: r, v: v, h: h, others: others),
+      margin: all != null
+          ? Ei.all(all)
+          : Ei.only(b: b, t: t, l: l, r: r, v: v, h: h, others: others),
       child: this,
     ) as T;
   }
@@ -13,9 +23,18 @@ extension CustomWidgetExtension<T> on Widget {
 
 class WidgettUtils {
   final Widget child;
-  WidgettUtils(this.child);
+  final LzAnimate animate;
 
-  T clip<T extends Widget>({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? all}) =>
+  WidgettUtils(this.child, this.animate);
+
+  T clip<T extends Widget>(
+          {double? tl,
+          double? tr,
+          double? bl,
+          double? br,
+          double? tlr,
+          double? blr,
+          double? all}) =>
       ClipRRect(
         borderRadius: all != null
             ? BorderRadius.all(Radius.circular(all))
@@ -27,16 +46,20 @@ class WidgettUtils {
         child: child,
       ) as T;
 
-  T ignore<T extends Widget>([bool ignore = true]) => IgnorePointer(ignoring: ignore, child: child) as T;
+  T ignore<T extends Widget>([bool ignore = true]) =>
+      IgnorePointer(ignoring: ignore, child: child) as T;
 
-  T opacity<T extends Widget>(double opacity) => Opacity(opacity: opacity, child: child) as T;
+  T opacity<T extends Widget>(double opacity) =>
+      Opacity(opacity: opacity, child: child) as T;
 
-  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: child);
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) =>
+      Flexible(flex: flex, fit: fit, child: child);
 
   /// ``` dart
   /// Widget().lz.shadowed(true);
   /// ```
-  Widget shadowed(BuildContext context, {double? spread, double? blur, Offset? offset, Color? color}) {
+  Widget shadowed(BuildContext context,
+      {double? spread, double? blur, Offset? offset, Color? color}) {
     Color backgroundColor = color ?? context.scaffoldColor;
 
     return Container(
@@ -47,6 +70,42 @@ class WidgettUtils {
             blurRadius: blur ?? 25,
             offset: offset ?? const Offset(0, 0))
       ]),
+      child: child,
+    );
+  }
+
+  /// ``` dart
+  /// YourWidget().lz.hide()
+  /// ```
+  Visibility hide([bool value = true]) =>
+      Visibility(visible: !value, child: child);
+
+  /// ``` dart
+  /// YourWidget().lz.border(Br.all(), width: 1, color: Colors.black)
+  /// ```
+  Widget border(BoxBorder border,
+      {BorderRadiusGeometry? radius, Color? color}) {
+    if (this is Container) {
+      final container = this as Container;
+      BoxDecoration? decoration = container.decoration as BoxDecoration?;
+
+      if (decoration == null) {
+        decoration =
+            BoxDecoration(borderRadius: radius, color: color, border: border);
+      } else {
+        decoration = decoration.copyWith(
+            borderRadius: radius, color: color, border: border);
+      }
+
+      return Container(
+        decoration: decoration,
+        child: child,
+      );
+    }
+
+    return Container(
+      decoration:
+          BoxDecoration(borderRadius: radius, color: color, border: border),
       child: child,
     );
   }

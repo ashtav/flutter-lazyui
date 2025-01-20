@@ -217,8 +217,8 @@ class _InputState extends State<Input> {
           }
 
           double radiusValue = isGrouped ? 0 : config.borderRadius;
-          final outlineBorder =
-              FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
+          final outlineBorder = FormUtils.getBorder(
+              context, state.invalid, isGrouped, state.enabled);
 
           TextStyle? textStyle = hasOnTap && state.enabled
               ? config.font.copyWith(color: '444'.hex.themeify)
@@ -258,7 +258,7 @@ class _InputState extends State<Input> {
 
               // error message
               if (!isGrouped)
-                SlideAnimate(
+                AccordionAnimated(
                     show: state.invalid,
                     child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
@@ -276,7 +276,9 @@ class FormUtils {
         ? Colors.red
         : context.isDarkMode
             ? Colors.black26.themeify
-            : enabled ? Colors.black45 : Colors.black12;
+            : enabled
+                ? Colors.black45
+                : Colors.black12;
 
     double radiusValue = isGrouped ? 0 : config.borderRadius;
 

@@ -109,7 +109,7 @@ class _CheckboxState extends State<Checkbox> {
               ),
 
               // error message
-              SlideAnimate(
+              AccordionAnimated(
                   show: state.invalid,
                   child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
@@ -125,7 +125,11 @@ class _Square extends StatelessWidget {
   final bool active;
   final void Function()? onTap;
   final bool enabled;
-  const _Square({required this.option, this.active = false, this.onTap, this.enabled = true});
+  const _Square(
+      {required this.option,
+      this.active = false,
+      this.onTap,
+      this.enabled = true});
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +152,10 @@ class _Square extends StatelessWidget {
                         ? darkAppbarColor.lighten(.05)
                         : backgroundColor,
                     border: Br.all(
-                        color: enabled ? config.primaryColor : Colors.black38.themeify, width: active ? 11 : .5)),
+                        color: enabled
+                            ? config.primaryColor
+                            : Colors.black38.themeify,
+                        width: active ? 11 : .5)),
               ),
               Poslign.center(
                   child: AnimatedOpacity(

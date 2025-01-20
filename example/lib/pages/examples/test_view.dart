@@ -37,8 +37,7 @@ class TestView extends StatelessWidget {
           ],
         ),
         body: Column(
-          children: [
-          ],
+          children: [],
         ).start.gap(25).margin(all: 20));
   }
 }
