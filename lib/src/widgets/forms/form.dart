@@ -1,5 +1,7 @@
 // ignore_for_file: invalid_use_of_protected_member
 
+import 'dart:async';
+
 import 'package:flutter/material.dart' hide Radio, Checkbox, Slider;
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
@@ -92,63 +94,65 @@ class FormManager {
     return models[key]!.notifier.controller.text;
   }
 
-  void set(String key, dynamic value) {
-    Bindings.onRendered(() {
-      final notifier = models[key]!.notifier;
-      final type = notifier.type;
+  FormControl set(String key, [dynamic value]) {
+    final notifier = models[key]!.notifier;
 
-      notifier.controller.text = value.toString();
+    if (value != null) {
+      Bindings.onRendered(() {
+        final type = notifier.type;
 
-      if (type == 'checkbox') {
-        List<String> options =
-            value.toString().replaceAll(', ', ',').split(',');
-        notifier.setSelectedBox(options);
-      }
+        notifier.controller.text = value.toString();
 
-      // radio input
-      else if (['radio', 'slider'].contains(type)) {
-        notifier.notify();
-      }
+        if (type == 'checkbox') {
+          List<String> options = value.toString().replaceAll(', ', ',').split(',');
+          notifier.setSelectedBox(options);
+        }
 
-      // select input
-      else if (type == 'select' && value is Option) {
-        notifier.controller.text = value.label;
-        notifier.extra = value.value;
-      }
+        // radio input
+        else if (['radio', 'slider'].contains(type)) {
+          notifier.notify();
+        }
 
-      // input (with onTap is not null)
-      else if (type == 'input-2' && value.toString().trim().isNotEmpty) {
-        notifier.validate();
-      }
+        // select input
+        else if (type == 'select' && value is Option) {
+          notifier.controller.text = value.label;
+          notifier.extra = value.value;
+        }
 
-      if (value is List) {
-        notifier.setOption(value.map((e) => e.toString()).toList());
-        return;
-      }
+        // input (with onTap is not null)
+        else if (type == 'input-2' && value.toString().trim().isNotEmpty) {
+          notifier.validate();
+        }
 
-      if (value is OptionSet) {
-        notifier.controller.clear(); // Clear text controller
+        if (value is List) {
+          notifier.setOption(value.map((e) => e.toString()).toList());
+          return FormControl(notifier);
+        }
 
-        // Apply filter if provided
-        final filteredData = value.filter == null
-            ? value.data
-            : value.data
-                .where((item) =>
-                    item.containsKey(value.filter!.keys.first) &&
-                    item[value.filter!.keys.first] ==
-                        value.filter!.values.first)
-                .toList();
+        if (value is OptionSet) {
+          notifier.controller.clear(); // Clear text controller
 
-        // Extract options and values
-        notifier.options = filteredData.extract<String>(value.labelKey);
-        notifier.values =
-            value.valueKey != null ? filteredData.extract(value.valueKey!) : [];
-        notifier.enabled = notifier.options.isNotEmpty;
+          // Apply filter if provided
+          final filteredData = value.filter == null
+              ? value.data
+              : value.data
+                  .where((item) =>
+                      item.containsKey(value.filter!.keys.first) &&
+                      item[value.filter!.keys.first] == value.filter!.values.first)
+                  .toList();
 
-        notifier.notify(); // Notify listeners
-        return;
-      }
-    });
+          // Extract options and values
+          notifier.options = filteredData.extract<String>(value.labelKey);
+          notifier.values = value.valueKey != null ? filteredData.extract(value.valueKey!) : [];
+          notifier.enabled = notifier.options.isNotEmpty;
+
+          notifier.notify(); // Notify listeners
+          return FormControl(notifier);
+        }
+      });
+    }
+
+    return FormControl(notifier);
   }
 
   void enable(String key, bool value) {
@@ -181,10 +185,7 @@ class FormManager {
 
   Map<String, dynamic> get value {
     final keys = models.keys.toList();
-    return Map.fromIterables(
-        keys,
-        List.generate(
-            keys.length, (i) => models[keys[i]]!.notifier.controller.text));
+    return Map.fromIterables(keys, List.generate(keys.length, (i) => models[keys[i]]!.notifier.controller.text));
   }
 
   dynamic extra(String key) {
@@ -198,6 +199,18 @@ class FormManager {
 
       for (String key in keys) {
         set(key, data[key] ?? '');
+      }
+    });
+  }
+
+  void reset({List<String> except = const []}) {
+    Bindings.onRendered(() {
+      List<String> keys = models.keys.toList();
+
+      for (String key in keys) {
+        if (!except.contains(key)) {
+          set(key, '');
+        }
       }
     });
   }
@@ -237,8 +250,7 @@ class FormManager {
       List<String> match = const [],
       Map<String, String>? message,
       FormFeedback feedback = FormFeedback.text}) {
-    final controllers = Map.fromIterables(
-        models.keys, models.values.map((e) => e.notifier.controller));
+    final controllers = Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
     final notifiers = Map.fromIterables(models.keys, models.values.map((e) {
       e.notifier.rules = [];
       e.notifier.feedback = feedback;
@@ -253,8 +265,7 @@ class FormManager {
     if (isRequiredAll) {
       required = controllers.keys.toList();
     } else if (isRequiredAllExcept) {
-      required = controllers.keys.toList()
-        ..removeWhere((e) => required.contains(e));
+      required = controllers.keys.toList()..removeWhere((e) => required.contains(e));
     }
 
     bool exist(String key) => controllers[key] != null;
@@ -288,8 +299,7 @@ class FormManager {
             'key': key,
             'type': 'min',
             'value': min,
-            'message': message?['$key:min'] ??
-                'The field $key must be at least ${split[1]} characters'
+            'message': message?['$key:min'] ?? 'The field $key must be at least ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -311,8 +321,7 @@ class FormManager {
             'key': key,
             'type': 'max',
             'value': max,
-            'message': message?['$key:max'] ??
-                'The field $key must be at most ${split[1]} characters'
+            'message': message?['$key:max'] ?? 'The field $key must be at most ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -326,8 +335,7 @@ class FormManager {
         final error = {
           'key': key,
           'type': 'email',
-          'message':
-              message?['$key:email'] ?? 'The field $key is not a valid email'
+          'message': message?['$key:email'] ?? 'The field $key is not a valid email'
         };
         notifiers[key]!.rules.add(error);
       }
@@ -345,8 +353,7 @@ class FormManager {
             'key': key,
             'type': 'match',
             'value': notifiers[k1],
-            'message': message?['$key:match'] ??
-                'The field $k2 does not match with the field $k1.'
+            'message': message?['$key:match'] ?? 'The field $k2 does not match with the field $k1.'
           };
 
           notifiers[k2]!.rules.add(error);
@@ -380,8 +387,7 @@ class FormManager {
 
     if (errors.isNotEmpty) {
       final map = errors.first;
-      final globalKeys =
-          Map.fromIterables(models.keys, models.values.map((e) => e.key));
+      final globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
 
       String key = map['key'];
       String message = map['message'];
@@ -389,8 +395,7 @@ class FormManager {
       // scroll to input position
       GlobalKey? gkey = globalKeys[key];
       if (gkey != null && gkey.currentContext != null) {
-        Scrollable.ensureVisible(gkey.currentContext!,
-            duration: const Duration(milliseconds: 300), alignment: .09);
+        Scrollable.ensureVisible(gkey.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
       }
 
       if (feedback == FormFeedback.toast) {
@@ -415,10 +420,8 @@ class LzForm {
       notifiers[e]?.key = e;
     }
 
-    final mdoels = Map.fromIterables(
-        keys,
-        List.generate(
-            keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())));
+    final mdoels =
+        Map.fromIterables(keys, List.generate(keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())));
     return FormManager(mdoels);
   }
 
@@ -775,5 +778,53 @@ class LzForm {
       initValue: initValue,
       reversed: reversed,
     );
+  }
+}
+
+/// Represents a control for managing form fields.
+class FormControl {
+  /// The form notifier instance associated with this control.
+  @protected
+  final FormNotifier notifier;
+
+  /// Constructs a [FormControl] with the specified notifier.
+  FormControl(this.notifier);
+
+  /// Enables or disables the form control.
+  ///
+  /// Returns this form control after enabling or disabling it.
+  FormControl enable([bool value = true]) {
+    notifier.enabled = value;
+    notifier.notify();
+    return this;
+  }
+
+  /// Sets extra data associated with the form control.
+  ///
+  /// Returns this form control after setting the extra data.
+  FormControl extra(dynamic value) {
+    notifier.extra = value;
+    return this;
+  }
+
+  /// Focuses on the form control.
+  ///
+  /// Returns this form control after focusing on it.
+  FormControl focus() {
+    notifier.timer?.cancel();
+    notifier.timer = Timer(50.ms, () {
+      notifier.focusNode.requestFocus();
+      notifier.timer?.cancel();
+    });
+    return this;
+  }
+
+  /// Sets the maximum length for input validation in the associated [FormNotifier].
+  ///
+  /// Returns this [FormControl] instance after setting the maximum length.
+  FormControl maxLength(int value) {
+    notifier.maxLength = value;
+    notifier.notify();
+    return this;
   }
 }

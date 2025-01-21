@@ -10,7 +10,7 @@ class Textr extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final BoxBorder? border;
-  final BorderRadiusGeometry? borderRadius;
+  final BorderRadiusGeometry? radius;
   final Color? color;
   final double? width;
   final double? height;
@@ -26,7 +26,7 @@ class Textr extends StatelessWidget {
     this.margin,
     this.padding,
     this.border,
-    this.borderRadius,
+    this.radius,
     this.color,
     this.width,
     this.height,
@@ -39,7 +39,7 @@ class Textr extends StatelessWidget {
       margin,
       padding,
       border,
-      borderRadius,
+      radius,
       color,
       width,
       height
@@ -66,7 +66,7 @@ class Textr extends StatelessWidget {
             width: width,
             height: height,
             decoration: BoxDecoration(
-                border: border, borderRadius: borderRadius, color: color),
+                border: border, borderRadius: radius, color: color),
             child: Row(
               spacing: 10,
               mainAxisSize: Mas.min,

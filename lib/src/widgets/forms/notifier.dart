@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class FormNotifier extends ChangeNotifier {
   String? key;
+
   String type = 'input';
+  Timer? timer;
+  FocusNode focusNode = FocusNode();
 
   final controller = TextEditingController();
   dynamic extra;
@@ -11,6 +16,7 @@ class FormNotifier extends ChangeNotifier {
   bool enabled = true;
   bool obscure = false;
   bool invalid = false;
+  int maxLength = 225;
 
   String invalidMessage = '';
   String invalidType = '';

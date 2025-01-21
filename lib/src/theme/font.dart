@@ -15,9 +15,11 @@ class Gfont {
       config.font.copyWith(color: Lz.color.hex('1A1A1A'));
   static final TextStyle white = config.font.copyWith(color: Colors.white);
   static final TextStyle red = config.font.copyWith(color: Colors.redAccent);
+  static final TextStyle blue = config.font.copyWith(color: Colors.blueAccent);
   static final TextStyle orange = config.font.copyWith(color: Colors.orange);
   static final TextStyle green = config.font.copyWith(color: Colors.green);
   static final TextStyle muted = config.font.copyWith(color: '404040'.hex);
+  static final TextStyle normal = config.font.copyWith(fontWeight: Fw.normal);
   static TextStyle color(Color color) => config.font.copyWith(color: color);
 
   // font size

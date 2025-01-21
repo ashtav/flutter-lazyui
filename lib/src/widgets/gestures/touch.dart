@@ -3,7 +3,7 @@ part of '../widget.dart';
 class Touch extends StatelessWidget {
   final Widget? child;
   final TouchType type;
-  final BorderRadius? borderRadius;
+  final BorderRadius? radius;
   final BoxBorder? border;
   final Color? color;
   final EdgeInsetsGeometry? padding;
@@ -19,7 +19,7 @@ class Touch extends StatelessWidget {
     super.key,
     this.child,
     this.type = TouchType.splash,
-    this.borderRadius,
+    this.radius,
     this.border,
     this.color,
     this.padding,
@@ -34,7 +34,7 @@ class Touch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final borderRadius = this.borderRadius;
+    final radius = this.radius;
     final backgroundColor = color ?? Colors.transparent;
 
     if (type == TouchType.splash) {
@@ -42,7 +42,7 @@ class Touch extends StatelessWidget {
         margin: margin,
         child: Material(
           color: backgroundColor,
-          borderRadius: borderRadius,
+          borderRadius: radius,
           child: LzTheme.watch((theme) {
             bool isDarkColor = backgroundColor.isDark;
             final splashColor = color == null
@@ -60,12 +60,9 @@ class Touch extends StatelessWidget {
               onTapUp: onTapUp,
               splashColor: splashColor,
               highlightColor: splashColor,
-              borderRadius: borderRadius,
+              borderRadius: radius,
               child: Container(
-                  padding: padding,
-                  decoration:
-                      BoxDecoration(border: border, borderRadius: borderRadius),
-                  child: child),
+                  padding: padding, decoration: BoxDecoration(border: border, borderRadius: radius), child: child),
             );
           }),
         ),
@@ -83,16 +80,13 @@ class Touch extends StatelessWidget {
         child: Container(
             padding: padding,
             margin: margin,
-            decoration: BoxDecoration(
-                color: backgroundColor,
-                border: border,
-                borderRadius: borderRadius),
+            decoration: BoxDecoration(color: backgroundColor, border: border, borderRadius: radius),
             child: child));
   }
 
   static Touch fade({
     Widget? child,
-    BorderRadius? borderRadius,
+    BorderRadius? radius,
     BoxBorder? border,
     Color? color,
     EdgeInsetsGeometry? padding,
@@ -106,7 +100,7 @@ class Touch extends StatelessWidget {
   }) {
     return Touch(
       type: TouchType.fade,
-      borderRadius: borderRadius,
+      radius: radius,
       border: border,
       color: color,
       padding: padding,
@@ -183,6 +177,59 @@ class _CustomGestureState extends State<CustomGesture> {
       behavior: HitTestBehavior.translucent,
       onTap: widget.onTap,
       child: Opacity(opacity: isTapDown ? .5 : 1, child: widget.child),
+    );
+  }
+}
+
+extension CustomTouchTypeExtension on bool {
+  TouchType get hoverable => this ? TouchType.fade : TouchType.none;
+}
+
+class InkTouch extends StatelessWidget {
+  final Widget? child;
+  final BorderRadius? radius;
+  final BoxBorder? border;
+  final Color? color;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final void Function()? onTap;
+  final void Function()? onDoubleTap;
+  final void Function()? onLongPress;
+  final void Function()? onTapCancel;
+  final void Function(TapDownDetails? details)? onTapDown;
+  final void Function(TapUpDetails? details)? onTapUp;
+
+  const InkTouch({
+    super.key,
+    this.child,
+    this.radius,
+    this.border,
+    this.color,
+    this.padding,
+    this.margin,
+    this.onTap,
+    this.onDoubleTap,
+    this.onLongPress,
+    this.onTapCancel,
+    this.onTapDown,
+    this.onTapUp,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Touch(
+      onTap: onTap,
+      onDoubleTap: onDoubleTap,
+      onLongPress: onLongPress,
+      onTapCancel: onTapCancel,
+      onTapDown: onTapDown,
+      onTapUp: onTapUp,
+      margin: margin,
+      padding: padding,
+      color: color,
+      border: border,
+      radius: radius,
+      child: child,
     );
   }
 }

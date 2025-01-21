@@ -335,7 +335,7 @@ class ConfirmButton extends StatelessWidget {
                       padding: Ei.sym(v: 12, h: 45),
                       border: Br.all(),
                       color: buttonColor,
-                      borderRadius: Br.radius(50),
+                      radius: Br.radius(50),
                       child: Text(confirmText ?? 'Confirm',
                           style: config.font.copyWith(
                               fontWeight: Fw.bold,
@@ -378,7 +378,7 @@ class TimePicker extends StatelessWidget {
                     },
               color: context.isDarkMode ? darkBackgroundColor : backgroundColor,
               border: Br.all(),
-              borderRadius: Br.radius(config.borderRadius),
+              radius: Br.radius(config.borderRadius),
               child: AnimatedContainer(
                 duration: 350.ms,
                 curve: isOpened

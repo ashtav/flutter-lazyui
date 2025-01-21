@@ -40,7 +40,7 @@ class LzCard extends StatelessWidget {
             padding: padding ?? Ei.all(20),
             color: color,
             border: border ?? Br.all(),
-            borderRadius: radius,
+            radius: radius,
             child: Column(children: children).start.gap(gap ?? 2),
           ),
 

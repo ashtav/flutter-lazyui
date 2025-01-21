@@ -221,9 +221,9 @@ class LzToast {
   /// ```dart
   /// LzToast.show('Hello, World!');
   /// ```
-  static void show(String message,
+  static void show(String? message,
       {Alignment? align, IconData? icon, int? maxLength}) {
-    _notifier.show(message,
+    _notifier.show(message.toString(),
         duration: _config.duration,
         align: align,
         color: null,
@@ -231,9 +231,9 @@ class LzToast {
         maxLength: maxLength);
   }
 
-  static void success(String message,
+  static void success(String? message,
       {Alignment? align, IconData? icon, int? maxLength}) {
-    _notifier.show(message,
+    _notifier.show(message.toString(),
         duration: _config.duration,
         align: align,
         color: Colors.green,
@@ -241,9 +241,9 @@ class LzToast {
         maxLength: maxLength);
   }
 
-  static void warning(String message,
+  static void warning(String? message,
       {Alignment? align, IconData? icon, int? maxLength}) {
-    _notifier.show(message,
+    _notifier.show(message.toString(),
         duration: _config.duration,
         align: align,
         color: Colors.orange,
@@ -251,9 +251,9 @@ class LzToast {
         maxLength: maxLength);
   }
 
-  static void error(String message,
+  static void error(String? message,
       {Alignment? align, IconData? icon, int? maxLength}) {
-    _notifier.show(message,
+    _notifier.show(message.toString(),
         duration: _config.duration,
         align: align,
         color: Colors.redAccent.lighten(.05),

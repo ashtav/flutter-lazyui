@@ -195,7 +195,7 @@ class _SelectState extends State<Select> {
                               onSelect: onChange);
                         },
                   color: background,
-                  borderRadius: Br.radius(radiusValue),
+                  radius: Br.radius(radiusValue),
                   child: LzTextField(
                       hint: hint,
                       textStyle: textStyle,

@@ -45,7 +45,7 @@ class LzButton extends StatelessWidget {
       onTap: onTap,
       padding: padding ?? Ei.sym(v: 15, h: 20),
       color: backgroundColor,
-      borderRadius: borderRadius ?? Br.radius(config.borderRadius),
+      radius: borderRadius ?? Br.radius(config.borderRadius),
       border: border,
       child: iconOnly
           ? Icon(icon, color: textColor)

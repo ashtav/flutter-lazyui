@@ -111,7 +111,7 @@ class __ConfirmDialogWidgetState extends State<_ConfirmDialogWidget> {
                               return Expanded(
                                 child: Touch(
                                   onTap: () => context.lz.pop(i == 1),
-                                  borderRadius: Br.zero,
+                                  radius: Br.zero,
                                   child: Container(
                                       decoration: BoxDecoration(border: Br.only(['l'], except: i == 0)),
                                       padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),

@@ -248,7 +248,7 @@ class TimePicker extends StatelessWidget {
                     },
               color: context.isDarkMode ? darkBackgroundColor : backgroundColor,
               border: Br.all(),
-              borderRadius: Br.radius(config.borderRadius),
+              radius: Br.radius(config.borderRadius),
               child: AnimatedContainer(
                 duration: 350.ms,
                 curve: isOpened
@@ -355,7 +355,7 @@ class StartEndDate extends StatelessWidget {
                       child: Touch(
                         onTap: isTo ? null : () => state.onSelectDate(ii),
                         padding: Ei.sym(v: 7, h: 15),
-                        borderRadius: Br.radius(4),
+                        radius: Br.radius(4),
                         child: Center(
                             child: isTo
                                 ? Icon(arrow, color: Colors.black38.themeify)

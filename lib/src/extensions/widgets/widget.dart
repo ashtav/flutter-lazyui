@@ -48,11 +48,26 @@ class WidgettUtils {
         child: child,
       ) as T;
 
+  T onTap<T>(void Function() onTap, [bool hoverable = false]) {
+    return Touch(
+      onTap: onTap,
+      type: hoverable ? TouchType.fade : TouchType.none,
+      child: child,
+    ) as T;
+  }
+
   T ignore<T extends Widget>([bool ignore = true]) => IgnorePointer(ignoring: ignore, child: child) as T;
 
   T opacity<T extends Widget>(double opacity) => Opacity(opacity: opacity, child: child) as T;
 
   Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: child);
+
+  /// ``` dart
+  /// Container().lz.rotate(90); // the value is in degree between 0 - 360
+  /// ```
+  Widget rotate(double value, {AlignmentGeometry alignment = Alignment.center}) {
+    return Transform.rotate(angle: (value % 360) * (3.1415926535897932 / 180), alignment: alignment, child: child);
+  }
 
   /// ``` dart
   /// Widget().lz.shadowed(true);
@@ -116,4 +131,9 @@ class WidgettUtils {
             ))
         : child;
   }
+
+  /// ``` dart
+  /// YourWidget().sized(100, 100)
+  /// ```
+  Widget sized([double width = 0, double? height]) => SizedBox(width: width, height: height, child: child);
 }
