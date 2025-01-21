@@ -3,7 +3,7 @@ part of '../extension.dart';
 extension CustomWidgetExtension<T> on Widget {
   WidgettUtils get lz => WidgettUtils(this, LzAnimate(this));
 
-  T margin(
+  Widget margin( 
       {double? all,
       double? b,
       double? t,
@@ -26,7 +26,15 @@ extension CustomWidgetExtension<T> on Widget {
               h: h,
               others: others),
       child: this,
-    ) as T;
+    );
+  }
+
+  Widget onTap(void Function() onTap, [bool hoverable = false]) {
+    return Touch(
+      onTap: onTap,
+      type: hoverable ? TouchType.fade : TouchType.none,
+      child: this,
+    );
   }
 }
 
@@ -47,14 +55,6 @@ class WidgettUtils {
                 bottomRight: Radius.circular(br ?? blr ?? 0)),
         child: child,
       ) as T;
-
-  T onTap<T>(void Function() onTap, [bool hoverable = false]) {
-    return Touch(
-      onTap: onTap,
-      type: hoverable ? TouchType.fade : TouchType.none,
-      child: child,
-    ) as T;
-  }
 
   T ignore<T extends Widget>([bool ignore = true]) => IgnorePointer(ignoring: ignore, child: child) as T;
 
