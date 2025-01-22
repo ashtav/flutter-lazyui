@@ -84,7 +84,7 @@ class _SelectState extends State<Select> {
     notifier.options = widget.options;
     notifier.values = widget.values;
 
-    notifier.enabled = widget.enabled && widget.options.isNotEmpty;
+    notifier.enabled = widget.enabled;
     notifier.extra = extra;
   }
 
@@ -151,7 +151,7 @@ class _SelectState extends State<Select> {
         notifier.watch((state) {
           Color background =
               (context.isDarkMode ? darkAppbarColor : backgroundColor)
-                  .darken(state.enabled && state.options.isNotEmpty ? 0 : .05);
+                  .darken(state.enabled ? 0 : .05);
           Widget suffixIcon = widget.suffix ??
               Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
 
@@ -183,7 +183,7 @@ class _SelectState extends State<Select> {
             spacing: 7,
             children: [
               Touch(
-                  onTap: !state.enabled || state.options.isEmpty
+                  onTap: !state.enabled
                       ? null
                       : () {
                           Option value =

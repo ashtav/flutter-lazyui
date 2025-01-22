@@ -71,7 +71,7 @@ class FormGroupView extends StatelessWidget {
                     label: 'Province',
                     hint: 'Select province',
                     model: forms.key('province'),
-                    options: ['Bali']),
+                    ),
                 LzForm.select(
                     label: 'City',
                     hint: 'Select city',

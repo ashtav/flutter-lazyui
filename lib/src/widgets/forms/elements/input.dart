@@ -204,7 +204,7 @@ class _InputState extends State<Input> {
           final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
 
           TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
-          InputBorder? border = hasOnTap && state.enabled
+          InputBorder? border = hasOnTap && state.enabled && !isGrouped
               ? outlineBorder
               : state.invalid && !isGrouped
                   ? outlineBorder

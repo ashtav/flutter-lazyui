@@ -18,7 +18,7 @@ class Touch extends StatelessWidget {
   const Touch({
     super.key,
     this.child,
-    this.type = TouchType.splash,
+    this.type = TouchType.fade,
     this.radius,
     this.border,
     this.color,
@@ -83,37 +83,6 @@ class Touch extends StatelessWidget {
             decoration: BoxDecoration(color: backgroundColor, border: border, borderRadius: radius),
             child: child));
   }
-
-  static Touch fade({
-    Widget? child,
-    BorderRadius? radius,
-    BoxBorder? border,
-    Color? color,
-    EdgeInsetsGeometry? padding,
-    EdgeInsetsGeometry? margin,
-    void Function()? onTap,
-    void Function()? onDoubleTap,
-    void Function()? onLongPress,
-    void Function()? onTapCancel,
-    void Function(TapDownDetails? details)? onTapDown,
-    void Function(TapUpDetails? details)? onTapUp,
-  }) {
-    return Touch(
-      type: TouchType.fade,
-      radius: radius,
-      border: border,
-      color: color,
-      padding: padding,
-      margin: margin,
-      onTap: onTap,
-      onDoubleTap: onDoubleTap,
-      onLongPress: onLongPress,
-      onTapCancel: onTapCancel,
-      onTapDown: onTapDown,
-      onTapUp: onTapUp,
-      child: child,
-    );
-  }
 }
 
 enum TouchType {
@@ -156,14 +125,14 @@ class _CustomGestureState extends State<CustomGesture> {
       onTapDown: (details) {
         widget.onTapDown?.call(details);
 
-        if (widget.faded) {
+        if (widget.faded && widget.onTap != null || widget.onDoubleTap != null || widget.onLongPress != null) {
           setState(() => isTapDown = true);
         }
       },
       onTapUp: (details) {
         widget.onTapUp?.call(details);
 
-        if (widget.faded) {
+        if (widget.faded && widget.onTap != null || widget.onDoubleTap != null || widget.onLongPress != null) {
           setState(() => isTapDown = false);
         }
       },

@@ -117,8 +117,8 @@ class LzImage<T> extends StatelessWidget {
               width: width,
               height: height,
               alignment: alignment,
-              frameBuilder: (context, child, __, ok) =>
-                  ok ? child : placeholder,
+              // frameBuilder: (context, child, __, ok) =>
+              //     ok ? child : placeholder,
               errorBuilder: (_, e, s) => errorWidget);
         }
       }
@@ -159,7 +159,7 @@ class LzImage<T> extends StatelessWidget {
           width: width,
           height: height,
           alignment: alignment,
-          frameBuilder: (context, child, __, ok) => ok ? child : placeholder,
+          // frameBuilder: (context, child, __, ok) => ok ? child : placeholder,
           errorBuilder: (_, e, s) => errorWidget);
     }
 
@@ -170,7 +170,7 @@ class LzImage<T> extends StatelessWidget {
           width: width,
           height: height,
           alignment: alignment,
-          frameBuilder: (context, child, __, ok) => ok ? child : placeholder,
+          // frameBuilder: (context, child, __, ok) => ok ? child : placeholder,
           errorBuilder: (_, e, s) => errorWidget);
     }
 

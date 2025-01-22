@@ -9,6 +9,7 @@ class LzBadge extends StatelessWidget {
   final bool soft;
   final bool border;
   final BorderRadius? radius;
+  final EdgeInsetsGeometry? padding;
 
   const LzBadge(
       {super.key,
@@ -19,7 +20,8 @@ class LzBadge extends StatelessWidget {
       this.pill = false,
       this.soft = false,
       this.border = false,
-      this.radius});
+      this.radius,
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +39,7 @@ class LzBadge extends StatelessWidget {
     }
 
     if (text != null) {
-      label =
-          Textr(text!, style: Gfont.color(labelColor).fsize(size), icon: icon);
+      label = Textr(text!, style: Gfont.color(labelColor).fsize(size), icon: icon);
     }
 
     if (icon != null && label == null) {
@@ -50,7 +51,7 @@ class LzBadge extends StatelessWidget {
     }
 
     return Container(
-      padding: Ei.sym(v: 5, h: 10),
+      padding: padding ?? Ei.sym(v: 5, h: 10),
       decoration: BoxDecoration(
           border: border ? Br.all(color: borderColor) : null,
           color: color,
