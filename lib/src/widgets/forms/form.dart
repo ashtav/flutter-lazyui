@@ -654,7 +654,7 @@ class LzForm {
     String? hint,
 
     /// Callback when the select dropdown is tapped.
-    void Function()? onTap,
+    Future Function()? onTap,
 
     /// Callback when a value is selected.
     void Function(String value)? onChange,

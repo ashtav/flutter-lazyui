@@ -14,8 +14,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Text('test').margin(all: 10).onTap((){});
-
     return LzTheme(
         child: (theme) => MaterialApp(
               title: 'LazyUi',

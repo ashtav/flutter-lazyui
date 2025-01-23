@@ -1,4 +1,4 @@
-// ignore_for_file: invalid_use_of_protected_member
+// ignore_for_file: invalid_use_of_protected_member, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
@@ -24,7 +24,7 @@ class Select extends StatefulWidget with FormMixin {
   final List values;
 
   /// Called when the select input is tapped.
-  final void Function()? onTap;
+  final Future Function()? onTap;
 
   /// Called when the selected value changes.
   final void Function(String value)? onChange;
@@ -185,7 +185,9 @@ class _SelectState extends State<Select> {
               Touch(
                   onTap: !state.enabled
                       ? null
-                      : () {
+                      : () async {
+                          await widget.onTap?.call();
+
                           Option value =
                               Option(state.controller.text, value: state.extra);
                           LzPicker.option(context,
