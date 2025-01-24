@@ -159,6 +159,10 @@ extension LzListMapExtension on List<Map> {
         ? map((e) => e[key] as T).toList()
         : this.where((e) => where(e)).map((e) => e[key] as T).toList();
   }
+
+  List<Map<String, dynamic>> labelValue(String labelKey, [String? valueKey]) {
+    return map((e) => {'label': e[labelKey], 'value': valueKey != null ? e[valueKey] : e}).toList();
+  }
 }
 
 /* --------------------------------------------------------------------------

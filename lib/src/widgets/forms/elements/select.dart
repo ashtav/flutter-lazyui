@@ -149,30 +149,13 @@ class _SelectState extends State<Select> {
 
         // textfield
         notifier.watch((state) {
-          Color background =
-              (context.isDarkMode ? darkAppbarColor : backgroundColor)
-                  .darken(state.enabled ? 0 : .05);
-          Widget suffixIcon = widget.suffix ??
-              Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
+          Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor).darken(state.enabled ? 0 : .05);
+          Widget suffixIcon = widget.suffix ?? Icon(widget.suffixIcon ?? ConfigIcon.get(IconSet.chevron));
 
-          TextStyle? textStyle = state.enabled
-              ? config.font.copyWith(color: '444'.hex.themeify)
-              : null;
+          TextStyle? textStyle = state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
           double radiusValue = isGrouped ? 0 : config.borderRadius;
 
-          // InputBorder? border = OutlineInputBorder(
-          //     borderRadius: Br.radius(radiusValue),
-          //     borderSide: BorderSide(
-          //         color: state.invalid && state.enabled
-          //             ? Colors.red
-          //             : context.isDarkMode
-          //                 ? Colors.black26.themeify.darken(state.enabled ? 0 : .7)
-          //                 : Colors.black45.lighten(state.enabled ? 0 : .7),
-          //         width: .5));
-
-          final outlineBorder = FormUtils.getBorder(
-              context, state.invalid, isGrouped, state.enabled);
-
+          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
           InputBorder? border = state.invalid && !isGrouped
               ? outlineBorder
               : isGrouped
@@ -187,14 +170,14 @@ class _SelectState extends State<Select> {
                       ? null
                       : () async {
                           await widget.onTap?.call();
+                          Option value = Option(state.controller.text, value: state.extra);
 
-                          Option value =
-                              Option(state.controller.text, value: state.extra);
-                          LzPicker.option(context,
-                              initialValue: value,
-                              options: Option.list(state.options,
-                                  values: state.values),
-                              onSelect: onChange);
+                          Utils.timer(() {
+                            LzPicker.option(context,
+                                initialValue: value,
+                                options: Option.list(state.options, values: state.values),
+                                onSelect: onChange);
+                          }, 10.ms);
                         },
                   color: background,
                   radius: Br.radius(radiusValue),
@@ -208,9 +191,7 @@ class _SelectState extends State<Select> {
 
               // error message
               if (!isGrouped)
-                AccordionAnimated(
-                    show: state.invalid,
-                    child: Text(state.invalidMessage, style: Gfont.fs14.red))
+                AccordionAnimated(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })

@@ -95,13 +95,20 @@ class FormManager {
   }
 
   FormControl set(String key, [dynamic value]) {
+    if (models[key] == null) {
+      Print.error('Form key $key not found!');
+      return FormControl(FormNotifier());
+    }
+
     final notifier = models[key]!.notifier;
 
     if (value != null) {
       Bindings.onRendered(() {
         final type = notifier.type;
 
-        notifier.controller.text = value.toString();
+        if (!['select'].contains(type)) {
+          notifier.controller.text = value.toString();
+        }
 
         if (type == 'checkbox') {
           List<String> options = value.toString().replaceAll(', ', ',').split(',');
@@ -126,27 +133,6 @@ class FormManager {
 
         if (value is List) {
           notifier.setOption(value.map((e) => e.toString()).toList());
-          return FormControl(notifier);
-        }
-
-        if (value is OptionSet) {
-          notifier.controller.clear(); // Clear text controller
-
-          // Apply filter if provided
-          final filteredData = value.filter == null
-              ? value.data
-              : value.data
-                  .where((item) =>
-                      item.containsKey(value.filter!.keys.first) &&
-                      item[value.filter!.keys.first] == value.filter!.values.first)
-                  .toList();
-
-          // Extract options and values
-          notifier.options = filteredData.extract<String>(value.labelKey);
-          notifier.values = value.valueKey != null ? filteredData.extract(value.valueKey!) : [];
-          notifier.enabled = notifier.options.isNotEmpty;
-
-          notifier.notify(); // Notify listeners
           return FormControl(notifier);
         }
       });
@@ -825,6 +811,14 @@ class FormControl {
   FormControl maxLength(int value) {
     notifier.maxLength = value;
     notifier.notify();
+    return this;
+  }
+
+  FormControl options(List<Map<String, dynamic>> data) {
+    notifier.options = data.extract<String>('label');
+    notifier.values = data.extract<dynamic>('value');
+    notifier.notify(); // Notify listeners
+
     return this;
   }
 }
