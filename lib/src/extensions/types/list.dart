@@ -161,7 +161,10 @@ extension LzListMapExtension on List<Map> {
   }
 
   List<Map<String, dynamic>> labelValue(String labelKey, [String? valueKey]) {
-    return map((e) => {'label': e[labelKey], 'value': valueKey != null ? e[valueKey] : e}).toList();
+    return map((e) => {
+          'label': e[labelKey],
+          'value': valueKey != null ? e[valueKey] : e
+        }).toList();
   }
 }
 

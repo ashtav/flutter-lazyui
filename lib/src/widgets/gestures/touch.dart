@@ -62,7 +62,10 @@ class Touch extends StatelessWidget {
               highlightColor: splashColor,
               borderRadius: radius,
               child: Container(
-                  padding: padding, decoration: BoxDecoration(border: border, borderRadius: radius), child: child),
+                  padding: padding,
+                  decoration:
+                      BoxDecoration(border: border, borderRadius: radius),
+                  child: child),
             );
           }),
         ),
@@ -80,7 +83,8 @@ class Touch extends StatelessWidget {
         child: Container(
             padding: padding,
             margin: margin,
-            decoration: BoxDecoration(color: backgroundColor, border: border, borderRadius: radius),
+            decoration: BoxDecoration(
+                color: backgroundColor, border: border, borderRadius: radius),
             child: child));
   }
 }
@@ -125,14 +129,18 @@ class _CustomGestureState extends State<CustomGesture> {
       onTapDown: (details) {
         widget.onTapDown?.call(details);
 
-        if (widget.faded && widget.onTap != null || widget.onDoubleTap != null || widget.onLongPress != null) {
+        if (widget.faded && widget.onTap != null ||
+            widget.onDoubleTap != null ||
+            widget.onLongPress != null) {
           setState(() => isTapDown = true);
         }
       },
       onTapUp: (details) {
         widget.onTapUp?.call(details);
 
-        if (widget.faded && widget.onTap != null || widget.onDoubleTap != null || widget.onLongPress != null) {
+        if (widget.faded && widget.onTap != null ||
+            widget.onDoubleTap != null ||
+            widget.onLongPress != null) {
           setState(() => isTapDown = false);
         }
       },

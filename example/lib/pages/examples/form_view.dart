@@ -2,8 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
 class Notifier extends ChangeNotifier {
-  final forms = LzForm.make(
-      ['name', 'phone', 'birthdate', 'password', 'gender', 'hobby', 'ticket', 'province', 'city', 'height', 'terms']);
+  final forms = LzForm.make([
+    'name',
+    'phone',
+    'birthdate',
+    'password',
+    'gender',
+    'hobby',
+    'ticket',
+    'province',
+    'city',
+    'height',
+    'terms'
+  ]);
 }
 
 class FormView extends StatelessWidget {
@@ -70,7 +81,10 @@ class FormView extends StatelessWidget {
           children: [
             /// An example of using a simple input field for a [label] and [hint].
             /// The [model] binds the value, allowing you to manage and retrieve the input.
-            LzForm.input(label: 'Full Name', hint: 'Type your name', model: forms.key('name')),
+            LzForm.input(
+                label: 'Full Name',
+                hint: 'Type your name',
+                model: forms.key('name')),
 
             /// An example of using prefix for input
             LzForm.input(
@@ -112,13 +126,23 @@ class FormView extends StatelessWidget {
 
             /// An example of using a radio button group with a [label] and multiple [options].
             /// The [model] binds the selected value, allowing you to store and manage the choice.
-            LzForm.radio(label: 'Gender', options: ['Male', 'Female'], model: forms.key('gender')),
+            LzForm.radio(
+                label: 'Gender',
+                options: ['Male', 'Female'],
+                model: forms.key('gender')),
 
             /// An example of using a checkbox field with multiple [options] for the [label].
             /// The [model] binds the selected values, allowing you to manage and retrieve the user's choices.
             LzForm.checkbox(
                 label: 'Hobby',
-                options: ['Football', 'Cooking', 'Coding', 'Swimming', 'Reading', 'Writing'],
+                options: [
+                  'Football',
+                  'Cooking',
+                  'Coding',
+                  'Swimming',
+                  'Reading',
+                  'Writing'
+                ],
                 model: forms.key('hobby')),
 
             /// An example of using a number input field with buttons for incrementing and decrementing the value.
@@ -132,7 +156,8 @@ class FormView extends StatelessWidget {
                     onChange: (value) {
                       forms.enable('province', value > 2);
                     }),
-                Text('Add at least 3 tickets to enable province.', style: Gfont.fs14.muted)
+                Text('Add at least 3 tickets to enable province.',
+                    style: Gfont.fs14.muted)
               ],
             ).start.gap(5),
 
@@ -149,15 +174,17 @@ class FormView extends StatelessWidget {
                   /// Sets the 'city' field based on the selected 'province'.
                   /// Filters the [cities] by [province_id] matching the selected province from [forms.extra('province')].
                   /// Uses 'name' for the display value and 'id' as the underlying value for the city options.
-                  
-                  final data = cities.where((e) => e['province_id'] == forms.extra('province')).toList();
+
+                  final data = cities
+                      .where((e) => e['province_id'] == forms.extra('province'))
+                      .toList();
                   forms.set('city').options(data.labelValue('name', 'id'));
                 }),
 
             LzForm.select(
                 label: 'City',
                 hint: 'Select city',
-                model: forms.key('city'), 
+                model: forms.key('city'),
                 onTap: () async {
                   final data = await getCities().overlay();
                   forms.set('city').options(data.labelValue('name', 'id'));
@@ -166,7 +193,11 @@ class FormView extends StatelessWidget {
             /// An example of using a slider input with a [label] to specify the purpose of the slider.
             /// The [initValue] sets the initial value of the slider, while [max] determines the upper limit.
             /// The [model] binds the slider value to a key, allowing for data binding and easy management.
-            LzForm.slider(label: 'Height', initValue: 165, max: 250, model: forms.key('height')),
+            LzForm.slider(
+                label: 'Height',
+                initValue: 165,
+                max: 250,
+                model: forms.key('height')),
 
             /// An example of using a switch with two states, [Agree] and [Disagree].
             /// The [label] specifies the text for both states, separated by a "|".
@@ -196,7 +227,8 @@ class FormView extends StatelessWidget {
                 'name': 'Name\'s missing? C\'mon, give me something!',
                 'phone': 'No phone number? Are you for real?',
                 'phone:min': 'Bruh, 5 digits, not a joke!',
-                'phone:max': 'That\'s a phone number, not a book. No more than 10!'
+                'phone:max':
+                    'That\'s a phone number, not a book. No more than 10!'
               });
 
               if (form.ok) {

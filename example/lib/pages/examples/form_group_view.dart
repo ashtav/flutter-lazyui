@@ -68,10 +68,10 @@ class FormGroupView extends StatelessWidget {
             FormGroup(
               children: [
                 LzForm.select(
-                    label: 'Province',
-                    hint: 'Select province',
-                    model: forms.key('province'),
-                    ),
+                  label: 'Province',
+                  hint: 'Select province',
+                  model: forms.key('province'),
+                ),
                 LzForm.select(
                     label: 'City',
                     hint: 'Select city',

@@ -43,18 +43,17 @@ class LzImage<T> extends StatelessWidget {
   final Widget? errorWidget;
 
   /// Creates an [LzImage] widget.
-  const LzImage(
-    this.src, {
-    super.key,
-    this.size,
-    this.fit = BoxFit.cover,
-    this.alignment = Alignment.center,
-    this.background,
-    this.radius,
-    this.previewable = false,
-    this.context,
-    this.placeholder, this.errorWidget
-  });
+  const LzImage(this.src,
+      {super.key,
+      this.size,
+      this.fit = BoxFit.cover,
+      this.alignment = Alignment.center,
+      this.background,
+      this.radius,
+      this.previewable = false,
+      this.context,
+      this.placeholder,
+      this.errorWidget});
 
   @override
   Widget build(BuildContext context) {
@@ -65,17 +64,19 @@ class LzImage<T> extends StatelessWidget {
     double? height = _getImageSize(size, 'height');
 
     // loading
-    Widget placeholder = this.placeholder ?? Shimmer(
-      size: [width ?? 50, height ?? 50],
-      radius: Br.radius(radius ?? config.borderRadius),
-    );
+    Widget placeholder = this.placeholder ??
+        Shimmer(
+          size: [width ?? 50, height ?? 50],
+          radius: Br.radius(radius ?? config.borderRadius),
+        );
 
     // error
-    Widget errorWidget = this.errorWidget ??Container(
-        width: width,
-        height: height,
-        color: Colors.black12,
-        child: const Center(child: Icon(Hi.alertSquare)));
+    Widget errorWidget = this.errorWidget ??
+        Container(
+            width: width,
+            height: height,
+            color: Colors.black12,
+            child: const Center(child: Icon(Hi.alertSquare)));
 
     // image string
     if (src is String && ![''].contains('$src'.trim())) {

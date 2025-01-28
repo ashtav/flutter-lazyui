@@ -3,7 +3,7 @@ part of '../extension.dart';
 extension CustomWidgetExtension<T> on Widget {
   WidgettUtils get lz => WidgettUtils(this, LzAnimate(this));
 
-  Widget margin( 
+  Widget margin(
       {double? all,
       double? b,
       double? t,
@@ -44,7 +44,14 @@ class WidgettUtils {
 
   WidgettUtils(this.child, this.animate);
 
-  T clip<T extends Widget>({double? tl, double? tr, double? bl, double? br, double? tlr, double? blr, double? all}) =>
+  T clip<T extends Widget>(
+          {double? tl,
+          double? tr,
+          double? bl,
+          double? br,
+          double? tlr,
+          double? blr,
+          double? all}) =>
       ClipRRect(
         borderRadius: all != null
             ? BorderRadius.all(Radius.circular(all))
@@ -56,23 +63,31 @@ class WidgettUtils {
         child: child,
       ) as T;
 
-  T ignore<T extends Widget>([bool ignore = true]) => IgnorePointer(ignoring: ignore, child: child) as T;
+  T ignore<T extends Widget>([bool ignore = true]) =>
+      IgnorePointer(ignoring: ignore, child: child) as T;
 
-  T opacity<T extends Widget>(double opacity) => Opacity(opacity: opacity, child: child) as T;
+  T opacity<T extends Widget>(double opacity) =>
+      Opacity(opacity: opacity, child: child) as T;
 
-  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) => Flexible(flex: flex, fit: fit, child: child);
+  Flexible flexible({int flex = 1, FlexFit fit = FlexFit.loose}) =>
+      Flexible(flex: flex, fit: fit, child: child);
 
   /// ``` dart
   /// Container().lz.rotate(90); // the value is in degree between 0 - 360
   /// ```
-  Widget rotate(double value, {AlignmentGeometry alignment = Alignment.center}) {
-    return Transform.rotate(angle: (value % 360) * (3.1415926535897932 / 180), alignment: alignment, child: child);
+  Widget rotate(double value,
+      {AlignmentGeometry alignment = Alignment.center}) {
+    return Transform.rotate(
+        angle: (value % 360) * (3.1415926535897932 / 180),
+        alignment: alignment,
+        child: child);
   }
 
   /// ``` dart
   /// Widget().lz.shadowed(true);
   /// ```
-  Widget shadowed(BuildContext context, {double? spread, double? blur, Offset? offset, Color? color}) {
+  Widget shadowed(BuildContext context,
+      {double? spread, double? blur, Offset? offset, Color? color}) {
     Color backgroundColor = color ?? context.scaffoldColor;
 
     return Container(
@@ -90,20 +105,24 @@ class WidgettUtils {
   /// ``` dart
   /// YourWidget().lz.hide()
   /// ```
-  Visibility hide([bool value = true]) => Visibility(visible: !value, child: child);
+  Visibility hide([bool value = true]) =>
+      Visibility(visible: !value, child: child);
 
   /// ``` dart
   /// YourWidget().lz.border(Br.all(), width: 1, color: Colors.black)
   /// ```
-  Widget border(BoxBorder border, {BorderRadiusGeometry? radius, Color? color}) {
+  Widget border(BoxBorder border,
+      {BorderRadiusGeometry? radius, Color? color}) {
     if (this is Container) {
       final container = this as Container;
       BoxDecoration? decoration = container.decoration as BoxDecoration?;
 
       if (decoration == null) {
-        decoration = BoxDecoration(borderRadius: radius, color: color, border: border);
+        decoration =
+            BoxDecoration(borderRadius: radius, color: color, border: border);
       } else {
-        decoration = decoration.copyWith(borderRadius: radius, color: color, border: border);
+        decoration = decoration.copyWith(
+            borderRadius: radius, color: color, border: border);
       }
 
       return Container(
@@ -113,7 +132,8 @@ class WidgettUtils {
     }
 
     return Container(
-      decoration: BoxDecoration(borderRadius: radius, color: color, border: border),
+      decoration:
+          BoxDecoration(borderRadius: radius, color: color, border: border),
       child: child,
     );
   }
@@ -135,5 +155,6 @@ class WidgettUtils {
   /// ``` dart
   /// YourWidget().sized(100, 100)
   /// ```
-  Widget sized([double width = 0, double? height]) => SizedBox(width: width, height: height, child: child);
+  Widget sized([double width = 0, double? height]) =>
+      SizedBox(width: width, height: height, child: child);
 }

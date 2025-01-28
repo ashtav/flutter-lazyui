@@ -70,7 +70,8 @@ class Utils {
   /// ```dart
   /// scrollToWidget(myKey, myController, MediaQuery.of(context).size.width);
   /// ```
-  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
+  static void scrollToWidget(
+      GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 
@@ -114,14 +115,18 @@ class Utils {
   /// Utils.scrollTo(controller, duration: 500, delay: 100, to: AxisDirection.down);
   /// ```
   static scrollTo(ScrollController scrollController,
-      {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
+      {int duration = 300,
+      int delay = 50,
+      AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
+            to == AxisDirection.down
+                ? scrollController.position.maxScrollExtent
+                : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -223,7 +228,8 @@ class Utils {
   /// TextEditingController name = TextEditingController();
   /// Utils.setCursorToLastPosition(name);
   /// ```
-  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
+  static setCursorToLastPosition(TextEditingController controller,
+      [int time = 0]) {
     Timer(
       Duration(milliseconds: time),
       () => controller.selection = TextSelection.fromPosition(
@@ -259,5 +265,6 @@ class Utils {
   ///   // do something...
   /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
   /// ```
-  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
+  static Timer timer(void Function() then, [Duration? duration]) =>
+      Timer(duration ?? 100.ms, then);
 }

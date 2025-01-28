@@ -39,7 +39,8 @@ class LzBadge extends StatelessWidget {
     }
 
     if (text != null) {
-      label = Textr(text!, style: Gfont.color(labelColor).fsize(size), icon: icon);
+      label =
+          Textr(text!, style: Gfont.color(labelColor).fsize(size), icon: icon);
     }
 
     if (icon != null && label == null) {

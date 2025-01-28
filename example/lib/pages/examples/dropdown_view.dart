@@ -10,8 +10,8 @@ class DropdownView extends StatelessWidget {
   Widget build(BuildContext context) {
     final key = GlobalKey();
     final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
-    final options =
-        DropOption.of(['Filter', 'Sort AZ', 'Settings'], icons: icons, separated: [2], focused: ['Settings']);
+    final options = DropOption.of(['Filter', 'Sort AZ', 'Settings'],
+        icons: icons, separated: [2], focused: ['Settings']);
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +58,8 @@ class DropdownView extends StatelessWidget {
             children: Faker.list.category(5).generate((item, i) {
               return LzDropdown(
                 options: [
-                  ...DropOption.of(['Edit', 'Delete', 'View'], icons: [Hi.edit01, Hi.delete01, Hi.view]),
+                  ...DropOption.of(['Edit', 'Delete', 'View'],
+                      icons: [Hi.edit01, Hi.delete01, Hi.view]),
                 ],
                 builder: (key, action) {
                   return DropWrap(
@@ -66,7 +67,7 @@ class DropdownView extends StatelessWidget {
                     child: InkTouch(
                       key: key,
                       onTap: () {
-                        action.show((value){
+                        action.show((value) {
                           logg(value);
                         });
                       },
