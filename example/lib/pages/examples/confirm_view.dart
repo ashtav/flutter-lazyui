@@ -29,7 +29,7 @@ class ConfirmView extends StatelessWidget {
                   outlined: true,
                   onTap: () {
                     LzConfirm.show(context, confirmText: 'Ya!', onConfirm: () {
-                      LzToast.show('Confirmed!');
+                      Toast.show('Confirmed!');
                     });
                   },
                 )

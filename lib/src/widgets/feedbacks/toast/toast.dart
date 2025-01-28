@@ -169,7 +169,7 @@ class _ToastWidget extends StatelessWidget {
   }
 }
 
-/// The `LzToast` class provides a utility for showing toast messages in your application.
+/// The `Toast` class provides a utility for showing toast messages in your application.
 /// It offers two methods for displaying toast messages (`show` and `overlay`) and a `builder`
 /// method to integrate with the widget tree.
 ///
@@ -181,28 +181,28 @@ class _ToastWidget extends StatelessWidget {
 ///   theme: theme,
 ///   home: const HomeView(),
 ///   builder: (context, child) {
-///     return LzToast.builder(context, child);
+///     return Toast.builder(context, child);
 ///   },
 /// )
 /// ```
 ///
-/// This example integrates `LzToast` into the app by using the `builder` method in `MaterialApp`.
+/// This example integrates `Toast` into the app by using the `builder` method in `MaterialApp`.
 /// This allows toast messages to overlay on top of the app's content.
 ///
 /// Sets the default configuration for displaying toast messages.
 ///
 /// Example usage:
 /// ```dart
-/// LzToast.config(align: Alignment.bottomCenter, duration: 5.s);
+/// Toast.config(align: Alignment.bottomCenter, duration: 5.s);
 /// ```
-class LzToast {
+class Toast {
   /// Displays a toast message.
   ///
   /// The [message] parameter specifies the text to display in the toast.
   ///
   /// Example:
   /// ```dart
-  /// LzToast.show('Hello, World!');
+  /// Toast.show('Hello, World!');
   /// ```
   static void show(String? message, {Alignment? align, IconData? icon, int? maxLength}) {
     _notifier.show(message.toString(),
@@ -235,7 +235,7 @@ class LzToast {
   ///
   /// Example:
   /// ```dart
-  /// LzToast.overlay('Hello, World!', duration: Duration(seconds: 3));
+  /// Toast.overlay('Hello, World!', duration: Duration(seconds: 3));
   /// ```
   static void overlay(String message, {Duration? duration, void Function()? onCancel}) {
     _notifier.overlay(message, duration: duration, onCancel: onCancel);
@@ -261,12 +261,12 @@ class LzToast {
   /// ```dart
   /// MaterialApp(
   ///   builder: (context, child) {
-  ///     return LzToast.builder(context, child);
+  ///     return Toast.builder(context, child);
   ///   },
   /// )
   /// ```
   static Widget builder(BuildContext context, Widget? child) {
-    return _LzToastOverlay(child: child);
+    return _ToastOverlay(child: child);
   }
 
   static void config({Duration? duration, Alignment? align}) {
@@ -276,9 +276,9 @@ class LzToast {
 
 extension CustomToastExtension<T> on Future<T> {
   Future<T> overlay([String? message, void Function()? onCancel]) async {
-    LzToast.overlay(message ?? 'Loading...', onCancel: onCancel);
+    Toast.overlay(message ?? 'Loading...', onCancel: onCancel);
     final res = await this;
-    LzToast.dismiss();
+    Toast.dismiss();
 
     return res;
   }

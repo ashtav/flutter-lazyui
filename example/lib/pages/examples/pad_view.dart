@@ -31,19 +31,19 @@ class PadView extends StatelessWidget {
                     logg(controller.value);
 
                     controller.pause();
-                    LzToast.overlay('Validating...');
+                    Toast.overlay('Validating...');
                     // request api...
 
                     Timer(2.s, () {
-                      LzToast.dismiss();
+                      Toast.dismiss();
 
                       if (controller.value == '123456') {
                         context.lz.pop();
-                        LzToast.success('Nice! you have been confirmed!.',
+                        Toast.success('Nice! you have been confirmed!.',
                             icon: Hi.checkmarkSquare01);
                       } else {
                         controller.reset().resume();
-                        LzToast.error('Your otp is invalid.',
+                        Toast.error('Your otp is invalid.',
                             icon: Hi.alertSquare);
                       }
                     });

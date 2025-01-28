@@ -337,7 +337,7 @@ class _Overlay extends StatelessWidget {
                             children = children.reversed.toList();
                           }
 
-                          return Touch(
+                          return InkTouch(
                             onTap: option.disabled
                                 ? null
                                 : () {

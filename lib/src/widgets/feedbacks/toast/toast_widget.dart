@@ -1,21 +1,21 @@
 part of 'toast.dart';
 
-class _LzToastOverlay extends StatefulWidget {
+class _ToastOverlay extends StatefulWidget {
   final Widget? child;
 
-  const _LzToastOverlay({this.child});
+  const _ToastOverlay({this.child});
 
   @override
-  State<_LzToastOverlay> createState() => _LzToastOverlayState();
+  State<_ToastOverlay> createState() => _ToastOverlayState();
 }
 
-class _LzToastOverlayState extends State<_LzToastOverlay> {
-  late _LzToastOverlayEntry overlayEntry;
+class _ToastOverlayState extends State<_ToastOverlay> {
+  late _ToastOverlayEntry overlayEntry;
 
   @override
   void initState() {
     super.initState();
-    overlayEntry = _LzToastOverlayEntry(
+    overlayEntry = _ToastOverlayEntry(
       overlayBuilder: (BuildContext context) => const _ToastWidget(),
     );
   }
@@ -25,7 +25,7 @@ class _LzToastOverlayState extends State<_LzToastOverlay> {
     return Material(
       child: Overlay(
         initialEntries: [
-          _LzToastOverlayEntry(
+          _ToastOverlayEntry(
               overlayBuilder: (BuildContext context) =>
                   widget.child ?? const SizedBox()),
           overlayEntry,
@@ -35,9 +35,9 @@ class _LzToastOverlayState extends State<_LzToastOverlay> {
   }
 }
 
-class _LzToastOverlayEntry extends OverlayEntry {
+class _ToastOverlayEntry extends OverlayEntry {
   final WidgetBuilder overlayBuilder;
 
-  _LzToastOverlayEntry({required this.overlayBuilder})
+  _ToastOverlayEntry({required this.overlayBuilder})
       : super(builder: overlayBuilder);
 }

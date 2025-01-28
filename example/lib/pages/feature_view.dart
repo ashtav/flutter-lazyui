@@ -95,7 +95,7 @@ class FeatureView extends StatelessWidget {
       'LzPicker': const PickerView(),
       'LzConfirm': const ConfirmView(),
       'Shimmer': const ShimmerView(),
-      'LzToast': const ToastView(),
+      'Toast': const ToastView(),
       'LzTheme': const ThemeView(),
       'LzImage': const ImageView(),
       'Refreshtor': const RefreshtorView(),

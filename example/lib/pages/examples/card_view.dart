@@ -29,6 +29,7 @@ class CardView extends StatelessWidget {
           LzCard(
             onTap: () {},
             style: LzCardStyle(stacked: true, stackAlign: StackAlign.top),
+            color: Colors.orange.applyOpacity(.09),
             children: [
               Text('Stacked Card', style: Gfont.bold),
               Text(Faker.words(10))

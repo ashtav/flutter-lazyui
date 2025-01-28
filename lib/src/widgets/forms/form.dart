@@ -385,7 +385,7 @@ class FormManager {
       }
 
       if (feedback == FormFeedback.toast) {
-        LzToast.show(message);
+        Toast.show(message);
       }
 
       return FormValidation(false, error: FormError(key, message));

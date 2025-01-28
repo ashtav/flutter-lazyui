@@ -244,7 +244,7 @@ class Utils {
     await Clipboard.setData(ClipboardData(text: text));
 
     if (message != null) {
-      LzToast.show(message);
+      Toast.show(message);
     }
   }
 

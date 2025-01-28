@@ -34,4 +34,28 @@ class LzColor {
   Color random(int index) {
     return Colors.primaries[index % Colors.primaries.length];
   }
+
+  /// Converts the provided [color] into a new [Color] object by blending
+  /// it with a white background, effectively removing the transparency.
+  ///
+  /// The resulting color will look like how the original [color] would appear
+  /// on a white background, without any transparency.
+  ///
+  /// - [color]: The color to be converted, with its transparency blended out.
+  ///
+  /// Returns a [Color] that represents the original color blended with white.
+  Color colorToHex(Color color) {
+    double r = color.r * 255;
+    double g = color.g * 255;
+    double b = color.b * 255;
+    double alpha = color.a * 255;
+
+    // Blend with white background (255, 255, 255)
+    int red = ((r * alpha) ~/ 255) + (255 * (255 - alpha) ~/ 255);
+    int green = ((g * alpha) ~/ 255) + (255 * (255 - alpha) ~/ 255);
+    int blue = ((b * alpha) ~/ 255) + (255 * (255 - alpha) ~/ 255);
+
+    // Return the blended color as a fully opaque color
+    return Color.fromARGB(255, red, green, blue);
+  }
 }

@@ -35,10 +35,10 @@ class LzCard extends StatelessWidget {
           b: stacked && !isTopAlign ? 5 : 0, t: stacked && isTopAlign ? 5 : 0),
       child: Stack(
         children: [
-          Touch(
+          InkTouch(
             onTap: onTap,
             padding: padding ?? Ei.all(20),
-            color: color,
+            color: Lz.color.colorToHex(color),
             border: border ?? Br.all(),
             radius: radius,
             child: Column(children: children).start.gap(gap ?? 2),

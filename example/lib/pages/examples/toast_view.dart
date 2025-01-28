@@ -36,7 +36,7 @@ class ToastView extends StatelessWidget {
         children: [
           const ExampleLabel(
             description:
-                'LzToast is a custom implementation of a Toast notification, providing a brief, on-screen message to inform or alert the user.',
+                'Toast is a custom implementation of a Toast notification, providing a brief, on-screen message to inform or alert the user.',
           ),
           Wrap(spacing: 15, runSpacing: 15, children: [
             LzButton(
@@ -44,7 +44,7 @@ class ToastView extends StatelessWidget {
               icon: Hi.informationCircle,
               outlined: true,
               onTap: () {
-                LzToast.success(Faker.words(15),
+                Toast.success(Faker.words(15),
                     icon: Hi.informationSquare,
                     align: Alignment.bottomLeft,
                     maxLength: 25);
@@ -55,8 +55,8 @@ class ToastView extends StatelessWidget {
               icon: Hi.loading03,
               outlined: true,
               onTap: () {
-                LzToast.overlay('Loading...', onCancel: () {
-                  LzToast.show('Progrss is cancelled!');
+                Toast.overlay('Loading...', onCancel: () {
+                  Toast.show('Progrss is cancelled!');
                 });
               },
             ),
@@ -66,7 +66,7 @@ class ToastView extends StatelessWidget {
               outlined: true,
               onTap: () {
                 uploading();
-                LzToast.progress('Uploading...', () => progress);
+                Toast.progress('Uploading...', () => progress);
               },
             )
           ])

@@ -15,7 +15,7 @@ class RefreshtorView extends StatelessWidget {
       ),
       body: Refreshtor(
         onRefresh: () async {
-          LzToast.show('List view has been refreshed!');
+          Toast.show('List view has been refreshed!');
         },
         child: ListView(
           padding: Ei.all(20),

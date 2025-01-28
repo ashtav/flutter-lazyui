@@ -42,7 +42,7 @@ List<FeatureGroup> get features => [
         features: [
           Feature(label: 'LzConfirm', icon: Hi.helpSquare),
           Feature(label: 'Shimmer', icon: Hi.loading03),
-          Feature(label: 'LzToast', icon: Hi.notification03),
+          Feature(label: 'Toast', icon: Hi.notification03),
         ],
       ),
       FeatureGroup(

@@ -198,6 +198,7 @@ class InkTouch extends StatelessWidget {
       color: color,
       border: border,
       radius: radius,
+      type: TouchType.splash,
       child: child,
     );
   }
