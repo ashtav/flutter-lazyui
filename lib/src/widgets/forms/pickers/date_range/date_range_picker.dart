@@ -206,7 +206,11 @@ class CupertinoPickerWidget extends StatelessWidget {
             child: ZoomIn(
               child: Textr(
                 item,
-                style: config.font.copyWith(letterSpacing: letterSpacing),
+                style: config.font.copyWith(
+                    color: state.dates.contains(item) || this.format != 'd'
+                        ? Colors.black87
+                        : Colors.black12,
+                    letterSpacing: letterSpacing),
                 padding: Ei.sym(h: 15),
               ),
             ),

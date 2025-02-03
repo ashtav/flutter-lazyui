@@ -60,6 +60,8 @@ class DatePickerNotifier extends ChangeNotifier {
     });
   }
 
+  List<String> dates = [];
+
   /// Generates a list of strings representing date values based on the provided type.
   List<String> generateDate(String type, [bool useNumericFormat = false]) {
     final now = DateTime.now();
@@ -67,8 +69,9 @@ class DatePickerNotifier extends ChangeNotifier {
 
     switch (type) {
       case 'd':
-        int days = now.daysInMonth;
-        return days.generate((i) => (i + 1).toString().padLeft(2, '0'));
+        dates =
+            now.daysInMonth.generate((i) => (i + 1).toString().padLeft(2, '0'));
+        return 31.generate((i) => (i + 1).toString().padLeft(2, '0'));
 
       case 'm':
       case 'mm':
@@ -143,6 +146,12 @@ class DatePickerNotifier extends ChangeNotifier {
         if (day > maxDate.day) {
           scrollTo('d', maxDate.day - 1);
         }
+      }
+
+      // set dates based on the month
+      if (type != 'd') {
+        dates = daysInMonth.generate((i) => (i + 1).toString().padLeft(2, '0'));
+        notifyListeners();
       }
 
       onChangeForWidget?.call(dateTime);

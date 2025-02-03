@@ -74,6 +74,8 @@ class DateRangePickerNotifier extends ChangeNotifier {
     });
   }
 
+  List<String> dates = [];
+
   /// Generates a list of dates based on the provided type and optional formatting.
   List<String> generateDate(String type, [bool useNumericFormat = false]) {
     final now = DateTime.now();
@@ -81,8 +83,9 @@ class DateRangePickerNotifier extends ChangeNotifier {
 
     switch (type) {
       case 'd':
-        int days = now.daysInMonth;
-        return days.generate((i) => (i + 1).toString().padLeft(2, '0'));
+        dates =
+            now.daysInMonth.generate((i) => (i + 1).toString().padLeft(2, '0'));
+        return 31.generate((i) => (i + 1).toString().padLeft(2, '0'));
 
       case 'm':
       case 'mm':
@@ -137,8 +140,12 @@ class DateRangePickerNotifier extends ChangeNotifier {
         f = ['mm', 'mmm'].contains(f) ? 'm' : f;
 
         if (f == 'd') {
+          dates = initDate[dateIndex]
+              .daysInMonth
+              .generate((i) => (i + 1).toString().padLeft(2, '0'));
           index =
               items.indexOf(initDate[dateIndex].day.toString().padLeft(2, '0'));
+          notifyListeners();
         } else if (f == 'm') {
           index = items
               .indexOf(initDate[dateIndex].month.toString().padLeft(2, '0'));
@@ -178,6 +185,8 @@ class DateRangePickerNotifier extends ChangeNotifier {
       bool isLessThanMinDate = dateTime.isBefore(minDate);
       bool isMoreThanMaxDate = dateTime.isAfter(maxDate);
 
+      // set dates based on the month
+      dates = daysInMonth.generate((i) => (i + 1).toString().padLeft(2, '0'));
       notifyListeners();
 
       if (isDayMoreThanDaysInMonth) {

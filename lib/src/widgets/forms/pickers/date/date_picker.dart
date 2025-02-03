@@ -243,7 +243,11 @@ class CupertinoPickerWidget extends StatelessWidget {
               child: Textr(
                 item,
                 style: config.font.copyWith(
-                    letterSpacing: letterSpacing, overflow: Tof.ellipsis),
+                    color: state.dates.contains(item) || this.format != 'd'
+                        ? Colors.black87
+                        : Colors.black12,
+                    letterSpacing: letterSpacing,
+                    overflow: Tof.ellipsis),
                 padding: Ei.sym(h: 15),
               ),
             ),
