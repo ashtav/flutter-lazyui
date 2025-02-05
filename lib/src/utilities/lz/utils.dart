@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/theme/color.dart';
 
 import '../../models/device.dart';
 
@@ -267,4 +268,19 @@ class Utils {
   /// ```
   static Timer timer(void Function() then, [Duration? duration]) =>
       Timer(duration ?? 100.ms, then);
+
+  /// Sets the system navigation bar and status bar UI based on the given theme mode.
+  ///
+  /// This method updates the system UI overlay style, modifying the navigation bar color,
+  /// icon brightness, and status bar appearance.
+  static void navbarUi({ThemeMode? theme, Color? color}) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      systemNavigationBarIconBrightness: Brightness.dark,
+      statusBarIconBrightness: null,
+      statusBarColor: const Color.fromARGB(0, 184, 174, 174),
+      systemNavigationBarDividerColor: null,
+      systemNavigationBarColor: color ??
+          (theme == ThemeMode.dark ? darkBackgroundColor : backgroundColor),
+    ));
+  }
 }

@@ -18,7 +18,7 @@ class Gfont {
   static final TextStyle blue = config.font.copyWith(color: Colors.blueAccent);
   static final TextStyle orange = config.font.copyWith(color: Colors.orange);
   static final TextStyle green = config.font.copyWith(color: Colors.green);
-  static final TextStyle muted = config.font.copyWith(color: '404040'.hex);
+  static final TextStyle muted = config.font.copyWith(color: '777777'.hex);
   static final TextStyle normal = config.font.copyWith(fontWeight: Fw.normal);
   static TextStyle color(Color color) => config.font.copyWith(color: color);
 
@@ -87,3 +87,14 @@ extension CustomTextStyleExtension on TextStyle {
     return style.copyWith(color: LzTheme.isDarkMode ? color : this.color);
   }
 }
+
+// class ContextFont {
+//   final BuildContext context;
+//   const ContextFont(this.context);
+
+//   TextStyle get muted => config.font.copyWith(color: context.isDarkMode ? '777'.hex : '777'.hex);
+// }
+
+// extension CustomContextColorExtension on BuildContext {
+//   ContextFont get font => ContextFont(this);
+// }

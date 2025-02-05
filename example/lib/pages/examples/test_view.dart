@@ -37,7 +37,18 @@ class TestView extends StatelessWidget {
           ],
         ),
         body: Column(
-          children: [],
-        ).start.gap(25).margin(all: 20));
+          children: [
+            Text(
+              'Headlines',
+              style: Gfont.bold,
+            ),
+            // Text(Faker.words(15), style: context.font.muted), // context.font.muted
+            Text(
+              Faker.words(15),
+              style: Gfont.muted,
+            ),
+            Text(Faker.words(15)),
+          ],
+        ).start.gap(15).margin(all: 20));
   }
 }
