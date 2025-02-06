@@ -231,9 +231,8 @@ extension CustomNullableStringExtension on String? {
       }
 
       // check if string contains
-      List<String> dates = this!.trim().split(' ');
-
-      String date = dates[0];
+      List<String> dates = toString().trim().split(' ');
+      String date = detectAndFormatDate(dates[0]);
 
       if (dates.length > 1) {
         date = '${detectAndFormatDate(dates[0])} ${dates[1]}';
