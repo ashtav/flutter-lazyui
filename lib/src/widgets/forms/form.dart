@@ -215,11 +215,13 @@ class FormManager {
   /// final forms = LzForm.make(['name', 'email', 'password']]);
   ///
   /// // use in widget
-  /// LzForm.input(label: 'Name', hint: 'Enter your name', model: forms['name']);
+  /// LzForm.input(label: 'Name', hint: 'Enter your name', model: forms.key('name'));
   ///
   /// // validate
   /// final form = LzForm.validate(forms, required: ['*']);
-  /// if(form.ok) // do something...
+  /// if(form.ok) {
+  ///    // do something...
+  /// }
   ///
   /// // validate params
   /// required: ['*'] // required all
@@ -230,6 +232,13 @@ class FormManager {
   /// max: ['phone:15', 'address:100']
   /// email: ['email']
   /// match: ['password:confirm_password']
+  ///
+  /// // make custom messages
+  /// message: {
+  ///   'name': 'Your name is required!',
+  ///   'phone:min': 'Provide more than 5 characters'
+  ///   'confirm_password:match': 'Your password does not match!'
+  /// }
   ///
   /// ```
   FormValidation validate(
@@ -348,7 +357,7 @@ class FormManager {
             'key': key,
             'type': 'match',
             'value': notifiers[k1],
-            'message': message?['$key:match'] ??
+            'message': message?['$k2:match'] ??
                 'The field $k2 does not match with the field $k1.'
           };
 
@@ -404,6 +413,63 @@ class FormManager {
     }
 
     return FormValidation(true, value: models.value);
+  }
+
+  /// Generates a form widget with configurable fields based on the given parameters.
+  ///
+  /// This method allows you to dynamically create form fields with labels, hints,
+  /// suffix widgets, and a custom gap between them.
+  ///
+  /// - If [indices] is provided, only the specified index range of models will be used.
+  ///   - Example: `indices: [1, 3]` selects fields at index 1 to 3.
+  ///   - If the index exceeds the available keys, it will be clamped to the maximum index.
+  ///
+  /// - If `labels`, `hints`, or `suffixs` are shorter than the number of fields, missing values will be set to `null`.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// forms.generate(
+  ///   indices: [1, 2],
+  ///   labels: ['Old Password *', 'New Password *', 'Confirm Password *'],
+  ///   hints: ['Type your old password', 'Type your new password', 'Type password confirmation'],
+  ///   suffixs: 3.generate((i) => Obscure()),
+  /// )
+  /// ```
+  ///
+  /// Parameters:
+  /// - [indices] (optional): A list of integers specifying the range of fields to include.
+  /// - [labels]: A list of labels for the form fields.
+  /// - [hints]: A list of hint texts for the form fields.
+  /// - [suffixs]: A list of suffix widgets (e.g., icons, buttons).
+  /// - [gap]: The spacing between form fields (default is 25).
+  ///
+  /// Returns a `Column` containing the generated form fields.
+  Widget generate({
+    List<int>? indices, // Formerly 'from'
+    List<String> labels = const [],
+    List<String> hints = const [],
+    List<Widget> suffixs = const [],
+    double gap = 25,
+  }) {
+    List<String> keys = models.keys.toList();
+
+    if (indices != null && indices.isNotEmpty) {
+      int maxIndex = keys.length - 1;
+      int start = indices.first.clamp(0, maxIndex);
+      int end = indices.last.clamp(0, maxIndex);
+      keys = keys.sublist(start, end + 1);
+    }
+
+    return Column(
+      children: keys.generate((key, i) {
+        return LzForm.input(
+          label: labels.length > i ? labels[i] : null,
+          hint: hints.length > i ? hints[i] : null,
+          suffix: suffixs.length > i ? suffixs[i] : null,
+          model: models[key],
+        );
+      }),
+    ).start.gap(gap);
   }
 }
 

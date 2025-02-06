@@ -84,7 +84,8 @@ class _ToastWidget extends StatelessWidget {
                         ? message
                         : '${message.safeSubstring(0, state.maxLength)}...',
                     style: Gfont.fs14.white,
-                    icon: state.icon),
+                    icon: state.icon,
+                    textAlign: state.icon == null ? Ta.center : Ta.left),
               ),
             )),
       );
@@ -222,9 +223,9 @@ class Toast {
   /// Toast.show('Hello, World!');
   /// ```
   static void show(String? message,
-      {Alignment? align, IconData? icon, int? maxLength}) {
+      {Alignment? align, IconData? icon, int? maxLength, Duration? duration}) {
     _notifier.show(message.toString(),
-        duration: _config.duration,
+        duration: duration ?? _config.duration,
         align: align,
         color: null,
         icon: icon,
@@ -232,9 +233,9 @@ class Toast {
   }
 
   static void success(String? message,
-      {Alignment? align, IconData? icon, int? maxLength}) {
+      {Alignment? align, IconData? icon, int? maxLength, Duration? duration}) {
     _notifier.show(message.toString(),
-        duration: _config.duration,
+        duration: duration ?? _config.duration,
         align: align,
         color: Colors.green,
         icon: icon,
@@ -242,9 +243,9 @@ class Toast {
   }
 
   static void warning(String? message,
-      {Alignment? align, IconData? icon, int? maxLength}) {
+      {Alignment? align, IconData? icon, int? maxLength, Duration? duration}) {
     _notifier.show(message.toString(),
-        duration: _config.duration,
+        duration: duration ?? _config.duration,
         align: align,
         color: Colors.orange,
         icon: icon,
@@ -252,7 +253,7 @@ class Toast {
   }
 
   static void error(String? message,
-      {Alignment? align, IconData? icon, int? maxLength}) {
+      {Alignment? align, IconData? icon, int? maxLength, Duration? duration}) {
     _notifier.show(message.toString(),
         duration: _config.duration,
         align: align,

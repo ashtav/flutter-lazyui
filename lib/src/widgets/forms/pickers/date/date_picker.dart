@@ -59,7 +59,7 @@ class DatePickerWidget extends StatelessWidget {
         child: Stack(
           children: [
             FutureBuilder(
-                future: Future.delayed(240.ms),
+                future: Future.delayed(0.ms),
                 builder: (context, snap) {
                   if (snap.connectionState == ConnectionState.waiting) {
                     return SizedBox(
@@ -244,8 +244,8 @@ class CupertinoPickerWidget extends StatelessWidget {
                 item,
                 style: config.font.copyWith(
                     color: state.dates.contains(item) || this.format != 'd'
-                        ? Colors.black87
-                        : Colors.black12,
+                        ? Colors.black87.themeify
+                        : Colors.black12.themeify,
                     letterSpacing: letterSpacing,
                     overflow: Tof.ellipsis),
                 padding: Ei.sym(h: 15),

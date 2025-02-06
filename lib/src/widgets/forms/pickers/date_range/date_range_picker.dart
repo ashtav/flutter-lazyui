@@ -208,8 +208,8 @@ class CupertinoPickerWidget extends StatelessWidget {
                 item,
                 style: config.font.copyWith(
                     color: state.dates.contains(item) || this.format != 'd'
-                        ? Colors.black87
-                        : Colors.black12,
+                        ? Colors.black87.themeify
+                        : Colors.black12.themeify,
                     letterSpacing: letterSpacing),
                 padding: Ei.sym(h: 15),
               ),

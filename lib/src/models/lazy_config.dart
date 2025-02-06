@@ -37,6 +37,7 @@ class LazyConfig {
       ThemeMode? theme,
       Color? backgroundColor,
       Color? surfaceColor,
+      Color? primaryColor,
       IconType? icon,
       String? locale}) {
     return LazyConfig(
@@ -47,6 +48,7 @@ class LazyConfig {
       theme: theme ?? this.theme,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       surfaceColor: surfaceColor ?? this.surfaceColor,
+      primaryColor: primaryColor ?? this.primaryColor,
       icon: icon ?? this.icon,
       locale: locale ?? this.locale,
     );

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:lazyui/lazyui.dart';
 
 import 'src/config/config.dart';
-import 'src/icons/icons.dart';
 import 'src/models/lazy_config.dart';
 import 'src/utilities/lz/color.dart';
 import 'src/utilities/lz/file.dart';

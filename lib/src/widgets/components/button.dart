@@ -29,7 +29,7 @@ class LzButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool iconOnly = text == null && icon != null;
     Color backgroundColor =
-        color ?? (context.isDarkMode ? darkAppbarColor : Colors.white);
+        color ?? (context.isDarkMode ? darkAppbarColor : config.primaryColor);
 
     Color textColor = backgroundColor.isDark ? Colors.white : Colors.black;
     final textStyle =

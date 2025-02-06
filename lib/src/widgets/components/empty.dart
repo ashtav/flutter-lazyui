@@ -1,5 +1,7 @@
 part of '../widget.dart';
 
+String _defaultMessage = 'No data available. Please try again later.';
+
 /// A widget displayed when there is no data.
 class Empty extends StatelessWidget {
   /// The optional icon to be displayed.
@@ -33,8 +35,7 @@ class Empty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String message =
-        this.message ?? 'No data available. Please try again later.';
+    String message = this.message ?? _defaultMessage;
     String onTapMessage = this.onTapMessage ?? 'Tap to refresh';
 
     return Container(
@@ -66,5 +67,9 @@ class Empty extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  static void setDefaultMessage(String text) {
+    _defaultMessage = text;
   }
 }
