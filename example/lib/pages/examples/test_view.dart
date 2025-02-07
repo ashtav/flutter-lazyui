@@ -16,7 +16,7 @@ class Notifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  final forms = LzForm.make(['old_pass', 'new_pass', 'confirm_pass']);
+  final forms = LzForm.make(['old_pass', 'new_pass', 'confirm_pass', 'name']);
 }
 
 class TestView extends StatelessWidget {
@@ -42,7 +42,7 @@ class TestView extends StatelessWidget {
         ),
         body: LzListView(
           autoCache: true,
-          gap: 35,
+          gap: 25,
           children: [
             // LzForm.input(
             //   label: 'Old Password *',
@@ -65,20 +65,25 @@ class TestView extends StatelessWidget {
             //   suffix: Obscure()
             // ),
 
-            forms.generate(labels: [
-              'Old Password *',
-              'New Password *',
-              'Confirm Password *'
-            ], hints: [
-              'Type your old password',
-              'Type your new password',
-              'Type password confirmation'
-            ], suffixs: 3.generate((i) => Obscure()))
+            forms.generate(
+                labels: ['Old Password *', 'New Password *', 'Confirm Password *'],
+                hints: ['Type your old password', 'Type your new password', 'Type password confirmation'],
+                suffixs: 3.generate((i) => Obscure()),
+                indices: [0, 2]),
+
+            LzForm.input(
+                label: 'Name',
+                hint: 'Input your full name',
+                model: forms.key('name'),
+                onChange: (value) {
+                  logg('changed: $value');
+                })
           ],
         ),
         bottomNavigationBar: LzButton(
           text: 'Submit',
           onTap: () {
+            forms.set('name', Faker.words());
             // final form = forms.validate(required: [
             //   '*'
             // ], match: [

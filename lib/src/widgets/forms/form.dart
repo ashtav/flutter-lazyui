@@ -86,7 +86,7 @@ class FormManager {
     return models[key] ?? FormModel(FormNotifier(), GlobalKey());
   }
 
-  dynamic get(String key) {
+  String? get(String key) {
     if (!models.containsKey(key)) {
       return null;
     }
