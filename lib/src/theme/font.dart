@@ -53,6 +53,7 @@ extension CustomTextStyleExtension on TextStyle {
   TextStyle get black => copyWith(color: Lz.color.hex('1A1A1A'));
   TextStyle get white => copyWith(color: Colors.white);
   TextStyle get red => copyWith(color: Colors.redAccent);
+  TextStyle get blue => copyWith(color: Colors.blueAccent);
   TextStyle get orange => copyWith(color: Colors.orange);
   TextStyle get green => copyWith(color: Colors.green);
   TextStyle get muted => copyWith(color: '707070'.hex);

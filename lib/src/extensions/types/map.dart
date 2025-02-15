@@ -127,10 +127,19 @@ extension MapStringExtension on Map<String, dynamic> {
 
   /// ``` dart
   /// Map<String, dynamic> data = {'id': 1, 'name': 'Apple', 'price': 2500}.get(['name']); // {'name': 'Apple'}
+  /// {}.get(['name']); // get only name
+  /// {}.get(['*', 'name']); // get all except the name
   /// ```
 
   Map<String, dynamic> get([List<String> keys = const []]) {
-    return this..removeWhere((key, value) => !keys.contains(key));
+    if (keys.contains('*')) {
+      return Map.from(this)
+        ..removeWhere((key, _) => keys.contains(key) && key != '*');
+    }
+    return {
+      for (var key in keys)
+        if (containsKey(key)) key: this[key]
+    };
   }
 
   /// ``` dart

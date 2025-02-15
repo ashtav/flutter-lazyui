@@ -8,6 +8,8 @@ import 'src/models/lazy_config.dart';
 import 'src/utilities/lz/color.dart';
 import 'src/utilities/lz/file.dart';
 
+export 'package:google_fonts/google_fonts.dart';
+
 export 'src/extensions/extension.dart';
 export 'src/icons/icons.dart';
 export 'src/models/icon_style.dart';

@@ -90,6 +90,9 @@ class LzTextField extends StatelessWidget {
   /// The border of the input field.
   final InputBorder? border;
 
+  /// The cursor color of the input field
+  final Color? cursorColor;
+
   /// Create widget
   const LzTextField(
       {super.key,
@@ -118,7 +121,8 @@ class LzTextField extends StatelessWidget {
       this.suffixIcon,
       this.suffixIconColor,
       this.backgroundColor,
-      this.border});
+      this.border,
+      this.cursorColor});
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +149,7 @@ class LzTextField extends StatelessWidget {
           ...formatters
         ],
         selectionControls: selectionControls,
+        cursorColor: cursorColor,
         decoration: InputDecoration(
           filled: true,
           fillColor: backgroundColor ?? Colors.transparent,

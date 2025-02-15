@@ -66,8 +66,16 @@ class TestView extends StatelessWidget {
             // ),
 
             forms.generate(
-                labels: ['Old Password *', 'New Password *', 'Confirm Password *'],
-                hints: ['Type your old password', 'Type your new password', 'Type password confirmation'],
+                labels: [
+                  'Old Password *',
+                  'New Password *',
+                  'Confirm Password *'
+                ],
+                hints: [
+                  'Type your old password',
+                  'Type your new password',
+                  'Type password confirmation'
+                ],
                 suffixs: 3.generate((i) => Obscure()),
                 indices: [0, 2]),
 
