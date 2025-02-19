@@ -111,8 +111,7 @@ class FormManager {
         }
 
         if (type == 'checkbox') {
-          List<String> options =
-              value.toString().replaceAll(', ', ',').split(',');
+          List<String> options = value.toString().replaceAll(', ', ',').split(',');
           notifier.setSelectedBox(options);
         }
 
@@ -172,10 +171,7 @@ class FormManager {
 
   Map<String, dynamic> get value {
     final keys = models.keys.toList();
-    return Map.fromIterables(
-        keys,
-        List.generate(
-            keys.length, (i) => models[keys[i]]!.notifier.controller.text));
+    return Map.fromIterables(keys, List.generate(keys.length, (i) => models[keys[i]]!.notifier.controller.text));
   }
 
   dynamic extra(String key) {
@@ -188,7 +184,9 @@ class FormManager {
       List<String> keys = data.keys.toList();
 
       for (String key in keys) {
-        set(key, data[key] ?? '');
+        if (models.keys.contains(key)) {
+          set(key, data[key] ?? '');
+        }
       }
     });
   }
@@ -249,8 +247,7 @@ class FormManager {
       List<String> match = const [],
       Map<String, String>? message,
       FormFeedback feedback = FormFeedback.text}) {
-    final controllers = Map.fromIterables(
-        models.keys, models.values.map((e) => e.notifier.controller));
+    final controllers = Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
     final notifiers = Map.fromIterables(models.keys, models.values.map((e) {
       e.notifier.rules = [];
       e.notifier.feedback = feedback;
@@ -265,8 +262,7 @@ class FormManager {
     if (isRequiredAll) {
       required = controllers.keys.toList();
     } else if (isRequiredAllExcept) {
-      required = controllers.keys.toList()
-        ..removeWhere((e) => required.contains(e));
+      required = controllers.keys.toList()..removeWhere((e) => required.contains(e));
     }
 
     bool exist(String key) => controllers[key] != null;
@@ -300,8 +296,7 @@ class FormManager {
             'key': key,
             'type': 'min',
             'value': min,
-            'message': message?['$key:min'] ??
-                'The field $key must be at least ${split[1]} characters'
+            'message': message?['$key:min'] ?? 'The field $key must be at least ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -323,8 +318,7 @@ class FormManager {
             'key': key,
             'type': 'max',
             'value': max,
-            'message': message?['$key:max'] ??
-                'The field $key must be at most ${split[1]} characters'
+            'message': message?['$key:max'] ?? 'The field $key must be at most ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -338,8 +332,7 @@ class FormManager {
         final error = {
           'key': key,
           'type': 'email',
-          'message':
-              message?['$key:email'] ?? 'The field $key is not a valid email'
+          'message': message?['$key:email'] ?? 'The field $key is not a valid email'
         };
         notifiers[key]!.rules.add(error);
       }
@@ -357,8 +350,7 @@ class FormManager {
             'key': key,
             'type': 'match',
             'value': notifiers[k1],
-            'message': message?['$k2:match'] ??
-                'The field $k2 does not match with the field $k1.'
+            'message': message?['$k2:match'] ?? 'The field $k2 does not match with the field $k1.'
           };
 
           notifiers[k2]!.rules.add(error);
@@ -392,8 +384,7 @@ class FormManager {
 
     if (errors.isNotEmpty) {
       final map = errors.first;
-      final globalKeys =
-          Map.fromIterables(models.keys, models.values.map((e) => e.key));
+      final globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
 
       String key = map['key'];
       String message = map['message'];
@@ -401,8 +392,7 @@ class FormManager {
       // scroll to input position
       GlobalKey? gkey = globalKeys[key];
       if (gkey != null && gkey.currentContext != null) {
-        Scrollable.ensureVisible(gkey.currentContext!,
-            duration: const Duration(milliseconds: 300), alignment: .09);
+        Scrollable.ensureVisible(gkey.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
       }
 
       if (feedback == FormFeedback.toast) {
@@ -484,10 +474,8 @@ class LzForm {
       notifiers[e]?.key = e;
     }
 
-    final mdoels = Map.fromIterables(
-        keys,
-        List.generate(
-            keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())));
+    final mdoels =
+        Map.fromIterables(keys, List.generate(keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())));
     return FormManager(mdoels);
   }
 
@@ -540,7 +528,8 @@ class LzForm {
     List<TextInputFormatter> formatters = const [],
 
     /// The maximum number of characters allowed in the input field.
-    int maxLength = 255,
+    /// by default is 255
+    int? maxLength,
 
     /// The maximum number of lines allowed in the input field.
     int? maxLines,
@@ -894,10 +883,22 @@ class FormControl {
     return this;
   }
 
+  /// Example usage:
+  /// ```dart
+  /// List<Map<String, Object>> cities = [
+  ///   {'name': 'New York', 'id': 1},
+  ///   {'name': 'Los Angeles', 'id': 2},
+  ///   {'name': 'Chicago', 'id': 3},
+  /// ];
+  ///
+  /// forms.set('city').options(cities.labelValue('name', 'id'));
+  /// // The 'name' property will be assigned to the label,
+  /// // and the 'id' property will be assigned to the value.
+  /// ```
   FormControl options(List<Map<String, dynamic>> data) {
-    notifier.options = data.extract<String>('label');
-    notifier.values = data.extract<dynamic>('value');
-    notifier.notify(); // Notify listeners
+    notifier.options = data.extract<String>('label'); // Extract 'label' field values
+    notifier.values = data.extract<dynamic>('value'); // Extract 'value' field values
+    notifier.notify(); // Notify listeners about the changes
 
     return this;
   }
