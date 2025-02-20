@@ -178,7 +178,7 @@ class FormView extends StatelessWidget {
                   final data = cities
                       .where((e) => e['province_id'] == forms.extra('province'))
                       .toList();
-                      
+
                   forms.set('city').options(data.labelValue('name', 'id'));
                 }),
 

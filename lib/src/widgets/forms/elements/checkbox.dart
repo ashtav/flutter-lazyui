@@ -40,8 +40,9 @@ class _CheckboxState extends State<Checkbox> {
   void onInit() {
     if (widget.model != null) {
       notifier = widget.model!.notifier;
-      notifier.type = 'checkbox';
     }
+
+    notifier.type = 'checkbox';
   }
 
   @override
@@ -52,13 +53,22 @@ class _CheckboxState extends State<Checkbox> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    if (widget.model == null) {
+      notifier.dispose();
+    }
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant Checkbox old) {
     if (widget.model != old.model) {
+      if (old.model != null && widget.model == null) {
+        notifier =
+            FormNotifier(); // reset with new instance if model became null
+      } else if (old.model == null && widget.model != null) {
+        notifier.dispose(); // dispose the old one
+        notifier = widget.model!.notifier;
+      }
       onInit();
     }
 

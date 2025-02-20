@@ -52,9 +52,9 @@ class _RadioState extends State<Radio> {
   void onInit() {
     if (widget.model != null) {
       notifier = widget.model!.notifier;
-      notifier.type = 'radio';
     }
 
+    notifier.type = 'radio';
     initValue();
   }
 
@@ -73,7 +73,9 @@ class _RadioState extends State<Radio> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    if (widget.model == null) {
+      notifier.dispose();
+    }
     super.dispose();
   }
 

@@ -284,3 +284,160 @@ class Utils {
     ));
   }
 }
+
+class Date {
+  /// Calculates the number of full days between two dates.
+  ///
+  /// If either `start` or `end` is `null`, the function returns `0`.
+  /// The difference is calculated based on full days, ignoring hours, minutes, and seconds.
+  ///
+  /// ### Example:
+  ///
+  /// ```dart
+  /// DateTime startDate = DateTime(2024, 2, 1);
+  /// DateTime endDate = DateTime(2024, 2, 10);
+  /// int days = daysBetween(startDate, endDate);
+  /// print(days); // Output: 9
+  /// ```
+  ///
+  /// - [start]: The starting date.
+  /// - [end]: The ending date.
+  /// - Returns the number of full days between `start` and `end`.
+  static int daysBetween(DateTime? start, DateTime? end) {
+    if (start == null || end == null) {
+      return 0;
+    }
+
+    Duration difference = end.difference(start);
+    int daysLeft = difference.inDays;
+
+    return daysLeft;
+  }
+
+  /// Calculates the exact age from a given birth date to the current date,
+  /// including years, months, days, hours, minutes, and seconds.
+  ///
+  /// The method accounts for negative values and adjusts the components accordingly.
+  ///
+  /// - [birthDate]: The `DateTime` representing the birth date.
+  ///
+  /// Returns an `Age` object containing the detailed breakdown of age.
+  static Age calculateAge(DateTime birthDate) {
+    DateTime currentDate = DateTime.now();
+
+    int year = currentDate.year - birthDate.year;
+    int month = currentDate.month - birthDate.month;
+    int day = currentDate.day - birthDate.day;
+    int hour = currentDate.hour - birthDate.hour;
+    int minute = currentDate.minute - birthDate.minute;
+    int second = currentDate.second - birthDate.second;
+
+    // Adjust for negative values
+    if (second < 0) {
+      second += 60;
+      minute--;
+    }
+    if (minute < 0) {
+      minute += 60;
+      hour--;
+    }
+    if (hour < 0) {
+      hour += 24;
+      day--;
+    }
+    if (day < 0) {
+      final previousMonth = DateTime(currentDate.year, currentDate.month, 0);
+      day += previousMonth.day;
+      month--;
+    }
+    if (month < 0) {
+      month += 12;
+      year--;
+    }
+
+    return Age(
+      year: year,
+      month: month,
+      day: day,
+      hour: hour,
+      minute: minute,
+      second: second,
+    );
+  }
+
+  /// Returns a human-readable string representing the time difference between two dates.
+  ///
+  /// - [fromDate]: The earlier date.
+  /// - [toDate]: The later date.
+  ///
+  /// The output will be formatted as:
+  /// - "Today" if the dates are the same.
+  /// - "Yesterday" if the difference is one day.
+  /// - "{x} days ago" if the difference is less than a week.
+  /// - "{x} weeks ago" if the difference is less than a month.
+  /// - "{x} months ago" if the difference is less than a year.
+  /// - "{x} years ago" or "{x} years and {y} months ago" if more than a year.
+  ///
+  /// Returns a formatted `String` describing how long ago `fromDate` was relative to `toDate`.
+  static String timeAgo(DateTime fromDate, DateTime toDate) {
+    // Extract only the date (ignoring time)
+    DateTime fromDateOnly =
+        DateTime(fromDate.year, fromDate.month, fromDate.day);
+    DateTime toDateOnly = DateTime(toDate.year, toDate.month, toDate.day);
+
+    int daysDifference = toDateOnly.difference(fromDateOnly).inDays;
+
+    if (daysDifference == 0) {
+      return "Today";
+    } else if (daysDifference == 1) {
+      return "Yesterday";
+    } else if (daysDifference < 7) {
+      return "$daysDifference days ago";
+    } else if (daysDifference < 30) {
+      int weeks = (daysDifference / 7).floor();
+      return "$weeks weeks ago";
+    } else if (daysDifference < 365) {
+      int months = (daysDifference / 30).floor();
+      return "$months months ago";
+    } else {
+      int years = (daysDifference / 365).floor();
+      int remainingMonths = ((daysDifference % 365) / 30).floor();
+      if (remainingMonths > 0) {
+        return "$years years and $remainingMonths months ago";
+      } else {
+        return "$years years ago";
+      }
+    }
+  }
+
+  /// Checks if the given year is a leap year.
+  ///
+  /// - [year]: The year to check.
+  /// - Returns `true` if the year is a leap year, otherwise `false`.
+  static bool isLeapYear(int year) {
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+  }
+}
+
+class Age {
+  final int year;
+  final int month;
+  final int day;
+  final int hour;
+  final int minute;
+  final int second;
+
+  Age({
+    this.year = 0,
+    this.month = 0,
+    this.day = 0,
+    this.hour = 0,
+    this.minute = 0,
+    this.second = 0,
+  });
+
+  @override
+  String toString() {
+    return '$year years, $month months, $day days, $hour hours, $minute minutes, $second seconds';
+  }
+}

@@ -98,7 +98,6 @@ class _InputState extends State<Input> {
   void setModel() {
     if (widget.model != null) {
       notifier = widget.model!.notifier;
-      notifier.type = widget.onTap != null ? 'input-2' : 'input';
 
       // listen to text editing controller
       final controller = widget.model!.notifier.controller;
@@ -106,6 +105,8 @@ class _InputState extends State<Input> {
         widget.onChange?.call(controller.text);
       });
     }
+
+    notifier.type = widget.onTap != null ? 'input-2' : 'input';
   }
 
   void onInit() {
@@ -142,28 +143,38 @@ class _InputState extends State<Input> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    if (widget.model == null) {
+      notifier.dispose();
+    }
+
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant Input old) {
-    if (widget.enabled != old.enabled ||
-        widget.model != old.model ||
-        widget.suffix != old.suffix ||
-        widget.maxLength != old.maxLength) {
+    if (widget.model != old.model) {
+      // Jika sebelumnya pakai model dan sekarang tidak, buat instance baru
+      if (old.model != null && widget.model == null) {
+        notifier = FormNotifier(); // Reset notifier ke instance baru
+      }
+      // Jika sebelumnya tidak pakai model dan sekarang pakai, ambil dari model
+      else if (old.model == null && widget.model != null) {
+        notifier.dispose(); // Dispose instance lama
+        notifier = widget.model!.notifier;
+      }
+
       setModel();
+    }
 
-      notifier.enabled = widget.enabled;
-      notifier.obscure = widget.obscure;
+    notifier.enabled = widget.enabled;
+    notifier.obscure = widget.obscure;
 
-      if (widget.maxLength != null) {
-        notifier.maxLength = widget.maxLength ?? 255;
-      }
+    if (widget.maxLength != null) {
+      notifier.maxLength = widget.maxLength ?? 255;
+    }
 
-      if (widget.suffix is Obscure) {
-        notifier.obscure = true;
-      }
+    if (widget.suffix is Obscure) {
+      notifier.obscure = true;
     }
 
     super.didUpdateWidget(old);
@@ -196,16 +207,25 @@ class _InputState extends State<Input> {
 
         // textfield
         notifier.watch((state) {
-          Color background = (context.isDarkMode ? darkAppbarColor : backgroundColor).darken(state.enabled ? 0 : .05);
+          Color background =
+              (context.isDarkMode ? darkAppbarColor : backgroundColor)
+                  .darken(state.enabled ? 0 : .05);
           Widget? suffixIcon = hasOnTap
-              ? (widget.suffixIcon == null ? Icon(ConfigIcon.get(IconSet.chevron)) : Icon(widget.suffixIcon))
+              ? (widget.suffixIcon == null
+                  ? Icon(ConfigIcon.get(IconSet.chevron))
+                  : Icon(widget.suffixIcon))
               : null;
 
-          Widget? prefixIcon = widget.prefix == null && widget.prefixIcon == null
-              ? null
-              : widget.prefix != null
-                  ? Center(widthFactor: 1, child: Container(padding: Ei.only(l: 16, r: 14, b: 2), child: widget.prefix))
-                  : Icon(widget.prefixIcon);
+          Widget? prefixIcon =
+              widget.prefix == null && widget.prefixIcon == null
+                  ? null
+                  : widget.prefix != null
+                      ? Center(
+                          widthFactor: 1,
+                          child: Container(
+                              padding: Ei.only(l: 16, r: 14, b: 2),
+                              child: widget.prefix))
+                      : Icon(widget.prefixIcon);
 
           // Defines a `suffix` widget, which can optionally be of type `Obsecure`.
           // If `suffix` is an `Obsecure`, it wraps the widget in a `Touch` for interactivity.
@@ -225,9 +245,12 @@ class _InputState extends State<Input> {
           }
 
           double radiusValue = isGrouped ? 0 : config.borderRadius;
-          final outlineBorder = FormUtils.getBorder(context, state.invalid, isGrouped, state.enabled);
+          final outlineBorder = FormUtils.getBorder(
+              context, state.invalid, isGrouped, state.enabled);
 
-          TextStyle? textStyle = hasOnTap && state.enabled ? config.font.copyWith(color: '444'.hex.themeify) : null;
+          TextStyle? textStyle = hasOnTap && state.enabled
+              ? config.font.copyWith(color: '444'.hex.themeify)
+              : null;
           InputBorder? border = hasOnTap && state.enabled && !isGrouped
               ? outlineBorder
               : state.invalid && !isGrouped
@@ -237,7 +260,8 @@ class _InputState extends State<Input> {
                       : null;
 
           List<TextInputFormatter> formatters = [
-            LengthLimitingTextInputFormatter(state.maxLength < 1 ? 1 : state.maxLength),
+            LengthLimitingTextInputFormatter(
+                state.maxLength < 1 ? 1 : state.maxLength),
             ...widget.formatters
           ];
 
@@ -269,7 +293,9 @@ class _InputState extends State<Input> {
 
               // error message
               if (!isGrouped)
-                AccordionAnimated(show: state.invalid, child: Text(state.invalidMessage, style: Gfont.fs14.red))
+                AccordionAnimated(
+                    show: state.invalid,
+                    child: Text(state.invalidMessage, style: Gfont.fs14.red))
             ],
           ).start;
         })
@@ -279,7 +305,8 @@ class _InputState extends State<Input> {
 }
 
 class FormUtils {
-  static OutlineInputBorder getBorder(BuildContext context, bool invalid, bool isGrouped, bool enabled) {
+  static OutlineInputBorder getBorder(
+      BuildContext context, bool invalid, bool isGrouped, bool enabled) {
     Color borderColor = invalid
         ? Colors.red
         : context.isDarkMode
@@ -291,6 +318,7 @@ class FormUtils {
     double radiusValue = isGrouped ? 0 : config.borderRadius;
 
     return OutlineInputBorder(
-        borderRadius: Br.radius(radiusValue), borderSide: BorderSide(color: borderColor, width: .5));
+        borderRadius: Br.radius(radiusValue),
+        borderSide: BorderSide(color: borderColor, width: .5));
   }
 }

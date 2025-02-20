@@ -61,6 +61,13 @@ extension CustomDateTimeExtension on DateTime {
     return DateTime(year, month + 1, 0).day;
   }
 
+  /// ```dart
+  /// DateTime.now().firstAndLast; // get first and last date of month
+  /// ```
+  List<DateTime> get firstAndLast {
+    return [DateTime(year, month, 1), DateTime(year, month, daysInMonth)];
+  }
+
   /// Returns the date range from the start to the end of the given month, formatted.
   ///
   /// ```dart

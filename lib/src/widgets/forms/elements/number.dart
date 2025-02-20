@@ -92,10 +92,10 @@ class _NumberState extends State<Number> {
     // if model is not null set notifier from model
     if (widget.model != null) {
       notifier = widget.model!.notifier;
-      notifier.type = 'number';
       notifier.controller.text = (widget.initValue ?? widget.min).toString();
     }
 
+    notifier.type = 'number';
     notifier.enabled = widget.enabled;
   }
 
@@ -163,18 +163,26 @@ class _NumberState extends State<Number> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    if (widget.model == null) {
+      notifier.dispose();
+    }
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant Number old) {
-    if (widget.enabled != old.enabled ||
-        widget.model != old.model ||
-        widget.initValue != old.initValue) {
+    if (widget.model != old.model) {
+      if (old.model != null && widget.model == null) {
+        notifier =
+            FormNotifier(); // reset with new instance if model became null
+      } else if (old.model == null && widget.model != null) {
+        notifier.dispose(); // dispose the old one
+        notifier = widget.model!.notifier;
+      }
       onInit();
     }
 
+    notifier.enabled = widget.enabled;
     super.didUpdateWidget(old);
   }
 

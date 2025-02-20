@@ -30,6 +30,7 @@ part 'animations/switcher.dart';
 part 'animations/typing.dart';
 part 'animations/zoom.dart';
 part 'components/accordion.dart';
+part 'components/adaptive_appbar.dart';
 part 'components/avatar.dart';
 part 'components/badge.dart';
 part 'components/button.dart';

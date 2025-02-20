@@ -70,9 +70,9 @@ class _SliderState extends State<Slider> {
     if (widget.model != null) {
       // ignore: invalid_use_of_protected_member
       notifier = widget.model!.notifier;
-      notifier.type = 'slider';
     }
 
+    notifier.type = 'slider';
     notifier.controller.text = (widget.initValue ?? 0).toString();
     notifier.enabled = widget.enabled;
   }
@@ -92,7 +92,10 @@ class _SliderState extends State<Slider> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    if (widget.model == null) {
+      notifier.dispose();
+    }
+
     super.dispose();
   }
 

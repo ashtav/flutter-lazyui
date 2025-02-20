@@ -78,9 +78,9 @@ class _SelectState extends State<Select> {
     // if model is not null set notifier from model
     if (widget.model != null) {
       notifier = widget.model!.notifier;
-      notifier.type = 'select';
     }
 
+    notifier.type = 'select';
     notifier.options = widget.options;
     notifier.values = widget.values;
 
@@ -106,16 +106,18 @@ class _SelectState extends State<Select> {
 
   @override
   void dispose() {
-    notifier.dispose();
+    if (widget.model == null) {
+      notifier.dispose();
+    }
     super.dispose();
   }
 
   @override
   void didUpdateWidget(covariant Select old) {
-    if (widget.options != old.options ||
+    if (widget.model != old.model ||
+        widget.options != old.options ||
         widget.values != old.values ||
         widget.enabled != old.enabled ||
-        widget.model != old.model ||
         widget.suffix != old.suffix) {
       onInit();
     }

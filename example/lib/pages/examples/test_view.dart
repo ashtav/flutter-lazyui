@@ -16,14 +16,14 @@ class Notifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  int length = 0;
+  double opacity = 1;
 
-  void setValue(int value) {
-    length = value;
+  void setValue(double value) {
+    opacity = value;
     notifyListeners();
   }
 
-  final forms = LzForm.make(['bank', 'bank_account']);
+  final forms = LzForm.make(['name', 'email', 'gender']);
 }
 
 class TestView extends StatelessWidget {
@@ -34,19 +34,6 @@ class TestView extends StatelessWidget {
     final notifier = Notifier();
     final forms = notifier.forms;
 
-    final banks = [
-      {"bank_name": "Bank Central Asia (BCA)", "max_length": 10},
-      {"bank_name": "Bank Rakyat Indonesia (BRI)", "max_length": 15},
-      {"bank_name": "Bank Negara Indonesia (BNI)", "max_length": 16},
-      {"bank_name": "Bank Mandiri", "max_length": 13},
-      {"bank_name": "Bank Tabungan Negara (BTN)", "max_length": 16},
-      {"bank_name": "CIMB Niaga", "max_length": 13},
-      {"bank_name": "Bank Danamon", "max_length": 10},
-      {"bank_name": "Bank Syariah Indonesia (BSI)", "max_length": 10},
-      {"bank_name": "Bank Permata", "max_length": 16},
-      {"bank_name": "Bank Mega", "max_length": 16}
-    ];
-
     return Unfocuser(
       child: Scaffold(
         appBar: AppBar(
@@ -56,35 +43,32 @@ class TestView extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   // notifier.toggle();
-                  // forms.fill({'old_pass': 'Lorem1234sdf', 'email': 'test@gmail.com'});
+                  forms.fill({'name': Faker.name(), 'email': 'test@gmail.com'});
                 },
                 icon: Icon(Hi.gift))
           ],
         ),
-        body: notifier.watch((state) => LzListView(
-              autoCache: true,
-              gap: 25,
+        body: LzListView(
+          autoCache: true,
+          gap: 25,
+          onScroll: (scroll) {
+            notifier.setValue(scroll.opacity(100, ScrollOpacity.bottom10));
+          },
+          children: [
+            FormGroup(
               children: [
-                LzForm.select(
-                    label: 'Select Bank *',
-                    hint: 'Select your bank',
-                    model: forms.key('bank'),
-                    onTap: () async {
-                      forms.set('bank').options(banks.labelValue('bank_name', 'max_length'));
-                    },
-                    onChange: (option) {
-                      forms.set('bank_account', '').maxLength(forms.extra('bank')).focus();
-                      state.setValue(forms.extra('bank'));
-                      logg('max length: ${forms.extra('bank')}');
-                    }),
                 LzForm.input(
-                    label: 'Account *',
-                    hint: 'Type bank account',
-                    keyboard: Tit.number,
-                    model: forms.key('bank_account'),
-                    suffix: Center(widthFactor: 1, child: LzBadge(text: '${state.length}', color: Colors.orange)))
+                    label: 'Name *',
+                    hint: 'Type your full name',
+                    model: forms.key('name')),
+                LzForm.input(
+                    label: 'Email *',
+                    hint: 'Type your email address',
+                    model: forms.key('email')),
               ],
-            )),
+            )
+          ],
+        ),
         bottomNavigationBar: LzButton(
           text: 'Submit',
           onTap: () {
