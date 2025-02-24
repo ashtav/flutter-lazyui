@@ -44,6 +44,9 @@ class Input extends StatefulWidget with FormMixin {
   /// Whether the input field is enabled or disabled.
   final bool enabled;
 
+  /// Whether the input field is read-only.
+  final bool readOnly;
+
   /// Whether the input field should gain focus automatically.
   final bool autofocus;
 
@@ -79,6 +82,7 @@ class Input extends StatefulWidget with FormMixin {
     this.prefixIcon,
     this.prefix,
     this.enabled = true,
+    this.readOnly = false,
     this.autofocus = false,
     this.obscure = false,
     this.model,
@@ -94,6 +98,7 @@ class Input extends StatefulWidget with FormMixin {
 
 class _InputState extends State<Input> {
   FormNotifier notifier = FormNotifier();
+  String lastText = '';
 
   void setModel() {
     if (widget.model != null) {
@@ -102,7 +107,13 @@ class _InputState extends State<Input> {
       // listen to text editing controller
       final controller = widget.model!.notifier.controller;
       controller.addListener(() {
-        widget.onChange?.call(controller.text);
+        final newText = controller.text;
+
+        // check if text has changed
+        if (newText != lastText) {
+          lastText = newText;
+          widget.onChange?.call(newText);
+        }
       });
     }
 
@@ -282,6 +293,7 @@ class _InputState extends State<Input> {
                       maxLength: state.maxLength,
                       maxLines: widget.maxLines,
                       enabled: state.enabled && !hasOnTap,
+                      readOnly: widget.readOnly,
                       obscure: state.obscure,
                       onChange: widget.onChange,
                       onSubmit: widget.onSubmit,

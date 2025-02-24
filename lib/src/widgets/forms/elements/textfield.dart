@@ -36,6 +36,9 @@ class LzTextField extends StatelessWidget {
   /// Whether the text field is enabled for user interaction.
   final bool enabled;
 
+  /// Whether the text field is read-only.
+  final bool readOnly;
+
   /// Whether the text input should be obscured (e.g., for passwords).
   final bool obscure;
 
@@ -109,6 +112,7 @@ class LzTextField extends StatelessWidget {
       this.controller,
       this.textAlign,
       this.enabled = true,
+      this.readOnly = false,
       this.maxLength = 255,
       this.formatters = const [],
       this.padding,
@@ -139,7 +143,7 @@ class LzTextField extends StatelessWidget {
         autofocus: autofocus,
         focusNode: node,
         obscureText: obscure,
-        enabled: enabled,
+        enabled: enabled && !readOnly,
         textAlign: textAlign ?? TextAlign.start,
         controller: controller,
         maxLines: maxLines ?? 1,

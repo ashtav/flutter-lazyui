@@ -46,6 +46,9 @@ class Number extends StatefulWidget with FormMixin {
   /// Whether the number input is enabled or disabled.
   final bool enabled;
 
+  /// Whether the input field is read-only.
+  final bool readOnly;
+
   /// Whether the number input should gain focus automatically.
   final bool autofocus;
 
@@ -77,6 +80,7 @@ class Number extends StatefulWidget with FormMixin {
 
     // Control properties
     this.enabled = true,
+    this.readOnly = false,
     this.autofocus = false,
     this.model,
   });
@@ -240,6 +244,7 @@ class _NumberState extends State<Number> {
                   formatters: formatters,
                   maxLength: 11,
                   enabled: state.enabled,
+                  readOnly: widget.readOnly,
                   onChange: onChange,
                   onSubmit: widget.onSubmit,
                   onFocus: widget.onFocus,

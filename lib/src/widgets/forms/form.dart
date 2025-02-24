@@ -544,6 +544,9 @@ class LzForm {
     /// Whether the input field is enabled or disabled.
     bool enabled = true,
 
+    /// Whether the input field is read-only.
+    bool readOnly = false,
+
     /// Whether the input field should gain focus automatically when the widget is built.
     bool autofocus = false,
 
@@ -582,6 +585,7 @@ class LzForm {
 
       // Control properties
       enabled: enabled,
+      readOnly: readOnly,
       autofocus: autofocus,
       model: model,
 
@@ -623,6 +627,9 @@ class LzForm {
     /// Determines if the input is enabled or disabled.
     bool enabled = true,
 
+    /// Whether the input field is read-only.
+    bool readOnly = false,
+
     /// If true, the input gains focus automatically when the widget is built.
     bool autofocus = false,
 
@@ -653,6 +660,7 @@ class LzForm {
 
       // Control properties
       enabled: enabled,
+      readOnly: readOnly,
       autofocus: autofocus,
       model: model,
 

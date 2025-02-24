@@ -68,7 +68,7 @@ class ToastNotifier extends ChangeNotifier {
     this.align = align ?? Alignment.center;
     this.color = color;
     this.icon = icon;
-    this.maxLength = maxLength ?? 35;
+    this.maxLength = maxLength ?? 60;
     notifyListeners();
   }
 

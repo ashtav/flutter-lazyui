@@ -247,8 +247,8 @@ class Utils {
   /// ```dart
   /// Utils.copy('YOUR TEXT');
   /// ```
-  static Future<void> copy(String text, [String? message]) async {
-    await Clipboard.setData(ClipboardData(text: text));
+  static Future<void> copy(String? text, [String? message]) async {
+    await Clipboard.setData(ClipboardData(text: text.toString()));
 
     if (message != null) {
       Toast.show(message);

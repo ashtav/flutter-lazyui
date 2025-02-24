@@ -111,7 +111,7 @@ class Ei {
   static const EdgeInsets zero = EdgeInsets.zero;
 
   /// ``` dart
-  /// padding: Ei.only(b: 15)
+  /// padding: Ei.only()
   /// ```
   static EdgeInsets only(
           {double? b,
@@ -120,12 +120,16 @@ class Ei {
           double? r,
           double? v,
           double? h,
+          double? tlr,
+          double? blr,
+          double? ltb,
+          double? rtb,
           double others = 0}) =>
       EdgeInsets.only(
-          bottom: v ?? b ?? others,
-          top: v ?? t ?? others,
-          left: h ?? l ?? others,
-          right: h ?? r ?? others);
+          bottom: blr ?? ltb ?? rtb ?? v ?? b ?? others,
+          left: blr ?? ltb ?? tlr ?? h ?? l ?? others,
+          right: blr ?? rtb ?? tlr ?? h ?? r ?? others,
+          top: tlr ?? rtb ?? ltb ?? v ?? t ?? others);
 
   /// ``` dart
   /// padding: Ei.all(15)
