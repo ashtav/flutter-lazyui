@@ -6,6 +6,7 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/theme/color.dart';
 
 import '../../models/device.dart';
@@ -416,6 +417,82 @@ class Date {
   /// - Returns `true` if the year is a leap year, otherwise `false`.
   static bool isLeapYear(int year) {
     return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+  }
+
+  /// Parses a date string with a month in text format into a [DateTime] object.
+  ///
+  /// Supports the following formats:
+  /// - `"3 Aug 2024"` (Day Month Year)
+  /// - `"Aug 3, 2024"` (Month Day, Year)
+  ///
+  /// The function is **case-insensitive** for month names.
+  ///
+  /// - [dateString]: The input date string to parse.
+  /// - [format]: The month format to use (`MMM`, `MMMM`). Other formats will log an error and return `null`.
+  /// - [locale]: The locale to use for month name conversion.
+  ///
+  /// - Returns a [DateTime] object if parsing is successful, otherwise `null`.
+  ///
+  /// ## Examples:
+  /// ```dart
+  /// DateTime? date1 = DateParser.parseCustomDate('3 Aug 2024');
+  /// print(date1); // Output: 2024-08-03 00:00:00.000
+  ///
+  /// DateTime? date2 = DateParser.parseCustomDate('Aug 3, 2024');
+  /// print(date2); // Output: 2024-08-03 00:00:00.000
+  /// ```
+  static DateTime? parseCustomDate(String dateString,
+      {String format = 'MMM', String? locale}) {
+    if (!['MMM', 'MMMM'].contains(format)) {
+      Print.error(
+          "Date.parseCustomDate - Invalid format: '$format'. Supported formats are 'MMM' and 'MMMM'.");
+      return null;
+    }
+
+    // Generate month name based on locale
+    final monthMap = Map.fromEntries(
+      [1, 12].iterate().generate(
+            (m, i) => MapEntry(
+                DateTime(now.year, m, 1)
+                    .format(format, true, locale ?? config.locale)
+                    .toLowerCase(),
+                m),
+          ),
+    );
+
+    // Regex untuk format "3 Aug 2024"
+    final regex1 = RegExp(r'^(\d{1,2})\s([A-Za-z]+)\s(\d{4})$');
+    // Regex untuk format "Aug 3, 2024"
+    final regex2 = RegExp(r'^([A-Za-z]+)\s(\d{1,2}),\s(\d{4})$');
+
+    Match? match =
+        regex1.firstMatch(dateString) ?? regex2.firstMatch(dateString);
+
+    if (match != null) {
+      String monthStr;
+      int day, year;
+
+      if (match.groupCount == 3) {
+        if (regex1.hasMatch(dateString)) {
+          // Format: "3 Aug 2024"
+          day = int.parse(match.group(1)!);
+          monthStr = match.group(2)!;
+          year = int.parse(match.group(3)!);
+        } else {
+          // Format: "Aug 3, 2024"
+          monthStr = match.group(1)!;
+          day = int.parse(match.group(2)!);
+          year = int.parse(match.group(3)!);
+        }
+
+        int? month = monthMap[monthStr.toLowerCase()];
+        if (month != null) {
+          return DateTime(year, month, day);
+        }
+      }
+    }
+
+    return null;
   }
 }
 

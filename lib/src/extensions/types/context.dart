@@ -63,7 +63,8 @@ extension CustomContextExtension on BuildContext {
       double blur = 7,
       Color? backgroundColor,
       Color? barrierColor,
-      bool isScrollControlled = true}) async {
+      bool isScrollControlled = true,
+      RouteSettings? routeSettings}) async {
     /// Wraps a given child widget with a `Container` that provides optional padding
     /// and background color customization.
     ///
@@ -108,6 +109,13 @@ extension CustomContextExtension on BuildContext {
       isScrollControlled: isScrollControlled,
       enableDrag: draggable,
       barrierColor: barrierColor,
+      routeSettings: routeSettings,
+      transitionAnimationController: AnimationController(
+        vsync: Navigator.of(this),
+        duration: 200.ms,
+      ),
+      sheetAnimationStyle: AnimationStyle(
+          curve: Curves.linear, reverseCurve: Curves.linear, duration: 200.ms),
       builder: ((context) => backBlur ? blurWrapper(widget) : wrapper(widget)),
     );
   }

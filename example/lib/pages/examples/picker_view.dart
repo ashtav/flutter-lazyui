@@ -29,7 +29,8 @@ class PickerView extends StatelessWidget {
                 icon: Hi.calendar01,
                 color: Colors.blue,
                 onTap: () {
-                  LzPicker.date(context, withTime: true, onSelect: (value) {
+                  LzPicker.date(context, withTime: true, showWeekday: true,
+                      onSelect: (value) {
                     logg(value);
                   });
                 },
@@ -50,7 +51,7 @@ class PickerView extends StatelessWidget {
                 icon: Hi.calendarCheckOut01,
                 border: Br.all(color: Colors.black45),
                 onTap: () {
-                  LzPicker.dateRange(context, withTime: true,
+                  LzPicker.dateRange(context, withTime: true, showWeekday: true,
                       onSelect: (value) {
                     logg(value);
                   });

@@ -2,11 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
+import 'package:lazyui/src/config/config.dart';
 
 import '../time/time.dart';
+import '../weekday.dart';
 
 /// A notifier class for managing the state of a date picker.
 class DateRangePickerNotifier extends ChangeNotifier {
+  final WeekdayNotifier? weekdayNotifier;
+  DateRangePickerNotifier(this.weekdayNotifier);
+
   /// Scroll controllers for the day, month, year, hour, and minute pickers.
   Map<String, FixedExtentScrollController> controller = {};
 
@@ -72,6 +77,9 @@ class DateRangePickerNotifier extends ChangeNotifier {
 
       controller[f] = FixedExtentScrollController(initialItem: index);
     });
+
+    weekdayNotifier?.setWeekday(
+        this.initDate[dateIndex].format('EEEE', false, config.locale));
   }
 
   List<String> dates = [];
@@ -123,6 +131,8 @@ class DateRangePickerNotifier extends ChangeNotifier {
   void onSelectDate(int index) async {
     try {
       isFromSelectDate = true;
+      weekdayNotifier
+          ?.setWeekday(initDate[index].format('EEEE', false, config.locale));
 
       dateIndex = index;
       notifyListeners();
@@ -229,6 +239,9 @@ class DateRangePickerNotifier extends ChangeNotifier {
         scrollTo('m', initDate[0].month - 1);
         scrollTo('y', initDate[0].year - minDate.year);
       }
+
+      weekdayNotifier?.setWeekday(
+          initDate[dateIndex].format('EEEE', false, config.locale));
     } catch (e, s) {
       Print.error('Error $e $s');
     }

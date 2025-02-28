@@ -43,7 +43,11 @@ class TestView extends StatelessWidget {
             IconButton(
                 onPressed: () {
                   // notifier.toggle();
-                  forms.fill({'name': Faker.name(), 'email': 'test@gmail.com'});
+                  // forms.fill({'name': Faker.name(), 'email': 'test@gmail.com'});
+
+                  LzPicker.option(context,
+                      options:
+                          Option.list(Faker.list.category(10, unique: true)));
                 },
                 icon: Icon(Hi.gift))
           ],
@@ -66,7 +70,8 @@ class TestView extends StatelessWidget {
                     hint: 'Type your email address',
                     model: forms.key('email')),
               ],
-            )
+            ),
+            Text(Faker.words(25))
           ],
         ),
         bottomNavigationBar: LzButton(

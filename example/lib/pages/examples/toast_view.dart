@@ -44,9 +44,9 @@ class ToastView extends StatelessWidget {
               icon: Hi.informationCircle,
               outlined: true,
               onTap: () {
-                Toast.success(Faker.words(15),
+                Toast.show(Faker.words(15),
                     icon: Hi.informationSquare,
-                    align: Alignment.bottomLeft,
+                    align: Alignment.bottomCenter,
                     maxLength: 25);
               },
             ),

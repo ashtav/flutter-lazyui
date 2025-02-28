@@ -6,6 +6,7 @@ import 'package:lazyui/src/theme/color.dart';
 
 import '../date/date_picker.dart';
 import '../time/time.dart';
+import '../weekday.dart';
 import 'notifier.dart';
 
 /// A date picker widget for selecting dates.
@@ -31,6 +32,9 @@ class DateRangePickerWidget extends StatelessWidget {
   /// Determines if the date picker includes time selection.
   final bool withTime;
 
+  /// Determines if the date picker incluces weekday
+  final bool showWeekday;
+
   /// Constructs a [DateRangePickerWidget] widget with optional parameters.
   const DateRangePickerWidget(
       {super.key,
@@ -40,13 +44,15 @@ class DateRangePickerWidget extends StatelessWidget {
       this.style,
       this.format,
       this.rangeFormat,
-      this.withTime = false});
+      this.withTime = false,
+      this.showWeekday = false});
 
   @override
   Widget build(BuildContext context) {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
-    final notifier = DateRangePickerNotifier();
+    final weekdayNotifier = showWeekday ? WeekdayNotifier() : null;
+    final notifier = DateRangePickerNotifier(weekdayNotifier);
     notifier.onInitialized(formats,
         initDate: initDate, minDate: minDate, maxDate: maxDate);
 
@@ -112,6 +118,9 @@ class DateRangePickerWidget extends StatelessWidget {
                 context.lz.pop();
               },
             ),
+
+            // show weekday
+            if (showWeekday) WeekdayLabel(notifier: weekdayNotifier),
 
             // time picker
             if (withTime) TimePicker(notifier, style: style)

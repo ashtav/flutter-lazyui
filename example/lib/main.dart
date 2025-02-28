@@ -4,7 +4,7 @@ import 'package:lazyui/lazyui.dart';
 import 'pages/home_view.dart';
 
 void main() {
-  LazyUi.init(primaryColor: Colors.green);
+  LazyUi.init(primaryColor: Colors.green, locale: 'ID');
 
   runApp(const MyApp());
 }

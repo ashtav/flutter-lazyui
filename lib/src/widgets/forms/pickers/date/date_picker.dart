@@ -5,6 +5,7 @@ import 'package:lazyui/src/config/config.dart';
 import 'package:lazyui/src/theme/color.dart';
 
 import '../time/time.dart';
+import '../weekday.dart';
 import 'notifier.dart';
 
 /// A date picker widget for selecting dates.
@@ -27,6 +28,9 @@ class DatePickerWidget extends StatelessWidget {
   /// Determines if the date picker includes time selection.
   final bool withTime;
 
+  /// Determines if the date picker incluces weekday
+  final bool showWeekday;
+
   /// Constructs a [DatePickerWidget] widget with optional parameters.
   const DatePickerWidget(
       {super.key,
@@ -35,13 +39,15 @@ class DatePickerWidget extends StatelessWidget {
       this.maxDate,
       this.style,
       this.format,
-      this.withTime = false});
+      this.withTime = false,
+      this.showWeekday = false});
 
   @override
   Widget build(BuildContext context) {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
-    final notifier = DatePickerNotifier();
+    final weekdayNotifier = showWeekday ? WeekdayNotifier() : null;
+    final notifier = DatePickerNotifier(weekdayNotifier);
     notifier.onInitialized(formats,
         initDate: initDate, minDate: minDate, maxDate: maxDate);
 
@@ -115,8 +121,11 @@ class DatePickerWidget extends StatelessWidget {
                   context.lz.pop();
                 }),
 
+            // show weekday
+            if (showWeekday) WeekdayLabel(notifier: weekdayNotifier),
+
             // time picker
-            if (withTime) TimePicker(notifier, style: style)
+            if (withTime) TimePicker(notifier, style: style),
           ],
         ),
       ).lz.clip(tlr: config.borderRadius),
@@ -134,7 +143,8 @@ class DatePickerWidget extends StatelessWidget {
       Function(DateTime value)? onChange}) {
     List<String> formats = (format ?? 'd/m/y').split('/');
 
-    final notifier = DatePickerNotifier();
+    final weekdayNotifier = WeekdayNotifier();
+    final notifier = DatePickerNotifier(weekdayNotifier);
     notifier.onInitialized(formats,
         initDate: initDate, minDate: minDate, maxDate: maxDate);
     notifier.onChangeForWidget = onChange;

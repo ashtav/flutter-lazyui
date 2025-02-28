@@ -41,6 +41,7 @@ class LzPicker {
       String? format,
       PickerStyle? style,
       bool withTime = false,
+      bool showWeekday = false,
       Function(DateTime value)? onSelect}) async {
     if (minDate != null && maxDate != null && minDate.isAfter(maxDate)) {
       Print.log('Min date must be smaller than max date.');
@@ -68,7 +69,8 @@ class LzPicker {
             maxDate: maxDate,
             style: style,
             format: format,
-            withTime: withTime),
+            withTime: withTime,
+            showWeekday: showWeekday),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,
@@ -111,6 +113,7 @@ class LzPicker {
       String? format,
       String? rangeFormat,
       bool withTime = false,
+      bool showWeekday = false,
       Function(List<DateTime> value)? onSelect}) async {
     List<DateTime> initDateValue =
         initDate ?? [DateTime.now(), DateTime.now().add(1.d)];
@@ -148,14 +151,14 @@ class LzPicker {
 
     List<DateTime>? result = await context.bottomSheet(
         DateRangePickerWidget(
-          initDate: initDateValue,
-          minDate: minDate,
-          maxDate: maxDate,
-          style: style,
-          format: format,
-          rangeFormat: rangeFormat,
-          withTime: withTime,
-        ),
+            initDate: initDateValue,
+            minDate: minDate,
+            maxDate: maxDate,
+            style: style,
+            format: format,
+            rangeFormat: rangeFormat,
+            withTime: withTime,
+            showWeekday: showWeekday),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,
