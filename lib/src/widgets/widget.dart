@@ -37,6 +37,7 @@ part 'components/button.dart';
 part 'components/card.dart';
 part 'components/countdown.dart';
 part 'components/dropdown.dart';
+part 'components/droplist.dart';
 part 'components/empty.dart';
 part 'components/iconr.dart';
 part 'components/image.dart';
