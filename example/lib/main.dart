@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
               theme: theme,
               home: const HomeView(),
               builder: (context, child) {
-                return Toast.builder(context, child);
+                return FontScaling(child: Toast.builder(context, child));
               },
             ));
   }

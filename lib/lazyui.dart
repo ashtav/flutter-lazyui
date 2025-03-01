@@ -63,3 +63,49 @@ class LazyUi {
     };
   }
 }
+
+/// A widget that constrains the text scaling factor to a maximum value.
+///
+/// This widget is useful when you want to limit how much text scales
+/// based on the user's device settings. It ensures that the text scaling
+/// does not exceed the specified [max] value.
+///
+/// Example usage:
+/// ```dart
+/// FontScaling(
+///   max: 1.2,
+///   child: Text('This text scaling is limited to 1.2x'),
+/// )
+/// ```
+class FontScaling extends StatelessWidget {
+  /// The maximum text scaling factor allowed.
+  ///
+  /// If `null`, there is no limit, and the system's text scaling factor is used.
+  final double? max;
+
+  /// The child widget that will inherit the modified text scaling settings.
+  final Widget? child;
+
+  /// Creates a [FontScaling] widget.
+  ///
+  /// The [max] parameter specifies the maximum allowed text scaling factor.
+  /// Defaults to `1.0`.
+  const FontScaling({super.key, this.max = 1, this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    // Get the text scaling factor based on device settings
+    double maxScalingFactor = MediaQuery.textScalerOf(context).scale(1);
+
+    return MediaQuery(
+      data: MediaQuery.of(context).copyWith(
+        textScaler: TextScaler.linear(
+          max != null
+              ? maxScalingFactor.clamp(1.0, max ?? 1)
+              : maxScalingFactor,
+        ),
+      ),
+      child: child ?? const SizedBox.shrink(),
+    );
+  }
+}
