@@ -136,46 +136,48 @@ extension CustomNullableStringExtension on String? {
     try {
       String num = '0', digits = '';
 
-      switch (runtimeType.toString()) {
-        case 'int':
-          num = toString();
-          break;
+      // Clean the string first to remove unwanted characters
+      String strValue = toString().replaceAll(RegExp(r'[^0-9.,-]'), '');
+      bool isNegative = strValue.startsWith('-');
 
-        case 'double':
-        case 'String':
-          if (toString().contains('.') || toString().contains(',')) {
-            // Identify the decimal separator dynamically
-            var decimalSeparator = toString().contains('.') ? '.' : ',';
-            num = toString().split(decimalSeparator)[0];
-            digits = toString().split(decimalSeparator)[1];
-          } else {
-            num = toString();
-          }
-          break;
+      // Identify the correct decimal separator (last occurrence of '.' or ',')
+      String decimalSeparator =
+          strValue.lastIndexOf('.') > strValue.lastIndexOf(',') ? '.' : ',';
 
-        default:
-          return '${prefix}0';
+      if (strValue.contains(decimalSeparator)) {
+        // Split the number into integer and decimal parts
+        List<String> parts = strValue.split(decimalSeparator);
+        num = parts[0]
+            .replaceAll(RegExp(r'[^0-9]'), ''); // Remove non-numeric characters
+        digits =
+            parts.length > 1 ? parts[1] : ''; // Get decimal part if it exists
+      } else {
+        num = strValue.replaceAll(
+            RegExp(r'[^0-9]'), ''); // Clean the integer part
       }
 
-      // Clean only the integer part of non-numeric characters
-      num = num.replaceAll(RegExp(r'[^0-9]'), '');
+      if (num.isEmpty) num = '0'; // Ensure `num` is not empty before parsing
 
+      // Format only the integer part to avoid rounding issues
       String result = NumberFormat.currency(
         locale: 'id_ID',
-        decimalDigits: 0, // Only format the integer part to avoid rounding
+        decimalDigits: 0,
         symbol: prefix,
       ).format(int.parse(num));
 
-      result =
-          result.replaceAll('.', separator); // Use the separator for thousands
+      // Replace the thousand separator with the provided one
+      result = result.replaceAll('.', separator);
 
-      // Determine the correct separator for the decimal part
-      String decimalSeparator = separator == ',' ? '.' : ',';
+      // Ensure decimal digits have the correct length using `padRight`
+      if (digits.isNotEmpty && decimalDigits > 0) {
+        String decimalPart =
+            digits.padRight(decimalDigits, '0').substring(0, decimalDigits);
+        String decimalSymbol =
+            separator == ',' ? '.' : ','; // Choose correct decimal separator
+        result = '$result$decimalSymbol$decimalPart';
+      }
 
-      // Append the decimal part manually if it exists
-      return digits.isEmpty
-          ? result
-          : '$result$decimalSeparator${digits.padRight(decimalDigits, '0').substring(0, decimalDigits)}';
+      return isNegative ? '-$result' : result;
     } catch (e) {
       return '${prefix}0';
     }

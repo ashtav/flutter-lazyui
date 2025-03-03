@@ -181,9 +181,9 @@ class __DroplistWidgetState extends State<_DroplistWidget> {
 
   void onInit() {
     try {
-      Bindings.onRendered(() {
-        _target = widget.target.localToGlobal(Offset.zero);
+      _target = widget.target.localToGlobal(Offset.zero);
 
+      Bindings.onRendered(() {
         offset = Offset(
             widget.offset.dx, widget.offset.dy - context.windowPadding.top);
 
