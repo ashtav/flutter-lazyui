@@ -9,7 +9,8 @@ extension CustomDateTimeNullableExtension on DateTime? {
   String format(
       [String format = 'yyyy-MM-dd', bool toLocal = false, String? locale]) {
     final date = this ?? DateTime.now();
-    return DateFormat(format, locale).format(toLocal ? date.toLocal() : date);
+    return DateFormat(format, locale ?? config.locale)
+        .format(toLocal ? date.toLocal() : date);
   }
 }
 

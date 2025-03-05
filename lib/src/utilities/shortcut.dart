@@ -17,24 +17,56 @@ class Br {
         strokeAlign: strokeAlign);
   }
 
-  /// ``` dart
-  /// border: Br.only(['t'])
+  /// Creates a `BoxBorder` with specific sides enabled.
+  ///
+  /// This method allows defining borders selectively by specifying which sides
+  /// should be active. The sides are represented using string identifiers:
+  /// - `'t'` for top
+  /// - `'b'` for bottom
+  /// - `'l'` for left
+  /// - `'r'` for right
+  ///
+  /// If `except` is set to `true`, all borders will be removed regardless of `only`.
+  /// If `except` is an `int`, it must be `0` to remove all borders; any other value is ignored.
+  /// This ensures that `except` only works with `bool` and `int` types.
+  ///
+  /// ### Example:
+  /// ```dart
+  /// Container(
+  ///   decoration: BoxDecoration(
+  ///     border: Br.only(['t', 'b'], color: Colors.red, width: 2),
+  ///   ),
+  ///   child: Text('Hello'),
+  /// )
   /// ```
+  /// This will create a `Container` with only the top and bottom borders set to red with a width of 2.
+  ///
+  /// - [only] A list of strings specifying which borders to enable.
+  /// - [color] The color of the border. Defaults to `config.borderColor`.
+  /// - [width] The width of the border. Defaults to `config.borderWidth`.
+  /// - [except] A `bool` or `int`. If `true`, removes all borders. If `0`, also removes all borders.
+  ///            Other `int` values have no effect.
+  /// - [style] The style of the border (solid, dashed, etc.). Defaults to `BorderStyle.solid`.
   static BoxBorder only(List<String> only,
       {Color? color,
       double? width,
-      bool except = false,
+      dynamic except = false,
       BorderStyle style = BorderStyle.solid}) {
     Color bcolor = color ?? config.borderColor;
     double bwidth = width ?? config.borderWidth;
 
     final borderSide = BorderSide(color: bcolor, width: bwidth, style: style);
+    final except_ = except is bool
+        ? except
+        : except is int
+            ? except == 0
+            : false;
 
     return Border(
-        top: !only.contains('t') || except ? BorderSide.none : borderSide,
-        bottom: !only.contains('b') || except ? BorderSide.none : borderSide,
-        left: !only.contains('l') || except ? BorderSide.none : borderSide,
-        right: !only.contains('r') || except ? BorderSide.none : borderSide);
+        top: !only.contains('t') || except_ ? BorderSide.none : borderSide,
+        bottom: !only.contains('b') || except_ ? BorderSide.none : borderSide,
+        left: !only.contains('l') || except_ ? BorderSide.none : borderSide,
+        right: !only.contains('r') || except_ ? BorderSide.none : borderSide);
   }
 
   /// ``` dart

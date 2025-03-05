@@ -10,9 +10,6 @@ class Droplist extends StatelessWidget {
   /// A builder function for constructing the dropdown and its trigger widget.
   final Widget Function(GlobalKey key, DropController action) builder;
 
-  /// A custom builder function for creating dropdown content.
-  final Widget Function(List<DropOption> options)? dropBuilder;
-
   /// The position of the dropdown relative to the trigger widget.
   final DropPosition? position;
 
@@ -24,9 +21,6 @@ class Droplist extends StatelessWidget {
 
   /// The width of the dropdown.
   final double width;
-
-  /// The child widget displayed in the dropdown.
-  final Widget? child;
 
   /// Creates an [Droplist] instance.
   ///
@@ -54,12 +48,10 @@ class Droplist extends StatelessWidget {
     this.options = const [],
     this.onSelect,
     required this.builder,
-    this.dropBuilder,
     this.position,
     this.align,
     this.space,
     this.width = 250,
-    this.child,
   });
 
   @override
@@ -72,12 +64,17 @@ class Droplist extends StatelessWidget {
     // Initialize the dropdown configuration.
     final controller = DropController();
 
+    // Reinit space
+    final space = Offset(this.space?.dx ?? 0, this.space?.dy ?? 20);
+
     controller.showDropdown = () {
       return context.droplist(key, options,
           onSelect: onSelect,
           width: width,
           space: space,
-          overlay: childOverlay);
+          overlay: childOverlay,
+          align: align,
+          position: position);
     };
 
     Widget child = builder(key, controller);
@@ -94,7 +91,9 @@ class Droplist extends StatelessWidget {
       {double width = 250,
       Offset? space,
       Function(DropValue value)? onSelect,
-      Widget? overlay}) async {
+      Widget? overlay,
+      DropAlign? align,
+      DropPosition? position}) async {
     context.lz.focus();
 
     try {
@@ -122,13 +121,18 @@ class Droplist extends StatelessWidget {
       // min = 150, and max = screen width
       width = width.clamp(150, screen.width);
 
+      // set drop align
+      if (align == DropAlign.right) {
+        dx = dx - (width - box.size.width) - dxSpace;
+      } else {
+        if ((dx + width + dxSpace) > screen.width) {
+          dx = screen.width - width - dxSpace;
+        }
+      }
+
       // prevent drop x position more than screen width and less than 0
       if (dx <= dxSpace) {
         dx = dxSpace;
-      }
-
-      if ((dx + width + dxSpace) > screen.width) {
-        dx = screen.width - width - dxSpace;
       }
 
       // logg('dx: $dx, dy: $dy, screen-w: ${screen.width}, screen-h: ${screen.height}');
@@ -139,7 +143,8 @@ class Droplist extends StatelessWidget {
               space: space,
               width: width,
               target: box,
-              targetWidget: overlay))
+              targetWidget: overlay,
+              position: position))
           .then((value) => value as DropValue?);
 
       if (option != null) {
@@ -161,6 +166,7 @@ class _DroplistWidget extends StatefulWidget {
   final double width;
   final RenderBox target;
   final Widget? targetWidget;
+  final DropPosition? position;
 
   const _DroplistWidget(
       {this.options = const [],
@@ -168,7 +174,8 @@ class _DroplistWidget extends StatefulWidget {
       this.space,
       required this.width,
       required this.target,
-      this.targetWidget});
+      this.targetWidget,
+      this.position});
 
   @override
   State<_DroplistWidget> createState() => __DroplistWidgetState();
@@ -206,11 +213,17 @@ class __DroplistWidgetState extends State<_DroplistWidget> {
         // final dropOffset = dropBox.localToGlobal(Offset.zero);
         // logg('target height: ${target.height}, drop-offset: $dropOffset, drop-height: ${dropSize.height}');
 
-        if (offset.dy + dropSize.height + target.height + dySpace >=
-            screen.height) {
-          offset = Offset(offset.dx, offset.dy - (dropSize.height + dySpace));
-        } else {
+        // set drop position
+        if (widget.position == DropPosition.bottom) {
           offset = Offset(offset.dx, offset.dy + target.height + dySpace);
+        } else {
+          if ((offset.dy + dropSize.height + target.height + dySpace >=
+                  screen.height) ||
+              widget.position == DropPosition.top) {
+            offset = Offset(offset.dx, offset.dy - (dropSize.height + dySpace));
+          } else {
+            offset = Offset(offset.dx, offset.dy + target.height + dySpace);
+          }
         }
 
         setState(() {});
@@ -287,15 +300,19 @@ class __DroplistWidgetState extends State<_DroplistWidget> {
 }
 
 extension DroplistExtension on BuildContext {
-  Future<DropValue?> droplist(
-    GlobalKey key,
-    List<DropOption> options, {
-    double width = 250,
-    Offset? space,
-    Function(DropValue value)? onSelect,
-    Widget? overlay,
-  }) async {
+  Future<DropValue?> droplist(GlobalKey key, List<DropOption> options,
+      {double width = 250,
+      Offset? space,
+      Function(DropValue value)? onSelect,
+      Widget? overlay,
+      DropAlign? align,
+      DropPosition? position}) async {
     return await Droplist.open(this, key, options,
-        width: width, space: space, onSelect: onSelect, overlay: overlay);
+        width: width,
+        space: space,
+        onSelect: onSelect,
+        overlay: overlay,
+        align: align,
+        position: position);
   }
 }

@@ -11,17 +11,14 @@ class DropdownView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final key = GlobalKey();
-    final key3 = GlobalKey();
-    final icons = [Hi.filterVertical, Hi.sortingAZ02, Hi.settings01];
-    final options = DropOption.of(['Filter', 'Sort AZ', 'Settings'],
-        icons: icons, separated: [2], focused: ['Settings']);
-
-    final dummyOptions = ['Details', 'Edit', 'Delete', 'Settings'];
+    final icons = [Hi.informationCircle, Hi.edit01, Hi.delete01, Hi.settings01];
+    final options = DropOption.of(['Details', 'Edit', 'Delete', 'Settings'],
+        separated: ['Settings'], critical: ['Delete'], icons: icons);
 
     return Unfocuser(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Dropdown'),
+          title: const Text('Droplist'),
           actions: [
             Droplist(
                 options: options,
@@ -41,34 +38,17 @@ class DropdownView extends StatelessWidget {
           autoCache: true,
           padding: Ei.zero,
           children: [
-            LzTabView(
-              tabs: list,
-              snapped: false,
-              onTap: (key, i) {
-                // Droplist.open(context, key, ['Filter', 'Sort AZ', 'Settings']);
-                context.droplist(
-                    key,
-                    DropOption.of(dummyOptions,
-                        separated: ['Settings'],
-                        critical: ['Delete'],
-                        icons: icons), onSelect: (value) {
-                  logg(value.label);
-                });
-                // Droplist.option(options, [].list())
-              },
-            ),
             Column(
               children: [
-                LzTextField(hint: 'Example of input'),
                 const ExampleLabel(
                   description:
-                      'LzDropdown is a customizable widget for selecting options from a dropdown list, supporting icons, labels, and flexible styling for various use cases.',
+                      'Droplist is a customizable widget for selecting options from a dropdown list, supporting icons, labels, and flexible styling for various use cases.',
                 ),
                 Wrap(
                   spacing: 15,
                   runSpacing: 15,
                   children: [
-                    LzDropdown(
+                    Droplist(
                         options: options,
                         builder: (key, action) {
                           return LzButton(
@@ -88,46 +68,48 @@ class DropdownView extends StatelessWidget {
                       text: 'Open from Context',
                       key: key,
                       onTap: () {
-                        context.dropdown(key, options: options);
+                        context.droplist(key, options);
                       },
                     )
                   ],
                 ),
-                20.height,
-                Column(
-                  children: Faker.list.category(5).generate((item, i) {
-                    return LzDropdown(
-                      options: [
-                        ...DropOption.of(['Edit', 'Delete', 'View'],
-                            icons: [Hi.edit01, Hi.delete01, Hi.view]),
-                      ],
-                      builder: (key, action) {
-                        return DropWrap(
-                          builder: (child) => child.lz.clip(all: 7),
-                          child: InkTouch(
-                            key: key,
-                            onTap: () {
-                              action.show((value) {
-                                logg(value);
-                              });
-                            },
-                            padding: Ei.all(20),
-                            border: Br.all(),
-                            color: Colors.white,
-                            child: Row(
-                              children: [
-                                Text(item),
-                              ],
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  }),
-                ).start,
+                // Column(
+                //   children: Faker.list.category(5).generate((item, i) {
+                //     return LzDropdown(
+                //       align: DropAlign.right,
+                //       position: DropPosition.bottom,
+                //       options: [
+                //         ...DropOption.of(['Edit', 'Delete', 'View'],
+                //             icons: [Hi.edit01, Hi.delete01, Hi.view]),
+                //       ],
+                //       builder: (key, action) {
+                //         return DropWrap(
+                //           builder: (child) => child.lz.clip(all: 7),
+                //           child: InkTouch(
+                //             key: key,
+                //             onTap: () {
+                //               action.show((value) {
+                //                 logg(value);
+                //               });
+                //             },
+                //             padding: Ei.all(20),
+                //             border: Br.all(),
+                //             color: Colors.white,
+                //             child: Row(
+                //               children: [
+                //                 Text(item),
+                //               ],
+                //             ),
+                //           ),
+                //         );
+                //       },
+                //     );
+                //   }),
+                // ).start,
                 Column(
                   children: list.take(3).toList().generate((item, i) {
                     return Droplist(
+                      // align: DropAlign.right,
                       options: DropOption.of(['Edit', 'Delete', 'View'],
                           icons: [Hi.edit01, Hi.delete01, Hi.view],
                           critical: [1]),
@@ -142,7 +124,8 @@ class DropdownView extends StatelessWidget {
                               });
                             },
                             padding: Ei.all(20),
-                            border: Br.all(),
+                            border: Br.only(['t'], except: i),
+                            // border: Br.only(['t']),
                             color: Colors.white,
                             child: Row(
                               children: [
@@ -154,15 +137,8 @@ class DropdownView extends StatelessWidget {
                       },
                     );
                   }),
-                ).start,
-                LzButton(
-                  key: key3,
-                  onTap: () {
-                    // Droplist.open(context, key3, dummyOptions);
-                  },
-                  text: 'Show Droplist',
-                ),
-                250.height
+                ).start.lz.clip(all: 7),
+                550.height
               ],
             ).start.gap(25).margin(all: 20)
           ],
