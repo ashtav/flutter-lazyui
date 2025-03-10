@@ -55,23 +55,14 @@ class TestView extends StatelessWidget {
         body: LzListView(
           autoCache: true,
           gap: 25,
-          onScroll: (scroll) {
-            notifier.setValue(scroll.opacity(100, ScrollOpacity.bottom10));
-          },
           children: [
-            FormGroup(
-              children: [
-                LzForm.input(
-                    label: 'Name *',
-                    hint: 'Type your full name',
-                    model: forms.key('name')),
-                LzForm.input(
-                    label: 'Email *',
-                    hint: 'Type your email address',
-                    model: forms.key('email')),
-              ],
-            ),
-            Text(Faker.words(25))
+            LzCard(
+              style: LzCardStyle(stacked: true),
+              onTap: () {
+                LzPicker.date(context);
+              },
+              children: [Text(Faker.name()), Text(Faker.email())],
+            )
           ],
         ),
         bottomNavigationBar: LzButton(

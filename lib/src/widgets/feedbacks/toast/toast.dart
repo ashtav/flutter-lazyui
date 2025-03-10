@@ -255,7 +255,7 @@ class Toast {
   static void error(String? message,
       {Alignment? align, IconData? icon, int? maxLength, Duration? duration}) {
     _notifier.show(message.toString(),
-        duration: _config.duration,
+        duration: duration ?? _config.duration,
         align: align,
         color: Colors.redAccent.lighten(.05),
         icon: icon,

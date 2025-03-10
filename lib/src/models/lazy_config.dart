@@ -38,7 +38,8 @@ class LazyConfig {
       Color? surfaceColor,
       Color? primaryColor,
       IconType? icon,
-      String? locale}) {
+      String? locale,
+      bool? backBlur}) {
     return LazyConfig(
       font: font ?? this.font,
       borderColor: borderColor ?? this.borderColor,
@@ -50,6 +51,7 @@ class LazyConfig {
       primaryColor: primaryColor ?? this.primaryColor,
       icon: icon ?? this.icon,
       locale: locale ?? this.locale,
+      backBlur: backBlur ?? this.backBlur,
     );
   }
 }

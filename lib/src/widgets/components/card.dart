@@ -41,7 +41,9 @@ class LzCard extends StatelessWidget {
             color: Lz.color.colorToHex(color),
             border: border ?? Br.all(),
             radius: radius,
-            child: Column(children: children).start.gap(gap ?? 2),
+            child: SizedBox(
+                width: double.infinity,
+                child: Column(children: children).start.gap(gap ?? 2)),
           ),
 
           // card background icon
