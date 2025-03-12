@@ -900,14 +900,29 @@ class FormControl {
   }
 
   /// Focuses on the form control.
+  /// If the form control is a select dropdown, it will automatically open the options.
   ///
-  /// Returns this form control after focusing on it.
+  /// Example usage:
+  /// ```dart
+  /// forms.set('province').focus();
+  /// ```
   FormControl focus() {
     notifier.timer?.cancel();
     notifier.timer = Timer(50.ms, () {
       notifier.focusNode.requestFocus();
       notifier.timer?.cancel();
     });
+
+    // open if select
+    if (notifier.type == 'select') {
+      notifier.openOption?.call();
+
+      if (notifier.globalKey != null) {
+        Scrollable.ensureVisible(notifier.globalKey!.currentContext!,
+            duration: const Duration(milliseconds: 300), alignment: .09);
+      }
+    }
+
     return this;
   }
 

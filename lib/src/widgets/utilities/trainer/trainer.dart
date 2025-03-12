@@ -13,18 +13,23 @@ export 'controller.dart' show TrainerController;
 export 'enums.dart';
 export 'target.dart' show Target;
 
+TrainerLabels _defaultLabels = TrainerLabels();
+
 class Trainer extends StatefulWidget {
+  static void setLabels(TrainerLabels labels) => _defaultLabels = labels;
+
   final Widget Function(List<GlobalKey> keys) builder;
   final List<Target> targets;
   final TrainerController? controller;
   final Duration duration;
   final bool allowSkip;
-  final TrainerLabels labels;
+  final TrainerLabels? labels;
   final Widget Function(String content, TrainerController controller)?
       contentBuilder;
   final void Function(int index)? onNext;
   final void Function()? onSkip;
   final void Function()? onFinish;
+  final void Function()? onSkipOrFinish;
 
   /// Example:
   ///
@@ -52,11 +57,12 @@ class Trainer extends StatefulWidget {
       this.controller,
       this.duration = const Duration(milliseconds: 600),
       this.allowSkip = true,
-      this.labels = const TrainerLabels(),
+      this.labels,
       this.contentBuilder,
       this.onNext,
       this.onSkip,
-      this.onFinish});
+      this.onFinish,
+      this.onSkipOrFinish});
 
   @override
   State<Trainer> createState() => _TrainerState();
@@ -108,8 +114,12 @@ class _TrainerState extends State<Trainer> {
               bool isLast = i == length - 1;
 
               List<_Label> actions = [
-                _Label(0, widget.labels.skip),
-                _Label(1, isLast ? widget.labels.finish : widget.labels.next),
+                _Label(0, widget.labels?.skip ?? _defaultLabels.skip),
+                _Label(
+                    1,
+                    isLast
+                        ? widget.labels?.finish ?? _defaultLabels.finish
+                        : widget.labels?.next ?? _defaultLabels.next),
               ];
 
               if (!widget.allowSkip) {
@@ -125,10 +135,12 @@ class _TrainerState extends State<Trainer> {
                 if (action.key == 0) {
                   controller.skip();
                   widget.onSkip?.call();
+                  widget.onSkipOrFinish?.call();
                 } else {
                   controller.next();
 
                   if (isLast) {
+                    widget.onSkipOrFinish?.call();
                     return widget.onFinish?.call();
                   }
 
@@ -202,9 +214,10 @@ class _TargetContent extends StatelessWidget {
       crossAxisAlignment: Caa.start,
       spacing: 25,
       children: [
-        Text(
+        Textr(
           target.content ?? '',
           style: Gfont.white,
+          icon: target.icon,
         ),
 
         // trainer controls

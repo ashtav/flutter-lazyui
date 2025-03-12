@@ -131,12 +131,14 @@ class NotFoundTargetException extends FormatException {
 
 /// A class representing a target with content and optional customizations.
 class Target {
+  final IconData? icon;
   final String? content;
   final ContentAlign align;
   final EdgeInsets? padding;
   final ShapeLightFocus? shape;
 
   const Target({
+    this.icon,
     this.content,
     this.align = ContentAlign.bottom,
     this.padding,

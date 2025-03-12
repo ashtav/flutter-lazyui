@@ -72,7 +72,14 @@ class FormView extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Form'),
-          actions: [LzThemeAction()],
+          actions: [
+            LzThemeAction(),
+            IconButton(
+                onPressed: () {
+                  forms.set('province').focus();
+                },
+                icon: Icon(Hi.pencil))
+          ],
         ),
         body: LzListView(
           padding: Ei.only(b: 100, others: 20),

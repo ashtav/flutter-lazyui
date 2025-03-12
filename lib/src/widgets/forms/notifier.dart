@@ -5,6 +5,7 @@ import 'package:lazyui/lazyui.dart';
 
 class FormNotifier extends ChangeNotifier {
   String? key;
+  GlobalKey? globalKey;
 
   String type = 'input';
   Timer? timer;
@@ -57,6 +58,9 @@ class FormNotifier extends ChangeNotifier {
     selected = values;
     notifyListeners();
   }
+
+  // select section
+  void Function()? openOption;
 
   @override
   void dispose() {

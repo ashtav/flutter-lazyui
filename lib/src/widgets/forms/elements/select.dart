@@ -86,6 +86,8 @@ class _SelectState extends State<Select> {
 
     notifier.enabled = widget.enabled;
     notifier.extra = extra;
+    notifier.openOption = onOpen;
+    notifier.globalKey = widget.model?.key;
   }
 
   void onChange(Option option) {
@@ -96,6 +98,17 @@ class _SelectState extends State<Select> {
     extra = option.value;
     widget.onChange?.call(option.label);
     context.lz.focus();
+  }
+
+  void onOpen() {
+    Option value = Option(notifier.controller.text, value: notifier.extra);
+
+    Utils.timer(() {
+      LzPicker.option(context,
+          initialValue: value,
+          options: Option.list(notifier.options, values: notifier.values),
+          onSelect: onChange);
+    }, 10.ms);
   }
 
   @override
@@ -178,16 +191,7 @@ class _SelectState extends State<Select> {
                       ? null
                       : () async {
                           await widget.onTap?.call();
-                          Option value =
-                              Option(state.controller.text, value: state.extra);
-
-                          Utils.timer(() {
-                            LzPicker.option(context,
-                                initialValue: value,
-                                options: Option.list(state.options,
-                                    values: state.values),
-                                onSelect: onChange);
-                          }, 10.ms);
+                          onOpen();
                         },
                   color: background,
                   radius: Br.radius(radiusValue),
