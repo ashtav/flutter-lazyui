@@ -77,15 +77,36 @@ class Obscure extends StatelessWidget {
   }
 }
 
+/// Manages form models and provides methods to access and manipulate form data.
 class FormManager {
+  /// A map storing all form models, protected to prevent direct modification.
   @protected
   final Map<String, FormModel> models;
+
+  /// Creates a new instance of [FormManager] with the provided form models.
   const FormManager(this.models);
 
+  /// Retrieves the [FormModel] for the given key.
+  ///
+  /// If the key is not found, a new [FormModel] with a default [FormNotifier] and [GlobalKey] is returned.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// FormModel nameModel = forms.key('name');
+  /// ```
   FormModel key(String key) {
     return models[key] ?? FormModel(FormNotifier(), GlobalKey());
   }
 
+  /// Retrieves the text value of a form field by its key.
+  ///
+  /// If the key does not exist, returns `null`.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// String? name = forms.get('name');
+  /// print(name); // Output: 'John Doe' (if set before)
+  /// ```
   String? get(String key) {
     if (!models.containsKey(key)) {
       return null;
@@ -94,6 +115,24 @@ class FormManager {
     return models[key]!.notifier.controller.text;
   }
 
+  /// A method to update the value of a form control by its key.
+  ///
+  /// If the key is not found in the `models`, an error is printed, and a default `FormControl` is returned.
+  /// Otherwise, the corresponding form notifier is updated with the provided [value].
+  ///
+  /// If [value] is a list, it is converted to a list of string options.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// forms.set('name', 'John Doe');
+  /// forms.set('name').focus();
+  ///
+  /// // For checkbox inputs
+  /// forms.set('hobby', 'Football, Cooking, Swimming');
+  ///
+  /// // For select option
+  /// forms.set('province', Option('Bali', value: 1));
+  /// ```
   FormControl set(String key, [dynamic value]) {
     if (models[key] == null) {
       Print.error('Form key $key not found!');
@@ -142,6 +181,16 @@ class FormManager {
     return FormControl(notifier);
   }
 
+  /// Enables or disables a form field by its key.
+  ///
+  /// - [key]: The form field key.
+  /// - [value]: `true` to enable the field, `false` to disable it.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// forms.enable('email', true);  // Enable the 'email' field
+  /// forms.enable('email', false); // Disable the 'email' field
+  /// ```
   void enable(String key, bool value) {
     Bindings.onRendered(() {
       final notifier = models[key]!.notifier;
@@ -150,6 +199,15 @@ class FormManager {
     });
   }
 
+  /// Disables specific options in a checkbox form field.
+  ///
+  /// - [key]: The form field key.
+  /// - [disabled]: A list of checkbox options to disable.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// forms.checkbox('hobbies', disabled: ['Football', 'Cooking']);
+  /// ```
   void checkbox(String key, {List<String> disabled = const []}) {
     Bindings.onRendered(() {
       final notifier = models[key]!.notifier;
@@ -160,6 +218,15 @@ class FormManager {
     });
   }
 
+  /// Disables specific options in a radio form field.
+  ///
+  /// - [key]: The form field key.
+  /// - [disabled]: A list of radio options to disable.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// forms.radio('gender', disabled: ['Male']);
+  /// ```
   void radio(String key, {List<String> disabled = const []}) {
     Bindings.onRendered(() {
       final notifier = models[key]!.notifier;
@@ -170,6 +237,15 @@ class FormManager {
     });
   }
 
+  /// Retrieves the current values of all form fields.
+  ///
+  /// Returns a map where each key represents a form field and the value is the text entered.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Map<String, dynamic> formData = forms.value;
+  /// print(formData['name']); // Output: 'John Doe'
+  /// ```
   Map<String, dynamic> get value {
     final keys = models.keys.toList();
     return Map.fromIterables(
@@ -178,11 +254,53 @@ class FormManager {
             keys.length, (i) => models[keys[i]]!.notifier.controller.text));
   }
 
+  /// Retrieves extra data associated with a specific form field.
+  ///
+  /// - [key]: The form field key.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// var provinceId = forms.extra('province');
+  /// print(provinceId); // Output: 1 (if the selected province is 'Bali' with value 1)
+  /// ```
   dynamic extra(String key) {
     final notifier = models[key]!.notifier;
     return notifier.extra;
   }
 
+  /// Updates the given [data] map with extra values from the specified form fields.
+  ///
+  /// - [data]: The map to be updated with extra values.
+  /// - [keys]: A list of form field keys whose extra values should be extracted.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final payload = forms.value;
+  /// forms.extras(payload, ['province', 'city']);
+  /// print(payload['province']); // Output: Extra value of 'province' field
+  /// print(payload['city']);     // Output: Extra value of 'city' field
+  /// ```
+  void extras(Map<String, dynamic> data, List<String> keys) {
+    for (String key in keys) {
+      if (data.containsKey(key)) {
+        data[key] = models[key]!.notifier.extra;
+      }
+    }
+  }
+
+  /// Fills multiple form fields with values from a given data map.
+  ///
+  /// The keys in the [data] map correspond to form field keys, and the values are used to populate the form.
+  /// Any key that is found in `models` will have its value set via the `set` method.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// forms.fill({
+  ///   'name': 'John Doe',
+  ///   'phone': 812300000,
+  ///   'province': Option('Bali', value: 1),
+  /// });
+  /// ```
   void fill(Map<String, dynamic> data) {
     Bindings.onRendered(() {
       List<String> keys = data.keys.toList();
@@ -195,6 +313,19 @@ class FormManager {
     });
   }
 
+  /// Resets all form fields to an empty value, except for the specified keys.
+  ///
+  /// The [except] parameter allows you to specify a list of keys that should not be reset.
+  /// If no keys are specified, all form fields will be cleared.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// // Reset all fields
+  /// forms.reset();
+  ///
+  /// // Reset all fields except 'name' and 'email'
+  /// forms.reset(except: ['name', 'email']);
+  /// ```
   void reset({List<String> except = const []}) {
     Bindings.onRendered(() {
       List<String> keys = models.keys.toList();

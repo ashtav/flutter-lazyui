@@ -76,9 +76,19 @@ class FormView extends StatelessWidget {
             LzThemeAction(),
             IconButton(
                 onPressed: () {
-                  forms.set('province').focus();
+                  forms.fill({
+                    'name': 'John Doe',
+                    'phone': 812300000,
+                    'province': Option('Bali', value: 1),
+                    'city': Option('Canggu', value: 5),
+                  });
+
+                  // for select option
+                  // forms.set('province', Option('Bali', value: 1));
                 },
-                icon: Icon(Hi.pencil))
+                icon: Icon(Hi.pencil)),
+
+            // ActionIcon(Hi.pencil, (){})
           ],
         ),
         body: LzListView(
@@ -240,7 +250,11 @@ class FormView extends StatelessWidget {
               });
 
               if (form.ok) {
+                final payload = form.value.clone();
+                forms.extras(payload, ['province', 'city']);
+
                 logg(form.value);
+                logg(payload);
               }
             },
           ).lz.shadowed(context),

@@ -11,6 +11,11 @@ OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled,
             width: .5));
 
 /// A customizable text field widget.
+///
+/// Example usage:
+/// ```dart
+/// LzTextField(hint: 'Enter your text here', border: OutlineInputBorder());
+/// ```
 class LzTextField extends StatelessWidget {
   /// Placeholder text to display when the field is empty.
   final String? hint;

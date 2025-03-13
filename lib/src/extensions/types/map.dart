@@ -168,27 +168,6 @@ extension MapStringExtension on Map<String, dynamic> {
 ///
 /// This is useful for ensuring that long string data in a map is shortened
 /// for display or storage, with an ellipsis (`...`) added to truncated values.
-///
-/// Example usage:
-/// ```dart
-/// Map<String, dynamic> example = {
-///   "title": "A Very Long Title That Needs Truncation",
-///   "tags": ["example-tag", "a-very-long-tag-that-needs-to-be-shortened"],
-///   "nested": {
-///     "description": "This is a lengthy description that should be truncated."
-///   }
-/// };
-///
-/// Map<String, dynamic> truncatedExample = example.truncate(20);
-/// print(truncatedExample);
-/// // Output:
-/// // {
-/// //   "title": "A Very Long Title Tha...",
-/// //   "tags": ["example-tag", "a-very-long-tag-tha..."],
-/// //   "nested": {"description": "This is a lengthy de..."}
-/// // }
-/// ```
-///
 extension MapGenericExtension<K, V> on Map<K, V> {
   /// Truncates string values in the map to a specified [maxLength], defaulting to 30.
   ///
@@ -206,6 +185,26 @@ extension MapGenericExtension<K, V> on Map<K, V> {
   /// - For other types, values are left unchanged.
   ///
   /// Returns a new `Map` with truncated values where applicable.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// Map<String, dynamic> example = {
+  ///   "title": "A Very Long Title That Needs Truncation",
+  ///   "tags": ["example-tag", "a-very-long-tag-that-needs-to-be-shortened"],
+  ///   "nested": {
+  ///     "description": "This is a lengthy description that should be truncated."
+  ///   }
+  /// };
+  ///
+  /// Map<String, dynamic> truncatedExample = example.truncate(20);
+  /// print(truncatedExample);
+  /// // Output:
+  /// // {
+  /// //   "title": "A Very Long Title Tha...",
+  /// //   "tags": ["example-tag", "a-very-long-tag-tha..."],
+  /// //   "nested": {"description": "This is a lengthy de..."}
+  /// // }
+  /// ```
   Map<K, V> truncate([int maxLength = 30]) {
     return map((key, value) {
       if (value is String && value.length > maxLength) {
@@ -226,5 +225,15 @@ extension MapGenericExtension<K, V> on Map<K, V> {
       // Return unchanged for non-string values
       return MapEntry(key, value);
     });
+  }
+
+  /// Creates a shallow copy of the map.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final clonedMap = myMap.clone();
+  /// ```
+  Map<K, V> clone() {
+    return Map<K, V>.from(this);
   }
 }

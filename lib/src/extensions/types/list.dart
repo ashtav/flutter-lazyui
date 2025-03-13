@@ -67,6 +67,16 @@ extension CustomListExtension<T> on List<T> {
 
     return chunks;
   }
+
+  /// Creates a shallow copy of the list.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// final clonedList = myList.clone();
+  /// ```
+  List<T> clone() {
+    return List<T>.from(this);
+  }
 }
 
 /// Extends the functionality of the [List<num>] class with additional methods and properties.
