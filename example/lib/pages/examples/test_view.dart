@@ -40,16 +40,7 @@ class TestView extends StatelessWidget {
           title: const Text('Labs'),
           actions: [
             LzThemeAction(),
-            IconButton(
-                onPressed: () {
-                  // notifier.toggle();
-                  // forms.fill({'name': Faker.name(), 'email': 'test@gmail.com'});
-
-                  LzPicker.option(context,
-                      options:
-                          Option.list(Faker.list.category(10, unique: true)));
-                },
-                icon: Icon(Hi.gift))
+            IconButton(onPressed: () {}, icon: Icon(Hi.gift))
           ],
         ),
         body: LzListView(
@@ -62,6 +53,10 @@ class TestView extends StatelessWidget {
                 LzPicker.date(context);
               },
               children: [Text(Faker.name()), Text(Faker.email())],
+            ),
+            LzTextField(
+              hint: 'Lorem ipsum dolor sit',
+              border: Ltf.none,
             )
           ],
         ),

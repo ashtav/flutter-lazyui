@@ -35,6 +35,9 @@ class Select extends StatefulWidget with FormMixin {
   /// Widget displayed at the end of the select input field (overrides [suffixIcon]).
   final Widget? suffix;
 
+  /// The visual style configuration for the option picker.
+  final OptionPickerStyle? style;
+
   /// Whether the select input is enabled or disabled.
   final bool enabled;
 
@@ -60,6 +63,7 @@ class Select extends StatefulWidget with FormMixin {
     // Appearance properties
     this.suffixIcon,
     this.suffix,
+    this.style,
 
     // Control properties
     this.enabled = true,
@@ -107,6 +111,7 @@ class _SelectState extends State<Select> {
       LzPicker.option(context,
           initialValue: value,
           options: Option.list(notifier.options, values: notifier.values),
+          style: widget.style,
           onSelect: onChange);
     }, 10.ms);
   }

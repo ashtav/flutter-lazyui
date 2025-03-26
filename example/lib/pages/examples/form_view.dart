@@ -27,7 +27,11 @@ class FormView extends StatelessWidget {
 
     // Example data of provinces and cities
     final provinces = [
-      {'id': 1, 'name': 'Bali'},
+      {
+        'id': 1,
+        'name':
+            'Bali Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Magna'
+      },
       {'id': 2, 'name': 'Jakarta'}
     ];
 

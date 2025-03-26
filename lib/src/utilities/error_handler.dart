@@ -144,10 +144,10 @@ Try to check [$member]''';
             String location = f.uri.toString().replaceAll('package:', ''),
                 member = f.member ?? 'Unknown';
 
-            String message = '''Error on $member ($line:$col), $e 
-                              File location: $location''';
+            String message = '''Error on $member ($line:$col), $e. File location: $location''';
 
             // message = builder?.call(message) ?? message;
+            message = builder?.call(message, frames) ?? message;
 
             logg(message, name: 'ERROR');
             errorMessage = message;

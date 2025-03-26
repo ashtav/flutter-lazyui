@@ -14,7 +14,7 @@ OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled,
 ///
 /// Example usage:
 /// ```dart
-/// LzTextField(hint: 'Enter your text here', border: OutlineInputBorder());
+/// LzTextField(hint: 'Enter your text here', border: Ltf.border());
 /// ```
 class LzTextField extends StatelessWidget {
   /// Placeholder text to display when the field is empty.
@@ -101,7 +101,10 @@ class LzTextField extends StatelessWidget {
   /// The cursor color of the input field
   final Color? cursorColor;
 
-  /// Create widget
+  /// Example usage:
+  /// ```dart
+  /// LzTextField(hint: 'Enter your text here', border: Ltf.border());
+  /// ```
   const LzTextField(
       {super.key,
       this.hint,
@@ -179,5 +182,18 @@ class LzTextField extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class Ltf {
+  static OutlineInputBorder border(
+      {Color? color, double? width, BorderStyle style = BorderStyle.solid}) {
+    return OutlineInputBorder(
+        borderSide: BorderSide(
+            color: color ?? Colors.black12, width: width ?? .5, style: style));
+  }
+
+  static InputBorder get none {
+    return InputBorder.none;
   }
 }

@@ -888,6 +888,9 @@ class LzForm {
     /// Custom widget displayed at the end of the input field.
     Widget? suffix,
 
+    /// The visual style configuration for the option picker.
+    OptionPickerStyle? style,
+
     /// Whether the select dropdown is enabled or not.
     bool enabled = true,
 
@@ -912,6 +915,7 @@ class LzForm {
       // Appearance properties
       suffixIcon: suffixIcon,
       suffix: suffix,
+      style: style,
 
       // Control properties
       enabled: enabled,
