@@ -12,6 +12,9 @@ class Checkbox extends StatefulWidget {
   /// The label text displayed above the checkbox group.
   final String? label;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// Called when the value of the checkbox group changes.
   final void Function(String value)? onChange;
 
@@ -25,6 +28,7 @@ class Checkbox extends StatefulWidget {
   const Checkbox({
     super.key,
     this.label,
+    this.labelStyle,
     this.onChange,
     this.model,
     this.options = const [],
@@ -84,7 +88,7 @@ class _CheckboxState extends State<Checkbox> {
       spacing: 10,
       key: widget.model?.key,
       children: [
-        if (hasLabel) Text(label!, style: Gfont.fs14),
+        if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
         notifier.watch((state) {
           final selected = state.selected;
 

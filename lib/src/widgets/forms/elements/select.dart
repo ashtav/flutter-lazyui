@@ -17,6 +17,9 @@ class Select extends StatefulWidget with FormMixin {
   /// The hint text displayed inside the select input.
   final String? hint;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// The list of options available for selection.
   final List<String> options;
 
@@ -51,6 +54,7 @@ class Select extends StatefulWidget with FormMixin {
     // Text properties
     this.label,
     this.hint,
+    this.labelStyle,
 
     // Input properties
     this.options = const [],
@@ -163,7 +167,7 @@ class _SelectState extends State<Select> {
         if (!isGrouped)
           Row(
             children: [
-              if (hasLabel) Text(label!, style: Gfont.fs14),
+              if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
             ],
           ),
 

@@ -57,7 +57,7 @@ class TestView extends StatelessWidget {
             LzTextField(
               hint: 'Lorem ipsum dolor sit',
               border: Ltf.none,
-            )
+            ),
           ],
         ),
         bottomNavigationBar: LzButton(

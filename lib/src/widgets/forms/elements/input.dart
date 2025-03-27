@@ -17,6 +17,9 @@ class Input extends StatefulWidget with FormMixin {
   /// The hint text displayed inside the input field.
   final String? hint;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// Called when the input field is tapped.
   final void Function()? onTap;
 
@@ -73,6 +76,7 @@ class Input extends StatefulWidget with FormMixin {
     super.key,
     this.label,
     this.hint,
+    this.labelStyle,
     this.onTap,
     this.onChange,
     this.onSubmit,
@@ -212,7 +216,7 @@ class _InputState extends State<Input> {
         if (!isGrouped)
           Row(
             children: [
-              if (hasLabel) Text(label!, style: Gfont.fs14),
+              if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
             ],
           ),
 

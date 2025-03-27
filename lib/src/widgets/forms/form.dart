@@ -150,8 +150,7 @@ class FormManager {
         }
 
         if (type == 'checkbox') {
-          List<String> options =
-              value.toString().replaceAll(', ', ',').split(',');
+          List<String> options = value.toString().replaceAll(', ', ',').split(',');
           notifier.setSelectedBox(options);
         }
 
@@ -248,10 +247,7 @@ class FormManager {
   /// ```
   Map<String, dynamic> get value {
     final keys = models.keys.toList();
-    return Map.fromIterables(
-        keys,
-        List.generate(
-            keys.length, (i) => models[keys[i]]!.notifier.controller.text));
+    return Map.fromIterables(keys, List.generate(keys.length, (i) => models[keys[i]]!.notifier.controller.text));
   }
 
   /// Retrieves extra data associated with a specific form field.
@@ -382,8 +378,7 @@ class FormManager {
       List<String> match = const [],
       Map<String, String>? message,
       FormFeedback feedback = FormFeedback.text}) {
-    final controllers = Map.fromIterables(
-        models.keys, models.values.map((e) => e.notifier.controller));
+    final controllers = Map.fromIterables(models.keys, models.values.map((e) => e.notifier.controller));
     final notifiers = Map.fromIterables(models.keys, models.values.map((e) {
       e.notifier.rules = [];
       e.notifier.feedback = feedback;
@@ -398,8 +393,7 @@ class FormManager {
     if (isRequiredAll) {
       required = controllers.keys.toList();
     } else if (isRequiredAllExcept) {
-      required = controllers.keys.toList()
-        ..removeWhere((e) => required.contains(e));
+      required = controllers.keys.toList()..removeWhere((e) => required.contains(e));
     }
 
     bool exist(String key) => controllers[key] != null;
@@ -433,8 +427,7 @@ class FormManager {
             'key': key,
             'type': 'min',
             'value': min,
-            'message': message?['$key:min'] ??
-                'The field $key must be at least ${split[1]} characters'
+            'message': message?['$key:min'] ?? 'The field $key must be at least ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -456,8 +449,7 @@ class FormManager {
             'key': key,
             'type': 'max',
             'value': max,
-            'message': message?['$key:max'] ??
-                'The field $key must be at most ${split[1]} characters'
+            'message': message?['$key:max'] ?? 'The field $key must be at most ${split[1]} characters'
           };
 
           notifiers[key]!.rules.add(error);
@@ -471,8 +463,7 @@ class FormManager {
         final error = {
           'key': key,
           'type': 'email',
-          'message':
-              message?['$key:email'] ?? 'The field $key is not a valid email'
+          'message': message?['$key:email'] ?? 'The field $key is not a valid email'
         };
         notifiers[key]!.rules.add(error);
       }
@@ -490,8 +481,7 @@ class FormManager {
             'key': key,
             'type': 'match',
             'value': notifiers[k1],
-            'message': message?['$k2:match'] ??
-                'The field $k2 does not match with the field $k1.'
+            'message': message?['$k2:match'] ?? 'The field $k2 does not match with the field $k1.'
           };
 
           notifiers[k2]!.rules.add(error);
@@ -525,8 +515,7 @@ class FormManager {
 
     if (errors.isNotEmpty) {
       final map = errors.first;
-      final globalKeys =
-          Map.fromIterables(models.keys, models.values.map((e) => e.key));
+      final globalKeys = Map.fromIterables(models.keys, models.values.map((e) => e.key));
 
       String key = map['key'];
       String message = map['message'];
@@ -534,8 +523,7 @@ class FormManager {
       // scroll to input position
       GlobalKey? gkey = globalKeys[key];
       if (gkey != null && gkey.currentContext != null) {
-        Scrollable.ensureVisible(gkey.currentContext!,
-            duration: const Duration(milliseconds: 300), alignment: .09);
+        Scrollable.ensureVisible(gkey.currentContext!, duration: const Duration(milliseconds: 300), alignment: .09);
       }
 
       if (feedback == FormFeedback.toast) {
@@ -632,8 +620,7 @@ class LzForm {
 
     final models = Map.fromIterables(
       keys,
-      List.generate(
-          keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())),
+      List.generate(keys.length, (i) => FormModel(notifiers[keys[i]]!, GlobalKey())),
     );
 
     return FormManager(models);
@@ -647,6 +634,9 @@ class LzForm {
 
     /// The hint text displayed inside the input field when it is empty.
     String? hint,
+
+    /// The style of the label text.
+    TextStyle? labelStyle,
 
     /// Called when the input field is tapped.
     void Function()? onTap,
@@ -701,6 +691,7 @@ class LzForm {
       // Text properties
       label: label,
       hint: hint,
+      labelStyle: labelStyle,
 
       // Event handlers
       onTap: onTap,
@@ -736,6 +727,9 @@ class LzForm {
 
     /// The hint text displayed inside the input field when it's empty.
     String? hint,
+
+    /// The style of the label text.
+    TextStyle? labelStyle,
 
     // Event Handlers
     /// Callback when the input value changes.
@@ -784,6 +778,7 @@ class LzForm {
       // Text properties
       label: label,
       hint: hint,
+      labelStyle: labelStyle,
 
       // Appearance properties
       prefixIcon: prefixIcon,
@@ -813,6 +808,9 @@ class LzForm {
     /// The label displayed above the radio group.
     String? label,
 
+    /// The style of the label text.
+    TextStyle? labelStyle,
+
     /// Callback when a radio button value changes.
     void Function(String value)? onChange,
 
@@ -834,6 +832,7 @@ class LzForm {
 
       // Text properties
       label: label,
+      labelStyle: labelStyle,
     );
   }
 
@@ -842,6 +841,9 @@ class LzForm {
   static Checkbox checkbox({
     /// The label displayed above the checkbox group.
     String? label,
+
+    /// The style of the label text.
+    TextStyle? labelStyle,
 
     /// Callback when a checkbox value changes.
     void Function(String value)? onChange,
@@ -864,6 +866,7 @@ class LzForm {
 
       // Text properties
       label: label,
+      labelStyle: labelStyle,
     );
   }
 
@@ -872,6 +875,9 @@ class LzForm {
   static Select select({
     /// The label displayed above the select dropdown.
     String? label,
+
+    /// The style of the label text.
+    TextStyle? labelStyle,
 
     /// The hint text displayed inside the select dropdown when empty.
     String? hint,
@@ -907,6 +913,7 @@ class LzForm {
       // Text properties
       label: label,
       hint: hint,
+      labelStyle: labelStyle,
 
       // Event handlers
       onTap: onTap,
@@ -933,6 +940,9 @@ class LzForm {
     /// The label displayed above the slider.
     String? label,
 
+    /// The style of the label text.
+    TextStyle? labelStyle,
+
     /// The initial value of the slider.
     double? initValue,
 
@@ -957,6 +967,7 @@ class LzForm {
     return Slider(
       // Text properties
       label: label,
+      labelStyle: labelStyle,
 
       // Input properties
       initValue: initValue,
@@ -982,6 +993,9 @@ class LzForm {
     /// The label displayed next to the switch.
     String? label,
 
+    /// The style of the label text.
+    TextStyle? labelStyle,
+
     /// Callback when the switch value changes.
     void Function(bool)? onChange,
 
@@ -997,6 +1011,7 @@ class LzForm {
 
       // Text properties
       label: label,
+      labelStyle: labelStyle,
 
       // Event handlers
       onChange: onChange,
@@ -1083,10 +1098,8 @@ class FormControl {
   /// // and the 'id' property will be assigned to the value.
   /// ```
   FormControl options(List<Map<String, dynamic>> data) {
-    notifier.options =
-        data.extract<String>('label'); // Extract 'label' field values
-    notifier.values =
-        data.extract<dynamic>('value'); // Extract 'value' field values
+    notifier.options = data.extract<String>('label'); // Extract 'label' field values
+    notifier.values = data.extract<dynamic>('value'); // Extract 'value' field values
     notifier.notify(); // Notify listeners about the changes
 
     return this;

@@ -12,6 +12,9 @@ class Radio extends StatefulWidget {
   /// The label text displayed above the radio group.
   final String? label;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// The list of options available for the radio group.
   final List<String> options;
 
@@ -30,6 +33,7 @@ class Radio extends StatefulWidget {
 
     // Text properties
     this.label,
+    this.labelStyle,
 
     // Input properties
     this.options = const [],
@@ -102,7 +106,7 @@ class _RadioState extends State<Radio> {
       spacing: 10,
       key: widget.model?.key,
       children: [
-        if (hasLabel) Text(label!, style: Gfont.fs14),
+        if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
         notifier.watch((state) {
           return Column(
             spacing: 7,

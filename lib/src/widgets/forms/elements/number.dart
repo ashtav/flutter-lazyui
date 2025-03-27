@@ -16,6 +16,9 @@ class Number extends StatefulWidget with FormMixin {
   /// The hint text displayed inside the number input.
   final String? hint;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// The initial value for the number input.
   final int? initValue;
 
@@ -63,6 +66,7 @@ class Number extends StatefulWidget with FormMixin {
     this.label,
     this.hint,
     this.initValue,
+    this.labelStyle,
 
     // Input properties
     this.max = 255,
@@ -215,7 +219,7 @@ class _NumberState extends State<Number> {
         if (!isGrouped)
           Row(
             children: [
-              if (hasLabel) Text(label!, style: Gfont.fs14),
+              if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
             ],
           ),
 

@@ -10,6 +10,9 @@ class Slider extends StatefulWidget {
   /// The label text displayed above the slider.
   final String? label;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// The initial value for the slider.
   final double? initValue;
 
@@ -40,6 +43,7 @@ class Slider extends StatefulWidget {
 
     // Text properties
     this.label,
+    this.labelStyle,
 
     // Input properties
     this.initValue,
@@ -138,7 +142,7 @@ class _SliderState extends State<Slider> {
               if (hasLabel)
                 Textr(
                   label!,
-                  style: Gfont.fs14,
+                  style: widget.labelStyle ?? Gfont.fs14,
                   overflow: Tof.ellipsis,
                 ).lz.flexible(),
             ],

@@ -9,6 +9,9 @@ class Switches extends StatelessWidget {
   /// The label text displayed alongside the switch.
   final String? label;
 
+  /// The style of the label text.
+  final TextStyle? labelStyle;
+
   /// The initial value of the switch (on/off).
   final bool initValue;
 
@@ -24,6 +27,7 @@ class Switches extends StatelessWidget {
 
     // Text properties
     this.label,
+    this.labelStyle,
 
     // Input properties
     this.initValue = false,
@@ -75,7 +79,7 @@ class Switches extends StatelessWidget {
           ),
         ),
         if (labels.isNotEmpty)
-          Textr(switched ? labels[0] : labels[1], padding: Ei.only(v: 5))
+          Textr(switched ? labels[0] : labels[1], padding: Ei.only(v: 5), style: labelStyle)
       ];
 
       return Row(
