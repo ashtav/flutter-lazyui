@@ -216,7 +216,8 @@ class _InputState extends State<Input> {
         if (!isGrouped)
           Row(
             children: [
-              if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
+              if (hasLabel)
+                Text(label!, style: widget.labelStyle ?? Gfont.fs14),
             ],
           ),
 

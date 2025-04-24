@@ -167,7 +167,8 @@ class _SelectState extends State<Select> {
         if (!isGrouped)
           Row(
             children: [
-              if (hasLabel) Text(label!, style: widget.labelStyle ?? Gfont.fs14),
+              if (hasLabel)
+                Text(label!, style: widget.labelStyle ?? Gfont.fs14),
             ],
           ),
 

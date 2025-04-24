@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lazyui/lazyui.dart';
 
 class Notifier extends ChangeNotifier {
@@ -23,7 +26,7 @@ class Notifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  final forms = LzForm.make(['name', 'email', 'gender']);
+  final forms = LzForm.make(['name', 'email', 'gender', 'image']);
 }
 
 class TestView extends StatelessWidget {
@@ -58,6 +61,16 @@ class TestView extends StatelessWidget {
               hint: 'Lorem ipsum dolor sit',
               border: Ltf.none,
             ),
+            LzForm.input(
+                label: 'Select Image',
+                hint: 'Please select your image',
+                model: forms.key('image'),
+                suffixIcon: Hi.image01,
+                onTap: () {
+                  Pickers.image(then: (file) {
+                    forms.set('image', file?.path);
+                  });
+                })
           ],
         ),
         bottomNavigationBar: LzButton(
@@ -81,5 +94,19 @@ class TestView extends StatelessWidget {
         ).margin(blr: 20).lz.shadowed(context),
       ),
     );
+  }
+}
+
+class Pickers {
+  static void image({Function(File?)? then}) async {
+    final ImagePicker picker = ImagePicker();
+
+    final XFile? file = await picker.pickImage(source: ImageSource.gallery);
+    if (file != null) {
+      final File image = File(file.path);
+      then?.call(image);
+    } else {
+      then?.call(null);
+    }
   }
 }
