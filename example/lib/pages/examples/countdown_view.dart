@@ -21,14 +21,16 @@ class CountdownView extends StatelessWidget {
               description:
                   'LzCountDown is a customizable countdown timer that displays the remaining time (days, hours, minutes, seconds) until a specified expiration time, with real-time updates.',
             ),
-            TimerCountDown(now.add(3.d), builder: (d, h, m, s) {
-              return Row(
-                children: [d, h, m, s].generate((time, i) {
-                  final times = ['D', 'H', 'M', 'S'];
-                  return Text('$time ${times[i]}');
-                }),
-              ).gap(35).center;
-            })
+            TimerTicker(
+                expiredTime: now.add(3.d),
+                builder: (d, h, m, s) {
+                  return Row(
+                    children: [d, h, m, s].generate((time, i) {
+                      final times = ['D', 'H', 'M', 'S'];
+                      return Text('$time ${times[i]}');
+                    }),
+                  ).gap(35).center;
+                })
           ],
         ),
       ),

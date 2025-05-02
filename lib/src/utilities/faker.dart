@@ -164,6 +164,7 @@ class Faker {
       Fit.food: 9,
       Fit.drink: 8,
       Fit.random: 10,
+      null: 10
     };
 
     int length = avalable[type]!;

@@ -265,8 +265,7 @@ class __DroplistWidgetState extends State<_DroplistWidget> {
                     : (context.isDarkMode ? Colors.white : Colors.black87);
 
                 List<Widget> children = [
-                  Text(option.label,
-                      style: Gfont.color(color).fbold(option.focused)),
+                  Text(option.label, style: Gfont.color(color)),
                   if (option.icon != null) Icon(option.icon, color: color),
                 ];
 
@@ -280,7 +279,11 @@ class __DroplistWidgetState extends State<_DroplistWidget> {
                       : () {
                           context.lz.pop(DropValue(option.label, i));
                         },
-                  color: context.isDarkMode ? darkAppbarColor : backgroundColor,
+                  color: (context.isDarkMode
+                          ? darkAppbarColor
+                          : backgroundColor)
+                      .darken(
+                          option.focused ? (context.isDarkMode ? .2 : .1) : 0),
                   padding: Ei.sym(v: 13, h: 20),
                   border: Br.only(['t'],
                       except: i == 0, width: option.separated ? 3 : .7),

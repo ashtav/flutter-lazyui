@@ -57,20 +57,11 @@ class TestView extends StatelessWidget {
               },
               children: [Text(Faker.name()), Text(Faker.email())],
             ),
-            LzTextField(
-              hint: 'Lorem ipsum dolor sit',
-              border: Ltf.none,
-            ),
-            LzForm.input(
-                label: 'Select Image',
-                hint: 'Please select your image',
-                model: forms.key('image'),
-                suffixIcon: Hi.image01,
-                onTap: () {
-                  Pickers.image(then: (file) {
-                    forms.set('image', file?.path);
-                  });
-                })
+            Column(
+              children: [
+                LzImage(Faker.image(), size: 100),
+              ],
+            ).start
           ],
         ),
         bottomNavigationBar: LzButton(

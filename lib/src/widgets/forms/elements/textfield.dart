@@ -1,9 +1,9 @@
 part of '../../widget.dart';
 
 OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled,
-        {double? radius}) =>
+        {BorderRadius? radius}) =>
     OutlineInputBorder(
-        borderRadius: Br.radius(radius ?? config.borderRadius),
+        borderRadius: radius ?? Br.radius(config.borderRadius),
         borderSide: BorderSide(
             color: context.isDarkMode
                 ? Colors.black26.themeify.darken(enabled ? 0 : .7)
@@ -98,6 +98,9 @@ class LzTextField extends StatelessWidget {
   /// The border of the input field.
   final InputBorder? border;
 
+  /// The border radius of the input field.
+  final BorderRadius? borderRadius;
+
   /// The cursor color of the input field
   final Color? cursorColor;
 
@@ -134,11 +137,13 @@ class LzTextField extends StatelessWidget {
       this.suffixIconColor,
       this.backgroundColor,
       this.border,
+      this.borderRadius,
       this.cursorColor});
 
   @override
   Widget build(BuildContext context) {
-    final border = this.border ?? textFieldDefaultBorder(context, enabled);
+    final border = this.border ??
+        textFieldDefaultBorder(context, enabled, radius: borderRadius);
 
     return Focus(
       onFocusChange: onFocus,

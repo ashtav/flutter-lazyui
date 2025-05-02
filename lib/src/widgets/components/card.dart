@@ -9,6 +9,7 @@ class LzCard extends StatelessWidget {
   final double? gap;
   final void Function()? onTap;
   final LzCardStyle? style;
+  final CrossAxisAlignment align;
 
   const LzCard(
       {super.key,
@@ -19,7 +20,8 @@ class LzCard extends StatelessWidget {
       this.border,
       this.gap,
       this.onTap,
-      this.style});
+      this.style,
+      this.align = CrossAxisAlignment.start});
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,8 @@ class LzCard extends StatelessWidget {
             radius: radius,
             child: SizedBox(
                 width: double.infinity,
-                child: Column(children: children).start.gap(gap ?? 2)),
+                child: Column(crossAxisAlignment: align, children: children)
+                    .gap(gap ?? 2)),
           ),
 
           // card background icon

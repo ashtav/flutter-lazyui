@@ -16,8 +16,7 @@ extension CustomListExtension<T> on List<T> {
   /// ``` dart
   /// [{'id': 1, 'name': 'John Doe'}].updateWhere((e) => e.id == 1, (data, index) => data[index]['name'] = 'Jane Doe')
   /// ```
-  void updateWhere(bool Function(T e) condition, dynamic data,
-      {Function()? onFail}) {
+  void updateWhere(bool Function(T e) condition, T data, {Function()? onFail}) {
     int i = indexWhere(condition);
     if (i >= 0) {
       this[i] = data;

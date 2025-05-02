@@ -13,7 +13,10 @@ class DropdownView extends StatelessWidget {
     final key = GlobalKey();
     final icons = [Hi.informationCircle, Hi.edit01, Hi.delete01, Hi.settings01];
     final options = DropOption.of(['Details', 'Edit', 'Delete', 'Settings'],
-        separated: ['Settings'], critical: ['Delete'], icons: icons);
+        separated: ['Settings'],
+        critical: ['Delete'],
+        icons: icons,
+        focused: [1]);
 
     return Unfocuser(
       child: Scaffold(
@@ -126,7 +129,9 @@ class DropdownView extends StatelessWidget {
                             padding: Ei.all(20),
                             border: Br.only(['t'], except: i),
                             // border: Br.only(['t']),
-                            color: Colors.white,
+                            color: context.isDarkMode
+                                ? context.scaffoldColor
+                                : Colors.white,
                             child: Row(
                               children: [
                                 Text(item),
