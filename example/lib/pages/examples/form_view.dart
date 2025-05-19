@@ -63,6 +63,7 @@ class FormView extends StatelessWidget {
       'hobby': 'Football, Cooking, Swimming',
       // 'ticket': 5,
       'height': 150,
+      'province': 1
     });
 
     // forms.set('province', Option('Jakarta', value: 2));

@@ -1,5 +1,12 @@
 part of '../../widget.dart';
 
+/// Returns a default [OutlineInputBorder] for text fields, styled based on the current theme
+/// and whether the field is enabled or disabled.
+///
+/// - Automatically adapts the border color depending on the app’s dark or light mode.
+/// - Slightly lightens or darkens the color when the field is disabled to give a visual cue.
+/// - Uses a thin border width of `0.5` for a subtle look.
+/// - Allows customizing the [borderRadius] via [radius], otherwise uses a default global radius.
 OutlineInputBorder textFieldDefaultBorder(BuildContext context, bool enabled,
         {BorderRadius? radius}) =>
     OutlineInputBorder(
@@ -83,7 +90,12 @@ class LzTextField extends StatelessWidget {
   /// Widget to display as a prefix to the input field.
   final Widget? prefixIcon;
 
-  /// Widget to display as a suffix to the input field.
+  /// Widget to display at the end (suffix) of the input field.
+  ///
+  /// You can use either [Suffix] or [SuffixBuilder] here depending on your needs:
+  ///
+  /// - Use [Suffix] for a static widget like an icon or button.
+  /// - Use [SuffixBuilder] if you need the widget to react to the text input (e.g., show "clear" or "submit" based on input value).
   final Widget? suffixIcon;
 
   /// The color of the prefix icon.
@@ -190,15 +202,113 @@ class LzTextField extends StatelessWidget {
   }
 }
 
+/// A utility class for building commonly used [InputBorder] styles
+/// in text fields and form inputs.
 class Ltf {
-  static OutlineInputBorder border(
-      {Color? color, double? width, BorderStyle style = BorderStyle.solid}) {
+  /// Returns a custom [OutlineInputBorder] with optional [color], [width], and [style].
+  ///
+  /// If no [color] is provided, defaults to [Colors.black12].
+  /// If no [width] is provided, defaults to `0.5`.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// TextField(
+  ///   decoration: InputDecoration(
+  ///     border: Ltf.border(color: Colors.blue, width: 1),
+  ///   ),
+  /// )
+  /// ```
+  static OutlineInputBorder border({
+    Color? color,
+    double? width,
+    BorderStyle style = BorderStyle.solid,
+  }) {
     return OutlineInputBorder(
-        borderSide: BorderSide(
-            color: color ?? Colors.black12, width: width ?? .5, style: style));
+      borderSide: BorderSide(
+        color: color ?? Colors.black12,
+        width: width ?? 0.5,
+        style: style,
+      ),
+    );
   }
 
-  static InputBorder get none {
-    return InputBorder.none;
+  /// Returns [InputBorder.none] to indicate no visible border.
+  ///
+  /// Example usage:
+  /// ```dart
+  /// TextField(
+  ///   decoration: InputDecoration(
+  ///     border: Ltf.none,
+  ///   ),
+  /// )
+  /// ```
+  static InputBorder get none => InputBorder.none;
+}
+
+/// A widget that rebuilds its child whenever the [TextEditingController]'s value changes.
+///
+/// Useful for building a dynamic suffix icon or action in a [TextField]
+/// that responds in real-time to input text changes.
+///
+/// Example usage:
+/// ```dart
+/// TextField(
+///   controller: myController,
+///   suffixIcon: SuffixBuilder(
+///     controller: myController,
+///     builder: (text) {
+///       return text.isEmpty ? Icon(Icons.clear) : Text('Submit');
+///     },
+///   ),
+/// )
+/// ```
+class SuffixBuilder extends StatefulWidget {
+  /// The [TextEditingController] to observe.
+  final TextEditingController controller;
+
+  /// The builder function that returns a widget based on the current text.
+  final Widget Function(String value)? builder;
+
+  const SuffixBuilder({
+    super.key,
+    required this.controller,
+    this.builder,
+  });
+
+  @override
+  State<SuffixBuilder> createState() => _SuffixBuilderState();
+}
+
+class _SuffixBuilderState extends State<SuffixBuilder> {
+  late TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = widget.controller;
+    _controller.addListener(_onTextChanged);
+  }
+
+  @override
+  void didUpdateWidget(covariant SuffixBuilder oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller.removeListener(_onTextChanged);
+      _controller = widget.controller;
+      _controller.addListener(_onTextChanged);
+    }
+  }
+
+  void _onTextChanged() => setState(() {});
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onTextChanged);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.builder?.call(_controller.text) ?? const None();
   }
 }

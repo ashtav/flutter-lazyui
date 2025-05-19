@@ -37,6 +37,8 @@ class TestView extends StatelessWidget {
     final notifier = Notifier();
     final forms = notifier.forms;
 
+    final controller = TextEditingController();
+
     return Unfocuser(
       child: Scaffold(
         appBar: AppBar(
@@ -61,7 +63,21 @@ class TestView extends StatelessWidget {
               children: [
                 LzImage(Faker.image(), size: 100),
               ],
-            ).start
+            ).start,
+            LzTextField(
+              hint: 'Enter email address',
+              prefixIcon: Icon(Hi.mail01),
+              controller: controller,
+              suffixIcon: SuffixBuilder(
+                  controller: controller,
+                  builder: (value) {
+                    return Touch(
+                      onTap: () {},
+                      padding: Ei.sym(v: 13, h: 16),
+                      child: value.isEmpty ? Icon(Hi.cancel01) : Text('Submit'),
+                    );
+                  }),
+            )
           ],
         ),
         bottomNavigationBar: LzButton(
