@@ -11,8 +11,19 @@ import 'package:lazyui/src/theme/color.dart';
 
 import '../../models/device.dart';
 
+/// Returns the current date and time as a [DateTime] object.
+///
+/// This getter provides a convenient way to access the current system time.
+/// 
+/// Example:
+/// ```dart
+/// final currentTime = now;
+/// print(currentTime); // Outputs the current date and time.
+/// ```
 DateTime get now => DateTime.now();
 
+/// A utility class that provides various helper methods and functions
+/// for common operations used throughout the application.
 class Utils {
   Utils._();
   static final Utils instance = Utils._();
@@ -286,6 +297,7 @@ class Utils {
   }
 }
 
+/// A utility class for handling date-related operations and manipulations.
 class Date {
   /// Calculates the number of full days between two dates.
   ///
@@ -496,6 +508,24 @@ class Date {
   }
 }
 
+/// A class that represents an age or duration broken down into years, months, days,
+/// hours, minutes, and seconds.
+///
+/// Each component defaults to zero if not specified.
+///
+/// Example usage:
+/// ```dart
+/// final age = Age(year: 2, month: 3, day: 15);
+/// print(age); // Output: 2 years, 3 months, 15 days, 0 hours, 0 minutes, 0 seconds
+/// ```
+///
+/// Properties:
+/// - [year]: The number of years.
+/// - [month]: The number of months.
+/// - [day]: The number of days.
+/// - [hour]: The number of hours.
+/// - [minute]: The number of minutes.
+/// - [second]: The number of seconds.
 class Age {
   final int year;
   final int month;
