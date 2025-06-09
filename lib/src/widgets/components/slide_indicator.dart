@@ -1,16 +1,45 @@
 part of '../widget.dart';
 
+/// A widget that displays an indicator for slides, such as those used in carousels or onboarding screens.
+///
+/// Typically used to visually represent the current position within a set of slides.
+///
+/// See also:
+///
+///  * [PageView], which is commonly used with slide indicators.
+///  * [DotsIndicator], for a similar indicator widget.
 class SlideIndicator extends StatefulWidget {
+  /// The total number of indicators to display.
   final int length;
+
+  /// The index of the currently active indicator.
   final int active;
+
+  /// The size of each inactive indicator. If null, a default size is used.
   final List<double>? size;
+
+  /// The size of each active indicator. If null, a default size is used.
   final List<double>? activeSize;
+
+  /// The color of inactive indicators.
   final Color? color;
+
+  /// The color of the active indicator.
   final Color? activeColor;
+
+  /// The duration of the animation when switching indicators.
   final Duration duration;
+
+  /// The direction in which the indicators are laid out (horizontal or vertical).
   final Axis axis;
+
+  /// The spacing between each indicator.
   final double spacing;
+
+  /// The border radius of the indicators. If null, a default radius is used.
   final double? radius;
+
+  /// The alignment of the indicators along the cross axis.
   final CrossAxisAlignment? crossAxisAlignment;
 
   const SlideIndicator(

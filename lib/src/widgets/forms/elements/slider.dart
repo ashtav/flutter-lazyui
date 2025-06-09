@@ -6,6 +6,29 @@ import 'package:lazyui/src/config/config.dart';
 import '../form_model.dart';
 import '../notifier.dart';
 
+/// A customizable slider widget that allows users to select a value from a range
+/// by sliding a thumb along a horizontal track.
+///
+/// This widget is stateful and can be used in forms or anywhere a value selection
+/// within a range is required.
+///
+/// Example usage:
+/// ```dart
+/// Slider(
+///   value: _currentValue,
+///   min: 0.0,
+///   max: 100.0,
+///   onChanged: (double newValue) {
+///     setState(() {
+///       _currentValue = newValue;
+///     });
+///   },
+/// )
+/// ```
+///
+/// See also:
+///  * [RangeSlider], for selecting a range of values.
+///  * [SliderTheme], for customizing the appearance of sliders.
 class Slider extends StatefulWidget {
   /// The label text displayed above the slider.
   final String? label;
@@ -177,6 +200,10 @@ class _SliderState extends State<Slider> {
   }
 }
 
+/// A custom slider track shape that extends [RectangularSliderTrackShape].
+///
+/// This class can be used to define a unique appearance for the track of a slider widget.
+/// Override its methods to customize the track's dimensions, painting, and layout.
 class CustomTrackShape extends RectangularSliderTrackShape {
   @override
   Rect getPreferredRect({
@@ -194,6 +221,13 @@ class CustomTrackShape extends RectangularSliderTrackShape {
   }
 }
 
+/// A custom stateless widget that represents a slider line element.
+///
+/// This widget is intended to be used as part of a form element, providing
+/// a visual representation of a slider's track or line.
+///
+/// Typically used internally by slider-related widgets to render the slider's
+/// background or progress indicator.
 class _SlideLiner extends StatelessWidget {
   final String alignment;
   final Color? color;

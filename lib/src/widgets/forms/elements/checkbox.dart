@@ -8,6 +8,15 @@ import 'package:lazyui/src/theme/color.dart';
 import '../form_model.dart';
 import '../notifier.dart';
 
+/// A customizable checkbox widget that maintains its own state.
+///
+/// This widget allows users to toggle between checked and unchecked states.
+/// It can be used as a form element or as a standalone interactive component.
+///
+/// See also:
+///
+///  * [CheckboxListTile], which combines a checkbox with a label.
+///  * [Switch], for toggling between on/off states.
 class Checkbox extends StatefulWidget {
   /// The label text displayed above the checkbox group.
   final String? label;
@@ -134,6 +143,11 @@ class _CheckboxState extends State<Checkbox> {
   }
 }
 
+/// A private [StatelessWidget] that represents a square-shaped UI element,
+/// typically used as a custom checkbox or indicator within form elements.
+///
+/// This widget is intended for internal use within the forms package and is
+/// not meant to be used directly outside of its context.
 class _Square extends StatelessWidget {
   final String option;
   final bool active;

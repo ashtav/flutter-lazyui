@@ -42,6 +42,9 @@ class LzImage<T> extends StatelessWidget {
   /// A widget to be displayed if the image fails to load.
   final Widget? errorWidget;
 
+  /// Optional headers for network requests, useful for authenticated image
+  final Map<String, String>? headers;
+
   /// Creates an [LzImage] widget.
   const LzImage(this.src,
       {super.key,
@@ -53,7 +56,8 @@ class LzImage<T> extends StatelessWidget {
       this.previewable = false,
       this.context,
       this.placeholder,
-      this.errorWidget});
+      this.errorWidget,
+      this.headers});
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +95,7 @@ class LzImage<T> extends StatelessWidget {
               width: width,
               height: height,
               alignment: alignment,
+              headers: headers,
               placeholderBuilder: (context) => placeholder);
         }
 
@@ -102,6 +107,7 @@ class LzImage<T> extends StatelessWidget {
             width: width,
             height: height,
             alignment: alignment,
+            httpHeaders: headers,
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 placeholder,
             errorWidget: (context, url, error) => errorWidget,

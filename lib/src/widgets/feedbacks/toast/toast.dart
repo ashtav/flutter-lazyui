@@ -10,6 +10,12 @@ import 'toast_progress_widget.dart';
 
 part 'toast_widget.dart';
 
+/// Configuration class for customizing toast behavior.
+///
+/// Allows specifying the [duration] for which the toast is displayed,
+/// and the [align]ment of the toast on the screen.
+///
+/// Both [duration] and [align] are optional.
 class _Config {
   final Duration? duration;
   final Alignment? align;
@@ -17,9 +23,18 @@ class _Config {
   _Config({this.duration, this.align});
 }
 
+/// Singleton instance of [ToastNotifier] used to manage toast notifications.
 final _notifier = ToastNotifier();
+
+/// Configuration object for customizing toast behavior and appearance.
 _Config _config = _Config();
 
+/// A widget that conditionally displays its [child] based on the [visible] flag.
+///
+/// The [_Switcher] widget takes a [child] widget and a [visible] boolean. If [visible]
+/// is true, the [child] is shown; otherwise, it is hidden.
+///
+/// Typically used to toggle the visibility of a widget in the UI.
 class _Switcher extends StatelessWidget {
   final bool visible;
   final Widget child;
@@ -42,6 +57,11 @@ class _Switcher extends StatelessWidget {
   }
 }
 
+/// A stateless widget that displays a toast notification.
+///
+/// This widget is intended to be used internally by the toast system to
+/// present brief messages to the user. It is constructed with no parameters,
+/// and its appearance and behavior are defined within its implementation.
 class _ToastWidget extends StatelessWidget {
   const _ToastWidget();
 

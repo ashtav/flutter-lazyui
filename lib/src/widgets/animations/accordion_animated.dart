@@ -1,9 +1,25 @@
 part of '../widget.dart';
 
+/// A widget that provides an animated accordion effect, allowing its content
+/// to expand and collapse with a smooth animation.
+///
+/// Typically used to show and hide sections of related content in a vertical list.
+///
+/// See also:
+///
+///  * [ExpansionPanel], which provides a similar expandable/collapsible effect.
+///  * [AnimatedContainer], which can be used for custom animated transitions.
 class AccordionAnimated extends StatefulWidget {
+  /// Whether the accordion is expanded and its content is visible.
   final bool show;
+
+  /// The duration of the expand/collapse animation.
   final Duration duration;
+
+  /// The widget to display inside the accordion.
   final Widget child;
+
+  /// The animation curve used for the expand/collapse transition.
   final Curve curve;
 
   const AccordionAnimated(

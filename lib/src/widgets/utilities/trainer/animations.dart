@@ -8,6 +8,19 @@ import 'package:lazyui/src/config/config.dart';
 import 'clipper_painter.dart';
 import 'target.dart';
 
+/// An extension on [State] that provides a safer way to call [setState].
+///
+/// The [safeSetState] method executes the provided [call] callback
+/// inside [setState] only if the widget is still mounted, preventing
+/// exceptions that can occur if [setState] is called after the widget
+/// has been disposed.
+///
+/// Example usage:
+/// ```dart
+/// safeSetState(() {
+///   // update state here
+/// });
+/// ```
 extension StateExt on State {
   void safeSetState(VoidCallback call) {
     if (mounted) {
@@ -17,16 +30,39 @@ extension StateExt on State {
   }
 }
 
+/// Widget that animates a focus light effect over a list of [TargetFocus] widgets.
+///
+/// This widget highlights UI elements in sequence, typically for onboarding or tutorials.
+/// It supports custom shadow color, opacity, padding, animation duration, and optional image filter.
 class AnimatedFocusLight extends StatefulWidget {
+  /// The list of targets to focus on.
   final List<TargetFocus> targets;
+
+  /// Callback when a target receives focus.
   final Function(TargetFocus)? focus;
+
+  /// Callback when focus is removed from a target.
   final Function? removeFocus;
+
+  /// Callback when all targets have been focused and the animation finishes.
   final Function()? finish;
+
+  /// Padding around the focused target.
   final double paddingFocus;
+
+  /// Color of the shadow around the focus light.
   final Color colorShadow;
+
+  /// Opacity of the shadow.
   final double opacityShadow;
+
+  /// Duration of the focus animation.
   final Duration? duration;
+
+  /// Optional image filter to apply to the background.
   final ImageFilter? imageFilter;
+
+  /// The initial index of the target to focus on.
   final int? initFocus;
 
   const AnimatedFocusLight(
@@ -47,6 +83,14 @@ class AnimatedFocusLight extends StatefulWidget {
   AnimatedFocusLightState createState() => AnimatedStaticFocusLightState();
 }
 
+/// The abstract state class for [AnimatedFocusLight] widget.
+///
+/// This class should be extended to implement the state logic for
+/// the [AnimatedFocusLight] widget, which is likely responsible for
+/// handling animations and focus effects within the UI.
+///
+/// Subclasses should override the necessary lifecycle methods and
+/// provide the animation logic specific to the focus light effect.
 abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
     with TickerProviderStateMixin {
   final defaultFocusAnimationDuration = const Duration(milliseconds: 600);
@@ -212,6 +256,12 @@ abstract class AnimatedFocusLightState extends State<AnimatedFocusLight>
   double get _getPaddingFocus => widget.paddingFocus;
 }
 
+/// The state class for [AnimatedStaticFocusLight], extending [AnimatedFocusLightState].
+///
+/// This class manages the animation and state logic for a static focus light effect,
+/// typically used to highlight a specific area or widget in the UI with an animated
+/// focus or spotlight effect. It inherits animation handling and lifecycle methods
+/// from [AnimatedFocusLightState].
 class AnimatedStaticFocusLightState extends AnimatedFocusLightState {
   double get left => (_targetPosition?.offset.dx ?? 0) - _getPaddingFocus * 2;
   double get top => (_targetPosition?.offset.dy ?? 0) - _getPaddingFocus * 2;

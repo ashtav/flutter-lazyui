@@ -1,8 +1,15 @@
 part of '../widget.dart';
 
+/// A widget that unfocuses any focused input when tapping outside, and optionally handles back button presses.
+/// Useful for dismissing the keyboard or focus from input fields when the user taps outside them.
 class Unfocuser extends StatelessWidget {
+  /// The widget below this Unfocuser in the tree.
   final Widget child;
+
+  /// Callback triggered when the back button is pressed.
   final void Function()? onBackPress;
+
+  /// Callback triggered when an unfocus event occurs.
   final void Function()? onUnfocus;
 
   const Unfocuser(

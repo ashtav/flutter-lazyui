@@ -3,6 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A [ChangeNotifier] that manages the state and notifications for form-related changes.
+///
+/// Use this class to notify listeners when the form's state changes, such as when
+/// input values are updated or validation occurs.
 class FormNotifier extends ChangeNotifier {
   String? key;
   GlobalKey? globalKey;
@@ -153,6 +157,12 @@ class FormNotifier extends ChangeNotifier {
   }
 }
 
+/// A [ChangeNotifier] that manages a group of form widgets.
+///
+/// The [FormGroupNotifier] holds a list of child widgets, typically form fields,
+/// and notifies listeners when changes occur within the group.
+///
+/// [children] is the list of widgets managed by this notifier.
 class FormGroupNotifier extends ChangeNotifier {
   final List<Widget> children;
   FormGroupNotifier(this.children);

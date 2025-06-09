@@ -4,7 +4,20 @@ import 'package:lazyui/lazyui.dart';
 import 'notifier.dart';
 import 'pad_widget.dart';
 
+/// A class representing a customizable pad widget for form inputs.
+///
+/// The [LzPad] class provides functionality to create and manage
+/// pad-style input fields, which can be used for entering PINs,
+/// passwords, or other segmented input data in forms.
+///
+/// Customize the appearance and behavior of the pad as needed
+/// for your application's requirements.
 class LzPad {
+  /// Displays an OTP (One-Time Password) input form.
+  ///
+  /// This static method creates and returns a widget for OTP input, typically used for authentication flows.
+  ///
+  /// [context] - The build context in which the OTP form is displayed.
   static otp(BuildContext context,
       {int length = 6,
       Duration? expired,
@@ -25,6 +38,9 @@ class LzPad {
     });
   }
 
+  /// Displays a passcode input dialog or widget.
+  ///
+  /// [context] is the build context in which the passcode input is shown.
   static passcode(BuildContext context,
       {int length = 6,
       String? title,
@@ -45,6 +61,11 @@ class LzPad {
   }
 }
 
+/// A controller class for managing the state and behavior of a Pad widget.
+///
+/// Use this controller to interact with and manipulate the Pad widget programmatically.
+/// It provides methods and properties to control the Pad's value, validation, and other
+/// functionalities as needed within forms or custom input scenarios.
 class PadController {
   final BuildContext _context;
   final PadNotifier _notifier;

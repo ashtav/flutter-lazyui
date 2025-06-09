@@ -74,6 +74,9 @@ class ButtonView extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar:
+          LzButton(text: 'Submit', icon: Hi.files01, onTap: () {})
+              .margin(blr: 20),
     );
   }
 }

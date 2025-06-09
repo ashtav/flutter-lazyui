@@ -1,5 +1,11 @@
 part of '../widget.dart';
 
+/// A stateless widget that displays a customizable drop-down list.
+///
+/// The [Droplist] widget allows users to select an item from a list of options.
+/// It can be configured with various properties to control its appearance and behavior.
+///
+/// Typically used in forms or settings screens where a selection from multiple options is required.
 class Droplist extends StatelessWidget {
   /// The list of options available in the dropdown.
   final List<DropOption> options;

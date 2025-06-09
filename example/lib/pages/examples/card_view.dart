@@ -41,7 +41,7 @@ class CardView extends StatelessWidget {
             style: LzCardStyle(
                 stacked: true,
                 stackAlign: StackAlign.top,
-                icon: Icon(
+                child: Icon(
                   Hi.gift,
                   color: context.isDarkMode ? Colors.white10 : Colors.black12,
                   size: 70,

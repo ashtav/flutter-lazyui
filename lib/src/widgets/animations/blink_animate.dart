@@ -1,8 +1,15 @@
 part of '../widget.dart';
 
+/// A widget that applies a blinking (fade in/out) animation to its child.
+/// The animation can be controlled via [isAnimated] and customized with [duration].
 class BlinkAnimate extends StatefulWidget {
+  /// The duration of one blink cycle (fade in and out).
   final Duration? duration;
+
+  /// The widget to which the blink animation will be applied.
   final Widget child;
+
+  /// Whether the animation should be active.
   final bool isAnimated;
 
   const BlinkAnimate({

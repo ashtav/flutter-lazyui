@@ -3,16 +3,31 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// Defines the types of notifications that can be displayed.
+///
+/// - [toast]: A brief message displayed at the bottom or top of the screen.
+/// - [overlay]: A message or widget that overlays the current content.
+/// - [progress]: A notification indicating ongoing progress.
 enum Type { toast, overlay, progress }
 
+/// Holds messages for different notification types.
 class Messages {
+  /// The message to display for toast notifications.
   String toast;
+
+  /// The message to display for overlay notifications.
   String overlay;
+
+  /// The message to display for progress notifications.
   String progress;
 
   Messages(this.toast, this.overlay, this.progress);
 }
 
+/// A [ChangeNotifier] that manages the state and notifications for toast messages.
+///
+/// Use this class to display, update, or dismiss toast notifications within your application.
+/// Listeners can subscribe to changes and update the UI accordingly.
 class ToastNotifier extends ChangeNotifier {
   List<Type> types = [];
 

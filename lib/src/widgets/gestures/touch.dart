@@ -1,18 +1,50 @@
 part of '../widget.dart';
 
+/// A widget that provides touch feedback (fade or splash) and gesture handling.
+///
+/// The [Touch] widget wraps its child and provides configurable touch feedback
+/// (either a fade effect or a Material splash) along with gesture callbacks.
+/// It supports customization of border, radius, color, padding, and margin,
+/// and can be used as a drop-in replacement for GestureDetector or InkWell
+/// with additional styling options.
 class Touch extends StatelessWidget {
+  /// The widget below this widget in the tree.
   final Widget? child;
+
+  /// The type of touch feedback to provide (fade or splash).
   final TouchType type;
+
+  /// The border radius of the touchable area.
   final BorderRadius? radius;
+
+  /// The border of the touchable area.
   final BoxBorder? border;
+
+  /// The background color of the touchable area.
   final Color? color;
+
+  /// The amount of space to surround the child inside the touchable area.
   final EdgeInsetsGeometry? padding;
+
+  /// The amount of space to surround the touchable area outside.
   final EdgeInsetsGeometry? margin;
+
+  /// Called when the user taps the widget.
   final void Function()? onTap;
+
+  /// Called when the user double-taps the widget.
   final void Function()? onDoubleTap;
+
+  /// Called when the user long-presses the widget.
   final void Function()? onLongPress;
+
+  /// Called when the tap gesture is canceled.
   final void Function()? onTapCancel;
+
+  /// Called when the user presses down on the widget.
   final void Function(TapDownDetails? details)? onTapDown;
+
+  /// Called when the user lifts their finger after a tap.
   final void Function(TapUpDetails? details)? onTapUp;
 
   const Touch({
@@ -89,20 +121,41 @@ class Touch extends StatelessWidget {
   }
 }
 
+/// Defines the types of touch feedback that can be applied to a widget.
+///
+/// - [none]: No visual feedback is shown on touch.
+/// - [splash]: A splash effect is shown on touch.
+/// - [fade]: A fade effect is shown on touch.
 enum TouchType {
   none,
   splash,
   fade,
 }
 
+/// A custom gesture detector widget that provides optional fade feedback and gesture callbacks.
 class CustomGesture extends StatefulWidget {
+  /// The widget below this widget in the tree.
   final Widget? child;
+
+  /// Whether to apply a fade effect when the widget is pressed.
   final bool faded;
+
+  /// Called when the user taps the widget.
   final Function()? onTap;
+
+  /// Called when the user double-taps the widget.
   final Function()? onDoubleTap;
+
+  /// Called when the user long-presses the widget.
   final Function()? onLongPress;
+
+  /// Called when the tap gesture is canceled.
   final Function()? onTapCancel;
+
+  /// Called when the user presses down on the widget.
   final Function(TapDownDetails? details)? onTapDown;
+
+  /// Called when the user lifts their finger after a tap.
   final Function(TapUpDetails? details)? onTapUp;
 
   const CustomGesture(
@@ -158,22 +211,54 @@ class _CustomGestureState extends State<CustomGesture> {
   }
 }
 
+/// An extension on [bool] that provides a convenient getter to determine the [TouchType].
+///
+/// Returns [TouchType.fade] if the boolean value is `true`, otherwise returns [TouchType.none].
+/// Useful for toggling hoverable touch effects based on a boolean condition.
 extension CustomTouchTypeExtension on bool {
   TouchType get hoverable => this ? TouchType.fade : TouchType.none;
 }
 
+/// A convenience widget that wraps [Touch] with [TouchType.splash] for Material splash feedback.
+///
+/// [InkTouch] provides a Material splash effect on tap, similar to [InkWell],
+/// while allowing customization of border, radius, color, padding, and margin.
+/// It is useful when you want a splash effect with additional styling options.
 class InkTouch extends StatelessWidget {
+  /// The widget below this widget in the tree.
   final Widget? child;
+
+  /// The border radius of the touchable area.
   final BorderRadius? radius;
+
+  /// The border of the touchable area.
   final BoxBorder? border;
+
+  /// The background color of the touchable area.
   final Color? color;
+
+  /// The amount of space to surround the child inside the touchable area.
   final EdgeInsetsGeometry? padding;
+
+  /// The amount of space to surround the touchable area outside.
   final EdgeInsetsGeometry? margin;
+
+  /// Called when the user taps the widget.
   final void Function()? onTap;
+
+  /// Called when the user double-taps the widget.
   final void Function()? onDoubleTap;
+
+  /// Called when the user long-presses the widget.
   final void Function()? onLongPress;
+
+  /// Called when the tap gesture is canceled.
   final void Function()? onTapCancel;
+
+  /// Called when the user presses down on the widget.
   final void Function(TapDownDetails? details)? onTapDown;
+
+  /// Called when the user lifts their finger after a tap.
   final void Function(TapUpDetails? details)? onTapUp;
 
   const InkTouch({

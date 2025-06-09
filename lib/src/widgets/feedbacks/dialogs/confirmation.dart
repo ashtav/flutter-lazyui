@@ -5,6 +5,33 @@ import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 import 'package:lazyui/src/theme/color.dart';
 
+/// A utility class for displaying a confirmation dialog with customizable
+/// title, message, and button texts.
+///
+/// The [show] method presents a dialog with an optional blurred background,
+/// and executes the [onConfirm] callback if the user confirms the action.
+///
+/// Example usage:
+/// ```dart
+/// LzConfirm.show(
+///   context,
+///   title: 'Delete Item',
+///   message: 'Are you sure you want to delete this item?',
+///   confirmText: 'Delete',
+///   cancelText: 'Cancel',
+///   onConfirm: () {
+///     // Handle confirmation
+///   },
+/// );
+/// ```
+///
+/// Parameters:
+/// - [context]: The build context to display the dialog.
+/// - [title]: Optional title for the dialog.
+/// - [message]: Optional message content for the dialog.
+/// - [confirmText]: Optional text for the confirm button.
+/// - [cancelText]: Optional text for the cancel button.
+/// - [onConfirm]: Optional callback executed when the user confirms.
 class LzConfirm {
   static void show(BuildContext context,
       {String? title,
@@ -29,9 +56,16 @@ class LzConfirm {
   }
 }
 
+/// A widget that animates its child in and out using both opacity and scale transitions.
+/// When [visible] is true, the [child] is shown with a fade and scale-in animation.
+/// When [visible] is false, the [child] is hidden with a fade and scale-out animation.
 class _Switcher extends StatelessWidget {
+  /// Whether the child is visible or not.
   final bool visible;
+
+  /// The widget to display and animate.
   final Widget child;
+
   const _Switcher({this.visible = false, required this.child});
 
   @override
@@ -51,10 +85,18 @@ class _Switcher extends StatelessWidget {
   }
 }
 
+/// The dialog widget for confirmation, allowing customization of title, message, and button texts.
 class _ConfirmDialogWidget extends StatefulWidget {
+  /// The title displayed at the top of the dialog.
   final String? title;
+
+  /// The message content displayed in the dialog.
   final String? message;
+
+  /// The text for the confirm action button.
   final String? confirmText;
+
+  /// The text for the cancel action button.
   final String? cancelText;
 
   const _ConfirmDialogWidget(

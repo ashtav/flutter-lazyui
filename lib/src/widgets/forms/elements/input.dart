@@ -10,6 +10,13 @@ import 'package:lazyui/src/theme/color.dart';
 import '../form_model.dart';
 import '../notifier.dart';
 
+/// A customizable input widget that integrates with form validation and state management.
+///
+/// The [Input] widget provides a text input field with support for various input types,
+/// validation, and styling options. It leverages the [FormMixin] to enable seamless
+/// integration with form handling logic.
+///
+/// Typically used within forms to capture user input such as text, numbers, or passwords.
 class Input extends StatefulWidget with FormMixin {
   /// The label text displayed above the input field.
   final String? label;
@@ -321,6 +328,10 @@ class _InputState extends State<Input> {
   }
 }
 
+/// A utility class that provides helper methods for form-related operations.
+///
+/// This class is intended to assist with common form tasks such as validation,
+/// formatting, and data manipulation within form elements.
 class FormUtils {
   static OutlineInputBorder getBorder(
       BuildContext context, bool invalid, bool isGrouped, bool enabled) {

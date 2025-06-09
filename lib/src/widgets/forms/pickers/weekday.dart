@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:lazyui/lazyui.dart';
 
+/// A [ChangeNotifier] that manages the state and logic related to selecting weekdays.
+///
+/// This class can be used to notify listeners when the selected weekday(s) change,
+/// making it suitable for use in forms or picker widgets that require weekday selection.
 class WeekdayNotifier extends ChangeNotifier {
   String weekday = '';
 
@@ -10,6 +14,10 @@ class WeekdayNotifier extends ChangeNotifier {
   }
 }
 
+/// A [StatelessWidget] that displays a label for a weekday picker.
+///
+/// This widget is typically used within forms or pickers to represent
+/// the label or title for a weekday selection component.
 class WeekdayLabel extends StatelessWidget {
   final WeekdayNotifier? notifier;
   const WeekdayLabel({super.key, this.notifier});

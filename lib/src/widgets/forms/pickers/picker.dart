@@ -12,6 +12,14 @@ export '../../../models/option.dart';
 export 'option/option_picker_style.dart';
 export 'picker_style.dart';
 
+/// A utility class for handling picker widgets in the LazyUI package.
+///
+/// The [LzPicker] class provides methods and properties to facilitate
+/// the creation and management of various picker components, such as
+/// date pickers, time pickers, and custom selection dialogs.
+///
+/// Usage of this class allows for a consistent and customizable
+/// picker experience across your application.
 class LzPicker {
   /// Displays a customizable date picker using a bottom sheet.
   ///

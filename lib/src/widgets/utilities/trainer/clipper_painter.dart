@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'target.dart';
 
+/// A custom clipper that creates a circular clipping path.
+///
+/// This class extends [CustomClipper<Path>] and is typically used with widgets
+/// that require a circular clipping region, such as images or containers.
+/// Override the [getClip] and [shouldReclip] methods to define the circle's
+/// size and position.
 class CircleClipper extends CustomClipper<Path> {
   final double progress;
   final Offset positioned;
@@ -62,6 +68,11 @@ class CircleClipper extends CustomClipper<Path> {
   }
 }
 
+/// A custom clipper that creates a rectangular clipping path.
+///
+/// This class extends [CustomClipper<Path>] and is typically used with widgets
+/// that require a rectangular clipping region. Override the [getClip] and
+/// [shouldReclip] methods to define the clipping behavior.
 class RectClipper extends CustomClipper<Path> {
   final double progress;
   final TargetPosition target;
@@ -165,13 +176,31 @@ class RectClipper extends CustomClipper<Path> {
   }
 }
 
+/// A custom painter that draws a rectangular (optionally rounded) transparent "hole"
+/// in a shadow overlay, typically used for highlighting a rectangular area (such as
+/// a widget) in onboarding or tutorial flows. The hole animates its size and position
+/// based on the [progress] value, and can have a border and configurable shadow color,
+/// opacity, offset, and corner radius.
 class LightPaintRect extends CustomPainter {
+  /// The animation progress (0.0 to 1.0) controlling the size of the hole.
   final double progress;
+
+  /// The target position and size to highlight.
   final TargetPosition target;
+
+  /// The color of the shadow overlay.
   final Color colorShadow;
+
+  /// The opacity of the shadow overlay (0.0 to 1.0).
   final double opacityShadow;
+
+  /// The extra offset (padding) around the highlighted rectangle.
   final double offset;
+
+  /// The corner radius for the highlighted rectangle.
   final double radius;
+
+  /// The border style for the highlighted rectangle.
   final BorderSide? borderSide;
 
   LightPaintRect({
@@ -283,12 +312,27 @@ class LightPaintRect extends CustomPainter {
   }
 }
 
+/// A custom painter that draws a circular transparent "hole" in a shadow overlay,
+/// typically used for highlighting a circular area (such as a widget) in onboarding
+/// or tutorial flows. The hole animates its size and position based on the [progress]
+/// value, and can have a border and configurable shadow color and opacity.
 class LightPaint extends CustomPainter {
+  /// The animation progress (0.0 to 1.0) controlling the size of the hole.
   final double progress;
+
+  /// The center position of the circular hole.
   final Offset positioned;
+
+  /// The final radius of the circular hole.
   final double sizeCircle;
+
+  /// The color of the shadow overlay.
   final Color colorShadow;
+
+  /// The opacity of the shadow overlay (0.0 to 1.0).
   final double opacityShadow;
+
+  /// The border style for the circular hole.
   final BorderSide? borderSide;
 
   LightPaint(
@@ -333,11 +377,12 @@ class LightPaint extends CustomPainter {
     );
     if (borderSide != null && borderSide?.style != BorderStyle.none) {
       canvas.drawPath(
-          justCircleHole,
-          Paint()
-            ..style = PaintingStyle.stroke
-            ..color = borderSide!.color
-            ..strokeWidth = borderSide!.width);
+        justCircleHole,
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..color = borderSide!.color
+          ..strokeWidth = borderSide!.width,
+      );
     }
   }
 

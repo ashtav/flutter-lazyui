@@ -10,6 +10,26 @@ import '../form_model.dart';
 import '../notifier.dart';
 import 'input.dart';
 
+/// A customizable dropdown selection widget that integrates with form validation.
+///
+/// The [Select] widget allows users to choose a single value from a list of options.
+/// It supports form validation and can be used within forms that utilize the [FormMixin].
+///
+/// Example usage:
+///
+/// ```dart
+/// Select(
+///   items: ['Option 1', 'Option 2', 'Option 3'],
+///   onChanged: (value) {
+///     // Handle value change
+///   },
+/// )
+/// ```
+///
+/// See also:
+///
+/// - [FormMixin], for integrating with form validation and state management.
+/// - [DropdownButton], for a lower-level dropdown implementation.
 class Select extends StatefulWidget with FormMixin {
   /// The label text displayed above the select input.
   final String? label;

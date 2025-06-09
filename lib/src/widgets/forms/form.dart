@@ -21,47 +21,55 @@ export 'form_model.dart' hide FormModel;
 
 part 'extension.dart';
 
+/// Defines the available styles for the LzForm widget.
+///
+/// - [blank]: No specific style applied.
+/// - [topAligned]: Labels are aligned at the top of the form fields.
+/// - [underlined]: Form fields have an underline style.
+/// - [topInner]: Labels are displayed inside the form fields at the top.
 enum LzFormType { blank, topAligned, underlined, topInner }
 
+/// A utility class to define and manage selectable options for dropdowns or other selection-based widgets.
+///
+/// The [OptionSet] class allows you to define a set of options based on a list of maps,
+/// specifying which keys in the map represent the labels and values for the options.
+/// You can also provide an optional filter to narrow down the available options.
+///
+/// ### Example:
+/// ```dart
+/// final provinces = [
+///   {'id': 1, 'name': 'Bali'},
+///   {'id': 2, 'name': 'Jakarta'}
+/// ];
+///
+/// final cities = [
+///   {'id': 1, 'province_id': 1, 'name': 'Denpasar'},
+///   {'id': 2, 'province_id': 1, 'name': 'Ubud'},
+///   {'id': 3, 'province_id': 2, 'name': 'Central Jakarta'},
+///   {'id': 4, 'province_id': 2, 'name': 'South Jakarta'}
+/// ];
+///
+/// OptionSet(provinces, 'name', 'id');
+/// // Output: ['Bali', 'Jakarta']
+/// // 'id' provides values for the options, Output: [1, 2]
+///
+/// OptionSet(cities, 'name', 'id', {'province_id': 2});
+/// // Output: ['Central Jakarta', 'South Jakarta']
+/// // 'id' provides values for the options, Output: [3, 4]
+/// ```
 class OptionSet {
+  /// The list of map objects containing the options.
   final List<Map<String, dynamic>> data;
+
+  /// The key in each map that represents the label of the option.
   final String labelKey;
+
+  /// The key in each map that represents the value of the option (optional).
   final String? valueKey;
+
+  /// A map to filter the options based on specific criteria (optional).
   final Map<String, dynamic>? filter;
 
-  /// A utility class to define and manage selectable options for dropdowns or other selection-based widgets.
-  ///
-  /// The [OptionSet] class allows you to define a set of options based on a list of maps,
-  /// specifying which keys in the map represent the labels and values for the options.
-  /// You can also provide an optional filter to narrow down the available options.
-  ///
-  /// - [data] is the list of map objects containing the options.
-  /// - [labelKey] specifies the key in each map that represents the label of the option.
-  /// - [valueKey] optionally specifies the key in each map that represents the value of the option.
-  /// - [filter] optionally provides a map to filter the options based on specific criteria.
-  ///
-  /// ### Example:
-  /// ```dart
-  /// final provinces = [
-  ///   {'id': 1, 'name': 'Bali'},
-  ///   {'id': 2, 'name': 'Jakarta'}
-  /// ];
-  ///
-  /// final cities = [
-  ///   {'id': 1, 'province_id': 1, 'name': 'Denpasar'},
-  ///   {'id': 2, 'province_id': 1, 'name': 'Ubud'},
-  ///   {'id': 3, 'province_id': 2, 'name': 'Central Jakarta'},
-  ///   {'id': 4, 'province_id': 2, 'name': 'South Jakarta'}
-  /// ];
-  ///
-  /// OptionSet(provinces, 'name', 'id');
-  /// // Output: ['Bali', 'Jakarta']
-  /// // 'id' provides values for the options, Output: [1, 2]
-  ///
-  /// OptionSet(cities, 'name', 'id', {'province_id': 2});
-  /// // Output: ['Central Jakarta', 'South Jakarta']
-  /// // 'id' provides values for the options, Output: [3, 4]
-  /// ```
   const OptionSet(this.data, this.labelKey, [this.valueKey, this.filter]);
 }
 

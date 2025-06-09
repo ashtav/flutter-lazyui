@@ -65,6 +65,20 @@ class ImageView extends StatelessWidget {
                   ),
                 ],
               )),
+          35.height,
+          Column(
+            spacing: 10,
+            children: [
+              Text('Image with Token', style: Gfont.bold),
+              Text(
+                  'You can pass headers to the image request, such as an authorization token.'),
+              10.height,
+              LzImage(imageURL, size: 100, headers: {
+                'Authorization': 'Bearer <your_token_here>',
+              })
+            ],
+          ).start.margin(all: 20),
+          50.height,
         ],
       ),
     );

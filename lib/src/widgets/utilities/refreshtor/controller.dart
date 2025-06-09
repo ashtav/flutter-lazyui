@@ -1,5 +1,10 @@
 part of 'refreshtor.dart';
 
+/// A controller for managing the state and animation of a refresh indicator,
+/// extending [Animation<double>] and mixing in various animation and overscroll state behaviors.
+///
+/// This controller provides mechanisms to listen to animation changes, manage local listeners,
+/// handle animation status updates, and track overscroll state for pull-to-refresh or similar widgets.
 class IndicatorController extends Animation<double>
     with
         AnimationEagerListenerMixin,

@@ -5,6 +5,25 @@ import 'package:lazyui/src/config/config.dart';
 
 import '../notifier.dart';
 
+/// A custom [StatelessWidget] that represents a switch UI element.
+///
+/// The [Switches] widget provides a customizable switch component that can be
+/// used within forms or settings screens to toggle between on/off states.
+///
+/// Typically used to allow users to enable or disable a particular setting.
+///
+/// Example usage:
+///
+/// ```dart
+/// Switches(
+///   value: isEnabled,
+///   onChanged: (bool newValue) {
+///     setState(() {
+///       isEnabled = newValue;
+///     });
+///   },
+/// )
+/// ```
 class Switches extends StatelessWidget {
   /// The label text displayed alongside the switch.
   final String? label;

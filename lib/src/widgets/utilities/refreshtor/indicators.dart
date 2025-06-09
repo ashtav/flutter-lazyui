@@ -12,6 +12,8 @@ enum IndicatorState {
   finalizing, // Indicator hides after refresh completes.
 }
 
+/// Extension methods that provide convenient getters for the [IndicatorState] class,
+/// allowing easier access to its properties or computed values.
 extension IndicatorStateGetters on IndicatorState {
   bool get isIdle => this == IndicatorState.idle;
   bool get isDragging => this == IndicatorState.dragging;

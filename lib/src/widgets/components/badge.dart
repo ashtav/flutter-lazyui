@@ -1,14 +1,45 @@
 part of '../widget.dart';
 
+/// A customizable badge widget that can be used to display notifications, counts,
+/// or status indicators. The [LzBadge] widget is typically used to highlight
+/// important information or to draw attention to a particular UI element.
+///
+/// This widget is stateless and can be configured with various properties
+/// such as color, shape, and content to suit different use cases.
+///
+/// Example usage:
+/// ```dart
+/// LzBadge(
+///   child: Icon(Icons.notifications),
+///   value: '3',
+/// )
+/// ```
 class LzBadge extends StatelessWidget {
+  /// The text to display inside the badge.
   final String? text;
+
+  /// The icon to display inside the badge.
   final IconData? icon;
+
+  /// The background color of the badge.
   final Color? color;
+
+  /// The size of the badge.
   final double? size;
+
+  /// Whether the badge should have a pill shape.
   final bool pill;
+
+  /// Whether the badge should use a soft (lighter) color style.
   final bool soft;
+
+  /// Whether the badge should display a border.
   final bool border;
+
+  /// The border radius of the badge.
   final BorderRadius? radius;
+
+  /// The padding inside the badge.
   final EdgeInsetsGeometry? padding;
 
   const LzBadge(

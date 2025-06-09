@@ -8,6 +8,25 @@ import 'package:lazyui/src/theme/color.dart';
 import '../form_model.dart';
 import '../notifier.dart';
 
+/// A customizable radio button widget that allows users to select a single option from a set.
+///
+/// This widget maintains its own state and can be used within forms or as a standalone input.
+///
+/// Typically used in scenarios where a user needs to choose one option from a group.
+///
+/// Example usage:
+///
+/// ```dart
+/// Radio(
+///   value: 'option1',
+///   groupValue: selectedValue,
+///   onChanged: (value) {
+///     setState(() {
+///       selectedValue = value;
+///     });
+///   },
+/// )
+/// ```
 class Radio extends StatefulWidget {
   /// The label text displayed above the radio group.
   final String? label;
@@ -143,6 +162,16 @@ class _RadioState extends State<Radio> {
   }
 }
 
+/// A custom [StatelessWidget] that represents a bullet, typically used as a visual indicator
+/// in radio button elements or selection controls.
+///
+/// This widget is intended for internal use within radio form elements to display
+/// a circular bullet, indicating selection state or focus.
+///
+/// See also:
+///
+/// * [Radio], which uses this widget as part of its UI.
+/// * [Checkbox], for a similar selection control.
 class _Bullet extends StatelessWidget {
   final String option;
   final bool active;

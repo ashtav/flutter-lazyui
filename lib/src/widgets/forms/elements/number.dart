@@ -9,6 +9,12 @@ import '../form_model.dart';
 import '../notifier.dart';
 import 'input.dart';
 
+/// A form field widget for handling numeric input within a form.
+///
+/// The [Number] widget extends [StatefulWidget] and mixes in [FormMixin] to provide
+/// form validation and state management capabilities for number input fields.
+///
+/// Typically used as part of a form to allow users to enter and edit numeric values.
 class Number extends StatefulWidget with FormMixin {
   /// The label text displayed above the number input.
   final String? label;
@@ -93,6 +99,8 @@ class Number extends StatefulWidget with FormMixin {
   State<Number> createState() => _NumberState();
 }
 
+/// The state class for the [Number] widget, responsible for managing
+/// its internal state and handling updates to the widget's value.
 class _NumberState extends State<Number> {
   FormNotifier notifier = FormNotifier();
 

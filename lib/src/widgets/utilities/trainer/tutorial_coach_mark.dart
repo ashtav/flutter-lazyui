@@ -10,17 +10,41 @@ import 'animations.dart';
 import 'controller.dart';
 import 'target.dart';
 
+/// Manages the display and control of a tutorial overlay using a list of [TargetFocus] elements.
+/// This class is responsible for creating, showing, and removing the tutorial overlay,
+/// as well as handling navigation between tutorial steps and callbacks for finishing or skipping the tutorial.
 class TutorialCoachMark {
+  /// The list of targets to highlight in the tutorial.
   final List<TargetFocus> targets;
+
+  /// Callback invoked when the tutorial is finished.
   final void Function()? onFinish;
+
+  /// Callback invoked when the tutorial is skipped.
   final void Function()? onSkip;
+
+  /// The padding around the focus area for each target.
   final double paddingFocus;
+
+  /// Whether to use the safe area when displaying the overlay.
   final bool useSafeArea;
+
+  /// The color of the shadow overlay.
   final Color colorShadow;
+
+  /// The opacity of the shadow overlay (0.0 to 1.0).
   final double opacityShadow;
+
+  /// The key used to access the state of the [TutorialCoachMarkWidget].
   final GlobalKey<TutorialCoachMarkWidgetState> _widgetKey = GlobalKey();
+
+  /// The duration of the focus animation.
   final Duration duration;
+
+  /// Optional image filter to apply to the overlay.
   final ImageFilter? imageFilter;
+
+  /// The initial index of the target to focus on.
   final int? initFocus;
 
   OverlayEntry? _overlayEntry;
@@ -86,7 +110,39 @@ class TutorialCoachMark {
   }
 }
 
+/// Widget that displays the tutorial overlay and manages the focus and content display for each target.
+/// This widget is responsible for rendering the highlighted area, shadow, and tutorial content for each step.
 class TutorialCoachMarkWidget extends StatefulWidget {
+  /// The list of targets to highlight in the tutorial.
+  final List<TargetFocus> targets;
+
+  /// Callback invoked when the tutorial is finished.
+  final void Function()? finish;
+
+  /// The color of the shadow overlay.
+  final Color colorShadow;
+
+  /// The opacity of the shadow overlay (0.0 to 1.0).
+  final double opacityShadow;
+
+  /// The padding around the focus area for each target.
+  final double paddingFocus;
+
+  /// Callback invoked when the skip button is clicked.
+  final void Function()? onClickSkip;
+
+  /// Whether to use the safe area when displaying the overlay.
+  final bool useSafeArea;
+
+  /// The duration of the focus animation.
+  final Duration? duration;
+
+  /// Optional image filter to apply to the overlay.
+  final ImageFilter? imageFilter;
+
+  /// The initial index of the target to focus on.
+  final int? initFocus;
+
   const TutorialCoachMarkWidget(
       {super.key,
       required this.targets,
@@ -100,17 +156,6 @@ class TutorialCoachMarkWidget extends StatefulWidget {
       this.imageFilter,
       this.initFocus = 0})
       : assert(targets.length > 0);
-
-  final List<TargetFocus> targets;
-  final void Function()? finish;
-  final Color colorShadow;
-  final double opacityShadow;
-  final double paddingFocus;
-  final void Function()? onClickSkip;
-  final bool useSafeArea;
-  final Duration? duration;
-  final ImageFilter? imageFilter;
-  final int? initFocus;
 
   @override
   TutorialCoachMarkWidgetState createState() => TutorialCoachMarkWidgetState();

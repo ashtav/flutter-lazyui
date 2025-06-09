@@ -18,11 +18,23 @@ export 'src/theme/theme.dart';
 export 'src/utilities/utilities.dart';
 export 'src/widgets/widget.dart';
 
+/// The `Lz` class provides convenient static accessors for commonly used utilities in the package.
+///
+/// - [color]: Returns an instance of [LzColor] for color-related utilities.
+/// - [file]: Returns an instance of [Files] for file-related operations.
 class Lz {
   static LzColor get color => LzColor();
   static Files get file => Files();
 }
 
+/// Initializes the LazyUi package with optional configuration parameters.
+///
+/// - [font]: The default [TextStyle] to be used throughout the application.
+/// - [icon]: The default [IconType] to be used. Defaults to [IconType.huge].
+/// - [locale]: The locale to be used for localization purposes.
+/// - [alwaysPortrait]: If true, the application will be locked in portrait mode. Defaults to true.
+/// - [backBlur]: If true, enables background blur effects. Defaults to true.
+/// - [primaryColor]: The primary [Color] to be used for theming.
 class LazyUi {
   static void init(
       {TextStyle? font,

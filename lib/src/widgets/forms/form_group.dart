@@ -9,6 +9,10 @@ import 'package:lazyui/src/widgets/forms/elements/select.dart';
 import 'elements/input.dart';
 import 'notifier.dart';
 
+/// A mixin that provides form-related utility methods for widgets.
+///
+/// The [FormMixin] includes a method to retrieve an [Attribute] object
+/// based on the presence of a [FormGroup] ancestor in the widget tree.
 mixin FormMixin {
   Attribute getAttribute<T>(BuildContext context) {
     final fa = context.findAncestorWidgetOfExactType<FormGroup>();
@@ -17,6 +21,13 @@ mixin FormMixin {
   }
 }
 
+/// A widget that groups a list of form field widgets together, optionally with a label.
+///
+/// The [FormGroup] widget is useful for organizing related form fields and displaying
+/// them with an optional section label.
+///
+/// - [children]: The list of widgets to display within the group.
+/// - [label]: An optional label to display above the group of widgets.
 class FormGroup extends StatelessWidget {
   final List<Widget> children;
   final String? label;

@@ -13,22 +13,53 @@ export 'controller.dart' show TrainerController;
 export 'enums.dart';
 export 'target.dart' show Target;
 
+/// The default instance of [TrainerLabels] used by the Trainer widget.
+///
+/// This provides a set of default labels that can be customized or overridden
+/// as needed throughout the application.
 TrainerLabels _defaultLabels = TrainerLabels();
 
+/// A widget that provides an interactive tutorial overlay for guiding users through UI elements.
+///
+/// The [Trainer] widget highlights specified targets and displays instructional content, allowing
+/// users to navigate through steps, skip, or finish the tutorial. It can be customized with labels,
+/// content builders, and callbacks for various actions.
 class Trainer extends StatefulWidget {
+  /// Sets the default labels for all Trainer instances.
   static void setLabels(TrainerLabels labels) => _defaultLabels = labels;
 
+  /// A builder function that receives a list of [GlobalKey]s for each target and returns the widget tree.
   final Widget Function(List<GlobalKey> keys) builder;
+
+  /// The list of [Target]s to highlight and provide instructions for.
   final List<Target> targets;
+
+  /// An optional [TrainerController] to control the tutorial programmatically.
   final TrainerController? controller;
+
+  /// The duration of the transition animation between targets.
   final Duration duration;
+
+  /// Whether the user is allowed to skip the tutorial.
   final bool allowSkip;
+
+  /// Custom labels for the tutorial actions (skip, next, finish).
   final TrainerLabels? labels;
+
+  /// An optional builder for custom content, receiving the content string and controller.
   final Widget Function(String content, TrainerController controller)?
       contentBuilder;
+
+  /// Callback invoked when the user proceeds to the next target.
   final void Function(int index)? onNext;
+
+  /// Callback invoked when the user skips the tutorial.
   final void Function()? onSkip;
+
+  /// Callback invoked when the user finishes the tutorial.
   final void Function()? onFinish;
+
+  /// Callback invoked when the user skips or finishes the tutorial.
   final void Function()? onSkipOrFinish;
 
   /// Example:
@@ -192,11 +223,24 @@ class _TrainerState extends State<Trainer> {
   }
 }
 
+/// A widget that displays the content and action controls for each tutorial target.
+///
+/// This widget is used internally by the Trainer to render the instructional text,
+/// optional icon, and navigation controls (skip, next, finish) for each step in the tutorial.
 class _TargetContent extends StatelessWidget {
+  /// The controller for managing tutorial navigation actions.
   final TutorialCoachMarkController controller;
+
+  /// The target data containing content, icon, and configuration.
   final Target target;
+
+  /// The index of the current target in the tutorial sequence.
   final int index;
+
+  /// The list of action labels (e.g., skip, next, finish) to display.
   final List<_Label> actions;
+
+  /// Callback invoked when an action button is tapped.
   final Function(_Label action) onTap;
 
   const _TargetContent(
@@ -240,17 +284,30 @@ class _TargetContent extends StatelessWidget {
   }
 }
 
+/// Holds the customizable labels for the Trainer widget's action buttons.
 class TrainerLabels {
+  /// The label for the skip action button.
   final String skip;
+
+  /// The label for the next action button.
   final String next;
+
+  /// The label for the finish action button.
   final String finish;
 
   const TrainerLabels(
       {this.skip = 'Skip', this.next = 'Next', this.finish = 'Finish'});
 }
 
+/// Internal class representing an action label for the Trainer controls.
+///
+/// Used to distinguish between different actions (e.g., skip, next, finish)
+/// and their associated display text.
 class _Label {
+  /// The unique key identifying the action (e.g., 0 for skip, 1 for next/finish, -1 for divider).
   final int key;
+
+  /// The display label for the action button.
   final String label;
 
   const _Label(this.key, this.label);

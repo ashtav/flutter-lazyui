@@ -1,7 +1,27 @@
 part of 'refreshtor.dart';
 
+/// Defines the types of refresh indicators available.
+///
+/// - [bar]: Displays a bar-style refresh indicator.
+/// - [arrow]: Displays an arrow-style refresh indicator.
+/// - [curve]: Displays a curve-style refresh indicator.
 enum RefreshType { bar, arrow, curve }
 
+/// A private widget that displays a bar-style indicator for refresh actions.
+///
+/// This widget uses the provided [IndicatorController] to manage its state and
+/// appearance. It is intended for internal use within the refresh indicator
+/// system and should not be used directly.
+///
+/// {@tool snippet}
+/// Example usage:
+/// ```dart
+/// _BarIndicator(controller)
+/// ```
+/// {@end-tool}
+///
+/// See also:
+///  * [IndicatorController], which manages the indicator's state.
 class _BarIndicator extends StatelessWidget {
   final IndicatorController controller;
   const _BarIndicator(this.controller);
@@ -44,8 +64,10 @@ class _BarIndicator extends StatelessWidget {
   }
 }
 
-// Curve Shape Indicator
-
+/// A custom painter that draws a curved shape, typically used for refresh indicators.
+///
+/// The [value] parameter controls the progress or extent of the curve,
+/// and the optional [color] parameter specifies the color of the shape.
 class _CurvedShapePainter extends CustomPainter {
   final double value;
   final Color? color;
@@ -75,6 +97,13 @@ class _CurvedShapePainter extends CustomPainter {
   }
 }
 
+/// A custom [StatelessWidget] that displays a curve indicator for a refresh controller.
+///
+/// This widget is used internally by the refresh indicator system to visually
+/// represent the current state of the [IndicatorController].
+///
+/// The [controller] parameter provides the necessary state and animation
+/// information for rendering the curve indicator.
 class _CurveIndicator extends StatelessWidget {
   final IndicatorController controller;
   const _CurveIndicator(this.controller);
@@ -119,8 +148,10 @@ class _CurveIndicator extends StatelessWidget {
   }
 }
 
-// Arrow Indicator
-
+/// A widget that displays an arrow indicator, typically used to show the state of a refresh action.
+///
+/// The [_ArrowIndicator] listens to the provided [IndicatorController] to update its appearance
+/// based on the current refresh state.
 class _ArrowIndicator extends StatelessWidget {
   final IndicatorController controller;
   const _ArrowIndicator(this.controller);
