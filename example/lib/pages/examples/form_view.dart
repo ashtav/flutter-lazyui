@@ -89,6 +89,12 @@ class FormView extends StatelessWidget {
                 },
                 icon: Icon(Hi.pencil)),
 
+                IconButton(
+                onPressed: () {
+                  forms.set('province', '');
+                },
+                icon: Icon(Hi.eraser)),
+
             // ActionIcon(Hi.pencil, (){})
           ],
         ),

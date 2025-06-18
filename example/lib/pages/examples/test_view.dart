@@ -77,7 +77,7 @@ class TestView extends StatelessWidget {
                       child: value.isEmpty ? Icon(Hi.cancel01) : Text('Submit'),
                     );
                   }),
-            )
+            ),
           ],
         ),
         bottomNavigationBar: LzButton(
