@@ -14,7 +14,7 @@ import '../../models/device.dart';
 /// Returns the current date and time as a [DateTime] object.
 ///
 /// This getter provides a convenient way to access the current system time.
-/// 
+///
 /// Example:
 /// ```dart
 /// final currentTime = now;
@@ -83,8 +83,7 @@ class Utils {
   /// ```dart
   /// scrollToWidget(myKey, myController, MediaQuery.of(context).size.width);
   /// ```
-  static void scrollToWidget(
-      GlobalKey key, ScrollController controller, double screenWidth) {
+  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 
@@ -128,18 +127,14 @@ class Utils {
   /// Utils.scrollTo(controller, duration: 500, delay: 100, to: AxisDirection.down);
   /// ```
   static scrollTo(ScrollController scrollController,
-      {int duration = 300,
-      int delay = 50,
-      AxisDirection to = AxisDirection.up}) {
+      {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down
-                ? scrollController.position.maxScrollExtent
-                : 0,
+            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -241,8 +236,7 @@ class Utils {
   /// TextEditingController name = TextEditingController();
   /// Utils.setCursorToLastPosition(name);
   /// ```
-  static setCursorToLastPosition(TextEditingController controller,
-      [int time = 0]) {
+  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
     Timer(
       Duration(milliseconds: time),
       () => controller.selection = TextSelection.fromPosition(
@@ -278,8 +272,7 @@ class Utils {
   ///   // do something...
   /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
   /// ```
-  static Timer timer(void Function() then, [Duration? duration]) =>
-      Timer(duration ?? 100.ms, then);
+  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
 
   /// Sets the system navigation bar and status bar UI based on the given theme mode.
   ///
@@ -291,8 +284,7 @@ class Utils {
       statusBarIconBrightness: null,
       statusBarColor: const Color.fromARGB(0, 184, 174, 174),
       systemNavigationBarDividerColor: null,
-      systemNavigationBarColor: color ??
-          (theme == ThemeMode.dark ? darkBackgroundColor : backgroundColor),
+      systemNavigationBarColor: color ?? (theme == ThemeMode.dark ? darkBackgroundColor : backgroundColor),
     ));
   }
 }
@@ -394,8 +386,7 @@ class Date {
   /// Returns a formatted `String` describing how long ago `fromDate` was relative to `toDate`.
   static String timeAgo(DateTime fromDate, DateTime toDate) {
     // Extract only the date (ignoring time)
-    DateTime fromDateOnly =
-        DateTime(fromDate.year, fromDate.month, fromDate.day);
+    DateTime fromDateOnly = DateTime(fromDate.year, fromDate.month, fromDate.day);
     DateTime toDateOnly = DateTime(toDate.year, toDate.month, toDate.day);
 
     int daysDifference = toDateOnly.difference(fromDateOnly).inDays;
@@ -453,22 +444,16 @@ class Date {
   /// DateTime? date2 = DateParser.parseCustomDate('Aug 3, 2024');
   /// print(date2); // Output: 2024-08-03 00:00:00.000
   /// ```
-  static DateTime? parseCustomDate(String dateString,
-      {String format = 'MMM', String? locale}) {
+  static DateTime? parseCustomDate(String dateString, {String format = 'MMM', String? locale}) {
     if (!['MMM', 'MMMM'].contains(format)) {
-      Print.error(
-          "Date.parseCustomDate - Invalid format: '$format'. Supported formats are 'MMM' and 'MMMM'.");
+      Print.error("Date.parseCustomDate - Invalid format: '$format'. Supported formats are 'MMM' and 'MMMM'.");
       return null;
     }
 
     // Generate month name based on locale
     final monthMap = Map.fromEntries(
       [1, 12].iterate().generate(
-            (m, i) => MapEntry(
-                DateTime(now.year, m, 1)
-                    .format(format, true, locale ?? config.locale)
-                    .toLowerCase(),
-                m),
+            (m, i) => MapEntry(DateTime(now.year, m, 1).format(format, true, locale ?? config.locale).toLowerCase(), m),
           ),
     );
 
@@ -477,8 +462,7 @@ class Date {
     // Regex untuk format "Aug 3, 2024"
     final regex2 = RegExp(r'^([A-Za-z]+)\s(\d{1,2}),\s(\d{4})$');
 
-    Match? match =
-        regex1.firstMatch(dateString) ?? regex2.firstMatch(dateString);
+    Match? match = regex1.firstMatch(dateString) ?? regex2.firstMatch(dateString);
 
     if (match != null) {
       String monthStr;
@@ -546,5 +530,310 @@ class Age {
   @override
   String toString() {
     return '$year years, $month months, $day days, $hour hours, $minute minutes, $second seconds';
+  }
+}
+
+class Case {
+  /// Converts the given [text] to CamelCase format.
+  ///
+  /// Splits the input string into words using spaces or underscores as delimiters,
+  /// capitalizes the first letter of each word, and joins them together.
+  ///
+  /// If [text] is empty, returns the original [text].
+  ///
+  /// Example:
+  /// ```
+  /// camel('hello world') // returns 'HelloWorld'
+  /// camel('foo_bar')     // returns 'FooBar'
+  /// ```
+  static String camel(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Capitalize the first letter of each word and join them
+    String result = words.map((word) {
+      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+    }).join();
+
+    return result;
+  }
+
+  /// Converts the given [text] to capital case, where the first letter of each word is capitalized
+  /// and the remaining letters are in lowercase. Words are separated by spaces or underscores.
+  ///
+  /// Returns the transformed string. If [text] is empty, returns [text] as is.
+  static String capital(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Capitalize the first letter of each word and join them with a space
+    String result = words.map((word) {
+      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+    }).join(' ');
+
+    return result;
+  }
+
+  /// Converts a string into CONSTANT_CASE format.
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// converts each word to uppercase, and joins them with underscores. If the input string
+  /// is empty, it returns the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = constant('hello world'); // Returns 'HELLO_WORLD'
+  /// String result2 = constant('hello_world'); // Returns 'HELLO_WORLD'
+  /// String result3 = constant(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in CONSTANT_CASE format.
+  static String constant(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Convert to uppercase and join with underscores
+    String result = words.map((word) => word.toUpperCase()).join('_');
+
+    return result;
+  }
+
+  /// Converts a string into dot.notation format.
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// converts each word to lowercase, and joins them with dots. If the input string
+  /// is empty, it returns the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = dot('Hello World'); // Returns 'hello.world'
+  /// String result2 = dot('hello_world'); // Returns 'hello.world'
+  /// String result3 = dot(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in dot.notation format.
+  static String dot(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Join the words with a dot
+    String result = words.map((word) => word.toLowerCase()).join('.');
+
+    return result;
+  }
+
+  /// Converts a string into kebab-case format.
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// converts each word to lowercase, and joins them with hyphens. If the input string
+  /// is empty, it returns the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = kebab('Hello World'); // Returns 'hello-world'
+  /// String result2 = kebab('hello_world'); // Returns 'hello-world'
+  /// String result3 = kebab(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in kebab-case format.
+  static String kebab(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Join the words with a hyphen
+    String result = words.map((word) => word.toLowerCase()).join('-');
+
+    return result;
+  }
+
+  /// Converts a string into no-case format (lowercase with no separators).
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// converts each word to lowercase, and joins them without any separator. If the input string
+  /// is empty, it returns the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = no('Hello World'); // Returns 'helloworld'
+  /// String result2 = no('hello_world'); // Returns 'helloworld'
+  /// String result3 = no(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in no-case format.
+  static String no(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Join the words without any separator
+    String result = words.map((word) => word.toLowerCase()).join('');
+
+    return result;
+  }
+
+  /// Converts a string into PascalCase format.
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// capitalizes the first letter of each word while converting the rest to lowercase,
+  /// and joins them without any separator. If the input string is empty, it returns
+  /// the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = pascal('hello world'); // Returns 'HelloWorld'
+  /// String result2 = pascal('hello_world'); // Returns 'HelloWorld'
+  /// String result3 = pascal(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in PascalCase format.
+  static String pascal(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Capitalize the first letter of each word and join them
+    String result = words.map((word) {
+      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+    }).join();
+
+    return result;
+  }
+
+  /// Converts a string into Pascal_Snake_Case format.
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// capitalizes the first letter of each word while converting the rest to lowercase,
+  /// and joins them with underscores. If the input string is empty, it returns
+  /// the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = pascalSnake('hello world'); // Returns 'Hello_World'
+  /// String result2 = pascalSnake('hello_world'); // Returns 'Hello_World'
+  /// String result3 = pascalSnake(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in Pascal_Snake_Case format.
+  static String pascalSnake(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Capitalize the first letter of each word and join them with underscores
+    String result = words.map((word) {
+      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+    }).join('_');
+
+    return result;
+  }
+
+  /// Converts a string into path/case/format.
+  ///
+  /// This method takes a string input, splits it into words based on spaces or underscores,
+  /// converts each word to lowercase, and joins them with forward slashes. If the input string
+  /// is empty, it returns the input as-is.
+  ///
+  /// Example:
+  /// ```dart
+  /// String result = path('Hello World'); // Returns 'hello/world'
+  /// String result2 = path('hello_world'); // Returns 'hello/world'
+  /// String result3 = path(''); // Returns ''
+  /// ```
+  ///
+  /// [text] The input string to convert.
+  /// Returns the string in path/case/format.
+  static String path(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Join the words with slashes
+    String result = words.map((word) => word.toLowerCase()).join('/');
+
+    return result;
+  }
+
+  /// Converts the given [text] into a sentence case format.
+  ///
+  /// - Splits the input [text] into words using spaces or underscores as delimiters.
+  /// - Capitalizes the first letter of each word and converts the rest to lowercase.
+  /// - Joins the words back together with spaces.
+  ///
+  /// Returns the formatted sentence. If [text] is empty, returns it as is.
+  static String sentence(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Capitalize the first letter of the first word and join them with spaces
+    String result = words.map((word) {
+      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+    }).join(' ');
+
+    return result;
+  }
+
+  /// Converts the given [text] to snake_case.
+  ///
+  /// Splits the input string by spaces or underscores, converts each word to lowercase,
+  /// and joins them with underscores. If the input [text] is empty, returns it as is.
+  ///
+  /// Example:
+  /// ```
+  /// snake('Hello World') // returns 'hello_world'
+  /// snake('helloWorld') // returns 'helloworld'
+  /// ```
+  static String snake(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Join the words with underscores
+    String result = words.map((word) => word.toLowerCase()).join('_');
+
+    return result;
+  }
+
+  /// Converts the given [text] into a hyphen-separated string where each word starts with an uppercase letter
+  /// and the rest of the letters are in lowercase.
+  ///
+  /// Words in the input [text] are split by whitespace or underscores.
+  /// For example, "hello_world test" becomes "Hello-World-Test".
+  ///
+  /// Returns the original [text] if it is empty.
+  static String train(String text) {
+    if (text.isEmpty) return text;
+
+    // Split the text into words
+    List<String> words = text.split(RegExp(r'[\s_]+'));
+
+    // Capitalize the first letter of each word and join them with hyphens
+    String result = words.map((word) {
+      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+    }).join('-');
+
+    return result;
   }
 }
