@@ -1,32 +1,30 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lazyui/lazyui.dart';
 
 class Notifier extends ChangeNotifier {
-  int active = 0;
-  bool show = false;
+  List<FormManager> cards = [];
 
-  void toggle() {
-    active++;
+  void addCard() {
+    final forms = LzForm.make(['name', 'gender', 'province']);
+    cards.insert(0, forms);
+    notifyListeners();
+  }
 
-    if (active >= 3) {
-      active = 0;
+  void remove(int index) {
+    cards.removeAt(index);
+    notifyListeners();
+  }
+
+  void onSubmit() {
+    for (var e in cards) {
+      logg('data: ${e.value}');
+      logg('extra: ${e.extra('province')}');
     }
-
-    show = !show;
-    notifyListeners();
   }
-
-  double opacity = 1;
-
-  void setValue(double value) {
-    opacity = value;
-    notifyListeners();
-  }
-
-  final forms = LzForm.make(['name', 'email', 'gender', 'image']);
 }
 
 class TestView extends StatelessWidget {
@@ -35,9 +33,21 @@ class TestView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notifier = Notifier();
-    final forms = notifier.forms;
 
-    final controller = TextEditingController();
+    List<Map<String, dynamic>> province = [
+      {
+        'label': 'Bali',
+        'value': 1,
+      },
+      {
+        'label': 'Jakarta',
+        'value': 2,
+      },
+      {
+        'label': 'Yogyakarta',
+        'value': 3,
+      },
+    ];
 
     return Unfocuser(
       child: Scaffold(
@@ -45,58 +55,61 @@ class TestView extends StatelessWidget {
           title: const Text('Labs'),
           actions: [
             LzThemeAction(),
-            IconButton(onPressed: () {}, icon: Icon(Hi.gift))
+            IconButton(
+                onPressed: () {
+                  notifier.addCard();
+                },
+                icon: Icon(Hi.plusSign))
           ],
         ),
         body: LzListView(
           autoCache: true,
           gap: 25,
           children: [
-            LzCard(
-              style: LzCardStyle(stacked: true),
-              onTap: () {
-                LzPicker.date(context);
-              },
-              children: [Text(Faker.name()), Text(Faker.email())],
-            ),
-            Column(
-              children: [
-                LzImage(Faker.image(), size: 100),
-              ],
-            ).start,
-            LzTextField(
-              hint: 'Enter email address',
-              prefixIcon: Icon(Hi.mail01),
-              controller: controller,
-              suffixIcon: SuffixBuilder(
-                  controller: controller,
-                  builder: (value) {
-                    return Touch(
-                      onTap: () {},
-                      padding: Ei.sym(v: 13, h: 16),
-                      child: value.isEmpty ? Icon(Hi.cancel01) : Text('Submit'),
-                    );
-                  }),
-            ),
+            LzForm.input(hint: 'Type something...', suffixIcon: Hi.book02),
+            notifier.watch((state) {
+              return Column(children: state.cards.generate((form, i) {
+                return LzCard(
+                  key: ValueKey(form
+                      .hashCode), // Prevents rebuild issues if we use insert/remove
+                  gap: 25,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Card ${i + 1}'),
+                        Touch(
+                            onTap: () {
+                              notifier.remove(i);
+                            },
+                            child: Icon(Hi.delete01))
+                      ],
+                    ).between,
+                    LzForm.input(
+                        label: 'Name *',
+                        hint: 'Enter your name',
+                        model: form.key('name')),
+                    LzForm.radio(
+                        label: 'Gender *',
+                        options: ['Male', 'Female', 'Other'],
+                        model: form.key('gender')),
+                    LzForm.select(
+                        label: 'Province *',
+                        hint: 'Select your province',
+                        options:
+                            province.map((e) => e['label'].toString()).toList(),
+                        values:
+                            province.map((e) => e['value'].toString()).toList(),
+                        model: form.key('province')),
+                  ],
+                );
+              })).start.gap(25);
+            })
           ],
         ),
         bottomNavigationBar: LzButton(
           text: 'Submit',
           onTap: () {
-            forms.set('name', Faker.words());
-            // final form = forms.validate(required: [
-            //   '*'
-            // ], match: [
-            //   'new_pass:confirm_pass'
-            // ], min: [
-            //   'old_pass:5'
-            // ], message: {
-            //   'old_pass': 'Old pass please!',
-            //   'old_pass:min': 'Wait! min',
-            //   'new_pass': 'New pass please!',
-            //   'confirm_pass': 'Ey! confirm your pass!',
-            //   'confirm_pass:match': 'Not same!'
-            // });
+            notifier.onSubmit();
           },
         ).margin(blr: 20).lz.shadowed(context),
       ),

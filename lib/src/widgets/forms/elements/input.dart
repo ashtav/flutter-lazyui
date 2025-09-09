@@ -233,11 +233,14 @@ class _InputState extends State<Input> {
           Color background =
               (context.isDarkMode ? darkAppbarColor : backgroundColor)
                   .darken(state.enabled ? 0 : .05);
+
           Widget? suffixIcon = hasOnTap
               ? (widget.suffixIcon == null
                   ? Icon(ConfigIcon.get(IconSet.chevron))
                   : Icon(widget.suffixIcon))
-              : null;
+              : widget.suffixIcon != null
+                  ? Icon(widget.suffixIcon)
+                  : null;
 
           Widget? prefixIcon =
               widget.prefix == null && widget.prefixIcon == null

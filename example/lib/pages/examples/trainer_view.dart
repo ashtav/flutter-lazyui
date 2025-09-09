@@ -57,7 +57,7 @@ class TrainerView extends StatelessWidget {
                     icon: Hi.books02,
                     outlined: true,
                     onTap: () {
-                      trainer.show(2);
+                      trainer.show(2, true);
                     },
                   )
                 ],

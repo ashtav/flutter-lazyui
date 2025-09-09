@@ -83,7 +83,8 @@ class Utils {
   /// ```dart
   /// scrollToWidget(myKey, myController, MediaQuery.of(context).size.width);
   /// ```
-  static void scrollToWidget(GlobalKey key, ScrollController controller, double screenWidth) {
+  static void scrollToWidget(
+      GlobalKey key, ScrollController controller, double screenWidth) {
     if (key.currentContext != null) {
       RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
 
@@ -127,14 +128,18 @@ class Utils {
   /// Utils.scrollTo(controller, duration: 500, delay: 100, to: AxisDirection.down);
   /// ```
   static scrollTo(ScrollController scrollController,
-      {int duration = 300, int delay = 50, AxisDirection to = AxisDirection.up}) {
+      {int duration = 300,
+      int delay = 50,
+      AxisDirection to = AxisDirection.up}) {
     Timer? timer;
 
     try {
       if (scrollController.hasClients) {
         timer = Timer(Duration(milliseconds: delay), () {
           scrollController.animateTo(
-            to == AxisDirection.down ? scrollController.position.maxScrollExtent : 0,
+            to == AxisDirection.down
+                ? scrollController.position.maxScrollExtent
+                : 0,
             curve: Curves.easeOut,
             duration: Duration(milliseconds: duration),
           );
@@ -236,7 +241,8 @@ class Utils {
   /// TextEditingController name = TextEditingController();
   /// Utils.setCursorToLastPosition(name);
   /// ```
-  static setCursorToLastPosition(TextEditingController controller, [int time = 0]) {
+  static setCursorToLastPosition(TextEditingController controller,
+      [int time = 0]) {
     Timer(
       Duration(milliseconds: time),
       () => controller.selection = TextSelection.fromPosition(
@@ -272,7 +278,8 @@ class Utils {
   ///   // do something...
   /// }, 5.s); // 100.ms, 1.s, 1.m, 1.h
   /// ```
-  static Timer timer(void Function() then, [Duration? duration]) => Timer(duration ?? 100.ms, then);
+  static Timer timer(void Function() then, [Duration? duration]) =>
+      Timer(duration ?? 100.ms, then);
 
   /// Sets the system navigation bar and status bar UI based on the given theme mode.
   ///
@@ -284,7 +291,8 @@ class Utils {
       statusBarIconBrightness: null,
       statusBarColor: const Color.fromARGB(0, 184, 174, 174),
       systemNavigationBarDividerColor: null,
-      systemNavigationBarColor: color ?? (theme == ThemeMode.dark ? darkBackgroundColor : backgroundColor),
+      systemNavigationBarColor: color ??
+          (theme == ThemeMode.dark ? darkBackgroundColor : backgroundColor),
     ));
   }
 }
@@ -386,7 +394,8 @@ class Date {
   /// Returns a formatted `String` describing how long ago `fromDate` was relative to `toDate`.
   static String timeAgo(DateTime fromDate, DateTime toDate) {
     // Extract only the date (ignoring time)
-    DateTime fromDateOnly = DateTime(fromDate.year, fromDate.month, fromDate.day);
+    DateTime fromDateOnly =
+        DateTime(fromDate.year, fromDate.month, fromDate.day);
     DateTime toDateOnly = DateTime(toDate.year, toDate.month, toDate.day);
 
     int daysDifference = toDateOnly.difference(fromDateOnly).inDays;
@@ -444,16 +453,22 @@ class Date {
   /// DateTime? date2 = DateParser.parseCustomDate('Aug 3, 2024');
   /// print(date2); // Output: 2024-08-03 00:00:00.000
   /// ```
-  static DateTime? parseCustomDate(String dateString, {String format = 'MMM', String? locale}) {
+  static DateTime? parseCustomDate(String dateString,
+      {String format = 'MMM', String? locale}) {
     if (!['MMM', 'MMMM'].contains(format)) {
-      Print.error("Date.parseCustomDate - Invalid format: '$format'. Supported formats are 'MMM' and 'MMMM'.");
+      Print.error(
+          "Date.parseCustomDate - Invalid format: '$format'. Supported formats are 'MMM' and 'MMMM'.");
       return null;
     }
 
     // Generate month name based on locale
     final monthMap = Map.fromEntries(
       [1, 12].iterate().generate(
-            (m, i) => MapEntry(DateTime(now.year, m, 1).format(format, true, locale ?? config.locale).toLowerCase(), m),
+            (m, i) => MapEntry(
+                DateTime(now.year, m, 1)
+                    .format(format, true, locale ?? config.locale)
+                    .toLowerCase(),
+                m),
           ),
     );
 
@@ -462,7 +477,8 @@ class Date {
     // Regex untuk format "Aug 3, 2024"
     final regex2 = RegExp(r'^([A-Za-z]+)\s(\d{1,2}),\s(\d{4})$');
 
-    Match? match = regex1.firstMatch(dateString) ?? regex2.firstMatch(dateString);
+    Match? match =
+        regex1.firstMatch(dateString) ?? regex2.firstMatch(dateString);
 
     if (match != null) {
       String monthStr;
@@ -554,7 +570,9 @@ class Case {
 
     // Capitalize the first letter of each word and join them
     String result = words.map((word) {
-      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+      return word.isNotEmpty
+          ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+          : '';
     }).join();
 
     return result;
@@ -572,7 +590,9 @@ class Case {
 
     // Capitalize the first letter of each word and join them with a space
     String result = words.map((word) {
-      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+      return word.isNotEmpty
+          ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+          : '';
     }).join(' ');
 
     return result;
@@ -710,7 +730,9 @@ class Case {
 
     // Capitalize the first letter of each word and join them
     String result = words.map((word) {
-      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+      return word.isNotEmpty
+          ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+          : '';
     }).join();
 
     return result;
@@ -740,7 +762,9 @@ class Case {
 
     // Capitalize the first letter of each word and join them with underscores
     String result = words.map((word) {
-      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+      return word.isNotEmpty
+          ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+          : '';
     }).join('_');
 
     return result;
@@ -788,7 +812,9 @@ class Case {
 
     // Capitalize the first letter of the first word and join them with spaces
     String result = words.map((word) {
-      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+      return word.isNotEmpty
+          ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+          : '';
     }).join(' ');
 
     return result;
@@ -831,7 +857,9 @@ class Case {
 
     // Capitalize the first letter of each word and join them with hyphens
     String result = words.map((word) {
-      return word.isNotEmpty ? word[0].toUpperCase() + word.substring(1).toLowerCase() : '';
+      return word.isNotEmpty
+          ? word[0].toUpperCase() + word.substring(1).toLowerCase()
+          : '';
     }).join('-');
 
     return result;

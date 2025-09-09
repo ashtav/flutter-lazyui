@@ -23,11 +23,11 @@ class TrainerController {
   void Function()? skipTarget;
 
   @protected
-  void Function([int? index])? showTrainer;
+  void Function([int? index, bool onlyCurrent])? showTrainer;
 
-  void show([int? from]) {
+  void show([int? from, bool onlyCurrent = false]) {
     if (showTrainer != null) {
-      showTrainer!(from);
+      showTrainer!(from, onlyCurrent);
     }
   }
 

@@ -106,9 +106,11 @@ class _TrainerState extends State<Trainer> {
 
   bool isOpened = false;
 
-  void showTrainer([int? from]) {
+  void showTrainer([int? from, bool onlyCurrent = false]) {
     final trainer = TutorialCoachMark(
-        targets: targets,
+        targets: onlyCurrent && from != null
+            ? targets.sublist(0, from + 1)
+            : targets,
         opacityShadow: .5,
         duration: widget.duration,
         initFocus: from,

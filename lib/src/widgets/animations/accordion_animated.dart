@@ -24,13 +24,13 @@ class AccordionAnimated extends StatefulWidget {
 
   /// A widget that provides an animated accordion effect, allowing its child
   /// widgets to expand and collapse with a smooth animation.
-  /// 
+  ///
   /// The [AccordionAnimated] widget is typically used to show and hide content
   /// in a vertical list, such as FAQs or expandable panels, enhancing user
   /// experience with animated transitions.
-  /// 
+  ///
   /// Example usage:
-  /// 
+  ///
   /// ```dart
   /// AccordionAnimated(
   ///   isOpen: true,
@@ -38,9 +38,9 @@ class AccordionAnimated extends StatefulWidget {
   ///   child: Text('Expandable content'),
   /// )
   /// ```
-  /// 
+  ///
   /// See also:
-  /// 
+  ///
   /// * [ExpansionPanel], which provides similar functionality in a list.
   /// * [AnimatedContainer], for more general animated size transitions.
   const AccordionAnimated(
