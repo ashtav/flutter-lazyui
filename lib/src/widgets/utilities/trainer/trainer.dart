@@ -47,8 +47,8 @@ class Trainer extends StatefulWidget {
   final TrainerLabels? labels;
 
   /// An optional builder for custom content, receiving the content string and controller.
-  final Widget Function(String content, TrainerController controller)?
-      contentBuilder;
+  final Widget Function(
+      int index, String content, TrainerController controller)? contentBuilder;
 
   /// Callback invoked when the user proceeds to the next target.
   final void Function(int index)? onNext;
@@ -161,7 +161,7 @@ class _TrainerState extends State<Trainer> {
 
               if (widget.contentBuilder != null) {
                 return widget.contentBuilder!(
-                    target.content ?? '', _controller);
+                    i, target.content ?? '', _controller);
               }
 
               return _TargetContent(controller, target, i, actions, (action) {
