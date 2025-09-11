@@ -29,8 +29,10 @@ class PickerView extends StatelessWidget {
                 icon: Hi.calendar01,
                 color: Colors.blue,
                 onTap: () {
-                  LzPicker.date(context, withTime: true, showWeekday: true,
-                      onSelect: (value) {
+                  LzPicker.date(context,
+                      minDate: now.subtract(30.y),
+                      withTime: true,
+                      showWeekday: true, onSelect: (value) {
                     logg(value);
                   });
                 },

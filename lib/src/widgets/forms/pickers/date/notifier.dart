@@ -42,6 +42,10 @@ class DatePickerNotifier extends ChangeNotifier {
     this.minDate = minDate ?? DateTime(now.year, 1, 1, 0, 0, 0);
     this.maxDate = maxDate ?? DateTime(now.year + 10, 12, 31, 23, 59, 59);
 
+    if (this.initDate.isAfter(this.maxDate)) {
+      this.initDate = this.maxDate;
+    }
+
     time = Time(this.initDate.hour, this.initDate.minute);
 
     values['d'] = this.initDate.day;
