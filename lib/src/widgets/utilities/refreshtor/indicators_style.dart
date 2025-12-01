@@ -24,7 +24,8 @@ enum RefreshType { bar, arrow, curve }
 ///  * [IndicatorController], which manages the indicator's state.
 class _BarIndicator extends StatelessWidget {
   final IndicatorController controller;
-  const _BarIndicator(this.controller);
+  final String? message;
+  const _BarIndicator(this.controller, this.message);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +34,10 @@ class _BarIndicator extends StatelessWidget {
     bool isSettling = controller.isSettling;
 
     double value = controller.value;
+
+    final messages = (message ?? '').split('|');
+    String release = messages.last;
+    String pull = messages.first;
 
     return Stack(
       alignment: Ad.topCenter,
@@ -50,7 +55,13 @@ class _BarIndicator extends StatelessWidget {
               child: BlinkAnimate(
                 isAnimated: isArmed,
                 child: Text(
-                    isArmed ? 'Release to refresh' : 'Pull down to refresh',
+                    message == null
+                        ? isArmed
+                            ? 'Release to refresh'
+                            : 'Pull down to refresh'
+                        : isArmed
+                            ? release
+                            : pull,
                     textAlign: Ta.center,
                     style: Gfont.fbold(isArmed).fs13),
               )),
@@ -106,7 +117,8 @@ class _CurvedShapePainter extends CustomPainter {
 /// information for rendering the curve indicator.
 class _CurveIndicator extends StatelessWidget {
   final IndicatorController controller;
-  const _CurveIndicator(this.controller);
+  final String? message;
+  const _CurveIndicator(this.controller, this.message);
 
   @override
   Widget build(BuildContext context) {
@@ -115,6 +127,10 @@ class _CurveIndicator extends StatelessWidget {
     bool isLoading = controller.isLoading;
 
     double value = controller.value;
+
+    final messages = (message ?? '').split('|');
+    String release = messages.last;
+    String pull = messages.first;
 
     return Stack(
       alignment: Alignment.topCenter,
@@ -135,9 +151,13 @@ class _CurveIndicator extends StatelessWidget {
                     child: BlinkAnimate(
                       isAnimated: isArmed,
                       child: Text(
-                          isArmed
-                              ? 'Release to refresh'
-                              : 'Pull down to refresh',
+                          message == null
+                              ? isArmed
+                                  ? 'Release to refresh'
+                                  : 'Pull down to refresh'
+                              : isArmed
+                                  ? release
+                                  : pull,
                           style: Gfont.fs13.fbold(isArmed),
                           textAlign: Ta.center),
                     )),

@@ -49,6 +49,9 @@ class Refreshtor extends StatefulWidget {
   /// A builder function to customize the refresh indicator widget.
   final Widget Function(IndicatorController controller)? builder;
 
+  /// text shown based on pull or release state
+  final String? refreshMessage;
+
   /// Creates a [Refreshtor] widget.
   ///
   /// All parameters are optional except for [child] and [onRefresh].
@@ -57,22 +60,23 @@ class Refreshtor extends StatefulWidget {
   /// ```dart
   /// Refreshtor(
   ///   onRefresh: () async {},
+  ///   refreshIndicator: 'pull message|release message',
   ///   child: ListView(
   ///     physics: Scrolics.bounce
   ///   )
   /// )
   /// ```
-  const Refreshtor({
-    super.key,
-    required this.child,
-    required this.onRefresh,
-    this.controller,
-    this.triggerMode = TriggerMode.onEdge,
-    this.offsetToArmed,
-    this.onStateChanged,
-    this.type = RefreshType.bar,
-    this.builder,
-  });
+  const Refreshtor(
+      {super.key,
+      required this.child,
+      required this.onRefresh,
+      this.controller,
+      this.triggerMode = TriggerMode.onEdge,
+      this.offsetToArmed,
+      this.onStateChanged,
+      this.type = RefreshType.bar,
+      this.builder,
+      this.refreshMessage});
 
   @override
   RefreshtorState createState() => RefreshtorState();
@@ -486,8 +490,8 @@ class RefreshtorState extends State<Refreshtor> with TickerProviderStateMixin {
       animation: controller,
       builder: (context, _) {
         Map<RefreshType, Widget> indicators = {
-          RefreshType.bar: _BarIndicator(controller),
-          RefreshType.curve: _CurveIndicator(controller),
+          RefreshType.bar: _BarIndicator(controller, widget.refreshMessage),
+          RefreshType.curve: _CurveIndicator(controller, widget.refreshMessage),
           RefreshType.arrow: _ArrowIndicator(controller)
         };
 

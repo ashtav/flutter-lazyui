@@ -14,6 +14,7 @@ class RefreshtorView extends StatelessWidget {
         actions: [LzThemeAction()],
       ),
       body: Refreshtor(
+        refreshMessage: '',
         onRefresh: () async {
           Toast.show('List view has been refreshed!');
         },
