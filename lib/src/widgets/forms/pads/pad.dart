@@ -27,12 +27,15 @@ class LzPad {
     final notifier = PadNotifier();
 
     context
-        .bottomSheet(PadWidget(notifier,
-            length: length,
-            expired: expired,
-            title: title,
-            message: message,
-            onCompleted: onCompleted))
+        .bottomSheet(SafeArea(
+      top: false,
+      child: PadWidget(notifier,
+          length: length,
+          expired: expired,
+          title: title,
+          message: message,
+          onCompleted: onCompleted),
+    ))
         .then((_) {
       notifier.dispose();
     });
@@ -49,12 +52,15 @@ class LzPad {
     final notifier = PadNotifier();
 
     context
-        .bottomSheet(PadWidget(notifier,
-            length: length,
-            title: title,
-            message: message,
-            onCompleted: onCompleted,
-            passcode: true))
+        .bottomSheet(SafeArea(
+      top: false,
+      child: PadWidget(notifier,
+          length: length,
+          title: title,
+          message: message,
+          onCompleted: onCompleted,
+          passcode: true),
+    ))
         .then((_) {
       notifier.dispose();
     });

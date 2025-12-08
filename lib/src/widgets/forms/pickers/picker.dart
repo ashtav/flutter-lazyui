@@ -71,14 +71,17 @@ class LzPicker {
     format = formatList.join('/');
 
     DateTime? result = await context.bottomSheet(
-        DatePickerWidget(
-            initDate: initDate,
-            minDate: minDate,
-            maxDate: maxDate,
-            style: style,
-            format: format,
-            withTime: withTime,
-            showWeekday: showWeekday),
+        SafeArea(
+          top: false,
+          child: DatePickerWidget(
+              initDate: initDate,
+              minDate: minDate,
+              maxDate: maxDate,
+              style: style,
+              format: format,
+              withTime: withTime,
+              showWeekday: showWeekday),
+        ),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,
@@ -158,15 +161,18 @@ class LzPicker {
     format = formatList.join('/');
 
     List<DateTime>? result = await context.bottomSheet(
-        DateRangePickerWidget(
-            initDate: initDateValue,
-            minDate: minDate,
-            maxDate: maxDate,
-            style: style,
-            format: format,
-            rangeFormat: rangeFormat,
-            withTime: withTime,
-            showWeekday: showWeekday),
+        SafeArea(
+          top: false,
+          child: DateRangePickerWidget(
+              initDate: initDateValue,
+              minDate: minDate,
+              maxDate: maxDate,
+              style: style,
+              format: format,
+              rangeFormat: rangeFormat,
+              withTime: withTime,
+              showWeekday: showWeekday),
+        ),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,
@@ -205,11 +211,14 @@ class LzPicker {
       PickerStyle? style,
       Function(Time value)? onSelect}) async {
     Time? result = await context.bottomSheet(
-        TimePickerWidget(
-            initTime: initTime,
-            minTime: minTime,
-            maxTime: maxTime,
-            style: style),
+        SafeArea(
+          top: false,
+          child: TimePickerWidget(
+              initTime: initTime,
+              minTime: minTime,
+              maxTime: maxTime,
+              style: style),
+        ),
         draggable: true,
         safeArea: false,
         backBlur: config.backBlur,
@@ -261,11 +270,14 @@ class LzPicker {
     }
 
     context.bottomSheet(
-      PickerOptionWidget(
-        initialValue: initialValue,
-        options: options,
-        onSelect: onSelect,
-        style: style,
+      SafeArea(
+        top: false,
+        child: PickerOptionWidget(
+          initialValue: initialValue,
+          options: options,
+          onSelect: onSelect,
+          style: style,
+        ),
       ),
       backgroundColor: Colors.transparent,
       safeArea: false,
