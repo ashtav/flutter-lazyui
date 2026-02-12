@@ -73,87 +73,94 @@ class FormNotifier extends ChangeNotifier {
   }
 
   void validate() {
-    List<Map<String, dynamic>> errors = [];
-    invalid = false;
+    try {
+      List<Map<String, dynamic>> errors = [];
+      invalid = false;
 
-    void markError(
-        String key, String type, Map<String, dynamic> rule, String message) {
-      if (enabled) {
-        rules.updateWhere((e) => e['key'] == key && e['type'] == type,
-            {...rule, 'invalid': true});
-        errors.add({'key': '$key:$type', 'message': message});
-      }
-    }
-
-    for (var rule in rules) {
-      String key = rule['key'];
-      String type = rule['type'];
-      dynamic value = rule['value'];
-
-      String text = controller.text;
-
-      final validators = {
-        'required': () => text.trim().isNotEmpty,
-        'min': () => text.length >= value,
-        'max': () => text.length <= value,
-        'email': () => text.trim().isEmail,
-        'match': () => text == (value as FormNotifier).controller.text,
-      };
-
-      if (validators.containsKey(type) && validators[type]!()) {
-        groupNotifier?.removeBy('$key:$type');
-      }
-    }
-
-    for (var rule in rules) {
-      String key = rule['key'];
-      String type = rule['type'];
-      dynamic value = rule['value'];
-      String message = rule['message'];
-
-      String text = controller.text;
-
-      // required
-      if (type == 'required' && text.trim().isEmpty) {
-        markError(key, type, rule, message);
+      void markError(String key, String type, Map<String, dynamic> rule, String message) {
+        if (enabled) {
+          rules.updateWhere((e) => e['key'] == key && e['type'] == type, {...rule, 'invalid': true});
+          errors.add({'key': '$key:$type', 'message': message});
+        }
       }
 
-      // min
-      else if (type == 'min' && text.length < value) {
-        markError(key, type, rule, message);
+      for (var rule in rules) {
+        String key = rule['key'];
+        String type = rule['type'];
+        dynamic value = rule['value'];
+
+        String text = controller.text;
+
+        final validators = {
+          'required': () => text.trim().isNotEmpty,
+          'min': () => text.length >= value,
+          'max': () => text.length <= value,
+          'email': () => text.trim().isEmail,
+          'match': () => text == (value as FormNotifier).controller.text,
+        };
+
+        if (validators.containsKey(type) && validators[type]!()) {
+          groupNotifier?.removeBy('$key:$type');
+        }
       }
 
-      // max
-      else if (type == 'max' && text.length > value) {
-        markError(key, type, rule, message);
-      }
+      for (var rule in rules) {
+        String key = rule['key'];
+        String type = rule['type'];
+        dynamic value = rule['value'];
+        String message = rule['message'];
 
-      // email
-      else if (type == 'email' && !text.trim().isEmail) {
-        markError(key, type, rule, message);
-      }
+        String text = controller.text;
 
-      // match
-      else if (type == 'match') {
-        // in match, value is FormNotifier
-        final notifier = value as FormNotifier;
+        // required
+        if (type == 'required' && text.trim().isEmpty) {
+          markError(key, type, rule, message);
+        }
 
-        if (text != notifier.controller.text) {
+        // min
+        else if (type == 'min' && text.length < value) {
+          markError(key, type, rule, message);
+        }
+
+        // max
+        else if (type == 'max' && text.length > value) {
+          markError(key, type, rule, message);
+        }
+
+        // email
+        else if (type == 'email' && !text.trim().isEmail) {
+          markError(key, type, rule, message);
+        }
+
+        // match
+        else if (type == 'match') {
+          // in match, value is FormNotifier
+          final notifier = value as FormNotifier;
+
+          if (text != notifier.controller.text) {
+            markError(key, type, rule, message);
+          }
+        }
+
+        // empty
+        else {
           markError(key, type, rule, message);
         }
       }
-    }
 
-    if (errors.isNotEmpty && enabled && feedback == FormFeedback.text) {
-      invalid = true;
-      invalidMessage = errors.first['message'];
-    }
+      if (errors.isNotEmpty && enabled && feedback == FormFeedback.text) {
+        invalid = true;
+        invalidMessage = errors.first['message'];
+      }
 
-    if (groupNotifier != null && feedback == FormFeedback.text) {
-      groupNotifier!.addError(errors);
-    }
+      if (groupNotifier != null && feedback == FormFeedback.text) {
+        groupNotifier!.addError(errors);
+      }
 
-    notifyListeners();
+      notifyListeners();
+    } catch (e, s) {
+      logg('error: $e, $s');
+    }
   }
 }
 

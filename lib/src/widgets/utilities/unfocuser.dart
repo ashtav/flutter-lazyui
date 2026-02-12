@@ -12,8 +12,7 @@ class Unfocuser extends StatelessWidget {
   /// Callback triggered when an unfocus event occurs.
   final void Function()? onUnfocus;
 
-  const Unfocuser(
-      {super.key, required this.child, this.onBackPress, this.onUnfocus});
+  const Unfocuser({super.key, required this.child, this.onBackPress, this.onUnfocus});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class Unfocuser extends StatelessWidget {
         }
       },
       behavior: HitTestBehavior.translucent,
-      child: child,
+      child: SafeArea(top: false, child: child),
     );
 
     if (onBackPress != null) {
