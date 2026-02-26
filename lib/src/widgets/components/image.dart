@@ -313,8 +313,8 @@ class _LzImageViewerState extends State<LzImageViewer>
 
       // translate tap position to the center of the viewport
       final Matrix4 transform = Matrix4.identity()
-        ..translate(-tapPosition.dx, -tapPosition.dy)
-        ..scale(scale);
+        ..translateByDouble(-tapPosition.dx, -tapPosition.dy, 0, 1)
+        ..scaleByDouble(scale, scale, 1, 1);
 
       return _animateToMatrix(transform);
     }

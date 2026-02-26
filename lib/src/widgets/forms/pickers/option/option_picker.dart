@@ -127,7 +127,7 @@ class _PickerOptionWidgetState extends State<PickerOptionWidget> {
     super.initState();
     onInitialized();
 
-    Bindings.onRendered(() {
+    UiFrame.runAfterBuild(() {
       setHeight();
     });
   }

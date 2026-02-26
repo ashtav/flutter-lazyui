@@ -123,7 +123,7 @@ class _LzAccordionState extends State<LzAccordion>
               curve: widget.curve ?? Curves.fastOutSlowIn,
             ));
 
-    Bindings.onRendered(() {
+    UiFrame.runAfterBuild(() {
       for (var index in widget.initValues) {
         if (index > -1 && index < length) {
           actives.add(index);

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:math' hide log;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:lazyui/lazyui.dart';
@@ -15,7 +16,7 @@ import 'lipsum.dart';
 export 'lz/utils.dart';
 export 'print.dart';
 
-part 'binding.dart';
+part 'ui_frame.dart';
 part 'bot.dart';
 part 'error_handler.dart';
 part 'faker.dart';

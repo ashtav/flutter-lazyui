@@ -189,7 +189,7 @@ class _TrainerState extends State<Trainer> {
       widget.controller!.showTrainer = showTrainer;
     } else {
       // toggle the trainer
-      Bindings.onRendered(() {
+      UiFrame.runAfterBuild(() {
         showTrainer();
       });
     }

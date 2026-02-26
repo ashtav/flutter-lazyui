@@ -544,7 +544,7 @@ class _DropdownNotifier extends ChangeNotifier {
     double dx = offset.dx;
     double dy = offset.dy + target.size.height - context.windowPadding.top;
 
-    Bindings.onRendered(() {
+    UiFrame.runAfterBuild(() {
       final box = key.context!.findRenderObject() as RenderBox?;
       final o = box?.localToGlobal(Offset.zero);
 
@@ -561,7 +561,7 @@ class _DropdownNotifier extends ChangeNotifier {
       if (align == DropAlign.right) {
         dx = target.offset.dx - (size.width - target.size.width);
 
-        Bindings.onRendered(() {
+        UiFrame.runAfterBuild(() {
           dropX = dropdownOffset().dx + size.width + (space?.dx ?? 20);
 
           if (dropX > screen.width) {
@@ -608,7 +608,7 @@ class _DropdownNotifier extends ChangeNotifier {
       if (position == DropPosition.auto) {
         setUpPosition();
 
-        Bindings.onRendered(() {
+        UiFrame.runAfterBuild(() {
           visible = true;
           setUpPosition();
         });
@@ -616,7 +616,7 @@ class _DropdownNotifier extends ChangeNotifier {
         return;
       }
 
-      Bindings.onRendered(() {
+      UiFrame.runAfterBuild(() {
         visible = true;
         setUpPosition();
       });
